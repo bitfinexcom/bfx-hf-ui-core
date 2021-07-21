@@ -1,6 +1,5 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import { Scrollbars } from 'react-custom-scrollbars'
 import { StoreProvider as UfxStoreProvider } from '@ufx-ui/core'
 import { useInjectBfxData } from '@ufx-ui/bfx-containers'
 
@@ -8,6 +7,7 @@ import Debug from 'debug'
 import Manifest from '../package.json'
 
 import HFUI from './components/HFUI'
+import CrashHandler from './components/CrashHandler'
 import StoreWrapper from './StoreWrapper'
 
 import './passive_listener_fix'
@@ -41,15 +41,17 @@ const config = {
 const HFUIWrapper = () => {
   useInjectBfxData()
 
-  return <HFUI />
+  return (
+    <CrashHandler>
+      <HFUI />
+    </CrashHandler>
+  )
 }
 
 ReactDOM.render((
-  <Scrollbars hideTracksWhenNotNeeded>
-    <StoreWrapper>
-      <UfxStoreProvider value={config}>
-        <HFUIWrapper />
-      </UfxStoreProvider>
-    </StoreWrapper>
-  </Scrollbars>
+  <StoreWrapper>
+    <UfxStoreProvider value={config}>
+      <HFUIWrapper />
+    </UfxStoreProvider>
+  </StoreWrapper>
 ), document.getElementById('root'))
