@@ -1,1 +1,1 @@
-# bfx-hf-hosted-ui
+# bfx-hf-ui-core

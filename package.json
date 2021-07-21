@@ -1,5 +1,5 @@
 {
-  "name": "bfx-hf-web",
+  "name": "bfx-hf-ui-core",
   "version": "3.13.0",
   "description": "Web based Honey Framework UI - for live trading and executing algorithmic orders and strategies",
   "engines": {
@@ -9,9 +9,8 @@
   "scripts": {
     "build-css": "cross-env sass --no-source-map src:src --load-path ./node_modules --style compressed",
     "watch-css": "cross-env npm run build-css && cross-env sass --no-source-map src:src --load-path ./node_modules --style compressed --watch",
-    "start": "cross-env REACT_APP_DEV=1 REACT_APP_TV_URL=http://localhost:9999 REACT_APP_WSS_URL=ws://localhost:45000 REACT_APP_DS_URL=ws://localhost:23521 REACT_APP_WS_API_URL=wss://api-pub.bitfinex.com/ws/2 REACT_APP_UFX_PUBLIC_API_URL=http://localhost:45001 node scripts/start.js",
-    "build": "GENERATE_SOURCEMAP=false cross-env npm run build-css && cross-env REACT_APP_TV_URL=http://localhost:9999 REACT_APP_WSS_URL=ws://localhost:45000 REACT_APP_DS_URL=ws://localhost:23521 REACT_APP_WS_API_URL=wss://api-pub.bitfinex.com/ws/2 REACT_APP_UFX_PUBLIC_API_URL=http://localhost:45001 IS_ELECTRON_APP=true node scripts/build.js",
-    "build-web": "GENERATE_SOURCEMAP=false cross-env npm run build-css && cross-env REACT_APP_TV_URL=http://localhost:9999 REACT_APP_WSS_URL=ws://localhost:45000 REACT_APP_DS_URL=ws://localhost:23521 REACT_APP_WS_API_URL=wss://api-pub.bitfinex.com/ws/2 REACT_APP_UFX_PUBLIC_API_URL=http://localhost:45001 IS_ELECTRON_APP=false node scripts/build.js",
+    "start": "cross-env REACT_APP_DEV=1 REACT_APP_TV_URL=http://localhost:9999 REACT_APP_WSS_URL=ws://localhost:45000 REACT_APP_DS_URL=ws://localhost:23521 REACT_APP_WS_API_URL=wss://api-pub.bitfinex.com/ws/2 REACT_APP_UFX_PUBLIC_API_URL=http://localhost:45001 IS_ELECTRON_APP=false node scripts/start.js",
+    "build": "GENERATE_SOURCEMAP=false cross-env npm run build-css && cross-env REACT_APP_TV_URL=http://localhost:9999 REACT_APP_WSS_URL=ws://localhost:45000 REACT_APP_DS_URL=ws://localhost:23521 REACT_APP_WS_API_URL=wss://api-pub.bitfinex.com/ws/2 REACT_APP_UFX_PUBLIC_API_URL=http://localhost:45001 IS_ELECTRON_APP=false node scripts/build.js",
     "test": "cross-env npm run lint",
     "lint": "cross-env eslint src"
   },
