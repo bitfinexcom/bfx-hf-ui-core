@@ -7,6 +7,13 @@ export const saveRemoteVersion = version => ({
   },
 })
 
+export const setLayouts = (layouts) => ({
+  type: types.SET_LAYOUTS,
+  payload: {
+    layouts,
+  },
+})
+
 export const saveLayout = () => ({
   type: types.SAVE_LAYOUT,
 })
@@ -25,10 +32,10 @@ export const selectLayout = (id) => ({
   },
 })
 
-export const createLayout = (id) => ({
+export const createLayout = (name) => ({
   type: types.CREATE_LAYOUT,
   payload: {
-    id,
+    name,
   },
 })
 
@@ -162,11 +169,6 @@ export const changeOldFormatModalState = (isVisible) => ({
   payload: { isVisible },
 })
 
-export const changeAOPauseModalState = (isVisible) => ({
-  type: types.CHANGE_AO_PAUSE_MODAL_STATE,
-  payload: { isVisible },
-})
-
 export const changeBadInternetConnectionState = (isVisible) => ({
   type: types.CHANGE_BAD_INTERNET_STATE,
   payload: { isVisible },
@@ -237,7 +239,7 @@ export default {
   clearStrategies,
   switchNotifcationPanel,
   setLayoutID,
+  setLayouts,
   changeTickersVolumeUnit,
   changeOldFormatModalState,
-  changeAOPauseModalState,
 }

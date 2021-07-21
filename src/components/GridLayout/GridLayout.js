@@ -5,19 +5,32 @@ import _map from 'lodash/map'
 import _get from 'lodash/get'
 import _last from 'lodash/last'
 import _entries from 'lodash/entries'
+import _reduce from 'lodash/reduce'
+import _keys from 'lodash/keys'
 import { Responsive as RGL, WidthProvider } from 'react-grid-layout'
 import { getLocation } from '../../redux/selectors/router'
 import {
-  removeComponent, changeLayout, setLayoutID, storeUnsavedLayout,
+  removeComponent,
+  changeLayout,
+  setLayoutID,
+  storeUnsavedLayout,
+  setLayouts,
 } from '../../redux/actions/ui'
-import { renderLayoutElement } from './GridLayout.helpers'
+import WSActions from '../../redux/actions/ws'
+import { renderLayoutElement, migrateLocalStorageToWs } from './GridLayout.helpers'
 import './style.css'
+import { LOADING_LAYOUT } from '../../constants/layouts'
 
 import {
   getLayouts,
   getLayoutID,
   getCurrentUnsavedLayout,
+  getIsWsLayoutsSet,
 } from '../../redux/selectors/ui'
+import {
+  getLayouts as getWsLayouts,
+  getAuthToken,
+} from '../../redux/selectors/ws'
 
 const ReactGridLayout = WidthProvider(RGL)
 
@@ -25,16 +38,23 @@ const GridLayout = ({
   sharedProps, tradesProps, bookProps, chartProps, orderFormProps,
 }) => {
   const dispatch = useDispatch()
+  const authToken = useSelector(getAuthToken)
   const { pathname } = useSelector(getLocation)
   const layouts = useSelector(getLayouts)
+  console.log('TCL: layouts', layouts)
+  const wsLayouts = useSelector(getWsLayouts)
+  console.log('TCL: wsLayouts', wsLayouts)
+  const isWsLayoutsSet = useSelector(getIsWsLayoutsSet)
   const layoutID = useSelector(getLayoutID)
   const currentSavedLayout = _get(layouts, layoutID, {})
   const unsavedLayoutDef = useSelector(getCurrentUnsavedLayout)
   const isValidUnsavedLayout = _get(unsavedLayoutDef, 'routePath', null) === pathname
   const isValidSavedLayout = currentSavedLayout.routePath === pathname
-  const [lastLayoutID, lastLayoutDef] = _last(_entries(layouts)
-    .filter(([, layout]) => layout.routePath === pathname)
-    .sort((a, b) => a[1].savedAt - b[1].savedAt))
+  const [lastLayoutID, lastLayoutDef] = _keys(layouts).length
+    ? _last(_entries(layouts)
+      .filter(([, layout]) => layout.routePath === pathname)
+      .sort((a, b) => a[1].savedAt - b[1].savedAt))
+    : [null, null]
 
   // should use unsaved one first, then saved one (if selected) else last saved one
   const layoutDef = isValidUnsavedLayout
@@ -42,6 +62,42 @@ const GridLayout = ({
     : isValidSavedLayout
       ? currentSavedLayout
       : lastLayoutDef
+
+  const saveLayoutsToWs = (nextLayouts) => dispatch(WSActions.send([
+    'layouts.save',
+    authToken,
+    _reduce(
+      _entries(nextLayouts),
+      (nextLayout, [id, layout]) => {
+        // don't save default layouts in db
+        if (layout.isDefault) {
+          return nextLayout
+        }
+
+        return {
+          ...nextLayout,
+          [id]: layout,
+        }
+      },
+      {},
+    ),
+  ]))
+
+  useEffect(() => {
+    // once the saved layouts are fetched from the websocket
+    // store it in the redux under ui.layouts
+    // once this happens we only reference ui.layouts
+    if (!isWsLayoutsSet && wsLayouts) {
+      dispatch(setLayouts(wsLayouts))
+    }
+  }, [isWsLayoutsSet, wsLayouts])
+
+  useEffect(() => {
+    // push every layout updates to websocket
+    if (isWsLayoutsSet) {
+      saveLayoutsToWs(layouts)
+    }
+  }, [isWsLayoutsSet, layouts])
 
   useEffect(() => {
     // set active layout id when there’s none selected (on initial load)
@@ -58,6 +114,11 @@ const GridLayout = ({
     }
   }, [isValidUnsavedLayout, layoutDef])
 
+  useEffect(() => {
+    // migrate localStorage to ws
+    migrateLocalStorageToWs(saveLayoutsToWs)
+  }, [])
+
   const componentProps = {
     orderForm: orderFormProps,
     trades: tradesProps,
@@ -67,7 +128,9 @@ const GridLayout = ({
     sharedProps,
   }
 
-  const currentLayouts = _get(layoutDef, 'layout', [])
+  const currentLayouts = isWsLayoutsSet
+    ? _get(layoutDef, 'layout', [])
+    : _get(LOADING_LAYOUT, 'layout')
   const onRemoveComponent = (i) => dispatch(removeComponent(i))
 
   return (

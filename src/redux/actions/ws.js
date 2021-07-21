@@ -233,16 +233,6 @@ export default {
     payload: { token },
   }),
 
-  authWrongAPIKeys: (status) => ({
-    type: t.AUTH_API_FAILED,
-    payload: { status },
-  }),
-
-  authAPIValidating: (status) => ({
-    type: t.AUTH_API_VALIDATING,
-    payload: { status },
-  }),
-
   recvBacktestStart: opts => ({
     type: t.BACKTEST_START,
     payload: opts,
@@ -276,6 +266,11 @@ export default {
   recvUpdatedFavoritePairs: pairs => ({
     type: t.UPDATE_FAVORITE_PAIRS,
     payload: pairs,
+  }),
+
+  recvUpdatedLayouts: layouts => ({
+    type: t.UPDATE_LAYOUTS,
+    payload: layouts,
   }),
 
   purgeDataBook: (channel) => ({

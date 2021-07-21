@@ -22,8 +22,18 @@ import { isElectronApp } from '../../redux/config'
 import './style.css'
 
 const HFUI = ({
-  authToken, getSettings, notificationsVisible, getFavoritePairs, currentMode, GAPageview,
-  currentPage, onUnload, subscribeAllTickers, shouldShowAOPauseModalState, settingsShowAlgoPauseInfo,
+  authToken,
+  getSettings,
+  notificationsVisible,
+  getFavoritePairs,
+  getLayouts,
+  currentMode,
+  GAPageview,
+  currentPage,
+  onUnload,
+  subscribeAllTickers,
+  shouldShowAOPauseModalState,
+  settingsShowAlgoPauseInfo,
 }) => {
   function unloadHandler() {
     if (authToken !== null) {
@@ -68,6 +78,7 @@ const HFUI = ({
     if (authToken) {
       getSettings(authToken)
       getFavoritePairs(authToken, currentMode)
+      getLayouts(authToken)
       subscribeAllTickers()
     }
   }, [authToken])
@@ -105,6 +116,7 @@ HFUI.propTypes = {
   currentMode: PropTypes.string.isRequired,
   getSettings: PropTypes.func.isRequired,
   getFavoritePairs: PropTypes.func.isRequired,
+  getLayouts: PropTypes.func.isRequired,
   onUnload: PropTypes.func.isRequired,
   notificationsVisible: PropTypes.bool.isRequired,
   GAPageview: PropTypes.func.isRequired,

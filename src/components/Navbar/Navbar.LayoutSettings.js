@@ -100,7 +100,7 @@ export default function LayoutSettings() {
                   isSelected={id === layoutID}
                   onClick={() => dispatch(selectLayout(id))}
                 >
-                  {makeShorterLongName(id, MAX_ID_LENGTH)}
+                  {makeShorterLongName(layoutDef.name, MAX_ID_LENGTH)}
                   {layoutDef.canDelete && (
                     <div className='hfui-navbar__layout-settings__delete'>
                       <i className='icon-clear' onClick={() => dispatch(deleteLayout(id))} />
