@@ -14,6 +14,11 @@
     width: 100%;
     padding-bottom: spacing();
 
+    .ccy-icon {
+      width: 30px;
+      height: 30px;
+    }
+
     .highlight {
       font-size: 18px;
       line-height: 18px;
@@ -173,7 +178,7 @@
 }
 
 .react-switch-bg {
-  opacity: .3;
+  opacity: 0.3;
 }
 
 .react-switch-bg svg * {
