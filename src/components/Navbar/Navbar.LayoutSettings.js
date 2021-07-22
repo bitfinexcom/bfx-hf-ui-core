@@ -12,7 +12,7 @@ import { getLocation } from '../../redux/selectors/router'
 
 import { ReactComponent as LayoutIcon } from './layout-icon.svg'
 import NavbarButton from './Navbar.Button'
-import * as Routes from '../../constants/routes'
+import Routes from '../../constants/routes'
 
 import AddLayoutComponentModal from '../AddLayoutComponentModal'
 import CreateNewLayoutModal from '../CreateNewLayoutModal'

@@ -14,10 +14,10 @@ import TradingModeModal from '../TradingModeModal'
 import BadConnectionModal from '../BadConnectionModal'
 import OldFormatModal from '../OldFormatModal'
 import AOPauseModal from '../AOPauseModal'
-
 import NotificationsSidebar from '../NotificationsSidebar'
 
-import * as Routes from '../../constants/routes'
+import Routes from '../../constants/routes'
+import { isElectronApp } from '../../redux/config'
 
 import './style.css'
 
@@ -81,13 +81,17 @@ const HFUI = ({
           <Switch>
             <Redirect from='/index.html' to='/' exact />
             <Route path={Routes.tradingTerminal.path} render={() => <TradingPage />} exact />
-            <Route path={Routes.strategyEditor.path} render={() => <StrategyEditorPage />} />
+            {isElectronApp && Routes.strategyEditor && <Route path={Routes.strategyEditor.path} render={() => <StrategyEditorPage />} />}
             <Route path={Routes.marketData.path} render={() => <MarketDataPage />} />
           </Switch>
-          <TradingModeModal />
-          <BadConnectionModal />
-          <OldFormatModal />
-          <AOPauseModal />
+          {isElectronApp && (
+          <>
+            <TradingModeModal />
+            <BadConnectionModal />
+            <OldFormatModal />
+            <AOPauseModal />
+          </>
+          )}
         </>
       )}
       <NotificationsSidebar notificationsVisible={notificationsVisible} />

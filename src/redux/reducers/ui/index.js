@@ -14,7 +14,7 @@ import { nonce } from 'bfx-api-node-util'
 import { VOLUME_UNIT, VOLUME_UNIT_PAPER } from '@ufx-ui/bfx-containers'
 
 import types from '../../constants/ui'
-import * as Routes from '../../../constants/routes'
+import Routes from '../../../constants/routes'
 import DEFAULT_TRADING_LAYOUT from './default_layout_trading'
 import DEFAULT_MARKET_DATA_LAYOUT from './default_layout_market_data'
 import DEFAULT_TRADING_COMPONENT_STATE from './default_component_state_trading'
