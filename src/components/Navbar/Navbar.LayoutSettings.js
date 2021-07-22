@@ -73,6 +73,7 @@ export default function LayoutSettings() {
     <div className='hfui-navbar__layout-settings'>
       <NavbarButton
         icon={LayoutIcon}
+        alt='Layout settings'
         onClick={() => setIsOpen(true)}
         className={isOpen ? 'is-open' : undefined}
       />
@@ -103,7 +104,7 @@ export default function LayoutSettings() {
                   {makeShorterLongName(id, MAX_ID_LENGTH)}
                   {layoutDef.canDelete && (
                     <div className='hfui-navbar__layout-settings__delete'>
-                      <i className='icon-clear' onClick={() => dispatch(deleteLayout(id))} />
+                      <i className='icon-clear' role='button' aria-label='Delete layout' tabIndex={0} onClick={() => dispatch(deleteLayout(id))} />
                     </div>
                   )}
                 </Item>

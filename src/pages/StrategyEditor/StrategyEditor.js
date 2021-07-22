@@ -1,20 +1,19 @@
-import React from 'react'
+import React, { lazy, Suspense } from 'react'
 import randomColor from 'randomcolor'
 import PropTypes from 'prop-types'
 import _remove from 'lodash/remove'
-import Joyride, { STEPS, STATUS } from '../../components/Joyride'
-
+import { STEPS, STATUS } from '../../components/Joyride'
 import Layout from '../../components/Layout'
-
 import Panel from '../../ui/Panel'
 import Markdown from '../../ui/Markdown'
 import Backtester from '../../components/Backtester'
 // import LiveStrategyExecutor from '../../components/LiveStrategyExecutor'
 import StrategyEditor from '../../components/StrategyEditor'
-
 import './style.css'
 
 const DocsPath = require('bfx-hf-strategy/docs/api.md')
+
+const Joyride = lazy(() => import('../../components/Joyride'))
 
 export default class StrategyEditorPage extends React.Component {
   state = {
@@ -111,11 +110,13 @@ export default class StrategyEditorPage extends React.Component {
               tf='1m'
             />
             {firstLogin && (
-              <Joyride
-                steps={STEPS.STRATEGY_EDITOR}
-                callback={this.onGuideFinish}
-                run={isGuideActive}
-              />
+              <Suspense fallback={<></>}>
+                <Joyride
+                  steps={STEPS.STRATEGY_EDITOR}
+                  callback={this.onGuideFinish}
+                  run={isGuideActive}
+                />
+              </Suspense>
             )}
             <div
               key='main'

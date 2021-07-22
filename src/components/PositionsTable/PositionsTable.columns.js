@@ -63,6 +63,7 @@ export default ({ authToken, closePosition }) => [{
     <div className='icons-cell'>
       <i
         role='button'
+        aria-label='Remove position'
         tabIndex={0}
         className='icon-cancel'
         onClick={() => closePosition(authToken, rowData)}
