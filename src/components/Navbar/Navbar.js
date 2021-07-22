@@ -9,7 +9,8 @@ import SwitchMode from '../SwitchMode'
 
 import LayoutSettings from './Navbar.LayoutSettings'
 import AppSettings from './Navbar.AppSettings'
-import * as Routes from '../../constants/routes'
+import Routes from '../../constants/routes'
+import { isElectronApp } from '../../redux/config'
 
 import './style.css'
 
@@ -36,14 +37,16 @@ const Navbar = () => {
             icon='notifications'
             onClick={() => dispatch(UIActions.switchNotifcationPanel())}
           />
-          <AppSettings />
+          {isElectronApp && <AppSettings />}
         </div>
+        {isElectronApp && (
         <div className='hfui-tradingpaper__control'>
           <div className='hfui-tradingpaper__control-toggle'>
             <p>Paper Trading</p>
             <SwitchMode />
           </div>
         </div>
+        )}
       </div>
     </div>
   )

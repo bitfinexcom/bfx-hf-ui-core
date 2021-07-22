@@ -1,3 +1,5 @@
+import { isElectronApp } from '../redux/config'
+
 export const tradingTerminal = {
   path: '/',
   label: 'Trading Terminal',
@@ -12,3 +14,11 @@ export const strategyEditor = {
   path: '/strategy-editor',
   label: 'Strategy Editor',
 }
+
+const routes = {
+  tradingTerminal,
+  marketData,
+  ...(isElectronApp ? { strategyEditor } : {}),
+}
+
+export default routes
