@@ -64,6 +64,12 @@
     display: flex;
     flex-direction: column;
 
+    .ccy-icon-small {
+      width: 10px;
+      height: 10px;
+      margin-right: 3px;
+    }
+
     .ufx-virtual-table--container {
       width: 100%;
       top: 40px;
@@ -82,6 +88,12 @@
         width: 12px;
         height: 12px;
       }
+    }
+
+    .price-unit {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
     }
 
     .price-unit span:last-child {
