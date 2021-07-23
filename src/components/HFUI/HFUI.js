@@ -9,6 +9,8 @@ import NotificationsSidebar from '../NotificationsSidebar'
 import closeElectronApp from '../../redux/helpers/close_electron_app'
 import Routes from '../../constants/routes'
 import { isElectronApp } from '../../redux/config'
+import MIN_SAFE_WIDTH from '../../constants/MIN_SAFE_WIDTH'
+import BestExperienceMessageModal from '../BestExperienceMessageModal'
 
 import './style.css'
 
@@ -21,24 +23,46 @@ const TradingModeModal = lazy(() => import('../TradingModeModal'))
 const BadConnectionModal = lazy(() => import('../BadConnectionModal'))
 const OldFormatModal = lazy(() => import('../OldFormatModal'))
 const AOPauseModal = lazy(() => import('../AOPauseModal'))
+const HF_UI_WEB_SHOW_BEST_EXPERIENCE_MODAL = 'HF_UI_WEB_SHOW_BEST_EXPERIENCE_MODAL'
 
 const HFUI = ({
   authToken, getSettings, notificationsVisible, getFavoritePairs, currentMode, GAPageview,
   currentPage, onUnload, subscribeAllTickers, shouldShowAOPauseModalState, settingsShowAlgoPauseInfo,
 }) => {
-  function unloadHandler() {
+  const [isBestExperienceMessageModalOpen, setBestExperienceModalState] = useState(false)
+
+  const unloadHandler = () => {
     if (authToken !== null) {
       onUnload(authToken, currentMode)
     }
   }
 
-  function onElectronAppClose() {
+  const onElectronAppClose = () => {
     if (!authToken || !settingsShowAlgoPauseInfo) {
       closeElectronApp()
     } else {
       shouldShowAOPauseModalState()
     }
   }
+
+  const onSubmitBestExperienceModal = () => {
+    localStorage.setItem(HF_UI_WEB_SHOW_BEST_EXPERIENCE_MODAL, JSON.stringify(false))
+    setBestExperienceModalState()
+  }
+
+  useEffect(() => {
+    const currentWidth = document.documentElement.clientWidth
+    let needToShowModal = localStorage.getItem(HF_UI_WEB_SHOW_BEST_EXPERIENCE_MODAL)
+    if (needToShowModal === null || needToShowModal === undefined) {
+      needToShowModal = true
+    } else {
+      needToShowModal = JSON.parse(needToShowModal)
+    }
+    if (isElectronApp || !needToShowModal || currentWidth >= MIN_SAFE_WIDTH) {
+      return
+    }
+    setBestExperienceModalState(true)
+  }, [])
 
   useEffect(() => {
     window.removeEventListener('beforeunload', unloadHandler)
@@ -83,13 +107,19 @@ const HFUI = ({
             {isElectronApp && Routes.strategyEditor && <Route path={Routes.strategyEditor.path} render={() => <StrategyEditorPage />} />}
             <Route path={Routes.marketData.path} render={() => <MarketDataPage />} />
           </Switch>
-          {isElectronApp && (
+          {isElectronApp ? (
             <>
               <TradingModeModal />
               <BadConnectionModal />
               <OldFormatModal />
               <AOPauseModal />
             </>
+          ) : (
+            <BestExperienceMessageModal
+              isOpen={isBestExperienceMessageModalOpen}
+              onClose={setBestExperienceModalState}
+              onSubmit={onSubmitBestExperienceModal}
+            />
           )}
         </>
       ) : (
