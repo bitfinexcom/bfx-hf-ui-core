@@ -18,7 +18,7 @@ const positionWithReplacedPairs = createSelector([allMarkets, allPositions], (ma
   return _map(positions, (position) => {
     const { symbol } = position
     const currentMarket = markets[symbol]
-    return { ...position, symbol: currentMarket.uiID }
+    return { ...position, uiID: currentMarket.uiID }
   }, [])
 })
 
