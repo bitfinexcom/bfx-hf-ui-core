@@ -1,6 +1,7 @@
 /* eslint-disable consistent-return */
 import React, { useEffect, Suspense, lazy } from 'react'
 import { Route, Switch, Redirect } from 'react-router'
+import _isNil from 'lodash/isNil'
 import PropTypes from 'prop-types'
 import _isFunction from 'lodash/isFunction'
 
@@ -31,13 +32,13 @@ const HFUI = ({
 }) => {
   const [isBestExperienceMessageModalOpen, setBestExperienceModalState] = useState(false)
 
-  const unloadHandler = () => {
+  function unloadHandler() {
     if (authToken !== null) {
       onUnload(authToken, currentMode)
     }
   }
 
-  const onElectronAppClose = () => {
+  function onElectronAppClose() {
     if (!authToken || !settingsShowAlgoPauseInfo) {
       closeElectronApp()
     } else {
@@ -47,19 +48,22 @@ const HFUI = ({
   const closeBestExperienceModal = () => setBestExperienceModalState(false)
 
   const onSubmitBestExperienceModal = () => {
-    localStorage.setItem(HF_UI_WEB_SHOW_BEST_EXPERIENCE_MODAL, JSON.stringify(false))
+    localStorage.setItem(HF_UI_WEB_SHOW_BEST_EXPERIENCE_MODAL, 'false')
     closeBestExperienceModal()
   }
 
   useEffect(() => {
     const currentWidth = document.documentElement.clientWidth
+    if (isElectronApp || currentWidth >= MIN_SAFE_WIDTH) {
+      return
+    }
     let needToShowModal = localStorage.getItem(HF_UI_WEB_SHOW_BEST_EXPERIENCE_MODAL)
-    if (needToShowModal === null || needToShowModal === undefined) {
+    if (_isNil(needToShowModal)) {
       needToShowModal = true
     } else {
       needToShowModal = JSON.parse(needToShowModal)
     }
-    if (isElectronApp || !needToShowModal || currentWidth >= MIN_SAFE_WIDTH) {
+    if (!needToShowModal) {
       return
     }
     setBestExperienceModalState(true)
