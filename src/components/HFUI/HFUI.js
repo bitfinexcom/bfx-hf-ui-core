@@ -44,10 +44,11 @@ const HFUI = ({
       shouldShowAOPauseModalState()
     }
   }
+  const closeBestExperienceModal = () => setBestExperienceModalState(false)
 
   const onSubmitBestExperienceModal = () => {
     localStorage.setItem(HF_UI_WEB_SHOW_BEST_EXPERIENCE_MODAL, JSON.stringify(false))
-    setBestExperienceModalState()
+    closeBestExperienceModal()
   }
 
   useEffect(() => {
@@ -117,7 +118,7 @@ const HFUI = ({
           ) : (
             <BestExperienceMessageModal
               isOpen={isBestExperienceMessageModalOpen}
-              onClose={setBestExperienceModalState}
+              onClose={closeBestExperienceModal}
               onSubmit={onSubmitBestExperienceModal}
             />
           )}
