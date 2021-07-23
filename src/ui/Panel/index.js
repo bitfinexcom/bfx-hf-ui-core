@@ -101,21 +101,6 @@ const Panel = (props) => {
               <p className='hfui-panel__close' onClick={closePanel}>&#10005;</p>
             )}
           </div>
-          {tabs.length > 0 && (
-            <ul className='hfui-panel__header-tabs'>
-              {tabs.map((tab, index) => (
-                <li
-                  key={tab.props.htmlKey || tab.props.tabtitle}
-                  className={ClassNames({ active: getTabTitle(tab) === getTabTitle(tabs[selectedTab]) })}
-                  onClick={() => setSelectedTab(index)}
-                >
-                  <p className='hfui-panel__label'>
-                    {tab.props.tabtitle}
-                  </p>
-                </li>
-              ))}
-            </ul>
-          )}
 
           {!hideIcons && (
             <div className='hfui-panel__header-icons'>
@@ -150,6 +135,24 @@ const Panel = (props) => {
         {secondaryHeaderComponents && (
           <div className='hfui-panel__secondaryheader__wrapper'>
             {secondaryHeaderComponents}
+          </div>
+        )}
+
+        {tabs.length > 0 && (
+          <div className='hfui-panel__secondaryheader__wrapper'>
+            <ul className='hfui-panel__header-tabs'>
+              {tabs.map((tab, index) => (
+                <li
+                  key={tab.props.htmlKey || tab.props.tabtitle}
+                  className={ClassNames({ active: getTabTitle(tab) === getTabTitle(tabs[selectedTab]) })}
+                  onClick={() => setSelectedTab(index)}
+                >
+                  <p className='hfui-panel__label'>
+                    {tab.props.tabtitle}
+                  </p>
+                </li>
+              ))}
+            </ul>
           </div>
         )}
       </div>
