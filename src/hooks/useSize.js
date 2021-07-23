@@ -3,7 +3,10 @@ import { useEffect, useRef, useState } from 'react'
 import _get from 'lodash/get'
 
 export default () => {
-  const [size, setSize] = useState({})
+  const [size, setSize] = useState({
+    width: 0,
+    height: 0,
+  })
   const ref = useRef(null)
   useEffect(() => {
     const DOMnode = ref.current

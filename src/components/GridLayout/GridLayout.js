@@ -74,7 +74,7 @@ const GridLayout = ({
     <div className='hfui-gridlayoutpage__wrapper'>
       <ReactGridLayout
         autoSize
-        draggableHandle='.icon-move'
+        draggableHandle='.draggable-handle'
         cols={{
           lg: 100, md: 100, sm: 100, xs: 100, xxs: 100,
         }}

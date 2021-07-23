@@ -1,4 +1,18 @@
+@import "../../variables.scss";
+
 .react-grid-layout,
 .react-grid-item {
   transition: none !important;
+}
+
+.react-grid-placeholder {
+  border-radius: $border-radius;
+  background-color: $secondary-color-100 !important;
+  opacity: 1 !important;
+}
+
+.react-draggable-transparent-selection {
+  .draggable-handle {
+    cursor: grabbing;
+  }
 }

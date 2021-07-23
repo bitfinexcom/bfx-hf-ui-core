@@ -54,15 +54,29 @@ const Panel = (props) => {
   const [selectedTab, setSelectedTab] = useState(initTab)
   const [panelRef, panelSize] = useSize()
   const [headerRef, headerSize] = useSize()
+  const [isMoveable, setIsMoveable] = useState(false)
+  const [isMoving, setIsMoving] = useState(false)
 
   return (
     <div
       className={ClassNames('hfui-panel', className, {
         'dark-header': darkHeader,
         dark,
+        'is-moveable': isMoveable,
       })}
       ref={panelRef}
     >
+      {moveable && (
+        <div
+          className={ClassNames('draggable-handle', {
+            'is-moving': isMoving,
+          })}
+          onMouseDown={() => setIsMoving(true)}
+          onMouseUp={() => setIsMoving(false)}
+          onMouseEnter={() => setIsMoveable(true)}
+          onMouseLeave={() => setIsMoveable(false)}
+        />
+      )}
       <div ref={headerRef}>
         <div
           className={ClassNames('hfui-panel__header', {
@@ -79,57 +93,57 @@ const Panel = (props) => {
           </div>
           <div className='hfui-panel__buttons-section'>
             {preHeaderComponents && (
-            <div className='hfui-panel__preheader'>
-              {preHeaderComponents}
-            </div>
+              <div className='hfui-panel__preheader'>
+                {preHeaderComponents}
+              </div>
             )}
             {closePanel && (
-            <p className='hfui-panel__close' onClick={closePanel}>&#10005;</p>
+              <p className='hfui-panel__close' onClick={closePanel}>&#10005;</p>
             )}
           </div>
           {tabs.length > 0 && (
-          <ul className='hfui-panel__header-tabs'>
-            {tabs.map((tab, index) => (
-              <li
-                key={tab.props.htmlKey || tab.props.tabtitle}
-                className={ClassNames({ active: getTabTitle(tab) === getTabTitle(tabs[selectedTab]) })}
-                onClick={() => setSelectedTab(index)}
-              >
-                <p className='hfui-panel__label'>
-                  {tab.props.tabtitle}
-                </p>
-              </li>
-            ))}
-          </ul>
+            <ul className='hfui-panel__header-tabs'>
+              {tabs.map((tab, index) => (
+                <li
+                  key={tab.props.htmlKey || tab.props.tabtitle}
+                  className={ClassNames({ active: getTabTitle(tab) === getTabTitle(tabs[selectedTab]) })}
+                  onClick={() => setSelectedTab(index)}
+                >
+                  <p className='hfui-panel__label'>
+                    {tab.props.tabtitle}
+                  </p>
+                </li>
+              ))}
+            </ul>
           )}
 
           {!hideIcons && (
-          <div className='hfui-panel__header-icons'>
-            {removeable && (
-            <i onClick={onRemove} className='icon-cancel' />
-            )}
+            <div className='hfui-panel__header-icons'>
+              {removeable && (
+                <i onClick={onRemove} className='icon-cancel' />
+              )}
 
-            {moveable && <i className='icon-move' />}
+              {/* {moveable && <i className='icon-move' />} */}
 
-            {showChartMarket && (
-            <div className='hfui-panel__chart-market-select'>
-              {chartMarketSelect}
+              {showChartMarket && (
+                <div className='hfui-panel__chart-market-select'>
+                  {chartMarketSelect}
+                </div>
+              )}
+
+              {onToggleSettings && (
+                <i
+                  onClick={onToggleSettings}
+                  className={ClassNames('icon-settings-icon', {
+                    yellow: settingsOpen,
+                  })}
+                />
+              )}
+
+              {extraIcons}
+
+              {dropdown}
             </div>
-            )}
-
-            {onToggleSettings && (
-            <i
-              onClick={onToggleSettings}
-              className={ClassNames('icon-settings-icon', {
-                yellow: settingsOpen,
-              })}
-            />
-            )}
-
-            {extraIcons}
-
-            {dropdown}
-          </div>
           )}
         </div>
 
