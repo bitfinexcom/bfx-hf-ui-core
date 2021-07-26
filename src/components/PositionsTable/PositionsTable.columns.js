@@ -7,7 +7,7 @@ export default ({ authToken, closePosition }) => [{
   dataKey: 'symbol',
   width: 145,
   flexGrow: 2,
-  cellRenderer: ({ rowData = {} }) => rowData.symbol,
+  cellRenderer: ({ rowData = {} }) => rowData.uiID,
 }, {
   label: 'Amount',
   dataKey: 'amount',
