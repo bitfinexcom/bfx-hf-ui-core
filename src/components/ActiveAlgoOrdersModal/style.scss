@@ -1,5 +1,12 @@
 @import '../../variables.scss';
 
+.hfui-active-ao-modal__wrapper {
+  .modal__body {
+    max-height: 500px;
+    overflow: auto;
+  }
+}
+
 .hfui-active-ao-modal__table {
   margin: 0 spacing(-0.75);
 
