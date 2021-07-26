@@ -4,6 +4,7 @@ import { Route, Switch, Redirect } from 'react-router'
 import PropTypes from 'prop-types'
 import _isFunction from 'lodash/isFunction'
 
+import StrategyEditorPage from '../../pages/StrategyEditor'
 import NotificationsSidebar from '../NotificationsSidebar'
 import closeElectronApp from '../../redux/helpers/close_electron_app'
 import Routes from '../../constants/routes'
@@ -12,7 +13,6 @@ import { isElectronApp } from '../../redux/config'
 import './style.css'
 
 const TradingPage = lazy(() => import('../../pages/Trading'))
-const StrategyEditorPage = lazy(() => import('../../pages/StrategyEditor'))
 const MarketDataPage = lazy(() => import('../../pages/MarketData'))
 const AuthenticationPage = lazy(() => import('../../pages/Authentication'))
 
@@ -81,8 +81,7 @@ const HFUI = ({
           <Switch>
             <Redirect from='/index.html' to='/' exact />
             <Route path={Routes.tradingTerminal.path} render={() => <TradingPage />} exact />
-            {/* {isElectronApp && Routes.strategyEditor && <Route path={Routes.strategyEditor.path} render={() => <StrategyEditorPage />} />} */}
-            <Route path={Routes.strategyEditor.path} render={() => <StrategyEditorPage />} />
+            {isElectronApp && Routes.strategyEditor && <Route path={Routes.strategyEditor.path} render={() => <StrategyEditorPage />} />}
             <Route path={Routes.marketData.path} render={() => <MarketDataPage />} />
           </Switch>
           {isElectronApp && (
