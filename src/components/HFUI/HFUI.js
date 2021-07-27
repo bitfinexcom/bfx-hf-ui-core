@@ -12,6 +12,7 @@ import { isElectronApp } from '../../redux/config'
 
 import './style.css'
 
+// const StrategyEditorPage = lazy(() => import('../../pages/StrategyEditor'))
 const TradingPage = lazy(() => import('../../pages/Trading'))
 const MarketDataPage = lazy(() => import('../../pages/MarketData'))
 const AuthenticationPage = lazy(() => import('../../pages/Authentication'))
