@@ -10,9 +10,7 @@ const orderHistory = (state) => {
   return _get(state, `${path}.orderHistory`, [])
 }
 
-const allMarkets = state => getMarketsObject(state)
-
-const orderHistoryWithReplacedPairs = createSelector([allMarkets, orderHistory], (markets, orders) => {
+const orderHistoryWithReplacedPairs = createSelector([getMarketsObject, orderHistory], (markets, orders) => {
   return _map(orders, (order) => {
     const { symbol } = order
     const currentMarket = markets[symbol]
