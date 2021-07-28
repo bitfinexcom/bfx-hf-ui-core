@@ -75,9 +75,7 @@ const HFUI = ({
 
   return (
     <Suspense fallback={<></>}>
-      {!authToken ? (
-        <AuthenticationPage />
-      ) : (
+      {authToken ? (
         <>
           <Switch>
             <Redirect from='/index.html' to='/' exact />
@@ -94,6 +92,8 @@ const HFUI = ({
             </>
           )}
         </>
+      ) : (
+        <AuthenticationPage />
       )}
       <NotificationsSidebar notificationsVisible={notificationsVisible} />
     </Suspense>
