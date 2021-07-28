@@ -15,7 +15,7 @@ const atomicOrdersWithReplacedPairs = createSelector([allMarkets, atomicOrders],
   return _map(orders, (order) => {
     const { symbol } = order
     const currentMarket = markets[symbol]
-    return { ...order, symbol: currentMarket.uiID }
+    return { ...order, uiID: currentMarket.uiID }
   }, [])
 })
 

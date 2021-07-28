@@ -14,7 +14,7 @@ export default (authToken, cancelOrder, gaCancelOrder, { width }) => [{
   dataKey: 'symbol',
   width: 145,
   flexGrow: 1.45,
-  cellRenderer: ({ rowData = {} }) => rowData.symbol,
+  cellRenderer: ({ rowData = {} }) => rowData.uiID,
 }, {
   label: 'Type',
   dataKey: 'type',
