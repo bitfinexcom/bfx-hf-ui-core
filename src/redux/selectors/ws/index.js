@@ -19,7 +19,7 @@ import getPositionsCount from './get_filtered_positions_count'
 import getAllBalances from './get_all_balances'
 import getFilteredBalances from './get_filtered_balances'
 import getBalances from './get_balances'
-import getAllOrders from './get_all_orders'
+import getAtomicOrders from './get_atomic_orders'
 import getAlgoOrders from './get_algo_orders'
 import getNotifications from './get_notifications'
 import getAPICredentials from './get_api_credentials'
@@ -70,7 +70,7 @@ export {
   getAllBalances,
   getFilteredBalances,
   getBalances,
-  getAllOrders,
+  getAtomicOrders,
   getAlgoOrders,
   getFavoritePairs,
   getFavoritePairsObject,

@@ -1,7 +1,7 @@
 import { connect } from 'react-redux'
 
 import { getActiveMarket } from '../../redux/selectors/ui'
-import { getAllOrders } from '../../redux/selectors/ws'
+import { getAtomicOrders } from '../../redux/selectors/ws'
 import UIActions from '../../redux/actions/ui'
 
 import AtomicOrdersTablePanel from './AtomicOrdersTablePanel'
@@ -9,7 +9,7 @@ import AtomicOrdersTablePanel from './AtomicOrdersTablePanel'
 const mapStateToProps = (state = {}) => {
   return {
     activeMarket: getActiveMarket(state),
-    atomicOrders: getAllOrders(state),
+    atomicOrders: getAtomicOrders(state),
   }
 }
 

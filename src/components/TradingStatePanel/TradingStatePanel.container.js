@@ -2,7 +2,7 @@ import { connect } from 'react-redux'
 
 import UIActions from '../../redux/actions/ui'
 import {
-  getAllOrders,
+  getAtomicOrders,
   getAlgoOrders,
   getPositionsCount,
 } from '../../redux/selectors/ws'
@@ -16,7 +16,7 @@ import TradingStatePanel from './TradingStatePanel'
 
 const mapStateToProps = (state = {}) => ({
   algoOrders: getAlgoOrders(state),
-  atomicOrders: getAllOrders(state),
+  atomicOrders: getAtomicOrders(state),
   algoOrdersCount: getAlgoOrdersCount(state),
   atomicOrdersCount: getAtomicOrdersCount(state),
   getPositionsCount: getPositionsCount(state),
