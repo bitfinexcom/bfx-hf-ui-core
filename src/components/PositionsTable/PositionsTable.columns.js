@@ -2,6 +2,10 @@ import React from 'react'
 import { preparePrice, prepareAmount } from 'bfx-api-node-util'
 import { processBalance } from '../../util/ui'
 
+const STYLES = {
+  rightAlign: { justifyContent: 'flex-end' },
+}
+
 export default ({ authToken, closePosition }) => [{
   label: 'Pair',
   dataKey: 'symbol',
@@ -13,6 +17,8 @@ export default ({ authToken, closePosition }) => [{
   dataKey: 'amount',
   width: 120,
   flexGrow: 1.5,
+  headerStyle: STYLES.rightAlign,
+  style: STYLES.rightAlign,
   cellRenderer: ({ rowData = {} }) => (rowData.amount < 0 // eslint-disable-line
     ? <span className='hfui-red'>{processBalance(prepareAmount(rowData.amount))}</span>
     : <span className='hfui-green'>{processBalance(prepareAmount(rowData.amount))}</span>
@@ -22,18 +28,24 @@ export default ({ authToken, closePosition }) => [{
   dataKey: 'basePrice',
   width: 100,
   flexGrow: 1,
+  headerStyle: STYLES.rightAlign,
+  style: STYLES.rightAlign,
   cellRenderer: ({ rowData = {} }) => processBalance(preparePrice(rowData.basePrice)),
 }, {
   label: 'Liq Price',
   dataKey: 'liquidationPrice',
   width: 100,
   flexGrow: 1,
+  headerStyle: STYLES.rightAlign,
+  style: STYLES.rightAlign,
   cellRenderer: ({ rowData = {} }) => processBalance(preparePrice(rowData.liquidationPrice)),
 }, {
   label: 'P/L',
   dataKey: 'pl',
   width: 100,
   flexGrow: 1,
+  headerStyle: STYLES.rightAlign,
+  style: STYLES.rightAlign,
   cellRenderer: ({ rowData = {} }) => ( // eslint-disable-line
     <span className={rowData.pl < 0 ? 'hfui-red' : 'hfui-green'}>
       {processBalance(preparePrice(rowData.pl))}
@@ -44,6 +56,8 @@ export default ({ authToken, closePosition }) => [{
   dataKey: 'plPerc',
   width: 100,
   flexGrow: 1,
+  headerStyle: STYLES.rightAlign,
+  style: STYLES.rightAlign,
   cellRenderer: ({ rowData = {} }) => ( // eslint-disable-line
     <span className={rowData.plPerc && rowData.plPerc < 0 ? 'hfui-red' : 'hfui-green'}>
       {(rowData.plPerc || 0).toFixed(4)}
@@ -54,6 +68,8 @@ export default ({ authToken, closePosition }) => [{
   dataKey: 'marginFunding',
   width: 100,
   flexGrow: 1,
+  headerStyle: STYLES.rightAlign,
+  style: STYLES.rightAlign,
   cellRenderer: ({ rowData = {} }) => processBalance(preparePrice(rowData.marginFunding)),
 }, {
   dataKey: 'order_cid',
