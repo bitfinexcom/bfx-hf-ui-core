@@ -17,6 +17,7 @@
     .ccy-icon {
       width: 30px;
       height: 30px;
+      filter: saturate(0) brightness(180);
     }
 
     .highlight {
@@ -65,9 +66,10 @@
     flex-direction: column;
 
     .ccy-icon-small {
-      width: 20px;
-      height: 20px;
+      width: 15px;
+      height: 15px;
       margin-right: 3px;
+      filter: saturate(0) brightness(180);
     }
 
     .ufx-virtual-table--container {
