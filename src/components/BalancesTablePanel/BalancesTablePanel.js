@@ -1,4 +1,4 @@
-import React, { useEffect, useState, memo } from 'react'
+import React, { useState, memo } from 'react'
 import PropTypes from 'prop-types'
 import _isEqual from 'lodash/isEqual'
 import { Checkbox } from '@ufx-ui/core'
@@ -9,15 +9,9 @@ import PanelSettings from '../../ui/PanelSettings'
 
 import './style.css'
 
-const BalancesTablePanel = ({
-  balances, setFilteredValueWithKey, onRemove, dark,
-}) => {
+const BalancesTablePanel = ({ onRemove, dark }) => {
   const [isSettingsOpen, setIsSettingsOpen] = useState(false)
   const [hideZeroBalances, setHideZeroBalances] = useState(true)
-
-  useEffect(() => {
-    setFilteredValueWithKey('filteredBalances', balances)
-  }, [balances])
 
   const onToggleShowingSettings = () => setIsSettingsOpen(prevState => !prevState)
 
@@ -44,7 +38,6 @@ const BalancesTablePanel = ({
         />
       ) : (
         <BalancesTable
-          filteredBalances={balances}
           hideZeroBalances={hideZeroBalances}
         />
       )}
@@ -53,15 +46,12 @@ const BalancesTablePanel = ({
 }
 
 BalancesTablePanel.propTypes = {
-  balances: PropTypes.arrayOf(PropTypes.object),
-  setFilteredValueWithKey: PropTypes.func.isRequired,
   onRemove: PropTypes.func,
   dark: PropTypes.bool,
 }
 
 BalancesTablePanel.defaultProps = {
   onRemove: () => {},
-  balances: [],
   dark: true,
 }
 
