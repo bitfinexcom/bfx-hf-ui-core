@@ -215,7 +215,6 @@ export default {
   openNotifcationPanel,
   firstLogin,
   finishGuide,
-  setFilteredValueWithKey,
   recvNotification,
   strategySelect,
   updateStrategyContent,
