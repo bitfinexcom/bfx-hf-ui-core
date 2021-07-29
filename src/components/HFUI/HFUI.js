@@ -1,7 +1,6 @@
 /* eslint-disable consistent-return */
 import React, { useEffect, Suspense, lazy } from 'react'
 import { Route, Switch, Redirect } from 'react-router'
-import _isNil from 'lodash/isNil'
 import PropTypes from 'prop-types'
 import _isFunction from 'lodash/isFunction'
 
@@ -10,7 +9,6 @@ import NotificationsSidebar from '../NotificationsSidebar'
 import closeElectronApp from '../../redux/helpers/close_electron_app'
 import Routes from '../../constants/routes'
 import { isElectronApp } from '../../redux/config'
-import MIN_SAFE_WIDTH from '../../constants/MIN_SAFE_WIDTH'
 import BestExperienceMessageModal from '../BestExperienceMessageModal'
 
 import './style.css'
@@ -24,14 +22,11 @@ const TradingModeModal = lazy(() => import('../TradingModeModal'))
 const BadConnectionModal = lazy(() => import('../BadConnectionModal'))
 const OldFormatModal = lazy(() => import('../OldFormatModal'))
 const AOPauseModal = lazy(() => import('../AOPauseModal'))
-const HF_UI_WEB_SHOW_BEST_EXPERIENCE_MODAL = 'HF_UI_WEB_SHOW_BEST_EXPERIENCE_MODAL'
 
 const HFUI = ({
   authToken, getSettings, notificationsVisible, getFavoritePairs, currentMode, GAPageview,
   currentPage, onUnload, subscribeAllTickers, shouldShowAOPauseModalState, settingsShowAlgoPauseInfo,
 }) => {
-  const [isBestExperienceMessageModalOpen, setBestExperienceModalState] = useState(false)
-
   function unloadHandler() {
     if (authToken !== null) {
       onUnload(authToken, currentMode)
@@ -45,29 +40,6 @@ const HFUI = ({
       shouldShowAOPauseModalState()
     }
   }
-  const closeBestExperienceModal = () => setBestExperienceModalState(false)
-
-  const onSubmitBestExperienceModal = () => {
-    localStorage.setItem(HF_UI_WEB_SHOW_BEST_EXPERIENCE_MODAL, 'false')
-    closeBestExperienceModal()
-  }
-
-  useEffect(() => {
-    const currentWidth = document.documentElement.clientWidth
-    if (isElectronApp || currentWidth >= MIN_SAFE_WIDTH) {
-      return
-    }
-    let needToShowModal = localStorage.getItem(HF_UI_WEB_SHOW_BEST_EXPERIENCE_MODAL)
-    if (_isNil(needToShowModal)) {
-      needToShowModal = true
-    } else {
-      needToShowModal = JSON.parse(needToShowModal)
-    }
-    if (!needToShowModal) {
-      return
-    }
-    setBestExperienceModalState(true)
-  }, [])
 
   useEffect(() => {
     window.removeEventListener('beforeunload', unloadHandler)
@@ -120,11 +92,7 @@ const HFUI = ({
               <AOPauseModal />
             </>
           ) : (
-            <BestExperienceMessageModal
-              isOpen={isBestExperienceMessageModalOpen}
-              onClose={closeBestExperienceModal}
-              onSubmit={onSubmitBestExperienceModal}
-            />
+            <BestExperienceMessageModal />
           )}
         </>
       ) : (
