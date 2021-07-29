@@ -34,12 +34,12 @@ export const rowMapping = {
       return (
         <>
           {isPerp ? (
-            <span className='price-unit'>
+            <span className='ccy-pair'>
               <CCYIcon small ccy={baseCcy} />
               <span>{perpUI}</span>
             </span>
           ) : (
-            <span className='price-unit'>
+            <span className='ccy-pair'>
               <CCYIcon small ccy={baseCcy} />
               <span>
                 {baseCcy}

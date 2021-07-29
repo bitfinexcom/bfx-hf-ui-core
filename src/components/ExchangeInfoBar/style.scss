@@ -92,13 +92,13 @@
       }
     }
 
-    .price-unit {
+    .ccy-pair {
       display: flex;
       justify-content: space-between;
       align-items: center;
     }
 
-    .price-unit span:last-child {
+    .ccy-pair span:last-child {
       display: inline-block;
     }
 
