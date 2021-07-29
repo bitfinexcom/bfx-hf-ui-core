@@ -289,7 +289,6 @@ export default (alias, store) => (e = {}) => {
 
       case 'algo.reload': {
         store.dispatch(WSActions.clearAlgoOrders())
-        store.dispatch(UIActions.setFilteredValueWithKey('filteredAO', []))
         store.dispatch(AOActions.getActiveAlgoOrders())
         break
       }

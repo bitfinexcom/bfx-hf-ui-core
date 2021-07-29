@@ -6,7 +6,6 @@ import getLayouts from './get_layouts'
 import getLayout from './get_layout'
 import getLayoutID from './get_layout_id'
 import getRemoteVersion from './get_remote_version'
-import getAlgoOrdersCount from './get_filtered_algo_orders_count'
 import getIsTradingModeModalVisible from './get_is_trading_mode_modal_visible'
 import getIsInternetConnection from './get_is_bad_internet_connection'
 import getIsAOPausedModalVisible from './get_is_ao_paused'
@@ -31,7 +30,6 @@ export {
   getLayouts,
   getLayout,
   getLayoutID,
-  getAlgoOrdersCount,
   getIsTradingModeModalVisible,
   getIsInternetConnection,
   getIsRefillBalanceModalVisible,

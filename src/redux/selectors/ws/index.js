@@ -22,6 +22,8 @@ import getBalances from './get_balances'
 import getAtomicOrders from './get_atomic_orders'
 import getFilteredAtomicOrders from './get_filtered_atomic_orders'
 import getFilteredAtomicOrdersCount from './get_filtered_atomic_orders_count'
+import getFilteredAlgoOrders from './get_filtered_algo_orders'
+import getFilteredAlgoOrdersCount from './get_filtered_algo_orders_count'
 import getAlgoOrders from './get_algo_orders'
 import getNotifications from './get_notifications'
 import getAPICredentials from './get_api_credentials'
@@ -76,6 +78,8 @@ export {
   getFilteredAtomicOrders,
   getFilteredAtomicOrdersCount,
   getAlgoOrders,
+  getFilteredAlgoOrders,
+  getFilteredAlgoOrdersCount,
   getFavoritePairs,
   getFavoritePairsObject,
 

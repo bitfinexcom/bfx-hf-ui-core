@@ -1,16 +1,10 @@
-import React, { memo, useEffect } from 'react'
+import React, { memo } from 'react'
 import PropTypes from 'prop-types'
 
 import AlgoOrdersTable from '../AlgoOrdersTable'
 import Panel from '../../ui/Panel'
 
-const AlgoOrdersTablePanel = ({
-  dark, onRemove, algoOrders, setFilteredValueWithKey,
-}) => {
-  useEffect(() => {
-    setFilteredValueWithKey('filteredAO', algoOrders)
-  }, [algoOrders])
-
+const AlgoOrdersTablePanel = ({ dark, onRemove }) => {
   return (
     <Panel
       label='Algo. Orders'
@@ -18,7 +12,7 @@ const AlgoOrdersTablePanel = ({
       dark={dark}
       darkHeader={dark}
     >
-      <AlgoOrdersTable filteredAO={algoOrders} />
+      <AlgoOrdersTable />
     </Panel>
   )
 }
@@ -26,13 +20,10 @@ const AlgoOrdersTablePanel = ({
 AlgoOrdersTablePanel.propTypes = {
   dark: PropTypes.bool,
   onRemove: PropTypes.func.isRequired,
-  algoOrders: PropTypes.arrayOf(PropTypes.object),
-  setFilteredValueWithKey: PropTypes.func.isRequired,
 }
 
 AlgoOrdersTablePanel.defaultProps = {
   dark: true,
-  algoOrders: [],
 }
 
 export default memo(AlgoOrdersTablePanel)

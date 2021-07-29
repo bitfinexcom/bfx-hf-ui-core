@@ -1,7 +1,6 @@
-import React, { useState, useEffect, memo } from 'react'
+import React, { useState, memo } from 'react'
 import PropTypes from 'prop-types'
 import _isEmpty from 'lodash/isEmpty'
-import _filter from 'lodash/filter'
 
 import Panel from '../../ui/Panel'
 import PositionsTable from '../PositionsTable'
@@ -13,22 +12,12 @@ import TabTitle from './TabTitle'
 import './style.css'
 
 const TradingStatePanel = ({
-  dark, onRemove, moveable, removeable, getPositionsCount, getAtomicOrdersCount, algoOrdersCount, markets,
-  setFilteredValueWithKey, algoOrders,
+  dark, onRemove, moveable, removeable, getPositionsCount, getAtomicOrdersCount, getAlgoOrdersCount, markets,
 }) => {
   const [activeFilter, setActiveFilter] = useState({})
   const positionsCount = getPositionsCount(activeFilter)
   const atomicOrdersCount = getAtomicOrdersCount(activeFilter)
-
-  const getFilteredAlgoOrders = () => {
-    const filteredAO = _isEmpty(activeFilter)
-      ? algoOrders
-      : _filter(algoOrders, ao => ao.args.symbol === activeFilter.wsID)
-
-    setFilteredValueWithKey('filteredAO', filteredAO)
-  }
-
-  useEffect(getFilteredAlgoOrders, [activeFilter, algoOrders])
+  const algoOrdersCount = getAlgoOrdersCount(activeFilter)
 
   return (
     <Panel
@@ -103,9 +92,7 @@ TradingStatePanel.propTypes = {
   removeable: PropTypes.bool,
   getPositionsCount: PropTypes.func,
   getAtomicOrdersCount: PropTypes.func,
-  algoOrdersCount: PropTypes.number,
-  setFilteredValueWithKey: PropTypes.func.isRequired,
-  algoOrders: PropTypes.arrayOf(PropTypes.object).isRequired,
+  getAlgoOrdersCount: PropTypes.func,
   markets: PropTypes.arrayOf(PropTypes.object).isRequired,
 }
 
@@ -115,8 +102,8 @@ TradingStatePanel.defaultProps = {
   removeable: false,
   getPositionsCount: () => { },
   getAtomicOrdersCount: () => { },
+  getAlgoOrdersCount: () => { },
   onRemove: () => { },
-  algoOrdersCount: 0,
 }
 
 export default memo(TradingStatePanel)
