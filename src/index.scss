@@ -21,7 +21,7 @@ body button:focus {
 }
 
 .trailing-zeros {
-  opacity: .4;
+  opacity: 0.4;
 }
 
 .react-datepicker {
@@ -140,7 +140,7 @@ body button:focus {
   font-size: 13px;
   padding: 4px 12px;
   text-align: center;
-  
+
   &.wide {
     word-break: break-all;
     max-width: 650px;
@@ -325,9 +325,13 @@ a:visited {
 ::-webkit-scrollbar-thumb {
   background: $light-color-100 !important;
   border: 0 !important;
-  transition: background-color .1s;
+  transition: background-color 0.1s;
 
   &:hover {
     background: $light-color-300 !important;
   }
+}
+
+.ReactVirtualized__Table__Grid {
+  font-feature-settings: "tnum";
 }
