@@ -1,7 +1,7 @@
 import { connect } from 'react-redux'
 
 import {
-  getPositionsCount,
+  getFilteredPositionsCount,
   getFilteredAtomicOrdersCount,
   getFilteredAlgoOrdersCount,
 } from '../../redux/selectors/ws'
@@ -10,7 +10,7 @@ import { getMarkets } from '../../redux/selectors/meta'
 import TradingStatePanel from './TradingStatePanel'
 
 const mapStateToProps = (state = {}) => ({
-  getPositionsCount: getPositionsCount(state),
+  getPositionsCount: getFilteredPositionsCount(state),
   getAtomicOrdersCount: getFilteredAtomicOrdersCount(state),
   getAlgoOrdersCount: getFilteredAlgoOrdersCount(state),
   markets: getMarkets(state),

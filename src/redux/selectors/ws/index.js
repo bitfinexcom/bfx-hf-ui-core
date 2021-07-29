@@ -15,7 +15,7 @@ import getAuthConfigured from './get_auth_configured'
 import getStrategies from './get_strategies'
 import getAllPositions from './get_all_positions'
 import getFilteredPositions from './get_filtered_positions'
-import getPositionsCount from './get_filtered_positions_count'
+import getFilteredPositionsCount from './get_filtered_positions_count'
 import getAllBalances from './get_all_balances'
 import getFilteredBalances from './get_filtered_balances'
 import getBalances from './get_balances'
@@ -70,7 +70,7 @@ export {
 
   getAllPositions,
   getFilteredPositions,
-  getPositionsCount,
+  getFilteredPositionsCount,
   getAllBalances,
   getFilteredBalances,
   getBalances,
