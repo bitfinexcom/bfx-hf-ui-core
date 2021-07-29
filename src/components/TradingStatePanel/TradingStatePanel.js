@@ -13,19 +13,12 @@ import TabTitle from './TabTitle'
 import './style.css'
 
 const TradingStatePanel = ({
-  dark, onRemove, moveable, removeable, getPositionsCount, algoOrdersCount, atomicOrdersCount, markets,
-  setFilteredValueWithKey, atomicOrders, algoOrders,
+  dark, onRemove, moveable, removeable, getPositionsCount, getAtomicOrdersCount, algoOrdersCount, markets,
+  setFilteredValueWithKey, algoOrders,
 }) => {
   const [activeFilter, setActiveFilter] = useState({})
   const positionsCount = getPositionsCount(activeFilter)
-
-  const getFilteredAtomicOrders = () => {
-    const filteredAtomicOrders = _isEmpty(activeFilter)
-      ? atomicOrders
-      : _filter(atomicOrders, o => o.symbol === activeFilter.wsID)
-
-    setFilteredValueWithKey('filteredAtomicOrders', filteredAtomicOrders)
-  }
+  const atomicOrdersCount = getAtomicOrdersCount(activeFilter)
 
   const getFilteredAlgoOrders = () => {
     const filteredAO = _isEmpty(activeFilter)
@@ -35,7 +28,6 @@ const TradingStatePanel = ({
     setFilteredValueWithKey('filteredAO', filteredAO)
   }
 
-  useEffect(getFilteredAtomicOrders, [activeFilter, atomicOrders])
   useEffect(getFilteredAlgoOrders, [activeFilter, algoOrders])
 
   return (
@@ -81,12 +73,16 @@ const TradingStatePanel = ({
           activeFilter={activeFilter}
         />
         <AtomicOrdersTable
+          renderedInTradingState
           htmlKey='Atomics'
           tabtitle={<TabTitle heading='Atomics' count={atomicOrdersCount} />}
+          activeFilter={activeFilter}
         />
         <AlgoOrdersTable
+          renderedInTradingState
           htmlKey='Algos'
           tabtitle={<TabTitle heading='Algos' count={algoOrdersCount} />}
+          activeFilter={activeFilter}
         />
         <BalancesTable
           renderedInTradingState
@@ -106,11 +102,10 @@ TradingStatePanel.propTypes = {
   onRemove: PropTypes.func,
   removeable: PropTypes.bool,
   getPositionsCount: PropTypes.func,
+  getAtomicOrdersCount: PropTypes.func,
   algoOrdersCount: PropTypes.number,
-  atomicOrdersCount: PropTypes.number,
   setFilteredValueWithKey: PropTypes.func.isRequired,
   algoOrders: PropTypes.arrayOf(PropTypes.object).isRequired,
-  atomicOrders: PropTypes.arrayOf(PropTypes.object).isRequired,
   markets: PropTypes.arrayOf(PropTypes.object).isRequired,
 }
 
@@ -119,9 +114,9 @@ TradingStatePanel.defaultProps = {
   moveable: false,
   removeable: false,
   getPositionsCount: () => { },
+  getAtomicOrdersCount: () => { },
   onRemove: () => { },
   algoOrdersCount: 0,
-  atomicOrdersCount: 0,
 }
 
 export default memo(TradingStatePanel)

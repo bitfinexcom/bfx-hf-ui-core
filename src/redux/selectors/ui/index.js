@@ -7,7 +7,6 @@ import getLayout from './get_layout'
 import getLayoutID from './get_layout_id'
 import getRemoteVersion from './get_remote_version'
 import getAlgoOrdersCount from './get_filtered_algo_orders_count'
-import getAtomicOrdersCount from './get_filtered_atomic_orders_count'
 import getIsTradingModeModalVisible from './get_is_trading_mode_modal_visible'
 import getIsInternetConnection from './get_is_bad_internet_connection'
 import getIsAOPausedModalVisible from './get_is_ao_paused'
@@ -22,7 +21,6 @@ import getStrategyId from './get_strategy_id'
 import getMarketComponents from './get_market_components'
 import getCurrentUnsavedLayout from './get_current_unsaved_layout'
 import getTickersVolumeUnit from './get_tickers_volume_unit'
-import getFilteredAtomicOrders from './get_filtered_atomic_orders'
 
 export {
   getRemoteVersion,
@@ -34,7 +32,6 @@ export {
   getLayout,
   getLayoutID,
   getAlgoOrdersCount,
-  getAtomicOrdersCount,
   getIsTradingModeModalVisible,
   getIsInternetConnection,
   getIsRefillBalanceModalVisible,
@@ -49,5 +46,4 @@ export {
   getTickersVolumeUnit,
   getOldFormatModalState,
   getIsAOPausedModalVisible,
-  getFilteredAtomicOrders,
 }
