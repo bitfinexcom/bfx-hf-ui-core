@@ -1,3 +1,3 @@
-import PositionsTablePanel from './PositionsTablePanel.container'
+import PositionsTablePanel from './PositionsTablePanel'
 
 export default PositionsTablePanel
