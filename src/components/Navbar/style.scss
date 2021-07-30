@@ -18,6 +18,10 @@
     height: 100%;
   }
 
+  .hfui-navbarbutton {
+    background-color: transparent !important;
+  }
+
   &, button {
     color: $text-color;
   }

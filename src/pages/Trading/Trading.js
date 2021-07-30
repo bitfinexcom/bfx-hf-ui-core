@@ -1,13 +1,17 @@
-import React, { memo, useCallback } from 'react'
+import React, {
+  memo, useCallback, lazy, Suspense,
+} from 'react'
 import PropTypes from 'prop-types'
 
 import Layout from '../../components/Layout'
-import Joyride, { STEPS, STATUS } from '../../components/Joyride'
+import { STEPS, STATUS } from '../../components/Joyride'
 import GridLayout from '../../components/GridLayout'
 import ActiveAlgoOrdersModal from '../../components/ActiveAlgoOrdersModal'
 import RefillBalanceModal from '../../components/RefillBalanceModal'
 
 import './style.css'
+
+const Joyride = lazy(() => import('../../components/Joyride'))
 
 const LAYOUT_ID = '__hfui_trading_page'
 
@@ -43,11 +47,13 @@ const Trading = ({
       <Layout.Header />
       <Layout.Main flex>
         {firstLogin && (
-          <Joyride
-            callback={onGuideFinish}
-            steps={STEPS.TRADING}
-            run={isGuideActive}
-          />
+          <Suspense fallback={<></>}>
+            <Joyride
+              callback={onGuideFinish}
+              steps={STEPS.TRADING}
+              run={isGuideActive}
+            />
+          </Suspense>
         )}
 
         <div className='hfui-tradingpage__column center'>

@@ -55,6 +55,7 @@ export default (authToken, cancelOrder, gaCancelOrder, { width }) => [{
     <div className='icons-cell'>
       <i
         role='button'
+        aria-label='Cancel order'
         tabIndex={0}
         className='icon-cancel'
         onClick={() => {

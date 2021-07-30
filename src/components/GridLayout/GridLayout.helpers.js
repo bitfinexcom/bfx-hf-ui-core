@@ -1,16 +1,16 @@
-import React from 'react'
+import React, { Suspense, lazy } from 'react'
 
-import OrderForm from '../OrderForm'
-import OrderBookPanel from '../OrderBookPanel'
-import ChartPanel from '../ChartPanel'
-import AtomicOrdersTablePanel from '../AtomicOrdersTablePanel'
-import AlgoOrdersTablePanel from '../AlgoOrdersTablePanel'
-import OrderHistory from '../OrderHistory'
-import TradesTablePanel from '../TradesTablePanel'
-import PositionsTablePanel from '../PositionsTablePanel'
-import BalancesTablePanel from '../BalancesTablePanel'
-import TradingStatePanel from '../TradingStatePanel'
-import ExchangeInfoBar from '../ExchangeInfoBar'
+const OrderForm = lazy(() => import('../OrderForm'))
+const OrderBookPanel = lazy(() => import('../OrderBookPanel'))
+const ChartPanel = lazy(() => import('../ChartPanel'))
+const AtomicOrdersTablePanel = lazy(() => import('../AtomicOrdersTablePanel'))
+const AlgoOrdersTablePanel = lazy(() => import('../AlgoOrdersTablePanel'))
+const OrderHistory = lazy(() => import('../OrderHistory'))
+const TradesTablePanel = lazy(() => import('../TradesTablePanel'))
+const PositionsTablePanel = lazy(() => import('../PositionsTablePanel'))
+const BalancesTablePanel = lazy(() => import('../BalancesTablePanel'))
+const TradingStatePanel = lazy(() => import('../TradingStatePanel'))
+const ExchangeInfoBar = lazy(() => import('../ExchangeInfoBar'))
 
 export const COMPONENT_TYPES = {
   CHART: 'CHART',
@@ -150,7 +150,11 @@ export const renderLayoutElement = (layoutID, def = {}, componentProps = {}, onR
   } else if (C === AtomicOrdersTablePanel && componentProps.orders) {
     Object.assign(cProps, componentProps.orders)
   }
-  return <C {...cProps} />
+  return (
+    <Suspense fallback={<></>}>
+      <C {...cProps} />
+    </Suspense>
+  )
 }
 
 export const layoutDefToGridLayout = layoutDef => layoutDef.layout.map(l => ({

@@ -1,25 +1,26 @@
 /* eslint-disable consistent-return */
-import React, { useEffect } from 'react'
+import React, { useEffect, Suspense, lazy } from 'react'
 import { Route, Switch, Redirect } from 'react-router'
 import PropTypes from 'prop-types'
 import _isFunction from 'lodash/isFunction'
 
-import closeElectronApp from '../../redux/helpers/close_electron_app'
-import TradingPage from '../../pages/Trading'
 import StrategyEditorPage from '../../pages/StrategyEditor'
-import MarketDataPage from '../../pages/MarketData'
-import AuthenticationPage from '../../pages/Authentication'
-
-import TradingModeModal from '../TradingModeModal'
-import BadConnectionModal from '../BadConnectionModal'
-import OldFormatModal from '../OldFormatModal'
-import AOPauseModal from '../AOPauseModal'
 import NotificationsSidebar from '../NotificationsSidebar'
-
+import closeElectronApp from '../../redux/helpers/close_electron_app'
 import Routes from '../../constants/routes'
 import { isElectronApp } from '../../redux/config'
 
 import './style.css'
+
+// const StrategyEditorPage = lazy(() => import('../../pages/StrategyEditor'))
+const TradingPage = lazy(() => import('../../pages/Trading'))
+const MarketDataPage = lazy(() => import('../../pages/MarketData'))
+const AuthenticationPage = lazy(() => import('../../pages/Authentication'))
+
+const TradingModeModal = lazy(() => import('../TradingModeModal'))
+const BadConnectionModal = lazy(() => import('../BadConnectionModal'))
+const OldFormatModal = lazy(() => import('../OldFormatModal'))
+const AOPauseModal = lazy(() => import('../AOPauseModal'))
 
 const HFUI = ({
   authToken, getSettings, notificationsVisible, getFavoritePairs, currentMode, GAPageview,
@@ -73,10 +74,8 @@ const HFUI = ({
   }, [authToken])
 
   return (
-    <>
-      {!authToken ? (
-        <AuthenticationPage />
-      ) : (
+    <Suspense fallback={<></>}>
+      {authToken ? (
         <>
           <Switch>
             <Redirect from='/index.html' to='/' exact />
@@ -85,17 +84,19 @@ const HFUI = ({
             <Route path={Routes.marketData.path} render={() => <MarketDataPage />} />
           </Switch>
           {isElectronApp && (
-          <>
-            <TradingModeModal />
-            <BadConnectionModal />
-            <OldFormatModal />
-            <AOPauseModal />
-          </>
+            <>
+              <TradingModeModal />
+              <BadConnectionModal />
+              <OldFormatModal />
+              <AOPauseModal />
+            </>
           )}
         </>
+      ) : (
+        <AuthenticationPage />
       )}
       <NotificationsSidebar notificationsVisible={notificationsVisible} />
-    </>
+    </Suspense>
   )
 }
 
