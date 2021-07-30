@@ -9,6 +9,7 @@ import NotificationsSidebar from '../NotificationsSidebar'
 import closeElectronApp from '../../redux/helpers/close_electron_app'
 import Routes from '../../constants/routes'
 import { isElectronApp } from '../../redux/config'
+import BestExperienceMessageModal from '../BestExperienceMessageModal'
 
 import './style.css'
 
@@ -83,13 +84,15 @@ const HFUI = ({
             {isElectronApp && Routes.strategyEditor && <Route path={Routes.strategyEditor.path} render={() => <StrategyEditorPage />} />}
             <Route path={Routes.marketData.path} render={() => <MarketDataPage />} />
           </Switch>
-          {isElectronApp && (
+          {isElectronApp ? (
             <>
               <TradingModeModal />
               <BadConnectionModal />
               <OldFormatModal />
               <AOPauseModal />
             </>
+          ) : (
+            <BestExperienceMessageModal />
           )}
         </>
       ) : (
