@@ -2,19 +2,13 @@ import React, { useEffect } from 'react'
 import PropTypes from 'prop-types'
 
 import { Dialog } from '@ufx-ui/core'
+import Scrollbars from '../Scrollbars'
 
 import './style.css'
 
-function Modal(props) {
-  const {
-    label,
-    isOpen,
-    onClose,
-    children,
-    className,
-    ...rest
-  } = props
-
+const Modal = ({
+  label, isOpen, onClose, children, className, scrollable, ...rest
+}) => {
   useEffect(() => {
     // focus on the first interactable element
     if (isOpen) {
@@ -35,7 +29,11 @@ function Modal(props) {
       textAlign='left'
       {...rest}
     >
-      {children}
+      {scrollable ? (
+        <Scrollbars>
+          {children}
+        </Scrollbars>
+      ) : children}
     </Dialog>
   )
 }
@@ -46,14 +44,17 @@ Modal.propTypes = {
   className: PropTypes.string,
   onClose: PropTypes.func.isRequired,
   children: PropTypes.oneOfType([PropTypes.array, PropTypes.object]).isRequired,
+  scrollable: PropTypes.bool,
 }
 
 Modal.defaultProps = {
   label: '',
   className: '',
+  scrollable: false,
 }
 
 Modal.Footer = Dialog.Footer
 Modal.Button = Dialog.Button
+Modal.displayName = 'Modal'
 
 export default Modal
