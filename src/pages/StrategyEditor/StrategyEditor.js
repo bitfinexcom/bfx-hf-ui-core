@@ -1,163 +1,153 @@
-import React from 'react'
+import React, {
+  lazy, Suspense, useState, useEffect, memo,
+} from 'react'
+import _values from 'lodash/values'
 import randomColor from 'randomcolor'
 import PropTypes from 'prop-types'
 import _remove from 'lodash/remove'
-import Joyride, { STEPS, STATUS } from '../../components/Joyride'
-
+import { STEPS, STATUS } from '../../components/Joyride'
 import Layout from '../../components/Layout'
-
 import Panel from '../../ui/Panel'
 import Markdown from '../../ui/Markdown'
 import Backtester from '../../components/Backtester'
 // import LiveStrategyExecutor from '../../components/LiveStrategyExecutor'
-import StrategyEditor from '../../components/StrategyEditor'
-
 import './style.css'
 
 const DocsPath = require('bfx-hf-strategy/docs/api.md')
 
-export default class StrategyEditorPage extends React.Component {
-  state = {
-    indicators: [],
-  }
+const StrategyEditor = lazy(() => import('../../components/StrategyEditor'))
+const Joyride = lazy(() => import('../../components/Joyride'))
 
-  componentDidMount() {
+const StrategyEditorPage = (props) => {
+  const {
+    selectStrategy, finishGuide, setStrategyContent, firstLogin, isGuideActive, // strategyContent,
+  } = props
+  const [indicators, setIndicators] = useState([])
+  const [docsText, setDocsText] = useState('')
+  const [forcedTab, setForcedTab] = useState('')
+
+  useEffect(() => {
     // load readme docs (DocsPath is an object when running in electron window)
     const docsPath = typeof DocsPath === 'object' ? DocsPath.default : DocsPath
     fetch(docsPath)
       .then(response => response.text())
-      .then(t => this.setState(() => ({ docsText: t })))
+      .then(setDocsText)
+  }, [])
+
+  const onAddIndicator = (indicator) => {
+    setIndicators([...indicators, indicator])
   }
 
-  onAddIndicator = (indicator) => {
-    this.setState(({ indicators }) => ({
-      indicators: [...indicators, indicator],
-    }))
+  const onDeleteIndicator = (index) => {
+    setIndicators(_remove(indicators, (_, id) => id !== index))
   }
 
-  onDeleteIndicator = (index) => {
-    this.setState(({ indicators }) => ({
-      indicators: _remove(indicators, (_, id) => id !== index),
-    }))
+  const onIndicatorsChange = (updatedIndicators) => {
+    const newIndicators = _values(updatedIndicators).map((ind) => {
+      let colors = []
+
+      for (let i = 0; i < 5; i += 1) {
+        colors.push(randomColor())
+      }
+
+      // allow users to overwrite colors
+      if (ind.color) {
+        colors[0] = ind.color
+      } else if (ind.colors) {
+        colors = ind.colors // eslint-disable-line
+      }
+
+      return [ind.constructor, ind._args, colors]
+    })
+
+    setIndicators(newIndicators)
   }
 
-  onIndicatorsChange = (indicators) => {
-    // TODO: Better color generation; to save time we generate enough colors for
-    //       all indicators here, but optimally we'd switch on i.constructor.ui
-    this.setState(() => ({
-      indicators: Object.values(indicators).map((ind) => {
-        let colors = []
-
-        for (let i = 0; i < 5; i += 1) {
-          colors.push(randomColor())
-        }
-
-        // allow users to overwrite colors
-        if (ind.color) {
-          colors[0] = ind.color
-        } else if (ind.colors) {
-          colors = ind.colors // eslint-disable-line
-        }
-
-        return [ind.constructor, ind._args, colors]
-      }),
-    }))
-  }
-
-  onGuideFinish = (data) => {
-    const { finishGuide } = this.props
-    const { status } = data
+  const onGuideFinish = ({ status, action }) => {
     const finishedStatuses = [STATUS.FINISHED, STATUS.SKIPPED]
     const CLOSE = 'close'
-    if (finishedStatuses.includes(status) || data.action === CLOSE) {
+    if (finishedStatuses.includes(status) || action === CLOSE) {
       finishGuide()
     }
   }
 
-  setContent = (content) => {
-    const { setStrategyContent } = this.props
-    // this.setState(() => ({ strategyContent: content }))
-    this.setState(() => ({ forcedTab: 'Backtest' }))
+  const setContent = (content) => {
+    setForcedTab('Backtest')
     setStrategyContent(content)
   }
 
-  selectStrategy = (content) => {
-    const { selectStrategy } = this.props
+  const selectStrategyHandler = (content) => {
     selectStrategy()
-    this.setContent(content)
+    setContent(content)
   }
 
-  render() {
-    const {
-      indicators,
-      // strategyContent,
-      docsText = '',
-      forcedTab = '',
-    } = this.state
-    const { firstLogin, isGuideActive } = this.props
-    return (
-      <Layout>
-        <Layout.Header />
-        <Layout.Main className='hfui-strategyeditorpage__wrapper'>
-          <div className='hfui-strategyeditorpage__content-wrapper'>
+  return (
+    <Layout>
+      <Layout.Header />
+      <Layout.Main className='hfui-strategyeditorpage__wrapper'>
+        <div className='hfui-strategyeditorpage__content-wrapper'>
+          <Suspense fallback={<></>}>
             <StrategyEditor
               dark
-              onStrategySelect={content => this.selectStrategy(content)}
-              onStrategyChange={content => this.setContent(content)}
+              onStrategySelect={selectStrategyHandler}
+              onStrategyChange={setContent}
               key='editor'
-              onIndicatorsChange={this.onIndicatorsChange}
+              onIndicatorsChange={onIndicatorsChange}
               moveable={false}
               removeable={false}
               tf='1m'
             />
-            {firstLogin && (
+          </Suspense>
+          {firstLogin && (
+            <Suspense fallback={<></>}>
               <Joyride
                 steps={STEPS.STRATEGY_EDITOR}
-                callback={this.onGuideFinish}
+                callback={onGuideFinish}
                 run={isGuideActive}
               />
-            )}
-            <div
-              key='main'
-              className='hfui-strategiespage__right'
+            </Suspense>
+          )}
+          <div
+            key='main'
+            className='hfui-strategiespage__right'
+          >
+            <Panel
+              className='hfui-strategiespage__pannel-wrapper'
+              moveable={false}
+              removeable={false}
+              forcedTab={forcedTab}
+              darkHeader
             >
-              <Panel
-                className='hfui-strategiespage__pannel-wrapper'
-                moveable={false}
-                removeable={false}
-                forcedTab={forcedTab}
-                darkHeader
+              <Markdown
+                tabtitle='Docs'
+                text={docsText}
+              />
+              <div
+                tabtitle='Backtest'
               >
-                <Markdown
-                  tabtitle='Docs'
-                  text={docsText}
+                <Backtester
+                  {...props}
+                  indicators={indicators}
+                  onAddIndicator={onAddIndicator}
+                  onDeleteIndicator={onDeleteIndicator}
                 />
-                <div
-                  tabtitle='Backtest'
-                >
-                  <Backtester
-                    {...this.props}
-                    indicators={indicators}
-                    onAddIndicator={this.onAddIndicator}
-                    onDeleteIndicator={this.onDeleteIndicator}
-                  />
-                </div>
-                {/* hidden until this feature will be implemented
+              </div>
+              {/* hidden until this feature will be implemented
                 <div
                   tabtitle='Execute'
                 >
                   <LiveStrategyExecutor
                     strategyContent={strategyContent}
                   />
-                </div> */}
-              </Panel>
-            </div>
+                </div>
+              */}
+            </Panel>
           </div>
-        </Layout.Main>
-        <Layout.Footer />
-      </Layout>
-    )
-  }
+        </div>
+      </Layout.Main>
+      <Layout.Footer />
+    </Layout>
+  )
 }
 
 StrategyEditorPage.propTypes = {
@@ -176,3 +166,5 @@ StrategyEditorPage.defaultProps = {
   isGuideActive: true,
   // strategyContent: {},
 }
+
+export default memo(StrategyEditorPage)

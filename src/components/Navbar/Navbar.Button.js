@@ -9,9 +9,9 @@ export default function NavbarButton({
   return (
     <button type='button' className={cx('hfui-exchangeinfobar__button', className)} {...props}>
       {typeof icon === 'string' ? (
-        <i className={`icon-${icon}`} />
+        <i className={`icon-${icon}`} role='button' aria-label={alt} tabIndex={0} />
       ) : (
-        <Icon />
+        <Icon role='button' aria-label={alt} tabIndex={0} />
       )}
     </button>
   )

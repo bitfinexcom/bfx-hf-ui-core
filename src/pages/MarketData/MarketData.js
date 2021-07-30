@@ -1,9 +1,11 @@
-import React, { memo } from 'react'
+import React, { memo, lazy, Suspense } from 'react'
 import PropTypes from 'prop-types'
-import Joyride, { STEPS, STATUS } from '../../components/Joyride'
+import { STEPS, STATUS } from '../../components/Joyride'
 import Layout from '../../components/Layout'
 import GridLayout from '../../components/GridLayout'
 import './style.css'
+
+const Joyride = lazy(() => import('../../components/Joyride'))
 
 const commonComponentProps = {
   dark: true,
@@ -28,11 +30,13 @@ const MarketData = ({ isGuideActive, isFirstLogin, finishGuide }) => {
       <Layout.Header />
       <Layout.Main>
         {isFirstLogin && (
-          <Joyride
-            callback={onGuideFinish}
-            steps={STEPS.MARKET_DATA}
-            run={isGuideActive}
-          />
+          <Suspense fallback={<></>}>
+            <Joyride
+              callback={onGuideFinish}
+              steps={STEPS.MARKET_DATA}
+              run={isGuideActive}
+            />
+          </Suspense>
         )}
         <GridLayout
           tradesProps={commonComponentProps}
