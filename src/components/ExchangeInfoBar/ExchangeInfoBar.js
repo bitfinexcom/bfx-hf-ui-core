@@ -9,6 +9,7 @@ import { tickerDataMapping, rowMapping } from './ExchangeInforBar.constants'
 
 import './style.css'
 import { MAIN_MODE } from '../../redux/reducers/ui'
+import CCYIcon from './CCYIcon'
 
 const ExchangeInfoBar = ({
   onChangeMarket,
@@ -80,6 +81,7 @@ const ExchangeInfoBar = ({
             dataMapping={tickerDataMapping}
             className='hfui-exchangeinfobar__ticker'
             volumeUnit={tickersVolumeUnit !== 'SELF' ? tickersVolumeUnit : quote}
+            ccyIcon={<CCYIcon ccy={base} />}
           />
         </div>
         <div
