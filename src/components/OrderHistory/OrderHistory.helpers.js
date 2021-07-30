@@ -1,14 +1,3 @@
-const symbolToLabel = (symbol) => {
-  if (symbol.includes(':')) {
-    let [base, quote] = symbol.split(':') //eslint-disable-line
-    if (base.includes('t')) {
-      base = base.substring(1, base.length)
-    }
-    return `${base}/${quote}`
-  }
-  return `${symbol.substring(1, 4)}/${symbol.substring(4)}`
-}
-
 const getPriceFromStatus = (status) => {
   if (!status.includes('@')) {
     return '0.00'
@@ -21,7 +10,6 @@ const getFormatedStatus = (status) => {
 }
 
 export {
-  symbolToLabel,
   getPriceFromStatus,
   getFormatedStatus,
 }
