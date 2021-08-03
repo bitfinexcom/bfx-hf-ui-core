@@ -7,9 +7,6 @@
   height: 100%;
   width: 100%;
 
-  .hfui-exchangeinfobar__ticker-wrapper {
-  }
-
   .hfui-exchangeinfobar__ticker {
     width: 100%;
     padding-bottom: spacing();
@@ -216,6 +213,11 @@
 }
 
 .hfui-panel--tickerlist {
+  .ufx-virtual-table--container .ReactVirtualized__Table__headerTruncatedText,
+  .ufx-virtual-table--container .ReactVirtualized__Table__row > * {
+    font-size: 11px;
+  }
+
   .hfui-panel__content {
     padding: 0;
   }
@@ -226,18 +228,16 @@
 
   .hfui-exchangeinfobar__tickerlist {
     .ufx-input {
-      padding: 0 spacing();
+      padding: 0 spacing(0.75);
     }
 
     .ufx-virtual-table--container {
       .ReactVirtualized__Table__headerColumn,
       .ReactVirtualized__Table__rowColumn {
-        padding: 0 spacing(0.5);
+        padding: 0 spacing(0.25);
       }
 
       .ReactVirtualized__Table__headerColumn:first-of-type {
-        padding: 0 spacing(0.5);
-
         &:hover {
           background: none;
         }
