@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
 import { VirtualTable, Checkbox } from '@ufx-ui/core'
 
@@ -13,21 +13,23 @@ const AlgoOrdersTable = ({
   onAllOrdersSelect,
   isAllOrdersSelected,
 }) => (
-  <Fragment className='hfui-active-ao-modal__table'>
+  <>
     <VirtualTable
-      className='virtual-table'
+      className='ao-modal-virtual-table'
       data={orders}
       columns={columns(onOrderSelect, isOrderSelected)}
       defaultSortBy='gid'
       defaultSortDirection='ASC'
-      rowHeight={30}
+      onRowClick={({ rowData }) => onOrderSelect(!isOrderSelected(rowData.gid), rowData.gid, rowData.algoID)}
+      rowHeight={40}
     />
     <Checkbox
+      className='select-all'
       label='Select All'
       checked={isAllOrdersSelected()}
       onChange={e => onAllOrdersSelect(e)}
     />
-  </Fragment>
+  </>
 )
 
 AlgoOrdersTable.propTypes = {
