@@ -1,9 +1,7 @@
 import React, { memo, useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import _get from 'lodash/get'
 import { Checkbox } from '@ufx-ui/core'
 
-import { getAuthToken } from '../../redux/selectors/ws'
 import WSActions from '../../redux/actions/ws'
 import GAActions from '../../redux/actions/google_analytics'
 import { getActiveAlgoOrders } from '../../redux/actions/ao'
@@ -12,15 +10,17 @@ import {
   getAutoLoginState,
   updateAutoLoginState,
 } from '../../util/autologin'
+import {
+  SETTINGS, getDMSSetting, getGASetting, getShowAlgoPauseInfoSetting,
+} from '../../redux/selectors/ui'
 
 const INITIAL_AUTO_LOGIN = getAutoLoginState()
 
 const General = () => {
   const dispatch = useDispatch()
-  const settingsDms = useSelector(state => _get(state, 'ui.settings.dms', null))
-  const settingsGa = useSelector(state => _get(state, 'ui.settings.ga', null))
-  const settingsShowAlgoPauseInfo = useSelector(state => _get(state, 'ui.settings.showAlgoPauseInfo', null))
-  const authToken = useSelector(getAuthToken)
+  const settingsDms = useSelector(getDMSSetting)
+  const settingsGa = useSelector(getGASetting)
+  const settingsShowAlgoPauseInfo = useSelector(getShowAlgoPauseInfoSetting)
 
   const [isAutoLoginChecked, setIsAutoLoginChecked] = useState(INITIAL_AUTO_LOGIN)
   const [isDmsChecked, setIsDmsChecked] = useState(settingsDms)
@@ -41,38 +41,20 @@ const General = () => {
 
   const updateDms = (nextDms) => {
     setIsDmsChecked(nextDms)
-    dispatch(WSActions.send([
-      'settings.update',
-      authToken,
-      nextDms,
-      settingsGa,
-      isShowAlgoPauseInfoChecked,
-    ]))
+    dispatch(WSActions.saveSettings(SETTINGS.DMS, nextDms))
     dispatch(getActiveAlgoOrders())
     dispatch(GAActions.updateSettings())
   }
 
   const updateGa = (nextGa) => {
     setIsGaChecked(nextGa)
-    dispatch(WSActions.send([
-      'settings.update',
-      authToken,
-      settingsDms,
-      nextGa,
-      isShowAlgoPauseInfoChecked,
-    ]))
+    dispatch(WSActions.saveSettings(SETTINGS.GA, nextGa))
     dispatch(GAActions.updateSettings())
   }
 
   const updateAOPause = (nextAOPause) => {
     setIsShowAlgoPauseInfoChecked(nextAOPause)
-    dispatch(WSActions.send([
-      'settings.update',
-      authToken,
-      settingsDms,
-      settingsGa,
-      nextAOPause,
-    ]))
+    dispatch(WSActions.saveSettings(SETTINGS.SHOW_ALGO_PAUSE_INFO, nextAOPause))
     dispatch(GAActions.updateSettings())
   }
 

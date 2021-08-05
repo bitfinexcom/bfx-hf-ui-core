@@ -4,9 +4,9 @@ import _isEqual from 'lodash/isEqual'
 import WSActions from '../../redux/actions/ws'
 import UIActions from '../../redux/actions/ui'
 import {
-  getActiveMarket, getCurrentMode, getTickersVolumeUnit, getShowOnlyFavoritePairs,
+  getActiveMarket, getCurrentMode, getTickersVolumeUnit, getShowOnlyFavoritePairsSetting,
 } from '../../redux/selectors/ui'
-import { SHOW_ONLY_FAV_PAIRS_KEY } from '../../redux/selectors/ui/get_settings'
+import { SETTINGS } from '../../redux/selectors/ui/get_settings'
 import {
   getAuthToken, getFavoritePairsObject,
 } from '../../redux/selectors/ws'
@@ -26,7 +26,7 @@ const mapStateToProps = (state = {}) => {
     authToken: getAuthToken(state),
     currentMode: getCurrentMode(state),
     tickersVolumeUnit: getTickersVolumeUnit(state),
-    showOnlyFavoritePairs: getShowOnlyFavoritePairs(state),
+    showOnlyFavoritePairs: getShowOnlyFavoritePairsSetting(state),
   }
 }
 
@@ -48,7 +48,7 @@ const mapDispatchToProps = (dispatch) => ({
   },
   setVolumeUnit: (key) => dispatch(UIActions.changeTickersVolumeUnit(key)),
 
-  updateShowOnlyFavoritePairs: (showOnlyFavoritePairs) => dispatch(WSActions.saveSettings(SHOW_ONLY_FAV_PAIRS_KEY, showOnlyFavoritePairs)),
+  updateShowOnlyFavoritePairs: (showOnlyFavoritePairs) => dispatch(WSActions.saveSettings(SETTINGS.SHOW_ONLY_FAVORITE_PAIRS, showOnlyFavoritePairs)),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(ExchangeInfoBar)
