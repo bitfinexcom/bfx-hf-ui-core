@@ -122,7 +122,7 @@ ExchangeInfoBar.propTypes = {
     quote: PropTypes.string,
     uiID: PropTypes.string,
     isPerp: PropTypes.bool,
-    baseCCYid: PropTypes.string,
+    baseCCYid: PropTypes.number,
   }).isRequired,
   onChangeMarket: PropTypes.func.isRequired,
   activeMarketTicker: PropTypes.shape({
