@@ -53,6 +53,7 @@ export default (alias, store) => (e = {}) => {
         store.dispatch(WSActions.recvDataMarkets(markets))
         store.dispatch(marketActions.getCCYFullNames())
         store.dispatch(marketActions.getPerpsNames())
+        store.dispatch(marketActions.getCCYsId())
         break
       }
 

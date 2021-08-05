@@ -8,7 +8,7 @@ const mapStateToProps = (state = {}) => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-  onClose: dispatch(UIActions.changeCCYInfoModalState(false)),
+  onClose: () => dispatch(UIActions.changeCCYInfoModalState(false)),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(CCYInfoModal)

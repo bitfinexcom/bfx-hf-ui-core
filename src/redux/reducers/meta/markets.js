@@ -85,6 +85,21 @@ export default (state = getInitialState(), action = {}) => {
       }, EMPTY_OBJ)
       return newState
     }
+    case marketTypes.SET_CCYS_ID: {
+      const { ids: [idsArray] } = payload
+      const marketsKeysArray = Object.keys(state)
+
+      const newState = _reduce(marketsKeysArray, (acc, key) => {
+        const market = state[key]
+        const idArray = _find(idsArray, (element) => element[0] === market.base, null)
+        if (!idArray || !idArray[1]) {
+          return acc
+        }
+        acc[key] = { ...market, baseCCYid: idArray[1] }
+        return acc
+      }, EMPTY_OBJ)
+      return newState
+    }
 
     default: {
       return state

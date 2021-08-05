@@ -51,7 +51,11 @@ const ExchangeInfoBar = ({
     volumeConverted,
   } = activeMarketTicker
   const {
-    base, quote, uiID, isPerp,
+    baseCCYid,
+    base,
+    quote,
+    uiID,
+    isPerp,
   } = activeMarket
 
   return (
@@ -84,7 +88,7 @@ const ExchangeInfoBar = ({
             className='hfui-exchangeinfobar__ticker'
             volumeUnit={tickersVolumeUnit !== 'SELF' ? tickersVolumeUnit : quote}
             ccyIcon={<CCYIcon ccy={base} />}
-            showCoinInfoIcon
+            showCoinInfoIcon={Boolean(baseCCYid)}
             onShowInfoClick={showCCYIconModal}
           />
         </div>
@@ -118,6 +122,7 @@ ExchangeInfoBar.propTypes = {
     quote: PropTypes.string,
     uiID: PropTypes.string,
     isPerp: PropTypes.bool,
+    baseCCYid: PropTypes.string,
   }).isRequired,
   onChangeMarket: PropTypes.func.isRequired,
   activeMarketTicker: PropTypes.shape({
