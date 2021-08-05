@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
 import { VOLUME_UNIT, VOLUME_UNIT_PAPER } from '@ufx-ui/bfx-containers'
 import { TickerList, Ticker } from '@ufx-ui/core'
@@ -24,8 +24,9 @@ const ExchangeInfoBar = ({
   onRemove,
   tickersVolumeUnit,
   setVolumeUnit,
+  showOnlyFavoritePairs,
+  updateShowOnlyFavoritePairs,
 }) => {
-  const [showFavorites, setShowingFavorites] = useState(false)
   const [tickerRef, size] = useSize()
 
   const _updateFavorites = (object) => {
@@ -92,8 +93,8 @@ const ExchangeInfoBar = ({
             data={allTickersArray}
             favs={favoritePairs}
             saveFavs={_updateFavorites}
-            showOnlyFavs={showFavorites}
-            setShowOnlyFavs={setShowingFavorites}
+            showOnlyFavs={showOnlyFavoritePairs}
+            setShowOnlyFavs={updateShowOnlyFavoritePairs}
             onRowClick={onChangeMarketHandler}
             className='hfui-exchangeinfobar__tickerlist'
             volumeUnit={tickersVolumeUnit}
@@ -134,11 +135,14 @@ ExchangeInfoBar.propTypes = {
   onRemove: PropTypes.func,
   tickersVolumeUnit: PropTypes.string.isRequired,
   setVolumeUnit: PropTypes.func.isRequired,
+  showOnlyFavoritePairs: PropTypes.bool,
+  updateShowOnlyFavoritePairs: PropTypes.func.isRequired,
 }
 
 ExchangeInfoBar.defaultProps = {
   markets: [],
   onRemove: () => {},
+  showOnlyFavoritePairs: false,
 }
 
 export default ExchangeInfoBar
