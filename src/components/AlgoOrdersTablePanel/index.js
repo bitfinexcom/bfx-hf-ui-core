@@ -1,3 +1,3 @@
-import AlgoOrdersTablePanel from './AlgoOrdersTablePanel.container'
+import AlgoOrdersTablePanel from './AlgoOrdersTablePanel'
 
 export default AlgoOrdersTablePanel

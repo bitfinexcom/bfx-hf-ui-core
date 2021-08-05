@@ -15,17 +15,22 @@ import getAuthConfigured from './get_auth_configured'
 import getStrategies from './get_strategies'
 import getAllPositions from './get_all_positions'
 import getFilteredPositions from './get_filtered_positions'
-import getPositionsCount from './get_filtered_positions_count'
+import getFilteredPositionsCount from './get_filtered_positions_count'
 import getAllBalances from './get_all_balances'
 import getFilteredBalances from './get_filtered_balances'
 import getBalances from './get_balances'
-import getAllOrders from './get_all_orders'
+import getAtomicOrders from './get_atomic_orders'
+import getFilteredAtomicOrders from './get_filtered_atomic_orders'
+import getFilteredAtomicOrdersCount from './get_filtered_atomic_orders_count'
+import getFilteredAlgoOrders from './get_filtered_algo_orders'
+import getFilteredAlgoOrdersCount from './get_filtered_algo_orders_count'
 import getAlgoOrders from './get_algo_orders'
 import getNotifications from './get_notifications'
 import getAPICredentials from './get_api_credentials'
 import getAllSyncRanges from './get_all_sync_ranges'
 import isWrongAPIKeys from './is_wrong_api_keys'
 import isValidatingAPIKeys from './is_validating_api_keys'
+import getOrderHistory from './get_order_history'
 
 import getBacktestState from './get_backtest_state'
 import getBacktestData from './get_backtest_data'
@@ -48,6 +53,7 @@ export {
   getChannelByID,
   getChannelRequirements,
   getAllChannelRequirements,
+  getOrderHistory,
 
   getSyncRanges,
   isSyncingCandles,
@@ -66,12 +72,16 @@ export {
 
   getAllPositions,
   getFilteredPositions,
-  getPositionsCount,
+  getFilteredPositionsCount,
   getAllBalances,
   getFilteredBalances,
   getBalances,
-  getAllOrders,
+  getAtomicOrders,
+  getFilteredAtomicOrders,
+  getFilteredAtomicOrdersCount,
   getAlgoOrders,
+  getFilteredAlgoOrders,
+  getFilteredAlgoOrdersCount,
   getFavoritePairs,
   getFavoritePairsObject,
 

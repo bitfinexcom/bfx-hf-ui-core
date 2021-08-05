@@ -1,7 +1,7 @@
 import { connect } from 'react-redux'
 import Debug from 'debug'
 
-import { getAlgoOrders, getAuthToken } from '../../redux/selectors/ws'
+import { getAlgoOrders, getFilteredAlgoOrders, getAuthToken } from '../../redux/selectors/ws'
 import { getActiveMarket } from '../../redux/selectors/ui'
 import WSActions from '../../redux/actions/ws'
 import GAActions from '../../redux/actions/google_analytics'
@@ -9,17 +9,12 @@ import AlgoOrdersTable from './AlgoOrdersTable'
 
 const debug = Debug('hfui:c:algo-orders-table')
 
-const mapStateToProps = (state = {}) => {
-  const { filteredAO = [] } = state.ui
-  const activeMarket = getActiveMarket(state)
-
-  return {
-    authToken: getAuthToken(state),
-    algoOrders: getAlgoOrders(state),
-    activeMarket,
-    filteredAO,
-  }
-}
+const mapStateToProps = (state = {}, { activeFilter }) => ({
+  authToken: getAuthToken(state),
+  algoOrders: getAlgoOrders(state),
+  filteredAlgoOrders: getFilteredAlgoOrders(state)(activeFilter),
+  activeMarket: getActiveMarket(state),
+})
 
 const mapDispatchToProps = dispatch => ({
   cancelOrder: (authToken, order) => {

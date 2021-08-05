@@ -46,14 +46,6 @@ export const setActiveMarket = market => ({
   },
 })
 
-export const setFilteredValueWithKey = (key, value) => ({
-  type: types.SET_FILTRED_VALUE,
-  payload: {
-    key,
-    value,
-  },
-})
-
 export const saveComponentState = ({
   layoutID,
   componentID,
@@ -223,7 +215,6 @@ export default {
   openNotifcationPanel,
   firstLogin,
   finishGuide,
-  setFilteredValueWithKey,
   recvNotification,
   strategySelect,
   updateStrategyContent,

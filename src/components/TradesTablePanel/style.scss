@@ -1,4 +1,4 @@
-@import '../../variables.scss';
+@import "../../variables.scss";
 
 .hfui-tradestable__wrapper {
   .ufx-trades {
@@ -16,7 +16,13 @@
         font-size: 13px;
         font-weight: 400;
         color: $text-color;
+
+        .fa-chevron-down,
+        .fa-chevron-up {
+          width: 10px;
+          height: 10px;
+        }
       }
-    }   
+    }
   }
 }

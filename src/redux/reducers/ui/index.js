@@ -312,14 +312,6 @@ function reducer(state = getInitialState(), action = {}) {
       }
     }
 
-    case types.SET_FILTRED_VALUE: {
-      const { key, value } = payload
-      return {
-        ...state,
-        [key]: value,
-      }
-    }
-
     case types.FIRST_LOGIN: {
       return {
         ...state,

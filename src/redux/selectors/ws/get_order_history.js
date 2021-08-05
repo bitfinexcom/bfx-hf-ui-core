@@ -6,12 +6,11 @@ import { getMarketsObject } from '../meta'
 
 const path = REDUCER_PATHS.WS
 
-const atomicOrders = (state) => {
-  return _get(state, `${path}.orders`, [])
+const orderHistory = (state) => {
+  return _get(state, `${path}.orderHistory`, [])
 }
-const allMarkets = state => getMarketsObject(state)
 
-const atomicOrdersWithReplacedPairs = createSelector([allMarkets, atomicOrders], (markets, orders) => {
+const orderHistoryWithReplacedPairs = createSelector([getMarketsObject, orderHistory], (markets, orders) => {
   return _map(orders, (order) => {
     const { symbol } = order
     const currentMarket = markets[symbol]
@@ -19,4 +18,4 @@ const atomicOrdersWithReplacedPairs = createSelector([allMarkets, atomicOrders],
   }, [])
 })
 
-export default atomicOrdersWithReplacedPairs
+export default orderHistoryWithReplacedPairs
