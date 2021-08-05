@@ -65,6 +65,7 @@ function getInitialState() {
     isRefillBalanceModalVisible: false,
     isOldFormatModalVisible: false,
     isAOPauseModalVisible: false,
+    isCCYInfoModalVisible: false,
     isBadInternetConnection: false,
     isOrderExecuting: false,
     content: {},
@@ -488,6 +489,14 @@ function reducer(state = getInitialState(), action = {}) {
       const unit = isPaperTrading ? VOLUME_UNIT_PAPER[key] : VOLUME_UNIT[key]
 
       return { ...state, tickersVolumeUnit: unit || 'SELF' }
+    }
+    case types.CHANGE_CCY_INFO_MODAL_STATE: {
+      const { isVisible } = payload
+
+      return {
+        ...state,
+        isCCYInfoModalVisible: isVisible,
+      }
     }
     default: {
       return state
