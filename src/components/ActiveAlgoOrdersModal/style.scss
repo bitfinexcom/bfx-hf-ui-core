@@ -4,21 +4,40 @@
   .modal__body {
     max-height: 500px;
     overflow: auto;
-  }
-}
 
-.hfui-active-ao-modal__table {
-  margin: 0 spacing(-0.75);
+    .ao-modal-virtual-table {
+      position: inherit;
+      width: 100%;
+      max-height: 400px;
+      height: 180px;
 
-  tbody tr:not(:last-child) {
-    cursor: pointer;
-    
-    &:hover {
-      background: $panel-background-color;
+      .checkbox {
+        width: 18px;
+        height: 18px;
+      }
+    }
+
+    .ReactVirtualized__Table__row {
+      user-select: none;
+
+      .ReactVirtualized__Table__rowColumn {
+        word-wrap: break-word;
+        white-space: normal;
+      }
+
+      &:hover {
+        cursor: pointer;
+        background-color: $darker-background-color;
+      }
+    }
+
+    .select-all {
+      margin-top: 10px !important;
+    }
+
+    .modal__footer {
+      margin-top: 5px;
     }
   }
-
-  .ufx-checkbox {
-    margin-top: 0;
-  }
 }
+
