@@ -28,7 +28,7 @@ const BestExperienceMessageModal = () => {
     if (!needToShowModal) {
       return
     }
-    setOpeningState(true)
+    setTimeout(() => setOpeningState(true), 100)
   }, [])
   return (
     <Modal
@@ -37,6 +37,7 @@ const BestExperienceMessageModal = () => {
       onClose={closeBestExperienceModal}
     >
       <p>Web verison of Honey Framework designed for desktops. For having best experience in using application, we strongly recommend using desktop.</p>
+      <p>It&apos;s adviced to use this app in a landscape mode.</p>
       <br />
       <p>Best regards, your Honey Framework&apos;s team!</p>
       <Modal.Footer>
