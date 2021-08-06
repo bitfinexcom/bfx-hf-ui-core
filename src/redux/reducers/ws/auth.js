@@ -40,11 +40,12 @@ export default function (state = getInitialState(), action = {}) {
     }
 
     case t.DATA_API_CREDENTIALS_CONFIGURED: {
+      const { state: apiKeysState } = payload
       return {
         ...state,
         apiKeys: {
-          ...(state.apiKeys || {}),
-          configured: true,
+          isMainConfigured: apiKeysState.main,
+          isPaperConfigured: apiKeysState.paper,
         },
       }
     }

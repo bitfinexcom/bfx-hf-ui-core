@@ -157,9 +157,9 @@ export default {
     payload: { strategies },
   }),
 
-  recvAPICredentialsConfigured: () => ({
+  recvAPICredentialsConfigured: (state) => ({
     type: t.DATA_API_CREDENTIALS_CONFIGURED,
-    payload: {},
+    payload: { state },
   }),
 
   recvClientStatusUpdate: ({ status }) => ({

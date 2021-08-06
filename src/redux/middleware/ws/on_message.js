@@ -153,8 +153,9 @@ export default (alias, store) => (e = {}) => {
         break
       }
 
-      case 'data.api_credentials.configured': {
-        store.dispatch(WSActions.recvAPICredentialsConfigured())
+      case 'data.api_credentials.validation': {
+        const [, apiKeysState] = payload
+        store.dispatch(WSActions.recvAPICredentialsConfigured(apiKeysState))
         break
       }
 
