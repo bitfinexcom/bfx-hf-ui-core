@@ -2,8 +2,9 @@ import React, { memo, useState, useEffect } from 'react'
 import ClassNames from 'classnames'
 import PropTypes from 'prop-types'
 
+import { isElectronApp, electronAppVersion } from '../../redux/config'
+
 import NavbarButton from '../Navbar/Navbar.Link'
-import MANIFEST from '../../../package.json'
 import './style.css'
 
 const StatusBar = ({
@@ -23,17 +24,19 @@ const StatusBar = ({
   return (
     <div className='hfui-statusbar__wrapper'>
       <div className='hfui-statusbar__left'>
-        <p>
-          {remoteVersion && remoteVersion !== MANIFEST.version && (
-            <NavbarButton
-              label='Update to latest version'
-              external='https://github.com/bitfinexcom/bfx-hf-ui/releases'
-            />
-          )}
-          &nbsp;
-          v
-          {MANIFEST.version}
-        </p>
+        {isElectronApp && (
+          <p>
+            {remoteVersion && remoteVersion !== electronAppVersion && (
+              <NavbarButton
+                label='Update to latest version'
+                external='https://github.com/bitfinexcom/bfx-hf-ui/releases'
+              />
+            )}
+            &nbsp;
+            v
+            {electronAppVersion}
+          </p>
+        )}
 
         <p>
           {apiClientConnected ? 'UNLOCKED' : 'LOCKED'}
