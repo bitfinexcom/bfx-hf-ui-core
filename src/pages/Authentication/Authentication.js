@@ -5,8 +5,7 @@ import HFIcon from '../../ui/HFIcon'
 import AuthenticationInitForm from './AuthenticationInitForm'
 import AuthenticationUnlockForm from './AuthenticationUnlockForm'
 import AuthenticationConnectingForm from './AuthenticationConnectingForm'
-import { version } from '../../../package.json'
-import { isElectronApp } from '../../redux/config'
+import { isElectronApp, electronAppVersion } from '../../redux/config'
 
 import './style.css'
 import { isDevEnv } from '../../util/autologin'
@@ -31,10 +30,12 @@ const Authentication = ({
           <div className='hfui-authenticationpage__inner-left-version-container'>
             <div className='hfui-authenticationpage__inner-left-version'>
               <h6>Crafted by Bitfinex</h6>
-              <p>
-                v
-                {version}
-              </p>
+              {isElectronApp && (
+                <p>
+                  v
+                  {electronAppVersion}
+                </p>
+              )}
             </div>
           </div>
         </div>
