@@ -4,7 +4,7 @@ import { Tooltip } from '@ufx-ui/core'
 import PropTypes from 'prop-types'
 
 import Dropdown from '../../../ui/Dropdown'
-import { renderString, CONVERT_LABELS_TO_PLACEHOLDERS } from '../OrderForm.helpers'
+import { renderString, CONVERT_LABELS_TO_PLACEHOLDERS } from './fields.helpers'
 
 const DropdownInput = ({
   value, disabled, onChange, def: { label, options, customHelp }, validationError, renderData,

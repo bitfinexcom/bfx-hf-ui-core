@@ -33,27 +33,10 @@ const COMPONENTS_FOR_ID = {
   'ui.ticker': TickerBar,
 }
 
-// Just in case we ever decide the labels are again valuable
-export const CONVERT_LABELS_TO_PLACEHOLDERS = false
-
 const marketToQuoteBase = market => ({
   QUOTE: market.quote,
   BASE: market.base,
 })
-
-const renderString = (str, renderData) => {
-  const tokens = str.split(' ')
-
-  return tokens.map((t) => {
-    if (t[0] !== '$') {
-      return t
-    }
-
-    const key = t.substring(1)
-
-    return renderData[key] || ''
-  }).join(' ')
-}
 
 const verifyCondition = (condition = {}, value) => {
   if (typeof condition.eq !== 'undefined') {
@@ -382,7 +365,6 @@ const renderLayout = ({
 
 export {
   renderLayout,
-  renderString,
   processFieldData,
   renderLayoutField,
   marketToQuoteBase,

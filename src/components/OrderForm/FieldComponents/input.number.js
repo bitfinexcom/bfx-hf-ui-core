@@ -5,7 +5,7 @@ import PropTypes from 'prop-types'
 import { Tooltip } from '@ufx-ui/core'
 
 import Input from '../../../ui/Input'
-import { renderString, CONVERT_LABELS_TO_PLACEHOLDERS } from '../OrderForm.helpers'
+import { renderString, CONVERT_LABELS_TO_PLACEHOLDERS } from './fields.helpers'
 
 const NumberInput = memo(({
   value, def: { label, customHelp }, disabled, onChange, validationError, percentage, max, renderData,
