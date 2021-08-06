@@ -4,7 +4,7 @@ import _isFinite from 'lodash/isFinite'
 import PropTypes from 'prop-types'
 
 import Input from '../../../ui/Input'
-import { renderString, CONVERT_LABELS_TO_PLACEHOLDERS } from '../OrderForm.helpers'
+import { renderString, CONVERT_LABELS_TO_PLACEHOLDERS } from './fields.helpers'
 
 const SliderInput = memo(({
   def: { label, min, max }, renderData, value, disabled, onChange, validationError,

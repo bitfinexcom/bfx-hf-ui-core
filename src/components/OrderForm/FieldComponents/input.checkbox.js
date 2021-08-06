@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 import { Checkbox } from '@ufx-ui/core'
 import _toUpper from 'lodash/toUpper'
 
-import { renderString } from '../OrderForm.helpers'
+import { renderString } from './fields.helpers'
 
 const CheckboxInput = memo(({
   id, value, def: { label, customHelp } = {}, onChange, disabled, renderData,
