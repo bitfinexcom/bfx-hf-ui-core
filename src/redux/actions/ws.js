@@ -85,6 +85,14 @@ export default {
     payload: settings,
   }),
 
+  saveSettings: (key, value) => ({
+    type: ui.SAVE_SETTINGS,
+    payload: {
+      key,
+      value,
+    },
+  }),
+
   bufferDataFromExchange: (
     chanID, data, rawData = null,
   ) => ({

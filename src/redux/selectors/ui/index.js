@@ -21,6 +21,8 @@ import getMarketComponents from './get_market_components'
 import getCurrentUnsavedLayout from './get_current_unsaved_layout'
 import getTickersVolumeUnit from './get_tickers_volume_unit'
 
+export * from './get_settings'
+
 export {
   getRemoteVersion,
   getNumberOfLayouts,

@@ -5,7 +5,7 @@ import Modal from '../../ui/Modal'
 import closeElectronApp from '../../redux/helpers/close_electron_app'
 
 const AOPauseModal = ({
-  changeAOPauseModalState, visible, onDontShowAgain: _onDontShowAgain, authToken, dms, ga,
+  changeAOPauseModalState, visible, onDontShowAgain: _onDontShowAgain,
 }) => {
   const onCancel = () => {
     changeAOPauseModalState(false)
@@ -17,7 +17,7 @@ const AOPauseModal = ({
   }
 
   const onDontShowAgain = () => {
-    _onDontShowAgain(authToken, dms, ga)
+    _onDontShowAgain()
     onClose()
   }
 
@@ -61,14 +61,8 @@ AOPauseModal.propTypes = {
   changeAOPauseModalState: PropTypes.func.isRequired,
   visible: PropTypes.bool.isRequired,
   onDontShowAgain: PropTypes.func.isRequired,
-  authToken: PropTypes.string.isRequired,
-  dms: PropTypes.bool,
-  ga: PropTypes.bool,
 }
 
-AOPauseModal.defaultProps = {
-  ga: null,
-  dms: null,
-}
+AOPauseModal.defaultProps = {}
 
 export default memo(AOPauseModal)
