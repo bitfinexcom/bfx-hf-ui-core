@@ -16,7 +16,7 @@ export default function* fetchCCYArticle() {
     if (!id) {
       return
     }
-    const url = `http://api.bitfinex.com/v1/articles?type=zendesk&id=${id}&lang=en-us`
+    const url = `${process.env.REACT_APP_UFX_PUBLIC_API_URL}/v1/articles?type=zendesk&id=${id}&lang=en-us`
     const { data } = yield axios.get(url)
     const { status, data: result } = data
     if (status !== 'success' || _isEmpty(result)) {
