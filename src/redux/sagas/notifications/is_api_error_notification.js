@@ -13,11 +13,9 @@ export default function* isAPIErrorNotification(action = {}) {
   if (status === 'error' && _includes(text, 'auth failed: apikey')) {
     debug('auth failed: wrong API keys')
     yield put(WSActions.authWrongAPIKeys(true))
-    yield put(WSActions.authAPIValidating(false))
   }
   if (status === 'success' && _includes(text, 'Authenticated with Bitfinex')) {
     yield put(WSActions.authWrongAPIKeys(false))
-    yield put(WSActions.authAPIValidating(false))
   }
   if (status === 'success' && _includes(text, 'API credentials saved for')) {
     yield put(WSActions.authWrongAPIKeys(false))

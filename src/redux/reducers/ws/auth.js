@@ -31,14 +31,6 @@ export default function (state = getInitialState(), action = {}) {
       }
     }
 
-    case t.AUTH_API_VALIDATING: {
-      const { status } = payload
-      return {
-        ...state,
-        isValidatingAPIKeys: status,
-      }
-    }
-
     case t.DATA_API_CREDENTIALS_CONFIGURED: {
       const { state: apiKeysState } = payload
       return {

@@ -246,11 +246,6 @@ export default {
     payload: { status },
   }),
 
-  authAPIValidating: (status) => ({
-    type: t.AUTH_API_VALIDATING,
-    payload: { status },
-  }),
-
   recvBacktestStart: opts => ({
     type: t.BACKTEST_START,
     payload: opts,

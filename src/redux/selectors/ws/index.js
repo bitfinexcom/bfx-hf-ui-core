@@ -29,7 +29,6 @@ import getNotifications from './get_notifications'
 import getAPICredentials from './get_api_credentials'
 import getAllSyncRanges from './get_all_sync_ranges'
 import isWrongAPIKeys from './is_wrong_api_keys'
-import isValidatingAPIKeys from './is_validating_api_keys'
 import getOrderHistory from './get_order_history'
 
 import getBacktestState from './get_backtest_state'
@@ -40,6 +39,9 @@ import getAPIClientState from './get_api_client_state'
 import apiClientConnected from './api_client_connected'
 import apiClientConnecting from './api_client_connecting'
 import apiClientDisconnected from './api_client_disconnected'
+
+import getPaperAPIKeyConfigured from './get_paper_api_key_configured'
+import getMainAPIKeyConfigured from './get_main_api_key_configured'
 
 export {
   getSocket,
@@ -58,7 +60,6 @@ export {
   getSyncRanges,
   isSyncingCandles,
   isWrongAPIKeys,
-  isValidatingAPIKeys,
   getStrategies,
 
   getBacktestState,
@@ -88,4 +89,7 @@ export {
   getNotifications,
   getAPICredentials,
   getAllSyncRanges,
+
+  getPaperAPIKeyConfigured,
+  getMainAPIKeyConfigured,
 }
