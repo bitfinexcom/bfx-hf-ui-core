@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { replace } from 'connected-react-router'
 import { isElectronApp } from '../redux/config'
 import { getLocation } from '../redux/selectors/router'
+import WSActions from '../redux/actions/ws'
 import tokenStore from '../util/token_store'
 
 export default () => {
@@ -12,21 +13,24 @@ export default () => {
 
   const dispatch = useDispatch()
   const location = useSelector(getLocation)
-  const { authToken } = location.query
+  const { authToken: queryToken } = location.query
 
   useEffect(() => {
-    if (!authToken) {
-      return
-    }
+    const token = queryToken
+      ? decodeURIComponent(queryToken)
+      : tokenStore.get()
 
-    if (authToken) {
-      tokenStore.set(decodeURIComponent(authToken))
+    if (queryToken) {
+      tokenStore.set(token)
 
       // remove authToken query from url
       dispatch(replace(location.pathname))
-    } else {
-      // trigger getting token
-      tokenStore.get()
+    }
+
+    if (token) {
+      // set token in store
+      dispatch(WSActions.recvAuthToken(token))
+      dispatch(WSActions.recvAuthConfigured(true))
     }
   }, [])
 }
