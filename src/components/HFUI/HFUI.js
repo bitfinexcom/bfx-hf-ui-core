@@ -24,8 +24,17 @@ const OldFormatModal = lazy(() => import('../OldFormatModal'))
 const AOPauseModal = lazy(() => import('../AOPauseModal'))
 
 const HFUI = ({
-  authToken, getSettings, notificationsVisible, getFavoritePairs, currentMode, GAPageview,
-  currentPage, onUnload, subscribeAllTickers, shouldShowAOPauseModalState, settingsShowAlgoPauseInfo,
+  authToken,
+  getSettings,
+  notificationsVisible,
+  getFavoritePairs,
+  currentMode,
+  GAPageview,
+  currentPage,
+  onUnload,
+  subscribeAllTickers,
+  shouldShowAOPauseModalState,
+  settingsShowAlgoPauseInfo,
 }) => {
   function unloadHandler() {
     if (authToken !== null) {

@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { replace } from 'connected-react-router'
 import { isElectronApp } from '../redux/config'
 import { getLocation } from '../redux/selectors/router'
+import tokenStore from '../util/token_store'
 
 export default () => {
   if (isElectronApp) {
@@ -19,7 +20,7 @@ export default () => {
     }
 
     if (authToken) {
-      tokenStore.set(authToken)
+      tokenStore.set(decodeURIComponent(authToken))
 
       // remove authToken query from url
       dispatch(replace(location.pathname))
