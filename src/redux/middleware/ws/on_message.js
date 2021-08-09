@@ -40,7 +40,6 @@ export default (alias, store) => (e = {}) => {
     store.dispatch(WSActions.bufferDataFromExchange(chanID, null, exData))
   }
 
-  console.log('TCL: payload', payload)
   if (_isArray(payload)) {
     const [type] = payload
     switch (type) {
@@ -71,7 +70,6 @@ export default (alias, store) => (e = {}) => {
       }
 
       case 'auth.user_id': {
-        console.log('TCL: payload', payload)
         const [, userId] = payload
         store.dispatch(WSActions.recvUserId(userId))
         break

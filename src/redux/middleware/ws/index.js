@@ -69,10 +69,7 @@ export default () => {
           break
         }
 
-        const json = JSON.stringify(Array.isArray(message) ? message : _omit(message, ['alias']))
-        console.log('TCL: qwejson', json)
-
-        socket.socket.send(json)
+        socket.socket.send(JSON.stringify(Array.isArray(message) ? message : _omit(message, ['alias'])))
 
         break
       }

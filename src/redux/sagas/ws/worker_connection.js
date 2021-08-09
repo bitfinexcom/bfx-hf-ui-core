@@ -23,7 +23,7 @@ export default function* () {
     for (let i = 0; i < keys.length; ++i) {
       const socket = keys[i]
 
-      if (isElectronApp && socket === WSTypes.ALIAS_DATA_SERVER) {
+      if (!isElectronApp && socket === WSTypes.ALIAS_DATA_SERVER) {
         // eslint-disable-next-line no-continue
         continue
       }
