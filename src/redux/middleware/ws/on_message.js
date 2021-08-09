@@ -40,6 +40,7 @@ export default (alias, store) => (e = {}) => {
     store.dispatch(WSActions.bufferDataFromExchange(chanID, null, exData))
   }
 
+  console.log('TCL: payload', payload)
   if (_isArray(payload)) {
     const [type] = payload
     switch (type) {
@@ -66,6 +67,13 @@ export default (alias, store) => (e = {}) => {
         const [, token] = payload
         store.dispatch(WSActions.recvAuthToken(token))
         store.dispatch(AOActions.getActiveAlgoOrders())
+        break
+      }
+
+      case 'auth.user_id': {
+        console.log('TCL: payload', payload)
+        const [, userId] = payload
+        store.dispatch(WSActions.recvUserId(userId))
         break
       }
 

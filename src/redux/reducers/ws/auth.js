@@ -1,4 +1,5 @@
 import t from '../../constants/ws'
+import { getAuthToken } from '../../../util/token_store'
 
 const getInitialState = () => {
   return {}
@@ -46,6 +47,18 @@ export default function (state = getInitialState(), action = {}) {
           ...(state.apiKeys || {}),
           configured: true,
         },
+      }
+    }
+
+    // web auth token success
+    case t.DATA_WEB_AUTH_SUCCESS: {
+      const { userId } = payload
+
+      return {
+        ...state,
+        userId,
+        token: getAuthToken(),
+        configured: true,
       }
     }
 

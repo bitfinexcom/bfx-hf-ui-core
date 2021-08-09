@@ -83,6 +83,8 @@ const HFUI = ({
     }
   }, [authToken])
 
+  console.log('TCL: authToken', authToken)
+
   return (
     <Suspense fallback={<></>}>
       {authToken ? (

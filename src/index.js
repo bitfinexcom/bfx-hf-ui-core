@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import ReactDOM from 'react-dom'
 import { StoreProvider as UfxStoreProvider } from '@ufx-ui/core'
 import { useInjectBfxData } from '@ufx-ui/bfx-containers'
@@ -11,7 +11,7 @@ import StoreWrapper from './StoreWrapper'
 
 import './passive_listener_fix'
 import './index.css'
-import useQueryAuthToken from './hooks/useQueryAuthToken'
+import useAuthToken from './hooks/useAuthToken'
 
 console.log(`bfx-hf-ui-core v${Manifest.version}`)
 
@@ -42,7 +42,7 @@ const config = {
 
 const HFUIWrapper = () => {
   useInjectBfxData()
-  useQueryAuthToken()
+  useAuthToken()
 
   return (
     <CrashHandler>

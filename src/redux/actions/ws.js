@@ -286,6 +286,13 @@ export default {
     payload: pairs,
   }),
 
+  recvUserId: userId => ({
+    type: t.DATA_WEB_AUTH_SUCCESS,
+    payload: {
+      userId,
+    },
+  }),
+
   purgeDataBook: (channel) => ({
     type: t.PURGE_DATA_BOOK,
     payload: { channel },
@@ -310,5 +317,6 @@ export default {
   initAuth: password => send(['auth.init', password, 'main']),
   auth: (password, mode) => send(['auth.submit', password, mode]),
   resetAuth: () => send(['auth.reset']),
+  webAuth: token => send({ event: 'auth', token }),
   onUnload: (authToken, mode) => send(['algo_order.pause', authToken, mode]),
 }

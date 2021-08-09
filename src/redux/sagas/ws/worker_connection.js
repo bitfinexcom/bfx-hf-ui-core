@@ -2,7 +2,7 @@ import { put, delay, select } from 'redux-saga/effects'
 import Debug from 'debug'
 
 import WSActions from '../../actions/ws'
-import { PUB_WS_API_URL } from '../../config'
+import { PUB_WS_API_URL, isElectronApp } from '../../config'
 import { getSockets } from '../../selectors/ws'
 
 import WSTypes from '../../constants/ws'
@@ -22,6 +22,11 @@ export default function* () {
 
     for (let i = 0; i < keys.length; ++i) {
       const socket = keys[i]
+
+      if (isElectronApp && socket === WSTypes.ALIAS_DATA_SERVER) {
+        // eslint-disable-next-line no-continue
+        continue
+      }
 
       if (sockets[socket].status === 'offline') {
         debug(`attempting connection to ${socket}...`)
