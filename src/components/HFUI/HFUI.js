@@ -107,7 +107,11 @@ const HFUI = ({
           )}
         </>
       ) : (
-        <AuthenticationPage />
+        <>
+          {isElectronApp && (
+            <AuthenticationPage />
+          )}
+        </>
       )}
       <NotificationsSidebar notificationsVisible={notificationsVisible} />
     </Suspense>
