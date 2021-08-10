@@ -57,7 +57,7 @@ export default () => ({
       component: 'input.checkbox',
       label: 'REDUCE-ONLY',
       customHelp: checkboxesHelpMessages['REDUCE-ONLY'],
-      trading: ['m'], // margin
+      trading: ['m', 'f'], // margin, derivatives
       default: false,
     },
 
