@@ -17,7 +17,7 @@ const allMarkets = state => getMarketsObject(state)
 const positionWithReplacedPairs = createSelector([allMarkets, allPositions], (markets, positions) => {
   return _map(positions, (position) => {
     const { symbol } = position
-    const currentMarket = markets[symbol]
+    const currentMarket = _get(markets, symbol, {})
     return { ...position, uiID: currentMarket.uiID }
   }, [])
 })
