@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux'
 import { getTicker } from '../../../redux/selectors/meta'
 import { getActiveMarket } from '../../../redux/selectors/ui'
 import PLNumber from '../../../ui/PLNumber'
-import { localiseNumber } from '../../../util/ui'
+import { processBalance } from '../../../util/ui'
 
 const TickerBar = (props) => {
   const { onFieldChange, layout: { fields } } = props
@@ -29,7 +29,7 @@ const TickerBar = (props) => {
         <span className='ticker-name'>BID:</span>
         <PLNumber
           value={bid}
-          prepareFunc={localiseNumber}
+          prepareFunc={processBalance}
           ccy={quote}
           isGreen
         />
@@ -41,7 +41,7 @@ const TickerBar = (props) => {
         tabIndex='0'
       >
         <span className='ticker-name'>ASK:</span>
-        <PLNumber value={ask} prepareFunc={localiseNumber} ccy={quote} />
+        <PLNumber value={ask} prepareFunc={processBalance} ccy={quote} />
       </div>
     </div>
   )
