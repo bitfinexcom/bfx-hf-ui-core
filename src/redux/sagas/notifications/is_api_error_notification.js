@@ -2,6 +2,7 @@ import { put } from 'redux-saga/effects'
 import Debug from 'debug'
 import _includes from 'lodash/includes'
 import WSActions from '../../actions/ws'
+import { authErrorRedirect } from '../../../util/cookies'
 
 const debug = Debug('hfui:rx:s:ntfc')
 
@@ -16,8 +17,7 @@ export default function* isAPIErrorNotification(action = {}) {
     yield put(WSActions.authAPIValidating(false))
   }
   if (status === 'error' && _includes(text, 'Authentication failed')) {
-    const { href, origin } = window.location
-    if (_includes(origin, 'localhost')) {
+    if (_includes(window.location.origin, 'localhost')) {
       // eslint-disable-next-line no-alert
       alert(`
         1. Connect and log in on bitfinex staging
@@ -26,7 +26,7 @@ export default function* isAPIErrorNotification(action = {}) {
         4. Visit localhost with query param ?authToken={authToken}
       `)
     } else {
-      window.location.assign(`${origin}/login?back=${encodeURIComponent(href)}`)
+      authErrorRedirect()
     }
   }
   if (status === 'success' && _includes(text, 'Authenticated with Bitfinex')) {
