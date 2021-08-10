@@ -5,12 +5,15 @@ import { VirtualTable } from '@ufx-ui/core'
 
 import BalancesTableColumns from './BalancesTable.columns'
 
+// balance < 0.000000004 will be rounded and shown as 0.00000000, so hide at this threshold
+const DUST_THRESHOLD = 0.000000004
+
 const BalancesTable = ({
   renderedInTradingState, filteredBalances, balances, hideZeroBalances,
 }) => {
   const data = renderedInTradingState ? filteredBalances : balances
   const filtered = hideZeroBalances
-    ? data.filter(b => +b.balance > 0)
+    ? data.filter(b => +b.balance > DUST_THRESHOLD)
     : data
 
   if (_isEmpty(filtered)) {
