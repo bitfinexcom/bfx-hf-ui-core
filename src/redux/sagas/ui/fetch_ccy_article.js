@@ -7,12 +7,12 @@ import _isEmpty from 'lodash/isEmpty'
 import UIActions from '../../actions/ui'
 import { getActiveMarket } from '../../selectors/ui'
 
-const debug = Debug('hfui:rx:s:market-hfui:getting CCY article')
+const debug = Debug('hfui:rx:s:market-hfui:getting ccy article')
 
-export default function* fetchCCYArticle() {
+export default function* fetchCcyArticle() {
   try {
     const activeMarket = yield select(getActiveMarket)
-    const id = _get(activeMarket, 'baseCCYid', null)
+    const id = _get(activeMarket, 'baseCcyId', null)
     if (!id) {
       return
     }
@@ -22,10 +22,10 @@ export default function* fetchCCYArticle() {
     if (status !== 'success' || _isEmpty(result)) {
       throw new Error('Article not found')
     }
-    yield put(UIActions.setCCYArticle(result[0]))
+    yield put(UIActions.setCcyArticle(result[0]))
   } catch (err) {
-    debug('failed to fetch CCY article: %s', err.message)
-    yield put(UIActions.changeCCYInfoModalState(false))
+    debug('failed to fetch ccy article: %s', err.message)
+    yield put(UIActions.changeCcyInfoModalState(false))
     yield put(UIActions.recvNotification({
       mts: Date.now(),
       status: 'error',

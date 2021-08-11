@@ -199,16 +199,16 @@ export const changeTickersVolumeUnit = key => ({
   payload: { key },
 })
 
-export const changeCCYInfoModalState = (isVisible) => ({
+export const changeCcyInfoModalState = (isVisible) => ({
   type: types.CHANGE_CCY_INFO_MODAL_STATE,
   payload: { isVisible },
 })
 
-export const fetchCCYArticle = () => ({
+export const fetchCcyArticle = () => ({
   type: types.FETCH_CCY_ARTICLE,
 })
 
-export const setCCYArticle = article => ({
+export const setCcyArticle = article => ({
   type: types.SET_CCY_ARTICLE,
   payload: { ...article },
 })
@@ -245,7 +245,7 @@ export default {
   changeTickersVolumeUnit,
   changeOldFormatModalState,
   changeAOPauseModalState,
-  changeCCYInfoModalState,
-  fetchCCYArticle,
-  setCCYArticle,
+  changeCcyInfoModalState,
+  fetchCcyArticle,
+  setCcyArticle,
 }

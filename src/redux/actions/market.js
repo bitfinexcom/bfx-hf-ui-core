@@ -20,7 +20,7 @@ const getPerpsNames = () => ({
   type: types.GET_PERPS_NAMES,
 })
 
-const getCCYsId = () => ({
+const getCcysId = () => ({
   type: types.GET_CCYS_ID,
 })
 
@@ -29,7 +29,7 @@ const setPerpsNames = names => ({
   payload: { names },
 })
 
-const setCCYsId = ids => ({
+const setCcysId = ids => ({
   type: types.SET_CCYS_ID,
   payload: { ids },
 })
@@ -40,6 +40,6 @@ export default {
   getCCYFullNames,
   getPerpsNames,
   setPerpsNames,
-  getCCYsId,
-  setCCYsId,
+  getCcysId,
+  setCcysId,
 }

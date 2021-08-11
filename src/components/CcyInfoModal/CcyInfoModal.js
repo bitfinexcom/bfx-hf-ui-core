@@ -4,16 +4,15 @@ import PropTypes from 'prop-types'
 import { Spinner } from '@ufx-ui/core'
 import Modal from '../../ui/Modal'
 
-const CCYInfoModal = ({
+const CcyInfoModal = ({
   onClose,
   isModalVisible,
-  fetchCCYArticle,
+  fetchCcyArticle,
   article,
 }) => {
-  console.log(article)
   useEffect(() => {
     if (isModalVisible && _isEmpty(article)) {
-      fetchCCYArticle()
+      fetchCcyArticle()
     }
   }, [isModalVisible])
   const { body, title } = article
@@ -33,21 +32,21 @@ const CCYInfoModal = ({
   )
 }
 
-CCYInfoModal.propTypes = {
+CcyInfoModal.propTypes = {
   isModalVisible: PropTypes.bool.isRequired,
   onClose: PropTypes.func.isRequired,
-  fetchCCYArticle: PropTypes.func.isRequired,
+  fetchCcyArticle: PropTypes.func.isRequired,
   article: PropTypes.shape({
     body: PropTypes.string,
     title: PropTypes.string,
   }),
 }
 
-CCYInfoModal.defaultProps = {
+CcyInfoModal.defaultProps = {
   article: {
     body: null,
     title: null,
   },
 }
 
-export default memo(CCYInfoModal)
+export default memo(CcyInfoModal)

@@ -95,7 +95,7 @@ export default (state = getInitialState(), action = {}) => {
         if (!idArray || !idArray[1]) {
           return acc
         }
-        acc[key] = { ...market, baseCCYid: idArray[1] }
+        acc[key] = { ...market, baseCcyId: idArray[1] }
         return acc
       }, EMPTY_OBJ)
       return newState

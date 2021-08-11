@@ -65,7 +65,7 @@ function getInitialState() {
     isRefillBalanceModalVisible: false,
     isOldFormatModalVisible: false,
     isAOPauseModalVisible: false,
-    isCCYInfoModalVisible: false,
+    isCcyInfoModalVisible: false,
     isBadInternetConnection: false,
     isOrderExecuting: false,
     content: {},
@@ -495,7 +495,7 @@ function reducer(state = getInitialState(), action = {}) {
 
       return {
         ...state,
-        isCCYInfoModalVisible: isVisible,
+        isCcyInfoModalVisible: isVisible,
       }
     }
     case types.SET_CCY_ARTICLE: {

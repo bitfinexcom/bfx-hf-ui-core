@@ -7,8 +7,8 @@ const path = REDUCER_PATHS.UI
 const EMPTY_OBJ = {}
 
 const getActiveMarketArticle = createSelector([getActiveMarket, state => state], (activeMarket, state) => {
-  const { baseCCYid } = activeMarket
-  return _get(state, `${path}.ccyArticles.${baseCCYid}`, EMPTY_OBJ)
+  const { baseCcyId } = activeMarket
+  return _get(state, `${path}.ccyArticles.${baseCcyId}`, EMPTY_OBJ)
 })
 
 export default getActiveMarketArticle
