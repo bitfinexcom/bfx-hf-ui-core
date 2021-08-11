@@ -10,7 +10,7 @@ const mapStateToProps = (state = {}) => ({
   article: getActiveMarketArticle(state),
 })
 
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch) => ({
   onClose: () => dispatch(UIActions.changeCcyInfoModalState(false)),
   fetchCcyArticle: () => dispatch(zendeskActions.fetchCcyArticle()),
 })
