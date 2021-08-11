@@ -2,27 +2,23 @@ import { put, select } from 'redux-saga/effects'
 import { v4 } from 'uuid'
 import Debug from 'debug'
 import axios from 'axios'
-import _get from 'lodash/get'
 import _isEmpty from 'lodash/isEmpty'
 import UIActions from '../../actions/ui'
-import { getActiveMarket } from '../../selectors/ui'
+import { getActiveMarketCcyId } from '../../selectors/zendesk'
+import zendeskActions from '../../actions/zendesk'
 
 const debug = Debug('hfui:rx:s:market-hfui:getting ccy article')
 
 export default function* fetchCcyArticle() {
   try {
-    const activeMarket = yield select(getActiveMarket)
-    const id = _get(activeMarket, 'baseCcyId', null)
-    if (!id) {
-      return
-    }
+    const id = yield select(getActiveMarketCcyId)
     const url = `${process.env.REACT_APP_UFX_PUBLIC_API_URL}/v1/articles?type=zendesk&id=${id}&lang=en-us`
     const { data } = yield axios.get(url)
     const { status, data: result } = data
     if (status !== 'success' || _isEmpty(result)) {
       throw new Error('Article not found')
     }
-    yield put(UIActions.setCcyArticle(result[0]))
+    yield put(zendeskActions.setCcyArticle(result[0]))
   } catch (err) {
     debug('failed to fetch ccy article: %s', err.message)
     yield put(UIActions.changeCcyInfoModalState(false))

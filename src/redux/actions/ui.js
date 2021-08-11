@@ -204,15 +204,6 @@ export const changeCcyInfoModalState = (isVisible) => ({
   payload: { isVisible },
 })
 
-export const fetchCcyArticle = () => ({
-  type: types.FETCH_CCY_ARTICLE,
-})
-
-export const setCcyArticle = article => ({
-  type: types.SET_CCY_ARTICLE,
-  payload: { ...article },
-})
-
 export default {
   saveLayout,
   storeUnsavedLayout,
@@ -246,6 +237,4 @@ export default {
   changeOldFormatModalState,
   changeAOPauseModalState,
   changeCcyInfoModalState,
-  fetchCcyArticle,
-  setCcyArticle,
 }

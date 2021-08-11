@@ -498,11 +498,6 @@ function reducer(state = getInitialState(), action = {}) {
         isCcyInfoModalVisible: isVisible,
       }
     }
-    case types.SET_CCY_ARTICLE: {
-      const { id } = payload
-      const ccyArticles = { ...state.ccyArticles, [id]: payload }
-      return { ...state, ccyArticles }
-    }
     default: {
       return state
     }

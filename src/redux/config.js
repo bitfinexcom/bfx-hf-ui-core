@@ -5,6 +5,7 @@ const REDUCER_PATHS = {
   UI: 'ui',
   NOTIFICATIONS: 'notifications',
   AOS: 'aos',
+  ZENDESK: 'zendesk',
 }
 
 const UFX_REDUCER_PATHS = {

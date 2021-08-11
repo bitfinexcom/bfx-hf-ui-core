@@ -20,18 +20,9 @@ const getPerpsNames = () => ({
   type: types.GET_PERPS_NAMES,
 })
 
-const getCcysId = () => ({
-  type: types.GET_CCYS_ID,
-})
-
 const setPerpsNames = names => ({
   type: types.SET_PERPS_NAMES,
   payload: { names },
-})
-
-const setCcysId = ids => ({
-  type: types.SET_CCYS_ID,
-  payload: { ids },
 })
 
 export default {
@@ -40,6 +31,4 @@ export default {
   getCCYFullNames,
   getPerpsNames,
   setPerpsNames,
-  getCcysId,
-  setCcysId,
 }

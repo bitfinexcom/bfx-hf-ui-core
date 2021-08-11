@@ -15,6 +15,7 @@ const CcyInfoModal = ({
       fetchCcyArticle()
     }
   }, [isModalVisible])
+
   const { body, title } = article
   return (
     <Modal title={title} onClose={onClose} isOpen={isModalVisible}>
