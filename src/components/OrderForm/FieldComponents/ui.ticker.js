@@ -6,6 +6,8 @@ import { getActiveMarket } from '../../../redux/selectors/ui'
 import PLNumber from '../../../ui/PLNumber'
 import { processBalance } from '../../../util/ui'
 
+const preparePrice = (value) => processBalance(value, false)
+
 const TickerBar = (props) => {
   const { onFieldChange, layout: { fields } } = props
   const activeMarket = useSelector(getActiveMarket)
@@ -29,7 +31,7 @@ const TickerBar = (props) => {
         <span className='ticker-name'>BID:</span>
         <PLNumber
           value={bid}
-          prepareFunc={processBalance}
+          prepareFunc={preparePrice}
           ccy={quote}
           isGreen
         />
@@ -41,7 +43,7 @@ const TickerBar = (props) => {
         tabIndex='0'
       >
         <span className='ticker-name'>ASK:</span>
-        <PLNumber value={ask} prepareFunc={processBalance} ccy={quote} />
+        <PLNumber value={ask} prepareFunc={preparePrice} ccy={quote} />
       </div>
     </div>
   )

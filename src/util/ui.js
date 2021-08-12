@@ -16,7 +16,9 @@ export const processBalance = (value, localise = true) => {
   let str = _toString(value)
 
   if (localise) {
-    str = localiseNumber(str)
+    str = localiseNumber(value)
+  } else {
+    str = _toString(value)
   }
 
   if (!_toString(_split(value, '.')[1])) {
