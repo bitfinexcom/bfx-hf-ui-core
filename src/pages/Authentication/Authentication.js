@@ -8,7 +8,6 @@ import AuthenticationConnectingForm from './AuthenticationConnectingForm'
 import { isElectronApp, electronAppVersion } from '../../redux/config'
 
 import './style.css'
-import { isDevEnv } from '../../util/autologin'
 
 const Authentication = ({
   wsConnected,
@@ -18,10 +17,6 @@ const Authentication = ({
   onReset,
   isPaperTrading,
 }) => {
-  if (!isElectronApp && !isDevEnv()) {
-    return <AuthenticationConnectingForm />
-  }
-
   return (
     <div className='hfui-authenticationpage__wrapper'>
       <div className='hfui-authenticationpage__inner'>
