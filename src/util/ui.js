@@ -6,6 +6,7 @@ import _toArray from 'lodash/toArray'
 import _toString from 'lodash/toString'
 import _reverse from 'lodash/reverse'
 import _truncate from 'lodash/truncate'
+import cx from 'classnames'
 
 // takes a number as input and returns a localised version with semicolons in it
 // e.g. 123456789.445566 -> '123,456,789.445566'
@@ -40,3 +41,15 @@ export const makeShorterLongName = (name, limit) => _truncate(name, {
   length: limit,
   omission: '...',
 })
+
+export const reactVirtualizedCellRenderer = (value, formattedValue = value, coloredCell = false) => (
+  <span
+    title={value}
+    className={cx('text-overflow', {
+      'hfui-red': coloredCell && value < 0,
+      'hfui-green': coloredCell && value >= 0,
+    })}
+  >
+    {formattedValue}
+  </span>
+)

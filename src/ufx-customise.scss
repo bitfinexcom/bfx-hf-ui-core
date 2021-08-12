@@ -43,3 +43,8 @@ $ufx-dialog-title: 14px;
     font-weight: 600 !important;
   }
 }
+
+.#{$ns}-fade-trailing-zeros {
+  color: inherit;
+  opacity: 0.6;
+}
