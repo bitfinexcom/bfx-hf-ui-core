@@ -21,12 +21,14 @@ const CcyInfoModal = ({
 
   const { body, title } = article
   return (
-    <Modal title={title} onClose={onClose} isOpen={isModalVisible} className='hfui-ccy-article-modal'>
-      {body ? (
-        <InnerHTML html={body} />
-      ) : (
-        <Spinner />
-      )}
+    <Modal
+      title={title}
+      onClose={onClose}
+      isOpen={isModalVisible}
+      className='hfui-ccy-article-modal'
+      scrollable
+    >
+      {body ? <InnerHTML html={body} /> : <Spinner />}
     </Modal>
   )
 }
