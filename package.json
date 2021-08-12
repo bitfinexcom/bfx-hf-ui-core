@@ -91,6 +91,7 @@
     "codemirror": "^5.48.0",
     "connected-react-router": "^6.5.2",
     "cross-env": "^7.0.2",
+    "dangerously-set-html-content": "^1.0.8",
     "date-fns": "^2.22.1",
     "debug": "^4.1.1",
     "dotenv": "^8.2.0",

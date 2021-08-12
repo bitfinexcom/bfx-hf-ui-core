@@ -6,6 +6,4 @@ const EMPTY_OBJ = {}
 
 const getCcyArticles = (state) => _get(state, `${path}.articles`, EMPTY_OBJ)
 
-console.log(getCcyArticles, 'getCcyArticles')
-
 export default getCcyArticles

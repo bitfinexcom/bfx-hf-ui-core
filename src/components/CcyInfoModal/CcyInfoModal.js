@@ -1,8 +1,11 @@
 import React, { memo, useEffect } from 'react'
 import _isEmpty from 'lodash/isEmpty'
 import PropTypes from 'prop-types'
+import InnerHTML from 'dangerously-set-html-content'
 import { Spinner } from '@ufx-ui/core'
 import Modal from '../../ui/Modal'
+
+import './style.css'
 
 const CcyInfoModal = ({
   onClose,
@@ -18,14 +21,9 @@ const CcyInfoModal = ({
 
   const { body, title } = article
   return (
-    <Modal title={title} onClose={onClose} isOpen={isModalVisible}>
+    <Modal title={title} onClose={onClose} isOpen={isModalVisible} className='hfui-ccy-article-modal'>
       {body ? (
-        <div
-          // eslint-disable-next-line react/no-danger
-          dangerouslySetInnerHTML={{
-            __html: body,
-          }}
-        />
+        <InnerHTML html={body} />
       ) : (
         <Spinner />
       )}
