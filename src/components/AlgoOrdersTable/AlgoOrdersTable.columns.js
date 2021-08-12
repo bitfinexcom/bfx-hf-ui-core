@@ -11,9 +11,7 @@ export default (authToken, cancelOrder, gaCancelOrder) => [{
   dataKey: 'args._margin',
   width: 65,
   flexGrow: 0.65,
-  cellRenderer: ({ rowData = {} }) => {
-    return rowData.args?._margin ? 'Margin' : 'Exchange'
-  },
+  cellRenderer: ({ rowData = {} }) => (rowData.args?._margin ? 'Margin' : 'Exchange'),
 }, {
   label: 'Created',
   dataKey: 'gid',
