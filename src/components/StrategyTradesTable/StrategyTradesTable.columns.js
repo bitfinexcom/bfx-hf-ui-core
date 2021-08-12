@@ -1,38 +1,54 @@
+/* eslint-disable react/prop-types */
+/* eslint-disable react/display-name */
 import React from 'react'
-import { preparePrice, prepareAmount } from 'bfx-api-node-util'
-import { processBalance } from '../../util/ui'
+import { PrettyValue } from '@ufx-ui/core'
+
+import { reactVirtualizedCellRenderer } from '../../util/ui'
+import { AMOUNT_DECIMALS, PRICE_SIG_FIGS } from '../../constants/precision'
 
 export default [{
   label: 'Price',
   dataKey: 'price',
   width: 60,
-  cellRenderer: ({ rowData = {} }) => preparePrice(rowData.price),
+  cellRenderer: ({ rowData = {} }) => (
+    <PrettyValue
+      value={rowData?.price}
+      sigFig={PRICE_SIG_FIGS}
+      fadeTrailingZeros
+    />
+  ),
 }, {
   label: 'Amount',
   dataKey: 'amount',
   width: 120,
-  cellRenderer: ({ rowData = {} }) => ( // eslint-disable-line
-    <span className={rowData.amount < 0 ? 'hfui-red' : 'hfui-green'}>
-      {processBalance(prepareAmount(rowData.amount))}
-    </span>
+  cellRenderer: ({ rowData = {} }) => (
+    <PrettyValue
+      value={rowData?.amount}
+      decimals={AMOUNT_DECIMALS}
+      fadeTrailingZeros
+      strike={0}
+    />
   ),
 }, {
   label: 'P/L',
   dataKey: 'pl',
   width: 120,
-  cellRenderer: ({ rowData = {} }) => ( // eslint-disable-line
-    <span className={rowData.pl < 0 ? 'hfui-red' : 'hfui-green'}>
-      {processBalance(prepareAmount(rowData.pl))}
-    </span>
+  cellRenderer: ({ rowData = {} }) => (
+    <PrettyValue
+      value={rowData?.pl}
+      decimals={AMOUNT_DECIMALS}
+      fadeTrailingZeros
+      strike={0}
+    />
   ),
 }, {
   label: 'Label',
   dataKey: 'label',
   width: 200,
-  cellRenderer: ({ rowData = {} }) => rowData.label,
+  cellRenderer: ({ rowData = {} }) => reactVirtualizedCellRenderer(rowData.label),
 }, {
   label: 'Time',
   dataKey: 'mts',
   width: 150,
-  cellRenderer: ({ rowData = {} }) => new Date(rowData.mts).toLocaleString(),
+  cellRenderer: ({ rowData = {} }) => reactVirtualizedCellRenderer(new Date(rowData.mts).toLocaleString()),
 }]
