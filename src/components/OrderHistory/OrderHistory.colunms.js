@@ -2,6 +2,8 @@ import React from 'react'
 import _get from 'lodash/get'
 import { ORDER_HISTORY_KEYS, PrettyValue, FullDate } from '@ufx-ui/core'
 import { getPriceFromStatus, getFormatedStatus } from './OrderHistory.helpers'
+import { defaultCellRenderer } from '../../util/ui'
+import { AMOUNT_DECIMALS } from '../../constants/precision'
 
 const {
   ID,
@@ -29,15 +31,14 @@ export const ROW_MAPPING = {
   [AMOUNT]: {
     index: 2,
     selector: 'originalAmount',
-    // eslint-disable-next-line react/prop-types, react/display-name
-    renderer: ({ rowData }) => {
-      const amount = _get(rowData, 'originalAmount')
-
-      return (amount < 0
-        ? <span className='hfui-red'>{amount}</span>
-        : <span className='hfui-green'>{amount}</span>
-      )
-    },
+    renderer: ({ rowData }) => defaultCellRenderer(
+      <PrettyValue
+        value={rowData?.originalAmount}
+        decimals={AMOUNT_DECIMALS}
+        fadeTrailingZeros
+        strike={0}
+      />,
+    ),
   },
   [PRICE]: {
     index: 3,

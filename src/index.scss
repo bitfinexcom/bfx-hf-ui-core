@@ -335,11 +335,3 @@ a:visited {
 .ReactVirtualized__Table__Grid {
   font-feature-settings: "tnum";
 }
-
-.ReactVirtualized__Table__rowColumn,
-.ReactVirtualized__Table__rowColumn > *,
-.text-overflow {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}

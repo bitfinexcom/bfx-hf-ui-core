@@ -2,7 +2,7 @@
 /* eslint-disable react/display-name */
 import React from 'react'
 import { PrettyValue } from '@ufx-ui/core'
-import { reactVirtualizedCellRenderer } from '../../util/ui'
+import { defaultCellRenderer } from '../../util/ui'
 import { PRICE_SIG_FIGS } from '../../constants/precision'
 
 const STYLES = {
@@ -14,7 +14,7 @@ export default ({ authToken, closePosition }) => [{
   dataKey: 'symbol',
   width: 145,
   flexGrow: 1.5,
-  cellRenderer: ({ rowData = {} }) => reactVirtualizedCellRenderer(rowData.uiID),
+  cellRenderer: ({ rowData = {} }) => defaultCellRenderer(rowData.uiID),
 }, {
   label: 'Amount',
   dataKey: 'amount',
@@ -22,12 +22,13 @@ export default ({ authToken, closePosition }) => [{
   flexGrow: 1.6,
   headerStyle: STYLES.rightAlign,
   style: STYLES.rightAlign,
-  cellRenderer: ({ rowData = {} }) => (
+  cellRenderer: ({ rowData = {} }) => defaultCellRenderer(
     <PrettyValue
       value={rowData?.amount}
       decimals={6}
       fadeTrailingZeros
-    />
+      strike={0}
+    />,
   ),
 }, {
   label: 'Base Price',
@@ -36,12 +37,12 @@ export default ({ authToken, closePosition }) => [{
   flexGrow: 1.3,
   headerStyle: STYLES.rightAlign,
   style: STYLES.rightAlign,
-  cellRenderer: ({ rowData = {} }) => (
+  cellRenderer: ({ rowData = {} }) => defaultCellRenderer(
     <PrettyValue
       value={rowData?.basePrice}
       decimals={8}
       fadeTrailingZeros
-    />
+    />,
   ),
 }, {
   label: 'Liq Price',
@@ -50,12 +51,12 @@ export default ({ authToken, closePosition }) => [{
   flexGrow: 1,
   headerStyle: STYLES.rightAlign,
   style: STYLES.rightAlign,
-  cellRenderer: ({ rowData = {} }) => (
+  cellRenderer: ({ rowData = {} }) => defaultCellRenderer(
     <PrettyValue
       value={rowData?.liquidationPrice}
       sigFig={PRICE_SIG_FIGS}
       fadeTrailingZeros
-    />
+    />,
   ),
 }, {
   label: 'P/L',
@@ -64,13 +65,13 @@ export default ({ authToken, closePosition }) => [{
   flexGrow: 1,
   headerStyle: STYLES.rightAlign,
   style: STYLES.rightAlign,
-  cellRenderer: ({ rowData = {} }) => (
+  cellRenderer: ({ rowData = {} }) => defaultCellRenderer(
     <PrettyValue
       value={rowData?.pl}
       decimals={3}
       fadeTrailingZeros
       strike={0}
-    />
+    />,
   ),
 }, {
   label: 'P/L %',
@@ -79,7 +80,13 @@ export default ({ authToken, closePosition }) => [{
   flexGrow: 0.7,
   headerStyle: STYLES.rightAlign,
   style: STYLES.rightAlign,
-  cellRenderer: ({ rowData = {} }) => <PrettyValue value={rowData?.plPerc || 0} decimals={2} strike={0} />,
+  cellRenderer: ({ rowData = {} }) => defaultCellRenderer(
+    <PrettyValue
+      value={rowData?.plPerc || 0}
+      decimals={2}
+      strike={0}
+    />,
+  ),
 }, {
   label: 'Funding Cost',
   dataKey: 'marginFunding',
@@ -87,13 +94,13 @@ export default ({ authToken, closePosition }) => [{
   flexGrow: 1,
   headerStyle: STYLES.rightAlign,
   style: STYLES.rightAlign,
-  cellRenderer: ({ rowData = {} }) => (
+  cellRenderer: ({ rowData = {} }) => defaultCellRenderer(
     <PrettyValue
       value={rowData?.marginFunding}
       fadeTrailingZeros
       strike={0}
       decimals={3}
-    />
+    />,
   ),
 }, {
   dataKey: 'order_cid',

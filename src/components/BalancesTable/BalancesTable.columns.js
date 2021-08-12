@@ -3,7 +3,7 @@
 import React from 'react'
 import _capitalize from 'lodash/capitalize'
 import { PrettyValue } from '@ufx-ui/core'
-import { reactVirtualizedCellRenderer } from '../../util/ui'
+import { defaultCellRenderer } from '../../util/ui'
 import { AMOUNT_DECIMALS } from '../../constants/precision'
 
 const STYLES = {
@@ -16,13 +16,13 @@ export default () => [{
   dataKey: 'context',
   width: 120,
   flexGrow: 1,
-  cellRenderer: ({ rowData = {} }) => reactVirtualizedCellRenderer(_capitalize(rowData.context)),
+  cellRenderer: ({ rowData = {} }) => defaultCellRenderer(_capitalize(rowData.context)),
 }, {
   label: 'Currency',
   dataKey: 'currency',
   width: 100,
   flexGrow: 1,
-  cellRenderer: ({ rowData = {} }) => reactVirtualizedCellRenderer(rowData.currency),
+  cellRenderer: ({ rowData = {} }) => defaultCellRenderer(rowData.currency),
 }, {
   label: 'Total',
   dataKey: 'balance',
@@ -30,12 +30,12 @@ export default () => [{
   flexGrow: 1.4,
   headerStyle: STYLES.total,
   style: STYLES.total,
-  cellRenderer: ({ rowData = {} }) => (
+  cellRenderer: ({ rowData = {} }) => defaultCellRenderer(
     <PrettyValue
       value={rowData?.balance}
       decimals={AMOUNT_DECIMALS}
       fadeTrailingZeros
-    />
+    />,
   ),
 }, {
   label: 'Available',
@@ -44,11 +44,11 @@ export default () => [{
   flexGrow: 1.4,
   headerStyle: STYLES.available,
   style: STYLES.available,
-  cellRenderer: ({ rowData = {} }) => (
+  cellRenderer: ({ rowData = {} }) => defaultCellRenderer(
     <PrettyValue
       value={rowData?.available}
       decimals={AMOUNT_DECIMALS}
       fadeTrailingZeros
-    />
+    />,
   ),
 }]
