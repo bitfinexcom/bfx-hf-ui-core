@@ -70,10 +70,6 @@ const ApiKeys = () => {
       <div className='appsettings-modal__title'>
         API Keys
       </div>
-      <ApiBanner
-        apiKeyState={mainAPIKeyState}
-        isUpdating={isMainApiKeyUpdating}
-      />
       <div className='appsettings-modal__setting'>
         <p>
           Production API Keys -
@@ -86,6 +82,10 @@ const ApiKeys = () => {
             How to Create a Key?
           </a>
         </p>
+        <ApiBanner
+          apiKeyState={mainAPIKeyState}
+          isUpdating={isMainApiKeyUpdating}
+        />
         <div className='appsettings-modal__input'>
           <Input
             type='text'
@@ -113,10 +113,6 @@ const ApiKeys = () => {
           {mainAPIKeyState.configured ? 'Update' : 'Save'}
         </Button>
       </div>
-      <ApiBanner
-        apiKeyState={paperAPIKeyState}
-        isUpdating={isPaperApiKeyUpdating}
-      />
       <div className='appsettings-modal__setting'>
         <p>
           Paper Trading API Keys -
@@ -129,6 +125,10 @@ const ApiKeys = () => {
             Learn More
           </a>
         </p>
+        <ApiBanner
+          apiKeyState={paperAPIKeyState}
+          isUpdating={isPaperApiKeyUpdating}
+        />
         <div className='appsettings-modal__input'>
           <Input
             type='text'
