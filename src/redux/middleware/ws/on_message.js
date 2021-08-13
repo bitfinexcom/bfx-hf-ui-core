@@ -9,6 +9,7 @@ import WSActions from '../../actions/ws'
 import AOActions from '../../actions/ao'
 import marketActions from '../../actions/market'
 import closeElectronApp from '../../helpers/close_electron_app'
+import { MAIN_MODE, PAPER_MODE } from '../../reducers/ui'
 
 const debug = Debug('hfui:rx:m:ws-hfui-server:msg')
 
@@ -158,8 +159,8 @@ export default (alias, store) => (e = {}) => {
         store.dispatch(WSActions.recvAPICredentialsConfigured(apiKeysState))
         // delay for showing 'validation...' message
         setTimeout(() => {
-          store.dispatch(WSActions.updatingMainModeApiKey(false))
-          store.dispatch(WSActions.updatingPaperModeApiKey(false))
+          store.dispatch(WSActions.updatingApiKey(MAIN_MODE, false))
+          store.dispatch(WSActions.updatingApiKey(PAPER_MODE, false))
         }, 1000)
 
         break

@@ -38,7 +38,7 @@ const ApiKeys = () => {
   const isPaperKeysTouched = _size(_trim(paperApiKey)) && _size(_trim(paperApiSecret))
 
   const onSaveMainModeApiKey = () => {
-    dispatch(WSActions.updatingMainModeApiKey(true))
+    dispatch(WSActions.updatingApiKey(MAIN_MODE, true))
     if (isProductionKeysTouched) {
       dispatch(WSActions.send([
         'api_credentials.save',
@@ -52,7 +52,7 @@ const ApiKeys = () => {
   }
 
   const onSavePaperModeApiKey = () => {
-    dispatch(WSActions.updatingPaperModeApiKey(true))
+    dispatch(WSActions.updatingApiKey(PAPER_MODE, true))
     if (isPaperKeysTouched) {
       dispatch(WSActions.send([
         'api_credentials.save',

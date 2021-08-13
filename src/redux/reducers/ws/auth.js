@@ -1,4 +1,5 @@
 import t from '../../constants/ws'
+import { MAIN_MODE, PAPER_MODE } from '../ui'
 
 const getInitialState = () => {
   return {}
@@ -38,11 +39,13 @@ export default function (state = getInitialState(), action = {}) {
         apiKeys: { ...apiKeysState },
       }
     }
-    case t.UPDATING_MAIN_MODE_API_KEY: {
-      return { ...state, isMainModeApiKeyUpdating: payload }
-    }
-    case t.UPDATING_PAPER_MODE_API_KEY: {
-      return { ...state, isPaperModeApiKeyUpdating: payload }
+    case t.UPDATING_API_KEY: {
+      const { mode, isUpdating } = payload
+      return {
+        ...state,
+        isMainModeApiKeyUpdating: mode === MAIN_MODE && isUpdating,
+        isPaperModeApiKeyUpdating: mode === PAPER_MODE && isUpdating,
+      }
     }
 
     default: {
