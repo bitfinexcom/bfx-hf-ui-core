@@ -13,7 +13,7 @@ const mapStateToProps = (state = {}) => {
     remoteVersion: getRemoteVersion(state),
     apiClientState: getAPIClientState(state),
     wsInterrupted: getIsInternetConnection(state),
-    isWrongAPIKeys: !getCurrentModeAPIKeyState(state).valid,
+    currentModeApiKeyState: getCurrentModeAPIKeyState(state),
   }
 }
 
