@@ -24,14 +24,6 @@ export default function (state = getInitialState(), action = {}) {
       }
     }
 
-    case t.AUTH_API_FAILED: {
-      const { status } = payload
-      return {
-        ...state,
-        isWrongAPIKeys: status,
-      }
-    }
-
     case t.DATA_API_CREDENTIALS_CONFIGURED: {
       const { state: apiKeysState } = payload
       return {

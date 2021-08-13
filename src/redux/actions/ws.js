@@ -241,11 +241,6 @@ export default {
     payload: { token },
   }),
 
-  authWrongAPIKeys: (status) => ({
-    type: t.AUTH_API_FAILED,
-    payload: { status },
-  }),
-
   recvBacktestStart: opts => ({
     type: t.BACKTEST_START,
     payload: opts,
