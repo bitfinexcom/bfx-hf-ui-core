@@ -369,7 +369,7 @@ class OrderForm extends React.Component {
 
     const apiClientConnected = apiClientState === 2
     const apiClientConnecting = apiClientState === 1
-    const apiClientConfigured = !_isEmpty(apiCredentials)
+    const apiClientConfigured = apiCredentials.configured && apiCredentials.valid
     const showOrderform = apiClientConfigured || !isElectronApp
     const renderData = marketToQuoteBase(currentMarket)
     const atomicOrderTypes = []
@@ -416,6 +416,7 @@ class OrderForm extends React.Component {
                   key='unconfigured'
                   onClick={this.onToggleConfigureModal}
                   isPaperTrading={isPaperTrading}
+                  keyExistButNotValid={apiCredentials.configured && !apiCredentials.valid}
                 />
               ),
 

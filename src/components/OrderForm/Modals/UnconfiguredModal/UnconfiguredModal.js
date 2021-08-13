@@ -3,15 +3,15 @@ import PropTypes from 'prop-types'
 
 import OrderFormModal from '../../OrderFormModal'
 
-const UnconfiguredModal = ({ onClick, isPaperTrading }) => (
+const UnconfiguredModal = ({ onClick, isPaperTrading, keyExistButNotValid }) => (
   <OrderFormModal
-    title='NOT CONFIGURED'
+    title={keyExistButNotValid ? 'NOT VALID' : 'NOT CONFIGURED'}
     icon='icon-api'
     onClick={onClick}
     content={(
       // eslint-disable-next-line jsx-a11y/anchor-is-valid
       <a className='submit-keys'>
-        Submit
+        {keyExistButNotValid ? 'Update' : 'Submit'}
         {isPaperTrading ? ' Paper Trading ' : ' '}
         API keys
       </a>
@@ -22,6 +22,7 @@ const UnconfiguredModal = ({ onClick, isPaperTrading }) => (
 UnconfiguredModal.propTypes = {
   onClick: PropTypes.func.isRequired,
   isPaperTrading: PropTypes.bool.isRequired,
+  keyExistButNotValid: PropTypes.bool.isRequired,
 }
 
 export default memo(UnconfiguredModal)
