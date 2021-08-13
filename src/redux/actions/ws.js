@@ -302,6 +302,14 @@ export default {
   resetBacktestData: () => ({
     type: t.RESET_DATA_BACKTEST,
   }),
+  updatingMainModeApiKey: (isUpdating) => ({
+    type: t.UPDATING_MAIN_MODE_API_KEY,
+    payload: isUpdating,
+  }),
+  updatingPaperModeApiKey: (isUpdating) => ({
+    type: t.UPDATING_PAPER_MODE_API_KEY,
+    payload: isUpdating,
+  }),
   initAuth: password => send(['auth.init', password, 'main']),
   auth: (password, mode) => send(['auth.submit', password, mode]),
   resetAuth: () => send(['auth.reset']),

@@ -2,11 +2,14 @@ import React, { useState, memo } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import _size from 'lodash/size'
 import _trim from 'lodash/trim'
-import _isEmpty from 'lodash/isEmpty'
 import { Button, Intent } from '@ufx-ui/core'
 
 import {
-  getAuthToken, getAPIClientState, getAPICredentials, getPaperAPIKeyConfigured, getMainAPIKeyConfigured,
+  getAuthToken,
+  getPaperAPIKeyState,
+  getMainAPIKeyState,
+  getIsMainModeApiKeyUpdating,
+  getIsPaperModeApiKeyUpdating,
 } from '../../redux/selectors/ws'
 import { getCurrentMode } from '../../redux/selectors/ui'
 import WSActions from '../../redux/actions/ws'
@@ -21,12 +24,10 @@ const ApiKeys = () => {
   const dispatch = useDispatch()
   const authToken = useSelector(getAuthToken)
   const currentMode = useSelector(getCurrentMode)
-  const apiClientState = useSelector(getAPIClientState)
-  const apiCredentials = useSelector(getAPICredentials)
-  const isPaperKeyConfigured = useSelector(getPaperAPIKeyConfigured)
-  const isMainKeyConfigured = useSelector(getMainAPIKeyConfigured)
-
-  const apiClientConnected = apiClientState === 2
+  const paperAPIKeyState = useSelector(getPaperAPIKeyState)
+  const mainAPIKeyState = useSelector(getMainAPIKeyState)
+  const isMainApiKeyUpdating = useSelector(getIsMainModeApiKeyUpdating)
+  const isPaperApiKeyUpdating = useSelector(getIsPaperModeApiKeyUpdating)
 
   const [apiKey, setApiKey] = useState('')
   const [apiSecret, setApiSecret] = useState('')
@@ -36,10 +37,8 @@ const ApiKeys = () => {
   const isProductionKeysTouched = _size(_trim(apiKey)) && _size(_trim(apiSecret))
   const isPaperKeysTouched = _size(_trim(paperApiKey)) && _size(_trim(paperApiSecret))
 
-  const apiClientConfigured = !_isEmpty(apiCredentials)
-  const isNotConfigured = !apiClientConnected && !apiClientConfigured
-
-  const onSave = () => {
+  const onSaveMainModeApiKey = () => {
+    dispatch(WSActions.updatingMainModeApiKey(true))
     if (isProductionKeysTouched) {
       dispatch(WSActions.send([
         'api_credentials.save',
@@ -50,7 +49,10 @@ const ApiKeys = () => {
         currentMode,
       ]))
     }
+  }
 
+  const onSavePaperModeApiKey = () => {
+    dispatch(WSActions.updatingPaperModeApiKey(true))
     if (isPaperKeysTouched) {
       dispatch(WSActions.send([
         'api_credentials.save',
@@ -69,10 +71,8 @@ const ApiKeys = () => {
         API Keys
       </div>
       <ApiBanner
-        isCurrentMode={currentMode === MAIN_MODE}
-        apiClientConfigured={apiClientConfigured}
-        apiClientConnected={apiClientConnected}
-        isValidKey={isMainKeyConfigured}
+        apiKeyState={mainAPIKeyState}
+        isUpdating={isMainApiKeyUpdating}
       />
       <div className='appsettings-modal__setting'>
         <p>
@@ -104,12 +104,18 @@ const ApiKeys = () => {
             autocomplete='off'
           />
         </div>
+        <Button
+          intent={Intent.PRIMARY}
+          small
+          onClick={onSaveMainModeApiKey}
+          disabled={!isProductionKeysTouched}
+        >
+          {mainAPIKeyState.configured ? 'Update' : 'Save'}
+        </Button>
       </div>
       <ApiBanner
-        isCurrentMode={currentMode === PAPER_MODE}
-        apiClientConfigured={apiClientConfigured}
-        apiClientConnected={apiClientConnected}
-        isValidKey={isPaperKeyConfigured}
+        apiKeyState={paperAPIKeyState}
+        isUpdating={isPaperApiKeyUpdating}
       />
       <div className='appsettings-modal__setting'>
         <p>
@@ -141,15 +147,15 @@ const ApiKeys = () => {
             autocomplete='off'
           />
         </div>
+        <Button
+          intent={Intent.PRIMARY}
+          small
+          onClick={onSavePaperModeApiKey}
+          disabled={!isPaperKeysTouched}
+        >
+          {paperAPIKeyState.configured ? 'Update' : 'Save'}
+        </Button>
       </div>
-      <Button
-        intent={Intent.PRIMARY}
-        small
-        onClick={onSave}
-        disabled={!(isProductionKeysTouched || isPaperKeysTouched)}
-      >
-        {isNotConfigured ? 'Save' : 'Update'}
-      </Button>
     </div>
   )
 }

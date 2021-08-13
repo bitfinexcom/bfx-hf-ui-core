@@ -35,11 +35,14 @@ export default function (state = getInitialState(), action = {}) {
       const { state: apiKeysState } = payload
       return {
         ...state,
-        apiKeys: {
-          isMainConfigured: apiKeysState.main,
-          isPaperConfigured: apiKeysState.paper,
-        },
+        apiKeys: { ...apiKeysState },
       }
+    }
+    case t.UPDATING_MAIN_MODE_API_KEY: {
+      return { ...state, isMainModeApiKeyUpdating: payload }
+    }
+    case t.UPDATING_PAPER_MODE_API_KEY: {
+      return { ...state, isPaperModeApiKeyUpdating: payload }
     }
 
     default: {

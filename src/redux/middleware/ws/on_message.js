@@ -156,6 +156,12 @@ export default (alias, store) => (e = {}) => {
       case 'data.api_credentials.validation': {
         const [, apiKeysState] = payload
         store.dispatch(WSActions.recvAPICredentialsConfigured(apiKeysState))
+        // delay for showing 'validation...' message
+        setTimeout(() => {
+          store.dispatch(WSActions.updatingMainModeApiKey(false))
+          store.dispatch(WSActions.updatingPaperModeApiKey(false))
+        }, 1000)
+
         break
       }
 

@@ -71,4 +71,7 @@ export default {
   ALIAS_API_SERVER: 'bfx-hf-server',
   ALIAS_DATA_SERVER: 'bfx-hf-data-server',
   ALIAS_PUB_WS_API: 'pub-ws-api',
+
+  UPDATING_MAIN_MODE_API_KEY: 'WS_UPDATING_MAIN_MODE_API_KEY',
+  UPDATING_PAPER_MODE_API_KEY: 'WS_UPDATING_PAPER_MODE_API_KEY',
 }

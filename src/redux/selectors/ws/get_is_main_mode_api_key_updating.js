@@ -4,5 +4,5 @@ import { REDUCER_PATHS } from '../../config'
 const path = REDUCER_PATHS.WS
 
 export default (state) => {
-  return _get(state, `${path}.auth.apiKeys.isMainConfigured`, false)
+  return _get(state, `${path}.auth.isMainModeApiKeyUpdating`, null)
 }

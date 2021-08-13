@@ -1,73 +1,64 @@
 import React, { memo } from 'react'
 import PropTypes from 'prop-types'
-import { useSelector } from 'react-redux'
 import { ReactComponent as CheckIcon } from './check.svg'
 import { ReactComponent as ErrorIcon } from './error.svg'
 import { ReactComponent as ClockIcon } from './clock.svg'
-import { isWrongAPIKeys } from '../../redux/selectors/ws'
 
 const ApiBanner = ({
-  apiClientConfigured,
-  apiClientConnected,
-  isValidKey,
-  isCurrentMode,
+  isUpdating,
+  apiKeyState,
 }) => {
-  const wrongAPIKeys = useSelector(isWrongAPIKeys)
-  if (isCurrentMode) {
+  const { configured, valid } = apiKeyState
+
+  if (isUpdating) {
     return (
-      <>
-        {wrongAPIKeys ? (
-          <div className='appsettings-modal__api-configuration-message is-error'>
-            <ErrorIcon />
-            {' '}
-            Invalid API Keys entered
-          </div>
-        ) : !isValidKey ? (
-          <div className='appsettings-modal__api-configuration-message is-error'>
-            <ErrorIcon />
-            {' '}
-            Not Configured
-          </div>
-        ) : apiClientConfigured && apiClientConnected ? (
-          <div className='appsettings-modal__api-configuration-message is-success'>
-            <CheckIcon />
-            {' '}
-            Configured
-          </div>
-        ) : (
-          <div className='appsettings-modal__api-configuration-message is-warning'>
-            <ClockIcon />
-            {' '}
-            Validating...
-          </div>
-        )}
-      </>
+      <div className='appsettings-modal__api-configuration-message is-warning'>
+        <ClockIcon />
+        {' '}
+        Validating...
+      </div>
+    )
+  }
+  if (!configured) {
+    return (
+      <div className='appsettings-modal__api-configuration-message is-error'>
+        <ErrorIcon />
+        {' '}
+        Not Configured
+      </div>
+    )
+  }
+  if (!valid) {
+    return (
+      <div className='appsettings-modal__api-configuration-message is-error'>
+        <ErrorIcon />
+        {' '}
+        Invalid API Key entered
+      </div>
     )
   }
   return (
-    <>
-      {isValidKey ? (
-        <div className='appsettings-modal__api-configuration-message is-success'>
-          <CheckIcon />
-          {' '}
-          Configured
-        </div>
-      ) : (
-        <div className='appsettings-modal__api-configuration-message is-error'>
-          <ErrorIcon />
-          {' '}
-          Not Configured or entered invalid key
-        </div>
-      )}
-    </>
+    <div className='appsettings-modal__api-configuration-message is-success'>
+      <CheckIcon />
+      {' '}
+      Configured
+    </div>
   )
 }
 
 ApiBanner.propTypes = {
-  apiClientConfigured: PropTypes.bool.isRequired,
-  apiClientConnected: PropTypes.bool.isRequired,
-  isValidKey: PropTypes.bool.isRequired,
-  isCurrentMode: PropTypes.bool.isRequired,
+  isUpdating: PropTypes.bool.isRequired,
+  apiKeyState: PropTypes.shape({
+    configured: PropTypes.bool,
+    valid: PropTypes.bool,
+  }),
+}
+
+ApiBanner.defaultProps = {
+  apiKeyState: {
+    configured: false,
+    valid: false,
+  },
 }
 
 export default memo(ApiBanner)
