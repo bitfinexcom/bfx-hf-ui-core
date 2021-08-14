@@ -26,6 +26,7 @@ const CcyInfoModal = ({
       onClose={onClose}
       isOpen={isModalVisible}
       className='hfui-ccy-article-modal'
+      width={600}
       scrollable
     >
       {body ? <InnerHTML html={body} /> : <Spinner />}
