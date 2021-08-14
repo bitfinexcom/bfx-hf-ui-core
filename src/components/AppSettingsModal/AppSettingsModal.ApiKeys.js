@@ -34,8 +34,8 @@ const ApiKeys = () => {
   const [paperApiKey, setPaperApiKey] = useState('')
   const [paperApiSecret, setPaperApiSecret] = useState('')
 
-  const isProductionKeysTouched = _size(_trim(apiKey)) && _size(_trim(apiSecret))
-  const isPaperKeysTouched = _size(_trim(paperApiKey)) && _size(_trim(paperApiSecret))
+  const isProductionKeysTouched = _size(_trim(apiKey)) && _size(_trim(apiSecret)) && !isMainApiKeyUpdating
+  const isPaperKeysTouched = _size(_trim(paperApiKey)) && _size(_trim(paperApiSecret)) && !isPaperApiKeyUpdating
 
   const onSaveMainModeApiKey = () => {
     dispatch(WSActions.updatingApiKey(MAIN_MODE, true))
