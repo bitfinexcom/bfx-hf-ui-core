@@ -26,5 +26,9 @@ const setPerpsNames = names => ({
 })
 
 export default {
-  changeSubscriptions, setCCYFullNames, getCCYFullNames, getPerpsNames, setPerpsNames,
+  changeSubscriptions,
+  setCCYFullNames,
+  getCCYFullNames,
+  getPerpsNames,
+  setPerpsNames,
 }

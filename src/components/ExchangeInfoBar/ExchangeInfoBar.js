@@ -26,6 +26,8 @@ const ExchangeInfoBar = ({
   setVolumeUnit,
   showOnlyFavoritePairs,
   updateShowOnlyFavoritePairs,
+  showCcyIconModal,
+  isCcyArticleAvailbale,
 }) => {
   const [tickerRef, size] = useSize()
 
@@ -50,7 +52,10 @@ const ExchangeInfoBar = ({
     volumeConverted,
   } = activeMarketTicker
   const {
-    base, quote, uiID, isPerp,
+    base,
+    quote,
+    uiID,
+    isPerp,
   } = activeMarket
 
   return (
@@ -83,6 +88,8 @@ const ExchangeInfoBar = ({
             className='hfui-exchangeinfobar__ticker'
             volumeUnit={tickersVolumeUnit !== 'SELF' ? tickersVolumeUnit : quote}
             ccyIcon={<CCYIcon ccy={base} />}
+            showCoinInfoIcon={isCcyArticleAvailbale}
+            onShowInfoClick={showCcyIconModal}
           />
         </div>
         <div
@@ -137,12 +144,15 @@ ExchangeInfoBar.propTypes = {
   setVolumeUnit: PropTypes.func.isRequired,
   showOnlyFavoritePairs: PropTypes.bool,
   updateShowOnlyFavoritePairs: PropTypes.func.isRequired,
+  showCcyIconModal: PropTypes.func.isRequired,
+  isCcyArticleAvailbale: PropTypes.bool,
 }
 
 ExchangeInfoBar.defaultProps = {
   markets: [],
   onRemove: () => {},
   showOnlyFavoritePairs: false,
+  isCcyArticleAvailbale: false,
 }
 
 export default ExchangeInfoBar

@@ -1,6 +1,7 @@
 import { takeEvery, fork } from 'redux-saga/effects'
 
 import UITypes from '../../constants/ui'
+
 import onChangeActiveMarket from './on_change_active_market'
 import onSaveSettings from './on_save_settings'
 import workerFetchRemoteVersion from './worker_fetch_remote_version'

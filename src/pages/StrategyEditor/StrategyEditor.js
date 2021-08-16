@@ -5,11 +5,15 @@ import _values from 'lodash/values'
 import randomColor from 'randomcolor'
 import PropTypes from 'prop-types'
 import _remove from 'lodash/remove'
-import { STEPS, STATUS } from '../../components/Joyride'
+
+import {
+  STEPS, ACTIONS, EVENTS, STATUS,
+} from '../../components/Joyride'
 import Layout from '../../components/Layout'
 import Panel from '../../ui/Panel'
 import Markdown from '../../ui/Markdown'
 import Backtester from '../../components/Backtester'
+
 // import LiveStrategyExecutor from '../../components/LiveStrategyExecutor'
 import './style.css'
 
@@ -25,6 +29,17 @@ const StrategyEditorPage = (props) => {
   const [indicators, setIndicators] = useState([])
   const [docsText, setDocsText] = useState('')
   const [forcedTab, setForcedTab] = useState('')
+  const [tourStep, setTourStep] = useState(0)
+  const [startTour, setStartTour] = useState(false)
+
+  // delay tour start a bit to mount all lazy loaded tour-targets
+  useEffect(() => {
+    if (isGuideActive) {
+      setTimeout(() => {
+        setStartTour(isGuideActive)
+      }, 200)
+    }
+  }, [isGuideActive])
 
   useEffect(() => {
     // load readme docs (DocsPath is an object when running in electron window)
@@ -63,10 +78,17 @@ const StrategyEditorPage = (props) => {
     setIndicators(newIndicators)
   }
 
-  const onGuideFinish = ({ status, action }) => {
+  const onTourUpdate = (data) => {
+    const {
+      status, action, index, type,
+    } = data
     const finishedStatuses = [STATUS.FINISHED, STATUS.SKIPPED]
     const CLOSE = 'close'
-    if (finishedStatuses.includes(status) || action === CLOSE) {
+
+    if ([EVENTS.STEP_AFTER, EVENTS.TARGET_NOT_FOUND].includes(type)) {
+      // Update state to advance the tour
+      setTourStep(index + (action === ACTIONS.PREV ? -1 : 1))
+    } else if (finishedStatuses.includes(status) || action === CLOSE) {
       finishGuide()
     }
   }
@@ -102,8 +124,9 @@ const StrategyEditorPage = (props) => {
             <Suspense fallback={<></>}>
               <Joyride
                 steps={STEPS.STRATEGY_EDITOR}
-                callback={onGuideFinish}
-                run={isGuideActive}
+                callback={onTourUpdate}
+                run={startTour}
+                stepIndex={tourStep}
               />
             </Suspense>
           )}

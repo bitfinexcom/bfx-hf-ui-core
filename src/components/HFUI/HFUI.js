@@ -9,7 +9,6 @@ import NotificationsSidebar from '../NotificationsSidebar'
 import closeElectronApp from '../../redux/helpers/close_electron_app'
 import Routes from '../../constants/routes'
 import { isElectronApp } from '../../redux/config'
-import BestExperienceMessageModal from '../BestExperienceMessageModal'
 
 import './style.css'
 
@@ -22,6 +21,8 @@ const TradingModeModal = lazy(() => import('../TradingModeModal'))
 const BadConnectionModal = lazy(() => import('../BadConnectionModal'))
 const OldFormatModal = lazy(() => import('../OldFormatModal'))
 const AOPauseModal = lazy(() => import('../AOPauseModal'))
+const BestExperienceMessageModal = lazy(() => import('../BestExperienceMessageModal'))
+const CcyInfoModal = lazy(() => import('../CcyInfoModal'))
 
 const HFUI = ({
   authToken,
@@ -103,6 +104,7 @@ const HFUI = ({
           ) : (
             <BestExperienceMessageModal />
           )}
+          <CcyInfoModal />
         </>
       ) : (
         <>

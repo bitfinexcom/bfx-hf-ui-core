@@ -8,12 +8,14 @@ import meta from './meta'
 import ws from './ws'
 import notifications from './notifications'
 import algoOrders from './ao'
+import zendesk from './zendesk'
 
 const reducers = history => combineReducers({
   [REDUCER_PATHS.ROUTER]: connectRouter(history),
   [REDUCER_PATHS.WS]: ws,
   [REDUCER_PATHS.META]: meta,
   [REDUCER_PATHS.UI]: ui,
+  [REDUCER_PATHS.ZENDESK]: zendesk,
   [REDUCER_PATHS.NOTIFICATIONS]: notifications,
   [REDUCER_PATHS.AOS]: algoOrders,
   [UFX_REDUCER_PATHS.UFX]: combineReducers({

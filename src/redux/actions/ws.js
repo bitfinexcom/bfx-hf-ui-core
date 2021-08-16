@@ -157,9 +157,9 @@ export default {
     payload: { strategies },
   }),
 
-  recvAPICredentialsConfigured: () => ({
+  recvAPICredentialsConfigured: (state) => ({
     type: t.DATA_API_CREDENTIALS_CONFIGURED,
-    payload: {},
+    payload: { state },
   }),
 
   recvClientStatusUpdate: ({ status }) => ({
@@ -241,16 +241,6 @@ export default {
     payload: { token },
   }),
 
-  authWrongAPIKeys: (status) => ({
-    type: t.AUTH_API_FAILED,
-    payload: { status },
-  }),
-
-  authAPIValidating: (status) => ({
-    type: t.AUTH_API_VALIDATING,
-    payload: { status },
-  }),
-
   recvBacktestStart: opts => ({
     type: t.BACKTEST_START,
     payload: opts,
@@ -313,6 +303,10 @@ export default {
   }),
   resetBacktestData: () => ({
     type: t.RESET_DATA_BACKTEST,
+  }),
+  updatingApiKey: (mode, isUpdating) => ({
+    type: t.UPDATING_API_KEY,
+    payload: { mode, isUpdating },
   }),
   initAuth: password => send(['auth.init', password, 'main']),
   auth: (password, mode) => send(['auth.submit', password, mode]),

@@ -7,8 +7,10 @@ import { v4 } from 'uuid'
 import UIActions from '../../actions/ui'
 import WSActions from '../../actions/ws'
 import AOActions from '../../actions/ao'
+import zendeskActions from '../../actions/zendesk'
 import marketActions from '../../actions/market'
 import closeElectronApp from '../../helpers/close_electron_app'
+import { MAIN_MODE, PAPER_MODE } from '../../reducers/ui'
 
 const debug = Debug('hfui:rx:m:ws-hfui-server:msg')
 
@@ -53,6 +55,7 @@ export default (alias, store) => (e = {}) => {
         store.dispatch(WSActions.recvDataMarkets(markets))
         store.dispatch(marketActions.getCCYFullNames())
         store.dispatch(marketActions.getPerpsNames())
+        store.dispatch(zendeskActions.getCcyIds())
         break
       }
 
@@ -159,8 +162,15 @@ export default (alias, store) => (e = {}) => {
         break
       }
 
-      case 'data.api_credentials.configured': {
-        store.dispatch(WSActions.recvAPICredentialsConfigured())
+      case 'data.api_credentials.validation': {
+        const [, apiKeysState] = payload
+        store.dispatch(WSActions.recvAPICredentialsConfigured(apiKeysState))
+        // delay for showing 'validation...' message
+        setTimeout(() => {
+          store.dispatch(WSActions.updatingApiKey(MAIN_MODE, false))
+          store.dispatch(WSActions.updatingApiKey(PAPER_MODE, false))
+        }, 1000)
+
         break
       }
 
