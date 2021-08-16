@@ -72,6 +72,12 @@ export default (alias, store) => (e = {}) => {
         break
       }
 
+      case 'auth.user_id': {
+        const [, userId] = payload
+        store.dispatch(WSActions.recvUserId(userId))
+        break
+      }
+
       case 'data': {
         const [,, chanID, exData] = payload
         store.dispatch(WSActions.bufferDataFromExchange(chanID, exData))

@@ -25,8 +25,17 @@ const BestExperienceMessageModal = lazy(() => import('../BestExperienceMessageMo
 const CcyInfoModal = lazy(() => import('../CcyInfoModal'))
 
 const HFUI = ({
-  authToken, getSettings, notificationsVisible, getFavoritePairs, currentMode, GAPageview,
-  currentPage, onUnload, subscribeAllTickers, shouldShowAOPauseModalState, settingsShowAlgoPauseInfo,
+  authToken,
+  getSettings,
+  notificationsVisible,
+  getFavoritePairs,
+  currentMode,
+  GAPageview,
+  currentPage,
+  onUnload,
+  subscribeAllTickers,
+  shouldShowAOPauseModalState,
+  settingsShowAlgoPauseInfo,
 }) => {
   function unloadHandler() {
     if (authToken !== null) {
@@ -98,7 +107,11 @@ const HFUI = ({
           <CcyInfoModal />
         </>
       ) : (
-        <AuthenticationPage />
+        <>
+          {isElectronApp && (
+            <AuthenticationPage />
+          )}
+        </>
       )}
       <NotificationsSidebar notificationsVisible={notificationsVisible} />
     </Suspense>

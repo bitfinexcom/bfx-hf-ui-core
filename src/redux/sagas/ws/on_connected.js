@@ -1,10 +1,13 @@
 import { put } from 'redux-saga/effects'
 import { v4 } from 'uuid'
 import A from '../../actions/ws'
+import { getAuthToken } from '../../../util/token_store'
+import WSTypes from '../../constants/ws'
+import { isElectronApp } from '../../config'
 
 let wasConnected = false
 
-export default function* () {
+export default function* ({ payload }) {
   yield put(A.flushQueue())
 
   if (wasConnected) {
@@ -17,6 +20,11 @@ export default function* () {
     text: 'Successfully connected to websocket server',
     cid: v4(),
   }))
+
+  if (!isElectronApp && payload.alias === WSTypes.ALIAS_API_SERVER) {
+    const token = getAuthToken()
+    yield put(A.webAuth(token))
+  }
 
   wasConnected = true
 }
