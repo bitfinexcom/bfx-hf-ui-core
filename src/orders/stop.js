@@ -81,7 +81,7 @@ export default () => ({
       component: 'input.checkbox',
       label: 'REDUCE-ONLY',
       customHelp: checkboxesHelpMessages['REDUCE-ONLY'],
-      trading: ['m'],
+      trading: ['m', 'f'],
       default: false,
     },
 

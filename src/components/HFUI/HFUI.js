@@ -22,6 +22,7 @@ const BadConnectionModal = lazy(() => import('../BadConnectionModal'))
 const OldFormatModal = lazy(() => import('../OldFormatModal'))
 const AOPauseModal = lazy(() => import('../AOPauseModal'))
 const BestExperienceMessageModal = lazy(() => import('../BestExperienceMessageModal'))
+const CcyInfoModal = lazy(() => import('../CcyInfoModal'))
 
 const HFUI = ({
   authToken, getSettings, notificationsVisible, getFavoritePairs, currentMode, GAPageview,
@@ -94,6 +95,7 @@ const HFUI = ({
           ) : (
             <BestExperienceMessageModal />
           )}
+          <CcyInfoModal />
         </>
       ) : (
         <AuthenticationPage />

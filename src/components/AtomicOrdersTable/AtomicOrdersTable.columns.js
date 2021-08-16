@@ -1,4 +1,10 @@
+/* eslint-disable react/prop-types */
+/* eslint-disable react/display-name */
 import React from 'react'
+import { PrettyValue } from '@ufx-ui/core'
+
+import { defaultCellRenderer } from '../../util/ui'
+import { AMOUNT_DECIMALS, PRICE_SIG_FIGS } from '../../constants/precision'
 
 const STYLES = {
   amount: { justifyContent: 'flex-end' },
@@ -17,45 +23,56 @@ export default (authToken, cancelOrder, gaCancelOrder, { width }) => [{
 }, {
   label: 'Pair',
   dataKey: 'symbol',
-  width: 145,
-  flexGrow: 1.45,
-  cellRenderer: ({ rowData = {} }) => rowData.uiID,
+  width: 135,
+  flexGrow: 1.35,
+  cellRenderer: ({ rowData = {} }) => defaultCellRenderer(rowData.uiID),
 }, {
   label: 'Type',
   dataKey: 'type',
   width: 120,
   flexGrow: 1.2,
-  cellRenderer: ({ rowData = {} }) => rowData.type,
+  cellRenderer: ({ rowData = {} }) => defaultCellRenderer(rowData.type),
 }, {
   label: 'Created',
   dataKey: 'created',
-  width: 155,
+  width: 145,
   flexGrow: 1.5,
-  cellRenderer: ({ rowData = {} }) => new Date(+rowData.created).toLocaleString(),
+  cellRenderer: ({ rowData = {} }) => defaultCellRenderer(new Date(+rowData.created).toLocaleString()),
 }, {
   label: 'Amount',
   dataKey: 'amount',
-  width: 100,
-  flexGrow: 1,
+  width: 120,
+  flexGrow: 1.2,
   headerStyle: STYLES.amount,
   style: STYLES.amount,
-  cellRenderer: ({ rowData = {} }) => ( // eslint-disable-line
-    <span className={rowData.amount < 0 ? 'hfui-red' : 'hfui-green'}>{rowData.amount}</span>
+  cellRenderer: ({ rowData = {} }) => defaultCellRenderer(
+    <PrettyValue
+      value={rowData?.amount}
+      decimals={AMOUNT_DECIMALS}
+      fadeTrailingZeros
+      strike={0}
+    />,
   ),
 }, {
   label: 'Price',
   dataKey: 'price',
-  width: 100,
-  flexGrow: 1,
+  width: 120,
+  flexGrow: 1.2,
   headerStyle: STYLES.price,
   style: STYLES.price,
-  cellRenderer: ({ rowData = {} }) => rowData.price,
+  cellRenderer: ({ rowData = {} }) => defaultCellRenderer(
+    <PrettyValue
+      value={rowData?.price}
+      sigFig={PRICE_SIG_FIGS}
+      fadeTrailingZeros
+    />,
+  ),
 }, {
   label: 'Status',
   dataKey: 'status',
   width: 100,
   flexGrow: 1,
-  cellRenderer: ({ rowData = {} }) => rowData.status,
+  cellRenderer: ({ rowData = {} }) => defaultCellRenderer(rowData.status),
 }, {
   dataKey: 'cid',
   width: 40,

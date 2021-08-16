@@ -99,7 +99,7 @@ const AuthenticationUnlockForm = ({ isPaperTrading, onUnlock: _onUnlock, onReset
       </form>
 
       <div className='hfui-authenticationpage__clear'>
-        <p>Alternatively, clear your credentials &amp; and stored data to set a new password.</p>
+        <p>Alternatively, clear your credentials and stored data to set a new password.</p>
 
         <Button
           onClick={onReset}
