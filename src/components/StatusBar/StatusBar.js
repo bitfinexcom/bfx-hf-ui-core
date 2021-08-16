@@ -8,12 +8,13 @@ import NavbarButton from '../Navbar/Navbar.Link'
 import './style.css'
 
 const StatusBar = ({
-  wsConnected, remoteVersion, apiClientState, wsInterrupted, isWrongAPIKeys,
+  wsConnected, remoteVersion, apiClientState, wsInterrupted, currentModeApiKeyState,
 }) => {
   const [wsConnInterrupted, setWsConnInterrupted] = useState(false)
+  const isWrongAPIKey = !currentModeApiKeyState.valid
   const apiClientConnected = apiClientState === 2
-  const apiClientConnecting = !isWrongAPIKeys && apiClientState === 1
-  const apiClientDisconnected = isWrongAPIKeys || !apiClientState
+  const apiClientConnecting = !isWrongAPIKey && apiClientState === 1
+  const apiClientDisconnected = isWrongAPIKey || !apiClientState
 
   useEffect(() => {
     if (wsInterrupted && !wsConnInterrupted) {
@@ -74,11 +75,16 @@ StatusBar.propTypes = {
   remoteVersion: PropTypes.string,
   apiClientState: PropTypes.number.isRequired,
   wsInterrupted: PropTypes.bool.isRequired,
-  isWrongAPIKeys: PropTypes.bool.isRequired,
+  currentModeApiKeyState: PropTypes.shape({
+    valid: PropTypes.bool,
+  }),
 }
 
 StatusBar.defaultProps = {
   remoteVersion: '',
+  currentModeApiKeyState: {
+    valid: false,
+  },
 }
 
 export default memo(StatusBar)

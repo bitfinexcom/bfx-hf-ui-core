@@ -2,15 +2,14 @@ import React, { useState, memo } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import _size from 'lodash/size'
 import _trim from 'lodash/trim'
-import _isEmpty from 'lodash/isEmpty'
 import { Button, Intent } from '@ufx-ui/core'
 
-import { ReactComponent as CheckIcon } from './check.svg'
-import { ReactComponent as ErrorIcon } from './error.svg'
-import { ReactComponent as ClockIcon } from './clock.svg'
-
 import {
-  getAuthToken, getAPIClientState, getAPICredentials, isWrongAPIKeys, isValidatingAPIKeys,
+  getAuthToken,
+  getPaperAPIKeyState,
+  getMainAPIKeyState,
+  getIsMainModeApiKeyUpdating,
+  getIsPaperModeApiKeyUpdating,
 } from '../../redux/selectors/ws'
 import { getCurrentMode } from '../../redux/selectors/ui'
 import WSActions from '../../redux/actions/ws'
@@ -19,29 +18,27 @@ import {
   PAPER_MODE,
   MAIN_MODE,
 } from '../../redux/reducers/ui'
+import ApiBanner from './AppSettingsModal.ApiBanner'
 
 const ApiKeys = () => {
   const dispatch = useDispatch()
   const authToken = useSelector(getAuthToken)
   const currentMode = useSelector(getCurrentMode)
-  const apiClientState = useSelector(getAPIClientState)
-  const apiCredentials = useSelector(getAPICredentials)
-  const wrongAPIKeys = useSelector(isWrongAPIKeys)
-  const validatingAPIKeys = useSelector(isValidatingAPIKeys)
-  const apiClientConnected = apiClientState === 2
+  const paperAPIKeyState = useSelector(getPaperAPIKeyState)
+  const mainAPIKeyState = useSelector(getMainAPIKeyState)
+  const isMainApiKeyUpdating = useSelector(getIsMainModeApiKeyUpdating)
+  const isPaperApiKeyUpdating = useSelector(getIsPaperModeApiKeyUpdating)
 
   const [apiKey, setApiKey] = useState('')
   const [apiSecret, setApiSecret] = useState('')
   const [paperApiKey, setPaperApiKey] = useState('')
   const [paperApiSecret, setPaperApiSecret] = useState('')
 
-  const isProductionKeysTouched = _size(_trim(apiKey)) && _size(_trim(apiSecret))
-  const isPaperKeysTouched = _size(_trim(paperApiKey)) && _size(_trim(paperApiSecret))
+  const isProductionKeysTouched = _size(_trim(apiKey)) && _size(_trim(apiSecret)) && !isMainApiKeyUpdating
+  const isPaperKeysTouched = _size(_trim(paperApiKey)) && _size(_trim(paperApiSecret)) && !isPaperApiKeyUpdating
 
-  const apiClientConfigured = !_isEmpty(apiCredentials)
-  const isNotConfigured = !apiClientConnected && !apiClientConfigured
-
-  const onSave = () => {
+  const onSaveMainModeApiKey = () => {
+    dispatch(WSActions.updatingApiKey(MAIN_MODE, true))
     if (isProductionKeysTouched) {
       dispatch(WSActions.send([
         'api_credentials.save',
@@ -52,7 +49,10 @@ const ApiKeys = () => {
         currentMode,
       ]))
     }
+  }
 
+  const onSavePaperModeApiKey = () => {
+    dispatch(WSActions.updatingApiKey(PAPER_MODE, true))
     if (isPaperKeysTouched) {
       dispatch(WSActions.send([
         'api_credentials.save',
@@ -63,8 +63,6 @@ const ApiKeys = () => {
         currentMode,
       ]))
     }
-
-    dispatch(WSActions.authAPIValidating(true))
   }
 
   return (
@@ -72,31 +70,6 @@ const ApiKeys = () => {
       <div className='appsettings-modal__title'>
         API Keys
       </div>
-      {wrongAPIKeys ? (
-        <div className='appsettings-modal__api-configuration-message is-error'>
-          <ErrorIcon />
-          {' '}
-          Invalid API Keys entered
-        </div>
-      ) : !validatingAPIKeys && (isNotConfigured || !apiClientState) ? (
-        <div className='appsettings-modal__api-configuration-message is-error'>
-          <ErrorIcon />
-          {' '}
-          Not Configured
-        </div>
-      ) : apiClientConfigured && apiClientConnected ? (
-        <div className='appsettings-modal__api-configuration-message is-success'>
-          <CheckIcon />
-          {' '}
-          Configured
-        </div>
-      ) : (
-        <div className='appsettings-modal__api-configuration-message is-warning'>
-          <ClockIcon />
-          {' '}
-          Validating...
-        </div>
-      )}
       <div className='appsettings-modal__setting'>
         <p>
           Production API Keys -
@@ -109,6 +82,10 @@ const ApiKeys = () => {
             How to Create a Key?
           </a>
         </p>
+        <ApiBanner
+          apiKeyState={mainAPIKeyState}
+          isUpdating={isMainApiKeyUpdating}
+        />
         <div className='appsettings-modal__input'>
           <Input
             type='text'
@@ -127,6 +104,14 @@ const ApiKeys = () => {
             autocomplete='off'
           />
         </div>
+        <Button
+          intent={Intent.PRIMARY}
+          small
+          onClick={onSaveMainModeApiKey}
+          disabled={!isProductionKeysTouched}
+        >
+          {mainAPIKeyState.configured ? 'Update' : 'Save'}
+        </Button>
       </div>
       <div className='appsettings-modal__setting'>
         <p>
@@ -140,6 +125,10 @@ const ApiKeys = () => {
             Learn More
           </a>
         </p>
+        <ApiBanner
+          apiKeyState={paperAPIKeyState}
+          isUpdating={isPaperApiKeyUpdating}
+        />
         <div className='appsettings-modal__input'>
           <Input
             type='text'
@@ -158,15 +147,15 @@ const ApiKeys = () => {
             autocomplete='off'
           />
         </div>
+        <Button
+          intent={Intent.PRIMARY}
+          small
+          onClick={onSavePaperModeApiKey}
+          disabled={!isPaperKeysTouched}
+        >
+          {paperAPIKeyState.configured ? 'Update' : 'Save'}
+        </Button>
       </div>
-      <Button
-        intent={Intent.PRIMARY}
-        small
-        onClick={onSave}
-        disabled={!(isProductionKeysTouched || isPaperKeysTouched)}
-      >
-        {isNotConfigured ? 'Save' : 'Update'}
-      </Button>
     </div>
   )
 }

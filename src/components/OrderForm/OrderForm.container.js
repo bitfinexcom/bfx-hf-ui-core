@@ -10,7 +10,7 @@ import WSActions from '../../redux/actions/ws'
 import GAActions from '../../redux/actions/google_analytics'
 import { getMarkets } from '../../redux/selectors/meta'
 import {
-  getAPIClientState, getAuthToken, getAPICredentials,
+  getAPIClientState, getAuthToken, getCurrentModeAPIKeyState,
 } from '../../redux/selectors/ws'
 import {
   getComponentState, getActiveMarket, getCurrentMode, getIsPaperTrading, getIsOrderExecuting,
@@ -31,7 +31,7 @@ const mapStateToProps = (state = {}, ownProps = {}) => {
     markets: getMarkets(state),
     savedState: getComponentState(state, layoutID, 'orderform', id),
     authToken: getAuthToken(state),
-    apiCredentials: getAPICredentials(state),
+    apiCredentials: getCurrentModeAPIKeyState(state),
     favoritePairs,
     mode: getCurrentMode(state),
     isPaperTrading: getIsPaperTrading(state),
@@ -86,6 +86,7 @@ const mapDispatchToProps = dispatch => ({
   submitAPIKeys: ({
     authToken, apiKey, apiSecret,
   }, mode) => {
+    dispatch(WSActions.updatingApiKey(mode, true))
     dispatch(WSActions.send([
       'api_credentials.save',
       authToken,
