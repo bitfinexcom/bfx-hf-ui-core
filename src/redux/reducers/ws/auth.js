@@ -1,4 +1,5 @@
 import t from '../../constants/ws'
+import { getAuthToken } from '../../../util/token_store'
 import { MAIN_MODE, PAPER_MODE } from '../ui'
 
 const getInitialState = () => {
@@ -37,6 +38,18 @@ export default function (state = getInitialState(), action = {}) {
         ...state,
         isMainModeApiKeyUpdating: mode === MAIN_MODE && isUpdating,
         isPaperModeApiKeyUpdating: mode === PAPER_MODE && isUpdating,
+      }
+    }
+
+    // web auth token success
+    case t.DATA_WEB_AUTH_SUCCESS: {
+      const { userId } = payload
+
+      return {
+        ...state,
+        userId,
+        token: getAuthToken(),
+        configured: true,
       }
     }
 

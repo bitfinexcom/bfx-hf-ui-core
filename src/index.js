@@ -11,6 +11,7 @@ import StoreWrapper from './StoreWrapper'
 
 import './passive_listener_fix'
 import './index.css'
+import useAuthToken from './hooks/useAuthToken'
 
 console.log(`bfx-hf-ui-core v${Manifest.version}`)
 
@@ -41,6 +42,7 @@ const config = {
 
 const HFUIWrapper = () => {
   useInjectBfxData()
+  useAuthToken()
 
   return (
     <CrashHandler>
