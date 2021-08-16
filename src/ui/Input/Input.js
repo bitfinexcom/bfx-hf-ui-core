@@ -58,7 +58,7 @@ class Input extends React.PureComponent {
             type='button'
             onClick={() => this.toggleShow()}
           >
-            {hidden ? <Icon name='eye' role='button' aria-label='Show' tabIndex={0} /> : <Icon name='eye-slash' role='button' aria-label='Hide' tabIndex={0} />}
+            {hidden ? <Icon name='eye' /> : <Icon name='eye-slash' />}
           </button>
         </div>
       )
