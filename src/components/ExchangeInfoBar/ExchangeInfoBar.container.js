@@ -13,6 +13,7 @@ import {
 import { getTicker, getTickersArray, getMarkets } from '../../redux/selectors/meta'
 
 import ExchangeInfoBar from './ExchangeInfoBar'
+import { getActiveMarketCcyId } from '../../redux/selectors/zendesk'
 
 const mapStateToProps = (state = {}) => {
   const activeMarket = getActiveMarket(state)
@@ -27,6 +28,7 @@ const mapStateToProps = (state = {}) => {
     currentMode: getCurrentMode(state),
     tickersVolumeUnit: getTickersVolumeUnit(state),
     showOnlyFavoritePairs: getShowOnlyFavoritePairsSetting(state),
+    isCcyArticleAvailbale: Boolean(getActiveMarketCcyId(state)),
   }
 }
 
@@ -47,8 +49,8 @@ const mapDispatchToProps = (dispatch) => ({
     ]))
   },
   setVolumeUnit: (key) => dispatch(UIActions.changeTickersVolumeUnit(key)),
-
   updateShowOnlyFavoritePairs: (showOnlyFavoritePairs) => dispatch(WSActions.saveSettings(SETTINGS.SHOW_ONLY_FAVORITE_PAIRS, showOnlyFavoritePairs)),
+  showCcyIconModal: () => dispatch(UIActions.changeCcyInfoModalState(true)),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(ExchangeInfoBar)

@@ -20,6 +20,7 @@ import getStrategyId from './get_strategy_id'
 import getMarketComponents from './get_market_components'
 import getCurrentUnsavedLayout from './get_current_unsaved_layout'
 import getTickersVolumeUnit from './get_tickers_volume_unit'
+import getIsCcyInfoModalVisible from './get_is_ccy_info_modal_visible'
 
 export * from './get_settings'
 
@@ -46,4 +47,5 @@ export {
   getTickersVolumeUnit,
   getOldFormatModalState,
   getIsAOPausedModalVisible,
+  getIsCcyInfoModalVisible,
 }

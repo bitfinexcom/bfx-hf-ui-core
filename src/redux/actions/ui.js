@@ -199,6 +199,11 @@ export const changeTickersVolumeUnit = key => ({
   payload: { key },
 })
 
+export const changeCcyInfoModalState = (isVisible) => ({
+  type: types.CHANGE_CCY_INFO_MODAL_STATE,
+  payload: { isVisible },
+})
+
 export default {
   saveLayout,
   storeUnsavedLayout,
@@ -231,4 +236,5 @@ export default {
   changeTickersVolumeUnit,
   changeOldFormatModalState,
   changeAOPauseModalState,
+  changeCcyInfoModalState,
 }

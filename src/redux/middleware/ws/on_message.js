@@ -7,6 +7,7 @@ import { v4 } from 'uuid'
 import UIActions from '../../actions/ui'
 import WSActions from '../../actions/ws'
 import AOActions from '../../actions/ao'
+import zendeskActions from '../../actions/zendesk'
 import marketActions from '../../actions/market'
 import closeElectronApp from '../../helpers/close_electron_app'
 
@@ -53,6 +54,7 @@ export default (alias, store) => (e = {}) => {
         store.dispatch(WSActions.recvDataMarkets(markets))
         store.dispatch(marketActions.getCCYFullNames())
         store.dispatch(marketActions.getPerpsNames())
+        store.dispatch(zendeskActions.getCcyIds())
         break
       }
 
