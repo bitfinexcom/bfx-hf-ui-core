@@ -11,6 +11,7 @@ import zendeskActions from '../../actions/zendesk'
 import marketActions from '../../actions/market'
 import closeElectronApp from '../../helpers/close_electron_app'
 import { MAIN_MODE, PAPER_MODE } from '../../reducers/ui'
+import tokenStore from '../../../util/token_store'
 
 const debug = Debug('hfui:rx:m:ws-hfui-server:msg')
 
@@ -73,8 +74,16 @@ export default (alias, store) => (e = {}) => {
       }
 
       case 'auth.user_id': {
-        const [, userId] = payload
+        const [, userId, { mode } = {}] = payload
         store.dispatch(WSActions.recvUserId(userId))
+
+        store.dispatch(UIActions.setTradingMode(mode === PAPER_MODE))
+        break
+      }
+
+      case 'auth.token': {
+        const [, tokenObj] = payload
+        tokenStore.set(tokenObj?.authToken)
         break
       }
 
