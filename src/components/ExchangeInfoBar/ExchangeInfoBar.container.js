@@ -40,10 +40,9 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch(UIActions.setActiveMarket(market))
   },
 
-  updateFavorites: (authToken, newArray, currentMode) => {
+  updateFavorites: (newArray, currentMode) => {
     dispatch(WSActions.send([
       'favourite_trading_pairs.save',
-      authToken,
       newArray,
       currentMode,
     ]))

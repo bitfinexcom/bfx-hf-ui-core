@@ -12,10 +12,9 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-  savePairs: (pairs, authToken, currentMode) => {
+  savePairs: (pairs, currentMode) => {
     dispatch(WSActions.send([
       'favourite_trading_pairs.save',
-      authToken,
       pairs,
       currentMode,
     ]))

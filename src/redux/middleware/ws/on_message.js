@@ -117,6 +117,7 @@ export default (alias, store) => (e = {}) => {
         store.dispatch(WSActions.recvRemovedStrategy(id))
         break
       }
+      case 'data.favourite_trading_pairs':
       case 'data.favourite_trading_pairs.saved': {
         const [, pairs] = payload
         store.dispatch(WSActions.recvUpdatedFavoritePairs(pairs))
@@ -174,7 +175,8 @@ export default (alias, store) => (e = {}) => {
         break
       }
 
-      case 'data.settings.updated': {
+      case 'data.settings':
+      case 'data.settings.saved': {
         const [, settings] = payload
         store.dispatch(WSActions.recvUpdatedSettings(settings))
         break

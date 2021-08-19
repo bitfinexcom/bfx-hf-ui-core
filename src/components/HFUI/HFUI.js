@@ -78,8 +78,8 @@ const HFUI = ({
 
   useEffect(() => {
     if (authToken) {
-      getSettings(authToken)
-      getFavoritePairs(authToken, currentMode)
+      getSettings()
+      getFavoritePairs(currentMode)
       subscribeAllTickers()
     }
   }, [authToken])

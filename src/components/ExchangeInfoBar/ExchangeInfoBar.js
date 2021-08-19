@@ -19,7 +19,6 @@ const ExchangeInfoBar = ({
   allTickersArray,
   favoritePairs,
   updateFavorites,
-  authToken,
   currentMode,
   onRemove,
   tickersVolumeUnit,
@@ -34,7 +33,7 @@ const ExchangeInfoBar = ({
   const _updateFavorites = (object) => {
     const arrayWithPairs = Object.keys(object)
     const arrayWithFavorites = arrayWithPairs.filter(pair => object[pair])
-    updateFavorites(authToken, arrayWithFavorites, currentMode)
+    updateFavorites(arrayWithFavorites, currentMode)
   }
   const onChangeMarketHandler = ({ rowData: { id } }) => {
     const newMarket = markets.find(market => market.uiID === id)
@@ -137,7 +136,6 @@ ExchangeInfoBar.propTypes = {
   allTickersArray: PropTypes.arrayOf(PropTypes.object).isRequired,
   favoritePairs: PropTypes.objectOf(PropTypes.bool).isRequired,
   updateFavorites: PropTypes.func.isRequired,
-  authToken: PropTypes.string.isRequired,
   currentMode: PropTypes.string.isRequired,
   onRemove: PropTypes.func,
   tickersVolumeUnit: PropTypes.string.isRequired,

@@ -97,15 +97,6 @@ const mapDispatchToProps = dispatch => ({
     ]))
   },
 
-  savePairs: (pairs, authToken, mode) => {
-    dispatch(WSActions.send([
-      'favourite_trading_pairs.save',
-      authToken,
-      pairs,
-      mode,
-    ]))
-  },
-
   onChangeMarket: (market, prevMarket) => {
     dispatch(WSActions.removeChannelRequirement(['ticker', prevMarket]))
     dispatch(UIActions.setActiveMarket(market))

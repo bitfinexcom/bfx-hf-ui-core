@@ -28,10 +28,10 @@ const MarketSelect = ({
   const [searchTerm, setSearchTerm] = useState('')
   const favoriteSelect = useCallback((pair, isPairSelected) => {
     if (isPairSelected) {
-      savePairs([...favoritePairs, pair], authToken, currentMode)
+      savePairs([...favoritePairs, pair], currentMode)
     } else {
       const filteredPairs = favoritePairs.filter(p => p !== pair)
-      savePairs(filteredPairs, authToken, currentMode)
+      savePairs(filteredPairs, currentMode)
     }
   }, [savePairs, favoritePairs])
 

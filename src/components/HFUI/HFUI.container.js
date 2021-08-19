@@ -20,16 +20,15 @@ const mapStateToProps = (state = {}) => {
 }
 
 const mapDispatchToProps = dispatch => ({
-  getSettings: (authToken) => {
-    dispatch(WSActions.send(['get.settings', authToken]))
+  getSettings: () => {
+    dispatch(WSActions.send(['settings.get']))
   },
   GAPageview: (page) => {
     dispatch(GAActions.pageview(page))
   },
-  getFavoritePairs: (authToken, mode) => {
+  getFavoritePairs: (mode) => {
     dispatch(WSActions.send([
-      'get.favourite_trading_pairs',
-      authToken,
+      'favourite_trading_pairs.get',
       mode,
     ]))
   },

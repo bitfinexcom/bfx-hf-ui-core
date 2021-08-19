@@ -23,7 +23,7 @@ export default () => {
       }
       case GA_UPDATE_SETTINGS: {
         if (ga) {
-          ReactGA.event('settings', 'settings.update').send()
+          ReactGA.event('settings', 'settings.save').send()
         }
         break
       }
