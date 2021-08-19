@@ -28,6 +28,7 @@ import {
   layoutDefToGridLayout,
   gridLayoutToLayoutDef,
 } from '../../../components/GridLayout/GridLayout.helpers'
+import { isElectronApp } from '../../config'
 
 const debug = Debug('hfui:rx:r:ui')
 const LAYOUTS_KEY = 'HF_UI_LAYOUTS'
@@ -356,6 +357,11 @@ function reducer(state = getInitialState(), action = {}) {
     case types.SET_TRADING_MODE: {
       const { isPaperTrading } = payload
       const mode = isPaperTrading ? PAPER_MODE : MAIN_MODE
+
+      if (isElectronApp) {
+        localStorage.setItem(IS_PAPER_TRADING, isPaperTrading)
+      }
+
       return {
         ...state,
         isPaperTrading,
@@ -525,11 +531,6 @@ function reducerWithStorage(state = getInitialState(), action = {}) {
       case types.UPDATE_COMPONENT_STATE: {
         const { layoutComponentState } = newState
         localStorage.setItem(LAYOUTS_STATE_KEY, JSON.stringify(layoutComponentState))
-        break
-      }
-      case types.SET_TRADING_MODE: {
-        const { isPaperTrading } = newState
-        localStorage.setItem(IS_PAPER_TRADING, isPaperTrading)
         break
       }
 
