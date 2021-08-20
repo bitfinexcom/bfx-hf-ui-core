@@ -416,6 +416,8 @@ function reducer(state = getInitialState(), action = {}) {
     case types.ADD_COMPONENT: {
       const { component } = payload
       const layoutDef = getActiveLayoutDef(state)
+      const x = _min(layoutDef.layout.map(l => l.x)) || 0
+      const y = _max(layoutDef.layout.map(l => l.y)) || 0
 
       return {
         ...state,
@@ -427,8 +429,8 @@ function reducer(state = getInitialState(), action = {}) {
             {
               i: `${nonce()}`,
               c: component,
-              x: _min(layoutDef.layout.map(l => l.x)) || 0,
-              y: _max(layoutDef.layout.map(l => l.y)) || 0,
+              x,
+              y: y + 1,
               ...COMPONENT_DIMENSIONS[component],
             },
           ],
