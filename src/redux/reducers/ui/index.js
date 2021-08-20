@@ -30,6 +30,8 @@ import {
 } from '../../../components/GridLayout/GridLayout.helpers'
 import { isElectronApp } from '../../config'
 
+import { storeLastUsedLayoutID } from '../../../util/layout'
+
 const debug = Debug('hfui:rx:r:ui')
 const LAYOUTS_KEY = 'HF_UI_LAYOUTS'
 const LAYOUTS_STATE_KEY = 'HF_UI_LAYOUTS_STATE'
@@ -176,7 +178,7 @@ function reducer(state = getInitialState(), action = {}) {
         layouts: {
           ...state.layouts,
           [state.layoutID]: {
-            ...state.unsavedLayout,
+            ...state?.unsavedLayout,
             isDefault: false,
             canDelete: true,
             savedAt: Date.now(),
@@ -225,6 +227,8 @@ function reducer(state = getInitialState(), action = {}) {
     case types.CREATE_LAYOUT: {
       const { id } = payload
       const layoutDef = getActiveLayoutDef(state)
+
+      storeLastUsedLayoutID(id, layoutDef?.routePath)
 
       return {
         ...state,
@@ -483,7 +487,9 @@ function reducer(state = getInitialState(), action = {}) {
       }
     }
     case types.SELECT_LAYOUT: {
-      const { id } = payload
+      const { id, routePath } = payload
+
+      storeLastUsedLayoutID(id, routePath)
 
       return {
         ...state,

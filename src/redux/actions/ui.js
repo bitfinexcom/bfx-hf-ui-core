@@ -18,10 +18,11 @@ export const storeUnsavedLayout = (layout) => ({
   },
 })
 
-export const selectLayout = (id) => ({
+export const selectLayout = (id, routePath) => ({
   type: types.SELECT_LAYOUT,
   payload: {
     id,
+    routePath,
   },
 })
 
