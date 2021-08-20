@@ -59,7 +59,7 @@ export default function LayoutSettings() {
   }
 
   const selectableLayouts = _entries(layouts)
-    // eslint-disable-next-line no-shadow
+  // eslint-disable-next-line no-shadow
     .filter(([, layout]) => layout.routePath === pathname)
     .sort((a, b) => a[1].savedAt - b[1].savedAt)
 
@@ -99,7 +99,7 @@ export default function LayoutSettings() {
                   key={id}
                   isLayout
                   isSelected={id === layoutID}
-                  onClick={() => dispatch(selectLayout(id))}
+                  onClick={() => dispatch(selectLayout(id, layoutDef?.routePath))}
                 >
                   {makeShorterLongName(id, MAX_ID_LENGTH)}
                   {layoutDef.canDelete && (
