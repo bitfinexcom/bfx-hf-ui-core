@@ -396,8 +396,9 @@ function reducer(state = getInitialState(), action = {}) {
     }
 
     case types.CREATE_LAYOUT: {
-      const { id } = payload
+      const { name } = payload
       const layoutDef = getActiveLayoutDef(state)
+      const id = `${layoutDef.routePath}:${name}`
 
       storeLastUsedLayoutID(id, layoutDef?.routePath)
 

@@ -37,7 +37,6 @@ import { getLastUsedLayoutID } from '../../util/layout'
 const ReactGridLayout = WidthProvider(RGL)
 
 const GridLayout = ({
-  // eslint-disable-next-line react/prop-types
   sharedProps, tradesProps, bookProps, chartProps, orderFormProps,
 }) => {
   const dispatch = useDispatch()
@@ -59,7 +58,7 @@ const GridLayout = ({
 
   const [lastLayoutID, lastLayoutDef] = _find(layoutsForCurrRoute, ([id]) => id === lastUsedLayoutID)
     || _last(layoutsForCurrRoute.sort((a, b) => a[1].savedAt - b[1].savedAt))
-    || []
+    || [null, null]
 
   // should use unsaved one first, then saved one (if selected) else last saved one
   const layoutDef = isValidUnsavedLayout
@@ -162,6 +161,30 @@ const GridLayout = ({
       </ReactGridLayout>
     </div>
   )
+}
+
+GridLayout.propTypes = {
+  chartProps: PropTypes.shape({
+    disableToolbar: PropTypes.bool,
+    activeMarket: PropTypes.objectOf(
+      PropTypes.oneOfType([
+        PropTypes.string,
+        PropTypes.array,
+        PropTypes.number,
+        PropTypes.bool,
+      ]),
+    ),
+  }),
+  bookProps: PropTypes.shape({
+    canChangeStacked: PropTypes.bool,
+  }),
+  tradesProps: PropTypes.objectOf(PropTypes.bool),
+  orderFormProps: PropTypes.shape({
+    orders: PropTypes.arrayOf(PropTypes.object),
+  }),
+  sharedProps: PropTypes.objectOf(PropTypes.oneOfType(
+    [PropTypes.bool, PropTypes.string],
+  )),
 }
 
 GridLayout.defaultProps = {
