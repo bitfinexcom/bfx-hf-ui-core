@@ -6,6 +6,7 @@ import _toArray from 'lodash/toArray'
 import _toString from 'lodash/toString'
 import _reverse from 'lodash/reverse'
 import _truncate from 'lodash/truncate'
+import { Truncate } from '@ufx-ui/core'
 
 // takes a number as input and returns a localised version with semicolons in it
 // e.g. 123456789.445566 -> '123,456,789.445566'
@@ -15,7 +16,9 @@ export const processBalance = (value, localise = true) => {
   let str = _toString(value)
 
   if (localise) {
-    str = localiseNumber(str)
+    str = localiseNumber(value)
+  } else {
+    str = _toString(value)
   }
 
   if (!_toString(_split(value, '.')[1])) {
@@ -40,3 +43,5 @@ export const makeShorterLongName = (name, limit) => _truncate(name, {
   length: limit,
   omission: '...',
 })
+
+export const defaultCellRenderer = (content) => (<Truncate>{content}</Truncate>)

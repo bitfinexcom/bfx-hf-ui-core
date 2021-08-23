@@ -15,16 +15,20 @@ import getAuthConfigured from './get_auth_configured'
 import getStrategies from './get_strategies'
 import getAllPositions from './get_all_positions'
 import getFilteredPositions from './get_filtered_positions'
-import getPositionsCount from './get_filtered_positions_count'
+import getFilteredPositionsCount from './get_filtered_positions_count'
 import getAllBalances from './get_all_balances'
 import getFilteredBalances from './get_filtered_balances'
 import getBalances from './get_balances'
-import getAllOrders from './get_all_orders'
+import getAtomicOrders from './get_atomic_orders'
+import getFilteredAtomicOrders from './get_filtered_atomic_orders'
+import getFilteredAtomicOrdersCount from './get_filtered_atomic_orders_count'
+import getFilteredAlgoOrders from './get_filtered_algo_orders'
+import getFilteredAlgoOrdersCount from './get_filtered_algo_orders_count'
 import getAlgoOrders from './get_algo_orders'
 import getNotifications from './get_notifications'
-import getAPICredentials from './get_api_credentials'
 import getAllSyncRanges from './get_all_sync_ranges'
 import getLayouts from './get_layouts'
+import getOrderHistory from './get_order_history'
 
 import getBacktestState from './get_backtest_state'
 import getBacktestData from './get_backtest_data'
@@ -34,6 +38,12 @@ import getAPIClientState from './get_api_client_state'
 import apiClientConnected from './api_client_connected'
 import apiClientConnecting from './api_client_connecting'
 import apiClientDisconnected from './api_client_disconnected'
+
+import getPaperAPIKeyState from './get_paper_api_key_state'
+import getMainAPIKeyState from './get_main_api_key_state'
+import getCurrentModeAPIKeyState from './get_current_mode_api_key_state'
+import getIsMainModeApiKeyUpdating from './get_is_main_mode_api_key_updating'
+import getIsPaperModeApiKeyUpdating from './get_is_paper_mode_api_key_updating'
 
 export {
   getSocket,
@@ -47,6 +57,7 @@ export {
   getChannelByID,
   getChannelRequirements,
   getAllChannelRequirements,
+  getOrderHistory,
 
   getSyncRanges,
   isSyncingCandles,
@@ -63,17 +74,26 @@ export {
 
   getAllPositions,
   getFilteredPositions,
-  getPositionsCount,
+  getFilteredPositionsCount,
   getAllBalances,
   getFilteredBalances,
   getBalances,
-  getAllOrders,
+  getAtomicOrders,
+  getFilteredAtomicOrders,
+  getFilteredAtomicOrdersCount,
   getAlgoOrders,
+  getFilteredAlgoOrders,
+  getFilteredAlgoOrdersCount,
   getFavoritePairs,
   getFavoritePairsObject,
   getLayouts,
 
   getNotifications,
-  getAPICredentials,
   getAllSyncRanges,
+
+  getPaperAPIKeyState,
+  getMainAPIKeyState,
+  getCurrentModeAPIKeyState,
+  getIsMainModeApiKeyUpdating,
+  getIsPaperModeApiKeyUpdating,
 }

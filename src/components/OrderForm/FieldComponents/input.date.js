@@ -2,7 +2,7 @@ import React, { memo } from 'react'
 import DatePicker from 'react-datepicker'
 import PropTypes from 'prop-types'
 
-import { renderString, CONVERT_LABELS_TO_PLACEHOLDERS } from '../OrderForm.helpers'
+import { renderString, CONVERT_LABELS_TO_PLACEHOLDERS } from './fields.helpers'
 
 const DateInput = ({
   value, minDate, maxDate, onChange, def, renderData, validationError,

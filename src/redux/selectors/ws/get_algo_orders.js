@@ -15,7 +15,7 @@ const algoOrdersWithReplacedPairs = createSelector([allMarkets, algoOrders], (ma
   return _map(orders, (order) => {
     const { symbol } = order.args
     const currentMarket = markets[symbol]
-    return { ...order, args: { ...order.args, symbol: currentMarket.uiID } }
+    return { ...order, args: { ...order.args, uiID: currentMarket.uiID } }
   }, [])
 })
 

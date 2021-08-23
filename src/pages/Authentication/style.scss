@@ -1,4 +1,4 @@
-@import '../../variables.scss';
+@import "../../variables.scss";
 
 .hfui-authenticationpage__wrapper {
   height: 100%;
@@ -133,7 +133,7 @@
   width: 400px;
   margin-top: 16px;
 
-  &.ufx-dropdown .dropdown-field {
+  &.ufx-dropdown .dropdown-field:not(:focus) {
     background-color: $panel-background-color;
   }
 }

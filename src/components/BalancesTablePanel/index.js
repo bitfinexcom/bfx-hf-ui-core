@@ -1,3 +1,3 @@
-import BalancesTablePanel from './BalancesTablePanel.container'
+import BalancesTablePanel from './BalancesTablePanel'
 
 export default BalancesTablePanel

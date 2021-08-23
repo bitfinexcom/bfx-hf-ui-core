@@ -2,7 +2,6 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import { StoreProvider as UfxStoreProvider } from '@ufx-ui/core'
 import { useInjectBfxData } from '@ufx-ui/bfx-containers'
-
 import Debug from 'debug'
 import Manifest from '../package.json'
 
@@ -12,6 +11,9 @@ import StoreWrapper from './StoreWrapper'
 
 import './passive_listener_fix'
 import './index.css'
+import useAuthToken from './hooks/useAuthToken'
+
+console.log(`bfx-hf-ui-core v${Manifest.version}`)
 
 const debug = Debug('hfui:main')
 const LOCAL_STORAGE_VERSION_KEY = 'HFUI_LS_VERSION'
@@ -40,6 +42,7 @@ const config = {
 
 const HFUIWrapper = () => {
   useInjectBfxData()
+  useAuthToken()
 
   return (
     <CrashHandler>

@@ -30,6 +30,7 @@ import SubmitAPIKeysModal from './Modals/SubmitAPIKeysModal'
 import OrderFormMenu from './OrderFormMenu'
 
 import './style.css'
+import { isElectronApp } from '../../redux/config'
 
 const debug = Debug('hfui:order-form')
 
@@ -38,6 +39,17 @@ const CONTEXT_LABELS = {
   m: 'Margin',
   f: 'Derivatives',
 }
+
+const ALL_ALGO_ORDERS = [
+  MACrossover,
+  AccumulateDistribute,
+  PingPong,
+  Iceberg,
+  TWAP,
+  OCOCO,
+]
+
+const HOSTED_ALGO_ORDERS = [Iceberg, TWAP]
 
 class OrderForm extends React.Component {
   state = {
@@ -84,14 +96,9 @@ class OrderForm extends React.Component {
   }
 
   static getAOs() {
-    return [
-      MACrossover,
-      AccumulateDistribute,
-      PingPong,
-      Iceberg,
-      TWAP,
-      OCOCO,
-    ].map(ao => ao.meta.getUIDef({
+    const algoOrders = isElectronApp ? ALL_ALGO_ORDERS : HOSTED_ALGO_ORDERS
+
+    return algoOrders.map(ao => ao.meta.getUIDef({
       timeframes: Object.values(timeFrames),
     }))
   }
@@ -362,7 +369,8 @@ class OrderForm extends React.Component {
 
     const apiClientConnected = apiClientState === 2
     const apiClientConnecting = apiClientState === 1
-    const apiClientConfigured = !_isEmpty(apiCredentials)
+    const apiClientConfigured = apiCredentials?.configured && apiCredentials?.valid
+    const showOrderform = apiClientConfigured || !isElectronApp
     const renderData = marketToQuoteBase(currentMarket)
     const atomicOrderTypes = []
     const algoOrderTypes = []
@@ -402,12 +410,13 @@ class OrderForm extends React.Component {
           )}
         >
           <div key='orderform-wrapper' className='hfui-orderform__wrapper'>
-            {[
+            {isElectronApp && [
               !apiClientConnected && !apiClientConfigured && !configureModalOpen && (
                 <UnconfiguredModal
                   key='unconfigured'
                   onClick={this.onToggleConfigureModal}
                   isPaperTrading={isPaperTrading}
+                  keyExistButNotValid={apiCredentials?.configured && !apiCredentials?.valid}
                 />
               ),
 
@@ -442,7 +451,7 @@ class OrderForm extends React.Component {
               </div>
             )}
 
-            {!currentLayout && apiClientConfigured && (
+            {!currentLayout && showOrderform && (
               <div key='order-form-menu' className='hfui-orderform__overlay-wrapper'>
                 <OrderFormMenu
                   atomicOrderTypes={atomicOrderTypes}

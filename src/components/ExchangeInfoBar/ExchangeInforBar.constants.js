@@ -2,6 +2,7 @@
 /* eslint-disable react/display-name */
 import React from 'react'
 import { TICKERLIST_KEYS, TICKER_KEYS } from '@ufx-ui/core'
+import CCYIcon from './CCYIcon'
 
 export const tickerDataMapping = {
   [TICKER_KEYS.BASE_CCY]: {
@@ -32,10 +33,16 @@ export const rowMapping = {
 
       return (
         <>
-          {isPerp ? <span>{perpUI}</span> : (
-            <span className='price-unit'>
-              <span>{baseCcy}</span>
+          {isPerp ? (
+            <span className='ccy-pair'>
+              <CCYIcon small ccy={baseCcy} />
+              <span>{perpUI}</span>
+            </span>
+          ) : (
+            <span className='ccy-pair'>
+              <CCYIcon small ccy={baseCcy} />
               <span>
+                {baseCcy}
                 /
                 {quoteCcy}
               </span>

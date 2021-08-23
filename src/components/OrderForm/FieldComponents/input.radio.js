@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 import _map from 'lodash/map'
 
 import RadioButton from '../../../ui/RadioButton'
-import { renderString } from '../OrderForm.helpers'
+import { renderString } from './fields.helpers'
 
 const RadioInput = memo(({
   def: { options }, renderData, value, onChange, disabled,

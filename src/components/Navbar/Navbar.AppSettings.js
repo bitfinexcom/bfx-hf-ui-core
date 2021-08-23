@@ -10,6 +10,7 @@ export default function AppSettings() {
   return (
     <div className='hfui-navbar__app-settings'>
       <NavbarButton
+        alt='Application settings'
         icon='settings-icon'
         className='hfui-navbar__app-settings__icon'
         onClick={() => setIsOpen(true)}

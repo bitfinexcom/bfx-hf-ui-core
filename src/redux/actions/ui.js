@@ -25,10 +25,11 @@ export const storeUnsavedLayout = (layout) => ({
   },
 })
 
-export const selectLayout = (id) => ({
+export const selectLayout = (id, routePath) => ({
   type: types.SELECT_LAYOUT,
   payload: {
     id,
+    routePath,
   },
 })
 
@@ -50,14 +51,6 @@ export const setActiveMarket = market => ({
   type: types.SET_ACTIVE_MARKET,
   payload: {
     market,
-  },
-})
-
-export const setFilteredValueWithKey = (key, value) => ({
-  type: types.SET_FILTRED_VALUE,
-  payload: {
-    key,
-    value,
   },
 })
 
@@ -209,6 +202,11 @@ export const changeTickersVolumeUnit = key => ({
   payload: { key },
 })
 
+export const changeCcyInfoModalState = (isVisible) => ({
+  type: types.CHANGE_CCY_INFO_MODAL_STATE,
+  payload: { isVisible },
+})
+
 export default {
   saveLayout,
   storeUnsavedLayout,
@@ -225,7 +223,6 @@ export default {
   openNotifcationPanel,
   firstLogin,
   finishGuide,
-  setFilteredValueWithKey,
   recvNotification,
   strategySelect,
   updateStrategyContent,
@@ -242,4 +239,6 @@ export default {
   setLayouts,
   changeTickersVolumeUnit,
   changeOldFormatModalState,
+  // changeAOPauseModalState,
+  changeCcyInfoModalState,
 }

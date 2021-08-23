@@ -1,15 +1,9 @@
-import React, { memo, useEffect } from 'react'
+import React, { memo } from 'react'
 import PropTypes from 'prop-types'
 import AtomicOrdersTable from '../AtomicOrdersTable'
 import Panel from '../../ui/Panel'
 
-const AtomicOrdersTablePanel = ({
-  dark, onRemove, setFilteredValueWithKey, atomicOrders,
-}) => {
-  useEffect(() => {
-    setFilteredValueWithKey('filteredAtomicOrders', atomicOrders)
-  }, [atomicOrders])
-
+const AtomicOrdersTablePanel = ({ dark, onRemove }) => {
   return (
     <Panel
       label='Atomic Orders'
@@ -17,20 +11,17 @@ const AtomicOrdersTablePanel = ({
       dark={dark}
       darkHeader={dark}
     >
-      <AtomicOrdersTable filteredAtomicOrders={atomicOrders} />
+      <AtomicOrdersTable />
     </Panel>
   )
 }
 
 AtomicOrdersTablePanel.propTypes = {
-  setFilteredValueWithKey: PropTypes.func.isRequired,
-  atomicOrders: PropTypes.arrayOf(PropTypes.object),
   onRemove: PropTypes.func,
   dark: PropTypes.bool,
 }
 
 AtomicOrdersTablePanel.defaultProps = {
-  atomicOrders: [],
   onRemove: () => {},
   dark: true,
 }

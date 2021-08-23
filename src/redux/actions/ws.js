@@ -85,6 +85,14 @@ export default {
     payload: settings,
   }),
 
+  saveSettings: (key, value) => ({
+    type: ui.SAVE_SETTINGS,
+    payload: {
+      key,
+      value,
+    },
+  }),
+
   bufferDataFromExchange: (
     chanID, data, rawData = null,
   ) => ({
@@ -149,9 +157,9 @@ export default {
     payload: { strategies },
   }),
 
-  recvAPICredentialsConfigured: () => ({
+  recvAPICredentialsConfigured: (state) => ({
     type: t.DATA_API_CREDENTIALS_CONFIGURED,
-    payload: {},
+    payload: { state },
   }),
 
   recvClientStatusUpdate: ({ status }) => ({
@@ -273,6 +281,13 @@ export default {
     payload: layouts,
   }),
 
+  recvUserId: userId => ({
+    type: t.DATA_WEB_AUTH_SUCCESS,
+    payload: {
+      userId,
+    },
+  }),
+
   purgeDataBook: (channel) => ({
     type: t.PURGE_DATA_BOOK,
     payload: { channel },
@@ -294,8 +309,13 @@ export default {
   resetBacktestData: () => ({
     type: t.RESET_DATA_BACKTEST,
   }),
+  updatingApiKey: (mode, isUpdating) => ({
+    type: t.UPDATING_API_KEY,
+    payload: { mode, isUpdating },
+  }),
   initAuth: password => send(['auth.init', password, 'main']),
   auth: (password, mode) => send(['auth.submit', password, mode]),
   resetAuth: () => send(['auth.reset']),
+  webAuth: token => send({ event: 'auth', token }),
   onUnload: (authToken, mode) => send(['algo_order.pause', authToken, mode]),
 }

@@ -13,19 +13,20 @@ import {
   updateAutoLoginState,
   updateStoredPassword,
 } from '../../util/autologin'
+import { MAIN_MODE, PAPER_MODE } from '../../redux/reducers/ui'
 
 const isDevEnv = devEnv()
 
-const MAIN_MODE = { value: 'main', label: 'Production' }
-const PAPER_MODE = { value: 'paper', label: 'Paper Trading' }
+const MAIN_MODE_OPTION = { value: MAIN_MODE, label: 'Production' }
+const PAPER_MODE_OPTION = { value: PAPER_MODE, label: 'Paper Trading' }
 
-const OPTIONS = [MAIN_MODE, PAPER_MODE]
+const OPTIONS = [MAIN_MODE_OPTION, PAPER_MODE_OPTION]
 const initialAutoLoginSave = getAutoLoginState()
 
 const AuthenticationUnlockForm = ({ isPaperTrading, onUnlock: _onUnlock, onReset }) => {
   const [password, setPassword] = useState('')
   const [autoLoginState, setAutoLoginState] = useState(initialAutoLoginSave)
-  const [mode, setMode] = useState(isPaperTrading ? PAPER_MODE.value : MAIN_MODE.value)
+  const [mode, setMode] = useState(isPaperTrading ? PAPER_MODE : MAIN_MODE)
   const submitReady = !_isEmpty(password) && !_isEmpty(mode)
 
   const onUnlock = () => {
@@ -76,7 +77,7 @@ const AuthenticationUnlockForm = ({ isPaperTrading, onUnlock: _onUnlock, onReset
           <Dropdown
             className='hfui-authenticationpage__trading-mode'
             placeholder='Select trading mode...'
-            value={OPTIONS.find(o => o.value === mode).value}
+            value={OPTIONS.find(o => o.value === mode)?.value}
             options={OPTIONS}
             onChange={(value) => setMode(value)}
           />
@@ -99,7 +100,7 @@ const AuthenticationUnlockForm = ({ isPaperTrading, onUnlock: _onUnlock, onReset
       </form>
 
       <div className='hfui-authenticationpage__clear'>
-        <p>Alternatively, clear your credentials &amp; and stored data to set a new password.</p>
+        <p>Alternatively, clear your credentials and stored data to set a new password.</p>
 
         <Button
           onClick={onReset}

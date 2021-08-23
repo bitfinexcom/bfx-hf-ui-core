@@ -1,7 +1,6 @@
-import React, { useState, useEffect, memo } from 'react'
+import React, { useState, memo } from 'react'
 import PropTypes from 'prop-types'
 import _isEmpty from 'lodash/isEmpty'
-import _filter from 'lodash/filter'
 
 import Panel from '../../ui/Panel'
 import PositionsTable from '../PositionsTable'
@@ -13,30 +12,12 @@ import TabTitle from './TabTitle'
 import './style.css'
 
 const TradingStatePanel = ({
-  dark, onRemove, moveable, removeable, getPositionsCount, algoOrdersCount, atomicOrdersCount, markets,
-  setFilteredValueWithKey, atomicOrders, algoOrders,
+  dark, onRemove, moveable, removeable, getPositionsCount, getAtomicOrdersCount, getAlgoOrdersCount, markets,
 }) => {
   const [activeFilter, setActiveFilter] = useState({})
   const positionsCount = getPositionsCount(activeFilter)
-
-  const getFilteredAtomicOrders = () => {
-    const filteredAtomicOrders = _isEmpty(activeFilter)
-      ? atomicOrders
-      : _filter(atomicOrders, o => o.symbol === activeFilter.wsID)
-
-    setFilteredValueWithKey('filteredAtomicOrders', filteredAtomicOrders)
-  }
-
-  const getFilteredAlgoOrders = () => {
-    const filteredAO = _isEmpty(activeFilter)
-      ? algoOrders
-      : _filter(algoOrders, ao => ao.args.symbol === activeFilter.wsID)
-
-    setFilteredValueWithKey('filteredAO', filteredAO)
-  }
-
-  useEffect(getFilteredAtomicOrders, [activeFilter, atomicOrders])
-  useEffect(getFilteredAlgoOrders, [activeFilter, algoOrders])
+  const atomicOrdersCount = getAtomicOrdersCount(activeFilter)
+  const algoOrdersCount = getAlgoOrdersCount(activeFilter)
 
   return (
     <Panel
@@ -81,12 +62,16 @@ const TradingStatePanel = ({
           activeFilter={activeFilter}
         />
         <AtomicOrdersTable
+          renderedInTradingState
           htmlKey='Atomics'
           tabtitle={<TabTitle heading='Atomics' count={atomicOrdersCount} />}
+          activeFilter={activeFilter}
         />
         <AlgoOrdersTable
+          renderedInTradingState
           htmlKey='Algos'
           tabtitle={<TabTitle heading='Algos' count={algoOrdersCount} />}
+          activeFilter={activeFilter}
         />
         <BalancesTable
           renderedInTradingState
@@ -106,11 +91,8 @@ TradingStatePanel.propTypes = {
   onRemove: PropTypes.func,
   removeable: PropTypes.bool,
   getPositionsCount: PropTypes.func,
-  algoOrdersCount: PropTypes.number,
-  atomicOrdersCount: PropTypes.number,
-  setFilteredValueWithKey: PropTypes.func.isRequired,
-  algoOrders: PropTypes.arrayOf(PropTypes.object).isRequired,
-  atomicOrders: PropTypes.arrayOf(PropTypes.object).isRequired,
+  getAtomicOrdersCount: PropTypes.func,
+  getAlgoOrdersCount: PropTypes.func,
   markets: PropTypes.arrayOf(PropTypes.object).isRequired,
 }
 
@@ -119,9 +101,9 @@ TradingStatePanel.defaultProps = {
   moveable: false,
   removeable: false,
   getPositionsCount: () => { },
+  getAtomicOrdersCount: () => { },
+  getAlgoOrdersCount: () => { },
   onRemove: () => { },
-  algoOrdersCount: 0,
-  atomicOrdersCount: 0,
 }
 
 export default memo(TradingStatePanel)

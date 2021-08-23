@@ -21,6 +21,9 @@ import {
   layoutDefToGridLayout,
   gridLayoutToLayoutDef,
 } from '../../../components/GridLayout/GridLayout.helpers'
+import { isElectronApp } from '../../config'
+
+import { storeLastUsedLayoutID } from '../../../util/layout'
 
 const debug = Debug('hfui:rx:r:ui')
 const LAYOUTS_STATE_KEY = 'HF_UI_LAYOUTS_STATE'
@@ -55,6 +58,8 @@ function getInitialState() {
     isTradingModeModalVisible: false,
     isRefillBalanceModalVisible: false,
     isOldFormatModalVisible: false,
+    isAOPauseModalVisible: false,
+    isCcyInfoModalVisible: false,
     isBadInternetConnection: false,
     isOrderExecuting: false,
     content: {},
@@ -190,14 +195,6 @@ function reducer(state = getInitialState(), action = {}) {
       }
     }
 
-    case types.SET_FILTRED_VALUE: {
-      const { key, value } = payload
-      return {
-        ...state,
-        [key]: value,
-      }
-    }
-
     case types.FIRST_LOGIN: {
       return {
         ...state,
@@ -241,6 +238,11 @@ function reducer(state = getInitialState(), action = {}) {
     case types.SET_TRADING_MODE: {
       const { isPaperTrading } = payload
       const mode = isPaperTrading ? PAPER_MODE : MAIN_MODE
+
+      if (isElectronApp) {
+        localStorage.setItem(IS_PAPER_TRADING, isPaperTrading)
+      }
+
       return {
         ...state,
         isPaperTrading,
@@ -311,6 +313,8 @@ function reducer(state = getInitialState(), action = {}) {
     case types.ADD_COMPONENT: {
       const { component } = payload
       const layoutDef = getActiveLayoutDef(state)
+      const x = _min(layoutDef.layout.map(l => l.x)) || 0
+      const y = _max(layoutDef.layout.map(l => l.y)) || 0
 
       return {
         ...state,
@@ -322,8 +326,8 @@ function reducer(state = getInitialState(), action = {}) {
             {
               i: `${nonce()}`,
               c: component,
-              x: _min(layoutDef.layout.map(l => l.x)) || 0,
-              y: _max(layoutDef.layout.map(l => l.y)) || 0,
+              x,
+              y: y + 1,
               ...COMPONENT_DIMENSIONS[component],
             },
           ],
@@ -380,7 +384,9 @@ function reducer(state = getInitialState(), action = {}) {
     }
 
     case types.SELECT_LAYOUT: {
-      const { id } = payload
+      const { id, routePath } = payload
+
+      storeLastUsedLayoutID(id, routePath)
 
       return {
         ...state,
@@ -390,9 +396,10 @@ function reducer(state = getInitialState(), action = {}) {
     }
 
     case types.CREATE_LAYOUT: {
-      const { name } = payload
+      const { id } = payload
       const layoutDef = getActiveLayoutDef(state)
-      const id = `${layoutDef.routePath}:${name}`
+
+      storeLastUsedLayoutID(id, layoutDef?.routePath)
 
       return {
         ...state,
@@ -401,8 +408,6 @@ function reducer(state = getInitialState(), action = {}) {
           ...state.layouts,
           [id]: {
             ...layoutDef,
-            id,
-            name,
             isDefault: false,
             canDelete: true,
             savedAt: Date.now(),
@@ -419,7 +424,7 @@ function reducer(state = getInitialState(), action = {}) {
         layouts: {
           ...state.layouts,
           [state.layoutID]: {
-            ...state.unsavedLayout,
+            ...state?.unsavedLayout,
             isDefault: false,
             canDelete: true,
             savedAt: Date.now(),
@@ -449,6 +454,14 @@ function reducer(state = getInitialState(), action = {}) {
       }
     }
 
+    case types.CHANGE_CCY_INFO_MODAL_STATE: {
+      const { isVisible } = payload
+
+      return {
+        ...state,
+        isCcyInfoModalVisible: isVisible,
+      }
+    }
     default: {
       return state
     }
@@ -468,11 +481,6 @@ function reducerWithStorage(state = getInitialState(), action = {}) {
       case types.UPDATE_COMPONENT_STATE: {
         const { layoutComponentState } = newState
         localStorage.setItem(LAYOUTS_STATE_KEY, JSON.stringify(layoutComponentState))
-        break
-      }
-      case types.SET_TRADING_MODE: {
-        const { isPaperTrading } = newState
-        localStorage.setItem(IS_PAPER_TRADING, isPaperTrading)
         break
       }
 

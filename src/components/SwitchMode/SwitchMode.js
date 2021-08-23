@@ -13,6 +13,7 @@ const SwitchMode = ({
     offColor='#d8d8d8'
     height={21}
     width={35}
+    aria-label='Switch Paper Trading mode'
   />
 )
 
