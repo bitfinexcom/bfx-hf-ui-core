@@ -77,7 +77,9 @@ export default (alias, store) => (e = {}) => {
         const [, userId, { mode } = {}] = payload
         store.dispatch(WSActions.recvUserId(userId))
 
+        const isPaperTrading = mode === PAPER_MODE
         store.dispatch(UIActions.setTradingMode(mode === PAPER_MODE))
+        store.dispatch(UIActions.setMarketFromStore(isPaperTrading))
         break
       }
 
