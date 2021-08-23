@@ -24,39 +24,43 @@ const StatusBar = ({
 
   return (
     <div className='hfui-statusbar__wrapper'>
-      <div className='hfui-statusbar__left'>
-        {isElectronApp && (
+      {isElectronApp && (
+        <div className='hfui-statusbar__left'>
           <p>
             {remoteVersion && remoteVersion !== electronAppVersion && (
-              <NavbarButton
-                label='Update to latest version'
-                external='https://github.com/bitfinexcom/bfx-hf-ui/releases'
-              />
+            <NavbarButton
+              label='Update to latest version'
+              external='https://github.com/bitfinexcom/bfx-hf-ui/releases'
+            />
             )}
             &nbsp;
             v
             {electronAppVersion}
           </p>
-        )}
 
-        <p>
-          {apiClientConnected ? 'UNLOCKED' : 'LOCKED'}
-        </p>
-      </div>
+          <p>
+            {apiClientConnected ? 'UNLOCKED' : 'LOCKED'}
+          </p>
+        </div>
+      )}
 
       <div className='hfui-statusbar__right'>
-        <p>
-          {apiClientConnected && 'HF Connected'}
-          {apiClientConnecting && 'HF Connecting'}
-          {apiClientDisconnected && 'HF Disconnected'}
-        </p>
+        {isElectronApp && (
+          <>
+            <p>
+              {apiClientConnected && 'HF Connected'}
+              {apiClientConnecting && 'HF Connecting'}
+              {apiClientDisconnected && 'HF Disconnected'}
+            </p>
 
-        <span className={ClassNames('hfui-statusbar__statuscircle', {
-          green: apiClientConnected,
-          yellow: apiClientConnecting,
-          red: apiClientDisconnected,
-        })}
-        />
+            <span className={ClassNames('hfui-statusbar__statuscircle', {
+              green: apiClientConnected,
+              yellow: apiClientConnecting,
+              red: apiClientDisconnected,
+            })}
+            />
+          </>
+        )}
 
         <p>{(wsConnected && !wsConnInterrupted) ? 'WS Connected' : 'WS Disconnected'}</p>
 
