@@ -4,8 +4,7 @@ import ClassNames from 'classnames'
 import _ from 'lodash'
 import _isEmpty from 'lodash/isEmpty'
 import _find from 'lodash/find'
-import { Controlled as CodeMirror } from 'react-codemirror2'
-import 'codemirror/mode/javascript/javascript'
+import Editor from '@monaco-editor/react'
 import Indicators from 'bfx-hf-indicators'
 import { nonce } from 'bfx-api-node-util'
 import HFS from 'bfx-hf-strategy'
@@ -203,7 +202,7 @@ const StrategyEditor = ({
     onStrategyChange(content)
   }
 
-  const onEditorContentChange = (editor, data, code) => {
+  const onEditorContentChange = (code) => {
     setStrategyDirty(true)
     updateStrategy({
       ...strategy,
@@ -321,18 +320,13 @@ const StrategyEditor = ({
             'exec-error': execError || sectionErrors[activeContent],
           })}
         >
-          <CodeMirror
+          <Editor
+            language='javascript'
             value={strategy[activeContent] || ''}
-            onBeforeChange={onEditorContentChange}
-            options={{
-              mode: {
-                name: 'javascript',
-                json: true,
-              },
-              theme: 'monokai',
-              lineNumbers: true,
-              tabSize: 2,
-            }}
+            onChange={onEditorContentChange}
+            height='100%'
+            width='100%'
+            theme='vs-dark'
           />
           {(execError || sectionErrors[activeContent]) && (
             <div className='hfui-strategyeditor__editor-error-output'>
