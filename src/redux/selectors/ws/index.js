@@ -28,6 +28,7 @@ import getAlgoOrders from './get_algo_orders'
 import getNotifications from './get_notifications'
 import getAllSyncRanges from './get_all_sync_ranges'
 import getLayouts from './get_layouts'
+import getLayoutsLoaded from './get_layouts_loaded'
 import getOrderHistory from './get_order_history'
 
 import getBacktestState from './get_backtest_state'
@@ -87,6 +88,7 @@ export {
   getFavoritePairs,
   getFavoritePairsObject,
   getLayouts,
+  getLayoutsLoaded,
 
   getNotifications,
   getAllSyncRanges,

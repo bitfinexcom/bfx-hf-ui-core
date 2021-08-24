@@ -7,6 +7,7 @@ import _last from 'lodash/last'
 import _find from 'lodash/find'
 import _entries from 'lodash/entries'
 import _reduce from 'lodash/reduce'
+import _keys from 'lodash/keys'
 import { Responsive as RGL, WidthProvider } from 'react-grid-layout'
 import { getLocation } from '../../redux/selectors/router'
 import {
@@ -29,6 +30,7 @@ import {
 } from '../../redux/selectors/ui'
 import {
   getLayouts as getWsLayouts,
+  getLayoutsLoaded as getIsWsLayoutsLoaded,
   getAuthToken,
 } from '../../redux/selectors/ws'
 
@@ -43,10 +45,10 @@ const GridLayout = ({
   const authToken = useSelector(getAuthToken)
   const { pathname } = useSelector(getLocation)
   const layouts = useSelector(getLayouts)
-  console.log('TCL: layouts', layouts)
   const wsLayouts = useSelector(getWsLayouts)
-  console.log('TCL: wsLayouts', wsLayouts)
+  console.log('TCL: layouts wsLayouts', layouts, wsLayouts)
   const isWsLayoutsSet = useSelector(getIsWsLayoutsSet)
+  const isWsLayoutsLoaded = useSelector(getIsWsLayoutsLoaded)
   const layoutID = useSelector(getLayoutID)
   const currentSavedLayout = _get(layouts, layoutID, {})
   const unsavedLayoutDef = useSelector(getCurrentUnsavedLayout)
@@ -69,7 +71,6 @@ const GridLayout = ({
 
   const saveLayoutsToWs = (nextLayouts) => dispatch(WSActions.send([
     'layouts.save',
-    authToken,
     _reduce(
       _entries(nextLayouts),
       (nextLayout, [id, layout]) => {
@@ -97,8 +98,10 @@ const GridLayout = ({
   }, [isWsLayoutsSet, wsLayouts])
 
   useEffect(() => {
+    console.log('TCL: layouts', layouts)
+    console.log('TCL: isWsLayoutsSet', isWsLayoutsSet)
     // push every layout updates to websocket
-    if (isWsLayoutsSet) {
+    if (isWsLayoutsSet && layouts) {
       saveLayoutsToWs(layouts)
     }
   }, [isWsLayoutsSet, layouts])
@@ -118,10 +121,10 @@ const GridLayout = ({
     }
   }, [isValidUnsavedLayout, layoutDef])
 
-  useEffect(() => {
-    // migrate localStorage to ws
-    migrateLocalStorageToWs(saveLayoutsToWs)
-  }, [])
+  // useEffect(() => {
+  //   // migrate localStorage to ws
+  //   migrateLocalStorageToWs(saveLayoutsToWs)
+  // }, [])
 
   const componentProps = {
     orderForm: orderFormProps,

@@ -409,6 +409,7 @@ function reducer(state = getInitialState(), action = {}) {
           ...state.layouts,
           [id]: {
             ...layoutDef,
+            name,
             isDefault: false,
             canDelete: true,
             savedAt: Date.now(),

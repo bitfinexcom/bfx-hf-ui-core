@@ -35,7 +35,7 @@ const mapDispatchToProps = dispatch => ({
   },
   getLayouts: (authToken) => {
     dispatch(WSActions.send([
-      'get.layouts',
+      'layouts.get',
       authToken,
     ]))
   },

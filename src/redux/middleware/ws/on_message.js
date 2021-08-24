@@ -134,6 +134,12 @@ export default (alias, store) => (e = {}) => {
         break
       }
 
+      case 'data.layouts': {
+        const [, layouts] = payload
+        store.dispatch(WSActions.recvLayouts(layouts))
+        break
+      }
+
       case 'data.layouts.saved': {
         const [, layouts] = payload
         store.dispatch(WSActions.recvUpdatedLayouts(layouts))
