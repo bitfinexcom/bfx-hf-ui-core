@@ -218,6 +218,10 @@
   background-color: transparent;
   opacity: 1 !important;
 
+  svg {
+    outline: 0;
+  }
+
   i,
   i:before {
     display: block;

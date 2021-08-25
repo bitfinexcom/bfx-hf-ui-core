@@ -5,7 +5,7 @@ import HFIcon from '../../ui/HFIcon'
 import AuthenticationInitForm from './AuthenticationInitForm'
 import AuthenticationUnlockForm from './AuthenticationUnlockForm'
 import AuthenticationConnectingForm from './AuthenticationConnectingForm'
-import { isElectronApp, electronAppVersion } from '../../redux/config'
+import { isElectronApp, appVersion } from '../../redux/config'
 
 import './style.css'
 
@@ -28,7 +28,7 @@ const Authentication = ({
               {isElectronApp && (
                 <p>
                   v
-                  {electronAppVersion}
+                  {appVersion}
                 </p>
               )}
             </div>
