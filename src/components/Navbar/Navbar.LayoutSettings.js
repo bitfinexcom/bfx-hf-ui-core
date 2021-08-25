@@ -71,17 +71,18 @@ export default function LayoutSettings() {
   }
 
   useEffect(() => {
-    if (isOpen && menuRef.current) {
+    const menuEl = menuRef.current
+    if (isOpen && menuEl) {
       requestAnimationFrame(() => {
-        const { x, width } = menuRef.current.getBoundingClientRect()
+        const { x, width } = menuEl.getBoundingClientRect()
 
         // overflowing outside of the window
         if (x + width > document.body.clientWidth) {
           const overflowPixels = x + width - document.body.clientWidth
-          const spacing = 16
+          const spacing = 12
 
           // adjust position
-          menuRef.current.style.transform = `translateX(calc(-50% - ${overflowPixels + spacing}px)`
+          menuEl.style.transform = `translateX(calc(-50% - ${overflowPixels + spacing}px))`
         }
       })
     }
