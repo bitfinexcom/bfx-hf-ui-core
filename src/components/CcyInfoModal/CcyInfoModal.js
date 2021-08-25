@@ -37,7 +37,6 @@ const CcyInfoModal = ({
         link.setAttribute('rel', 'noopener')
       }
     })
-    console.log(links)
   }, [body])
 
   return (
