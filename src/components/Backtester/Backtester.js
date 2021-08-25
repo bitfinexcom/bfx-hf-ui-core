@@ -137,7 +137,7 @@ Backtester.propTypes = {
       PropTypes.oneOf([null]).isRequired,
     ]),
   ),
-  markets: PropTypes.arrayOf(PropTypes.object),
+  markets: PropTypes.objectOf(PropTypes.object),
   backtestResults: PropTypes.objectOf(PropTypes.any),
   backtestOptions: PropTypes.objectOf(PropTypes.any),
   authToken: PropTypes.string.isRequired,

@@ -5,11 +5,12 @@ import _find from 'lodash/find'
 
 import Button from '../../../ui/Button'
 import Dropdown from '../../../ui/Dropdown'
+import { getDefaultMarket } from '../../../util/market'
 
 const HistoricalForm = ({
   updateExecutionType, executionTypes, executionType, disabled, markets,
 }) => {
-  const [selectedMarket, setSelectedMarket] = useState(markets[0])
+  const [selectedMarket, setSelectedMarket] = useState(getDefaultMarket(markets))
   const executeBacktest = () => { }
 
   return (
@@ -58,7 +59,7 @@ HistoricalForm.propTypes = {
   updateExecutionType: PropTypes.func.isRequired,
   disabled: PropTypes.bool,
   executionTypes: PropTypes.arrayOf(PropTypes.object),
-  markets: PropTypes.arrayOf(PropTypes.object),
+  markets: PropTypes.objectOf(PropTypes.object),
   executionType: PropTypes.string,
 }
 

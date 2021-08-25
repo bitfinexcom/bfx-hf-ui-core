@@ -1,11 +1,13 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Checkbox } from '@ufx-ui/core'
+import _find from 'lodash/find'
 
 import Button from '../../../ui/Button'
 import Dropdown from '../../../ui/Dropdown'
 import MarketSelect from '../../MarketSelect'
 import TimeFrameDropdown from '../../TimeFrameDropdown'
+import { getDefaultMarket } from '../../../util/market'
 
 import DateInput from '../../OrderForm/FieldComponents/input.date'
 
@@ -64,7 +66,7 @@ export default class HistoricalForm extends React.PureComponent {
       startDate: new Date(Date.now() - ONE_DAY),
       endDate: new Date(Date.now() - (ONE_MIN * 15)),
       selectedTimeFrame: '15m',
-      selectedMarket: markets[0],
+      selectedMarket: getDefaultMarket(markets),
       trades: false,
       candles: true,
       checkboxErr: false,
@@ -125,7 +127,7 @@ export default class HistoricalForm extends React.PureComponent {
             <MarketSelect
               value={selectedMarket}
               onChange={(selection) => {
-                const sel = markets.find(m => m.uiID === selection.uiID)
+                const sel = _find(markets, m => m.uiID === selection.uiID)
                 setFormState(() => ({ selectedMarket: sel }))
               }}
               markets={markets}
@@ -205,7 +207,7 @@ HistoricalForm.propTypes = {
     trades: PropTypes.bool,
     candles: PropTypes.bool,
   }),
-  markets: PropTypes.arrayOf(PropTypes.object),
+  markets: PropTypes.objectOf(PropTypes.object),
   updateError: PropTypes.func.isRequired,
   setFormState: PropTypes.func.isRequired,
   backtestStrategy: PropTypes.func.isRequired,

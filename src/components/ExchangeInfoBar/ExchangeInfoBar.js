@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { VOLUME_UNIT, VOLUME_UNIT_PAPER } from '@ufx-ui/bfx-containers'
 import { TickerList, Ticker } from '@ufx-ui/core'
+import _find from 'lodash/find'
 
 import Panel from '../../ui/Panel'
 import useSize from '../../hooks/useSize'
@@ -37,7 +38,7 @@ const ExchangeInfoBar = ({
     updateFavorites(authToken, arrayWithFavorites, currentMode)
   }
   const onChangeMarketHandler = ({ rowData: { id } }) => {
-    const newMarket = markets.find(market => market.uiID === id)
+    const newMarket = _find(markets, market => market.uiID === id)
     if (!newMarket) {
       return
     }
@@ -133,7 +134,7 @@ ExchangeInfoBar.propTypes = {
     changePerc: PropTypes.number,
     volumeConverted: PropTypes.number,
   }).isRequired,
-  markets: PropTypes.arrayOf(PropTypes.object),
+  markets: PropTypes.objectOf(PropTypes.object),
   allTickersArray: PropTypes.arrayOf(PropTypes.object).isRequired,
   favoritePairs: PropTypes.objectOf(PropTypes.bool).isRequired,
   updateFavorites: PropTypes.func.isRequired,

@@ -1,8 +1,13 @@
-import { REDUCER_PATHS } from '../../config'
+import _get from 'lodash/get'
+import { createSelector } from 'reselect'
 
-const path = REDUCER_PATHS.META
+import getMarkets from './get_markets_object'
 
-export default (state, symbol) => {
-  const { markets } = state[path]
-  return markets[symbol]
-}
+const EMPTY_OBJ = {}
+
+const getMarketBySymbol = createSelector([
+  getMarkets,
+  (_, symbol) => symbol,
+], (markets, symbol) => _get(markets, [symbol], EMPTY_OBJ))
+
+export default getMarketBySymbol
