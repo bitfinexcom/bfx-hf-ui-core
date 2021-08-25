@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useRef, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import cx from 'classnames'
 import _entries from 'lodash/entries'
@@ -50,6 +50,7 @@ export default function LayoutSettings() {
   const layoutIsDirty = useSelector(state => state.ui.layoutIsDirty)
   const layout = _get(layouts, layoutID, {})
   const { pathname } = useSelector(getLocation)
+  const menuRef = useRef()
 
   if (![
     Routes.tradingTerminal.path,
@@ -69,6 +70,23 @@ export default function LayoutSettings() {
     }
   }
 
+  useEffect(() => {
+    if (isOpen && menuRef.current) {
+      requestAnimationFrame(() => {
+        const { x, width } = menuRef.current.getBoundingClientRect()
+
+        // overflowing outside of the window
+        if (x + width > document.body.clientWidth) {
+          const overflowPixels = x + width - document.body.clientWidth
+          const spacing = 16
+
+          // adjust position
+          menuRef.current.style.transform = `translateX(calc(-50% - ${overflowPixels + spacing}px)`
+        }
+      })
+    }
+  }, [isOpen])
+
   return (
     <div className='hfui-navbar__layout-settings'>
       <NavbarButton
@@ -79,7 +97,7 @@ export default function LayoutSettings() {
       />
       {isOpen && (
         <OutsideClickHandler onOutsideClick={() => setIsOpen(false)}>
-          <div className='hfui-navbar__layout-settings__menu'>
+          <div ref={menuRef} className='hfui-navbar__layout-settings__menu'>
             <div className='hfui-navbar__layout-settings__title'>
               Layout settings
             </div>
