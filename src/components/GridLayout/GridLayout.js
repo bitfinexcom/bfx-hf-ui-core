@@ -46,7 +46,6 @@ const GridLayout = ({
   const { pathname } = useSelector(getLocation)
   const layouts = useSelector(getLayouts)
   const wsLayouts = useSelector(getWsLayouts)
-  console.log('TCL: layouts wsLayouts', layouts, wsLayouts)
   const isWsLayoutsSet = useSelector(getIsWsLayoutsSet)
   const isWsLayoutsLoaded = useSelector(getIsWsLayoutsLoaded)
   const layoutID = useSelector(getLayoutID)
@@ -98,8 +97,6 @@ const GridLayout = ({
   }, [isWsLayoutsSet, wsLayouts])
 
   useEffect(() => {
-    console.log('TCL: layouts', layouts)
-    console.log('TCL: isWsLayoutsSet', isWsLayoutsSet)
     // push every layout updates to websocket
     if (isWsLayoutsSet && layouts) {
       saveLayoutsToWs(layouts)

@@ -65,7 +65,10 @@ function getInitialState() {
     content: {},
     unsavedLayout: null,
     layoutID: null,
-    layouts: {},
+    layouts: {
+      [DEFAULT_TRADING_LAYOUT.id]: DEFAULT_TRADING_LAYOUT,
+      [DEFAULT_MARKET_DATA_LAYOUT.id]: DEFAULT_MARKET_DATA_LAYOUT,
+    },
     isWsLayoutsSet: false,
   }
 
@@ -302,8 +305,7 @@ function reducer(state = getInitialState(), action = {}) {
       return {
         ...state,
         layouts: {
-          [DEFAULT_TRADING_LAYOUT.id]: DEFAULT_TRADING_LAYOUT,
-          [DEFAULT_MARKET_DATA_LAYOUT.id]: DEFAULT_MARKET_DATA_LAYOUT,
+          ...state.layouts,
           ...layouts,
         },
         isWsLayoutsSet: true,
@@ -409,6 +411,7 @@ function reducer(state = getInitialState(), action = {}) {
           ...state.layouts,
           [id]: {
             ...layoutDef,
+            id,
             name,
             isDefault: false,
             canDelete: true,

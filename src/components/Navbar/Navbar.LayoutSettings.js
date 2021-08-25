@@ -62,7 +62,11 @@ export default function LayoutSettings() {
   const selectableLayouts = _entries(layouts)
   // eslint-disable-next-line no-shadow
     .filter(([, layout]) => layout.routePath === pathname)
-    .sort((a, b) => a[1].savedAt - b[1].savedAt)
+    .sort((a, b) => {
+      const [, layoutA] = a
+      const [, layoutB] = b
+      return layoutA.savedAt - layoutB.savedAt
+    })
 
   const onSave = () => {
     if (!layout.isDefault && layoutIsDirty) {
