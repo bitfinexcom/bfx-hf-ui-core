@@ -88,7 +88,7 @@ ChartPanel.propTypes = {
       PropTypes.array, PropTypes.string, PropTypes.bool, PropTypes.number,
     ])),
   }),
-  markets: PropTypes.arrayOf(PropTypes.object),
+  markets: PropTypes.objectOf(PropTypes.object),
 }
 
 ChartPanel.defaultProps = {

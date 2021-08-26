@@ -2,6 +2,7 @@ import React, {
   useMemo, useCallback, memo, useState,
 } from 'react'
 import _filter from 'lodash/filter'
+import _find from 'lodash/find'
 import _toLower from 'lodash/toLower'
 import _join from 'lodash/join'
 import _includes from 'lodash/includes'
@@ -56,7 +57,7 @@ const MarketSelect = ({
       searchable
       className={ClassNames('hfui-marketselect', className)}
       onChange={(val) => {
-        onChange(markets.find(m => m.uiID === val))
+        onChange(_find(markets, m => m?.uiID === val))
       }}
       value={value.uiID}
       options={sortedOptions}
@@ -92,7 +93,7 @@ const MarketSelect = ({
 MarketSelect.propTypes = {
   value: PropTypes.instanceOf(Object).isRequired,
   onChange: PropTypes.func.isRequired,
-  markets: PropTypes.instanceOf(Array).isRequired,
+  markets: PropTypes.objectOf(PropTypes.object).isRequired,
   renderLabel: PropTypes.bool,
   className: PropTypes.instanceOf(Object),
   currentMode: PropTypes.string,

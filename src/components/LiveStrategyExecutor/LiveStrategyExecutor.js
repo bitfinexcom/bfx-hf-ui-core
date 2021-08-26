@@ -6,6 +6,7 @@ import _isEmpty from 'lodash/isEmpty'
 import Button from '../../ui/Button'
 import MarketSelect from '../MarketSelect'
 import TimeFrameDropdown from '../TimeFrameDropdown'
+import { getDefaultMarket } from '../../util/market'
 
 import './style.css'
 
@@ -13,7 +14,7 @@ const LiveStrategyExecutor = ({
   strategyContent, dsExecuteLiveStrategy, markets,
 }) => {
   const [selectedTimeFrame, setSelectedTimeFrame] = useState('1m')
-  const [selectedMarket, setSelectedMarket] = useState(markets[0])
+  const [selectedMarket, setSelectedMarket] = useState(getDefaultMarket(markets))
 
   if (_isEmpty(strategyContent)) {
     return (
@@ -62,12 +63,12 @@ LiveStrategyExecutor.propTypes = {
       PropTypes.oneOf([null]).isRequired,
     ]),
   ),
-  markets: PropTypes.arrayOf(PropTypes.object),
+  markets: PropTypes.objectOf(PropTypes.object),
 }
 
 LiveStrategyExecutor.defaultProps = {
   strategyContent: {},
-  markets: [{}],
+  markets: {},
 }
 
 export default memo(LiveStrategyExecutor)

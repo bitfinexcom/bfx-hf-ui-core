@@ -141,7 +141,7 @@ TradesTablePanel.propTypes = {
   layoutI: PropTypes.string.isRequired,
   layoutID: PropTypes.string,
   updateState: PropTypes.func.isRequired,
-  markets: PropTypes.arrayOf(PropTypes.object).isRequired,
+  markets: PropTypes.objectOf(PropTypes.object).isRequired,
   activeMarket: PropTypes.shape({
     uiID: PropTypes.string,
   }).isRequired,

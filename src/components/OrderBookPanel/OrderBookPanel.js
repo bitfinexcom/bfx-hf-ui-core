@@ -205,7 +205,7 @@ OrderBookPanel.propTypes = {
     quote: PropTypes.string,
     uiID: PropTypes.string,
   }),
-  markets: PropTypes.array.isRequired,
+  markets: PropTypes.objectOf(PropTypes.object).isRequired,
   canChangeMarket: PropTypes.bool.isRequired,
   layoutID: PropTypes.string,
   layoutI: PropTypes.string.isRequired,

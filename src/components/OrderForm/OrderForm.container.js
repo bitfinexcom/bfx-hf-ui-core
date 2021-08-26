@@ -8,7 +8,6 @@ import OrderForm from './OrderForm'
 import UIActions from '../../redux/actions/ui'
 import WSActions from '../../redux/actions/ws'
 import GAActions from '../../redux/actions/google_analytics'
-import { getMarkets } from '../../redux/selectors/meta'
 import {
   getAPIClientState, getAuthToken, getCurrentModeAPIKeyState,
 } from '../../redux/selectors/ws'
@@ -28,7 +27,6 @@ const mapStateToProps = (state = {}, ownProps = {}) => {
   return {
     activeMarket: getActiveMarket(state),
     apiClientState: getAPIClientState(state),
-    markets: getMarkets(state),
     savedState: getComponentState(state, layoutID, 'orderform', id),
     authToken: getAuthToken(state),
     apiCredentials: getCurrentModeAPIKeyState(state),
