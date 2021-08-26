@@ -18,8 +18,8 @@ function reducer(state = getInitialState(), action = {}) {
       const { notification = {} } = payload
 
       return [
-        notificationAdapter(notification),
         ...state,
+        notificationAdapter(notification),
       ]
     }
 
