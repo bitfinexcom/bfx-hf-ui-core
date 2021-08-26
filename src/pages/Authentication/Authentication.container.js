@@ -4,6 +4,7 @@ import WSActions from '../../redux/actions/ws'
 import UIActions from '../../redux/actions/ui'
 import { getSocket, getAuthConfigured } from '../../redux/selectors/ws'
 import Authentication from './Authentication'
+import { PAPER_MODE } from '../../redux/reducers/ui'
 
 const mapStateToProps = (state = {}) => {
   const socket = getSocket()(state)
@@ -25,7 +26,7 @@ const mapDispatchToProps = dispatch => ({ // eslint-disable-line
   },
 
   onUnlock: (password, mode) => {
-    const isPaperTrading = mode === 'paper'
+    const isPaperTrading = mode === PAPER_MODE
     dispatch(WSActions.auth(password, mode))
     dispatch(UIActions.setMarketFromStore(isPaperTrading))
     dispatch(UIActions.setTradingMode(isPaperTrading))

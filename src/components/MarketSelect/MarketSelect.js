@@ -38,7 +38,7 @@ const MarketSelect = ({
   const sortedOptions = useMemo(() => {
     const filtered = searchTerm ? _filter(markets,
       (market) => {
-        const { quote, base, ccyLabels } = market
+        const { quote, base, ccyLabels = [] } = market
         const defaultLabels = [base, quote, base + quote, `${base}/${quote}`]
         const matches = _toLower(_join([...ccyLabels, ...defaultLabels]))
         return _includes(matches, _toLower(searchTerm))

@@ -1,4 +1,4 @@
-import React, { memo, useEffect } from 'react'
+import React, { memo, useEffect, useRef } from 'react'
 import _isEmpty from 'lodash/isEmpty'
 import PropTypes from 'prop-types'
 import InnerHTML from 'dangerously-set-html-content'
@@ -13,13 +13,32 @@ const CcyInfoModal = ({
   fetchCcyArticle,
   article,
 }) => {
+  const { body, title } = article
+
+  const containerRef = useRef()
   useEffect(() => {
     if (isModalVisible && _isEmpty(article)) {
       fetchCcyArticle()
     }
   }, [isModalVisible])
 
-  const { body, title } = article
+  useEffect(() => {
+    if (!body || !containerRef.current) {
+      return
+    }
+    const links = [...containerRef.current.querySelectorAll('a')]
+    links.forEach(link => {
+      const targetAttr = link.getAttribute('target')
+      const refAttr = link.getAttribute('rel')
+      if (targetAttr !== '_blank') {
+        link.setAttribute('target', '_blank')
+      }
+      if (refAttr !== 'noopener') {
+        link.setAttribute('rel', 'noopener')
+      }
+    })
+  }, [body])
+
   return (
     <Modal
       title={title}
@@ -29,7 +48,9 @@ const CcyInfoModal = ({
       width={600}
       scrollable
     >
-      {body ? <InnerHTML html={body} /> : <Spinner />}
+      <div ref={containerRef}>
+        {body ? <InnerHTML html={body} /> : <Spinner />}
+      </div>
     </Modal>
   )
 }
