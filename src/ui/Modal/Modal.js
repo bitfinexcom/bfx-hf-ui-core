@@ -12,7 +12,7 @@ const Modal = ({
   useEffect(() => {
     // focus on the first interactable element
     if (isOpen) {
-      const el = document.querySelector(['input', 'button', '[role=button'].map(element => `.modal__body ${element}`).join(','))
+      const el = document.querySelector(['input', 'button', '[role=button]'].map(element => `.modal__body ${element}`).join(','))
       const footer = document.querySelector('.modal__footer')
       if (el && footer && !footer.contains(el)) {
         el.focus()
