@@ -40,6 +40,7 @@ function* externalREST(action = {}) {
 
 function* onREST(action = {}) {
   const { dataHF = {} } = yield select(getState)
+  console.log('onREST: ')
   const { user } = dataHF
   const {
     payload = {},

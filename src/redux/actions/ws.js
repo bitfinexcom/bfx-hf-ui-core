@@ -1,5 +1,4 @@
 import _isString from 'lodash/isString'
-import _isFinite from 'lodash/isFinite'
 import t from '../constants/ws'
 import ui from '../constants/ui'
 
@@ -24,51 +23,6 @@ export default {
   reconnected: (alias) => ({ type: t.RECONNECTED, payload: { alias } }),
   disconnected: (alias) => ({ type: t.DISCONNECTED, payload: { alias } }),
   disconnect: (alias) => ({ type: t.DISCONNECT, payload: { alias } }),
-
-  subscribed: ({ chanID, chanData }) => ({
-    type: t.SUBSCRIBED,
-    payload: { chanID, chanData },
-  }),
-
-  clearChannels: () => ({ type: t.CLEAR_CHANNELS }),
-
-  unsubscribed: ({ chanId }) => ({
-    type: t.UNSUBSCRIBED,
-    payload: { chanId },
-  }),
-
-  subscribe: (channel) => ({
-    type: t.SUBSCRIBE,
-    payload: { channel },
-  }),
-
-  pubSubscribed: ({ chanID, chanName, symbol }) => ({
-    type: t.PUB_SUBSCRIBED,
-    payload: { chanID, chanName, symbol },
-  }),
-
-  unsubscribe: (channelDataOrID) => {
-    const action = {
-      type: t.UNSUBSCRIBE,
-      payload: {},
-    }
-    if (_isFinite(channelDataOrID)) {
-      action.payload.chanId = channelDataOrID
-    } else {
-      action.payload.chanData = channelDataOrID
-    }
-    return action
-  },
-
-  addChannelRequirement: (channel) => ({
-    type: t.ADD_CHANNEL_REQUIREMENT,
-    payload: { channel },
-  }),
-
-  removeChannelRequirement: (channel) => ({
-    type: t.REMOVE_CHANNEL_REQUIREMENT,
-    payload: { channel },
-  }),
 
   setBacktestLoading: () => ({
     type: t.SET_BACKTEST_LOADING,
@@ -102,26 +56,6 @@ export default {
       data,
       rawData,
     },
-  }),
-
-  flushDataFromExchange: updates => ({
-    type: t.FLUSH_DATA_FROM_EXCHANGE,
-    payload: { updates },
-  }),
-
-  recvDataTicker: (channel, ticker) => ({
-    type: t.DATA_TICKER,
-    payload: { channel, ticker },
-  }),
-
-  recvDataTrades: (channel, trades) => ({
-    type: t.DATA_TRADES,
-    payload: { channel, trades },
-  }),
-
-  recvDataBook: (channel, book) => ({
-    type: t.DATA_BOOK,
-    payload: { channel, book },
   }),
 
   recvDataSyncStart: ({
@@ -285,11 +219,6 @@ export default {
 
   purgeDataBook: (channel) => ({
     type: t.PURGE_DATA_BOOK,
-    payload: { channel },
-  }),
-
-  purgeDataTrades: (channel) => ({
-    type: t.PURGE_DATA_TRADES,
     payload: { channel },
   }),
 

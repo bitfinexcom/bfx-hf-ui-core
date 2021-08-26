@@ -1,9 +1,3 @@
-import getAllChannelRequirements from './get_all_channel_requirements'
-import getChannelRequirements from './get_channel_requirements'
-import getChannels from './get_channels'
-import getChannel from './get_channel'
-import getChannelID from './get_channel_id'
-import getChannelByID from './get_channel_by_id'
 import getFavoritePairs from './get_favorite_pairs'
 import getFavoritePairsObject from './get_favorite_pairs_object'
 import getSyncRanges from './get_sync_ranges'
@@ -50,12 +44,6 @@ export {
 
   getAuthToken,
   getAuthConfigured,
-  getChannels,
-  getChannel,
-  getChannelID,
-  getChannelByID,
-  getChannelRequirements,
-  getAllChannelRequirements,
   getOrderHistory,
 
   getSyncRanges,
