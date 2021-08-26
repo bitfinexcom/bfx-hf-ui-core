@@ -4,7 +4,6 @@ import ClassNames from 'classnames'
 import _ from 'lodash'
 import _isEmpty from 'lodash/isEmpty'
 import _find from 'lodash/find'
-import Editor from '@monaco-editor/react'
 import Indicators from 'bfx-hf-indicators'
 import { nonce } from 'bfx-api-node-util'
 import HFS from 'bfx-hf-strategy'
@@ -16,6 +15,7 @@ import StrategyEditorPanel from './StrategyEditorPanel'
 import CreateNewStrategyModal from '../CreateNewStrategyModal'
 import RemoveExistingStrategyModal from '../RemoveExistingStrategyModal'
 import OpenExistingStrategyModal from '../OpenExistingStrategyModal'
+import MonacoEditor from './MonacoEditor'
 
 import './style.css'
 
@@ -320,13 +320,9 @@ const StrategyEditor = ({
             'exec-error': execError || sectionErrors[activeContent],
           })}
         >
-          <Editor
-            language='javascript'
+          <MonacoEditor
             value={strategy[activeContent] || ''}
             onChange={onEditorContentChange}
-            height='100%'
-            width='100%'
-            theme='vs-dark'
           />
           {(execError || sectionErrors[activeContent]) && (
             <div className='hfui-strategyeditor__editor-error-output'>
