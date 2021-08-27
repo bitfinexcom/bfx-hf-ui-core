@@ -4,8 +4,6 @@ import ClassNames from 'classnames'
 import _ from 'lodash'
 import _isEmpty from 'lodash/isEmpty'
 import _find from 'lodash/find'
-import { Controlled as CodeMirror } from 'react-codemirror2'
-import 'codemirror/mode/javascript/javascript'
 import Indicators from 'bfx-hf-indicators'
 import { nonce } from 'bfx-api-node-util'
 import HFS from 'bfx-hf-strategy'
@@ -17,6 +15,7 @@ import StrategyEditorPanel from './StrategyEditorPanel'
 import CreateNewStrategyModal from '../CreateNewStrategyModal'
 import RemoveExistingStrategyModal from '../RemoveExistingStrategyModal'
 import OpenExistingStrategyModal from '../OpenExistingStrategyModal'
+import MonacoEditor from './MonacoEditor'
 
 import './style.css'
 
@@ -203,7 +202,7 @@ const StrategyEditor = ({
     onStrategyChange(content)
   }
 
-  const onEditorContentChange = (editor, data, code) => {
+  const onEditorContentChange = (code) => {
     setStrategyDirty(true)
     updateStrategy({
       ...strategy,
@@ -321,18 +320,9 @@ const StrategyEditor = ({
             'exec-error': execError || sectionErrors[activeContent],
           })}
         >
-          <CodeMirror
+          <MonacoEditor
             value={strategy[activeContent] || ''}
-            onBeforeChange={onEditorContentChange}
-            options={{
-              mode: {
-                name: 'javascript',
-                json: true,
-              },
-              theme: 'monokai',
-              lineNumbers: true,
-              tabSize: 2,
-            }}
+            onChange={onEditorContentChange}
           />
           {(execError || sectionErrors[activeContent]) && (
             <div className='hfui-strategyeditor__editor-error-output'>

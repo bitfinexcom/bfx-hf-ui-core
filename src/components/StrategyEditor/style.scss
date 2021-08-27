@@ -1,4 +1,4 @@
-@import '../../variables.scss';
+@import "../../variables.scss";
 
 .hfui-strategyeditor__wrapper {
   display: flex;
@@ -10,7 +10,7 @@
   button {
     margin-right: 10px;
   }
-  .hfui-removestrategymodal__content p{ 
+  .hfui-removestrategymodal__content p {
     margin-bottom: 15px;
   }
 }
@@ -26,31 +26,7 @@
   &.noresults {
     height: 100%;
   }
-
-  &.exec-error {
-    .react-codemirror2, .CodeMirror {
-      height: calc(100% - 22px);
-    }
-  }
-
-  .react-codemirror2, .CodeMirror {
-    height: 100%;
-  }
-
-  .CodeMirror-code {
-    font-size: 13px;
-  }
-
-  .cm-s-monokai.CodeMirror {
-    border-radius: $border-radius;
-    background: $background-color;
-  }
-
-  .cm-s-monokai .CodeMirror-gutters {
-    background-color: $background-color;
-  }
 }
-
 .hfui-strategyeditor__editor-error-output {
   font-family: monospace;
   padding: 0 16px;
@@ -78,7 +54,7 @@
 .hfui-strategyeditor__func-select {
   flex-shrink: 0;
   font-size: 13px;
-  margin-right: spacing(.75);
+  margin-right: spacing(0.75);
   width: 170px;
 
   li {
@@ -89,7 +65,7 @@
     font-weight: 500;
     padding: 0 spacing();
     cursor: pointer;
-    transition: all .2s;
+    transition: all 0.2s;
     border-bottom: 1px solid $light-color-50;
     background: $background-color;
 
@@ -106,7 +82,7 @@
 
     &:active {
       transition-duration: 0.05s;
-      background: rgba(0, 0, 0, .1);
+      background: rgba(0, 0, 0, 0.1);
     }
 
     p:first-child {
@@ -150,7 +126,9 @@
 }
 
 .hfui-strategyeditor__content-wrapper {
-  width: calc(100% - 182px); // width of hfui-strategyeditor__func-select + margin-right
+  width: calc(
+    100% - 182px
+  ); // width of hfui-strategyeditor__func-select + margin-right
 }
 
 .hfui-strategyeditor__panel {
