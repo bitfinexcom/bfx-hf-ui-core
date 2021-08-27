@@ -103,12 +103,6 @@ const mapDispatchToProps = dispatch => ({
       mode,
     ]))
   },
-
-  onChangeMarket: (market, prevMarket) => {
-    dispatch(WSActions.removeChannelRequirement(['ticker', prevMarket]))
-    dispatch(UIActions.setActiveMarket(market))
-    dispatch(WSActions.addChannelRequirement(['ticker', market]))
-  },
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(OrderForm)

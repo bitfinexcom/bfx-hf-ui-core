@@ -30,13 +30,7 @@ export default (alias, store) => (e = {}) => {
     console.error('[wss] recv invalid ws payload: ', payload)
     return
   }
-  const event = payload?.event
   const hasDataUpdates = _isNumber(payload[0]) && _isArray(payload[1])
-
-  if (event === 'subscribed') {
-    const { chanId: chanID, channel: chanName, symbol } = payload
-    store.dispatch(WSActions.pubSubscribed({ chanID, chanName, symbol }))
-  }
 
   if (hasDataUpdates) {
     const [chanID, exData] = payload
