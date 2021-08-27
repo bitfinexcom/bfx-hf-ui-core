@@ -1,3 +1,4 @@
+/* eslint-disable no-param-reassign */
 import React, { memo, useEffect, useRef } from 'react'
 import _isEmpty from 'lodash/isEmpty'
 import PropTypes from 'prop-types'
@@ -23,19 +24,14 @@ const CcyInfoModal = ({
   }, [isModalVisible])
 
   useEffect(() => {
-    if (!body || !containerRef.current) {
+    if (!body) {
       return
     }
-    const links = [...containerRef.current.querySelectorAll('a')]
+
+    const links = containerRef.current.querySelectorAll('a')
     links.forEach(link => {
-      const targetAttr = link.getAttribute('target')
-      const refAttr = link.getAttribute('rel')
-      if (targetAttr !== '_blank') {
-        link.setAttribute('target', '_blank')
-      }
-      if (refAttr !== 'noopener') {
-        link.setAttribute('rel', 'noopener')
-      }
+      link.target = '_blank'
+      link.rel = 'noopener noreferrer'
     })
   }, [body])
 
@@ -45,7 +41,7 @@ const CcyInfoModal = ({
       onClose={onClose}
       isOpen={isModalVisible}
       className='hfui-ccy-article-modal'
-      width={600}
+      width={1000}
       scrollable
     >
       <div ref={containerRef}>
