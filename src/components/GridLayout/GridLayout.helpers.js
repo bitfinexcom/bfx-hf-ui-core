@@ -196,6 +196,11 @@ export const migrateLocalStorageToWs = (saveLayoutsToWs) => {
 
   const LAYOUTS_KEY = 'HF_UI_LAYOUTS'
   const layoutsJSON = localStorage.getItem(LAYOUTS_KEY)
+
+  if (!layoutsJSON) {
+    return
+  }
+
   const storedLayouts = JSON.parse(layoutsJSON)
 
   const isNewFormat = !_some(

@@ -65,10 +65,7 @@ function getInitialState() {
     content: {},
     unsavedLayout: null,
     layoutID: null,
-    layouts: {
-      [DEFAULT_TRADING_LAYOUT.id]: DEFAULT_TRADING_LAYOUT,
-      [DEFAULT_MARKET_DATA_LAYOUT.id]: DEFAULT_MARKET_DATA_LAYOUT,
-    },
+    layouts: null,
     isWsLayoutsSet: false,
   }
 
@@ -305,7 +302,8 @@ function reducer(state = getInitialState(), action = {}) {
       return {
         ...state,
         layouts: {
-          ...state.layouts,
+          [DEFAULT_TRADING_LAYOUT.id]: DEFAULT_TRADING_LAYOUT,
+          [DEFAULT_MARKET_DATA_LAYOUT.id]: DEFAULT_MARKET_DATA_LAYOUT,
           ...layouts,
         },
         isWsLayoutsSet: true,
@@ -366,13 +364,15 @@ function reducer(state = getInitialState(), action = {}) {
       const newLayout = layoutDefToGridLayout({ layout: incomingLayout })
       const setIsDirty = !_isEqual(currentLayout, newLayout)
 
+      const unsavedLayout = gridLayoutToLayoutDef({
+        ...layoutDef,
+        layout: incomingLayout,
+      }, layoutDef)
+
       return {
         ...state,
         ...setIsDirty && { layoutIsDirty: true },
-        unsavedLayout: gridLayoutToLayoutDef({
-          ...layoutDef,
-          layout: incomingLayout,
-        }, layoutDef),
+        unsavedLayout,
       }
     }
 
@@ -407,6 +407,7 @@ function reducer(state = getInitialState(), action = {}) {
       return {
         ...state,
         layoutIsDirty: false,
+        unsavedLayout: null,
         layouts: {
           ...state.layouts,
           [id]: {
