@@ -11,6 +11,7 @@ export const SETTINGS = {
   GA: 'ga',
   SHOW_ALGO_PAUSE_INFO: 'showAlgoPauseInfo',
   SHOW_ONLY_FAVORITE_PAIRS: 'showOnlyFavoritePairs',
+  REBOOT_AUTOMATICALLY: 'rebootAutomatically',
 }
 
 const getSettings = (state) => _get(state, `${path}.settings`, EMPTY_OBJ)
@@ -33,6 +34,11 @@ export const getDMSSetting = createSelector(
 export const getGASetting = createSelector(
   getSettings,
   (settings) => _get(settings, SETTINGS.GA, true),
+)
+
+export const getRebootSetting = createSelector(
+  getSettings,
+  (settings) => _get(settings, SETTINGS.REBOOT_AUTOMATICALLY, false),
 )
 
 export default getSettings
