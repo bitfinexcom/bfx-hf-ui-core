@@ -1,16 +1,19 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { StoreProvider as UfxStoreProvider } from '@ufx-ui/core'
+import { I18nextProvider } from 'react-i18next'
+import { useInjectBfxData } from '@ufx-ui/bfx-containers'
 import Debug from 'debug'
 import Manifest from '../package.json'
 
 import HFUI from './components/HFUI'
 import CrashHandler from './components/CrashHandler'
 import StoreWrapper from './StoreWrapper'
+import useAuthToken from './hooks/useAuthToken'
+import i18n from './locales/i18n'
 
 import './passive_listener_fix'
 import './index.css'
-import useAuthToken from './hooks/useAuthToken'
 
 console.log(`bfx-hf-ui-core v${Manifest.version}`)
 
@@ -52,7 +55,9 @@ const HFUIWrapper = () => {
 ReactDOM.render((
   <StoreWrapper>
     <UfxStoreProvider value={config}>
-      <HFUIWrapper />
+      <I18nextProvider i18n={i18n}>
+        <HFUIWrapper />
+      </I18nextProvider>
     </UfxStoreProvider>
   </StoreWrapper>
 ), document.getElementById('root'))
