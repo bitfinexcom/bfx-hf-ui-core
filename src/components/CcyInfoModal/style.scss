@@ -1,6 +1,8 @@
 .hfui-ccy-article-modal {
   line-height: 1.5;
   font-weight: 400;
+  overflow-y: auto !important;
+
   p {
     margin: 0.5rem 0;
   }
