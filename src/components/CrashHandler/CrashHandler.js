@@ -32,7 +32,6 @@ class CrashHandler extends React.Component {
     const { children } = this.props
 
     if (appCrashed) {
-      console.log(crashStack)
       return (
         <div className='hfui-crash_screen-wrapper'>
           <div className='hfui-crash_screen'>
