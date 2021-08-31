@@ -49,7 +49,7 @@ const Navbar = () => {
           </div>
         </div>
         )}
-        <LanguageSettings />
+        {/* <LanguageSettings /> */}
       </div>
     </div>
   )
