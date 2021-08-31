@@ -33,30 +33,34 @@ export const ROW_MAPPING = {
     selector: 'originalAmount',
     renderer: ({ rowData = {} }) => {
       const { originalAmount, amount } = rowData
-      return amount && originalAmount && originalAmount !== amount ? defaultCellRenderer(
-        <span>
-          <PrettyValue
-            value={amount}
-            decimals={AMOUNT_DECIMALS}
-            fadeTrailingZeros
-            strike={0}
-          />
-          {' '}
-          /
-          <PrettyValue
-            value={originalAmount}
-            decimals={AMOUNT_DECIMALS}
-            fadeTrailingZeros
-            strike={0}
-          />
-        </span>,
-      ) : defaultCellRenderer(
-        <PrettyValue
-          value={amount || originalAmount}
-          decimals={AMOUNT_DECIMALS}
-          fadeTrailingZeros
-          strike={0}
-        />,
+      const valueProps = {
+        decimals: AMOUNT_DECIMALS,
+        fadeTrailingZeros: true,
+        strike: 0,
+      }
+
+      return defaultCellRenderer(
+        amount && originalAmount && originalAmount !== amount
+          ? (
+            <span>
+              <PrettyValue
+                value={amount}
+                {...valueProps}
+              />
+              {' '}
+              /
+              <PrettyValue
+                value={originalAmount}
+                {...valueProps}
+              />
+            </span>
+          )
+          : (
+            <PrettyValue
+              value={amount || originalAmount}
+              {...valueProps}
+            />
+          ),
       )
     },
   },
