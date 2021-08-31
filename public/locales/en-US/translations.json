@@ -1,5 +1,20 @@
 {
-  "something": {
-    "text": "qweqweqwe"
+  "main": {
+    "paper": "Paper Trading",
+    "production": "Production"
+  },
+  "auth": {
+    "enterPsw": "Enter your password to unlock",
+    "password": "Password",
+    "confirmPsw": "Confirm password",
+    "selectMode": "Select trading mode",
+    "resetMsg": "Alternatively, clear your credentials and stored data to set a new password",
+    "resetBtn": "Clear Data & Reset",
+    "unlockBtn": "Unlock",
+    "initMsg": "Create a password to encrypt your API credentials & strategies. All data is stored locally, and your password is hashed",
+    "saveCredentsBtn": "Save Credentials"
+  },
+  "settings": {
+    "autologin": "Auto-login in development mode"
   }
 }
