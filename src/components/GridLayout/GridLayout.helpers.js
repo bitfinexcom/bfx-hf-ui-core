@@ -1,5 +1,12 @@
 import React, { Suspense, lazy } from 'react'
 
+import _reduce from 'lodash/reduce'
+import _entries from 'lodash/entries'
+import _values from 'lodash/values'
+import _some from 'lodash/some'
+import _isUndefined from 'lodash/isUndefined'
+import * as Routes from '../../constants/routes'
+
 const OrderForm = lazy(() => import('../OrderForm'))
 const OrderBookPanel = lazy(() => import('../OrderBookPanel'))
 const ChartPanel = lazy(() => import('../ChartPanel'))
@@ -11,6 +18,7 @@ const PositionsTablePanel = lazy(() => import('../PositionsTablePanel'))
 const BalancesTablePanel = lazy(() => import('../BalancesTablePanel'))
 const TradingStatePanel = lazy(() => import('../TradingStatePanel'))
 const ExchangeInfoBar = lazy(() => import('../ExchangeInfoBar'))
+const LoadingPanel = lazy(() => import('../LoadingPanel'))
 
 export const COMPONENT_TYPES = {
   CHART: 'CHART',
@@ -24,6 +32,7 @@ export const COMPONENT_TYPES = {
   ORDER_HISTORY_TABLE: 'ORDER_HISTORY_TABLE',
   TRADING_STATE_PANEL: 'TRADING_STATE_PANEL',
   EXCHANGE_INFO_BAR: 'EXCHANGE_INFO_BAR',
+  LOADING_PANEL: 'LOADING_PANEL',
 }
 
 export const COMPONENT_LABELS = {
@@ -114,6 +123,9 @@ const componentForType = (c) => {
     case COMPONENT_TYPES.EXCHANGE_INFO_BAR:
       return ExchangeInfoBar
 
+    case COMPONENT_TYPES.LOADING_PANEL:
+      return LoadingPanel
+
     default:
       return null
   }
@@ -175,4 +187,76 @@ export const gridLayoutToLayoutDef = (layoutDef, parentLayoutDef) => {
   })
 
   return layoutDef
+}
+
+export const migrateLocalStorageToWs = (saveLayoutsToWs) => {
+  if (_isUndefined(localStorage)) {
+    return
+  }
+
+  const LAYOUTS_KEY = 'HF_UI_LAYOUTS'
+  const layoutsJSON = localStorage.getItem(LAYOUTS_KEY)
+
+  if (!layoutsJSON) {
+    return
+  }
+
+  const storedLayouts = JSON.parse(layoutsJSON)
+
+  const isNewFormat = !_some(
+    _values(storedLayouts),
+    layout => _isUndefined(layout.savedAt),
+  )
+
+  // transform old format to new format for compatibility
+  const nextFormatLayouts = isNewFormat ? storedLayouts : _reduce(
+    _entries(storedLayouts),
+    (nextLayouts, [key, layout]) => {
+      const routePath = layout.type === 'data'
+        ? Routes.marketData.path
+        : Routes.tradingTerminal.path
+
+      return {
+        ...nextLayouts,
+        // Previously stored default layout could have been edited
+        // so store them without newly added ' Layout' suffix key
+        // and set isDefault false and canDelete true
+        [key]: {
+          ...layout,
+          routePath,
+          isDefault: false,
+          canDelete: true,
+          savedAt: Date.now(),
+        },
+      }
+    },
+    {},
+  )
+
+  // transform local storage format to ws format (with added unique id and name)
+  const wsLayouts = _reduce(
+    _entries(nextFormatLayouts),
+    (nextLayout, [name, { routePath, ...layoutProps }]) => {
+      // don't save default layouts in db
+      if (layoutProps.isDefault) {
+        return nextLayout
+      }
+
+      const id = `${routePath}:${name}`
+
+      return {
+        ...nextLayout,
+        [id]: {
+          ...layoutProps,
+          name,
+          routePath,
+          id,
+        },
+      }
+    },
+    {},
+  )
+
+  saveLayoutsToWs(wsLayouts)
+  localStorage.removeItem(LAYOUTS_KEY)
 }

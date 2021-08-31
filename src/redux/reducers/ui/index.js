@@ -5,18 +5,11 @@ import _isEmpty from 'lodash/isEmpty'
 import _cloneDeep from 'lodash/cloneDeep'
 import _min from 'lodash/min'
 import _max from 'lodash/max'
-import _reduce from 'lodash/reduce'
-import _entries from 'lodash/entries'
-import _values from 'lodash/values'
-import _some from 'lodash/some'
-import _isUndefined from 'lodash/isUndefined'
 import { nonce } from 'bfx-api-node-util'
 import { VOLUME_UNIT, VOLUME_UNIT_PAPER } from '@ufx-ui/bfx-containers'
 
 import types from '../../constants/ui'
-import Routes from '../../../constants/routes'
-import DEFAULT_TRADING_LAYOUT from './default_layout_trading'
-import DEFAULT_MARKET_DATA_LAYOUT from './default_layout_market_data'
+import { DEFAULT_TRADING_LAYOUT, DEFAULT_MARKET_DATA_LAYOUT } from '../../../constants/layouts'
 import DEFAULT_TRADING_COMPONENT_STATE from './default_component_state_trading'
 import DEFAULT_MARKET_DATA_COMPONENT_STATE from './default_component_state_market_data'
 import DEFAULT_ACTIVE_MARKET_STATE from './default_active_market_state'
@@ -33,14 +26,12 @@ import { isElectronApp } from '../../config'
 import { storeLastUsedLayoutID } from '../../../util/layout'
 
 const debug = Debug('hfui:rx:r:ui')
-const LAYOUTS_KEY = 'HF_UI_LAYOUTS'
 const LAYOUTS_STATE_KEY = 'HF_UI_LAYOUTS_STATE'
 const ACTIVE_MARKET_KEY = 'HF_UI_ACTIVE_MARKET'
 const ACTIVE_MARKET_PAPER_KEY = 'HF_UI_PAPER_ACTIVE_MARKET'
 const IS_PAPER_TRADING = 'IS_PAPER_TRADING'
 export const PAPER_MODE = 'paper'
 export const MAIN_MODE = 'main'
-let shownOldFormatModal = false
 
 const DEFAULT_MARKET = {
   contexts: ['e', 'm'],
@@ -74,6 +65,8 @@ function getInitialState() {
     content: {},
     unsavedLayout: null,
     layoutID: null,
+    layouts: null,
+    isWsLayoutsSet: false,
   }
 
   if (!localStorage) {
@@ -81,69 +74,12 @@ function getInitialState() {
   }
 
   const isPaperTrading = localStorage.getItem(IS_PAPER_TRADING) === 'true'
-  const layoutsJSON = localStorage.getItem(LAYOUTS_KEY)
   const layoutsComponentStateJSON = localStorage.getItem(LAYOUTS_STATE_KEY)
-
-  try {
-    const storedLayouts = JSON.parse(layoutsJSON)
-
-    const isNewFormat = !_some(
-      _values(storedLayouts),
-      layout => _isUndefined(layout.savedAt),
-    )
-
-    // transform old format to new format for compatibility
-    const nextFormatLayouts = isNewFormat ? storedLayouts : _reduce(
-      _entries(storedLayouts),
-      (nextLayouts, [key, layout]) => {
-        const routePath = layout.type === 'data'
-          ? Routes.marketData.path
-          : Routes.tradingTerminal.path
-
-        return {
-          ...nextLayouts,
-          // Previously stored default layout could have been edited
-          // so store them without newly added ' Layout' suffix key
-          // and set isDefault false and canDelete true
-          [key]: {
-            ...layout,
-            routePath,
-            isDefault: false,
-            canDelete: true,
-            savedAt: Date.now(),
-          },
-        }
-      },
-      {
-        [DEFAULT_TRADING_KEY]: DEFAULT_TRADING_LAYOUT,
-        [DEFAULT_MARKET_KEY]: DEFAULT_MARKET_DATA_LAYOUT,
-      },
-    )
-
-    // saving reformatted layouts into the local storage
-    if ((!isNewFormat && !_isEmpty(storedLayouts)) || shownOldFormatModal) {
-      shownOldFormatModal = true
-      defaultState.isOldFormatModalVisible = true
-      localStorage.setItem(LAYOUTS_KEY, JSON.stringify(nextFormatLayouts))
-    }
-
-    defaultState.layouts = nextFormatLayouts
-    defaultState.tickersVolumeUnit = isPaperTrading ? VOLUME_UNIT_PAPER.TESTUSD : VOLUME_UNIT.USD
-  } catch (e) {
-    debug('Loading layouts error, check localStorage: %s', LAYOUTS_KEY)
-  }
 
   try {
     defaultState.layoutComponentState = JSON.parse(layoutsComponentStateJSON)
   } catch (e) {
     debug('Loading layouts state error, check localStorage: %s', LAYOUTS_STATE_KEY)
-  }
-
-  if (!defaultState.layouts) {
-    defaultState.layouts = {
-      [DEFAULT_TRADING_KEY]: DEFAULT_TRADING_LAYOUT,
-      [DEFAULT_MARKET_KEY]: DEFAULT_MARKET_DATA_LAYOUT,
-    }
   }
 
   if (!defaultState.layoutComponentState) {
@@ -168,31 +104,6 @@ function reducer(state = getInitialState(), action = {}) {
       return {
         ...state,
         remoteVersion: version,
-      }
-    }
-
-    case types.SAVE_LAYOUT: {
-      return {
-        ...state,
-        layoutIsDirty: false,
-        layouts: {
-          ...state.layouts,
-          [state.layoutID]: {
-            ...state?.unsavedLayout,
-            isDefault: false,
-            canDelete: true,
-            savedAt: Date.now(),
-          },
-        },
-      }
-    }
-
-    case types.STORE_UNSAVED_LAYOUT: {
-      const { layout } = payload
-
-      return {
-        ...state,
-        unsavedLayout: layout,
       }
     }
 
@@ -221,40 +132,6 @@ function reducer(state = getInitialState(), action = {}) {
       return {
         ...state,
         notificationsVisible: !state.notificationsVisible,
-      }
-    }
-
-    case types.CREATE_LAYOUT: {
-      const { id } = payload
-      const layoutDef = getActiveLayoutDef(state)
-
-      storeLastUsedLayoutID(id, layoutDef?.routePath)
-
-      return {
-        ...state,
-        layoutIsDirty: false,
-        layouts: {
-          ...state.layouts,
-          [id]: {
-            ...layoutDef,
-            isDefault: false,
-            canDelete: true,
-            savedAt: Date.now(),
-          },
-        },
-        layoutID: id,
-      }
-    }
-
-    case types.DELETE_LAYOUT: {
-      const { id } = payload
-      const { [id]: delLayout, ...remainingLayouts } = state.layouts
-      const { [id]: delState, ...remainingStates } = state.layoutComponentState
-
-      return {
-        ...state,
-        layouts: remainingLayouts,
-        layoutComponentState: remainingStates,
       }
     }
 
@@ -409,14 +286,30 @@ function reducer(state = getInitialState(), action = {}) {
         isOldFormatModalVisible: isVisible,
       }
     }
-    case types.CHANGE_AO_PAUSE_MODAL_STATE: {
-      const { isVisible } = payload
+    case types.CHANGE_TICKERS_VOLUME_UNIT: {
+      const { key } = payload
+      const { isPaperTrading } = state
+      const unit = isPaperTrading ? VOLUME_UNIT_PAPER[key] : VOLUME_UNIT[key]
 
+      return { ...state, tickersVolumeUnit: unit || 'SELF' }
+    }
+
+    /**
+     * Layout cases
+     */
+    case types.SET_LAYOUTS: {
+      const { layouts } = payload
       return {
         ...state,
-        isAOPauseModalVisible: isVisible,
+        layouts: {
+          [DEFAULT_TRADING_LAYOUT.id]: DEFAULT_TRADING_LAYOUT,
+          [DEFAULT_MARKET_DATA_LAYOUT.id]: DEFAULT_MARKET_DATA_LAYOUT,
+          ...layouts,
+        },
+        isWsLayoutsSet: true,
       }
     }
+
     case types.ADD_COMPONENT: {
       const { component } = payload
       const layoutDef = getActiveLayoutDef(state)
@@ -441,6 +334,7 @@ function reducer(state = getInitialState(), action = {}) {
         },
       }
     }
+
     case types.REMOVE_COMPONENT: {
       const { i } = payload
       const newLayoutDef = _cloneDeep(getActiveLayoutDef(state))
@@ -456,6 +350,7 @@ function reducer(state = getInitialState(), action = {}) {
         unsavedLayout: newLayoutDef,
       }
     }
+
     case types.CHANGE_LAYOUT: {
       const { incomingLayout } = payload
       const layoutDef = getActiveLayoutDef(state)
@@ -469,15 +364,18 @@ function reducer(state = getInitialState(), action = {}) {
       const newLayout = layoutDefToGridLayout({ layout: incomingLayout })
       const setIsDirty = !_isEqual(currentLayout, newLayout)
 
+      const unsavedLayout = gridLayoutToLayoutDef({
+        ...layoutDef,
+        layout: incomingLayout,
+      }, layoutDef)
+
       return {
         ...state,
         ...setIsDirty && { layoutIsDirty: true },
-        unsavedLayout: gridLayoutToLayoutDef({
-          ...layoutDef,
-          layout: incomingLayout,
-        }, layoutDef),
+        unsavedLayout,
       }
     }
+
     case types.SET_LAYOUT_ID: {
       const { layoutID } = payload
 
@@ -486,6 +384,7 @@ function reducer(state = getInitialState(), action = {}) {
         layoutID,
       }
     }
+
     case types.SELECT_LAYOUT: {
       const { id, routePath } = payload
 
@@ -497,13 +396,70 @@ function reducer(state = getInitialState(), action = {}) {
         layoutID: id,
       }
     }
-    case types.CHANGE_TICKERS_VOLUME_UNIT: {
-      const { key } = payload
-      const { isPaperTrading } = state
-      const unit = isPaperTrading ? VOLUME_UNIT_PAPER[key] : VOLUME_UNIT[key]
 
-      return { ...state, tickersVolumeUnit: unit || 'SELF' }
+    case types.CREATE_LAYOUT: {
+      const { name } = payload
+      const layoutDef = getActiveLayoutDef(state)
+      const id = `${layoutDef.routePath}:${name}`
+
+      storeLastUsedLayoutID(id, layoutDef?.routePath)
+
+      return {
+        ...state,
+        layoutIsDirty: false,
+        unsavedLayout: null,
+        layouts: {
+          ...state.layouts,
+          [id]: {
+            ...layoutDef,
+            id,
+            name,
+            isDefault: false,
+            canDelete: true,
+            savedAt: Date.now(),
+          },
+        },
+        layoutID: id,
+      }
     }
+
+    case types.SAVE_LAYOUT: {
+      return {
+        ...state,
+        layoutIsDirty: false,
+        layouts: {
+          ...state.layouts,
+          [state.layoutID]: {
+            ...state?.unsavedLayout,
+            isDefault: false,
+            canDelete: true,
+            savedAt: Date.now(),
+          },
+        },
+      }
+    }
+
+    case types.STORE_UNSAVED_LAYOUT: {
+      const { layout } = payload
+
+      return {
+        ...state,
+        unsavedLayout: layout,
+      }
+    }
+
+    case types.DELETE_LAYOUT: {
+      const { id } = payload
+      const { [id]: delLayout, ...remainingLayouts } = state.layouts
+      const { [id]: delState, ...remainingStates } = state.layoutComponentState
+
+      return {
+        ...state,
+        layouts: remainingLayouts,
+        layoutComponentState: remainingStates,
+      }
+    }
+
     case types.CHANGE_CCY_INFO_MODAL_STATE: {
       const { isVisible } = payload
 
@@ -523,14 +479,6 @@ function reducerWithStorage(state = getInitialState(), action = {}) {
 
   if (localStorage) {
     switch (action.type) {
-      case types.SAVE_LAYOUT:
-      case types.CREATE_LAYOUT:
-      case types.DELETE_LAYOUT: {
-        const { layouts } = newState
-        localStorage.setItem(LAYOUTS_KEY, JSON.stringify(layouts))
-        break
-      }
-
       case types.SAVE_COMPONENT_STATE: {
         const { layoutComponentState } = newState
         localStorage.setItem(LAYOUTS_STATE_KEY, JSON.stringify(layoutComponentState))

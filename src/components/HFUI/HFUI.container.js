@@ -33,6 +33,12 @@ const mapDispatchToProps = dispatch => ({
       mode,
     ]))
   },
+  getLayouts: (authToken) => {
+    dispatch(WSActions.send([
+      'layouts.get',
+      authToken,
+    ]))
+  },
   onUnload: (authToken, mode) => {
     dispatch(WSActions.onUnload(authToken, mode))
   },

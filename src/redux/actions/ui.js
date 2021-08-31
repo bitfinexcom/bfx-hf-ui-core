@@ -7,6 +7,13 @@ export const saveRemoteVersion = version => ({
   },
 })
 
+export const setLayouts = (layouts) => ({
+  type: types.SET_LAYOUTS,
+  payload: {
+    layouts,
+  },
+})
+
 export const saveLayout = () => ({
   type: types.SAVE_LAYOUT,
 })
@@ -26,10 +33,10 @@ export const selectLayout = (id, routePath) => ({
   },
 })
 
-export const createLayout = (id) => ({
+export const createLayout = (name) => ({
   type: types.CREATE_LAYOUT,
   payload: {
-    id,
+    name,
   },
 })
 
@@ -234,6 +241,7 @@ export default {
   clearStrategies,
   switchNotifcationPanel,
   setLayoutID,
+  setLayouts,
   changeTickersVolumeUnit,
   changeOldFormatModalState,
   changeAOPauseModalState,

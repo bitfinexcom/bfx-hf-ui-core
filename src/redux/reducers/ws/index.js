@@ -11,6 +11,7 @@ import orderHistory from './order_history'
 import algoOrders from './algo_orders'
 import backtest from './backtest'
 import favoriteTradingPairs from './favorite_pairs'
+import layouts from './layouts'
 
 export default combineReducers({
   algoOrders,
@@ -24,4 +25,5 @@ export default combineReducers({
   auth,
   backtest,
   favoriteTradingPairs,
+  layouts,
 })
