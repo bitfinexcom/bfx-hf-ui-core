@@ -5,14 +5,15 @@ import _find from 'lodash/find'
 import _isEmpty from 'lodash/isEmpty'
 import { createSelector } from 'reselect'
 import { reduxSelectors, prepareTickers } from '@ufx-ui/bfx-containers'
-import { getMarkets, getMarketTickersKeys } from '.'
+import getMarkets from './get_markets'
+import getTickersKeys from './get_tickers_keys'
 import { getTickersVolumeUnit } from '../ui'
 
 const tickersSelector = state => reduxSelectors.getTickers(state)
 const getCurrencySymbol = state => reduxSelectors.getCurrencySymbolMemo(state)
 const tickersVolumeUnit = state => getTickersVolumeUnit(state)
 
-const getTickersArray = createSelector([tickersSelector, getMarkets], (tickers, markets) => {
+const getTickersInfo = createSelector([tickersSelector, getMarkets], (tickers, markets) => {
   const fullTickersData = _reduce(markets, (acc, market) => {
     const {
       wsID, base, quote, uiID, ccyLabels, isPerp,
@@ -29,34 +30,36 @@ const getTickersArray = createSelector([tickersSelector, getMarkets], (tickers, 
       isPerp,
       perpUI: isPerp ? uiID : null,
     }
-    acc.push(newTickerObject)
+
+    acc[wsID] = newTickerObject
     return acc
-  }, [])
+  }, {})
 
   return fullTickersData
 })
 
 const preparedTickersArray = createSelector(
   [
-    getTickersArray,
-    getMarketTickersKeys,
+    getTickersInfo,
+    getTickersKeys,
     tickersSelector,
     getCurrencySymbol,
     tickersVolumeUnit,
   ],
-  (tickersArray, tickersKeys, tickers, _getCurrencySymbol, _tickersVolumeUnit) => {
-    if (_isEmpty(tickersArray)) {
+  (tickersInfo, tickersKeys, tickers, _getCurrencySymbol, _tickersVolumeUnit) => {
+    if (_isEmpty(tickersInfo)) {
       return []
     }
     const prepared = prepareTickers(tickersKeys, tickers, _tickersVolumeUnit, _getCurrencySymbol)
 
-    return _map(tickersArray, (ticker) => {
+    return _map(tickersKeys, (pair) => {
+      const ticker = tickersInfo[pair]
       const preparedTicker = _find(prepared, (_ticker) => {
         return _ticker.id === ticker.wsID
       },
       null)
       return { ...ticker, volume: preparedTicker ? preparedTicker.volumeConverted : ticker.volume }
-    }, tickersArray)
+    })
   },
 )
 export default preparedTickersArray
