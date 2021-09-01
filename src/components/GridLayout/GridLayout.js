@@ -6,30 +6,19 @@ import _get from 'lodash/get'
 import _last from 'lodash/last'
 import _find from 'lodash/find'
 import _entries from 'lodash/entries'
-import _reduce from 'lodash/reduce'
 import { Responsive as RGL, WidthProvider } from 'react-grid-layout'
 import { getLocation } from '../../redux/selectors/router'
 import {
-  removeComponent,
-  changeLayout,
-  setLayoutID,
-  storeUnsavedLayout,
-  setLayouts,
+  removeComponent, changeLayout, setLayoutID, storeUnsavedLayout,
 } from '../../redux/actions/ui'
-import WSActions from '../../redux/actions/ws'
-import { renderLayoutElement, migrateLocalStorageToWs } from './GridLayout.helpers'
+import { renderLayoutElement } from './GridLayout.helpers'
 import './style.css'
-import { LOADING_LAYOUT } from '../../constants/layouts'
 
 import {
   getLayouts,
   getLayoutID,
   getCurrentUnsavedLayout,
-  getIsWsLayoutsSet,
 } from '../../redux/selectors/ui'
-import {
-  getLayouts as getWsLayouts,
-} from '../../redux/selectors/ws'
 
 import { getLastUsedLayoutID } from '../../util/layout'
 
@@ -41,8 +30,6 @@ const GridLayout = ({
   const dispatch = useDispatch()
   const { pathname } = useSelector(getLocation)
   const layouts = useSelector(getLayouts)
-  const wsLayouts = useSelector(getWsLayouts)
-  const isWsLayoutsSet = useSelector(getIsWsLayoutsSet)
   const layoutID = useSelector(getLayoutID)
   const currentSavedLayout = _get(layouts, layoutID, {})
   const unsavedLayoutDef = useSelector(getCurrentUnsavedLayout)
@@ -52,9 +39,8 @@ const GridLayout = ({
     .filter(([, layout]) => layout.routePath === pathname)
   const lastUsedLayoutID = getLastUsedLayoutID(pathname)
 
-  const [lastLayoutID, lastLayoutDef] = _find(layoutsForCurrRoute, ([id]) => id === lastUsedLayoutID)
-    || _last(layoutsForCurrRoute.sort((a, b) => a[1].savedAt - b[1].savedAt))
-    || [null, null]
+  const [lastLayoutID, lastLayoutDef] = _find(layoutsForCurrRoute, ([id]) => id === lastUsedLayoutID) || _last(layoutsForCurrRoute
+    .sort((a, b) => a[1].savedAt - b[1].savedAt))
 
   // should use unsaved one first, then saved one (if selected) else last saved one
   const layoutDef = isValidUnsavedLayout
@@ -62,41 +48,6 @@ const GridLayout = ({
     : isValidSavedLayout
       ? currentSavedLayout
       : lastLayoutDef
-
-  const saveLayoutsToWs = (nextLayouts) => dispatch(WSActions.send([
-    'layouts.save',
-    _reduce(
-      _entries(nextLayouts),
-      (nextLayout, [id, layout]) => {
-        // don't save default layouts in db
-        if (layout.isDefault) {
-          return nextLayout
-        }
-
-        return {
-          ...nextLayout,
-          [id]: layout,
-        }
-      },
-      {},
-    ),
-  ]))
-
-  useEffect(() => {
-    // once the saved layouts are fetched from the websocket
-    // store it in the redux under ui.layouts
-    // once this happens we only reference ui.layouts
-    if (!isWsLayoutsSet && wsLayouts) {
-      dispatch(setLayouts(wsLayouts))
-    }
-  }, [isWsLayoutsSet, wsLayouts])
-
-  useEffect(() => {
-    // push every layout updates to websocket
-    if (isWsLayoutsSet && layouts) {
-      saveLayoutsToWs(layouts)
-    }
-  }, [isWsLayoutsSet, layouts])
 
   useEffect(() => {
     // set active layout id when there’s none selected (on initial load)
@@ -113,10 +64,6 @@ const GridLayout = ({
     }
   }, [isValidUnsavedLayout, layoutDef])
 
-  useEffect(() => {
-    migrateLocalStorageToWs(saveLayoutsToWs)
-  }, [])
-
   const componentProps = {
     orderForm: orderFormProps,
     trades: tradesProps,
@@ -126,9 +73,7 @@ const GridLayout = ({
     sharedProps,
   }
 
-  const currentLayouts = isWsLayoutsSet
-    ? _get(layoutDef, 'layout', [])
-    : _get(LOADING_LAYOUT, 'layout')
+  const currentLayouts = _get(layoutDef, 'layout', [])
   const onRemoveComponent = (i) => dispatch(removeComponent(i))
 
   return (

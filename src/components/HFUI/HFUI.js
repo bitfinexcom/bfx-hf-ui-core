@@ -29,7 +29,6 @@ const HFUI = ({
   getSettings,
   notificationsVisible,
   getFavoritePairs,
-  getLayouts,
   currentMode,
   GAPageview,
   currentPage,
@@ -81,7 +80,6 @@ const HFUI = ({
     if (authToken) {
       getSettings(authToken)
       getFavoritePairs(authToken, currentMode)
-      getLayouts(authToken)
       subscribeAllTickers()
     }
   }, [authToken])
@@ -126,7 +124,6 @@ HFUI.propTypes = {
   currentMode: PropTypes.string.isRequired,
   getSettings: PropTypes.func.isRequired,
   getFavoritePairs: PropTypes.func.isRequired,
-  getLayouts: PropTypes.func.isRequired,
   onUnload: PropTypes.func.isRequired,
   notificationsVisible: PropTypes.bool.isRequired,
   GAPageview: PropTypes.func.isRequired,

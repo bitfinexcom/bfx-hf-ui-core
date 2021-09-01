@@ -62,11 +62,7 @@ export default function LayoutSettings() {
   const selectableLayouts = _entries(layouts)
   // eslint-disable-next-line no-shadow
     .filter(([, layout]) => layout.routePath === pathname)
-    .sort((a, b) => {
-      const [, layoutA] = a
-      const [, layoutB] = b
-      return layoutA.savedAt - layoutB.savedAt
-    })
+    .sort((a, b) => a[1].savedAt - b[1].savedAt)
 
   const onSave = () => {
     if (!layout.isDefault && layoutIsDirty) {
@@ -124,7 +120,7 @@ export default function LayoutSettings() {
                   isSelected={id === layoutID}
                   onClick={() => dispatch(selectLayout(id, layoutDef?.routePath))}
                 >
-                  {makeShorterLongName(layoutDef.name, MAX_ID_LENGTH)}
+                  {makeShorterLongName(id, MAX_ID_LENGTH)}
                   {layoutDef.canDelete && (
                     <div className='hfui-navbar__layout-settings__delete'>
                       <i className='icon-clear' role='button' aria-label='Delete layout' tabIndex={0} onClick={() => dispatch(deleteLayout(id))} />

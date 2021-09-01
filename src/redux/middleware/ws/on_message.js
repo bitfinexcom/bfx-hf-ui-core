@@ -128,18 +128,6 @@ export default (alias, store) => (e = {}) => {
         break
       }
 
-      case 'data.layouts': {
-        const [, layouts] = payload
-        store.dispatch(WSActions.recvLayouts(layouts))
-        break
-      }
-
-      case 'data.layouts.saved': {
-        const [, layouts] = payload
-        store.dispatch(WSActions.recvUpdatedLayouts(layouts))
-        break
-      }
-
       case 'data.algo_order.submit_status':
       case 'data.order.submit_status':
         store.dispatch(UIActions.setIsOrderExecuting(false))
