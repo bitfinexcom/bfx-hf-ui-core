@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 
 import { Dropdown as UfxDropdown } from '@ufx-ui/core'
 import './style.css'
+import { useTranslation } from 'react-i18next'
 
 function optionsAdaptor(options) {
   return options.reduce((nextOptions, option) => ({
@@ -12,6 +13,7 @@ function optionsAdaptor(options) {
 }
 
 function Dropdown(props) {
+  const { t } = useTranslation()
   const {
     icon,
     label,
@@ -20,7 +22,7 @@ function Dropdown(props) {
     options,
     highlight,
     className,
-    placeholder,
+    placeholder = t('ui.dropdown'),
     ...rest
   } = props
 
@@ -70,7 +72,7 @@ Dropdown.defaultProps = {
   className: '',
   disabled: false,
   highlight: false,
-  placeholder: 'Select an option',
+  placeholder: undefined,
 }
 
 export default memo(Dropdown)

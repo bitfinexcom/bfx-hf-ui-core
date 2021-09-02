@@ -1,6 +1,7 @@
 import React, { memo } from 'react'
 import PropTypes from 'prop-types'
 
+import { useTranslation } from 'react-i18next'
 import Modal from '../../ui/Modal'
 import closeElectronApp from '../../redux/helpers/close_electron_app'
 
@@ -21,36 +22,38 @@ const AOPauseModal = ({
     onClose()
   }
 
+  const { t } = useTranslation()
+
   return (
     <Modal
-      label='Algo Orders Pause'
+      label={t('AOPauseModal.title')}
       isOpen={visible}
       onClose={onClose}
     >
-      <p>Closing the application while algo orders are active will require you to resume/cancel the algo orders when you relaunch the Honey Framework application.</p>
+      <p>{t('AOPauseModal.text1')}</p>
       <br />
-      <p>When you restart the Honey Framework application, you will be prompted to select between the currently active algo orders to which two of the given options can be applied:</p>
+      <p>{t('AOPauseModal.text2')}</p>
       <br />
-      <p>1. Resume: The atomic orders placed by the selected algo orders (if active) will be cancelled, and the algo orders will resume placing orders for the remaining amounts. The unselected algo orders will not be resumed and will be lost in perpetuity.</p>
-      <p>2. Cancel All: All atomic orders placed by the algo orders (if active) will be cancelled and no algo orders will be resumed.</p>
+      <p>{t('AOPauseModal.text3')}</p>
+      <p>{t('AOPauseModal.text4')}</p>
       <br />
-      <p>Note: Atomic orders will remain active if DMS option is disabled.</p>
+      <p>{t('AOPauseModal.text5')}</p>
       <Modal.Footer>
         <Modal.Button
           onClick={onCancel}
         >
-          Cancel
+          {t('ui.cancel')}
         </Modal.Button>
         <Modal.Button
           onClick={onDontShowAgain}
         >
-          Don&apos;t show again
+          {t('ui.dontShowAgain')}
         </Modal.Button>
         <Modal.Button
           primary
           onClick={onClose}
         >
-          Okay
+          {t('ui.ok')}
         </Modal.Button>
       </Modal.Footer>
     </Modal>

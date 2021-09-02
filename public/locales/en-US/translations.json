@@ -24,6 +24,20 @@
     "resumeBtn": "Resume",
     "selectAllBtn": "Select All"
   },
+  "badConnectionModal": {
+    "title": "Connection issue",
+    "text1": "We've noticed several internet connection issues. It's required to reboot the app to continue normal operation.",
+    "text2": "Please make sure you have stable and good internet connection.",
+    "text3": "The Honey Framework will reboot after you press 'Okay'.",
+    "text4": "The app will reboot automatically in {{countdown}} seconds.",
+    "checkbox": "Reboot automatically"
+  },
+  "bestExperienceMessageModal": {
+    "title": "Best experience warning",
+    "text1": "Web verison of Honey Framework designed for desktops. For having best experience in using application, we strongly recommend using desktop.",
+    "text2": "It's adviced to use this app in a landscape mode.",
+    "text3": "Best regards, your Honey Framework&apos;s team!"
+  },
   "layoutSettings": {
     "title": "Layout settings",
     "addComponent": "Add Component",
@@ -36,6 +50,24 @@
   },
   "settings": {
     "autologin": "Auto-login in development mode"
+  },
+  "tradingModeModal": {
+    "title": "Switch Trade Mode",
+    "text": "The app will reboot after you press Okay. It's required for switching trading mode. Open algo orders are paused."
+  },
+  "oldFormatModal": {
+    "title": "Layout upgrade",
+    "text1": "Since the v3.12.0 update we have reworked the way of how the application layout works.",
+    "text2": "From now on, each component, including the Order form and Ticker symbols, is independent and can be added or removed in the layout settings.",
+    "text3": "If needed, you can add these components to your custom layout in the layout settings, sorry for the inconvenience."
+  },
+  "AOPauseModal": {
+    "title": "Algo Orders Pause",
+    "text1": "Closing the application while algo orders are active will require you to resume/cancel the algo orders when you relaunch the Honey Framework application.",
+    "text2": "When you restart the Honey Framework application, you will be prompted to select between the currently active algo orders to which two of the given options can be applied:",
+    "text3": "1. Resume: The atomic orders placed by the selected algo orders (if active) will be cancelled, and the algo orders will resume placing orders for the remaining amounts. The unselected algo orders will not be resumed and will be lost in perpetuity.",
+    "text4": "2. Cancel All: All atomic orders placed by the algo orders (if active) will be cancelled and no algo orders will be resumed.",
+    "text5": "Note: Atomic orders will remain active if DMS option is disabled."
   },
   "joyride": {
     "trading1": "Customized layouts can be saved here",
@@ -59,5 +91,11 @@
     "created": "Created",
     "symbol": "Symbol",
     "label": "Label"
+  },
+  "ui": {
+    "ok": "Okay",
+    "cancel": "Cancel",
+    "dontShowAgain": "I understood. Don't show me again!",
+    "dropdown": "Select an option"
   }
 }

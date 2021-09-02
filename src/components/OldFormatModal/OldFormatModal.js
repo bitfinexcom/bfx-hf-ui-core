@@ -1,6 +1,7 @@
 import React, { memo } from 'react'
 import PropTypes from 'prop-types'
 
+import { useTranslation } from 'react-i18next'
 import Modal from '../../ui/Modal'
 
 const OldFormatModal = ({ changeOldFormatModalState, visible }) => {
@@ -8,22 +9,24 @@ const OldFormatModal = ({ changeOldFormatModalState, visible }) => {
     changeOldFormatModalState(false)
   }
 
+  const { t } = useTranslation()
+
   return (
     <Modal
-      label='Layout upgrade'
+      label={t('oldFormatModal.title')}
       isOpen={visible}
       onClose={onSubmit}
     >
-      <p>Since the v3.12.0 update we have reworked the way of how the application layout works.</p>
-      <p>From now on, each component, including the Order form and Ticker symbols, is independent and can be added or removed in the layout settings.</p>
+      <p>{t('oldFormatModal.text1')}</p>
+      <p>{t('oldFormatModal.text2')}</p>
       <br />
-      <p>If needed, you can add these components to your custom layout in the layout settings, sorry for the inconvenience.</p>
+      <p>{t('oldFormatModal.text3')}</p>
       <Modal.Footer>
         <Modal.Button
           onClick={onSubmit}
           primary
         >
-          Okay
+          {t('ui.ok')}
         </Modal.Button>
       </Modal.Footer>
     </Modal>
