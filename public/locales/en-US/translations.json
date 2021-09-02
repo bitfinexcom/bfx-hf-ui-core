@@ -32,5 +32,18 @@
     "nextBtn": "Next",
     "openBtn": "Open the dialog",
     "skipBtn": "Skip"
+  },
+  "activeAlgoOrdersModal": {
+    "title": "Active Orders",
+    "cancellBtn": "Cancel All",
+    "resumeBtn": "Resume",
+    "selectAllBtn": "Select All"
+  },
+  "table": {
+    "name": "Name",
+    "context": "Context",
+    "created": "Created",
+    "symbol": "Symbol",
+    "label": "Label"
   }
 }
