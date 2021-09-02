@@ -2,7 +2,7 @@
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 import Joyride from 'react-joyride'
-import { getLocaleOptions } from './Joyride.steps'
+import { getLocaleOptions } from './Joyride.helpers'
 
 export default function HoneyJoyride({ styles = {}, ...props }) {
   const { t } = useTranslation()
