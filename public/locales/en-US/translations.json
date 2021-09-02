@@ -16,5 +16,21 @@
   },
   "settings": {
     "autologin": "Auto-login in development mode"
+  },
+  "joyride": {
+    "trading1": "Customized layouts can be saved here",
+    "trading2": "You can find your notifications here",
+    "trading3": "If you want to create an order, this menu contains all orders available",
+    "trading4": "Here you can find the current version of your app. In case there is an update, there will be an update button",
+    "market": "To customize your layout, you can add components to it",
+    "strategyEditor1": "Create your own strategies",
+    "strategyEditor2": "Or open an existing one",
+    "strategyEditor3": "In this section you find the available function declarations to code your own strategies",
+    "backBtn": "Back",
+    "closeBtn": "Close",
+    "lastBtn": "Finish",
+    "nextBtn": "Next",
+    "openBtn": "Open the dialog",
+    "skipBtn": "Skip"
   }
 }

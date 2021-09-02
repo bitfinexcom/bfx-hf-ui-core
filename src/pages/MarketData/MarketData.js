@@ -1,8 +1,10 @@
 import React, { memo, lazy, Suspense } from 'react'
 import PropTypes from 'prop-types'
+import { useTranslation } from 'react-i18next'
 import { STEPS, STATUS } from '../../components/Joyride'
 import Layout from '../../components/Layout'
 import GridLayout from '../../components/GridLayout'
+
 import './style.css'
 
 const Joyride = lazy(() => import('../../components/Joyride'))
@@ -16,6 +18,7 @@ const commonComponentProps = {
 }
 
 const MarketData = ({ isGuideActive, isFirstLogin, finishGuide }) => {
+  const { t } = useTranslation()
   const onGuideFinish = (data) => {
     const { status } = data
     const finishedStatuses = [STATUS.FINISHED, STATUS.SKIPPED]
@@ -33,7 +36,7 @@ const MarketData = ({ isGuideActive, isFirstLogin, finishGuide }) => {
           <Suspense fallback={<></>}>
             <Joyride
               callback={onGuideFinish}
-              steps={STEPS.MARKET_DATA}
+              steps={STEPS.getMarketModes(t)}
               run={isGuideActive}
             />
           </Suspense>

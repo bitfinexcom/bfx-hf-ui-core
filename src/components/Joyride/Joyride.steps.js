@@ -1,43 +1,49 @@
-export const TRADING = [
+export const getTradingModes = (t) => [
   {
     target: '.hfui-navbar__layout-settings .hfui-exchangeinfobar__button',
-    content: 'Customized layouts can be saved here',
+    content: t('joyride.trading1'),
   },
   {
     target: '.icon-notifications',
-    content: 'You can find your notifications here',
+    content: t('joyride.trading2'),
   },
   {
     target: '.hfui-orderform__panel',
-    content: 'If you want to create an order, this menu contains all orders available',
+    content: t('joyride.trading3'),
   },
   {
-    locale: { last: 'Finish' },
     target: '.hfui-statusbar__left',
-    content: 'Here you can find the current version of your app. In case there is an update, there will be an update button',
+    content: t('joyride.trading4'),
   },
 ]
 
-export const MARKET_DATA = [
+export const getMarketModes = (t) => [
   {
-    locale: { last: 'Finish' },
     target: '.hfui-navbar__layout-settings .hfui-exchangeinfobar__button',
-    content: 'To customize your layout, you can add components to it',
+    content: t('joyride.market'),
   },
 ]
 
-export const STRATEGY_EDITOR = [
+export const getStrategyEditorModes = (t) => [
   {
     target: '.hfui-create-strategy__btn',
-    content: 'Create your own strategies',
+    content: t('joyride.strategyEditor1'),
   },
   {
     target: '.hfui-open-strategy__btn',
-    content: 'Or open an existing one',
+    content: t('joyride.strategyEditor2'),
   },
   {
-    locale: { last: 'Finish' },
     target: '.hfui-markdown__wrapper',
-    content: 'In this section you find the available function declarations to code your own strategies',
+    content: t('joyride.strategyEditor3'),
   },
 ]
+
+export const getLocaleOptions = (t) => ({
+  back: t('joyride.backBtn'),
+  close: t('joyride.closeBtn'),
+  last: t('joyride.lastBtn'),
+  next: t('joyride.nextBtn'),
+  open: t('joyride.openBtn'),
+  skip: t('joyride.skipBtn'),
+})
