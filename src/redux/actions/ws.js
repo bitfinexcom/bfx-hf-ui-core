@@ -210,16 +210,6 @@ export default {
     payload: pairs,
   }),
 
-  recvLayouts: layouts => ({
-    type: t.DATA_LAYOUTS,
-    payload: layouts,
-  }),
-
-  recvUpdatedLayouts: layouts => ({
-    type: t.UPDATE_LAYOUTS,
-    payload: layouts,
-  }),
-
   recvUserId: userId => ({
     type: t.DATA_WEB_AUTH_SUCCESS,
     payload: {

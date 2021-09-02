@@ -15,4 +15,5 @@ export default function* rootSaga() {
   yield fork(zendesk)
   yield fork(reduxSagas.wsSaga)
   yield fork(reduxSagas.tickersSaga)
+  yield fork(reduxSagas.currenciesSaga)
 }
