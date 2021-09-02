@@ -1,6 +1,7 @@
 import React from 'react'
 import { useDispatch } from 'react-redux'
 
+import { useTranslation } from 'react-i18next'
 import HFIcon from '../../ui/HFIcon'
 import UIActions from '../../redux/actions/ui'
 import NavbarLink from './Navbar.Link'
@@ -17,6 +18,7 @@ import './style.css'
 
 const Navbar = () => {
   const dispatch = useDispatch()
+  const { t } = useTranslation()
 
   return (
     <div className='hfui-navbar__wrapper'>
@@ -26,7 +28,7 @@ const Navbar = () => {
           <li key={path}>
             <NavbarLink
               route={path}
-              label={label}
+              label={t(label)}
             />
           </li>
         ))}
@@ -35,7 +37,7 @@ const Navbar = () => {
         <div className='hfui-exchangeinfobar__buttons'>
           <LayoutSettings />
           <NavbarButton
-            alt='Notifications'
+            alt={t('main.notifications')}
             icon='notifications'
             onClick={() => dispatch(UIActions.switchNotifcationPanel())}
           />
@@ -44,7 +46,7 @@ const Navbar = () => {
         {isElectronApp && (
         <div className='hfui-tradingpaper__control'>
           <div className='hfui-tradingpaper__control-toggle'>
-            <p>Paper Trading</p>
+            <p>{t('main.paper')}</p>
             <SwitchMode />
           </div>
         </div>

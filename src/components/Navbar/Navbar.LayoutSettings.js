@@ -6,6 +6,7 @@ import _map from 'lodash/map'
 import _get from 'lodash/get'
 
 import OutsideClickHandler from 'react-outside-click-handler'
+import { useTranslation } from 'react-i18next'
 import { selectLayout, deleteLayout, saveLayout } from '../../redux/actions/ui'
 import { getLayouts, getLayoutID } from '../../redux/selectors/ui'
 import { getLocation } from '../../redux/selectors/router'
@@ -88,11 +89,13 @@ export default function LayoutSettings() {
     }
   }, [isOpen])
 
+  const { t } = useTranslation()
+
   return (
     <div className='hfui-navbar__layout-settings'>
       <NavbarButton
         icon={LayoutIcon}
-        alt='Layout settings'
+        alt={t('layoutSettings.title')}
         onClick={() => setIsOpen(true)}
         className={isOpen ? 'is-open' : undefined}
       />
@@ -100,17 +103,17 @@ export default function LayoutSettings() {
         <OutsideClickHandler onOutsideClick={() => setIsOpen(false)}>
           <div ref={menuRef} className='hfui-navbar__layout-settings__menu'>
             <div className='hfui-navbar__layout-settings__title'>
-              Layout settings
+              {t('layoutSettings.title')}
             </div>
             <div className='hfui-navbar__layout-settings__menu-buttons' onClick={() => setIsOpen(false)}>
               <Item onClick={() => setIsAddLayoutComponentModalOpen(true)}>
-                Add Component
+                {t('layoutSettings.addComponent')}
               </Item>
               <Item onClick={onSave} isDisabled={layout.isDefault || !layoutIsDirty}>
-                Save
+                {t('layoutSettings.save')}
               </Item>
               <Item onClick={() => setIsCreateNewLayoutModalOpen(true)}>
-                Save As...
+                {t('layoutSettings.saveAs')}
               </Item>
               <div className='hfui-navbar__layout-settings__separator' />
               {_map(selectableLayouts, ([id, layoutDef]) => (

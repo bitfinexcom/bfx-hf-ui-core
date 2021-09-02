@@ -1,7 +1,11 @@
 {
   "main": {
     "paper": "Paper Trading",
-    "production": "Production"
+    "production": "Production",
+    "trading": "Trading Terminal",
+    "market": "Market Data",
+    "strategyEditor": "Strategy Editor",
+    "notifications": "Notifications"
   },
   "auth": {
     "enterPsw": "Enter your password to unlock",
@@ -13,6 +17,22 @@
     "unlockBtn": "Unlock",
     "initMsg": "Create a password to encrypt your API credentials & strategies. All data is stored locally, and your password is hashed",
     "saveCredentsBtn": "Save Credentials"
+  },
+  "activeAlgoOrdersModal": {
+    "title": "Active Orders",
+    "cancellBtn": "Cancel All",
+    "resumeBtn": "Resume",
+    "selectAllBtn": "Select All"
+  },
+  "layoutSettings": {
+    "title": "Layout settings",
+    "addComponent": "Add Component",
+    "save": "Save",
+    "saveAs": "Save As...",
+    "labelEmptyError": "Label empty",
+    "addLayout": "Add Layout",
+    "layoutName": "Layout Name",
+    "invalidComponentError": "Invalid Component"
   },
   "settings": {
     "autologin": "Auto-login in development mode"
@@ -32,12 +52,6 @@
     "nextBtn": "Next",
     "openBtn": "Open the dialog",
     "skipBtn": "Skip"
-  },
-  "activeAlgoOrdersModal": {
-    "title": "Active Orders",
-    "cancellBtn": "Cancel All",
-    "resumeBtn": "Resume",
-    "selectAllBtn": "Select All"
   },
   "table": {
     "name": "Name",
