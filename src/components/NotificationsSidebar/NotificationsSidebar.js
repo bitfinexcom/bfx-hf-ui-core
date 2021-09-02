@@ -7,6 +7,7 @@ import _map from 'lodash/map'
 import _includes from 'lodash/includes'
 import _filter from 'lodash/filter'
 import { nonce } from 'bfx-api-node-util'
+import { withTranslation } from 'react-i18next'
 
 import Panel from '../../ui/Panel'
 import Button from '../../ui/Button'
@@ -106,7 +107,9 @@ class NotificationsSidebar extends React.PureComponent {
 
   render() {
     const { liveNotifications } = this.state
-    const { notifications, notificationsVisible, closeNotificationPanel } = this.props
+    const {
+      notifications, notificationsVisible, closeNotificationPanel, t,
+    } = this.props
 
     return (
       <>
@@ -116,7 +119,7 @@ class NotificationsSidebar extends React.PureComponent {
         })}
         >
           <Panel
-            label='Notifications'
+            label={t('notifications.title')}
             hideIcons
             closePanel={closeNotificationPanel}
             preHeaderComponents={[
@@ -127,13 +130,13 @@ class NotificationsSidebar extends React.PureComponent {
                 className='hfui-notificationssidebar__header-btn'
                 label={[
                   <i key='icon' className='icon-clear' />,
-                  <p key='text'>Clear all</p>,
+                  <p key='text'>{t('notifications.clearAllBtn')}</p>,
                 ]}
               />,
             ]}
           >
             {_isEmpty(notifications) ? (
-              <p className='hfui-notificationssidebar__empty'>There are no new notifications yet!</p>
+              <p className='hfui-notificationssidebar__empty'>{t('notifications.noNotifications')}</p>
             ) : (
               <Scrollbars>
                 <Notifications
@@ -160,6 +163,7 @@ NotificationsSidebar.propTypes = {
   removeNotifications: PropTypes.func.isRequired,
   clearNotifications: PropTypes.func.isRequired,
   closeNotificationPanel: PropTypes.func.isRequired,
+  t: PropTypes.func.isRequired,
   notificationsVisible: PropTypes.bool,
 }
 
@@ -167,4 +171,4 @@ NotificationsSidebar.defaultProps = {
   notificationsVisible: false,
 }
 
-export default NotificationsSidebar
+export default withTranslation()(NotificationsSidebar)

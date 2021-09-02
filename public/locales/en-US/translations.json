@@ -4,8 +4,7 @@
     "production": "Production",
     "trading": "Trading Terminal",
     "market": "Market Data",
-    "strategyEditor": "Strategy Editor",
-    "notifications": "Notifications"
+    "strategyEditor": "Strategy Editor"
   },
   "auth": {
     "enterPsw": "Enter your password to unlock",
@@ -47,6 +46,11 @@
     "addLayout": "Add Layout",
     "layoutName": "Layout Name",
     "invalidComponentError": "Invalid Component"
+  },
+  "notifications": {
+    "title": "Notifications",
+    "clearAllBtn": "Clear all",
+    "noNotifications": "There are no new notifications yet!"
   },
   "settings": {
     "autologin": "Auto-login in development mode"

@@ -37,7 +37,7 @@ const Navbar = () => {
         <div className='hfui-exchangeinfobar__buttons'>
           <LayoutSettings />
           <NavbarButton
-            alt={t('main.notifications')}
+            alt={t('notifications.title')}
             icon='notifications'
             onClick={() => dispatch(UIActions.switchNotifcationPanel())}
           />
