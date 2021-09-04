@@ -4,13 +4,14 @@ import { VOLUME_UNIT, VOLUME_UNIT_PAPER } from '@ufx-ui/bfx-containers'
 import { TickerList, Ticker } from '@ufx-ui/core'
 import _find from 'lodash/find'
 
+import { useTranslation } from 'react-i18next'
 import Panel from '../../ui/Panel'
 import useSize from '../../hooks/useSize'
 import { getTickerDataMapping, rowMapping } from './ExchangeInforBar.constants'
-
-import './style.css'
 import { MAIN_MODE } from '../../redux/reducers/ui'
 import CCYIcon from './CCYIcon'
+
+import './style.css'
 
 const ExchangeInfoBar = ({
   onChangeMarket,
@@ -59,13 +60,14 @@ const ExchangeInfoBar = ({
     uiID,
     isPerp,
   } = activeMarket
+  const { t } = useTranslation()
 
   const tickerMapping = useMemo(() => getTickerDataMapping(getCurrencySymbol), [getCurrencySymbol])
 
   return (
     <Panel
       key='ticker-symbols'
-      label='Ticker symbols'
+      label={t('tickersPanel.title')}
       className='hfui-panel--tickerlist'
       onRemove={onRemove}
       darkHeader
@@ -155,7 +157,7 @@ ExchangeInfoBar.propTypes = {
 
 ExchangeInfoBar.defaultProps = {
   markets: [],
-  onRemove: () => {},
+  onRemove: () => { },
   showOnlyFavoritePairs: false,
   isCcyArticleAvailbale: false,
 }

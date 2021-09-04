@@ -1,7 +1,7 @@
 import React, { useState, useEffect, memo } from 'react'
 import PropTypes from 'prop-types'
 import _isEmpty from 'lodash/isEmpty'
-
+import { useTranslation } from 'react-i18next'
 import Panel from '../../ui/Panel'
 import Chart from '../Chart'
 import MarketSelect from '../MarketSelect'
@@ -38,6 +38,8 @@ const ChartPanel = ({
     })
   }
 
+  const { t } = useTranslation()
+
   const renderMarketDropdown = () => {
     return (
       <MarketSelect
@@ -53,7 +55,7 @@ const ChartPanel = ({
   return (
     <Panel
       dark={dark}
-      label={label || 'Chart'}
+      label={label || t('chartModal.title')}
       darkHeader={dark}
       onRemove={onRemove}
       moveable={moveable}

@@ -27,17 +27,17 @@ export const COMPONENT_TYPES = {
 }
 
 export const COMPONENT_LABELS = {
-  [COMPONENT_TYPES.CHART]: 'Chart',
-  [COMPONENT_TYPES.ORDER_BOOK]: 'Order Book',
+  [COMPONENT_TYPES.CHART]: 'chartModal.title',
+  [COMPONENT_TYPES.ORDER_BOOK]: 'orderBookModal.title',
   [COMPONENT_TYPES.ORDER_FORM]: 'Order Form',
-  [COMPONENT_TYPES.TRADES_TABLE]: 'Trades Table',
-  [COMPONENT_TYPES.BALANCES_TABLE]: 'Balances Table',
-  [COMPONENT_TYPES.POSITIONS_TABLE]: 'Positions Table',
-  [COMPONENT_TYPES.ALGO_ORDERS_TABLE]: 'Algo Orders Table',
-  [COMPONENT_TYPES.ATOMIC_ORDERS_TABLE]: 'Atomic Orders Table',
-  [COMPONENT_TYPES.ORDER_HISTORY_TABLE]: 'Order History Table',
-  [COMPONENT_TYPES.TRADING_STATE_PANEL]: 'Trading State Panel',
-  [COMPONENT_TYPES.EXCHANGE_INFO_BAR]: 'Ticker Panel',
+  [COMPONENT_TYPES.TRADES_TABLE]: 'tradesTableModal.title',
+  [COMPONENT_TYPES.BALANCES_TABLE]: 'balancesTableModal.title',
+  [COMPONENT_TYPES.POSITIONS_TABLE]: 'positionsTableModal.title',
+  [COMPONENT_TYPES.ALGO_ORDERS_TABLE]: 'AOTableModal.title',
+  [COMPONENT_TYPES.ATOMIC_ORDERS_TABLE]: 'atomicOrdersTableModal.title',
+  [COMPONENT_TYPES.ORDER_HISTORY_TABLE]: 'orderHistoryModal.titles',
+  [COMPONENT_TYPES.TRADING_STATE_PANEL]: 'tradingStatePanel.title',
+  [COMPONENT_TYPES.EXCHANGE_INFO_BAR]: 'tickersPanel.title',
 }
 
 export const COMPONENT_DIMENSIONS = {

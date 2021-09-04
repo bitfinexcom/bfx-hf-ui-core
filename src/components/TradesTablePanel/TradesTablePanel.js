@@ -10,6 +10,7 @@ import {
   reduxConstants,
   useCommonBfxData,
 } from '@ufx-ui/bfx-containers'
+import { useTranslation } from 'react-i18next'
 
 import MarketSelect from '../MarketSelect'
 import Panel from '../../ui/Panel'
@@ -47,6 +48,8 @@ const TradesTablePanel = (props) => {
   const marketData = useSelector(state => getRecentTrades(state, symbol))
   const hasFetchedTrades = useSelector(state => hasFetchedTradesSelector(state, symbol))
   const isSubscribedToSymbol = useSelector(state => isSubscribedToTrades(state, symbol))
+
+  const { t } = useTranslation()
 
   useEffect(() => {
     if (isWSConnected && symbol && !isSubscribedToSymbol) {
@@ -107,7 +110,7 @@ const TradesTablePanel = (props) => {
   return (
     <Panel
       dark={dark}
-      label='Trades'
+      label={t('tradesTableModal.title')}
       darkHeader={dark}
       moveable={moveable}
       onRemove={handleOnRemove}

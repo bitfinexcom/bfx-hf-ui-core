@@ -23,6 +23,22 @@
     "resumeBtn": "Resume",
     "selectAllBtn": "Select All"
   },
+  "AOPauseModal": {
+    "title": "Algo Orders Pause",
+    "text1": "Closing the application while algo orders are active will require you to resume/cancel the algo orders when you relaunch the Honey Framework application.",
+    "text2": "When you restart the Honey Framework application, you will be prompted to select between the currently active algo orders to which two of the given options can be applied:",
+    "text3": "1. Resume: The atomic orders placed by the selected algo orders (if active) will be cancelled, and the algo orders will resume placing orders for the remaining amounts. The unselected algo orders will not be resumed and will be lost in perpetuity.",
+    "text4": "2. Cancel All: All atomic orders placed by the algo orders (if active) will be cancelled and no algo orders will be resumed.",
+    "text5": "Note: Atomic orders will remain active if DMS option is disabled."
+  },
+  "AOTableModal": {
+    "title": "Algo. Orders",
+    "noOrders": "No active algorithmic orders"
+  },
+  "atomicOrdersTableModal": {
+    "title": "Atomic Orders",
+    "noOrders": "No active atomic orders"
+  },
   "badConnectionModal": {
     "title": "Connection issue",
     "text1": "We've noticed several internet connection issues. It's required to reboot the app to continue normal operation.",
@@ -31,11 +47,19 @@
     "text4": "The app will reboot automatically in {{countdown}} seconds.",
     "checkbox": "Reboot automatically"
   },
+  "balancesTableModal": {
+    "title": "Balances",
+    "hideZeroCheckbox": "Hide Zero Balances",
+    "noBalances": "No balances available"
+  },
   "bestExperienceMessageModal": {
     "title": "Best experience warning",
     "text1": "Web verison of Honey Framework designed for desktops. For having best experience in using application, we strongly recommend using desktop.",
     "text2": "It's adviced to use this app in a landscape mode.",
     "text3": "Best regards, your Honey Framework&apos;s team!"
+  },
+  "chartModal": {
+    "title": "Chart"
   },
   "layoutSettings": {
     "title": "Layout settings",
@@ -65,13 +89,14 @@
     "text2": "From now on, each component, including the Order form and Ticker symbols, is independent and can be added or removed in the layout settings.",
     "text3": "If needed, you can add these components to your custom layout in the layout settings, sorry for the inconvenience."
   },
-  "AOPauseModal": {
-    "title": "Algo Orders Pause",
-    "text1": "Closing the application while algo orders are active will require you to resume/cancel the algo orders when you relaunch the Honey Framework application.",
-    "text2": "When you restart the Honey Framework application, you will be prompted to select between the currently active algo orders to which two of the given options can be applied:",
-    "text3": "1. Resume: The atomic orders placed by the selected algo orders (if active) will be cancelled, and the algo orders will resume placing orders for the remaining amounts. The unselected algo orders will not be resumed and will be lost in perpetuity.",
-    "text4": "2. Cancel All: All atomic orders placed by the algo orders (if active) will be cancelled and no algo orders will be resumed.",
-    "text5": "Note: Atomic orders will remain active if DMS option is disabled."
+  "orderBookModal": {
+    "title": "Order Book",
+    "sumAmountsCheckbox": "Sum Amounts",
+    "stackedViewCheckbox": "Stacked View"
+  },
+  "orderHistoryModal": {
+    "title": "Order History",
+    "noHistory": "Order history is empty"
   },
   "joyride": {
     "trading1": "Customized layouts can be saved here",
@@ -81,25 +106,57 @@
     "market": "To customize your layout, you can add components to it",
     "strategyEditor1": "Create your own strategies",
     "strategyEditor2": "Or open an existing one",
-    "strategyEditor3": "In this section you find the available function declarations to code your own strategies",
-    "backBtn": "Back",
-    "closeBtn": "Close",
-    "lastBtn": "Finish",
-    "nextBtn": "Next",
-    "openBtn": "Open the dialog",
-    "skipBtn": "Skip"
+    "strategyEditor3": "In this section you find the available function declarations to code your own strategies"
+  },
+  "positionsTableModal": {
+    "title": "Positions",
+    "noPositions": "No active positions found"
   },
   "table": {
     "name": "Name",
     "context": "Context",
     "created": "Created",
     "symbol": "Symbol",
-    "label": "Label"
+    "label": "Label",
+    "currency": "Currency",
+    "total": "Total",
+    "available": "Available",
+    "pair": "Pair",
+    "amount": "Amount",
+    "basePrice": "Base Price",
+    "liqPrice": "Liq Price",
+    "pl": "P/L",
+    "plPerc": "P/L %",
+    "fundingCost": "Funding Cost",
+    "type": "Type",
+    "price": "Price",
+    "status": "Status"
+  },
+  "tickersPanel": {
+    "title": "Ticker Panel"
+  },
+  "tradesTableModal": {
+    "title": "Trades"
+  },
+  "tradingStatePanel": {
+    "title": "Trading State Panel",
+    "filterBy": "Filter by",
+    "filteringBy": "Filtering by",
+    "positionsTab": "Positions",
+    "atomicsTab": "Atomics",
+    "algosTab": "Algos",
+    "balancesTab": "Balances"
   },
   "ui": {
     "ok": "Okay",
     "cancel": "Cancel",
     "dontShowAgain": "I understood. Don't show me again!",
-    "dropdown": "Select an option"
+    "dropdown": "Select an option",
+    "backBtn": "Back",
+    "closeBtn": "Close",
+    "lastBtn": "Finish",
+    "nextBtn": "Next",
+    "openBtn": "Open the dialog",
+    "skipBtn": "Skip"
   }
 }

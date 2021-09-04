@@ -1,13 +1,16 @@
 import React, { memo } from 'react'
 import PropTypes from 'prop-types'
 
+import { useTranslation } from 'react-i18next'
 import AlgoOrdersTable from '../AlgoOrdersTable'
 import Panel from '../../ui/Panel'
 
 const AlgoOrdersTablePanel = ({ dark, onRemove }) => {
+  const { t } = useTranslation()
+
   return (
     <Panel
-      label='Algo. Orders'
+      label={t('AOTableModal.title')}
       onRemove={onRemove}
       dark={dark}
       darkHeader={dark}

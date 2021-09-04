@@ -1,6 +1,7 @@
 import React, { memo } from 'react'
 import ClassNames from 'classnames'
 import PropTypes from 'prop-types'
+import { useTranslation } from 'react-i18next'
 
 import Button from '../Button'
 import './style.css'
@@ -8,16 +9,17 @@ import './style.css'
 const PanelSettings = ({
   title, content, onClose,
 }) => {
+  const { t } = useTranslation()
   return (
     <div className='hfui-panelsettings__wrapper'>
       {title && (<p className='header'>{title}</p>)}
       {content && (
-      <div className={ClassNames('inner')}>{content}</div>
+        <div className={ClassNames('inner')}>{content}</div>
       )}
 
       <div className='footer'>
         <Button
-          label='Close'
+          label={t('ui.closeBtn')}
           onClick={onClose}
         />
       </div>
@@ -33,7 +35,7 @@ PanelSettings.propTypes = {
 
 PanelSettings.defaultProps = {
   title: 'Settings',
-  onClose: () => {},
+  onClose: () => { },
 }
 
 export default memo(PanelSettings)

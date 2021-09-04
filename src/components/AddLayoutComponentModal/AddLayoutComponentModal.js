@@ -41,7 +41,7 @@ const AddLayoutComponentModal = ({ onClose, isOpen }) => {
         value={componentType}
         onChange={setComponentType}
         options={Object.values(COMPONENT_TYPES).map(type => ({
-          label: COMPONENT_LABELS[type],
+          label: t(COMPONENT_LABELS[type]),
           value: type,
         }))}
       />

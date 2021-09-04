@@ -40,10 +40,10 @@ export const getStrategyEditorModes = (t) => [
 ]
 
 export const getLocaleOptions = (t) => ({
-  back: t('joyride.backBtn'),
-  close: t('joyride.closeBtn'),
-  last: t('joyride.lastBtn'),
-  next: t('joyride.nextBtn'),
-  open: t('joyride.openBtn'),
-  skip: t('joyride.skipBtn'),
+  back: t('ui.backBtn'),
+  close: t('ui.closeBtn'),
+  last: t('ui.lastBtn'),
+  next: t('ui.nextBtn'),
+  open: t('ui.openBtn'),
+  skip: t('ui.skipBtn'),
 })

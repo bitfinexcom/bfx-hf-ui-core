@@ -2,32 +2,32 @@ import React from 'react'
 
 import { defaultCellRenderer } from '../../util/ui'
 
-export default (authToken, cancelOrder, gaCancelOrder) => [{
-  label: 'Name',
+export default (authToken, cancelOrder, gaCancelOrder, t) => [{
+  label: t('table.name'),
   dataKey: 'name',
   width: 90,
   flexGrow: 0.7,
   cellRenderer: ({ rowData = {} }) => defaultCellRenderer(rowData.name),
 }, {
-  label: 'Context',
+  label: t('table.context'),
   dataKey: 'args._margin',
   width: 65,
   flexGrow: 0.65,
   cellRenderer: ({ rowData = {} }) => defaultCellRenderer(rowData.args?._margin ? 'Margin' : 'Exchange'),
 }, {
-  label: 'Created',
+  label: t('table.created'),
   dataKey: 'gid',
   width: 155,
   flexGrow: 1.55,
   cellRenderer: ({ rowData = {} }) => defaultCellRenderer(new Date(+rowData.gid).toLocaleString()),
 }, {
-  label: 'Symbol',
+  label: t('table.symbol'),
   dataKey: 'args.symbol',
   width: 140,
   flexGrow: 1.4,
   cellRenderer: ({ rowData = {} }) => defaultCellRenderer(rowData.args?.uiID),
 }, {
-  label: 'Label',
+  label: t('table.label'),
   dataKey: 'label',
   width: 545,
   flexGrow: 5.4,
