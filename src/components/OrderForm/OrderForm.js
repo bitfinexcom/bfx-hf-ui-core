@@ -496,6 +496,7 @@ class OrderForm extends React.Component {
                 validationErrors,
                 renderData,
                 isOrderExecuting,
+                t,
                 fieldData: {
                   ...fieldData,
                   _context: context,

@@ -208,6 +208,8 @@
     "openBtn": "Open the dialog",
     "skipBtn": "Skip",
     "submitBtn": "Submit",
-    "updateBtn": "Update"
+    "updateBtn": "Update",
+    "sellBtn": "Sell",
+    "buyBtn": "Buy"
   }
 }
