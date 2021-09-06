@@ -217,6 +217,14 @@
     "algosTab": "Algos",
     "balancesTab": "Balances"
   },
+  "statusbar": {
+    "updateToLast": "Update to latest version",
+    "locked": "LOCKED",
+    "unlocked": "UNLOCKED",
+    "connected": "Connected",
+    "connecting": "Connecting",
+    "disconnected": "Disconnected"
+  },
   "ui": {
     "ok": "Okay",
     "cancel": "Cancel",
