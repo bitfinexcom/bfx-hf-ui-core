@@ -3,6 +3,7 @@ import React, { useState } from 'react'
 import _values from 'lodash/values'
 import _isFunction from 'lodash/isFunction'
 import cx from 'classnames'
+import { useTranslation } from 'react-i18next'
 
 import Modal from '../../ui/Modal'
 import GeneralTab from './AppSettingsModal.General'
@@ -12,9 +13,9 @@ import TradingModeTab from './AppSettingsModal.TradingMode'
 import './style.css'
 
 const Tabs = {
-  General: 'General',
-  TradingMode: 'Trading mode',
-  Keys: 'API keys',
+  General: 'appSettings.generalTab',
+  TradingMode: 'appSettings.tradingModeTab',
+  Keys: 'appSettings.apiKeys',
 }
 
 const defaultTab = Tabs.General
@@ -37,12 +38,13 @@ const AppSettingsModal = ({
       }
     }, 200)
   }
+  const { t } = useTranslation()
 
   return (
     <Modal
       isOpen={isOpen}
       onClose={onClose}
-      label='Settings'
+      label={t('appSettings.title')}
       className='appsettings-modal'
       width={640}
       textAlign='center'
@@ -56,7 +58,7 @@ const AppSettingsModal = ({
             })}
             onClick={() => setActiveTab(tab)}
           >
-            {tab}
+            {t(tab)}
           </div>
         ))}
       </div>

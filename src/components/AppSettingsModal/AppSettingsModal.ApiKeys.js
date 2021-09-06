@@ -4,6 +4,7 @@ import _size from 'lodash/size'
 import _trim from 'lodash/trim'
 import { Button, Intent } from '@ufx-ui/core'
 
+import { useTranslation } from 'react-i18next'
 import {
   getAuthToken,
   getPaperAPIKeyState,
@@ -33,6 +34,8 @@ const ApiKeys = () => {
   const [apiSecret, setApiSecret] = useState('')
   const [paperApiKey, setPaperApiKey] = useState('')
   const [paperApiSecret, setPaperApiSecret] = useState('')
+
+  const { t } = useTranslation()
 
   const isProductionKeysTouched = _size(_trim(apiKey)) && _size(_trim(apiSecret)) && !isMainApiKeyUpdating
   const isPaperKeysTouched = _size(_trim(paperApiKey)) && _size(_trim(paperApiSecret)) && !isPaperApiKeyUpdating
@@ -68,18 +71,18 @@ const ApiKeys = () => {
   return (
     <div>
       <div className='appsettings-modal__title'>
-        API Keys
+        {t('appSettings.apiKeys')}
       </div>
       <div className='appsettings-modal__setting'>
         <p>
-          Production API Keys -
+          {t('appSettings.productionKey')}
           {' '}
           <a
             href='https://support.bitfinex.com/hc/en-us/articles/115002349625-API-Key-Setup-Login'
             target='_blank'
             rel='noopener noreferrer'
           >
-            How to Create a Key?
+            {t('appSettings.howToCreate')}
           </a>
         </p>
         <ApiBanner
@@ -89,7 +92,7 @@ const ApiKeys = () => {
         <div className='appsettings-modal__input'>
           <Input
             type='text'
-            placeholder='API Key'
+            placeholder={t('appSettings.apiKey')}
             onChange={setApiKey}
             value={apiKey}
             autocomplete='off'
@@ -98,7 +101,7 @@ const ApiKeys = () => {
         <div className='appsettings-modal__input'>
           <Input
             type='password'
-            placeholder='API Secret'
+            placeholder={t('appSettings.apiSecret')}
             onChange={setApiSecret}
             value={apiSecret}
             autocomplete='off'
@@ -110,19 +113,19 @@ const ApiKeys = () => {
           onClick={onSaveMainModeApiKey}
           disabled={!isProductionKeysTouched}
         >
-          {mainAPIKeyState.configured ? 'Update' : 'Save'}
+          {mainAPIKeyState.configured ? t('ui.updateBtn') : t('ui.saveBtn')}
         </Button>
       </div>
       <div className='appsettings-modal__setting'>
         <p>
-          Paper Trading API Keys -
-          {' '}
+          {t('appSettings.paperKey')}
+          {' - '}
           <a
             href='https://support.bitfinex.com/hc/en-us/articles/900001525006-Paper-Trading-test-learn-and-simulate-trading-strategies-'
             target='_blank'
             rel='noopener noreferrer'
           >
-            Learn More
+            {t('appSettings.learnMore')}
           </a>
         </p>
         <ApiBanner
@@ -132,7 +135,7 @@ const ApiKeys = () => {
         <div className='appsettings-modal__input'>
           <Input
             type='text'
-            placeholder='Paper Trading API Key'
+            placeholder={t('appSettings.apiKey')}
             onChange={setPaperApiKey}
             value={paperApiKey}
             autocomplete='off'
@@ -141,7 +144,7 @@ const ApiKeys = () => {
         <div className='appsettings-modal__input'>
           <Input
             type='password'
-            placeholder='Paper Trading API Secret'
+            placeholder={t('appSettings.apiSecret')}
             onChange={setPaperApiSecret}
             value={paperApiSecret}
             autocomplete='off'
@@ -153,7 +156,7 @@ const ApiKeys = () => {
           onClick={onSavePaperModeApiKey}
           disabled={!isPaperKeysTouched}
         >
-          {paperAPIKeyState.configured ? 'Update' : 'Save'}
+          {paperAPIKeyState.configured ? t('ui.updateBtn') : t('ui.saveBtn')}
         </Button>
       </div>
     </div>
