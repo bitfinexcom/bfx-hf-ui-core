@@ -33,7 +33,17 @@
   },
   "AOTableModal": {
     "title": "Algo. Orders",
+    "titleFull": "Algorithmic Orders",
     "noOrders": "No active algorithmic orders"
+  },
+  "appSettings": {
+    "apiNotValid": "Not Valid",
+    "apiNotConfigured": "Not Configured",
+    "apiSubmit": "Submit",
+    "autologin": "Auto-login in development mode",
+    "apiKeys": "API keys",
+    "apiKey": "API Key",
+    "apiSecret": "API Secret"
   },
   "atomicOrdersTableModal": {
     "title": "Atomic Orders",
@@ -76,9 +86,6 @@
     "clearAllBtn": "Clear all",
     "noNotifications": "There are no new notifications yet!"
   },
-  "settings": {
-    "autologin": "Auto-login in development mode"
-  },
   "tradingModeModal": {
     "title": "Switch Trade Mode",
     "text": "The app will reboot after you press Okay. It's required for switching trading mode. Open algo orders are paused."
@@ -93,6 +100,48 @@
     "title": "Order Book",
     "sumAmountsCheckbox": "Sum Amounts",
     "stackedViewCheckbox": "Stacked View"
+  },
+  "orderForm": {
+    "title": "Execute Order",
+    "title2": "Order Form",
+    "apiKeyRequired": "API Key Required",
+    "apiSecretRequired": "API Secret Required",
+    "submitKeys": "Submit {{mode}} api keys",
+    "exchangeConnecting": "Connecting to exchange...",
+    "help": "HELP:",
+    "exchange": "Exchange",
+    "margin": "Margin",
+    "derivatives": "Derivatives",
+    "fokTitle": "Fill or Kill",
+    "fokHelp": "An FOK order is a limit order that must fully fill immediately or it is canceled (killed).",
+    "iocTitle": "Immediate or Cancel",
+    "iocHelp": "An IOC order is a limit order that must fill immediately, with any unfilled portion cancelled.",
+    "limitTitle": "Limit",
+    "limitHelp": "A Limit order submits a buy or sell order at the specified price. If the price is above or below the current best ask/bid (respectively for buy/sell orders) it will execute immediately as a TAKER order. Otherwise, it will be inserted into the order book and execute as a MAKER order when the market reaches the order's price.\n\nIf the 'hidden' option is enabled, the order will be inserted in the order book but will not be visible to other users, and will execute as a TAKER.\n\nThe OCO (one-cancels-the-other) option may be used to submit a pair of orders; once one of the orders fills, the other is automatically cancelled.\n\nThe 'post-only' option ensures the order is inserted into the order book instead of being immediately filled, and cancels it otherwise.\n\nA Time-In-Force date may be specified, after which the order will be automatically cancelled.",
+    "marketTitle": "Market",
+    "marketHelp": "A Market order will fill immediately at the current market price.\n\nIf the 'reduce-only' option is specified, the order will be cancelled if it would open or increase the size of an open position.",
+    "stopLimitTitle": "Stop Limit",
+    "stopLimitHelp": "The Stop-Limit order type differs from the basic Stop order by allowing the specification of an exact price of execution.\n\nOnce the 'stop' price is reached, a 'Limit' order is created at the specified limit price.\n\nIf the 'hidden' option is enabled, the order will be inserted in the order book but will not be visible to other users, and will execute as a TAKER.\n\nIf the 'reduce-only' option is specified, the resulting Limit order will be cancelled if it would open or increase the size of an open position.\n\nA Time-In-Force date may be specified, after which the order will be automatically cancelled.",
+    "stopTitle": "Stop",
+    "stopHelp": "Stop orders are automatically converted to Market orders once the specified stop price is reached.\n\nFor control over the execution price, use a Stop-Limit order.\n\nIf the 'reduce-only' option is specified, the order will be cancelled if it would open or increase the size of an open position.\n\nA Time-In-Force date may be specified, after which the order will be automatically cancelled.",
+    "trailingStopTitle": "Trailing Stop",
+    "trailingStopHelp": "Trailing stop orders follow ('trail') the market price up (for sell orders) or down (for buy orders) by the specified trailing distance. If the market price moves against the trailing stop order, it does not move and will execute once the market reaches the order.\n\nIf the 'reduce-only' option is specified, the order will be cancelled if it would open or increase the size of an open position.\n\nA Time-In-Force date may be specified, after which the order will be automatically cancelled.",
+    "reduceOnlyCheckbox": "REDUCE-ONLY",
+    "reduceOnlyMessage": "Cancels the order if it would increase the size of an open position",
+    "hiddenCheckbox": "HIDDEN",
+    "hiddenMessage": "This option allows you to place an order into the book but not have it displayed to other traders. Price/time priority is the same as a displayed order, but the hidden order will always pay the \"taker\" fee while those trading against a hidden order will pay the \"maker\" fee",
+    "ocoCheckbox": "OCO",
+    "ocoMessage": "This option allows you to place a pair of orders stipulating that if one order is executed fully or partially, then the other order is automatically canceled. A one-cancels-the-other order combines a stop order with a limit order. This option allows you to place both take profit and stop loss targets for your position (only for limit orders)",
+    "ocoStop": "OCO Stop",
+    "tifCheckbox": "TIF",
+    "tifMessage": "Time-In-Force: specify datetime for automatic order cancellation",
+    "tifDate": "TIF Date",
+    "postOnlyCheckbox": "POST-ONLY",
+    "postOnlyMessage": "\"Post Only\" limit orders are orders that allow you to be sure to always pay the maker fee. When placed, a \"Post Only\" limit order is either inserted into the order book or cancelled (only for limit orders)",
+    "laverage": "Leverage",
+    "stopPrice": "Stop Price",
+    "limitPrice": "Limit Price",
+    "distance": "Distance"
   },
   "orderHistoryModal": {
     "title": "Order History",
@@ -157,6 +206,8 @@
     "lastBtn": "Finish",
     "nextBtn": "Next",
     "openBtn": "Open the dialog",
-    "skipBtn": "Skip"
+    "skipBtn": "Skip",
+    "submitBtn": "Submit",
+    "updateBtn": "Update"
   }
 }

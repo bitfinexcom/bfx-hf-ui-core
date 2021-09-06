@@ -1,8 +1,6 @@
-import checkboxesHelpMessages from '../constants/AtomicOrdersCheckboxHelpText'
-
-export default () => ({
-  label: 'Immediate or Cancel',
-  customHelp: 'An IOC order is a limit order that must fill immediately, with any unfilled portion cancelled.',
+export default (t) => ({
+  label: t('orderForm.iocTitle'),
+  customHelp: t('orderForm.iocHelp'),
   uiIcon: 'immediate-or-cancel-active',
 
   generateOrder: (data = {}, symbol, context) => {
@@ -59,20 +57,20 @@ export default () => ({
   fields: {
     reduceonly: {
       component: 'input.checkbox',
-      label: 'REDUCE-ONLY',
-      customHelp: checkboxesHelpMessages['REDUCE-ONLY'],
+      label: t('orderForm.reduceOnlyCheckbox'),
+      customHelp: t('orderForm.reduceOnlyMessage'),
       trading: ['m', 'f'],
       default: false,
     },
 
     price: {
       component: 'input.price',
-      label: 'Price $QUOTE',
+      label: `${t('table.price')} $QUOTE`,
     },
 
     amount: {
       component: 'input.amount',
-      label: 'Amount $BASE',
+      label: `${t('table.amount')} $BASE`,
     },
     ticker: {
       component: 'ui.ticker',
@@ -80,7 +78,7 @@ export default () => ({
 
     lev: {
       component: 'input.range',
-      label: 'Leverage',
+      label: t('orderForm.laverage'),
       min: 1,
       max: 100,
       default: 10,

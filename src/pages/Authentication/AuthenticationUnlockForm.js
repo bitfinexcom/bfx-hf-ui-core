@@ -92,7 +92,7 @@ const AuthenticationUnlockForm = ({ isPaperTrading, onUnlock: _onUnlock, onReset
         {isDevEnv && (
           <div className='hfui-authenticationpage__dev-mode'>
             <Checkbox
-              label={t('settings.autologin')}
+              label={t('appSettings.autologin')}
               checked={autoLoginState}
               onChange={setAutoLoginState}
             />

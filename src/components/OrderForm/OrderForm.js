@@ -21,9 +21,8 @@ import {
   fixComponentContext,
   COMPONENTS_FOR_ID,
 } from './OrderForm.helpers'
-
+import { isElectronApp } from '../../redux/config'
 import timeFrames from '../../util/time_frames'
-
 import Panel from '../../ui/Panel'
 
 import UnconfiguredModal from './Modals/UnconfiguredModal'
@@ -31,14 +30,13 @@ import SubmitAPIKeysModal from './Modals/SubmitAPIKeysModal'
 import OrderFormMenu from './OrderFormMenu'
 
 import './style.css'
-import { isElectronApp } from '../../redux/config'
 
 const debug = Debug('hfui:order-form')
 
 const CONTEXT_LABELS = {
-  e: 'Exchange',
-  m: 'Margin',
-  f: 'Derivatives',
+  e: 'orderForm.exchange',
+  m: 'orderForm.margin',
+  f: 'orderForm.derivatives',
 }
 
 const ALL_ALGO_ORDERS = [
@@ -366,7 +364,7 @@ class OrderForm extends React.Component {
 
   render() {
     const {
-      onRemove, orders, apiClientState, apiCredentials, moveable, removeable, isPaperTrading, isOrderExecuting,
+      onRemove, orders, apiClientState, apiCredentials, moveable, removeable, isPaperTrading, isOrderExecuting, t,
     } = this.props
 
     const {
@@ -403,7 +401,7 @@ class OrderForm extends React.Component {
           key='execute-order'
           darkHeader
           dark
-          label='Execute Order'
+          label={t('orderForm.title')}
           className='hfui-orderform__panel'
           moveable={moveable}
           removeable={removeable}
@@ -443,7 +441,7 @@ class OrderForm extends React.Component {
               <div key='overlay-wrapper' className='hfui-orderform__overlay-wrapper'>
                 <div className='hfui-orderform__help-inner'>
                   <p className='hfui-orderform__help-title'>
-                    <span className='prefix'>HELP:</span>
+                    <span className='prefix'>{t('orderForm.help')}</span>
                     {currentLayout.label}
                     <i
                       role='button'
@@ -485,7 +483,7 @@ class OrderForm extends React.Component {
                 <li key='item' className='hfui-orderform__centered-item'>
                   {_map(currentMarket.contexts, value => (
                     <div key={value} onClick={() => this.onContextChange(value)} className={`hfui__orderform-tab ${value === context ? 'active' : ''}`}>
-                      <p>{CONTEXT_LABELS[value]}</p>
+                      <p>{t(CONTEXT_LABELS[value])}</p>
                     </div>
                   ))}
                 </li>
@@ -545,6 +543,7 @@ OrderForm.propTypes = {
   isOrderExecuting: PropTypes.bool,
   moveable: PropTypes.bool,
   removeable: PropTypes.bool,
+  t: PropTypes.func.isRequired,
 }
 
 OrderForm.defaultProps = {

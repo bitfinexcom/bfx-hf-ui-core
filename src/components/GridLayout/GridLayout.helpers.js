@@ -29,7 +29,7 @@ export const COMPONENT_TYPES = {
 export const COMPONENT_LABELS = {
   [COMPONENT_TYPES.CHART]: 'chartModal.title',
   [COMPONENT_TYPES.ORDER_BOOK]: 'orderBookModal.title',
-  [COMPONENT_TYPES.ORDER_FORM]: 'Order Form',
+  [COMPONENT_TYPES.ORDER_FORM]: 'orderForm.title2',
   [COMPONENT_TYPES.TRADES_TABLE]: 'tradesTableModal.title',
   [COMPONENT_TYPES.BALANCES_TABLE]: 'balancesTableModal.title',
   [COMPONENT_TYPES.POSITIONS_TABLE]: 'positionsTableModal.title',
