@@ -205,6 +205,11 @@ export const changeCcyInfoModalState = (isVisible) => ({
   payload: { isVisible },
 })
 
+const setLanguage = language => ({
+  type: types.SET_LANGUAGE,
+  payload: { language },
+})
+
 export default {
   saveLayout,
   storeUnsavedLayout,
@@ -238,4 +243,5 @@ export default {
   changeOldFormatModalState,
   changeAOPauseModalState,
   changeCcyInfoModalState,
+  setLanguage,
 }

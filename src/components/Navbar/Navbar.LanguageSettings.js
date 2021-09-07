@@ -1,20 +1,25 @@
-import React, { useState } from 'react'
+import React from 'react'
 import _keys from 'lodash/keys'
 import _map from 'lodash/map'
 
 import { useTranslation } from 'react-i18next'
+import { useDispatch, useSelector } from 'react-redux'
 import Dropdown from '../../ui/Dropdown'
 import { LANGUAGE_NAMES } from '../../locales/i18n'
+import UIActions from '../../redux/actions/ui'
+import { getCurrentLanguage } from '../../redux/selectors/ui'
 
 const languagesKeys = _keys(LANGUAGE_NAMES)
 const languagesOptions = _map(languagesKeys, lang => ({ value: lang, label: LANGUAGE_NAMES[lang] }))
 
 const LanguageSettings = () => {
   const { i18n } = useTranslation()
-  const [language, setLanguage] = useState(i18n.language)
+  const language = useSelector(getCurrentLanguage)
+  const dispatch = useDispatch()
+
   const changeLanguageHandler = (lang) => {
     i18n.changeLanguage(lang)
-    setLanguage(lang)
+    dispatch(UIActions.setLanguage(lang))
   }
   return (
     <Dropdown

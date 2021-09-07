@@ -35,7 +35,7 @@ export const COMPONENT_LABELS = {
   [COMPONENT_TYPES.POSITIONS_TABLE]: 'positionsTableModal.title',
   [COMPONENT_TYPES.ALGO_ORDERS_TABLE]: 'AOTableModal.title',
   [COMPONENT_TYPES.ATOMIC_ORDERS_TABLE]: 'atomicOrdersTableModal.title',
-  [COMPONENT_TYPES.ORDER_HISTORY_TABLE]: 'orderHistoryModal.titles',
+  [COMPONENT_TYPES.ORDER_HISTORY_TABLE]: 'orderHistoryModal.title',
   [COMPONENT_TYPES.TRADING_STATE_PANEL]: 'tradingStatePanel.title',
   [COMPONENT_TYPES.EXCHANGE_INFO_BAR]: 'tickersPanel.title',
 }

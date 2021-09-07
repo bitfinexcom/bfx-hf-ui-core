@@ -38,6 +38,7 @@ const LAYOUTS_STATE_KEY = 'HF_UI_LAYOUTS_STATE'
 const ACTIVE_MARKET_KEY = 'HF_UI_ACTIVE_MARKET'
 const ACTIVE_MARKET_PAPER_KEY = 'HF_UI_PAPER_ACTIVE_MARKET'
 const IS_PAPER_TRADING = 'IS_PAPER_TRADING'
+const LANGUAGE = 'i18nextLng'
 export const PAPER_MODE = 'paper'
 export const MAIN_MODE = 'main'
 let shownOldFormatModal = false
@@ -74,6 +75,7 @@ function getInitialState() {
     content: {},
     unsavedLayout: null,
     layoutID: null,
+    language: 'en',
   }
 
   if (!localStorage) {
@@ -83,6 +85,7 @@ function getInitialState() {
   const isPaperTrading = localStorage.getItem(IS_PAPER_TRADING) === 'true'
   const layoutsJSON = localStorage.getItem(LAYOUTS_KEY)
   const layoutsComponentStateJSON = localStorage.getItem(LAYOUTS_STATE_KEY)
+  const prevLanguage = localStorage.getItem(LANGUAGE)
 
   try {
     const storedLayouts = JSON.parse(layoutsJSON)
@@ -154,6 +157,7 @@ function getInitialState() {
   }
 
   defaultState.isPaperTrading = isPaperTrading
+  defaultState.language = prevLanguage
 
   return defaultState
 }
@@ -511,6 +515,10 @@ function reducer(state = getInitialState(), action = {}) {
         ...state,
         isCcyInfoModalVisible: isVisible,
       }
+    }
+    case types.SET_LANGUAGE: {
+      const { language } = payload
+      return { ...state, language }
     }
     default: {
       return state
