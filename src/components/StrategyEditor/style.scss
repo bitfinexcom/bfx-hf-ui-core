@@ -26,6 +26,31 @@
   &.noresults {
     height: 100%;
   }
+  // remove for monaco
+  &.exec-error {
+    .react-codemirror2,
+    .CodeMirror {
+      height: calc(100% - 22px);
+    }
+  }
+
+  .react-codemirror2,
+  .CodeMirror {
+    height: 100%;
+  }
+
+  .CodeMirror-code {
+    font-size: 13px;
+  }
+
+  .cm-s-monokai.CodeMirror {
+    border-radius: $border-radius;
+    background: $background-color;
+  }
+
+  .cm-s-monokai .CodeMirror-gutters {
+    background-color: $background-color;
+  }
 }
 .hfui-strategyeditor__editor-error-output {
   font-family: monospace;
