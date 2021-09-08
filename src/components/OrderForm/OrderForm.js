@@ -95,6 +95,17 @@ class OrderForm extends React.Component {
     return !(_isEqual(nextProps, this.props)) || !(_isEqual(this.state, nextState))
   }
 
+  componentDidUpdate(prevProps) {
+    if (prevProps.activeMarket === this.activeMarket) {
+      return
+    }
+    const algoOrders = this.getAOs()
+    // eslint-disable-next-line react/no-did-update-set-state
+    this.setState({
+      algoOrders,
+    })
+  }
+
   static getDerivedStateFromProps(nextProps, prevState) {
     const { activeMarket } = nextProps
     const {
@@ -110,10 +121,7 @@ class OrderForm extends React.Component {
       }
     }
 
-    const algoOrders = this.getAOs()
-
     return {
-      algoOrders,
       currentMarket: activeMarket,
       context: activeMarket.contexts[0],
       fieldData: {},
