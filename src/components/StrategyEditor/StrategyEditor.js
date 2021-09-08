@@ -16,7 +16,6 @@ import StrategyEditorPanel from './StrategyEditorPanel'
 import CreateNewStrategyModal from '../CreateNewStrategyModal'
 import RemoveExistingStrategyModal from '../RemoveExistingStrategyModal'
 import OpenExistingStrategyModal from '../OpenExistingStrategyModal'
-import MonacoEditor from './MonacoEditor'
 import 'codemirror/mode/javascript/javascript'
 
 import './style.css'
