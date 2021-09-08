@@ -31,7 +31,7 @@ class NotificationsSidebar extends React.PureComponent {
   }
 
   static getDerivedStateFromProps(nextProps, prevState) {
-    const { notifications = [] } = nextProps
+    const { notifications = [], t } = nextProps
     const { shownNotifications } = prevState
 
     if (notifications.length <= shownNotifications.length) {
@@ -45,7 +45,7 @@ class NotificationsSidebar extends React.PureComponent {
       liveNotifications: [
         ...notifications.filter(({ cid }) => !shownNotifications.includes(cid)).map(n => ({
           n: {
-            message: n.text,
+            message: t(n.text),
             level: n.status,
             ...n,
           },
@@ -110,6 +110,7 @@ class NotificationsSidebar extends React.PureComponent {
     const {
       notifications, notificationsVisible, closeNotificationPanel, t,
     } = this.props
+    console.log(notifications, liveNotifications);
 
     return (
       <>
@@ -144,7 +145,7 @@ class NotificationsSidebar extends React.PureComponent {
                   notifications={_map(notifications, item => ({
                     ...item,
                     level: item.status,
-                    message: item.text,
+                    message: t(item.text),
                   }))}
                   onClose={this.onClose}
                 />

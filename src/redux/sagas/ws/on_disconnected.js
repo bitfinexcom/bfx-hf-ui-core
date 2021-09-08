@@ -6,7 +6,7 @@ export default function* () {
   yield put(WSActions.recvNotification({
     mts: Date.now(),
     status: 'error',
-    text: 'Disconnected from websocket server',
+    text: 'notifications.wsDisconnected',
     cid: v4(),
   }))
 }

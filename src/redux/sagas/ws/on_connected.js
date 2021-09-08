@@ -17,7 +17,7 @@ export default function* ({ payload }) {
   yield put(A.recvNotification({
     mts: Date.now(),
     status: 'success',
-    text: 'Successfully connected to websocket server',
+    text: 'notifications.wsConnected',
     cid: v4(),
   }))
 

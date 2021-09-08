@@ -103,7 +103,10 @@
   "notifications": {
     "title": "Notifications",
     "clearAllBtn": "Clear all",
-    "noNotifications": "There are no new notifications yet!"
+    "noNotifications": "There are no new notifications yet!",
+    "layoutSaved": "Successfully saved layout",
+    "wsConnected": "Successfully connected to websocket server",
+    "wsDisconnected": "Disconnected from websocket server"
   },
   "tradingModeModal": {
     "title": "Switch Trade Mode",
