@@ -44,6 +44,6 @@ export const getLocaleOptions = (t) => ({
   close: t('ui.closeBtn'),
   last: t('ui.lastBtn'),
   next: t('ui.nextBtn'),
-  open: t('ui.openBtn'),
+  open: t('ui.openDlgBtn'),
   skip: t('ui.skipBtn'),
 })

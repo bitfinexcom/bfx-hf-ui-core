@@ -61,7 +61,7 @@ const TradingMode = ({ onClose }) => {
         onClick={onSave}
         disabled={!isChanged}
       >
-        {t('layoutSettings.save')}
+        {t('ui.save')}
       </Button>
     </div>
   )

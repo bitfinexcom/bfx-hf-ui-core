@@ -4,6 +4,7 @@ import _isEmpty from 'lodash/isEmpty'
 import _find from 'lodash/find'
 import _omitBy from 'lodash/omitBy'
 import _isNil from 'lodash/isNil'
+import { useTranslation } from 'react-i18next'
 
 import RenderHistoricalReport from './reports/HistoricalReport'
 import RenderHistoricalForm from './forms/HistoricalForm'
@@ -87,10 +88,12 @@ const Backtester = ({
     },
   }
 
+  const { t } = useTranslation()
+
   if (!strategyContent || _isEmpty(_omitBy(strategyContent, _isNil))) {
     return (
       <div className='hfui-backtester__wrapper'>
-        <p>Create a strategy to begin backtesting.</p>
+        <p>{t('strategyEditor.backtestingCreateMessage')}</p>
       </div>
     )
   }
@@ -108,7 +111,7 @@ const Backtester = ({
     return (
       <div className='hfui-backtester__wrapper'>
         <executionType.form {...opts} />
-        {executionType.renderReport({ ...opts }, backtestResults, backtestData, backtestOptions)}
+        {executionType.renderReport({ ...opts }, backtestResults, backtestData, backtestOptions, t)}
       </div>
     )
   }
@@ -116,7 +119,7 @@ const Backtester = ({
   return (
     <div className='hfui-backtester__wrapper'>
       <executionType.form {...opts} disabled={backtestResults.loading} />
-      <p>{backtestResults.loading ? 'Loading candles and executing strategy...' : 'Press start to begin backtesting.'}</p>
+      <p>{backtestResults.loading ? t('strategyEditor.backtestingLoadingMessage') : t('strategyEditor.backtestingStartingMessage')}</p>
     </div>
   )
 }
@@ -161,8 +164,8 @@ Backtester.defaultProps = {
   markets: [],
   backtestResults: {},
   backtestOptions: {},
-  onAddIndicator: () => {},
-  onDeleteIndicator: () => {},
+  onAddIndicator: () => { },
+  onDeleteIndicator: () => { },
 }
 
 export default memo(Backtester)

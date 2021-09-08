@@ -95,8 +95,6 @@
   "layoutSettings": {
     "title": "Layout settings",
     "addComponent": "Add Component",
-    "save": "Save",
-    "saveAs": "Save As...",
     "labelEmptyError": "Label empty",
     "addLayout": "Add Layout",
     "layoutName": "Layout Name",
@@ -200,13 +198,29 @@
     "fundingCost": "Funding Cost",
     "type": "Type",
     "price": "Price",
-    "status": "Status"
+    "status": "Status",
+    "time": "Time"
   },
   "tickersPanel": {
     "title": "Ticker Panel"
   },
+  "time": {
+    "1m": "1 Minute",
+    "5m": "5 Minutes",
+    "15m": "15 Minutes",
+    "30m": "30 Minutes",
+    "1h": "1 Hour",
+    "3h": "3 Hours",
+    "6h": "6 Hours",
+    "12h": "12 Hours",
+    "1D": "1 Day",
+    "7D": "7 Days",
+    "14D": "14 Days",
+    "1M": "1 Month"
+  },
   "tradesTableModal": {
-    "title": "Trades"
+    "title": "Trades",
+    "noTrades": "There were no trades in this timeframe"
   },
   "tradingStatePanel": {
     "title": "Trading State Panel",
@@ -225,6 +239,47 @@
     "connecting": "Connecting",
     "disconnected": "Disconnected"
   },
+  "strategyEditor": {
+    "docsTab": "Docs",
+    "backtestTab": "Backtest",
+    "unsavedStartegy": "Unsaved strategy",
+    "newStrategy": "New Strategy",
+    "createStrategyStringPart1": "Create",
+    "createStrategyStringPart2": "a new strategy",
+    "createStrategyStringPart3": "or",
+    "createStrategyStringPart4": "open",
+    "createStrategyStringPart5": "an existing one.",
+    "createStrategyStringPart6": "to begin backtesting.",
+    "newStrategyModalTitle": "Create a New Strategy",
+    "newStrategyModalEmptyError": "Label is empty",
+    "newStrategyModalLongError": "Strategy name is too long ({{labelSize}}/{{MAX_LABEL_LENGTH}} characters)",
+    "openStrategyModalTitle": "Open Strategy",
+    "openStartegyModalNoSelectedError": "No strategy selected",
+    "backtestingCreateMessage": "Create a strategy to begin backtesting",
+    "backtestingLoadingMessage": "Loading candles and executing strategy...",
+    "backtestingStartingMessage": "Press start to begin backtesting.",
+    "historical": "Historical",
+    "startDate": "Start Date",
+    "endDate": "End Date",
+    "useCandlesCheckbox": "Use candles",
+    "useTradesCheckbox": "Use trades",
+    "checkboxWarningMessage": "At least one checkbox should be selected",
+    "totalPL": "Total P/L",
+    "avgPL": "Avg PL",
+    "profitFactor": "Profit Factor",
+    "volatility": "Volatility",
+    "backtestCandles": "Backtest Candles",
+    "backtestTrades": "Backtest Trades",
+    "trades": "Trades",
+    "positions": "Positions",
+    "gains": "Gains",
+    "losses": "Losses",
+    "fees": "Fees",
+    "profitLoss": "Profit/Loss",
+    "volume": "Volume",
+    "largestGain": "Largest Gain",
+    "largestLoss": "Largest Loss"
+  },
   "ui": {
     "ok": "Okay",
     "cancel": "Cancel",
@@ -234,11 +289,17 @@
     "closeBtn": "Close",
     "lastBtn": "Finish",
     "nextBtn": "Next",
-    "openBtn": "Open the dialog",
+    "openDlgBtn": "Open the dialog",
     "skipBtn": "Skip",
     "submitBtn": "Submit",
     "updateBtn": "Update",
     "sellBtn": "Sell",
-    "buyBtn": "Buy"
+    "buyBtn": "Buy",
+    "save": "Save",
+    "saveAs": "Save As...",
+    "openBtn": "Open",
+    "removeBtn": "Remove",
+    "createBtn": "Create",
+    "startBtn": "Start"
   }
 }

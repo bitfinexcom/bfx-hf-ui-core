@@ -145,11 +145,11 @@ const StrategyEditorPage = (props) => {
               darkHeader
             >
               <Markdown
-                tabtitle='Docs'
+                tabtitle={t('strategyEditor.docsTab')}
                 text={docsText}
               />
               <div
-                tabtitle='Backtest'
+                tabtitle={t('strategyEditor.backtestTab')}
               >
                 <Backtester
                   {...props}

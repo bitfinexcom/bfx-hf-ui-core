@@ -61,7 +61,7 @@ export default function LayoutSettings() {
   }
 
   const selectableLayouts = _entries(layouts)
-  // eslint-disable-next-line no-shadow
+    // eslint-disable-next-line no-shadow
     .filter(([, layout]) => layout.routePath === pathname)
     .sort((a, b) => a[1].savedAt - b[1].savedAt)
 
@@ -110,10 +110,10 @@ export default function LayoutSettings() {
                 {t('layoutSettings.addComponent')}
               </Item>
               <Item onClick={onSave} isDisabled={layout.isDefault || !layoutIsDirty}>
-                {t('layoutSettings.save')}
+                {t('ui.save')}
               </Item>
               <Item onClick={() => setIsCreateNewLayoutModalOpen(true)}>
-                {t('layoutSettings.saveAs')}
+                {t('ui.saveAs')}
               </Item>
               <div className='hfui-navbar__layout-settings__separator' />
               {_map(selectableLayouts, ([id, layoutDef]) => (
