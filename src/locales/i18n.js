@@ -20,11 +20,11 @@ export const LANGUAGES = {
 
 export const LANGUAGE_NAMES = {
   en: 'English',
-  // es: 'Español',
-  // ru: 'Русский',
-  // tr: 'Türk',
-  // cn: '中文 (简化)',
-  // tw: '中文 (繁體)',
+  es: 'Español',
+  ru: 'Русский',
+  tr: 'Türk',
+  cn: '中文 (简化)',
+  tw: '中文 (繁體)',
 }
 
 // email templates language mapping
