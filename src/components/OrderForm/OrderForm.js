@@ -69,7 +69,7 @@ class OrderForm extends React.Component {
       marketDirty,
     } = savedState
 
-    const algoOrders = OrderForm.getAOs()
+    const algoOrders = this.getAOs()
 
     this.state = {
       ...this.state,
@@ -81,6 +81,7 @@ class OrderForm extends React.Component {
       context: currentMarket.contexts[0],
     }
 
+    this.getAOs = this.getAOs.bind(this)
     this.onContextChange = this.onContextChange.bind(this)
     this.onFieldChange = this.onFieldChange.bind(this)
     this.onSubmit = this.onSubmit.bind(this)
@@ -92,14 +93,6 @@ class OrderForm extends React.Component {
 
   shouldComponentUpdate(nextProps, nextState) {
     return !(_isEqual(nextProps, this.props)) || !(_isEqual(this.state, nextState))
-  }
-
-  static getAOs() {
-    const algoOrders = isElectronApp ? ALL_ALGO_ORDERS : HOSTED_ALGO_ORDERS
-
-    return algoOrders.map(ao => ao.meta.getUIDef({
-      timeframes: Object.values(timeFrames),
-    }))
   }
 
   static getDerivedStateFromProps(nextProps, prevState) {
@@ -117,7 +110,7 @@ class OrderForm extends React.Component {
       }
     }
 
-    const algoOrders = OrderForm.getAOs()
+    const algoOrders = this.getAOs()
 
     return {
       algoOrders,
@@ -296,6 +289,16 @@ class OrderForm extends React.Component {
         },
       }))
     }
+  }
+
+  getAOs() {
+    const algoOrders = isElectronApp ? ALL_ALGO_ORDERS : HOSTED_ALGO_ORDERS
+    const { t } = this.props
+
+    return algoOrders.map(ao => ao.meta.getUIDef({
+      timeframes: Object.values(timeFrames),
+      t,
+    }))
   }
 
   validateAOData(data) {
