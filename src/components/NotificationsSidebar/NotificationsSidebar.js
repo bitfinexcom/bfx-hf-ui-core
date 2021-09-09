@@ -45,7 +45,7 @@ class NotificationsSidebar extends React.PureComponent {
       liveNotifications: [
         ...notifications.filter(({ cid }) => !shownNotifications.includes(cid)).map(n => ({
           n: {
-            message: t(n.text),
+            message: t(n.text, n.text),
             level: n.status,
             ...n,
           },
@@ -110,7 +110,6 @@ class NotificationsSidebar extends React.PureComponent {
     const {
       notifications, notificationsVisible, closeNotificationPanel, t,
     } = this.props
-    console.log(notifications, liveNotifications);
 
     return (
       <>
@@ -145,7 +144,7 @@ class NotificationsSidebar extends React.PureComponent {
                   notifications={_map(notifications, item => ({
                     ...item,
                     level: item.status,
-                    message: t(item.text),
+                    message: t(item.text, item.text),
                   }))}
                   onClose={this.onClose}
                 />
