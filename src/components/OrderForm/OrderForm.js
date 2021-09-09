@@ -96,7 +96,8 @@ class OrderForm extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    if (prevProps.activeMarket === this.activeMarket) {
+    const { activeMarket } = this.props
+    if (prevProps.activeMarket.wsID === activeMarket.wsID) {
       return
     }
     const algoOrders = this.getAOs()
