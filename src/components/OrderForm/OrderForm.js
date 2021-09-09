@@ -306,7 +306,7 @@ class OrderForm extends React.Component {
 
     return algoOrders.map(ao => ao.meta.getUIDef({
       timeframes: timeFrames,
-      t,
+      i18n: { t },
     }))
   }
 
