@@ -324,19 +324,6 @@ const StrategyEditor = ({
             value={strategy[activeContent] || ''}
             onChange={onEditorContentChange}
           />
-          {/* <CodeMirror
-            value={strategy[activeContent] || ''}
-            onBeforeChange={onEditorContentChange}
-            options={{
-              mode: {
-                name: 'javascript',
-                json: true,
-              },
-              theme: 'monokai',
-              lineNumbers: true,
-              tabSize: 2,
-            }}
-          /> */}
           {(execError || sectionErrors[activeContent]) && (
             <div className='hfui-strategyeditor__editor-error-output'>
               <p className='hfui-panel__close strategyeditor__close-icon' onClick={onClearErrors}>&#10005; </p>
