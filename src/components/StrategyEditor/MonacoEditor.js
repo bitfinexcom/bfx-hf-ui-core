@@ -1,4 +1,4 @@
-import Editor, { useMonaco } from '@monaco-editor/react'
+import Editor, { monaco } from 'react-monaco-editor'
 import React, { useEffect } from 'react'
 import PropTypes from 'prop-types'
 import _isEmpty from 'lodash/isEmpty'
@@ -6,7 +6,6 @@ import _isEmpty from 'lodash/isEmpty'
 const HF_MONACO_THEME = 'HFTheme'
 
 const MonacoEditor = ({ value, onChange }) => {
-  const monaco = useMonaco()
   useEffect(() => {
     if (_isEmpty(monaco)) {
       return
@@ -24,12 +23,12 @@ const MonacoEditor = ({ value, onChange }) => {
 
   return (
     <Editor
-      language='javascript'
-      value={value}
-      onChange={onChange}
       height='100%'
       width='100%'
+      language='javascript'
       theme={HF_MONACO_THEME}
+      value={value}
+      onChange={onChange}
     />
   )
 }
