@@ -52,10 +52,12 @@ const HFUI = ({
   }
 
   useEffect(() => {
-    window.removeEventListener('beforeunload', unloadHandler)
-    window.addEventListener('beforeunload', unloadHandler)
-    return () => {
+    if (isElectronApp) {
       window.removeEventListener('beforeunload', unloadHandler)
+      window.addEventListener('beforeunload', unloadHandler)
+      return () => {
+        window.removeEventListener('beforeunload', unloadHandler)
+      }
     }
   }, [authToken, currentMode])
 
