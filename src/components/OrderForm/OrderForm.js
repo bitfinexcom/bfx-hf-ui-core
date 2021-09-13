@@ -6,6 +6,7 @@ import _isString from 'lodash/isString'
 import _isBoolean from 'lodash/isBoolean'
 import _map from 'lodash/map'
 import _trim from 'lodash/trim'
+import _isNil from 'lodash/isNil'
 import PropTypes from 'prop-types'
 import {
   Iceberg, TWAP, AccumulateDistribute, PingPong, MACrossover, OCOCO,
@@ -59,6 +60,7 @@ class OrderForm extends React.Component {
     context: 'e',
     helpOpen: false,
     configureModalOpen: false,
+    selectedOrderID: null,
   }
 
   constructor(props) {
@@ -106,11 +108,16 @@ class OrderForm extends React.Component {
   static getDerivedStateFromProps(nextProps, prevState) {
     const { activeMarket } = nextProps
     const {
-      marketDirty, currentMarket,
+      marketDirty, currentMarket, currentLayout, validationErrors,
     } = prevState
 
+    // reset errors when switched back to orders list view
+    const nextValidationErrors = _isNil(currentLayout?.label) ? {} : validationErrors
+
     if (marketDirty || (activeMarket === currentMarket)) {
-      return {}
+      return {
+        validationErrors: nextValidationErrors,
+      }
     }
 
     const algoOrders = OrderForm.getAOs()
@@ -121,6 +128,7 @@ class OrderForm extends React.Component {
       context: activeMarket.contexts[0],
       fieldData: {},
       currentLayout: null,
+      validationErrors: nextValidationErrors,
     }
   }
 
@@ -171,6 +179,7 @@ class OrderForm extends React.Component {
     this.setState(() => ({
       currentLayout: uiDef,
       fieldData: defaultDataForLayout(uiDef),
+      selectedOrderLable: orderLabel,
     }))
   }
 
