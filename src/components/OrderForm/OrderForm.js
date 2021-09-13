@@ -60,7 +60,6 @@ class OrderForm extends React.Component {
     context: 'e',
     helpOpen: false,
     configureModalOpen: false,
-    selectedOrderID: null,
   }
 
   constructor(props) {
@@ -179,7 +178,6 @@ class OrderForm extends React.Component {
     this.setState(() => ({
       currentLayout: uiDef,
       fieldData: defaultDataForLayout(uiDef),
-      selectedOrderLable: orderLabel,
     }))
   }
 
