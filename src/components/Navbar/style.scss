@@ -100,7 +100,8 @@
 }
 
 .hfui-navbar__app-settings,
-.hfui-navbar__layout-settings {
+.hfui-navbar__layout-settings,
+.hfui-orderform__ao-settings {
   position: relative;
 }
 
@@ -109,7 +110,8 @@
   font-weight: 500;
 }
 
-.hfui-navbar__layout-settings__menu {
+.hfui-navbar__layout-settings__menu,
+.hfui-orderform__ao-settings__menu {
   position: absolute;
   z-index: 1;
   top: 100%;
@@ -122,20 +124,23 @@
   // border: 1px solid $light-color-100;
 }
 
-.hfui-navbar__layout-settings__title {
+.hfui-navbar__layout-settings__title,
+.hfui-orderform__ao-settings__title {
   color: $light-color-900;
   font-size: 14px;
   font-weight: 600;
   padding: spacing(0.5) spacing(1);
 }
 
-.hfui-navbar__layout-settings__separator {
+.hfui-navbar__layout-settings__separator,
+.hfui-orderform__ao-settings__separator {
   height: 1px;
   background: $light-color-100;
   margin: spacing(0.5) 0;
 }
 
-.hfui-navbar__layout-settings__item {
+.hfui-navbar__layout-settings__item,
+.hfui-orderform__ao-settings__item {
   color: $light-color-600;
   font-size: 14px;
   font-weight: 500;
@@ -157,7 +162,8 @@
     position: relative;
     padding-left: spacing(2.75);
 
-    .hfui-navbar__layout-settings__delete {
+    .hfui-navbar__layout-settings__delete,
+    .hfui-orderform__ao-settings__delete {
       position: absolute;
       top: 4px;
       right: spacing(0.75);
@@ -177,7 +183,8 @@
     }
 
     &:hover {
-      .hfui-navbar__layout-settings__delete {
+      .hfui-navbar__layout-settings__delete,
+      .hfui-orderform__ao-settings__delete {
         opacity: 1;
 
         &:hover {
@@ -196,7 +203,8 @@
     content: 'S'; // check
   }
 
-  .hfui-navbar__layout-settings__item-unsaved {
+  .hfui-navbar__layout-settings__item-unsaved,
+  .hfui-orderform__ao-settings__item-unsaved {
     color: $light-color-300;
   }
 }

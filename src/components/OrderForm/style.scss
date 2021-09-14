@@ -754,3 +754,16 @@
     }
   }
 }
+
+.hfui-orderform__ao-settings__menu {
+  transform: translateX(-65%);
+
+  .hfui-orderform__ao-settings__delete > i {
+    width: 24px;
+    height: 24px;
+  }
+
+  .hfui-orderform__ao-settings__item {
+    padding-left: 16px;
+  }
+}

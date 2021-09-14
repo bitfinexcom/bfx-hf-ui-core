@@ -6,6 +6,7 @@ import _isString from 'lodash/isString'
 import _isBoolean from 'lodash/isBoolean'
 import _map from 'lodash/map'
 import _trim from 'lodash/trim'
+import _isArray from 'lodash/isArray'
 import PropTypes from 'prop-types'
 import {
   Iceberg, TWAP, AccumulateDistribute, PingPong, MACrossover, OCOCO,
@@ -25,6 +26,7 @@ import timeFrames from '../../util/time_frames'
 
 import Panel from '../../ui/Panel'
 
+import AOParamSettings from './Orderform.AlgoParams'
 import UnconfiguredModal from './Modals/UnconfiguredModal'
 import SubmitAPIKeysModal from './Modals/SubmitAPIKeysModal'
 import OrderFormMenu from './OrderFormMenu'
@@ -89,6 +91,9 @@ class OrderForm extends React.Component {
     this.onToggleConfigureModal = this.onToggleConfigureModal.bind(this)
     this.onSubmitAPIKeys = this.onSubmitAPIKeys.bind(this)
     this.onClearOrderLayout = this.onClearOrderLayout.bind(this)
+    this.processAOData = this.processAOData.bind(this)
+    this.setFieldData = this.setFieldData.bind(this)
+    this.validateAOData = this.validateAOData.bind(this)
   }
 
   shouldComponentUpdate(nextProps, nextState) {
@@ -157,15 +162,21 @@ class OrderForm extends React.Component {
   }
 
   onChangeActiveOrderLayout(orderLabel) {
-    const { orders } = this.props
+    const {
+      orders, getAlgoOrderParams, aoParams, resetActiveAOParamsID,
+    } = this.props
     const { algoOrders, currentMarket } = this.state
+    resetActiveAOParamsID()
 
     let uiDef = orders.find(({ label }) => label === orderLabel)
 
     if (!uiDef) {
       uiDef = algoOrders.find(({ label }) => label === orderLabel)
-    }
 
+      if (!_isArray(aoParams[currentMarket.wsID]?.[uiDef.id])) {
+        getAlgoOrderParams(uiDef.id, currentMarket.wsID)
+      }
+    }
     uiDef.fields = fixComponentContext(uiDef.fields, currentMarket)
 
     this.setState(() => ({
@@ -293,6 +304,22 @@ class OrderForm extends React.Component {
     }
   }
 
+  setFieldData(data) {
+    this.setState({
+      fieldData: data,
+    })
+  }
+
+  updateValidationErrors(errors) {
+    const { field, message } = errors
+    this.setState(({ validationErrors }) => ({
+      validationErrors: {
+        ...validationErrors,
+        [field]: message,
+      },
+    }))
+  }
+
   validateAOData(data) {
     const { currentLayout } = this.state
     let errors = {}
@@ -341,6 +368,16 @@ class OrderForm extends React.Component {
     return errors
   }
 
+  processAOData() {
+    const { currentLayout, fieldData } = this.state
+
+    return processFieldData({
+      layout: currentLayout,
+      action: 'submit',
+      fieldData,
+    })
+  }
+
   deferSaveState() {
     setTimeout(() => {
       this.saveState()
@@ -359,7 +396,7 @@ class OrderForm extends React.Component {
 
   render() {
     const {
-      onRemove, orders, apiClientState, apiCredentials, moveable, removeable, isPaperTrading, isOrderExecuting,
+      onRemove, orders, apiClientState, apiCredentials, moveable, removeable, isPaperTrading, isOrderExecuting, activeMarket,
     } = this.props
 
     const {
@@ -400,14 +437,24 @@ class OrderForm extends React.Component {
           moveable={moveable}
           removeable={removeable}
           onRemove={onRemove}
-          extraIcons={(
-            !helpOpen && apiClientConnected && currentLayout && currentLayout.customHelp && (
+          extraIcons={[
+            !helpOpen && currentLayout && currentLayout.customHelp && (
               <Icon
                 name='question'
                 onClick={this.onToggleHelp}
               />
-            )
-          )}
+            ),
+            !helpOpen && currentLayout && currentLayout.id && (
+              <AOParamSettings
+                algoID={currentLayout.id}
+                symbol={activeMarket.wsID}
+                processAOData={this.processAOData}
+                setFieldData={this.setFieldData}
+                validateAOData={this.validateAOData}
+                updateValidationErrors={this.updateValidationErrors}
+              />
+            ),
+          ]}
         >
           <div key='orderform-wrapper' className='hfui-orderform__wrapper'>
             {isElectronApp && [
@@ -525,6 +572,9 @@ OrderForm.propTypes = {
   setIsOrderExecuting: PropTypes.func.isRequired,
   mode: PropTypes.string.isRequired,
   submitAPIKeys: PropTypes.func.isRequired,
+  getAlgoOrderParams: PropTypes.func.isRequired,
+  aoParams: PropTypes.objectOf(PropTypes.object).isRequired,
+  resetActiveAOParamsID: PropTypes.func.isRequired,
   submitOrder: PropTypes.func.isRequired,
   gaSubmitOrder: PropTypes.func.isRequired,
   submitAlgoOrder: PropTypes.func.isRequired,

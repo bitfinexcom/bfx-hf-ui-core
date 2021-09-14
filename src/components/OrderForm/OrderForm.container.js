@@ -8,6 +8,8 @@ import OrderForm from './OrderForm'
 import UIActions from '../../redux/actions/ui'
 import WSActions from '../../redux/actions/ws'
 import GAActions from '../../redux/actions/google_analytics'
+import AOActions from '../../redux/actions/ao'
+import { getAOParams } from '../../redux/selectors/ao'
 import {
   getAPIClientState, getAuthToken, getCurrentModeAPIKeyState,
 } from '../../redux/selectors/ws'
@@ -35,6 +37,7 @@ const mapStateToProps = (state = {}, ownProps = {}) => {
     isPaperTrading: getIsPaperTrading(state),
     isOrderExecuting: getIsOrderExecuting(state),
     orders,
+    aoParams: getAOParams(state),
   }
 }
 
@@ -102,6 +105,14 @@ const mapDispatchToProps = dispatch => ({
       pairs,
       mode,
     ]))
+  },
+
+  getAlgoOrderParams: (aoID, symbol) => {
+    dispatch(AOActions.getAlgoOrderParams(aoID, symbol))
+  },
+
+  resetActiveAOParamsID: () => {
+    dispatch(AOActions.setActiveAOParamsID(null))
   },
 })
 
