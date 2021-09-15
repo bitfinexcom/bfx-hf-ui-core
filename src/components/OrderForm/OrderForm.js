@@ -265,7 +265,7 @@ class OrderForm extends React.Component {
 
   onSubmitAlgoOrder() {
     const {
-      submitAlgoOrder, authToken, gaSubmitAO, setIsOrderExecuting,
+      submitAlgoOrder, authToken, gaSubmitAO, setIsOrderExecuting, t,
     } = this.props
     const {
       currentMarket, currentLayout, fieldData, context,
@@ -290,11 +290,11 @@ class OrderForm extends React.Component {
       })
     } else {
       setIsOrderExecuting(false)
-      const { field, message } = errors
+      const { field, message, i18n } = errors
       this.setState(({ validationErrors }) => ({
         validationErrors: {
           ...validationErrors,
-          [field]: message,
+          [field]: i18n ? t(`algoOrderForm.validationMessages.${i18n.key}`, i18n.props) : message,
         },
       }))
     }
