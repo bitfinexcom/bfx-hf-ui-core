@@ -35,6 +35,7 @@ const notificationAdapter = (data = []) => {
   }
   const notification = new Notification(data).toJS()
   notification.cid = data.cid || data.uid
+  notification.i18n = data.i18n || null
 
   return notification
 }

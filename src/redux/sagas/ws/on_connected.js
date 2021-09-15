@@ -17,8 +17,9 @@ export default function* ({ payload }) {
   yield put(A.recvNotification({
     mts: Date.now(),
     status: 'success',
-    text: 'notifications.wsConnected',
+    text: 'Successfully connected to websocket server',
     cid: v4(),
+    i18n: { key: 'notifications.wsConnected' },
   }))
 
   if (!isElectronApp && payload.alias === WSTypes.ALIAS_API_SERVER) {

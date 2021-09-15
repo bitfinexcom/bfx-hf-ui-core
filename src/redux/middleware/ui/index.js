@@ -11,8 +11,9 @@ export default () => {
         store.dispatch(UIActions.recvNotification({
           mts: Date.now(),
           status: 'success',
-          text: 'notifications.layoutSaved',
+          text: 'Successfully saved layout',
           cid: v4(),
+          i18n: { key: 'notifications.layoutSaved' },
         }))
         next(action)
         break
