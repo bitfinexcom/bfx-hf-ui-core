@@ -48,7 +48,7 @@ const AlgoParams = ({
 
   const onSave = () => {
     if (!_isNull(activeAOID)) {
-      const { name, id } = _find(selectedAOParams, (p) => p.id === activeAOID)
+      const { name, id } = _find(selectedAOParams, (p) => p?.id === activeAOID)
       const params = processAOData()
       const errors = validateAOData(params)
 
