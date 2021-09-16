@@ -1,7 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { StoreProvider as UfxStoreProvider } from '@ufx-ui/core'
-import { useInjectBfxData } from '@ufx-ui/bfx-containers'
 import Debug from 'debug'
 import Manifest from '../package.json'
 
@@ -41,7 +40,6 @@ const config = {
 }
 
 const HFUIWrapper = () => {
-  useInjectBfxData()
   useAuthToken()
 
   return (

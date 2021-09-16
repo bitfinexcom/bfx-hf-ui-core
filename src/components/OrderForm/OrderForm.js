@@ -370,7 +370,8 @@ class OrderForm extends React.Component {
     const apiClientConnected = apiClientState === 2
     const apiClientConnecting = apiClientState === 1
     const apiClientConfigured = apiCredentials?.configured && apiCredentials?.valid
-    const showOrderform = apiClientConfigured || !isElectronApp
+    const isConnectedWithValidAPI = apiClientConnected && apiClientConfigured
+    const showOrderform = isConnectedWithValidAPI || !isElectronApp
     const renderData = marketToQuoteBase(currentMarket)
     const atomicOrderTypes = []
     const algoOrderTypes = []
@@ -411,7 +412,7 @@ class OrderForm extends React.Component {
         >
           <div key='orderform-wrapper' className='hfui-orderform__wrapper'>
             {isElectronApp && [
-              !apiClientConnected && !apiClientConfigured && !configureModalOpen && (
+              !isConnectedWithValidAPI && !configureModalOpen && (
                 <UnconfiguredModal
                   key='unconfigured'
                   onClick={this.onToggleConfigureModal}
@@ -420,7 +421,7 @@ class OrderForm extends React.Component {
                 />
               ),
 
-              !apiClientConnected && !apiClientConfigured && configureModalOpen && (
+              !isConnectedWithValidAPI && configureModalOpen && (
                 <SubmitAPIKeysModal
                   key='submit-api-keys'
                   onClose={this.onToggleConfigureModal}

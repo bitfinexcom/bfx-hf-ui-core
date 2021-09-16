@@ -5,6 +5,8 @@ import './style.css'
 import Navbar from '../Navbar'
 import StatusBar from '../StatusBar'
 
+import { MIN_SAFE_WIDTH } from '../../constants/variables'
+
 // eslint-disable-next-line react/prop-types
 function Layout({ children, ...props }) {
   return (
@@ -26,15 +28,20 @@ Layout.Header = function Header({ children, buttons, ...props }) {
 
 Layout.Main = function Main({
   // eslint-disable-next-line react/prop-types
-  children, className, flex, noSpaceTop, ...props
+  children, className, flex, noSpaceTop, style: styleProp, ...props
 }) {
   const classes = cx('layout__main', className, {
     'is-flex': flex,
     'no-space-top': noSpaceTop,
   })
 
+  const style = {
+    minWidth: MIN_SAFE_WIDTH,
+    ...styleProp,
+  }
+
   return (
-    <main className={classes} {...props}>
+    <main className={classes} style={style} {...props}>
       {children}
     </main>
   )
