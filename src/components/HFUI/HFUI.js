@@ -4,6 +4,7 @@ import { Route, Switch, Redirect } from 'react-router'
 import PropTypes from 'prop-types'
 import _isFunction from 'lodash/isFunction'
 
+import useInjectBfxData from '../../hooks/useInjectBfxData'
 import StrategyEditorPage from '../../pages/StrategyEditor'
 import NotificationsSidebar from '../NotificationsSidebar'
 import closeElectronApp from '../../redux/helpers/close_electron_app'
@@ -37,6 +38,8 @@ const HFUI = ({
   shouldShowAOPauseModalState,
   settingsShowAlgoPauseInfo,
 }) => {
+  useInjectBfxData()
+
   function unloadHandler() {
     if (authToken !== null) {
       onUnload(authToken, currentMode)
@@ -52,10 +55,12 @@ const HFUI = ({
   }
 
   useEffect(() => {
-    window.removeEventListener('beforeunload', unloadHandler)
-    window.addEventListener('beforeunload', unloadHandler)
-    return () => {
+    if (isElectronApp) {
       window.removeEventListener('beforeunload', unloadHandler)
+      window.addEventListener('beforeunload', unloadHandler)
+      return () => {
+        window.removeEventListener('beforeunload', unloadHandler)
+      }
     }
   }, [authToken, currentMode])
 

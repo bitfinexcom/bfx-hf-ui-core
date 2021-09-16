@@ -9,13 +9,14 @@ import { nonce } from 'bfx-api-node-util'
 import HFS from 'bfx-hf-strategy'
 import HFU from 'bfx-hf-util'
 import PropTypes from 'prop-types'
+import { Controlled as CodeMirror } from 'react-codemirror2'
 
 import Templates from './templates'
 import StrategyEditorPanel from './StrategyEditorPanel'
 import CreateNewStrategyModal from '../CreateNewStrategyModal'
 import RemoveExistingStrategyModal from '../RemoveExistingStrategyModal'
 import OpenExistingStrategyModal from '../OpenExistingStrategyModal'
-import MonacoEditor from './MonacoEditor'
+import 'codemirror/mode/javascript/javascript'
 
 import './style.css'
 
@@ -202,7 +203,21 @@ const StrategyEditor = ({
     onStrategyChange(content)
   }
 
-  const onEditorContentChange = (code) => {
+  // for Monaco
+  // const onEditorContentChange = (code) => {
+  //   setStrategyDirty(true)
+  //   updateStrategy({
+  //     ...strategy,
+  //     [activeContent]: code,
+  //   })
+
+  //   if (activeContent === 'defineIndicators') {
+  //     onDefineIndicatorsChange(code) // tracks errors
+  //   } else {
+  //     evalSectionContent(activeContent, code)
+  //   }
+  // }
+  const onEditorContentChange = (_1, _2, code) => {
     setStrategyDirty(true)
     updateStrategy({
       ...strategy,
@@ -320,13 +335,26 @@ const StrategyEditor = ({
             'exec-error': execError || sectionErrors[activeContent],
           })}
         >
-          <MonacoEditor
+          {/* <MonacoEditor
             value={strategy[activeContent] || ''}
             onChange={onEditorContentChange}
+          /> */}
+          <CodeMirror
+            value={strategy[activeContent] || ''}
+            onBeforeChange={onEditorContentChange}
+            options={{
+              mode: {
+                name: 'javascript',
+                json: true,
+              },
+              theme: 'monokai',
+              lineNumbers: true,
+              tabSize: 2,
+            }}
           />
           {(execError || sectionErrors[activeContent]) && (
             <div className='hfui-strategyeditor__editor-error-output'>
-              <p className='hfui-panel__close strategyeditor__close-icon' onClick={onClearErrors}>&#10005;</p>
+              <p className='hfui-panel__close strategyeditor__close-icon' onClick={onClearErrors}>&#10005; </p>
               <pre>{execError || sectionErrors[activeContent]}</pre>
             </div>
           )}

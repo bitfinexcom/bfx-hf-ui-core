@@ -7,6 +7,7 @@ import _isBoolean from 'lodash/isBoolean'
 import _map from 'lodash/map'
 import _trim from 'lodash/trim'
 import _isArray from 'lodash/isArray'
+import _isNil from 'lodash/isNil'
 import PropTypes from 'prop-types'
 import {
   Iceberg, TWAP, AccumulateDistribute, PingPong, MACrossover, OCOCO,
@@ -111,11 +112,16 @@ class OrderForm extends React.Component {
   static getDerivedStateFromProps(nextProps, prevState) {
     const { activeMarket } = nextProps
     const {
-      marketDirty, currentMarket,
+      marketDirty, currentMarket, currentLayout, validationErrors,
     } = prevState
 
+    // reset errors when switched back to orders list view
+    const nextValidationErrors = _isNil(currentLayout?.label) ? {} : validationErrors
+
     if (marketDirty || (activeMarket === currentMarket)) {
-      return {}
+      return {
+        validationErrors: nextValidationErrors,
+      }
     }
 
     const algoOrders = OrderForm.getAOs()
@@ -126,6 +132,7 @@ class OrderForm extends React.Component {
       context: activeMarket.contexts[0],
       fieldData: {},
       currentLayout: null,
+      validationErrors: nextValidationErrors,
     }
   }
 
@@ -407,7 +414,8 @@ class OrderForm extends React.Component {
     const apiClientConnected = apiClientState === 2
     const apiClientConnecting = apiClientState === 1
     const apiClientConfigured = apiCredentials?.configured && apiCredentials?.valid
-    const showOrderform = apiClientConfigured || !isElectronApp
+    const isConnectedWithValidAPI = apiClientConnected && apiClientConfigured
+    const showOrderform = isConnectedWithValidAPI || !isElectronApp
     const renderData = marketToQuoteBase(currentMarket)
     const atomicOrderTypes = []
     const algoOrderTypes = []
@@ -458,7 +466,7 @@ class OrderForm extends React.Component {
         >
           <div key='orderform-wrapper' className='hfui-orderform__wrapper'>
             {isElectronApp && [
-              !apiClientConnected && !apiClientConfigured && !configureModalOpen && (
+              !isConnectedWithValidAPI && !configureModalOpen && (
                 <UnconfiguredModal
                   key='unconfigured'
                   onClick={this.onToggleConfigureModal}
@@ -467,7 +475,7 @@ class OrderForm extends React.Component {
                 />
               ),
 
-              !apiClientConnected && !apiClientConfigured && configureModalOpen && (
+              !isConnectedWithValidAPI && configureModalOpen && (
                 <SubmitAPIKeysModal
                   key='submit-api-keys'
                   onClose={this.onToggleConfigureModal}

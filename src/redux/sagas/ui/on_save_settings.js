@@ -18,5 +18,6 @@ export default function* onSaveSettings(action = {}) {
     settings.ga,
     settings.showAlgoPauseInfo,
     settings.showOnlyFavoritePairs,
+    settings.rebootAutomatically,
   ]))
 }

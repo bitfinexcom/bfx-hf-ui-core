@@ -11,7 +11,7 @@ import {
   updateAutoLoginState,
 } from '../../util/autologin'
 import {
-  SETTINGS, getDMSSetting, getGASetting, getShowAlgoPauseInfoSetting,
+  SETTINGS, getDMSSetting, getGASetting, getShowAlgoPauseInfoSetting, getRebootSetting,
 } from '../../redux/selectors/ui'
 
 const INITIAL_AUTO_LOGIN = getAutoLoginState()
@@ -21,10 +21,12 @@ const General = () => {
   const settingsDms = useSelector(getDMSSetting)
   const settingsGa = useSelector(getGASetting)
   const settingsShowAlgoPauseInfo = useSelector(getShowAlgoPauseInfoSetting)
+  const settingsRebootAutomatically = useSelector(getRebootSetting)
 
   const [isAutoLoginChecked, setIsAutoLoginChecked] = useState(INITIAL_AUTO_LOGIN)
   const [isDmsChecked, setIsDmsChecked] = useState(settingsDms)
   const [isGaChecked, setIsGaChecked] = useState(settingsGa)
+  const [isRebootChecked, setIsRebootChecked] = useState(settingsRebootAutomatically)
   const [isShowAlgoPauseInfoChecked, setIsShowAlgoPauseInfoChecked] = useState(settingsShowAlgoPauseInfo)
 
   useEffect(() => {
@@ -55,6 +57,12 @@ const General = () => {
   const updateAOPause = (nextAOPause) => {
     setIsShowAlgoPauseInfoChecked(nextAOPause)
     dispatch(WSActions.saveSettings(SETTINGS.SHOW_ALGO_PAUSE_INFO, nextAOPause))
+    dispatch(GAActions.updateSettings())
+  }
+
+  const updateReboot = (nextReboot) => {
+    setIsRebootChecked(nextReboot)
+    dispatch(WSActions.saveSettings(SETTINGS.REBOOT_AUTOMATICALLY, nextReboot))
     dispatch(GAActions.updateSettings())
   }
 
@@ -103,6 +111,17 @@ const General = () => {
         />
         <div className='appsettings-modal__description'>
           If checked, the modal with explanations will be displayed when you close the app with active Algo Orders.
+        </div>
+      </div>
+      <div className='appsettings-modal__setting'>
+        <Checkbox
+          onChange={updateReboot}
+          label='Reboot automatically on bad connection'
+          checked={isRebootChecked}
+          className='appsettings-modal__checkbox'
+        />
+        <div className='appsettings-modal__description'>
+          When you experience a poor internet connection, the modal window that notifies you of this will not be displayed and the app will restart automatically.
         </div>
       </div>
       {isDevEnv() && (

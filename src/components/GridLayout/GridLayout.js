@@ -76,6 +76,15 @@ const GridLayout = ({
   const currentLayouts = _get(layoutDef, 'layout', [])
   const onRemoveComponent = (i) => dispatch(removeComponent(i))
 
+  /* fix-start: initial grid rendering issue
+  * when screen is loaded the grids are arranged in stack of items instead of in a linear manner.
+  * https://github.com/react-grid-layout/react-grid-layout/issues/879
+  */
+  useEffect(() => {
+    setTimeout(() => { window.dispatchEvent(new Event('resize')) }, 500)
+  }, [])
+  /* fix-end: initial grid rendering issue */
+
   return (
     <div className='hfui-gridlayoutpage__wrapper'>
       <ReactGridLayout
