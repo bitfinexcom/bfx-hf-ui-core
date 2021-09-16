@@ -104,7 +104,7 @@ const AlgoParams = ({
                   {_map(selectedAOParams, (params) => (
                     <Item
                       key={params?.id || params?.name}
-                      isSelected={params.id === activeAOID}
+                      isSelected={params?.id === activeAOID}
                       onClick={() => onSelect(params)}
                     >
                       {makeShorterLongName(params.name, MAX_NAME_LENGTH)}
