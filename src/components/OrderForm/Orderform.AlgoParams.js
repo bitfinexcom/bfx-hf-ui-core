@@ -103,7 +103,7 @@ const AlgoParams = ({
                   <div className='hfui-orderform__ao-settings__separator' />
                   {_map(selectedAOParams, (params) => (
                     <Item
-                      key={params.id || params.name}
+                      key={params?.id || params?.name}
                       isSelected={params.id === activeAOID}
                       onClick={() => onSelect(params)}
                     >
