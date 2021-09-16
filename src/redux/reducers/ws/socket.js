@@ -57,7 +57,7 @@ export default function (state = initialState(), action = {}) {
         [alias]: {
           ...state[alias],
           status: 'offline',
-          lastActivity: null,
+          lastActivity,
         },
       }
     }

@@ -11,10 +11,16 @@ const URLS = {
   [WSTypes.ALIAS_API_SERVER]: process.env.REACT_APP_WSS_URL,
   [WSTypes.ALIAS_DATA_SERVER]: process.env.REACT_APP_DS_URL,
 }
-const CHECK_CONNECTION_EVERY_MS = 10 * 1000
+const CHECK_CONNECTION_EVERY_MS = 10 * 1000 // 10 sec
+const CHECK_CONNECTION_INITIAL_DELAY = 8 * 1000 // 8 sec
 const debug = Debug('hfui:rx:s:ws-hfui:worker-connection')
 
 export default function* () {
+  // on app start, wait for port to open before attempting api/ds ws connection
+  if (isElectronApp) {
+    yield delay(CHECK_CONNECTION_INITIAL_DELAY)
+  }
+
   while (true) {
     const sockets = yield select(getSockets)
     const keys = Object.keys(sockets)
