@@ -4,6 +4,9 @@ import PropTypes from 'prop-types'
 import _isEmpty from 'lodash/isEmpty'
 
 const HF_MONACO_THEME = 'HFTheme'
+const monacoOptions = {
+  automaticLayout: true,
+}
 
 const MonacoEditor = ({ value, onChange }) => {
   useEffect(() => {
@@ -29,6 +32,7 @@ const MonacoEditor = ({ value, onChange }) => {
       theme={HF_MONACO_THEME}
       value={value}
       onChange={onChange}
+      options={monacoOptions}
     />
   )
 }

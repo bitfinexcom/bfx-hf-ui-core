@@ -74,7 +74,6 @@
     "workbox-webpack-plugin": "^5.0.0"
   },
   "dependencies": {
-    "@monaco-editor/react": "^4.2.2",
     "@projectstorm/react-diagrams": "^5.3.2",
     "@ufx-ui/bfx-containers": "0.10.9",
     "@ufx-ui/core": "0.10.8",
