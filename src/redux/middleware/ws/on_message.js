@@ -135,6 +135,9 @@ export default (alias, store) => (e = {}) => {
 
       case 'error': {
         const [, message, i18n] = payload
+        if (i18n) {
+          i18n.key = `notifications.${i18n.key}`
+        }
         store.dispatch(WSActions.recvNotification({
           status: 'error',
           text: message,
@@ -147,13 +150,17 @@ export default (alias, store) => (e = {}) => {
 
       case 'notify': {
         const [, status, message, i18n] = payload
-        store.dispatch(WSActions.recvNotification({
+        if (i18n) {
+          i18n.key = `notifications.${i18n.key}`
+        }
+        const notificationObject = {
           status,
           text: message,
           mts: Date.now(),
           cid: v4(),
           i18n,
-        }))
+        }
+        store.dispatch(WSActions.recvNotification(notificationObject))
         break
       }
 
@@ -249,6 +256,7 @@ export default (alias, store) => (e = {}) => {
 
       case 'data.ao': {
         const [, , ao] = payload
+        console.log(ao, 'ao');
         store.dispatch(WSActions.recvDataAlgoOrder({ ao }))
         break
       }
