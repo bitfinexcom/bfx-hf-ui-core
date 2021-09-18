@@ -4,10 +4,8 @@ import _reduce from 'lodash/reduce'
 import types from '../../constants/ws'
 import marketTypes from '../../constants/market'
 
-const EMPTY_OBJ = {}
-
 const getInitialState = () => {
-  return EMPTY_OBJ
+  return {}
 }
 
 export default (state = getInitialState(), action = {}) => {
@@ -15,12 +13,12 @@ export default (state = getInitialState(), action = {}) => {
 
   switch (type) {
     case types.DATA_MARKETS: {
-      const { markets = EMPTY_OBJ } = payload
+      const { markets = {} } = payload
 
       return _reduce(markets, (acc, market) => {
         acc[market.wsID] = market
         return acc
-      }, EMPTY_OBJ)
+      }, {})
     }
 
     case marketTypes.SET_CCY_FULL_NAMES: {
@@ -60,7 +58,7 @@ export default (state = getInitialState(), action = {}) => {
         acc[key] = newMarketObject
 
         return acc
-      }, EMPTY_OBJ)
+      }, {})
       return newState
     }
     case marketTypes.SET_PERPS_NAMES: {
@@ -82,7 +80,7 @@ export default (state = getInitialState(), action = {}) => {
           acc[key] = { ...market, uiID: perpID, isPerp: true }
         }
         return acc
-      }, EMPTY_OBJ)
+      }, {})
       return newState
     }
 
