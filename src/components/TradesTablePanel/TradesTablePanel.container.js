@@ -1,5 +1,6 @@
 import { connect } from 'react-redux'
 
+import { reduxSelectors } from '@ufx-ui/bfx-containers'
 import UIActions from '../../redux/actions/ui'
 import { getMarkets } from '../../redux/selectors/meta'
 import { getAuthToken } from '../../redux/selectors/ws'
@@ -15,6 +16,7 @@ const mapStateToProps = (state = {}, { layoutID, layoutI: id } = {}) => ({
   authToken: getAuthToken(state),
   activeMarket: getActiveMarket(state),
   savedState: getComponentState(state, layoutID, 'trades', id),
+  getCurrencySymbol: reduxSelectors.getCurrencySymbolMemo(state),
 })
 
 const mapDispatchToProps = dispatch => ({
