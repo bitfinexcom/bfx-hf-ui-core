@@ -4,7 +4,7 @@ import React from 'react'
 import { TICKERLIST_KEYS, TICKER_KEYS } from '@ufx-ui/core'
 import CCYIcon from './CCYIcon'
 
-export const tickerDataMapping = {
+export const getTickerDataMapping = (getCurrencySymbol) => ({
   [TICKER_KEYS.BASE_CCY]: {
     renderer: ({ baseCcy, quoteCcy, data }) => {
       const { isPerp, perpUI } = data
@@ -12,15 +12,15 @@ export const tickerDataMapping = {
       return (
         isPerp ? <div className='highlight'>{perpUI}</div> : (
           <>
-            <div className='highlight'>{baseCcy}</div>
+            <div className='highlight'>{getCurrencySymbol(baseCcy)}</div>
             /
-            <div className='quote-ccy'>{quoteCcy}</div>
+            <div className='quote-ccy'>{getCurrencySymbol(quoteCcy)}</div>
           </>
         )
       )
     },
   },
-}
+})
 
 export const rowMapping = {
   [TICKERLIST_KEYS.BASE_CCY]: {

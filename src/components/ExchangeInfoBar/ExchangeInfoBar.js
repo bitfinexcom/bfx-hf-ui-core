@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useMemo } from 'react'
 import PropTypes from 'prop-types'
 import { VOLUME_UNIT, VOLUME_UNIT_PAPER } from '@ufx-ui/bfx-containers'
 import { TickerList, Ticker } from '@ufx-ui/core'
@@ -6,7 +6,7 @@ import _find from 'lodash/find'
 
 import Panel from '../../ui/Panel'
 import useSize from '../../hooks/useSize'
-import { tickerDataMapping, rowMapping } from './ExchangeInforBar.constants'
+import { getTickerDataMapping, rowMapping } from './ExchangeInforBar.constants'
 
 import './style.css'
 import { MAIN_MODE } from '../../redux/reducers/ui'
@@ -29,6 +29,7 @@ const ExchangeInfoBar = ({
   updateShowOnlyFavoritePairs,
   showCcyIconModal,
   isCcyArticleAvailbale,
+  getCurrencySymbol,
 }) => {
   const [tickerRef, size] = useSize()
 
@@ -37,7 +38,7 @@ const ExchangeInfoBar = ({
     const arrayWithFavorites = arrayWithPairs.filter(pair => object[pair])
     updateFavorites(authToken, arrayWithFavorites, currentMode)
   }
-  const onChangeMarketHandler = ({ rowData: { id } }) => {
+  const onChangeMarketHandler = ({ rowData: { id } } = {}) => {
     const newMarket = _find(markets, market => market.uiID === id)
     if (!newMarket) {
       return
@@ -58,6 +59,8 @@ const ExchangeInfoBar = ({
     uiID,
     isPerp,
   } = activeMarket
+
+  const tickerMapping = useMemo(() => getTickerDataMapping(getCurrencySymbol), [getCurrencySymbol])
 
   return (
     <Panel
@@ -85,7 +88,7 @@ const ExchangeInfoBar = ({
               isPerp,
               perpUI: isPerp ? uiID : null,
             }}
-            dataMapping={tickerDataMapping}
+            dataMapping={tickerMapping}
             className='hfui-exchangeinfobar__ticker'
             volumeUnit={tickersVolumeUnit !== 'SELF' ? tickersVolumeUnit : quote}
             ccyIcon={<CCYIcon ccy={base} />}
@@ -147,6 +150,7 @@ ExchangeInfoBar.propTypes = {
   updateShowOnlyFavoritePairs: PropTypes.func.isRequired,
   showCcyIconModal: PropTypes.func.isRequired,
   isCcyArticleAvailbale: PropTypes.bool,
+  getCurrencySymbol: PropTypes.func.isRequired,
 }
 
 ExchangeInfoBar.defaultProps = {
