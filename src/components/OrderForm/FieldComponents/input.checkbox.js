@@ -9,18 +9,20 @@ import { renderString } from './fields.helpers'
 const CheckboxInput = memo(({
   id, value, def: { label, customHelp } = {}, onChange, disabled, renderData,
 }) => (
-  <Tooltip content={customHelp} className='__react-tooltip __react_component_tooltip'>
-    <div className={ClassNames('hfui-orderform__input inline', { disabled })}>
-      <Checkbox
-        id={id}
-        checked={!!value}
-        onChange={onChange}
-        disabled={disabled}
-        label={_toUpper(renderString(label, renderData))}
-        className='hfui-help-checkbox'
-      />
-    </div>
-  </Tooltip>
+  <div className={ClassNames('hfui-orderform__input inline', { disabled })}>
+    <Checkbox
+      id={id}
+      checked={!!value}
+      onChange={onChange}
+      disabled={disabled}
+      className='hfui-help-checkbox'
+      label={(
+        <Tooltip content={customHelp} className='__react-tooltip __react_component_tooltip'>
+          {_toUpper(renderString(label, renderData))}
+        </Tooltip>
+      )}
+    />
+  </div>
 ))
 
 CheckboxInput.DEFAULT_VALUE = false
