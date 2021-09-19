@@ -38,8 +38,8 @@ const ExchangeInfoBar = ({
     const arrayWithFavorites = arrayWithPairs.filter(pair => object[pair])
     updateFavorites(authToken, arrayWithFavorites, currentMode)
   }
-  const onChangeMarketHandler = ({ rowData: { id } } = {}) => {
-    const newMarket = _find(markets, market => market.uiID === id)
+  const onChangeMarketHandler = ({ rowData } = {}) => {
+    const newMarket = _find(markets, market => market.uiID === rowData?.uiID)
     if (!newMarket) {
       return
     }

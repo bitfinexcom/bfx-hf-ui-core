@@ -20,6 +20,7 @@ const getTickersInfo = createSelector([getTickers, getMarkets, getCurrencySymbol
     const id = getPairFromMarket(market, getCurrencySymbol)
     const newTickerObject = {
       id,
+      uiID,
       baseCcy: base,
       quoteCcy: quote,
       changePerc: _get(tickers, `${wsID}.changePerc`, 0),
