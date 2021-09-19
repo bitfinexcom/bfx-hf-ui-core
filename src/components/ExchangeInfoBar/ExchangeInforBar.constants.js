@@ -25,31 +25,17 @@ export const tickerDataMapping = {
 export const rowMapping = {
   [TICKERLIST_KEYS.BASE_CCY]: {
     renderer: (
-      { rowData },
+      { rowData = {} },
     ) => {
       const {
-        baseCcy, quoteCcy, isPerp, perpUI,
+        baseCcy, isPerp, perpUI, id,
       } = rowData
 
       return (
-        <>
-          {isPerp ? (
-            <span className='ccy-pair'>
-              <CCYIcon small ccy={baseCcy} />
-              <span>{perpUI}</span>
-            </span>
-          ) : (
-            <span className='ccy-pair'>
-              <CCYIcon small ccy={baseCcy} />
-              <span>
-                {baseCcy}
-                /
-                {quoteCcy}
-              </span>
-            </span>
-          )}
-        </>
-
+        <span className='ccy-pair'>
+          <CCYIcon small ccy={baseCcy} />
+          <span>{isPerp ? perpUI : id}</span>
+        </span>
       )
     },
   },
