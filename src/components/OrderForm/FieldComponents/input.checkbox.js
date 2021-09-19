@@ -1,7 +1,7 @@
 import React, { memo } from 'react'
 import ClassNames from 'classnames'
 import PropTypes from 'prop-types'
-import { Checkbox } from '@ufx-ui/core'
+import { Checkbox, Tooltip } from '@ufx-ui/core'
 import _toUpper from 'lodash/toUpper'
 
 import { renderString } from './fields.helpers'
@@ -9,17 +9,18 @@ import { renderString } from './fields.helpers'
 const CheckboxInput = memo(({
   id, value, def: { label, customHelp } = {}, onChange, disabled, renderData,
 }) => (
-  <div className={ClassNames('hfui-orderform__input inline', { disabled })}>
-    <Checkbox
-      id={id}
-      checked={!!value}
-      onChange={onChange}
-      disabled={disabled}
-      helpMessage={customHelp}
-      helpMessageClassName='__react-tooltip __react_component_tooltip'
-      label={_toUpper(renderString(label, renderData))}
-    />
-  </div>
+  <Tooltip content={customHelp} className='__react-tooltip __react_component_tooltip'>
+    <div className={ClassNames('hfui-orderform__input inline', { disabled })}>
+      <Checkbox
+        id={id}
+        checked={!!value}
+        onChange={onChange}
+        disabled={disabled}
+        label={_toUpper(renderString(label, renderData))}
+        className='hfui-help-checkbox'
+      />
+    </div>
+  </Tooltip>
 ))
 
 CheckboxInput.DEFAULT_VALUE = false
