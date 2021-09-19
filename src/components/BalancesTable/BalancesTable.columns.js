@@ -11,7 +11,7 @@ const STYLES = {
   available: { justifyContent: 'flex-end' },
 }
 
-export default () => [{
+export default (getCurrencySymbol) => [{
   label: 'Context',
   dataKey: 'context',
   width: 120,
@@ -22,7 +22,7 @@ export default () => [{
   dataKey: 'currency',
   width: 100,
   flexGrow: 1,
-  cellRenderer: ({ rowData = {} }) => defaultCellRenderer(rowData.currency),
+  cellRenderer: ({ rowData = {} }) => defaultCellRenderer(getCurrencySymbol(rowData?.currency)),
 }, {
   label: 'Total',
   dataKey: 'balance',
