@@ -18,6 +18,7 @@ import PanelSettings from '../../ui/PanelSettings'
 import Panel from '../../ui/Panel'
 
 import './style.css'
+import { getPairFromMarket } from '../../util/market'
 
 const { WSSubscribeChannel, WSUnsubscribeChannel } = reduxActions
 const { SUBSCRIPTION_CONFIG } = reduxConstants
@@ -36,7 +37,7 @@ const OrderBookPanel = (props) => {
   const {
     onRemove, showMarket, canChangeStacked, moveable,
     removeable, dark, savedState, activeMarket,
-    markets, canChangeMarket, layoutID, layoutI, updateState, isTradingTerminal, allMarketBooks,
+    markets, canChangeMarket, layoutID, layoutI, updateState, isTradingTerminal, allMarketBooks, getCurrencySymbol,
   } = props
   const {
     sumAmounts = true,
@@ -45,6 +46,7 @@ const OrderBookPanel = (props) => {
   } = savedState
   const bookMarket = isTradingTerminal ? activeMarket : currentMarket
   const { base, quote } = bookMarket
+  const currentPair = getPairFromMarket(activeMarket, getCurrencySymbol)
 
   const [settingsOpen, setSettingsOpen] = useState(false)
 
@@ -145,7 +147,7 @@ const OrderBookPanel = (props) => {
       secondaryHeaderComponents={
         showMarket && canChangeMarket && renderMarketDropdown()
       }
-      headerComponents={showMarket && !canChangeMarket && <p>{activeMarket.uiID}</p>}
+      headerComponents={showMarket && !canChangeMarket && <p>{currentPair}</p>}
       settingsOpen={settingsOpen}
       onToggleSettings={onToggleSettings}
       className='hfui-book__wrapper'
@@ -212,6 +214,7 @@ OrderBookPanel.propTypes = {
   updateState: PropTypes.func.isRequired,
   isTradingTerminal: PropTypes.bool,
   allMarketBooks: PropTypes.arrayOf(PropTypes.object),
+  getCurrencySymbol: PropTypes.func.isRequired,
 }
 
 OrderBookPanel.defaultProps = {
