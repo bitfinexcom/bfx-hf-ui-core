@@ -17,9 +17,17 @@ function Layout({ children, ...props }) {
 }
 
 // eslint-disable-next-line react/prop-types
-Layout.Header = function Header({ children, buttons, ...props }) {
+Layout.Header = function Header({
+  // eslint-disable-next-line react/prop-types
+  children, buttons, style: styleProp, ...props
+}) {
+  const style = {
+    minWidth: MIN_SAFE_WIDTH,
+    ...styleProp,
+  }
+
   return (
-    <header className='layout__header' {...props}>
+    <header className='layout__header' style={style} {...props}>
       <Navbar />
       {children}
     </header>
