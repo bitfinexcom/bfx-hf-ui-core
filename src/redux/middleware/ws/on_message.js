@@ -256,7 +256,7 @@ export default (alias, store) => (e = {}) => {
 
       case 'data.ao': {
         const [, , ao] = payload
-        console.log(ao, 'ao');
+        console.log(ao, 'ao')
         store.dispatch(WSActions.recvDataAlgoOrder({ ao }))
         break
       }
