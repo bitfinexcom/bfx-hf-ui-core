@@ -377,7 +377,7 @@ class OrderForm extends React.Component {
 
     const apiClientConnected = apiClientState === 2
     const apiClientConnecting = apiClientState === 1
-    const apiClientConfigured = apiCredentials?.configured && apiCredentials?.valid && apiCredentials?.sufficientPermissions
+    const apiClientConfigured = apiCredentials?.configured && apiCredentials?.valid
     const isConnectedWithValidAPI = apiClientConnected && apiClientConfigured
     const showOrderform = isConnectedWithValidAPI || !isElectronApp
     const renderData = marketToQuoteBase(currentMarket)
