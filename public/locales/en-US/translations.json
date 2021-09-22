@@ -4,7 +4,9 @@
     "production": "Production",
     "trading": "Trading Terminal",
     "market": "Market Data",
-    "strategyEditor": "Strategy Editor"
+    "strategyEditor": "Strategy Editor",
+    "startingUp": "Starting up app...",
+    "craftedBy": "Crafted by Bitfinex"
   },
   "auth": {
     "enterPsw": "Enter your password to unlock",
