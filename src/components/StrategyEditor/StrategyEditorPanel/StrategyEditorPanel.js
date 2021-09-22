@@ -87,7 +87,7 @@ const StrategyEditorPanel = ({
                 disabled={!id}
                 label={[
                   <i key='icon' className='icon-delete1' />,
-                  <p key='text'>{t('ui.removeBtns')}</p>,
+                  <p key='text'>{t('ui.removeBtn')}</p>,
                 ]}
               />
             )}
