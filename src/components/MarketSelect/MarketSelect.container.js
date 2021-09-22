@@ -1,4 +1,5 @@
 import { connect } from 'react-redux'
+import { reduxSelectors } from '@ufx-ui/bfx-containers'
 
 import WSActions from '../../redux/actions/ws'
 import { getAuthToken, getFavoritePairs } from '../../redux/selectors/ws'
@@ -9,6 +10,7 @@ const mapStateToProps = state => ({
   favoritePairs: getFavoritePairs(state),
   authToken: getAuthToken(state),
   currentMode: getCurrentMode(state),
+  getCurrencySymbol: reduxSelectors.getCurrencySymbolMemo(state),
 })
 
 const mapDispatchToProps = dispatch => ({

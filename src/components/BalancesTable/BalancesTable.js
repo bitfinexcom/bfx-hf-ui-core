@@ -1,9 +1,13 @@
 import React, { memo } from 'react'
+import { useSelector } from 'react-redux'
 import PropTypes from 'prop-types'
 import _isEmpty from 'lodash/isEmpty'
 import { VirtualTable } from '@ufx-ui/core'
+import { reduxSelectors } from '@ufx-ui/bfx-containers'
 
 import BalancesTableColumns from './BalancesTable.columns'
+
+const { getCurrencySymbolMemo } = reduxSelectors
 
 // balance < 0.000000004 will be rounded and shown as 0.00000000, so hide at this threshold
 const DUST_THRESHOLD = 0.000000004
@@ -16,6 +20,8 @@ const BalancesTable = ({
     ? data.filter(b => +b.balance > DUST_THRESHOLD)
     : data
 
+  const getCurrencySymbol = useSelector(getCurrencySymbolMemo)
+
   if (_isEmpty(filtered)) {
     return (
       <p className='empty'>No balances available</p>
@@ -25,7 +31,7 @@ const BalancesTable = ({
   return (
     <VirtualTable
       data={filtered}
-      columns={BalancesTableColumns()}
+      columns={BalancesTableColumns(getCurrencySymbol)}
       defaultSortBy='context'
       defaultSortDirection='ASC'
     />
