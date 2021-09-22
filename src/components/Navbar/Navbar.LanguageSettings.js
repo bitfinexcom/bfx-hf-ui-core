@@ -5,7 +5,7 @@ import _map from 'lodash/map'
 import { useTranslation } from 'react-i18next'
 import { useDispatch, useSelector } from 'react-redux'
 import Dropdown from '../../ui/Dropdown'
-import { LANGUAGE_NAMES } from '../../locales/i18n'
+import { LANGUAGES, LANGUAGE_NAMES } from '../../locales/i18n'
 import UIActions from '../../redux/actions/ui'
 import { getCurrentLanguage } from '../../redux/selectors/ui'
 
@@ -18,7 +18,8 @@ const LanguageSettings = () => {
   const dispatch = useDispatch()
 
   const changeLanguageHandler = (lang) => {
-    i18n.changeLanguage(lang)
+    i18n.changeLanguage(LANGUAGES[lang])
+
     dispatch(UIActions.setLanguage(lang))
   }
   return (
