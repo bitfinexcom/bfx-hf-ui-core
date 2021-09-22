@@ -13,7 +13,7 @@ const TimeFrameDropdown = ({ tf, onChange }) => {
       value: time,
       label: t(`time.${time}`),
     }))
-  }, [])
+  }, [t])
 
   return (
     <div className='hfui-backtester__executionform'>
