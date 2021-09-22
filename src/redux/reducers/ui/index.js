@@ -9,6 +9,7 @@ import _reduce from 'lodash/reduce'
 import _entries from 'lodash/entries'
 import _values from 'lodash/values'
 import _some from 'lodash/some'
+import _keys from 'lodash/keys'
 import _isUndefined from 'lodash/isUndefined'
 import { nonce } from 'bfx-api-node-util'
 import { VOLUME_UNIT, VOLUME_UNIT_PAPER } from '@ufx-ui/bfx-containers'
@@ -31,6 +32,7 @@ import {
 import { isElectronApp } from '../../config'
 
 import { storeLastUsedLayoutID } from '../../../util/layout'
+import { LANGUAGES } from '../../../locales/i18n'
 
 const debug = Debug('hfui:rx:r:ui')
 const LAYOUTS_KEY = 'HF_UI_LAYOUTS'
@@ -86,6 +88,8 @@ function getInitialState() {
   const layoutsJSON = localStorage.getItem(LAYOUTS_KEY)
   const layoutsComponentStateJSON = localStorage.getItem(LAYOUTS_STATE_KEY)
   const prevLanguage = localStorage.getItem(LANGUAGE)
+  const parsedLocale = prevLanguage.replace('_', '-')
+  const lang = _keys(LANGUAGES).find(key => LANGUAGES[key] === parsedLocale)
 
   try {
     const storedLayouts = JSON.parse(layoutsJSON)
@@ -157,7 +161,7 @@ function getInitialState() {
   }
 
   defaultState.isPaperTrading = isPaperTrading
-  defaultState.language = prevLanguage
+  defaultState.language = lang
 
   return defaultState
 }
