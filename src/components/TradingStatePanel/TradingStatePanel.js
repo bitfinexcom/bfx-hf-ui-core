@@ -25,8 +25,6 @@ const TradingStatePanel = ({
       dark={dark}
       darkHeader={dark}
       className='hfui-tradingstatepanel__wrapper'
-      moveable={false}
-      removeable={false}
       extraIcons={[_isEmpty(activeFilter) ? (
         <MarketSelect
           key='filter-market'
@@ -48,39 +46,35 @@ const TradingStatePanel = ({
           </p>
         </div>
       )]}
+      onRemove={onRemove}
+      moveable={moveable}
+      removeable={removeable}
     >
-      <Panel
-        onRemove={onRemove}
-        moveable={moveable}
-        removeable={removeable}
-        darkHeader
-      >
-        <PositionsTable
-          renderedInTradingState
-          htmlKey='Positions'
-          tabtitle={<TabTitle heading='Positions' count={positionsCount} />}
-          activeFilter={activeFilter}
-        />
-        <AtomicOrdersTable
-          renderedInTradingState
-          htmlKey='Atomics'
-          tabtitle={<TabTitle heading='Atomics' count={atomicOrdersCount} />}
-          activeFilter={activeFilter}
-        />
-        <AlgoOrdersTable
-          renderedInTradingState
-          htmlKey='Algos'
-          tabtitle={<TabTitle heading='Algos' count={algoOrdersCount} />}
-          activeFilter={activeFilter}
-        />
-        <BalancesTable
-          renderedInTradingState
-          htmlKey='Balances'
-          tabtitle='Balances'
-          hideZeroBalances
-          activeFilter={activeFilter}
-        />
-      </Panel>
+      <PositionsTable
+        renderedInTradingState
+        htmlKey='Positions'
+        tabtitle={<TabTitle heading='Positions' count={positionsCount} />}
+        activeFilter={activeFilter}
+      />
+      <AtomicOrdersTable
+        renderedInTradingState
+        htmlKey='Atomics'
+        tabtitle={<TabTitle heading='Atomics' count={atomicOrdersCount} />}
+        activeFilter={activeFilter}
+      />
+      <AlgoOrdersTable
+        renderedInTradingState
+        htmlKey='Algos'
+        tabtitle={<TabTitle heading='Algos' count={algoOrdersCount} />}
+        activeFilter={activeFilter}
+      />
+      <BalancesTable
+        renderedInTradingState
+        htmlKey='Balances'
+        tabtitle='Balances'
+        hideZeroBalances
+        activeFilter={activeFilter}
+      />
     </Panel>
   )
 }
