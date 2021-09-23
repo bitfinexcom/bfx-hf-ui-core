@@ -10,6 +10,7 @@ import WSTypes from '../../constants/ws'
 const URLS = {
   [WSTypes.ALIAS_API_SERVER]: process.env.REACT_APP_WSS_URL,
   [WSTypes.ALIAS_DATA_SERVER]: process.env.REACT_APP_DS_URL,
+  [WSTypes.ALIAS_PUB_WS_API]: process.env.REACT_APP_UFX_WSS_URL,
 }
 const CHECK_CONNECTION_EVERY_MS = 10 * 1000 // 10 sec
 const CHECK_CONNECTION_INITIAL_DELAY = 8 * 1000 // 8 sec
@@ -28,7 +29,7 @@ export default function* () {
     for (let i = 0; i < keys.length; ++i) {
       const socket = keys[i]
 
-      if (!isElectronApp && socket === WSTypes.ALIAS_DATA_SERVER) {
+      if (!isElectronApp && (socket === WSTypes.ALIAS_DATA_SERVER || socket === WSTypes.ALIAS_PUB_WS_API)) {
         // eslint-disable-next-line no-continue
         continue
       }
