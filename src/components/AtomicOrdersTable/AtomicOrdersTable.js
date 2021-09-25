@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import _isEmpty from 'lodash/isEmpty'
 import { VirtualTable } from '@ufx-ui/core'
+import { useTranslation } from 'react-i18next'
 
 import useSize from '../../hooks/useSize'
 import AtomicOrdersTableColumns from './AtomicOrdersTable.columns'
@@ -12,15 +13,16 @@ const AtomicOrdersTable = ({
 }) => {
   const [ref, size] = useSize()
   const data = renderedInTradingState ? filteredAtomicOrders : atomicOrders
+  const { t } = useTranslation()
 
   return (
     <div ref={ref} className='hfui-orderstable__wrapper'>
       {_isEmpty(data) ? (
-        <p className='empty'>No active atomic orders</p>
+        <p className='empty'>{t('atomicOrdersTableModal.noOrders')}</p>
       ) : (
         <VirtualTable
           data={data}
-          columns={AtomicOrdersTableColumns(authToken, cancelOrder, gaCancelOrder, size)}
+          columns={AtomicOrdersTableColumns(authToken, cancelOrder, gaCancelOrder, size, t)}
           defaultSortBy='id'
           defaultSortDirection='ASC'
         />

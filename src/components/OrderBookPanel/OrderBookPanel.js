@@ -11,6 +11,7 @@ import {
   reduxConstants,
   reduxSelectors,
 } from '@ufx-ui/bfx-containers'
+import { useTranslation } from 'react-i18next'
 
 import MarketSelect from '../MarketSelect'
 import OrderBook from '../OrderBook'
@@ -64,6 +65,8 @@ const OrderBookPanel = (props) => {
   const tAsks = useSelector(state => getBooktAsks(state, symbol))
   const tBids = useSelector(state => getBooktBids(state, symbol))
   const isSubscribedToSymbol = useSelector(state => isSubscribedToBook(state, symbol))
+
+  const { t } = useTranslation()
 
   // resubscribe book channel on market change
   useEffect(() => {
@@ -138,7 +141,7 @@ const OrderBookPanel = (props) => {
 
   return (
     <Panel
-      label='Order Book'
+      label={t('orderBookModal.title')}
       dark={dark}
       darkHeader={dark}
       onRemove={handleOnRemove}
@@ -159,17 +162,17 @@ const OrderBookPanel = (props) => {
             <>
               <Checkbox
                 key='sum-amounts'
-                label='Sum Amounts'
+                label={t('orderBookModal.sumAmountsCheckbox')}
                 checked={sumAmounts}
                 onChange={onChangeSumAmounts}
               />
               {canChangeStacked && (
-              <Checkbox
-                key='stacked-view'
-                label='Stacked View'
-                checked={stackedView}
-                onChange={onChangeStackedView}
-              />
+                <Checkbox
+                  key='stacked-view'
+                  label={t('orderBookModal.stackedViewCheckbox')}
+                  checked={stackedView}
+                  onChange={onChangeStackedView}
+                />
               )}
             </>
           )}
@@ -187,7 +190,7 @@ const OrderBookPanel = (props) => {
           tAsks={tAsks}
           tBids={tBids}
           loading={!snapshotReceived}
-          // ufx-ui/book props end
+        // ufx-ui/book props end
         />
       )}
     </Panel>

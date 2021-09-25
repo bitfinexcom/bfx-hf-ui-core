@@ -1,7 +1,5 @@
 import timeFrames from './time_frames'
 
-const tfs = Object.values(timeFrames)
-
 const SUFFIX_WIDTHS = {
   m: 60 * 1000,
   h: 60 * 60 * 1000,
@@ -14,7 +12,7 @@ const SUFFIX_WIDTHS = {
 
 const CANDLE_WIDTHS = {}
 
-tfs.forEach((tf) => {
+timeFrames.forEach((tf) => {
   const suffix = tf.substring(tf.length - 1)
   const value = +tf.substring(0, tf.length - 1)
 

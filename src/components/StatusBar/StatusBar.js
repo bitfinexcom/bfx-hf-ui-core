@@ -1,6 +1,7 @@
 import React, { memo, useState, useEffect } from 'react'
 import ClassNames from 'classnames'
 import PropTypes from 'prop-types'
+import { useTranslation } from 'react-i18next'
 
 import { isElectronApp, appVersion } from '../../redux/config'
 
@@ -16,6 +17,8 @@ const StatusBar = ({
   const apiClientConnecting = !isWrongAPIKey && apiClientState === 1
   const apiClientDisconnected = isWrongAPIKey || !apiClientState
 
+  const { t } = useTranslation()
+
   useEffect(() => {
     if (wsInterrupted && !wsConnInterrupted) {
       setWsConnInterrupted(true)
@@ -29,7 +32,7 @@ const StatusBar = ({
           <p>
             {remoteVersion && remoteVersion !== appVersion && (
               <NavbarButton
-                label='Update to latest version'
+                label={t('statusbar.updateToLast')}
                 external='https://github.com/bitfinexcom/bfx-hf-ui/releases'
               />
             )}
@@ -63,7 +66,7 @@ const StatusBar = ({
           red: !wsConnected || wsConnInterrupted,
         })}
         />
-        <p>{(wsConnected && !wsConnInterrupted) ? 'WS Connected' : 'WS Disconnected'}</p>
+        <p>{`WS ${(wsConnected && !wsConnInterrupted) ? t('statusbar.connected') : t('statusbar.disconnected')}`}</p>
       </div>
     </div>
   )

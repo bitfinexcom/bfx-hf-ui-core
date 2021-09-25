@@ -19,6 +19,7 @@ export default function* ({ payload }) {
     status: 'success',
     text: 'Successfully connected to websocket server',
     cid: v4(),
+    i18n: { key: 'notifications.wsConnected' },
   }))
 
   if (!isElectronApp && payload.alias === WSTypes.ALIAS_API_SERVER) {

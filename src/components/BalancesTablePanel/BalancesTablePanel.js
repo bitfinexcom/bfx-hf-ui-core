@@ -2,6 +2,7 @@ import React, { useState, memo } from 'react'
 import PropTypes from 'prop-types'
 import _isEqual from 'lodash/isEqual'
 import { Checkbox } from '@ufx-ui/core'
+import { useTranslation } from 'react-i18next'
 
 import BalancesTable from '../BalancesTable'
 import Panel from '../../ui/Panel'
@@ -15,10 +16,12 @@ const BalancesTablePanel = ({ onRemove, dark }) => {
 
   const onToggleShowingSettings = () => setIsSettingsOpen(prevState => !prevState)
 
+  const { t } = useTranslation()
+
   // TODO: Extract settings panel/wrapper into own component
   return (
     <Panel
-      label='Balances'
+      label={t('balancesTableModal.title')}
       onRemove={onRemove}
       settingsOpen={isSettingsOpen}
       onToggleSettings={onToggleShowingSettings}
@@ -30,11 +33,11 @@ const BalancesTablePanel = ({ onRemove, dark }) => {
           onClose={onToggleShowingSettings}
           content={(
             <Checkbox
-              label='Hide Zero Balances'
+              label={t('balancesTableModal.hideZeroCheckbox')}
               checked={hideZeroBalances}
               onChange={setHideZeroBalances}
             />
-            )}
+          )}
         />
       ) : (
         <BalancesTable
@@ -51,7 +54,7 @@ BalancesTablePanel.propTypes = {
 }
 
 BalancesTablePanel.defaultProps = {
-  onRemove: () => {},
+  onRemove: () => { },
   dark: true,
 }
 

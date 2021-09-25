@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 import _isEmpty from 'lodash/isEmpty'
 
+import { useTranslation } from 'react-i18next'
 import Button from '../../ui/Button'
 import Input from '../../ui/Input'
 
@@ -17,10 +18,12 @@ const AuthenticationInitForm = ({ onInit }) => {
     && (password === confirmPassword)
   )
 
+  const { t } = useTranslation()
+
   return (
     <div className='hfui-authenticationpage__content'>
       <h2>Honey Framework UI</h2>
-      <p>Create a password to encrypt your API credentials &amp; strategies. All data is stored locally, and your password is hashed.</p>
+      <p>{t('auth.initMsg')}</p>
 
       <form className='hfui-authenticationpage__inner-form'>
         <Input
@@ -34,7 +37,7 @@ const AuthenticationInitForm = ({ onInit }) => {
         <Input
           type='password'
           autocomplete='new-password'
-          placeholder='Password'
+          placeholder={t('auth.password')}
           value={password}
           onChange={setPassword}
         />
@@ -42,7 +45,7 @@ const AuthenticationInitForm = ({ onInit }) => {
         <Input
           type='password'
           autocomplete='new-password'
-          placeholder='Confirm password'
+          placeholder={t('auth.confirmPsw')}
           value={confirmPassword}
           onChange={setConfirmPassword}
         />
@@ -50,7 +53,7 @@ const AuthenticationInitForm = ({ onInit }) => {
         <Button
           onClick={onSubmit}
           disabled={!submitReady}
-          label='Save Credentials'
+          label={t('auth.saveCredentsBtn')}
           green
         />
 

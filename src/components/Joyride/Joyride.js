@@ -1,8 +1,11 @@
 /* eslint-disable react/prop-types */
 import React from 'react'
+import { useTranslation } from 'react-i18next'
 import Joyride from 'react-joyride'
+import { getLocaleOptions } from './Joyride.helpers'
 
 export default function HoneyJoyride({ styles = {}, ...props }) {
+  const { t } = useTranslation()
   return (
     <Joyride
       continuous
@@ -20,6 +23,7 @@ export default function HoneyJoyride({ styles = {}, ...props }) {
           ...styles.options,
         },
       }}
+      locale={getLocaleOptions(t)}
       {...props}
     />
   )

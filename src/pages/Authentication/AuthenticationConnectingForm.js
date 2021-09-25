@@ -1,10 +1,14 @@
 import React from 'react'
+import { useTranslation } from 'react-i18next'
 
-const AuthenticationConnectingForm = () => (
-  <div className='hfui-authenticationpage__content'>
-    <h2>Honey Framework UI</h2>
-    <p>Starting up app...</p>
-  </div>
-)
+const AuthenticationConnectingForm = () => {
+  const { t } = useTranslation()
+  return (
+    <div className='hfui-authenticationpage__content'>
+      <h2>Honey Framework UI</h2>
+      <p>{t('main.startingUp')}</p>
+    </div>
+  )
+}
 
 export default AuthenticationConnectingForm

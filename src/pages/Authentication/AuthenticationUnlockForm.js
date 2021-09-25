@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
 import { Checkbox } from '@ufx-ui/core'
 import _isEmpty from 'lodash/isEmpty'
+import { useTranslation } from 'react-i18next'
 
 import Input from '../../ui/Input'
 import Button from '../../ui/Button'
@@ -17,17 +18,23 @@ import { MAIN_MODE, PAPER_MODE } from '../../redux/reducers/ui'
 
 const isDevEnv = devEnv()
 
-const MAIN_MODE_OPTION = { value: MAIN_MODE, label: 'Production' }
-const PAPER_MODE_OPTION = { value: PAPER_MODE, label: 'Paper Trading' }
-
-const OPTIONS = [MAIN_MODE_OPTION, PAPER_MODE_OPTION]
 const initialAutoLoginSave = getAutoLoginState()
+
+const getModes = (t) => {
+  const MAIN_MODE_OPTION = { value: MAIN_MODE, label: t('main.production') }
+  const PAPER_MODE_OPTION = { value: PAPER_MODE, label: t('main.paper') }
+  return [MAIN_MODE_OPTION, PAPER_MODE_OPTION]
+}
 
 const AuthenticationUnlockForm = ({ isPaperTrading, onUnlock: _onUnlock, onReset }) => {
   const [password, setPassword] = useState('')
   const [autoLoginState, setAutoLoginState] = useState(initialAutoLoginSave)
   const [mode, setMode] = useState(isPaperTrading ? PAPER_MODE : MAIN_MODE)
   const submitReady = !_isEmpty(password) && !_isEmpty(mode)
+
+  const { t } = useTranslation()
+
+  const OPTIONS = getModes(t)
 
   const onUnlock = () => {
     if (!submitReady) return
@@ -61,22 +68,22 @@ const AuthenticationUnlockForm = ({ isPaperTrading, onUnlock: _onUnlock, onReset
   return (
     <div className='hfui-authenticationpage__content'>
       <h2>Honey Framework UI</h2>
-      <p>Enter your password to unlock.</p>
+      <p>{t('auth.enterPsw')}</p>
 
       <form className='hfui-authenticationpage__inner-form' onSubmit={onFormSubmit}>
         <Input
           type='password'
           autocomplete='current-password'
-          placeholder='Password'
+          placeholder={t('auth.password')}
           value={password}
           onChange={setPassword}
         />
         <div className='hfui-authenticationpage__mode-select'>
-          <p>Select trading mode</p>
+          <p>{t('auth.selectMode')}</p>
 
           <Dropdown
             className='hfui-authenticationpage__trading-mode'
-            placeholder='Select trading mode...'
+            placeholder={t('auth.selectMode')}
             value={OPTIONS.find(o => o.value === mode)?.value}
             options={OPTIONS}
             onChange={(value) => setMode(value)}
@@ -85,7 +92,7 @@ const AuthenticationUnlockForm = ({ isPaperTrading, onUnlock: _onUnlock, onReset
         {isDevEnv && (
           <div className='hfui-authenticationpage__dev-mode'>
             <Checkbox
-              label='Auto-login in development mode'
+              label={t('appSettings.autologin')}
               checked={autoLoginState}
               onChange={setAutoLoginState}
             />
@@ -94,17 +101,17 @@ const AuthenticationUnlockForm = ({ isPaperTrading, onUnlock: _onUnlock, onReset
         <Button
           onClick={onUnlock}
           disabled={!submitReady}
-          label='Unlock'
+          label={t('auth.unlockBtn')}
           green
         />
       </form>
 
       <div className='hfui-authenticationpage__clear'>
-        <p>Alternatively, clear your credentials and stored data to set a new password.</p>
+        <p>{t('auth.resetMsg')}</p>
 
         <Button
           onClick={onReset}
-          label='Clear Data &amp; Reset'
+          label={t('auth.resetBtn')}
           red
         />
       </div>

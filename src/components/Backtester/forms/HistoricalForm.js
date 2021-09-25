@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Checkbox } from '@ufx-ui/core'
 import _find from 'lodash/find'
+import { withTranslation } from 'react-i18next'
 
 import Button from '../../../ui/Button'
 import Dropdown from '../../../ui/Dropdown'
@@ -16,7 +17,7 @@ const ONE_HOUR = ONE_MIN * 60
 const ONE_DAY = ONE_HOUR * 24
 const MAX_DATE = new Date()
 
-export default class HistoricalForm extends React.PureComponent {
+class HistoricalForm extends React.PureComponent {
   componentDidUpdate(prevProps) {
     const { formState: { candles: prevCandles, trades: prevTrades } } = prevProps
     const { formState: { candles, trades } } = this.props
@@ -98,6 +99,7 @@ export default class HistoricalForm extends React.PureComponent {
       markets,
       setFormState,
       updateExecutionType,
+      t,
     } = this.props
     const {
       trades,
@@ -114,11 +116,11 @@ export default class HistoricalForm extends React.PureComponent {
         <div className='hfui-backtester_row'>
           <div className='hfui-backtester__flex_start'>
             <Dropdown
-              value='Historical'
+              value={t('strategyEditor.historical')}
               disabled
               onChange={updateExecutionType}
               options={[{
-                label: 'Historical',
+                label: t('strategyEditor.historical'),
                 value: 'Historical',
               }]}
             />
@@ -147,7 +149,7 @@ export default class HistoricalForm extends React.PureComponent {
           <div className='hfui-backtester_dateInput hfui-backtester__flex_start'>
             <DateInput
               onChange={val => setFormState(() => ({ startDate: val }))}
-              def={{ label: 'Start Date' }}
+              def={{ label: t('strategyEditor.startDate') }}
               value={startDate}
               maxDate={MAX_DATE}
             />
@@ -155,7 +157,7 @@ export default class HistoricalForm extends React.PureComponent {
           <div className='hfui-backtester_dateInput hfui-backtester__flex_start'>
             <DateInput
               onChange={val => setFormState(() => ({ endDate: val }))}
-              def={{ label: 'End Date' }}
+              def={{ label: t('strategyEditor.endDate') }}
               value={endDate}
               maxDate={MAX_DATE}
             />
@@ -166,7 +168,7 @@ export default class HistoricalForm extends React.PureComponent {
               style={{ marginLeft: 5 }}
               className='hfui-backtester__flex_start hfui-backtester__start-button'
               disabled={disabled || emptyBtErr}
-              label='Start'
+              label={t('ui.startBtn')}
               green
             />
           </div>
@@ -174,27 +176,27 @@ export default class HistoricalForm extends React.PureComponent {
         <div className='hfui-backtester_row'>
           <div className='hfui-backtester_dateInput hfui-backtester__flex_start'>
             <Checkbox
-              label='Use candles'
+              label={t('strategyEditor.useCandlesCheckbox')}
               checked={candles}
               onChange={val => this.toggleCandles(val)}
             />
           </div>
           <div className='hfui-backtester_dateInput hfui-backtester__flex_start'>
             <Checkbox
-              label='Use trades'
+              label={t('strategyEditor.useTradesCheckbox')}
               checked={trades}
               onChange={val => this.toggleTrades(val)}
             />
           </div>
         </div>
         {emptyBtErr && (
-        <div className='hfui-backtester_row'>
-          <div className='hfui-backtester__flex_start'>
-            <div className='hfui-backtester__check-error' key='of-error'>
-              <p>At least one checkbox should be selected.</p>
+          <div className='hfui-backtester_row'>
+            <div className='hfui-backtester__flex_start'>
+              <div className='hfui-backtester__check-error' key='of-error'>
+                <p>{t('strategyEditor.checkboxWarningMessage')}</p>
+              </div>
             </div>
           </div>
-        </div>
         )}
       </div>
     )
@@ -212,6 +214,7 @@ HistoricalForm.propTypes = {
   setFormState: PropTypes.func.isRequired,
   backtestStrategy: PropTypes.func.isRequired,
   updateExecutionType: PropTypes.func.isRequired,
+  t: PropTypes.func.isRequired,
 }
 
 HistoricalForm.defaultProps = {
@@ -222,3 +225,5 @@ HistoricalForm.defaultProps = {
   markets: [],
   disabled: false,
 }
+
+export default withTranslation()(HistoricalForm)

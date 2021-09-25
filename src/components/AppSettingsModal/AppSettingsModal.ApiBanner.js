@@ -1,5 +1,6 @@
 import React, { memo } from 'react'
 import PropTypes from 'prop-types'
+import { useTranslation } from 'react-i18next'
 import { ReactComponent as CheckIcon } from './check.svg'
 import { ReactComponent as ErrorIcon } from './error.svg'
 import { ReactComponent as ClockIcon } from './clock.svg'
@@ -9,13 +10,14 @@ const ApiBanner = ({
   apiKeyState,
 }) => {
   const { configured, valid } = apiKeyState
+  const { t } = useTranslation()
 
   if (isUpdating) {
     return (
       <div className='appsettings-modal__api-configuration-message is-warning'>
         <ClockIcon />
         {' '}
-        Validating...
+        {t('appSettings.validating')}
       </div>
     )
   }
@@ -24,7 +26,7 @@ const ApiBanner = ({
       <div className='appsettings-modal__api-configuration-message is-error'>
         <ErrorIcon />
         {' '}
-        Not Configured
+        {t('appSettings.apiNotConfigured')}
       </div>
     )
   }
@@ -33,7 +35,7 @@ const ApiBanner = ({
       <div className='appsettings-modal__api-configuration-message is-error'>
         <ErrorIcon />
         {' '}
-        Invalid API Key entered
+        {t('appSettings.apiNotValid')}
       </div>
     )
   }
@@ -41,7 +43,7 @@ const ApiBanner = ({
     <div className='appsettings-modal__api-configuration-message is-success'>
       <CheckIcon />
       {' '}
-      Configured
+      {t('appSettings.configured')}
     </div>
   )
 }

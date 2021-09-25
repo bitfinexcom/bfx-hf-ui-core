@@ -1,19 +1,19 @@
-import React from 'react'
+import React, { useMemo } from 'react'
 import PropTypes from 'prop-types'
+import _map from 'lodash/map'
+import { useTranslation } from 'react-i18next'
 
 import Dropdown from '../../ui/Dropdown'
 import timeFrames from '../../util/time_frames'
 
 const TimeFrameDropdown = ({ tf, onChange }) => {
-  const options = []
-  const tfLabels = Object.keys(timeFrames)
-
-  for (let i = 0; i < tfLabels.length; ++i) {
-    options.push({
-      label: tfLabels[i],
-      value: timeFrames[tfLabels[i]],
-    })
-  }
+  const { t } = useTranslation()
+  const options = useMemo(() => {
+    return _map(timeFrames, (time) => ({
+      value: time,
+      label: t(`time.${time}`),
+    }))
+  }, [t])
 
   return (
     <div className='hfui-backtester__executionform'>

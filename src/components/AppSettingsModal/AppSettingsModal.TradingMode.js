@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Checkbox, Button, Intent } from '@ufx-ui/core'
+import { useTranslation } from 'react-i18next'
 
 import UIActions from '../../redux/actions/ui'
 import { getIsPaperTrading } from '../../redux/selectors/ui'
@@ -17,39 +18,40 @@ const TradingMode = ({ onClose }) => {
     // open change trading mode modal after this modal closes
     onClose(() => dispatch(UIActions.changeTradingModeModalState(true)))
   }
+  const { t } = useTranslation()
 
   return (
     <div>
       <div className='appsettings-modal__title'>
-        Trading Mode
+        {t('appSettings.tradingModeTab')}
       </div>
       <div className='appsettings-modal__setting'>
         <Checkbox
           onChange={() => setIsPaperTrading(!isPaperTrading)}
-          label='Production Trading'
+          label={t('appSettings.productionTradingCheckbox')}
           checked={!isPaperTrading}
           className='appsettings-modal__checkbox'
         />
         <div className='appsettings-modal__description'>
-          Live trading with real money.
+          {t('appSettings.productionTradingText')}
         </div>
       </div>
       <div className='appsettings-modal__setting'>
         <Checkbox
           onChange={() => setIsPaperTrading(!isPaperTrading)}
-          label='Paper Trading'
+          label={t('main.paper')}
           checked={isPaperTrading}
           className='appsettings-modal__checkbox'
         />
         <div className='appsettings-modal__description'>
-          Practice trading without risking real money.
+          {t('appSettings.paperTradingText')}
           <br />
           <a
             href='https://support.bitfinex.com/hc/en-us/articles/900001525006-Paper-Trading-test-learn-and-simulate-trading-strategies-'
             target='_blank'
             rel='noopener noreferrer'
           >
-            Learn More
+            {t('appSettings.learnMore')}
           </a>
         </div>
       </div>
@@ -59,7 +61,7 @@ const TradingMode = ({ onClose }) => {
         onClick={onSave}
         disabled={!isChanged}
       >
-        Save
+        {t('ui.save')}
       </Button>
     </div>
   )

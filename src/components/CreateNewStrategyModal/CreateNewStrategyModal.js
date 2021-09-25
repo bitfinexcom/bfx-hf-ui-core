@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import _isEmpty from 'lodash/isEmpty'
 import _size from 'lodash/size'
 import PropTypes from 'prop-types'
+import { useTranslation } from 'react-i18next'
 
 import Templates from '../StrategyEditor/templates'
 
@@ -20,16 +21,18 @@ const CreateNewStrategyModal = ({
   const [error, setError] = useState('')
   const [template, setTemplate] = useState('Blank')
 
+  const { t } = useTranslation()
+
   const onSubmitHandler = () => {
     const labelSize = _size(label)
 
     if (_isEmpty(label)) {
-      setError('Label is empty')
+      setError(t('strategyEditor.newStrategyModalEmptyError'))
       return
     }
 
     if (labelSize > MAX_LABEL_LENGTH) {
-      setError(`Strategy name is too long (${labelSize}/${MAX_LABEL_LENGTH} characters)`)
+      setError(t('strategyEditor.newStrategyModalLongError', { labelSize, MAX_LABEL_LENGTH }))
       return
     }
 
@@ -44,7 +47,7 @@ const CreateNewStrategyModal = ({
       isOpen={isOpen}
       onClose={onClose}
       className='hfui-createnewstrategymodal__wrapper'
-      label='Create a New Strategy'
+      label={t('strategyEditor.newStrategyModalTitle')}
     >
 
       <Input
@@ -57,19 +60,19 @@ const CreateNewStrategyModal = ({
       <Dropdown
         value={template}
         onChange={setTemplate}
-        options={Templates.map(t => ({
-          label: t.label,
-          value: t.label,
+        options={Templates.map(_t => ({
+          label: _t.label,
+          value: _t.label,
         }))}
       />
 
       {!_isEmpty(error) && (
-      <p className='error'>{error}</p>
+        <p className='error'>{error}</p>
       )}
 
       <Modal.Footer>
         <Modal.Button primary onClick={onSubmitHandler}>
-          Create
+          {t('ui.createBtn')}
         </Modal.Button>
       </Modal.Footer>
     </Modal>
@@ -84,7 +87,7 @@ CreateNewStrategyModal.propTypes = {
 }
 
 CreateNewStrategyModal.defaultProps = {
-  gaCreateStrategy: () => {},
+  gaCreateStrategy: () => { },
   isOpen: true,
 }
 

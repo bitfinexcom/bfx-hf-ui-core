@@ -1,6 +1,6 @@
 import { STATUS, ACTIONS, EVENTS } from 'react-joyride'
 import Joyride from './Joyride'
-import * as STEPS from './Joyride.steps'
+import * as STEPS from './Joyride.helpers'
 
 export default Joyride
 

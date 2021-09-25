@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import _isEmpty from 'lodash/isEmpty'
 import PropTypes from 'prop-types'
-
+import { useTranslation } from 'react-i18next'
 import Modal from '../../ui/Modal'
 import Dropdown from '../../ui/Dropdown'
 import {
@@ -14,13 +14,15 @@ import { addComponent } from '../../redux/actions/ui'
 import './style.css'
 
 const AddLayoutComponentModal = ({ onClose, isOpen }) => {
+  const { t } = useTranslation()
+
   const dispatch = useDispatch()
   const [error, setError] = useState('')
   const [componentType, setComponentType] = useState(COMPONENT_LABELS.CHART)
 
   const onSubmitHandler = () => {
     if (_isEmpty(componentType) || !COMPONENT_LABELS[componentType]) {
-      setError('Invalid Component')
+      setError(t('layoutSettings.invalidComponentErrors'))
       return
     }
 
@@ -33,13 +35,13 @@ const AddLayoutComponentModal = ({ onClose, isOpen }) => {
       isOpen={isOpen}
       onClose={onClose}
       className='hfui-addlayoutcomponentmodal__wrapper'
-      label='Add Component'
+      label={t('layoutSettings.addComponent')}
     >
       <Dropdown
         value={componentType}
         onChange={setComponentType}
         options={Object.values(COMPONENT_TYPES).map(type => ({
-          label: COMPONENT_LABELS[type],
+          label: t(COMPONENT_LABELS[type]),
           value: type,
         }))}
       />
@@ -53,7 +55,7 @@ const AddLayoutComponentModal = ({ onClose, isOpen }) => {
           primary
           onClick={onSubmitHandler}
         >
-          Add Component
+          {t('layoutSettings.addComponent')}
         </Modal.Button>
       </Modal.Footer>
     </Modal>

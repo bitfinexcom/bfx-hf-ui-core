@@ -9,6 +9,7 @@ import _reduce from 'lodash/reduce'
 import _entries from 'lodash/entries'
 import _values from 'lodash/values'
 import _some from 'lodash/some'
+import _keys from 'lodash/keys'
 import _isUndefined from 'lodash/isUndefined'
 import { nonce } from 'bfx-api-node-util'
 import { VOLUME_UNIT, VOLUME_UNIT_PAPER } from '@ufx-ui/bfx-containers'
@@ -31,6 +32,7 @@ import {
 import { isElectronApp } from '../../config'
 
 import { storeLastUsedLayoutID } from '../../../util/layout'
+import { LANGUAGES } from '../../../locales/i18n'
 
 const debug = Debug('hfui:rx:r:ui')
 const LAYOUTS_KEY = 'HF_UI_LAYOUTS'
@@ -38,6 +40,7 @@ const LAYOUTS_STATE_KEY = 'HF_UI_LAYOUTS_STATE'
 const ACTIVE_MARKET_KEY = 'HF_UI_ACTIVE_MARKET'
 const ACTIVE_MARKET_PAPER_KEY = 'HF_UI_PAPER_ACTIVE_MARKET'
 export const IS_PAPER_TRADING = 'IS_PAPER_TRADING'
+const LANGUAGE = 'i18nextLng'
 export const PAPER_MODE = 'paper'
 export const MAIN_MODE = 'main'
 let shownOldFormatModal = false
@@ -74,6 +77,7 @@ function getInitialState() {
     content: {},
     unsavedLayout: null,
     layoutID: null,
+    language: 'en',
   }
 
   if (!localStorage) {
@@ -83,6 +87,9 @@ function getInitialState() {
   const isPaperTrading = localStorage.getItem(IS_PAPER_TRADING) === 'true'
   const layoutsJSON = localStorage.getItem(LAYOUTS_KEY)
   const layoutsComponentStateJSON = localStorage.getItem(LAYOUTS_STATE_KEY)
+  const prevLanguage = localStorage.getItem(LANGUAGE)
+  const parsedLocale = prevLanguage.replace('_', '-')
+  const lang = _keys(LANGUAGES).find(key => LANGUAGES[key] === parsedLocale)
 
   try {
     const storedLayouts = JSON.parse(layoutsJSON)
@@ -154,6 +161,7 @@ function getInitialState() {
   }
 
   defaultState.isPaperTrading = isPaperTrading
+  defaultState.language = lang
 
   return defaultState
 }
@@ -511,6 +519,10 @@ function reducer(state = getInitialState(), action = {}) {
         ...state,
         isCcyInfoModalVisible: isVisible,
       }
+    }
+    case types.SET_LANGUAGE: {
+      const { language } = payload
+      return { ...state, language }
     }
     default: {
       return state
