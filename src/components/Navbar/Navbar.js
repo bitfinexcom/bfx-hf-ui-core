@@ -12,7 +12,7 @@ import LayoutSettings from './Navbar.LayoutSettings'
 import AppSettings from './Navbar.AppSettings'
 import Routes from '../../constants/routes'
 import { isElectronApp } from '../../redux/config'
-import LanguageSettings from './Navbar.LanguageSettings'
+// import LanguageSettings from './Navbar.LanguageSettings'
 
 import './style.css'
 
