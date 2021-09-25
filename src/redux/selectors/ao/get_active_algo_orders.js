@@ -11,8 +11,10 @@ const { getCurrencySymbolMemo } = reduxSelectors
 
 const path = REDUCER_PATHS.AOS
 
+const EMPTY_ARR = []
+
 const activeAlgoOrders = (state) => {
-  return _get(state, `${path}.activeAlgoOrders`, [])
+  return _get(state, `${path}.activeAlgoOrders`, EMPTY_ARR)
 }
 
 const activeAlgoOrdersWithReplacedPairs = createSelector([getMarkets, activeAlgoOrders, getCurrencySymbolMemo], (markets, orders, getCurrencySymbol) => {
@@ -26,7 +28,7 @@ const activeAlgoOrdersWithReplacedPairs = createSelector([getMarkets, activeAlgo
         symbol: getPairFromMarket(currentMarket, getCurrencySymbol),
       },
     }
-  }, [])
+  })
 })
 
 export default activeAlgoOrdersWithReplacedPairs

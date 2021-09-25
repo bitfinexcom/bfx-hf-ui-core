@@ -25,7 +25,7 @@ const positionWithReplacedPairs = createSelector([getMarkets, allPositions, getC
       ...position,
       uiID: getPairFromMarket(currentMarket, getCurrencySymbol),
     }
-  }, [])
+  })
 })
 
 export default positionWithReplacedPairs

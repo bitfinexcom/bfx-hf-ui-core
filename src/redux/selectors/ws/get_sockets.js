@@ -5,8 +5,10 @@ import WSTypes from '../../constants/ws'
 
 const path = REDUCER_PATHS.WS
 
+const EMPTY_OBJ = {}
+
 export default (state) => {
-  const sockets = _get(state, `${path}.socket`, {})
+  const sockets = _get(state, `${path}.socket`, EMPTY_OBJ)
 
   if (isElectronApp) {
     return sockets

@@ -4,9 +4,10 @@ import { REDUCER_PATHS } from '../../config'
 import { getIsPaperTrading } from '../ui'
 
 const path = REDUCER_PATHS.WS
+const EMPTY_OBJ = {}
 
 const apiKeyStates = (state) => {
-  return _get(state, `${path}.auth.apiKeys`, {})
+  return _get(state, `${path}.auth.apiKeys`, EMPTY_OBJ)
 }
 
 const getCurrentModeAPIKeyState = createSelector(

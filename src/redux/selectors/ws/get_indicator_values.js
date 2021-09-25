@@ -3,6 +3,8 @@ import { REDUCER_PATHS } from '../../config'
 
 const path = REDUCER_PATHS.WS
 
+const EMPTY_OBJ = {}
+
 export default (state) => {
-  return _get(state, `${path}.indicatorValues`, {})
+  return _get(state, `${path}.indicatorValues`, EMPTY_OBJ)
 }

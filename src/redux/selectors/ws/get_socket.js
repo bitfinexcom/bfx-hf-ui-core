@@ -4,6 +4,8 @@ import t from '../../constants/ws'
 
 const path = REDUCER_PATHS.WS
 
+const EMPTY_OBJ = {}
+
 export default (alias = t.ALIAS_API_SERVER) => (state) => {
-  return _get(state, `${path}.socket.${alias}`, {})
+  return _get(state, `${path}.socket.${alias}`, EMPTY_OBJ)
 }

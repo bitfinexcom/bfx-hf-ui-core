@@ -10,8 +10,10 @@ const { getCurrencySymbolMemo } = reduxSelectors
 
 const path = REDUCER_PATHS.WS
 
+const EMPTY_ARR = []
+
 const atomicOrders = (state) => {
-  return _get(state, `${path}.orders`, [])
+  return _get(state, `${path}.orders`, EMPTY_ARR)
 }
 
 const atomicOrdersWithReplacedPairs = createSelector([getMarkets, atomicOrders, getCurrencySymbolMemo], (markets, orders, getCurrencySymbol) => {
@@ -22,7 +24,7 @@ const atomicOrdersWithReplacedPairs = createSelector([getMarkets, atomicOrders, 
       ...order,
       uiID: getPairFromMarket(currentMarket, getCurrencySymbol),
     }
-  }, [])
+  })
 })
 
 export default atomicOrdersWithReplacedPairs
