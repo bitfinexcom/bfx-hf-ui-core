@@ -22,7 +22,11 @@ const UnconfiguredModal = ({ onClick, isPaperTrading, keyExistButNotValid }) => 
 UnconfiguredModal.propTypes = {
   onClick: PropTypes.func.isRequired,
   isPaperTrading: PropTypes.bool.isRequired,
-  keyExistButNotValid: PropTypes.bool.isRequired,
+  keyExistButNotValid: PropTypes.bool,
+}
+
+UnconfiguredModal.defaultProps = {
+  keyExistButNotValid: false,
 }
 
 export default memo(UnconfiguredModal)
