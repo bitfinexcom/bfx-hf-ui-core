@@ -25,6 +25,7 @@ import { isElectronApp } from '../../redux/config'
 import timeFrames from '../../util/time_frames'
 import Panel from '../../ui/Panel'
 
+import ConnectingModal from './Modals/ConnectingModal'
 import UnconfiguredModal from './Modals/UnconfiguredModal'
 import SubmitAPIKeysModal from './Modals/SubmitAPIKeysModal'
 import OrderFormMenu from './OrderFormMenu'
@@ -429,7 +430,11 @@ class OrderForm extends React.Component {
         >
           <div key='orderform-wrapper' className='hfui-orderform__wrapper'>
             {isElectronApp && [
-              !isConnectedWithValidAPI && !configureModalOpen && (
+              apiClientConnecting && (
+                <ConnectingModal key='connecting' />
+              ),
+
+              !apiClientConfigured && !configureModalOpen && (
                 <UnconfiguredModal
                   key='unconfigured'
                   onClick={this.onToggleConfigureModal}
@@ -438,7 +443,7 @@ class OrderForm extends React.Component {
                 />
               ),
 
-              !isConnectedWithValidAPI && configureModalOpen && (
+              !apiClientConfigured && configureModalOpen && (
                 <SubmitAPIKeysModal
                   key='submit-api-keys'
                   onClose={this.onToggleConfigureModal}
@@ -449,7 +454,7 @@ class OrderForm extends React.Component {
               ),
             ]}
 
-            {helpOpen && currentLayout && currentLayout.customHelp && (
+            {helpOpen && showOrderform && currentLayout && currentLayout.customHelp && (
               <div key='overlay-wrapper' className='hfui-orderform__overlay-wrapper'>
                 <div className='hfui-orderform__help-inner'>
                   <p className='hfui-orderform__help-title'>
@@ -479,7 +484,7 @@ class OrderForm extends React.Component {
               </div>
             )}
 
-            {!helpOpen && currentLayout && [
+            {!helpOpen && currentLayout && showOrderform && [
               <div className='hfui-orderform__layout-label' key='layout-label'>
                 <i
                   className='icon-back-arrow'

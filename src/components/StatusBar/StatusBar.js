@@ -40,39 +40,33 @@ const StatusBar = ({
             v
             {appVersion}
           </p>
-
-          <p>
-            {apiClientConnected ? t('statusbar.unlocked') : t('statusbar.locked')}
-          </p>
         </div>
       )}
 
       <div className='hfui-statusbar__right'>
         {isElectronApp && (
           <>
-            <p>
-              {'HF '}
-              {apiClientConnected && t('statusbar.connected')}
-              {apiClientConnecting && t('statusbar.connecting')}
-              {apiClientDisconnected && t('statusbar.disconnected')}
-            </p>
-
             <span className={ClassNames('hfui-statusbar__statuscircle', {
               green: apiClientConnected,
               yellow: apiClientConnecting,
               red: apiClientDisconnected,
             })}
             />
+            <p>
+              {apiClientConnected && 'HF Connected'}
+              {apiClientConnecting && 'HF Connecting'}
+              {apiClientDisconnected && 'HF Disconnected'}
+            </p>
+            <div className='hfui-statusbar__divide' />
           </>
         )}
-
-        <p>{`WS ${(wsConnected && !wsConnInterrupted) ? t('statusbar.connected') : t('statusbar.disconnected')}`}</p>
 
         <span className={ClassNames('hfui-statusbar__statuscircle', {
           green: wsConnected && !wsConnInterrupted,
           red: !wsConnected || wsConnInterrupted,
         })}
         />
+        <p>{`WS ${(wsConnected && !wsConnInterrupted) ? t('statusbar.connected') : t('statusbar.disconnected')}`}</p>
       </div>
     </div>
   )
