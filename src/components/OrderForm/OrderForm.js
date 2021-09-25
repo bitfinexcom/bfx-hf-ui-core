@@ -12,7 +12,6 @@ import {
   Iceberg, TWAP, AccumulateDistribute, PingPong, MACrossover, OCOCO,
 } from 'bfx-hf-algo'
 import Debug from 'debug'
-import memoizeOne from 'memoize-one'
 
 import {
   renderLayout,
