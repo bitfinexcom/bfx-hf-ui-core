@@ -57,15 +57,9 @@ Authentication.propTypes = {
   wsConnected: PropTypes.bool.isRequired,
   configured: PropTypes.bool.isRequired,
   isPaperTrading: PropTypes.bool.isRequired,
-  onUnlock: PropTypes.func,
-  onInit: PropTypes.func,
-  onReset: PropTypes.func,
-}
-
-Authentication.defaultProps = {
-  onUnlock: () => {},
-  onInit: () => {},
-  onReset: () => {},
+  onUnlock: PropTypes.func.isRequired,
+  onInit: PropTypes.func.isRequired,
+  onReset: PropTypes.func.isRequired,
 }
 
 export default memo(Authentication)
