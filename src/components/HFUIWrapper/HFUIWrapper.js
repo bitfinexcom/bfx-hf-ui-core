@@ -12,8 +12,11 @@ import esTrans from '../../locales/ufx-ui/es.json'
 import trTrans from '../../locales/ufx-ui/tr.json'
 import twTrans from '../../locales/ufx-ui/tw.json'
 import cnTrans from '../../locales/ufx-ui/cn.json'
+// add en.json again even though already present in ufx-ui, so can be set as source file for crowdin
+import enTrans from '../../locales/ufx-ui/en.json'
 
 const translations = {
+  en: enTrans,
   ru: ruTrans,
   es: esTrans,
   cn: cnTrans,
