@@ -2,6 +2,7 @@ import Debug from 'debug'
 import _get from 'lodash/get'
 import _isEqual from 'lodash/isEqual'
 import _isEmpty from 'lodash/isEmpty'
+import _replace from 'lodash/replace'
 import _cloneDeep from 'lodash/cloneDeep'
 import _min from 'lodash/min'
 import _max from 'lodash/max'
@@ -88,7 +89,7 @@ function getInitialState() {
   const layoutsJSON = localStorage.getItem(LAYOUTS_KEY)
   const layoutsComponentStateJSON = localStorage.getItem(LAYOUTS_STATE_KEY)
   const prevLanguage = localStorage.getItem(LANGUAGE)
-  const parsedLocale = prevLanguage.replace('_', '-')
+  const parsedLocale = _replace(prevLanguage, '_', '-')
   const lang = _keys(LANGUAGES).find(key => LANGUAGES[key] === parsedLocale)
 
   try {
@@ -161,7 +162,7 @@ function getInitialState() {
   }
 
   defaultState.isPaperTrading = isPaperTrading
-  defaultState.language = lang
+  defaultState.language = lang || defaultState.language
 
   return defaultState
 }
