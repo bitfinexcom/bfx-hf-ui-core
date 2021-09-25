@@ -12,6 +12,7 @@ import {
   Iceberg, TWAP, AccumulateDistribute, PingPong, MACrossover, OCOCO,
 } from 'bfx-hf-algo'
 import Debug from 'debug'
+import memoizeOne from 'memoize-one'
 
 import {
   renderLayout,
@@ -22,12 +23,13 @@ import {
   COMPONENTS_FOR_ID,
 } from './OrderForm.helpers'
 import { isElectronApp } from '../../redux/config'
-import timeFrames from '../../util/time_frames'
+
 import Panel from '../../ui/Panel'
 
 import UnconfiguredModal from './Modals/UnconfiguredModal'
 import SubmitAPIKeysModal from './Modals/SubmitAPIKeysModal'
 import OrderFormMenu from './OrderFormMenu'
+import { getAOs } from './OrderForm.ao.helpers'
 
 import './style.css'
 
@@ -38,17 +40,6 @@ const CONTEXT_LABELS = {
   m: 'orderForm.margin',
   f: 'orderForm.derivatives',
 }
-
-const ALL_ALGO_ORDERS = [
-  MACrossover,
-  AccumulateDistribute,
-  PingPong,
-  Iceberg,
-  TWAP,
-  OCOCO,
-]
-
-const HOSTED_ALGO_ORDERS = [Iceberg, TWAP]
 
 class OrderForm extends React.Component {
   state = {
@@ -69,11 +60,8 @@ class OrderForm extends React.Component {
       marketDirty,
     } = savedState
 
-    const algoOrders = this.getAOs()
-
     this.state = {
       ...this.state,
-      algoOrders,
       currentMarket,
       marketDirty,
       fieldData: {},
@@ -81,7 +69,6 @@ class OrderForm extends React.Component {
       context: currentMarket.contexts[0],
     }
 
-    this.getAOs = this.getAOs.bind(this)
     this.onContextChange = this.onContextChange.bind(this)
     this.onFieldChange = this.onFieldChange.bind(this)
     this.onSubmit = this.onSubmit.bind(this)
@@ -93,18 +80,6 @@ class OrderForm extends React.Component {
 
   shouldComponentUpdate(nextProps, nextState) {
     return !(_isEqual(nextProps, this.props)) || !(_isEqual(this.state, nextState))
-  }
-
-  componentDidUpdate(prevProps) {
-    const { activeMarket } = this.props
-    if (prevProps.activeMarket.wsID === activeMarket.wsID) {
-      return
-    }
-    const algoOrders = this.getAOs()
-    // eslint-disable-next-line react/no-did-update-set-state
-    this.setState({
-      algoOrders,
-    })
   }
 
   static getDerivedStateFromProps(nextProps, prevState) {
@@ -164,8 +139,9 @@ class OrderForm extends React.Component {
   }
 
   onChangeActiveOrderLayout(orderLabel) {
-    const { orders } = this.props
-    const { algoOrders, currentMarket } = this.state
+    const { orders, t } = this.props
+    const { currentMarket } = this.state
+    const algoOrders = getAOs(t)
 
     let uiDef = orders.find(({ label }) => label === orderLabel)
 
@@ -300,16 +276,6 @@ class OrderForm extends React.Component {
     }
   }
 
-  getAOs() {
-    const algoOrders = isElectronApp ? ALL_ALGO_ORDERS : HOSTED_ALGO_ORDERS
-    const { t } = this.props
-
-    return algoOrders.map(ao => ao.meta.getUIDef({
-      timeframes: timeFrames,
-      i18n: { t, prefix: 'algoOrderForm.' },
-    }))
-  }
-
   validateAOData(data) {
     const { currentLayout } = this.state
     let errors = {}
@@ -381,8 +347,10 @@ class OrderForm extends React.Component {
 
     const {
       fieldData, validationErrors, creationError, context, currentLayout,
-      helpOpen, configureModalOpen, currentMarket, algoOrders,
+      helpOpen, configureModalOpen, currentMarket,
     } = this.state
+
+    const algoOrders = getAOs(t)
 
     const apiClientConnected = apiClientState === 2
     const apiClientConnecting = apiClientState === 1
