@@ -51,7 +51,7 @@ const Navbar = () => {
           </div>
         </div>
         )}
-        <LanguageSettings />
+        {/* <LanguageSettings /> TODO: hide until translations are ready */}
       </div>
     </div>
   )
