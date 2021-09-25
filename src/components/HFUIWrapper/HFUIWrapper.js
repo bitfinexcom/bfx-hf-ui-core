@@ -13,6 +13,14 @@ import trTrans from '../../locales/ufx-ui/tr.json'
 import twTrans from '../../locales/ufx-ui/tw.json'
 import cnTrans from '../../locales/ufx-ui/cn.json'
 
+const translations = {
+  ru: ruTrans,
+  es: esTrans,
+  cn: cnTrans,
+  tw: twTrans,
+  tr: trTrans,
+}
+
 const HFUIWrapper = () => {
   useInjectBfxData()
   useAuthToken()
@@ -21,13 +29,7 @@ const HFUIWrapper = () => {
   const timezoneOffset = -(new Date().getTimezoneOffset())
   const config = {
     timezoneOffset,
-    translations: {
-      ru: ruTrans,
-      es: esTrans,
-      cn: cnTrans,
-      tw: twTrans,
-      tr: trTrans,
-    },
+    translations,
     lang: language,
   }
 

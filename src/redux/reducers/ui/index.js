@@ -2,6 +2,7 @@ import Debug from 'debug'
 import _get from 'lodash/get'
 import _isEqual from 'lodash/isEqual'
 import _isEmpty from 'lodash/isEmpty'
+import _replace from 'lodash/replace'
 import _cloneDeep from 'lodash/cloneDeep'
 import _min from 'lodash/min'
 import _max from 'lodash/max'
@@ -39,8 +40,8 @@ const LAYOUTS_KEY = 'HF_UI_LAYOUTS'
 const LAYOUTS_STATE_KEY = 'HF_UI_LAYOUTS_STATE'
 const ACTIVE_MARKET_KEY = 'HF_UI_ACTIVE_MARKET'
 const ACTIVE_MARKET_PAPER_KEY = 'HF_UI_PAPER_ACTIVE_MARKET'
+const LANGUAGE = 'HF_LOCALE'
 export const IS_PAPER_TRADING = 'IS_PAPER_TRADING'
-const LANGUAGE = 'i18nextLng'
 export const PAPER_MODE = 'paper'
 export const MAIN_MODE = 'main'
 let shownOldFormatModal = false
@@ -88,7 +89,7 @@ function getInitialState() {
   const layoutsJSON = localStorage.getItem(LAYOUTS_KEY)
   const layoutsComponentStateJSON = localStorage.getItem(LAYOUTS_STATE_KEY)
   const prevLanguage = localStorage.getItem(LANGUAGE)
-  const parsedLocale = prevLanguage.replace('_', '-')
+  const parsedLocale = _replace(prevLanguage, '_', '-')
   const lang = _keys(LANGUAGES).find(key => LANGUAGES[key] === parsedLocale)
 
   try {
@@ -161,7 +162,7 @@ function getInitialState() {
   }
 
   defaultState.isPaperTrading = isPaperTrading
-  defaultState.language = lang
+  defaultState.language = lang || defaultState.language
 
   return defaultState
 }
