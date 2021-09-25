@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import Debug from 'debug'
 import _isEmpty from 'lodash/isEmpty'
 import _find from 'lodash/find'
+import _mapValues from 'lodash/mapValues'
 import { useTranslation } from 'react-i18next'
 
 import Modal from '../../ui/Modal'
@@ -49,7 +50,7 @@ const OpenExistingStrategyModal = ({
       <Dropdown
         value={strategyID}
         onChange={setStrategyID}
-        options={strategies.map(({ label, id }) => ({
+        options={_mapValues(strategies, ({ label, id }) => ({
           label: makeShorterLongName(label, MAX_STRATEGY_LABEL_LENGTH),
           value: id,
         }))}
@@ -71,7 +72,7 @@ const OpenExistingStrategyModal = ({
 OpenExistingStrategyModal.propTypes = {
   onClose: PropTypes.func.isRequired,
   onOpen: PropTypes.func.isRequired,
-  strategies: PropTypes.arrayOf(PropTypes.object).isRequired,
+  strategies: PropTypes.objectOf(PropTypes.object).isRequired,
   isOpen: PropTypes.bool,
 }
 

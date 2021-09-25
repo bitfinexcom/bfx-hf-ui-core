@@ -3,6 +3,4 @@ import { REDUCER_PATHS } from '../../config'
 
 const path = REDUCER_PATHS.AOS
 
-export default (state) => {
-  return _get(state, `${path}.showActiveAlgoModal`, true)
-}
+export default (state) => _get(state, `${path}.showActiveAlgoModal`, true)

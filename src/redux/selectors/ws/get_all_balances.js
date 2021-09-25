@@ -5,6 +5,4 @@ const path = REDUCER_PATHS.WS
 
 const EMPTY_ARR = []
 
-export default (state) => {
-  return _get(state, `${path}.balances`, EMPTY_ARR)
-}
+export default (state) => _get(state, `${path}.balances`, EMPTY_ARR)

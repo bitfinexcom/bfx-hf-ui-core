@@ -358,7 +358,7 @@ StrategyEditor.propTypes = {
       PropTypes.oneOf([null]).isRequired,
     ]),
   ),
-  strategies: PropTypes.arrayOf(PropTypes.object).isRequired,
+  strategies: PropTypes.objectOf(PropTypes.object).isRequired,
   backtestResults: PropTypes.objectOf(PropTypes.any),
 }
 

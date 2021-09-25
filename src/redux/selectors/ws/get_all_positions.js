@@ -17,15 +17,21 @@ const allPositions = (state) => {
   return _get(state, `${path}.positions`, EMPTY_ARR)
 }
 
-const positionWithReplacedPairs = createSelector([getMarkets, allPositions, getCurrencySymbolMemo], (markets, positions, getCurrencySymbol) => {
-  return _map(positions, (position) => {
-    const currentMarket = markets?.[position?.symbol]
+const positionWithReplacedPairs = createSelector(
+  [
+    getMarkets,
+    allPositions,
+    getCurrencySymbolMemo,
+  ], (markets, positions, getCurrencySymbol) => {
+    return _map(positions, (position) => {
+      const currentMarket = markets?.[position?.symbol]
 
-    return {
-      ...position,
-      uiID: getPairFromMarket(currentMarket, getCurrencySymbol),
-    }
-  })
-})
+      return {
+        ...position,
+        uiID: getPairFromMarket(currentMarket, getCurrencySymbol),
+      }
+    })
+  },
+)
 
 export default positionWithReplacedPairs

@@ -5,6 +5,4 @@ const path = REDUCER_PATHS.UI
 
 const EMPTY_OBJ = {}
 
-export default (state) => {
-  return _get(state, `${path}.unsavedLayout`, EMPTY_OBJ)
-}
+export default (state) => _get(state, `${path}.unsavedLayout`, EMPTY_OBJ)

@@ -17,18 +17,24 @@ const algoOrders = (state) => {
   return _get(state, `${path}.algoOrders`, EMPTY_ARR)
 }
 
-const algoOrdersWithReplacedPairs = createSelector([getMarkets, algoOrders, getCurrencySymbolMemo], (markets, orders, getCurrencySymbol) => {
-  return _map(orders, (order) => {
-    const currentMarket = markets[order?.args?.symbol]
+const algoOrdersWithReplacedPairs = createSelector(
+  [
+    getMarkets,
+    algoOrders,
+    getCurrencySymbolMemo,
+  ], (markets, orders, getCurrencySymbol) => {
+    return _map(orders, (order) => {
+      const currentMarket = markets[order?.args?.symbol]
 
-    return {
-      ...order,
-      args: {
-        ...order.args,
-        uiID: getPairFromMarket(currentMarket, getCurrencySymbol),
-      },
-    }
-  })
-})
+      return {
+        ...order,
+        args: {
+          ...order?.args,
+          uiID: getPairFromMarket(currentMarket, getCurrencySymbol),
+        },
+      }
+    })
+  },
+)
 
 export default algoOrdersWithReplacedPairs

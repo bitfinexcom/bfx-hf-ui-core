@@ -5,6 +5,4 @@ const path = REDUCER_PATHS.WS
 
 const EMPTY_OBJ = {}
 
-export default (state) => {
-  return _get(state, `${path}.backtest`, EMPTY_OBJ)
-}
+export default (state) => _get(state, `${path}.backtest`, EMPTY_OBJ)

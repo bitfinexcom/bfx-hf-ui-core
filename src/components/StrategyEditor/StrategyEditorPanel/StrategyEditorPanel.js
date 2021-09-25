@@ -117,7 +117,7 @@ StrategyEditorPanel.propTypes = {
   onOpenCreateModal: PropTypes.func.isRequired,
   onOpenRemoveModal: PropTypes.func.isRequired,
   children: PropTypes.node.isRequired,
-  strategies: PropTypes.arrayOf(PropTypes.object).isRequired,
+  strategies: PropTypes.objectOf(PropTypes.object).isRequired,
 }
 
 StrategyEditorPanel.defaultProps = {
