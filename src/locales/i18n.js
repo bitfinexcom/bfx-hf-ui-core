@@ -11,18 +11,18 @@ const { REACT_APP_ENV } = process.env
 
 export const LANGUAGES = {
   en: 'en-US',
-  es: 'es-EM',
+  // es: 'es-EM',
   ru: 'ru',
-  tr: 'tr',
+  // tr: 'tr',
   cn: 'zh-CN',
   tw: 'zh-TW',
 }
 
 export const LANGUAGE_NAMES = {
   en: 'English',
-  es: 'Español',
+  // es: 'Español', // hide Spanish Turkey until 28th Oct release
   ru: 'Русский',
-  tr: 'Türk',
+  // tr: 'Türk',
   cn: '中文 (简化)',
   tw: '中文 (繁體)',
 }
@@ -30,9 +30,9 @@ export const LANGUAGE_NAMES = {
 // email templates language mapping
 export const LANGUAGES_MAP = {
   en: 'en',
-  es: 'es-EM',
+  // es: 'es-EM',
   ru: 'ru',
-  tr: 'tr',
+  // tr: 'tr',
   cn: 'zh-CN',
   tw: 'zh-TW',
 }
