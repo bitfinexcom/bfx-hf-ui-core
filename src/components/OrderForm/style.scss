@@ -765,5 +765,9 @@
 
   .hfui-orderform__ao-settings__item {
     padding-left: 16px;
+
+    &.is-selected {
+      padding-left: 44px;
+    }
   }
 }
