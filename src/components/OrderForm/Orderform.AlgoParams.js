@@ -21,6 +21,9 @@ import { makeShorterLongName } from '../../util/ui'
 
 const MAX_NAME_LENGTH = 30
 
+// since percentage values are stored as a floating variable [0, 1], they must be multiplied by 100 before they can be applied
+const percentageParams = ['amountDistortion', 'intervalDistortion', 'sliceAmountPerc']
+
 const Item = ({
   isSelected, isDisabled, children, ...props // eslint-disable-line
 }) => (
@@ -72,6 +75,12 @@ const AlgoParams = ({
 
   const onSelect = (selectedParams) => {
     const { id, params } = selectedParams
+
+    for (let i = 0; i < percentageParams.length; ++i) {
+      if (percentageParams[i] in params) {
+        params[percentageParams[i]] *= 100
+      }
+    }
 
     dispatch(setActiveAOParamsID(id))
     setFieldData(params)
