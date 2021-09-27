@@ -75,15 +75,16 @@ const AlgoParams = ({
 
   const onSelect = (selectedParams) => {
     const { id, params } = selectedParams
+    const updatedParams = { ...params }
 
     for (let i = 0; i < percentageParams.length; ++i) {
-      if (percentageParams[i] in params) {
-        params[percentageParams[i]] *= 100
+      if (percentageParams[i] in updatedParams) {
+        updatedParams[percentageParams[i]] *= 100
       }
     }
 
     dispatch(setActiveAOParamsID(id))
-    setFieldData(params)
+    setFieldData(updatedParams)
   }
 
   return (
