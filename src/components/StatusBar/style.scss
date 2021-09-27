@@ -55,6 +55,10 @@
     vertical-align: middle;
     margin-right: 10px;
   }
+
+  & > *:last-child {
+    margin-right: 0;
+  }
 }
 
 .hfui-statusbar__statuscircle {
@@ -62,6 +66,7 @@
   height: 8px;
   border-radius: 50%;
   display: inline-block;
+  margin-right: 8px;
 
   &.green {
     background: $green-color;
@@ -78,4 +83,9 @@
 
 .hfui-statusbar__version {
   line-height: 32px;
+}
+
+.hfui-statusbar__divide {
+  border-left: 1px solid $lighter-background-color;
+  height: 60%;
 }

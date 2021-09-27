@@ -4,6 +4,7 @@ import PropTypes from 'prop-types'
 import _isEmpty from 'lodash/isEmpty'
 import _size from 'lodash/size'
 import { Tooltip } from '@ufx-ui/core'
+import { useTranslation } from 'react-i18next'
 
 import Panel from '../../../ui/Panel'
 import { makeShorterLongName } from '../../../util/ui'
@@ -17,15 +18,17 @@ const StrategyEditorPanel = ({
   dark, strategy, onRemove, moveable, children, strategyId, removeable, execRunning, strategyDirty,
   onSaveStrategy, onOpenSelectModal, onOpenCreateModal, onOpenRemoveModal, strategies,
 }) => {
+  const { t } = useTranslation()
   const { id = strategyId, label: strategyName } = strategy || {}
-  const strategyDisplayName = strategyDirty ? 'Unsaved strategy' : strategyName
+  const strategyDisplayName = strategyDirty ? t('strategyEditor.unsavedStartegy') : strategyName
   const strategyDisplayLabel = strategyDisplayName ? `- ${strategyDisplayName}` : ''
 
   return (
     <Panel
       label={(
         <>
-          Strategy Editor&nbsp;
+          {t('main.strategyEditor')}
+          &nbsp;
           {_size(strategyDisplayLabel) > MAX_STRATEGY_LABEL_LENGTH ? (
             <Tooltip className='__react-tooltip __react_component_tooltip wide' content={strategyDisplayName}>
               {makeShorterLongName(strategyDisplayLabel, MAX_STRATEGY_LABEL_LENGTH)}
@@ -55,7 +58,7 @@ const StrategyEditorPanel = ({
               disabled={strategyDirty || _isEmpty(strategies)}
               label={[
                 <i key='icon' className='icon-open' />,
-                <p key='text'>Open</p>,
+                <p key='text'>{t('ui.openBtn')}</p>,
               ]}
             />
             <Button
@@ -64,7 +67,7 @@ const StrategyEditorPanel = ({
               onClick={onOpenCreateModal}
               label={[
                 <i key='icon' className='icon-strategy-editor-passive' />,
-                <p key='text'>New Strategy</p>,
+                <p key='text'>{t('strategyEditor.newStrategy')}</p>,
               ]}
             />
             {!_isEmpty(strategy) && (
@@ -73,7 +76,7 @@ const StrategyEditorPanel = ({
                 disabled={!strategyDirty}
                 label={[
                   <i key='icon' className='icon-save' />,
-                  <p key='text'>Save</p>,
+                  <p key='text'>{t('ui.save')}</p>,
                 ]}
               />
             )}
@@ -84,7 +87,7 @@ const StrategyEditorPanel = ({
                 disabled={!id}
                 label={[
                   <i key='icon' className='icon-delete1' />,
-                  <p key='text'>Remove</p>,
+                  <p key='text'>{t('ui.removeBtn')}</p>,
                 ]}
               />
             )}

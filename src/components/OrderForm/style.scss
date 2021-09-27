@@ -1,4 +1,4 @@
-@import '../../variables.scss';
+@import "../../variables.scss";
 
 .hfui-orderform__wrapper {
   .react-datepicker-popper {
@@ -312,6 +312,16 @@
 
   .hfui-orderform__input {
     margin-bottom: 0;
+  }
+}
+
+.hfui-help-checkbox {
+  .ufx-label {
+    cursor: help;
+
+    &::after {
+      cursor: pointer;
+    }
   }
 }
 

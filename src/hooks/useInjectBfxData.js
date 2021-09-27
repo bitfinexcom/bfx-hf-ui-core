@@ -20,15 +20,15 @@ const { getWSConnected } = reduxSelectors
 const useInjectBfxData = () => {
   const dispatch = useDispatch()
   const socket = useSelector(getSocket())
-  const isAPIServerConnected = socket?.status === 'online'
+  /*
+    electron-app: api will be fetched on localhost:45001, which will be available once api-server is started
+    hosted-app: can fetch early without waiting for api-server
+  */
+  const isAPIServerConnected = !isElectronApp ? true : socket?.status === 'online'
 
   // start: fetch common data used across all ufx-containers
   useEffect(() => {
-    /*
-      electron-app: api will be fetched on localhost:45001, which will be available once api-server is started
-      hosted-app: can fetch early without waiting for api-server
-    */
-    if (!isElectronApp || isAPIServerConnected) {
+    if (isAPIServerConnected) {
       dispatch(requestCurrenciesInfo())
       dispatch(requestSymbolDetails())
     }

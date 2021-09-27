@@ -1,6 +1,7 @@
 import React, { memo, useState, useEffect } from 'react'
 import ClassNames from 'classnames'
 import PropTypes from 'prop-types'
+import { useTranslation } from 'react-i18next'
 
 import { isElectronApp, appVersion } from '../../redux/config'
 
@@ -16,6 +17,8 @@ const StatusBar = ({
   const apiClientConnecting = !isWrongAPIKey && apiClientState === 1
   const apiClientDisconnected = isWrongAPIKey || !apiClientState
 
+  const { t } = useTranslation()
+
   useEffect(() => {
     if (wsInterrupted && !wsConnInterrupted) {
       setWsConnInterrupted(true)
@@ -29,7 +32,7 @@ const StatusBar = ({
           <p>
             {remoteVersion && remoteVersion !== appVersion && (
               <NavbarButton
-                label='Update to latest version'
+                label={t('statusbar.updateToLast')}
                 external='https://github.com/bitfinexcom/bfx-hf-ui/releases'
               />
             )}
@@ -37,38 +40,33 @@ const StatusBar = ({
             v
             {appVersion}
           </p>
-
-          <p>
-            {apiClientConnected ? 'UNLOCKED' : 'LOCKED'}
-          </p>
         </div>
       )}
 
       <div className='hfui-statusbar__right'>
         {isElectronApp && (
           <>
-            <p>
-              {apiClientConnected && 'HF Connected'}
-              {apiClientConnecting && 'HF Connecting'}
-              {apiClientDisconnected && 'HF Disconnected'}
-            </p>
-
             <span className={ClassNames('hfui-statusbar__statuscircle', {
               green: apiClientConnected,
               yellow: apiClientConnecting,
               red: apiClientDisconnected,
             })}
             />
+            <p>
+              {apiClientConnected && 'HF Connected'}
+              {apiClientConnecting && 'HF Connecting'}
+              {apiClientDisconnected && 'HF Disconnected'}
+            </p>
+            <div className='hfui-statusbar__divide' />
           </>
         )}
-
-        <p>{(wsConnected && !wsConnInterrupted) ? 'WS Connected' : 'WS Disconnected'}</p>
 
         <span className={ClassNames('hfui-statusbar__statuscircle', {
           green: wsConnected && !wsConnInterrupted,
           red: !wsConnected || wsConnInterrupted,
         })}
         />
+        <p>{`WS ${(wsConnected && !wsConnInterrupted) ? t('statusbar.connected') : t('statusbar.disconnected')}`}</p>
       </div>
     </div>
   )

@@ -1,4 +1,5 @@
 import { connect } from 'react-redux'
+import { reduxSelectors } from '@ufx-ui/bfx-containers'
 
 import ChartPanel from './ChartPanel'
 import UIActions from '../../redux/actions/ui'
@@ -12,6 +13,7 @@ const mapStateToProps = (state = {}, ownProps = {}) => {
     savedState: getComponentState(state, layoutID, 'trades', id),
     activeMarket: getActiveMarket(state),
     markets: getMarkets(state),
+    getCurrencySymbol: reduxSelectors.getCurrencySymbolMemo(state),
   }
 }
 

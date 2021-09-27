@@ -1,6 +1,7 @@
 import React, { memo, useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Checkbox } from '@ufx-ui/core'
+import { useTranslation } from 'react-i18next'
 
 import WSActions from '../../redux/actions/ws'
 import GAActions from '../../redux/actions/google_analytics'
@@ -28,6 +29,8 @@ const General = () => {
   const [isGaChecked, setIsGaChecked] = useState(settingsGa)
   const [isRebootChecked, setIsRebootChecked] = useState(settingsRebootAutomatically)
   const [isShowAlgoPauseInfoChecked, setIsShowAlgoPauseInfoChecked] = useState(settingsShowAlgoPauseInfo)
+
+  const { t } = useTranslation()
 
   useEffect(() => {
     setIsDmsChecked(settingsDms)
@@ -69,35 +72,31 @@ const General = () => {
   return (
     <div>
       <div className='appsettings-modal__title'>
-        General
+        {t('appSettings.generalTab')}
       </div>
       <div className='appsettings-modal__setting'>
         <Checkbox
           onChange={updateDms}
-          label='Dead Man Switch'
+          label={t('appSettings.deadManCheckbox')}
           checked={isDmsChecked}
           className='appsettings-modal__checkbox'
         />
         <div className='appsettings-modal__description'>
           <p>
-            Enabling the Dead Man switch will automatically cancel all
-            active orders when the application closes.
+            {t('appSettings.deadManText1')}
           </p>
           <p>
-            Algorithmic orders are cancelled on application close;
-            without the Dead Man switch, any atomic orders created by an
-            AO will remain open, and state may be lost when the
-            application is started up again.
+            {t('appSettings.deadManText2')}
           </p>
           <div className='appsettings-modal__warning'>
-            Disabling this should be done with caution!
+            {t('appSettings.deadManWarning')}
           </div>
         </div>
       </div>
       <div className='appsettings-modal__setting'>
         <Checkbox
           onChange={updateGa}
-          label='Usage reporting'
+          label={t('appSettings.usageReportingCheckbox')}
           checked={isGaChecked}
           className='appsettings-modal__checkbox'
         />
@@ -105,29 +104,29 @@ const General = () => {
       <div className='appsettings-modal__setting'>
         <Checkbox
           onChange={updateAOPause}
-          label='Show Algo Orders pause info'
+          label={t('appSettings.showPauseInfoCheckbox')}
           checked={isShowAlgoPauseInfoChecked}
           className='appsettings-modal__checkbox'
         />
         <div className='appsettings-modal__description'>
-          If checked, the modal with explanations will be displayed when you close the app with active Algo Orders.
+          {t('appSettings.showPauseInfoText')}
         </div>
       </div>
       <div className='appsettings-modal__setting'>
         <Checkbox
           onChange={updateReboot}
-          label='Reboot automatically on bad connection'
+          label={t('appSettings.rebootCheckbox')}
           checked={isRebootChecked}
           className='appsettings-modal__checkbox'
         />
         <div className='appsettings-modal__description'>
-          When you experience a poor internet connection, the modal window that notifies you of this will not be displayed and the app will restart automatically.
+          {t('appSettings.rebootText')}
         </div>
       </div>
       {isDevEnv() && (
         <div className='appsettings-modal__setting'>
           <Checkbox
-            label='Auto-login in development mode'
+            label={t('appSettings.autologin')}
             checked={isAutoLoginChecked}
             onChange={(value) => {
               setIsAutoLoginChecked(value)

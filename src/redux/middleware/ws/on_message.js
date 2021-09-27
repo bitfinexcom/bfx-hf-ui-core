@@ -46,7 +46,7 @@ export default (alias, store) => (e = {}) => {
       }
 
       case 'info.markets': {
-        const [,, markets] = payload
+        const [, , markets] = payload
         store.dispatch(WSActions.recvDataMarkets(markets))
         store.dispatch(marketActions.getCCYFullNames())
         store.dispatch(marketActions.getPerpsNames())
@@ -84,13 +84,13 @@ export default (alias, store) => (e = {}) => {
       }
 
       case 'data': {
-        const [,, chanID, exData] = payload
+        const [, , chanID, exData] = payload
         store.dispatch(WSActions.bufferDataFromExchange(chanID, exData))
         break
       }
 
       case 'data.sync.start': {
-        const [,, symbol, tf, start, end] = payload
+        const [, , symbol, tf, start, end] = payload
         store.dispatch(WSActions.recvDataSyncStart({
           symbol, tf, start, end,
         }))
@@ -98,7 +98,7 @@ export default (alias, store) => (e = {}) => {
       }
 
       case 'data.sync.end': {
-        const [,, symbol, tf, start, end] = payload
+        const [, , symbol, tf, start, end] = payload
         store.dispatch(WSActions.recvDataSyncEnd({
           symbol, tf, start, end,
         }))
@@ -148,24 +148,33 @@ export default (alias, store) => (e = {}) => {
         break
 
       case 'error': {
-        const [, message] = payload
+        const [, message, i18n] = payload
+        if (i18n) {
+          i18n.key = `notifications.${i18n.key}`
+        }
         store.dispatch(WSActions.recvNotification({
           status: 'error',
           text: message,
           mts: Date.now(),
           cid: v4(),
+          i18n,
         }))
         break
       }
 
       case 'notify': {
-        const [, status, message] = payload
-        store.dispatch(WSActions.recvNotification({
+        const [, status, message, i18n] = payload
+        if (i18n) {
+          i18n.key = `notifications.${i18n.key}`
+        }
+        const notificationObject = {
           status,
           text: message,
           mts: Date.now(),
           cid: v4(),
-        }))
+          i18n,
+        }
+        store.dispatch(WSActions.recvNotification(notificationObject))
         break
       }
 
@@ -200,73 +209,73 @@ export default (alias, store) => (e = {}) => {
       }
 
       case 'data.client': {
-        const [,, status] = payload
+        const [, , status] = payload
         store.dispatch(WSActions.recvClientStatusUpdate({ status }))
         break
       }
 
       case 'data.positions': {
-        const [,, positions] = payload
+        const [, , positions] = payload
         store.dispatch(WSActions.recvPositions({ positions }))
         break
       }
 
       case 'data.position': {
-        const [,, position] = payload
+        const [, , position] = payload
         store.dispatch(WSActions.recvPosition({ position }))
         break
       }
 
       case 'data.position.close': {
-        const [,, position] = payload
+        const [, , position] = payload
         store.dispatch(WSActions.recvPositionClose({ position }))
         break
       }
 
       case 'data.balances': {
-        const [,, balances] = payload
+        const [, , balances] = payload
         store.dispatch(WSActions.recvBalances({ balances }))
         break
       }
 
       case 'data.balance': {
-        const [,, balance] = payload
+        const [, , balance] = payload
         store.dispatch(WSActions.recvBalance({ balance }))
         break
       }
 
       case 'data.orders': {
-        const [,, orders] = payload
+        const [, , orders] = payload
         store.dispatch(WSActions.recvOrders({ orders }))
         break
       }
 
       case 'data.order': {
-        const [,, order] = payload
+        const [, , order] = payload
         store.dispatch(WSActions.recvOrder({ order }))
         break
       }
 
       case 'data.order.close': {
-        const [,, order] = payload
+        const [, , order] = payload
         store.dispatch(WSActions.recvOrderClose({ order }))
         break
       }
 
       case 'data.aos': {
-        const [,, aos] = payload
+        const [, , aos] = payload
         store.dispatch(WSActions.recvDataAlgoOrders({ aos }))
         break
       }
 
       case 'data.ao': {
-        const [,, ao] = payload
+        const [, , ao] = payload
         store.dispatch(WSActions.recvDataAlgoOrder({ ao }))
         break
       }
 
       case 'data.ao.stopped': {
-        const [,, gid] = payload
+        const [, , gid] = payload
         store.dispatch(WSActions.recvDataAlgoOrderStopped({ gid }))
         break
       }
@@ -286,25 +295,25 @@ export default (alias, store) => (e = {}) => {
       }
 
       case 'bt.start': {
-        const [,,, from, to] = payload
+        const [, , , from, to] = payload
         store.dispatch(WSActions.recvBacktestStart({ from, to }))
         break
       }
 
       case 'bt.candle': {
-        const [,,, candle] = payload
+        const [, , , candle] = payload
         store.dispatch(WSActions.recvBacktestCandle(candle))
         break
       }
 
       case 'bt.trade': {
-        const [,,, trade] = payload
+        const [, , , trade] = payload
         store.dispatch(WSActions.recvBacktestTrade(trade))
         break
       }
 
       case 'bt.end': {
-        const [,,, from, to] = payload
+        const [, , , from, to] = payload
         store.dispatch(WSActions.recvBacktestEnd({ from, to }))
         break
       }

@@ -1,5 +1,6 @@
 import { connect } from 'react-redux'
 
+import { reduxSelectors } from '@ufx-ui/bfx-containers'
 import {
   getActiveMarket, getComponentState, getMarketComponents,
 } from '../../redux/selectors/ui'
@@ -19,6 +20,7 @@ const mapStateToProps = (state = {}, ownProps = {}) => {
     markets: getMarkets(state),
     isTradingTerminal,
     allMarketBooks: getMarketComponents(state, 'book'),
+    getCurrencySymbol: reduxSelectors.getCurrencySymbolMemo(state),
   }
 }
 

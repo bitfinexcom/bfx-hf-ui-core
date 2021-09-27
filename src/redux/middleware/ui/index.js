@@ -13,6 +13,7 @@ export default () => {
           status: 'success',
           text: 'Successfully saved layout',
           cid: v4(),
+          i18n: { key: 'notifications.layoutSaved' },
         }))
         next(action)
         break

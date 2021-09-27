@@ -13,6 +13,7 @@ import Dropdown from '../../ui/Dropdown'
 import FavoriteIcon from '../../ui/Icons/FavoriteIcon'
 
 import './style.css'
+import { getPairFromMarket } from '../../util/market'
 
 const MarketSelect = ({
   savePairs,
@@ -24,6 +25,7 @@ const MarketSelect = ({
   className,
   renderLabel,
   renderWithFavorites,
+  getCurrencySymbol,
   ...otherProps
 }) => {
   const [searchTerm, setSearchTerm] = useState('')
@@ -45,11 +47,11 @@ const MarketSelect = ({
         return _includes(matches, _toLower(searchTerm))
       }, []) : markets
     const options = _map(filtered, (m => ({
-      label: m.uiID || `${m.base}/${m.quote}`,
+      label: getPairFromMarket(m, getCurrencySymbol) || `${m.base}/${m.quote}`,
       value: m.uiID,
     })), [])
     return options.sort((a, b) => favoritePairs.includes(b.value) - favoritePairs.includes(a.value))
-  }, [searchTerm, favoritePairs])
+  }, [searchTerm, favoritePairs, getCurrencySymbol])
 
   return (
     <Dropdown
@@ -101,6 +103,7 @@ MarketSelect.propTypes = {
   authToken: PropTypes.string.isRequired,
   favoritePairs: PropTypes.instanceOf(Array),
   renderWithFavorites: PropTypes.bool,
+  getCurrencySymbol: PropTypes.func.isRequired,
 }
 
 MarketSelect.defaultProps = {

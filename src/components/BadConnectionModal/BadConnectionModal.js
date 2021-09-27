@@ -4,7 +4,9 @@ import React, {
 import { Checkbox } from '@ufx-ui/core'
 import PropTypes from 'prop-types'
 
+import { useTranslation } from 'react-i18next'
 import Modal from '../../ui/Modal'
+
 import './style.css'
 
 const REBOOT_AFTER = 25
@@ -46,30 +48,30 @@ const BadConnection = ({
     return () => clearInterval(intervalID)
   }, [visible])
 
+  const { t } = useTranslation()
+
   return (
     <Modal
-      label='Connection issue'
+      label={t('badConnectionModal.title')}
       className='hfui-bad-conn-modal__wrapper'
       isOpen={visible}
       onClose={onClose}
     >
-      <p>We&apos;ve noticed several internet connection issues. It&apos;s required to reboot the app to continue normal operation.</p>
-      <p>Please make sure you have stable and good internet connection.</p>
-      <p>The Honey Framework will reboot after you press &apos;Okay&apos;.</p>
+      <p>{t('badConnectionModal.text1')}</p>
+      <p>{t('badConnectionModal.text2')}</p>
+      <p>{t('badConnectionModal.text3')}</p>
       <br />
       <p>
-        The app will reboot automatically in&nbsp;
-        {countdown}
-        &nbsp;seconds.
+        {t('badConnectionModal.text3', { countdown })}
       </p>
       <Modal.Footer>
         <Checkbox
-          label='Reboot automatically'
+          label={t('badConnectionModal.checkbox')}
           checked={isRebootChecked}
           onChange={onRebootUpdate}
         />
         <Modal.Button onClick={onSubmit} primary>
-          Okay
+          {t('ui.ok')}
         </Modal.Button>
       </Modal.Footer>
     </Modal>

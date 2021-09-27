@@ -5,6 +5,7 @@ import _values from 'lodash/values'
 import randomColor from 'randomcolor'
 import PropTypes from 'prop-types'
 import _remove from 'lodash/remove'
+import { useTranslation } from 'react-i18next'
 
 import {
   STEPS, ACTIONS, EVENTS, STATUS,
@@ -48,6 +49,8 @@ const StrategyEditorPage = (props) => {
       .then(response => response.text())
       .then(setDocsText)
   }, [])
+
+  const { t } = useTranslation()
 
   const onAddIndicator = (indicator) => {
     setIndicators([...indicators, indicator])
@@ -123,7 +126,7 @@ const StrategyEditorPage = (props) => {
           {firstLogin && (
             <Suspense fallback={<></>}>
               <Joyride
-                steps={STEPS.STRATEGY_EDITOR}
+                steps={STEPS.getStrategyEditorModes(t)}
                 callback={onTourUpdate}
                 run={startTour}
                 stepIndex={tourStep}
@@ -142,11 +145,11 @@ const StrategyEditorPage = (props) => {
               darkHeader
             >
               <Markdown
-                tabtitle='Docs'
+                tabtitle={t('strategyEditor.docsTab')}
                 text={docsText}
               />
               <div
-                tabtitle='Backtest'
+                tabtitle={t('strategyEditor.backtestTab')}
               >
                 <Backtester
                   {...props}

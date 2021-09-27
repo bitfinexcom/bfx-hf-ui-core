@@ -24,7 +24,7 @@ const CcyInfoModal = ({
   }, [isModalVisible])
 
   useEffect(() => {
-    if (!body) {
+    if (!body || !containerRef || !containerRef.current) {
       return
     }
 

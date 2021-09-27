@@ -5,6 +5,7 @@ import _isEmpty from 'lodash/isEmpty'
 import {
   OrderHistory as UfxOrderHistory,
 } from '@ufx-ui/core'
+import { useTranslation } from 'react-i18next'
 import Panel from '../../ui/Panel'
 import useSize from '../../hooks/useSize'
 import { ROW_MAPPING } from './OrderHistory.colunms'
@@ -14,17 +15,18 @@ const OrderHistory = ({
   onRemove, dark, orders,
 }) => {
   const [ref, { width }] = useSize()
+  const { t } = useTranslation()
 
   return (
     <Panel
-      label='Order History'
+      label={t('orderHistoryModal.title')}
       onRemove={onRemove}
       dark={dark}
       darkHeader={dark}
     >
       <div ref={ref}>
         {_isEmpty(orders) ? (
-          <p className='empty'>Order history is empty</p>
+          <p className='empty'>{t('orderHistoryModal.noHistory')}</p>
         ) : (
           <UfxOrderHistory
             orders={orders}

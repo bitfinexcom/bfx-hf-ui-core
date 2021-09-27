@@ -8,18 +8,19 @@ import { reduxSelectors, prepareTickers } from '@ufx-ui/bfx-containers'
 import getMarkets from './get_markets'
 import getTickersKeys from './get_tickers_keys'
 import { getTickersVolumeUnit } from '../ui'
+import { getPairFromMarket } from '../../../util/market'
 
-const tickersSelector = state => reduxSelectors.getTickers(state)
-const getCurrencySymbol = state => reduxSelectors.getCurrencySymbolMemo(state)
-const tickersVolumeUnit = state => getTickersVolumeUnit(state)
+const { getCurrencySymbolMemo, getTickers } = reduxSelectors
 
-const getTickersInfo = createSelector([tickersSelector, getMarkets], (tickers, markets) => {
+const getTickersInfo = createSelector([getTickers, getMarkets, getCurrencySymbolMemo], (tickers, markets, getCurrencySymbol) => {
   const fullTickersData = _reduce(markets, (acc, market) => {
     const {
       wsID, base, quote, uiID, ccyLabels, isPerp,
     } = market
+    const id = getPairFromMarket(market, getCurrencySymbol)
     const newTickerObject = {
-      id: uiID,
+      id,
+      uiID,
       baseCcy: base,
       quoteCcy: quote,
       changePerc: _get(tickers, `${wsID}.changePerc`, 0),
@@ -42,15 +43,15 @@ const preparedTickersArray = createSelector(
   [
     getTickersInfo,
     getTickersKeys,
-    tickersSelector,
-    getCurrencySymbol,
-    tickersVolumeUnit,
+    getTickers,
+    getCurrencySymbolMemo,
+    getTickersVolumeUnit,
   ],
-  (tickersInfo, tickersKeys, tickers, _getCurrencySymbol, _tickersVolumeUnit) => {
+  (tickersInfo, tickersKeys, tickers, getCurrencySymbol, tickersVolumeUnit) => {
     if (_isEmpty(tickersInfo)) {
       return []
     }
-    const prepared = prepareTickers(tickersKeys, tickers, _tickersVolumeUnit, _getCurrencySymbol)
+    const prepared = prepareTickers(tickersKeys, tickers, tickersVolumeUnit, getCurrencySymbol)
 
     return _map(tickersKeys, (pair) => {
       const ticker = tickersInfo[pair]

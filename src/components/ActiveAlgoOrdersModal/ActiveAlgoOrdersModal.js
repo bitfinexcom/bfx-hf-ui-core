@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import _isEqual from 'lodash/isEqual'
 import _isEmpty from 'lodash/isEmpty'
 import _differenceBy from 'lodash/differenceBy'
+import { useTranslation } from 'react-i18next'
 
 import Modal from '../../ui/Modal'
 
@@ -80,6 +81,8 @@ const ActiveAlgoOrdersModal = ({
     })
   }
 
+  const { t } = useTranslation()
+
   return (
     <Modal
       isOpen={isOpen}
@@ -87,7 +90,7 @@ const ActiveAlgoOrdersModal = ({
         showActiveOrdersModal(false)
         onSubmit('cancel_all')
       }}
-      label='Active Orders'
+      label={t('activeAlgoOrdersModal.title')}
       className='hfui-active-ao-modal__wrapper'
       width={800}
     >
@@ -104,7 +107,7 @@ const ActiveAlgoOrdersModal = ({
           onClick={() => onSubmit('cancel_all')}
           className='hfui-active-ao-modal-btn mr-10'
         >
-          Cancel All
+          {t('activeAlgoOrdersModal.cancellBtn')}
         </Modal.Button>
         <Modal.Button
           primary
@@ -112,7 +115,7 @@ const ActiveAlgoOrdersModal = ({
           disabled={_isEmpty(selectedOrders)}
           className='hfui-active-ao-modal-btn'
         >
-          Resume
+          {t('activeAlgoOrdersModal.resumeBtn')}
         </Modal.Button>
       </Modal.Footer>
     </Modal>

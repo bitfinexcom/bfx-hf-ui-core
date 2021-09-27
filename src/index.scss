@@ -5,9 +5,6 @@
 @import "/icon_font/styles.css";
 @import "./variables.scss";
 @import "./ufx-customise.scss";
-// need to remove for monaco
-@import "codemirror/lib/codemirror";
-@import "codemirror/theme/monokai";
 
 *,
 ::before,
@@ -148,10 +145,10 @@ body button:focus {
   }
 }
 
-.__react_component_tooltip {
-  border: 1px solid $tooltip-border-color;
-  background-color: $tooltip-background-color;
-  color: $tooltip-text-color;
+.__react_component_tooltip,
+.ufx-tooltip {
+  background-color: $tooltip-background-color !important;
+  color: $tooltip-text-color !important;
 }
 
 .tooltip-arrow {

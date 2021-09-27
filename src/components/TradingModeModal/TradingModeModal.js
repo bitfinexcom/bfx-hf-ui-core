@@ -1,6 +1,6 @@
 import React, { memo } from 'react'
-
 import PropTypes from 'prop-types'
+import { useTranslation } from 'react-i18next'
 import Modal from '../../ui/Modal'
 
 const TradingModeModal = ({
@@ -20,16 +20,18 @@ const TradingModeModal = ({
     location.replace('/index.html') // eslint-disable-line
   }
 
+  const { t } = useTranslation()
+
   return (
     <Modal
-      label='Switch Trade Mode'
+      label={t('tradingModeModal.title')}
       isOpen={isTradingModeModalVisible}
       onClose={onTradingModeModalClose}
     >
-      <p> The app will reboot after you press Okay. It&apos;s required for switching trading mode. Open algo orders are paused.</p>
+      <p>{t('tradingModeModal.text')}</p>
       <Modal.Footer>
         <Modal.Button primary onClick={onTradingModeModalSubmit}>
-          Okay
+          {t('ui.ok')}
         </Modal.Button>
       </Modal.Footer>
     </Modal>

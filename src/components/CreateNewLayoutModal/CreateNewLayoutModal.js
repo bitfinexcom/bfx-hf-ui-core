@@ -2,21 +2,24 @@ import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import _isEmpty from 'lodash/isEmpty'
 import PropTypes from 'prop-types'
+import { useTranslation } from 'react-i18next'
 
 import Input from '../../ui/Input'
 import Modal from '../../ui/Modal'
-
-import './style.css'
 import { createLayout } from '../../redux/actions/ui'
 
+import './style.css'
+
 const CreateNewLayoutModal = ({ onClose, isOpen }) => {
+  const { t } = useTranslation()
+
   const dispatch = useDispatch()
   const [label, setLabel] = useState('')
   const [error, setError] = useState('')
 
   const onSubmitHandler = () => {
     if (_isEmpty(label)) {
-      setError('Label empty')
+      setError(t('layoutSettings.labelEmptyError'))
       return
     }
 
@@ -30,11 +33,11 @@ const CreateNewLayoutModal = ({ onClose, isOpen }) => {
       isOpen={isOpen}
       onClose={onClose}
       className='hfui-createnewlayoutmodal__wrapper'
-      label='Add Layout'
+      label={t('layoutSettings.addLayout')}
     >
       <Input
         type='text'
-        placeholder='Layout Name'
+        placeholder={t('layoutSettings.layoutName')}
         value={label}
         onChange={setLabel}
       />
@@ -48,7 +51,7 @@ const CreateNewLayoutModal = ({ onClose, isOpen }) => {
           primary
           onClick={onSubmitHandler}
         >
-          Add Layout
+          {t('layoutSettings.addLayout')}
         </Modal.Button>
       </Modal.Footer>
     </Modal>

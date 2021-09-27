@@ -1,17 +1,19 @@
 import React, { useState, useEffect, memo } from 'react'
 import PropTypes from 'prop-types'
 import _isEmpty from 'lodash/isEmpty'
-
+import { useTranslation } from 'react-i18next'
 import Panel from '../../ui/Panel'
 import Chart from '../Chart'
 import MarketSelect from '../MarketSelect'
 import './style.css'
+import { getPairFromMarket } from '../../util/market'
 
 const ChartPanel = ({
   dark, label, onRemove, moveable, removeable, showChartMarket, markets, canChangeMarket,
-  activeMarket, savedState: { currentMarket: _currentMarket }, saveState, layoutID, layoutI, showMarket,
+  activeMarket, savedState: { currentMarket: _currentMarket }, saveState, layoutID, layoutI, showMarket, getCurrencySymbol,
 }) => {
   const [currentMarket, setCurrentMarket] = useState(_currentMarket || activeMarket)
+  const currentPair = getPairFromMarket(currentMarket, getCurrencySymbol)
 
   useEffect(() => {
     if (_isEmpty(_currentMarket) && activeMarket.restID !== currentMarket.restID) {
@@ -36,6 +38,8 @@ const ChartPanel = ({
     })
   }
 
+  const { t } = useTranslation()
+
   const renderMarketDropdown = () => {
     return (
       <MarketSelect
@@ -51,14 +55,14 @@ const ChartPanel = ({
   return (
     <Panel
       dark={dark}
-      label={label || 'Chart'}
+      label={label || t('chartModal.title')}
       darkHeader={dark}
       onRemove={onRemove}
       moveable={moveable}
       removeable={removeable}
       showChartMarket={showChartMarket}
       chartMarketSelect={showChartMarket && canChangeMarket && renderMarketDropdown()}
-      headerComponents={showMarket && !canChangeMarket && <p>{currentMarket.uiID}</p>}
+      headerComponents={showMarket && !canChangeMarket && <p>{currentPair}</p>}
       className='hfui-chart__wrapper'
     >
       <Chart market={currentMarket} />
@@ -89,6 +93,7 @@ ChartPanel.propTypes = {
     ])),
   }),
   markets: PropTypes.objectOf(PropTypes.object),
+  getCurrencySymbol: PropTypes.func.isRequired,
 }
 
 ChartPanel.defaultProps = {

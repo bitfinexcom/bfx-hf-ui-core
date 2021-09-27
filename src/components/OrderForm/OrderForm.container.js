@@ -1,9 +1,11 @@
 import { connect } from 'react-redux'
+import { compose } from 'redux'
 import { push } from 'connected-react-router'
 import Debug from 'debug'
 import _values from 'lodash/values'
 import _map from 'lodash/map'
 
+import { withTranslation } from 'react-i18next'
 import OrderForm from './OrderForm'
 import UIActions from '../../redux/actions/ui'
 import WSActions from '../../redux/actions/ws'
@@ -18,11 +20,11 @@ import {
 } from '../../redux/selectors/ui'
 import rawOrders from '../../orders'
 
-const orders = _map(_values(rawOrders), uiDef => uiDef())
+const getAtomicOrders = (t) => _map(_values(rawOrders), uiDef => uiDef(t))
 const debug = Debug('hfui:c:order-form')
 
 const mapStateToProps = (state = {}, ownProps = {}) => {
-  const { layoutID, layoutI: id } = ownProps
+  const { layoutID, layoutI: id, t } = ownProps
   const { ws = {} } = state
   const { favoriteTradingPairs = {} } = ws
   const { favoritePairs = [] } = favoriteTradingPairs
@@ -36,8 +38,8 @@ const mapStateToProps = (state = {}, ownProps = {}) => {
     mode: getCurrentMode(state),
     isPaperTrading: getIsPaperTrading(state),
     isOrderExecuting: getIsOrderExecuting(state),
-    orders,
     aoParams: getAOParams(state),
+    orders: getAtomicOrders(t),
   }
 }
 
@@ -116,4 +118,4 @@ const mapDispatchToProps = dispatch => ({
   },
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(OrderForm)
+export default compose(withTranslation(), connect(mapStateToProps, mapDispatchToProps))(OrderForm)

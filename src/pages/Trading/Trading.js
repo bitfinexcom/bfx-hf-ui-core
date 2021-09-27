@@ -2,6 +2,7 @@ import React, {
   memo, useCallback, lazy, Suspense,
 } from 'react'
 import PropTypes from 'prop-types'
+import { useTranslation } from 'react-i18next'
 
 import Layout from '../../components/Layout'
 import { STEPS, STATUS } from '../../components/Joyride'
@@ -33,6 +34,8 @@ const Trading = ({
   hasActiveAlgoOrders,
   finishGuide,
 }) => {
+  const { t } = useTranslation()
+
   const onGuideFinish = useCallback((data) => {
     const { status } = data
     const finishedStatuses = [STATUS.FINISHED, STATUS.SKIPPED]
@@ -50,7 +53,7 @@ const Trading = ({
           <Suspense fallback={<></>}>
             <Joyride
               callback={onGuideFinish}
-              steps={STEPS.TRADING}
+              steps={STEPS.getTradingModes(t)}
               run={isGuideActive}
             />
           </Suspense>

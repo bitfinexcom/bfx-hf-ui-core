@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { VirtualTable, Checkbox } from '@ufx-ui/core'
+import { useTranslation } from 'react-i18next'
 
 import columns from './ActiveAlgoOrdersModal.columns'
 
@@ -12,25 +13,28 @@ const AlgoOrdersTable = ({
   isOrderSelected,
   onAllOrdersSelect,
   isAllOrdersSelected,
-}) => (
-  <>
-    <VirtualTable
-      className='ao-modal-virtual-table'
-      data={orders}
-      columns={columns(onOrderSelect, isOrderSelected)}
-      defaultSortBy='gid'
-      defaultSortDirection='ASC'
-      onRowClick={({ rowData }) => onOrderSelect(!isOrderSelected(rowData.gid), rowData.gid, rowData.algoID)}
-      rowHeight={40}
-    />
-    <Checkbox
-      className='select-all'
-      label='Select All'
-      checked={isAllOrdersSelected()}
-      onChange={e => onAllOrdersSelect(e)}
-    />
-  </>
-)
+}) => {
+  const { t } = useTranslation()
+  return (
+    <>
+      <VirtualTable
+        className='ao-modal-virtual-table'
+        data={orders}
+        columns={columns(onOrderSelect, isOrderSelected, t)}
+        defaultSortBy='gid'
+        defaultSortDirection='ASC'
+        onRowClick={({ rowData }) => onOrderSelect(!isOrderSelected(rowData.gid), rowData.gid, rowData.algoID)}
+        rowHeight={40}
+      />
+      <Checkbox
+        className='select-all'
+        label={t('activeAlgoOrdersModal.selectAllBtn')}
+        checked={isAllOrdersSelected()}
+        onChange={e => onAllOrdersSelect(e)}
+      />
+    </>
+  )
+}
 
 AlgoOrdersTable.propTypes = {
   isOrderSelected: PropTypes.func,

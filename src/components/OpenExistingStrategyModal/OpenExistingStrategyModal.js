@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import Debug from 'debug'
 import _isEmpty from 'lodash/isEmpty'
 import _find from 'lodash/find'
+import { useTranslation } from 'react-i18next'
 
 import Modal from '../../ui/Modal'
 import { makeShorterLongName } from '../../util/ui'
@@ -20,9 +21,11 @@ const OpenExistingStrategyModal = ({
   const [strategyID, setStrategyID] = useState(null)
   const [error, setError] = useState('')
 
+  const { t } = useTranslation()
+
   const onSubmit = () => {
     if (!strategyID) {
-      setError('No strategy selected')
+      setError(t('strategyEditor.openStartegyModalNoSelectedError'))
       return
     }
     const strategy = _find(strategies, ({ id }) => id === strategyID)
@@ -41,7 +44,7 @@ const OpenExistingStrategyModal = ({
       isOpen={isOpen}
       onClose={onClose}
       className='hfui-openexistingstrategymodal__wrapper'
-      label='Open Strategy'
+      label={t('strategyEditor.openStrategyModalTitle')}
     >
       <Dropdown
         value={strategyID}
@@ -58,7 +61,7 @@ const OpenExistingStrategyModal = ({
 
       <Modal.Footer>
         <Modal.Button onClick={onSubmit} primary>
-          Open
+          {t('ui.openBtn')}
         </Modal.Button>
       </Modal.Footer>
     </Modal>

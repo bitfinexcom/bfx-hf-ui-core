@@ -9,14 +9,14 @@ const STYLES = {
   rightAlign: { justifyContent: 'flex-end' },
 }
 
-export default ({ authToken, closePosition }) => [{
-  label: 'Pair',
+export default ({ authToken, closePosition, t }) => [{
+  label: t('table.pair'),
   dataKey: 'symbol',
   width: 145,
   flexGrow: 1.5,
   cellRenderer: ({ rowData = {} }) => defaultCellRenderer(rowData.uiID),
 }, {
-  label: 'Amount',
+  label: t('table.amount'),
   dataKey: 'amount',
   width: 160,
   flexGrow: 1.6,
@@ -31,7 +31,7 @@ export default ({ authToken, closePosition }) => [{
     />,
   ),
 }, {
-  label: 'Base Price',
+  label: t('table.basePrice'),
   dataKey: 'basePrice',
   width: 130,
   flexGrow: 1.3,
@@ -45,7 +45,7 @@ export default ({ authToken, closePosition }) => [{
     />,
   ),
 }, {
-  label: 'Liq Price',
+  label: t('table.liqPrice'),
   dataKey: 'liquidationPrice',
   width: 100,
   flexGrow: 1,
@@ -59,7 +59,7 @@ export default ({ authToken, closePosition }) => [{
     />,
   ),
 }, {
-  label: 'P/L',
+  label: t('table.pl'),
   dataKey: 'pl',
   width: 100,
   flexGrow: 1,
@@ -74,7 +74,7 @@ export default ({ authToken, closePosition }) => [{
     />,
   ),
 }, {
-  label: 'P/L %',
+  label: t('table.plPerc'),
   dataKey: 'plPerc',
   width: 70,
   flexGrow: 0.7,
@@ -88,7 +88,7 @@ export default ({ authToken, closePosition }) => [{
     />,
   ),
 }, {
-  label: 'Funding Cost',
+  label: t('table.fundingCost'),
   dataKey: 'marginFunding',
   width: 100,
   flexGrow: 1,

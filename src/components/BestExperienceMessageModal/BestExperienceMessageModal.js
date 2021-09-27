@@ -1,6 +1,6 @@
 import React, { memo, useEffect, useState } from 'react'
 import _isNil from 'lodash/isNil'
-
+import { useTranslation } from 'react-i18next'
 import Modal from '../../ui/Modal'
 import { MIN_SAFE_WIDTH, HF_UI_WEB_SHOW_BEST_EXPERIENCE_MODAL } from '../../constants/variables'
 
@@ -30,19 +30,21 @@ const BestExperienceMessageModal = () => {
     }
     setTimeout(() => setOpeningState(true), 100)
   }, [])
+
+  const { t } = useTranslation()
   return (
     <Modal
-      label='Best experience warning'
+      label={t('bestExperienceMessageModal.title')}
       isOpen={isOpen}
       onClose={closeBestExperienceModal}
     >
-      <p>Web verison of Honey Framework designed for desktops. For having best experience in using application, we strongly recommend using desktop.</p>
-      <p>It&apos;s adviced to use this app in a landscape mode.</p>
+      <p>{t('bestExperienceMessageModal.text1')}</p>
+      <p>{t('bestExperienceMessageModal.text2')}</p>
       <br />
-      <p>Best regards, your Honey Framework&apos;s team!</p>
+      <p>{t('bestExperienceMessageModal.text3')}</p>
       <Modal.Footer>
         <Modal.Button primary onClick={onSubmitBestExperienceModal}>
-          I understood. Don&apos;t show me again!
+          {t('ui.dontShowAgain')}
         </Modal.Button>
       </Modal.Footer>
     </Modal>
