@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, memo } from 'react'
 import _isEmpty from 'lodash/isEmpty'
 import _size from 'lodash/size'
 import PropTypes from 'prop-types'
@@ -91,4 +91,4 @@ CreateNewStrategyModal.defaultProps = {
   isOpen: true,
 }
 
-export default CreateNewStrategyModal
+export default memo(CreateNewStrategyModal)

@@ -8,7 +8,7 @@ import Layout from '../../components/Layout'
 import { STEPS, STATUS } from '../../components/Joyride'
 import GridLayout from '../../components/GridLayout'
 import ActiveAlgoOrdersModal from '../../modals/ActiveAlgoOrdersModal'
-import RefillBalanceModal from '../../modals/RefillBalanceModal'
+// import RefillBalanceModal from '../../modals/RefillBalanceModal'
 
 import './style.css'
 
@@ -66,7 +66,7 @@ const Trading = ({
         </div>
 
         <ActiveAlgoOrdersModal isOpen={showAlgoModal && hasActiveAlgoOrders && apiClientConnected} />
-        <RefillBalanceModal />
+        {/* <RefillBalanceModal /> */}
       </Layout.Main>
       <Layout.Footer />
     </Layout>

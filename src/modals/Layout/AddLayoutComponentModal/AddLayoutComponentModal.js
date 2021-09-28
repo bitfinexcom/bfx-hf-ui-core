@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, memo } from 'react'
 import { useDispatch } from 'react-redux'
 import _isEmpty from 'lodash/isEmpty'
 import PropTypes from 'prop-types'
@@ -67,4 +67,4 @@ AddLayoutComponentModal.propTypes = {
   isOpen: PropTypes.bool.isRequired,
 }
 
-export default AddLayoutComponentModal
+export default memo(AddLayoutComponentModal)

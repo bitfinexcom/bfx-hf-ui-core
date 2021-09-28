@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import React, { useState } from 'react'
+import React, { useState, memo } from 'react'
 import _values from 'lodash/values'
 import _isFunction from 'lodash/isFunction'
 import cx from 'classnames'
@@ -71,4 +71,4 @@ const AppSettingsModal = ({
   )
 }
 
-export default AppSettingsModal
+export default memo(AppSettingsModal)
