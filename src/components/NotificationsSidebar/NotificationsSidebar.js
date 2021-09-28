@@ -43,6 +43,8 @@ class NotificationsSidebar extends React.PureComponent {
     return {
       lastShownMTS: showMTS,
       liveNotifications: [
+        // TODO: rework notifications state
+        // eslint-disable-next-line lodash/prefer-lodash-method
         ...notifications.filter(({ cid }) => !_includes(shownNotifications, cid)).map(n => ({
           n: {
             message: n.i18n ? t(n.i18n.key, n.i18n.props) : n.text,
