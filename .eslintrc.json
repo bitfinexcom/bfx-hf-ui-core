@@ -5,6 +5,7 @@
     "eslint:recommended",
     "plugin:react/recommended"
   ],
+  "plugins": ["lodash"],
   "rules": {
     "arrow-body-style": "off",
     "arrow-parens": "off",
@@ -34,7 +35,8 @@
     "react/prop-types": "warn",
     "react/state-in-constructor": "off",
     "react/static-property-placement": "off",
-    "semi": [ "warn", "never" ]
+    "semi": [ "warn", "never" ],
+    "lodash/prefer-lodash-method": "warn"
   },
   "settings": {
     "import/resolver": {
