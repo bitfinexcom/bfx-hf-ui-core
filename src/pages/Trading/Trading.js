@@ -7,8 +7,8 @@ import { useTranslation } from 'react-i18next'
 import Layout from '../../components/Layout'
 import { STEPS, STATUS } from '../../components/Joyride'
 import GridLayout from '../../components/GridLayout'
-import ActiveAlgoOrdersModal from '../../components/ActiveAlgoOrdersModal'
-import RefillBalanceModal from '../../components/RefillBalanceModal'
+import ActiveAlgoOrdersModal from '../../modals/ActiveAlgoOrdersModal'
+import RefillBalanceModal from '../../modals/RefillBalanceModal'
 
 import './style.css'
 

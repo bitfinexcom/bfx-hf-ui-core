@@ -15,8 +15,8 @@ import { ReactComponent as LayoutIcon } from './layout-icon.svg'
 import NavbarButton from './Navbar.Button'
 import Routes from '../../constants/routes'
 
-import AddLayoutComponentModal from '../AddLayoutComponentModal'
-import CreateNewLayoutModal from '../CreateNewLayoutModal'
+import AddLayoutComponentModal from '../../modals/Layout/AddLayoutComponentModal'
+import CreateNewLayoutModal from '../../modals/Layout/CreateNewLayoutModal'
 import { makeShorterLongName } from '../../util/ui'
 
 const MAX_ID_LENGTH = 30

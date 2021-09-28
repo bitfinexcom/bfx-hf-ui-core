@@ -4,9 +4,9 @@ import _isEmpty from 'lodash/isEmpty'
 import PropTypes from 'prop-types'
 import { useTranslation } from 'react-i18next'
 
-import Input from '../../ui/Input'
-import Modal from '../../ui/Modal'
-import { createLayout } from '../../redux/actions/ui'
+import Input from '../../../ui/Input'
+import Modal from '../../../ui/Modal'
+import { createLayout } from '../../../redux/actions/ui'
 
 import './style.css'
 

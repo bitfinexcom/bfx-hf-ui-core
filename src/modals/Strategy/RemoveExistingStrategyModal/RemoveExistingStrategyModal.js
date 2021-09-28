@@ -1,8 +1,8 @@
 import React, { useEffect, useState, memo } from 'react'
 import PropTypes from 'prop-types'
 import _size from 'lodash/size'
-import Input from '../../ui/Input'
-import Modal from '../../ui/Modal'
+import Input from '../../../ui/Input'
+import Modal from '../../../ui/Modal'
 
 import './style.css'
 

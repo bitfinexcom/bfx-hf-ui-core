@@ -6,9 +6,9 @@ import _find from 'lodash/find'
 import _mapValues from 'lodash/mapValues'
 import { useTranslation } from 'react-i18next'
 
-import Modal from '../../ui/Modal'
-import { makeShorterLongName } from '../../util/ui'
-import Dropdown from '../../ui/Dropdown'
+import Modal from '../../../ui/Modal'
+import { makeShorterLongName } from '../../../util/ui'
+import Dropdown from '../../../ui/Dropdown'
 
 import './style.css'
 

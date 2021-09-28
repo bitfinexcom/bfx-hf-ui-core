@@ -4,11 +4,11 @@ import _size from 'lodash/size'
 import PropTypes from 'prop-types'
 import { useTranslation } from 'react-i18next'
 
-import Templates from '../StrategyEditor/templates'
+import Templates from '../../../components/StrategyEditor/templates'
 
-import Input from '../../ui/Input'
-import Modal from '../../ui/Modal'
-import Dropdown from '../../ui/Dropdown'
+import Input from '../../../ui/Input'
+import Modal from '../../../ui/Modal'
+import Dropdown from '../../../ui/Dropdown'
 
 import './style.css'
 

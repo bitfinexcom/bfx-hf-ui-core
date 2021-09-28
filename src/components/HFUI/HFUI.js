@@ -18,12 +18,12 @@ const TradingPage = lazy(() => import('../../pages/Trading'))
 const MarketDataPage = lazy(() => import('../../pages/MarketData'))
 const AuthenticationPage = lazy(() => import('../../pages/Authentication'))
 
-const TradingModeModal = lazy(() => import('../TradingModeModal'))
-const BadConnectionModal = lazy(() => import('../BadConnectionModal'))
-const OldFormatModal = lazy(() => import('../OldFormatModal'))
-const AOPauseModal = lazy(() => import('../AOPauseModal'))
-const BestExperienceMessageModal = lazy(() => import('../BestExperienceMessageModal'))
-const CcyInfoModal = lazy(() => import('../CcyInfoModal'))
+const TradingModeModal = lazy(() => import('../../modals/TradingModeModal'))
+const BadConnectionModal = lazy(() => import('../../modals/BadConnectionModal'))
+const OldFormatModal = lazy(() => import('../../modals/OldFormatModal'))
+const AOPauseModal = lazy(() => import('../../modals/AOPauseModal'))
+const BestExperienceMessageModal = lazy(() => import('../../modals/BestExperienceMessageModal'))
+const CcyInfoModal = lazy(() => import('../../modals/CcyInfoModal'))
 
 const HFUI = ({
   authToken,

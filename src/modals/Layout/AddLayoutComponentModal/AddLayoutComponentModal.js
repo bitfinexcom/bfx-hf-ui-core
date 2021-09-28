@@ -3,13 +3,13 @@ import { useDispatch } from 'react-redux'
 import _isEmpty from 'lodash/isEmpty'
 import PropTypes from 'prop-types'
 import { useTranslation } from 'react-i18next'
-import Modal from '../../ui/Modal'
-import Dropdown from '../../ui/Dropdown'
+
+import Modal from '../../../ui/Modal'
+import Dropdown from '../../../ui/Dropdown'
+import { addComponent } from '../../../redux/actions/ui'
 import {
   COMPONENT_TYPES, COMPONENT_LABELS,
-} from '../GridLayout/GridLayout.helpers'
-
-import { addComponent } from '../../redux/actions/ui'
+} from '../../../components/GridLayout/GridLayout.helpers'
 
 import './style.css'
 

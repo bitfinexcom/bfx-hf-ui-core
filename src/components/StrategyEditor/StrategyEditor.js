@@ -13,9 +13,9 @@ import { useTranslation } from 'react-i18next'
 
 import Templates from './templates'
 import StrategyEditorPanel from './StrategyEditorPanel'
-import CreateNewStrategyModal from '../CreateNewStrategyModal'
-import RemoveExistingStrategyModal from '../RemoveExistingStrategyModal'
-import OpenExistingStrategyModal from '../OpenExistingStrategyModal'
+import CreateNewStrategyModal from '../../modals/Strategy/CreateNewStrategyModal'
+import RemoveExistingStrategyModal from '../../modals/Strategy/RemoveExistingStrategyModal'
+import OpenExistingStrategyModal from '../../modals/Strategy/OpenExistingStrategyModal'
 import MonacoEditor from './MonacoEditor'
 
 import './style.css'
