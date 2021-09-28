@@ -1,6 +1,6 @@
 import getFavoritePairs from './get_favorite_pairs'
 import getFavoritePairsObject from './get_favorite_pairs_object'
-import getSocket from './get_socket'
+import { getSocket, isSocketConnected } from './get_socket'
 import getSockets from './get_sockets'
 import getAuthToken from './get_auth_token'
 import getAuthConfigured from './get_auth_configured'
@@ -34,8 +34,9 @@ import getIsMainModeApiKeyUpdating from './get_is_main_mode_api_key_updating'
 import getIsPaperModeApiKeyUpdating from './get_is_paper_mode_api_key_updating'
 
 export {
-  getSocket,
   getSockets,
+  getSocket,
+  isSocketConnected,
 
   getAuthToken,
   getAuthConfigured,

@@ -5,7 +5,7 @@ import { useBeforeunload } from 'react-beforeunload'
 import { useSelector, useDispatch } from 'react-redux'
 import { reduxActions, reduxSelectors } from '@ufx-ui/bfx-containers'
 
-import { getSocket } from '../redux/selectors/ws'
+import { isSocketConnected } from '../redux/selectors/ws'
 import { isElectronApp } from '../redux/config'
 
 const {
@@ -19,12 +19,12 @@ const { getWSConnected } = reduxSelectors
 
 const useInjectBfxData = () => {
   const dispatch = useDispatch()
-  const socket = useSelector(getSocket())
+  const _isSocketConnected = useSelector(isSocketConnected)
   /*
     electron-app: api will be fetched on localhost:45001, which will be available once api-server is started
     hosted-app: can fetch early without waiting for api-server
   */
-  const isAPIServerConnected = !isElectronApp ? true : socket?.status === 'online'
+  const isAPIServerConnected = !isElectronApp ? true : _isSocketConnected
 
   // start: fetch common data used across all ufx-containers
   useEffect(() => {

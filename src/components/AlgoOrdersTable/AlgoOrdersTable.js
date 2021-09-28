@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { memo } from 'react'
 import PropTypes from 'prop-types'
 import { VirtualTable } from '@ufx-ui/core'
 import _isEmpty from 'lodash/isEmpty'
@@ -45,4 +45,4 @@ AlgoOrdersTable.defaultProps = {
   renderedInTradingState: false,
 }
 
-export default React.memo(AlgoOrdersTable)
+export default memo(AlgoOrdersTable)

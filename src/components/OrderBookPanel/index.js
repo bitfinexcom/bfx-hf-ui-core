@@ -1,3 +1,1 @@
-import OrderBookPanel from './OrderBookPanel.container'
-
-export default OrderBookPanel
+export { default } from './OrderBookPanel.container'

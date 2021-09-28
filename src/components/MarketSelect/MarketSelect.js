@@ -28,6 +28,7 @@ const MarketSelect = ({
   getCurrencySymbol,
   ...otherProps
 }) => {
+  console.log('MarketSelect: ')
   const [searchTerm, setSearchTerm] = useState('')
   const favoriteSelect = useCallback((pair, isPairSelected) => {
     if (isPairSelected) {

@@ -1,3 +1,1 @@
-import PositionsTablePanel from './PositionsTablePanel'
-
-export default PositionsTablePanel
+export { default } from './PositionsTablePanel'

@@ -1,3 +1,1 @@
-import SwitchMode from './SwitchMode.container'
-
-export default SwitchMode
+export { default } from './SwitchMode.container'

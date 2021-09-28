@@ -5,7 +5,7 @@ import WSActions from '../../actions/ws'
 import { isElectronApp } from '../../config'
 import { getSockets } from '../../selectors/ws'
 
-import WSTypes from '../../constants/ws'
+import WSTypes, { SOCKET_STATUS_MAP } from '../../constants/ws'
 
 const URLS = {
   [WSTypes.ALIAS_API_SERVER]: process.env.REACT_APP_WSS_URL,
@@ -33,7 +33,7 @@ export default function* () {
         continue
       }
 
-      if (sockets[socket].status === 'offline') {
+      if (sockets[socket].status === SOCKET_STATUS_MAP.OFFLINE) {
         debug(`attempting connection to ${socket}...`)
         yield put(WSActions.connect(socket, URLS[socket]))
       }

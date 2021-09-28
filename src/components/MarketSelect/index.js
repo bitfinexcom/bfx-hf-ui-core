@@ -1,3 +1,1 @@
-import MarketSelect from './MarketSelect.container'
-
-export default MarketSelect
+export { default } from './MarketSelect.container'

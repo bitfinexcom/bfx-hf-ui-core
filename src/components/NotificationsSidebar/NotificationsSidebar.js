@@ -106,6 +106,7 @@ class NotificationsSidebar extends React.PureComponent {
   }
 
   render() {
+    console.log('NotificationsSidebar: ')
     const { liveNotifications } = this.state
     const {
       notifications, notificationsVisible, closeNotificationPanel, t,

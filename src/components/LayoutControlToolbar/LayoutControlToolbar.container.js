@@ -9,18 +9,12 @@ const mapStateToProps = (state = {}) => ({
   layouts: getLayouts(state),
 })
 
-const mapDispatchToProps = dispatch => ({
-  saveLayout: (layout, id) => {
-    dispatch(UIActions.saveLayout(layout, id))
-  },
+const mapDispatchToProps = {
+  saveLayout: UIActions.saveLayout,
 
-  createLayout: (id, tradingEnabled) => {
-    dispatch(UIActions.createLayout(id, tradingEnabled))
-  },
+  createLayout: UIActions.createLayout,
 
-  deleteLayout: (id) => {
-    dispatch(UIActions.deleteLayout(id))
-  },
-})
+  deleteLayout: UIActions.deleteLayout,
+}
 
 export default connect(mapStateToProps, mapDispatchToProps)(LayoutControlToolbar)
