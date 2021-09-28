@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 
-import UIActions from '../../redux/actions/ui'
+import { createLayout, saveLayout, deleteLayout } from '../../redux/actions/ui'
 import { getLayouts } from '../../redux/selectors/ui'
 
 import LayoutControlToolbar from './LayoutControlToolbar'
@@ -10,11 +10,9 @@ const mapStateToProps = (state = {}) => ({
 })
 
 const mapDispatchToProps = {
-  saveLayout: UIActions.saveLayout,
-
-  createLayout: UIActions.createLayout,
-
-  deleteLayout: UIActions.deleteLayout,
+  createLayout,
+  saveLayout,
+  deleteLayout,
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(LayoutControlToolbar)

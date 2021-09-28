@@ -9,9 +9,9 @@ const mapStateToProps = (state = {}) => ({
   activeAlgoOrders: getActiveAlgoOrders(state),
 })
 
-const mapDispatchToProps = dispatch => ({
-  showActiveOrdersModal: payload => dispatch(showActiveOrdersModal(payload)),
-  handleActiveOrders: data => dispatch(handleActiveOrders(data)),
-})
+const mapDispatchToProps = {
+  showActiveOrdersModal,
+  handleActiveOrders,
+}
 
 export default connect(mapStateToProps, mapDispatchToProps)(ActiveAlgoOrdersModal)
