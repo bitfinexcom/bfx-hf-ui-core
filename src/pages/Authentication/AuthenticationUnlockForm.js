@@ -84,6 +84,7 @@ const AuthenticationUnlockForm = ({ isPaperTrading, onUnlock: _onUnlock, onReset
           <Dropdown
             className='hfui-authenticationpage__trading-mode'
             placeholder={t('auth.selectMode')}
+            // eslint-disable-next-line lodash/prefer-lodash-method
             value={OPTIONS.find(o => o.value === mode)?.value}
             options={OPTIONS}
             onChange={(value) => setMode(value)}

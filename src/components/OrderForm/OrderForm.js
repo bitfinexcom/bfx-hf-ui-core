@@ -5,6 +5,8 @@ import _isEmpty from 'lodash/isEmpty'
 import _isString from 'lodash/isString'
 import _isBoolean from 'lodash/isBoolean'
 import _map from 'lodash/map'
+import _find from 'lodash/find'
+import _forEach from 'lodash/forEach'
 import _trim from 'lodash/trim'
 import _isNil from 'lodash/isNil'
 import PropTypes from 'prop-types'
@@ -143,10 +145,10 @@ class OrderForm extends React.Component {
     const algoOrders = getAOs(t)
     const orders = getAtomicOrders(t)
 
-    let uiDef = orders.find(({ label }) => label === orderLabel)
+    let uiDef = _find(orders, ({ label }) => label === orderLabel)
 
     if (!uiDef) {
-      uiDef = algoOrders.find(({ label }) => label === orderLabel)
+      uiDef = _find(algoOrders, ({ label }) => label === orderLabel)
     }
 
     uiDef.fields = fixComponentContext(uiDef.fields, currentMarket)
@@ -363,13 +365,13 @@ class OrderForm extends React.Component {
     const atomicOrderTypes = []
     const algoOrderTypes = []
 
-    orders.forEach(({ label, id, uiIcon }) => atomicOrderTypes.push({
+    _forEach(orders, ({ label, id, uiIcon }) => atomicOrderTypes.push({
       id,
       label,
       uiIcon,
     }))
 
-    algoOrders.forEach(({ label, id, uiIcon }) => {
+    _forEach(algoOrders, ({ label, id, uiIcon }) => {
       algoOrderTypes.push({
         id,
         label,

@@ -1,6 +1,7 @@
 /* eslint-disable no-param-reassign */
 import React, { memo, useEffect, useRef } from 'react'
 import _isEmpty from 'lodash/isEmpty'
+import _forEach from 'lodash/forEach'
 import PropTypes from 'prop-types'
 import InnerHTML from 'dangerously-set-html-content'
 import { Spinner } from '@ufx-ui/core'
@@ -29,7 +30,7 @@ const CcyInfoModal = ({
     }
 
     const links = containerRef.current.querySelectorAll('a')
-    links.forEach(link => {
+    _forEach(links, link => {
       link.target = '_blank'
       link.rel = 'noopener noreferrer'
     })

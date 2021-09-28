@@ -3,6 +3,9 @@ import PropTypes from 'prop-types'
 import _isEqual from 'lodash/isEqual'
 import _isEmpty from 'lodash/isEmpty'
 import _differenceBy from 'lodash/differenceBy'
+import _filter from 'lodash/filter'
+import _includes from 'lodash/includes'
+import _forEach from 'lodash/forEach'
 import { useTranslation } from 'react-i18next'
 
 import Modal from '../../ui/Modal'
@@ -28,14 +31,14 @@ const ActiveAlgoOrdersModal = ({
     if (e) {
       setSelectedOrders([...selectedOrders, { gid, algoID }])
     } else {
-      setSelectedOrders([...(selectedOrders.filter(order => gid !== order.gid))])
+      setSelectedOrders(_filter(selectedOrders, order => gid !== order.gid))
     }
   }
 
   const onAllOrdersSelect = (e) => {
     let allOrders = []
     if (e) {
-      ordersList.forEach(order => {
+      _forEach(ordersList, order => {
         const { gid, algoID } = order
         allOrders.push({ gid, algoID })
       })
@@ -47,13 +50,13 @@ const ActiveAlgoOrdersModal = ({
 
   const isOrderSelected = (gid) => {
     const gids = []
-    selectedOrders.forEach(order => gids.push(order.gid))
-    return gids.includes(gid)
+    _forEach(selectedOrders, order => gids.push(order.gid))
+    return _includes(gids, gid)
   }
 
   const isAllOrdersSelected = () => {
     const allOrders = []
-    ordersList.forEach(order => {
+    _forEach(ordersList, order => {
       const { gid, algoID } = order
       allOrders.push({ gid, algoID })
     })
@@ -62,7 +65,7 @@ const ActiveAlgoOrdersModal = ({
 
   const prepareOrders = (orders) => {
     const preparedOrders = []
-    orders.forEach(order => {
+    _forEach(orders, order => {
       const { gid, algoID } = order
       preparedOrders.push({ gid, algoID })
     })

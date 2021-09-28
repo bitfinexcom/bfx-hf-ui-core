@@ -6,6 +6,7 @@ const EVENTS_TO_MODIFY = ['touchstart', 'touchmove', 'touchend', 'touchcancel', 
 const originalAddEventListener = document.addEventListener.bind()
 document.addEventListener = (type, listener, options, wantsUntrusted) => {
   let modOptions = options
+  // eslint-disable-next-line lodash/prefer-lodash-method
   if (EVENTS_TO_MODIFY.includes(type)) {
     if (typeof options === 'boolean') {
       modOptions = {
@@ -26,6 +27,7 @@ document.addEventListener = (type, listener, options, wantsUntrusted) => {
 const originalRemoveEventListener = document.removeEventListener.bind()
 document.removeEventListener = (type, listener, options) => {
   let modOptions = options
+  // eslint-disable-next-line lodash/prefer-lodash-method
   if (EVENTS_TO_MODIFY.includes(type)) {
     if (typeof options === 'boolean') {
       modOptions = {

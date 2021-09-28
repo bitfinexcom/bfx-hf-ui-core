@@ -1,6 +1,7 @@
 import _filter from 'lodash/filter'
 import _find from 'lodash/find'
 import _reduce from 'lodash/reduce'
+import _keys from 'lodash/keys'
 import types from '../../constants/ws'
 import marketTypes from '../../constants/market'
 
@@ -23,7 +24,7 @@ export default (state = getInitialState(), action = {}) => {
 
     case marketTypes.SET_CCY_FULL_NAMES: {
       const { names: [namesArr] } = payload
-      const marketsKeysArray = Object.keys(state)
+      const marketsKeysArray = _keys(state)
 
       const newState = _reduce(marketsKeysArray, (acc, key) => {
         const market = state[key]
@@ -63,7 +64,7 @@ export default (state = getInitialState(), action = {}) => {
     }
     case marketTypes.SET_PERPS_NAMES: {
       const { names: [namesArr] } = payload
-      const marketsKeysArray = Object.keys(state)
+      const marketsKeysArray = _keys(state)
 
       const newState = _reduce(marketsKeysArray, (acc, key) => {
         const market = state[key]

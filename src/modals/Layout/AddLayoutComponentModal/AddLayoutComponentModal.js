@@ -1,6 +1,8 @@
 import React, { useState, memo } from 'react'
 import { useDispatch } from 'react-redux'
 import _isEmpty from 'lodash/isEmpty'
+import _values from 'lodash/values'
+import _map from 'lodash/map'
 import PropTypes from 'prop-types'
 import { useTranslation } from 'react-i18next'
 
@@ -40,7 +42,7 @@ const AddLayoutComponentModal = ({ onClose, isOpen }) => {
       <Dropdown
         value={componentType}
         onChange={setComponentType}
-        options={Object.values(COMPONENT_TYPES).map(type => ({
+        options={_map(_values(COMPONENT_TYPES), type => ({
           label: t(COMPONENT_LABELS[type]),
           value: type,
         }))}

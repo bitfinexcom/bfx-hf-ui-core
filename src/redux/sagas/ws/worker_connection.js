@@ -1,4 +1,6 @@
 import { put, delay, select } from 'redux-saga/effects'
+import _keys from 'lodash/keys'
+
 import Debug from 'debug'
 
 import WSActions from '../../actions/ws'
@@ -23,7 +25,7 @@ export default function* () {
 
   while (true) {
     const sockets = yield select(getSockets)
-    const keys = Object.keys(sockets)
+    const keys = _keys(sockets)
 
     for (let i = 0; i < keys.length; ++i) {
       const socket = keys[i]

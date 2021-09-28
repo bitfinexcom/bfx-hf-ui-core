@@ -1,4 +1,5 @@
 import _get from 'lodash/get'
+import _find from 'lodash/find'
 import _startsWith from 'lodash/startsWith'
 import * as cookie from 'js-cookie'
 import { BFX_TOKEN_COOKIE, BFX_FORCE_LOGIN, BFX_FORCE_LOGIN_MESSAGE } from '../constants/cookies'
@@ -12,7 +13,7 @@ export const defaultCookieOpts = cookieDomain === 'localhost'
 // we can add it here
 const noAuthPages = []
 
-export const isNonAuthPage = (path) => noAuthPages.find((noAuthPath) => (
+export const isNonAuthPage = (path) => _find(noAuthPages, (noAuthPath) => (
   path === noAuthPath || _startsWith(path, noAuthPath)
 ))
 

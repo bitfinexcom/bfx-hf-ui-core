@@ -5,6 +5,12 @@ import _isBoolean from 'lodash/isBoolean'
 import _capitalize from 'lodash/capitalize'
 import _flatten from 'lodash/flatten'
 import _forOwn from 'lodash/forOwn'
+import _forEach from 'lodash/forEach'
+import _filter from 'lodash/filter'
+import _map from 'lodash/map'
+import _join from 'lodash/join'
+import _keys from 'lodash/keys'
+import _includes from 'lodash/includes'
 
 import NumberInput from './FieldComponents/input.number'
 import PriceInput from './FieldComponents/input.price'
@@ -58,13 +64,13 @@ const verifyCondition = (condition = {}, value) => {
     return value <= condition.lte
   }
 
-  console.error(`unknown condition: ${Object.keys(condition).join(', ')}`)
+  console.error(`unknown condition: ${_join(_keys(condition), ', ')}`)
 
   return false
 }
 
 const verifyConditionsMet = (conditions = {}, fieldData = {}) => {
-  const fields = Object.keys(conditions)
+  const fields = _keys(conditions)
 
   for (let i = 0; i < fields.length; i += 1) {
     if (!verifyCondition(conditions[fields[i]], fieldData[fields[i]])) {
@@ -79,7 +85,7 @@ const defaultDataForLayout = (layout = {}) => {
   const { fields = {} } = layout
   const defaultData = {}
 
-  Object.keys(fields).forEach((fieldName) => {
+  _forEach(_keys(fields), (fieldName) => {
     const field = fields[fieldName]
     const { component, default: defaultValue } = field
     const C = COMPONENTS_FOR_ID[component] || {}
@@ -109,7 +115,7 @@ const processFieldData = ({ action, layout = {}, fieldData = {} }) => {
   const { fields = {} } = layout
   const data = {}
 
-  Object.keys(fieldData).forEach((fieldName) => {
+  _forEach(_keys(fieldData), (fieldName) => {
     const rawValue = fieldData[fieldName]
     const C = COMPONENTS_FOR_ID[(fields[fieldName] || {}).component]
 
@@ -199,7 +205,7 @@ const renderLayoutActions = ({
 }) => {
   // eslint-disable-line
   const { actions = [] } = layout
-  const validActions = actions.filter((action) => action !== 'preview')
+  const validActions = _filter(actions, (action) => action !== 'preview')
 
   return (
     <div
@@ -208,7 +214,7 @@ const renderLayoutActions = ({
         'single-action': validActions.length === 1,
       })}
     >
-      {validActions.map((action) => (
+      {_map(validActions, (action) => (
         <Button
           key={action}
           label={_capitalize(getActionsTranslate(action, t))}
@@ -240,7 +246,7 @@ const renderLayoutField = ({
     return null
   }
 
-  if (fieldDef.trading && !fieldDef.trading.includes(fieldData._context)) {
+  if (fieldDef.trading && !_includes(fieldDef.trading, fieldData._context)) {
     return null
   }
 
@@ -279,7 +285,7 @@ const renderLayoutSection = ({
 
       <ul>
         {_flatten(
-          rows.map((row, i) => row.map((field, rowI) => {
+          _map(rows, (row, i) => _map(row, (field, rowI) => {
             if (field === null) {
               // spacing placeholder
               return (
@@ -359,7 +365,7 @@ const renderLayout = ({
     }
   }
 
-  sections.forEach((section = {}) => {
+  _forEach(sections, (section = {}) => {
     const { visible } = section
 
     if (_isBoolean(visible) && !visible) {

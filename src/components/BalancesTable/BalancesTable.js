@@ -2,6 +2,7 @@ import React, { memo } from 'react'
 import { useSelector } from 'react-redux'
 import PropTypes from 'prop-types'
 import _isEmpty from 'lodash/isEmpty'
+import _filter from 'lodash/filter'
 import { VirtualTable } from '@ufx-ui/core'
 import { reduxSelectors } from '@ufx-ui/bfx-containers'
 import { useTranslation } from 'react-i18next'
@@ -19,7 +20,7 @@ const BalancesTable = ({
   const { t } = useTranslation()
   const data = renderedInTradingState ? filteredBalances : balances
   const filtered = hideZeroBalances
-    ? data.filter(b => +b.balance > DUST_THRESHOLD)
+    ? _filter(data, b => +b.balance > DUST_THRESHOLD)
     : data
 
   const getCurrencySymbol = useSelector(getCurrencySymbolMemo)

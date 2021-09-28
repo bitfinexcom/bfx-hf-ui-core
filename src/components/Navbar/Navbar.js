@@ -1,5 +1,7 @@
 import React from 'react'
 import { useDispatch } from 'react-redux'
+import _values from 'lodash/values'
+import _map from 'lodash/map'
 
 import { useTranslation } from 'react-i18next'
 import HFIcon from '../../ui/HFIcon'
@@ -25,7 +27,7 @@ const Navbar = () => {
     <div className='hfui-navbar__wrapper'>
       <HFIcon className='hfui-navbar__logo' />
       <ul className='hfui-navbar__main-links'>
-        {Object.values(Routes).map(({ path, label }) => (
+        {_map(_values(Routes), ({ path, label }) => (
           <li key={path}>
             <NavbarLink
               route={path}

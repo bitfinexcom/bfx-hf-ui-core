@@ -2,6 +2,7 @@ import React, {
   lazy, Suspense, useState, useEffect, memo,
 } from 'react'
 import _values from 'lodash/values'
+import _map from 'lodash/map'
 import randomColor from 'randomcolor'
 import PropTypes from 'prop-types'
 import _remove from 'lodash/remove'
@@ -61,7 +62,7 @@ const StrategyEditorPage = (props) => {
   }
 
   const onIndicatorsChange = (updatedIndicators) => {
-    const newIndicators = _values(updatedIndicators).map((ind) => {
+    const newIndicators = _map(_values(updatedIndicators), (ind) => {
       let colors = []
 
       for (let i = 0; i < 5; i += 1) {
@@ -88,9 +89,11 @@ const StrategyEditorPage = (props) => {
     const finishedStatuses = [STATUS.FINISHED, STATUS.SKIPPED]
     const CLOSE = 'close'
 
+    // eslint-disable-next-line lodash/prefer-lodash-method
     if ([EVENTS.STEP_AFTER, EVENTS.TARGET_NOT_FOUND].includes(type)) {
       // Update state to advance the tour
       setTourStep(index + (action === ACTIONS.PREV ? -1 : 1))
+    // eslint-disable-next-line lodash/prefer-lodash-method
     } else if (finishedStatuses.includes(status) || action === CLOSE) {
       finishGuide()
     }

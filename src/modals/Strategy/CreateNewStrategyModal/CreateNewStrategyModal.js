@@ -1,6 +1,7 @@
 import React, { useState, memo } from 'react'
 import _isEmpty from 'lodash/isEmpty'
 import _size from 'lodash/size'
+import _map from 'lodash/map'
 import PropTypes from 'prop-types'
 import { useTranslation } from 'react-i18next'
 
@@ -60,7 +61,7 @@ const CreateNewStrategyModal = ({
       <Dropdown
         value={template}
         onChange={setTemplate}
-        options={Templates.map(_t => ({
+        options={_map(Templates, _t => ({
           label: _t.label,
           value: _t.label,
         }))}

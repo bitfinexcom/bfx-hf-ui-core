@@ -3,6 +3,8 @@ import PropTypes from 'prop-types'
 import { VOLUME_UNIT, VOLUME_UNIT_PAPER } from '@ufx-ui/bfx-containers'
 import { TickerList, Ticker } from '@ufx-ui/core'
 import _find from 'lodash/find'
+import _filter from 'lodash/filter'
+import _keys from 'lodash/keys'
 
 import { useTranslation } from 'react-i18next'
 import Panel from '../../ui/Panel'
@@ -35,8 +37,7 @@ const ExchangeInfoBar = ({
   const [tickerRef, size] = useSize()
 
   const _updateFavorites = (object) => {
-    const arrayWithPairs = Object.keys(object)
-    const arrayWithFavorites = arrayWithPairs.filter(pair => object[pair])
+    const arrayWithFavorites = _filter(_keys(object), pair => object[pair])
     updateFavorites(authToken, arrayWithFavorites, currentMode)
   }
   const onChangeMarketHandler = ({ rowData } = {}) => {

@@ -23,7 +23,7 @@ const HOSTED_ALGO_ORDERS = [Iceberg, TWAP]
 
 const algoOrders = isElectronApp ? ALL_ALGO_ORDERS : HOSTED_ALGO_ORDERS
 
-export const getAOs = memoizeOne((t) => algoOrders.map(ao => ao.meta.getUIDef({
+export const getAOs = memoizeOne((t) => _map(algoOrders, ao => ao.meta.getUIDef({
   timeframes: timeFrames,
   i18n: { t, prefix: 'algoOrderForm.' },
 })))

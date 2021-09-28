@@ -1,6 +1,7 @@
 /* eslint-disable react/prop-types */
 import React, { useState, memo } from 'react'
 import _values from 'lodash/values'
+import _map from 'lodash/map'
 import _isFunction from 'lodash/isFunction'
 import cx from 'classnames'
 import { useTranslation } from 'react-i18next'
@@ -51,7 +52,7 @@ const AppSettingsModal = ({
       textAlign='center'
     >
       <div className='appsettings-modal__tabs'>
-        {_values(Tabs).map(tab => (
+        {_map(_values(Tabs), tab => (
           <div
             key={tab}
             className={cx('appsettings-modal__tab', {

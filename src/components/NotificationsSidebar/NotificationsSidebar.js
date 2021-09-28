@@ -43,7 +43,7 @@ class NotificationsSidebar extends React.PureComponent {
     return {
       lastShownMTS: showMTS,
       liveNotifications: [
-        ...notifications.filter(({ cid }) => !shownNotifications.includes(cid)).map(n => ({
+        ...notifications.filter(({ cid }) => !_includes(shownNotifications, cid)).map(n => ({
           n: {
             message: n.i18n ? t(n.i18n.key, n.i18n.props) : n.text,
             level: n.status,
@@ -55,7 +55,7 @@ class NotificationsSidebar extends React.PureComponent {
 
         ...prevState.liveNotifications,
       ],
-      shownNotifications: notifications.map(({ cid }) => cid),
+      shownNotifications: _map(notifications, ({ cid }) => cid),
     }
   }
 

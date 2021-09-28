@@ -3,6 +3,9 @@ import Debug from 'debug'
 import ClassNames from 'classnames'
 import _ from 'lodash'
 import _isEmpty from 'lodash/isEmpty'
+import _keys from 'lodash/keys'
+import _values from 'lodash/values'
+import _forEach from 'lodash/forEach'
 import _find from 'lodash/find'
 import Indicators from 'bfx-hf-indicators'
 import { nonce } from 'bfx-api-node-util'
@@ -133,7 +136,7 @@ const StrategyEditor = ({
       }
     }
 
-    Object.values(indicators).forEach((i) => {
+    _forEach(_values(indicators), (i) => {
       i.key = `${nonce()}` // eslint-disable-line
     })
 
@@ -148,9 +151,9 @@ const StrategyEditor = ({
       debug('unknown template: %s', templateLabel)
     }
 
-    const templateSections = Object.keys(template)
+    const templateSections = _keys(template)
 
-    templateSections.forEach((s) => {
+    _forEach(templateSections, (s) => {
       if (s === 'label') return
 
       newStrategy[s] = template[s]
@@ -296,6 +299,7 @@ const StrategyEditor = ({
         strategy={strategy}
       />
       <ul className='hfui-strategyeditor__func-select'>
+        {/* eslint-disable-next-line lodash/prefer-lodash-method */}
         {STRATEGY_SECTIONS.map(section => (
           <li
             key={section}
