@@ -22,14 +22,13 @@ import {
   COMPONENTS_FOR_ID,
 } from './OrderForm.helpers'
 import { isElectronApp } from '../../redux/config'
-
 import Panel from '../../ui/Panel'
 
 import ConnectingModal from './Modals/ConnectingModal'
 import UnconfiguredModal from './Modals/UnconfiguredModal'
 import SubmitAPIKeysModal from './Modals/SubmitAPIKeysModal'
 import OrderFormMenu from './OrderFormMenu'
-import { getAOs } from './OrderForm.ao.helpers'
+import { getAOs, getAtomicOrders } from './OrderForm.orders.helpers'
 
 import './style.css'
 
@@ -139,9 +138,10 @@ class OrderForm extends React.Component {
   }
 
   onChangeActiveOrderLayout(orderLabel) {
-    const { orders, t } = this.props
+    const { t } = this.props
     const { currentMarket } = this.state
     const algoOrders = getAOs(t)
+    const orders = getAtomicOrders(t)
 
     let uiDef = orders.find(({ label }) => label === orderLabel)
 
@@ -342,8 +342,9 @@ class OrderForm extends React.Component {
 
   render() {
     const {
-      onRemove, orders, apiClientState, apiCredentials, moveable, removeable, isPaperTrading, isOrderExecuting, t,
+      onRemove, apiClientState, apiCredentials, moveable, removeable, isPaperTrading, isOrderExecuting, t,
     } = this.props
+    const orders = getAtomicOrders(t)
 
     const {
       fieldData, validationErrors, creationError, context, currentLayout,
@@ -501,7 +502,6 @@ class OrderForm extends React.Component {
 }
 
 OrderForm.propTypes = {
-  orders: PropTypes.arrayOf(PropTypes.object).isRequired,
   savedState: PropTypes.objectOf(PropTypes.oneOfType([
     PropTypes.string, PropTypes.bool, PropTypes.object,
   ])).isRequired,
