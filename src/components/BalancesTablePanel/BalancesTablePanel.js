@@ -1,6 +1,5 @@
 import React, { useState, memo } from 'react'
 import PropTypes from 'prop-types'
-import _isEqual from 'lodash/isEqual'
 import { Checkbox } from '@ufx-ui/core'
 import { useTranslation } from 'react-i18next'
 
@@ -58,4 +57,4 @@ BalancesTablePanel.defaultProps = {
   dark: true,
 }
 
-export default memo(BalancesTablePanel, (prevProps, nextProps) => !_isEqual(prevProps, nextProps))
+export default memo(BalancesTablePanel)

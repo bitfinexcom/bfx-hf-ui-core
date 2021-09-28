@@ -1,3 +1,1 @@
-import TradesTablePanel from './TradesTablePanel.container'
-
-export default TradesTablePanel
+export { default } from './TradesTablePanel.container'

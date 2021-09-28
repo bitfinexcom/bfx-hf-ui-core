@@ -2,10 +2,10 @@ import React, {
   useMemo, useCallback, memo, useState,
 } from 'react'
 import _filter from 'lodash/filter'
+import _includes from 'lodash/includes'
 import _find from 'lodash/find'
 import _toLower from 'lodash/toLower'
 import _join from 'lodash/join'
-import _includes from 'lodash/includes'
 import _map from 'lodash/map'
 import ClassNames from 'classnames'
 import PropTypes from 'prop-types'
@@ -33,7 +33,7 @@ const MarketSelect = ({
     if (isPairSelected) {
       savePairs([...favoritePairs, pair], authToken, currentMode)
     } else {
-      const filteredPairs = favoritePairs.filter(p => p !== pair)
+      const filteredPairs = _filter(favoritePairs, p => p !== pair)
       savePairs(filteredPairs, authToken, currentMode)
     }
   }, [savePairs, favoritePairs])
@@ -50,7 +50,7 @@ const MarketSelect = ({
       label: getPairFromMarket(m, getCurrencySymbol) || `${m.base}/${m.quote}`,
       value: m.uiID,
     })), [])
-    return options.sort((a, b) => favoritePairs.includes(b.value) - favoritePairs.includes(a.value))
+    return options.sort((a, b) => _includes(favoritePairs, b.value) - _includes(favoritePairs, a.value))
   }, [searchTerm, favoritePairs, getCurrencySymbol])
 
   return (
@@ -65,7 +65,7 @@ const MarketSelect = ({
       options={sortedOptions}
       onSearchTermChange={setSearchTerm}
       optionRenderer={renderWithFavorites ? (optionValue, optionLabel) => {
-        const isSelected = favoritePairs.includes(optionValue)
+        const isSelected = _includes(favoritePairs, optionValue)
         return (
           <div className='hfui-marketselect__option'>
             <div className='hfui-marketselect__text'>{optionLabel}</div>

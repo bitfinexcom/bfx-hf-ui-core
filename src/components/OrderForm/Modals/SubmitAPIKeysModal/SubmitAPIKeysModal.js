@@ -2,6 +2,7 @@ import React, { memo, useState } from 'react'
 import PropTypes from 'prop-types'
 import _isEmpty from 'lodash/isEmpty'
 import { useTranslation } from 'react-i18next'
+import _toUpper from 'lodash/toUpper'
 
 import Input from '../../../../ui/Input'
 import Button from '../../../../ui/Button'
@@ -33,7 +34,7 @@ const SubmitAPIKeysModal = ({
 
   return (
     <OrderFormModal
-      title={(t('orderForm.submitKeys', { mode: isPaperTrading ? t('main.paper') : '' })).toUpperCase()}
+      title={_toUpper(t('orderForm.submitKeys', { mode: isPaperTrading ? t('main.paper') : '' }))}
       icon='icon-api'
       isModal={isModal}
       apiClientConnecting={apiClientConnecting}
@@ -41,13 +42,13 @@ const SubmitAPIKeysModal = ({
         <div key='form' className='row'>
           <Input
             type='text'
-            placeholder={t('appSettings.apiKey').toUpperCase()}
+            placeholder={_toUpper(t('appSettings.apiKey'))}
             value={apiKey}
             onChange={setApiKey}
           />
           <Input
             type='password'
-            placeholder={t('appSettings.apiSecret').toUpperCase()}
+            placeholder={_toUpper(t('appSettings.apiSecret'))}
             value={apiSecret}
             onChange={setApiSecret}
           />

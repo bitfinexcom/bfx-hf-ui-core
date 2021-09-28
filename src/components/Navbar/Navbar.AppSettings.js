@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 
 import NavbarButton from './Navbar.Button'
 
-import AppSettingsModal from '../AppSettingsModal'
+import AppSettingsModal from '../../modals/AppSettingsModal'
 
 export default function AppSettings() {
   const [isOpen, setIsOpen] = useState(false)

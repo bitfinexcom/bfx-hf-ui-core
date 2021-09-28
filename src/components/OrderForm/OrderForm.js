@@ -5,6 +5,8 @@ import _isEmpty from 'lodash/isEmpty'
 import _isString from 'lodash/isString'
 import _isBoolean from 'lodash/isBoolean'
 import _map from 'lodash/map'
+import _find from 'lodash/find'
+import _forEach from 'lodash/forEach'
 import _trim from 'lodash/trim'
 import _isNil from 'lodash/isNil'
 import PropTypes from 'prop-types'
@@ -22,14 +24,13 @@ import {
   COMPONENTS_FOR_ID,
 } from './OrderForm.helpers'
 import { isElectronApp } from '../../redux/config'
-
 import Panel from '../../ui/Panel'
 
 import ConnectingModal from './Modals/ConnectingModal'
 import UnconfiguredModal from './Modals/UnconfiguredModal'
 import SubmitAPIKeysModal from './Modals/SubmitAPIKeysModal'
 import OrderFormMenu from './OrderFormMenu'
-import { getAOs } from './OrderForm.ao.helpers'
+import { getAOs, getAtomicOrders } from './OrderForm.orders.helpers'
 
 import './style.css'
 
@@ -139,14 +140,15 @@ class OrderForm extends React.Component {
   }
 
   onChangeActiveOrderLayout(orderLabel) {
-    const { orders, t } = this.props
+    const { t } = this.props
     const { currentMarket } = this.state
     const algoOrders = getAOs(t)
+    const orders = getAtomicOrders(t)
 
-    let uiDef = orders.find(({ label }) => label === orderLabel)
+    let uiDef = _find(orders, ({ label }) => label === orderLabel)
 
     if (!uiDef) {
-      uiDef = algoOrders.find(({ label }) => label === orderLabel)
+      uiDef = _find(algoOrders, ({ label }) => label === orderLabel)
     }
 
     uiDef.fields = fixComponentContext(uiDef.fields, currentMarket)
@@ -342,8 +344,9 @@ class OrderForm extends React.Component {
 
   render() {
     const {
-      onRemove, orders, apiClientState, apiCredentials, moveable, removeable, isPaperTrading, isOrderExecuting, t,
+      onRemove, apiClientState, apiCredentials, moveable, removeable, isPaperTrading, isOrderExecuting, t,
     } = this.props
+    const orders = getAtomicOrders(t)
 
     const {
       fieldData, validationErrors, creationError, context, currentLayout,
@@ -361,13 +364,13 @@ class OrderForm extends React.Component {
     const atomicOrderTypes = []
     const algoOrderTypes = []
 
-    orders.forEach(({ label, id, uiIcon }) => atomicOrderTypes.push({
+    _forEach(orders, ({ label, id, uiIcon }) => atomicOrderTypes.push({
       id,
       label,
       uiIcon,
     }))
 
-    algoOrders.forEach(({ label, id, uiIcon }) => {
+    _forEach(algoOrders, ({ label, id, uiIcon }) => {
       algoOrderTypes.push({
         id,
         label,
@@ -501,7 +504,6 @@ class OrderForm extends React.Component {
 }
 
 OrderForm.propTypes = {
-  orders: PropTypes.arrayOf(PropTypes.object).isRequired,
   savedState: PropTypes.objectOf(PropTypes.oneOfType([
     PropTypes.string, PropTypes.bool, PropTypes.object,
   ])).isRequired,

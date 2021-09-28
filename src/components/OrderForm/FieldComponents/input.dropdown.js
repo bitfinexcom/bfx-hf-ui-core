@@ -2,6 +2,8 @@ import React, { memo } from 'react'
 import ClassNames from 'classnames'
 import { Tooltip } from '@ufx-ui/core'
 import PropTypes from 'prop-types'
+import _map from 'lodash/map'
+import _keys from 'lodash/keys'
 
 import Dropdown from '../../../ui/Dropdown'
 import { renderString, CONVERT_LABELS_TO_PLACEHOLDERS } from './fields.helpers'
@@ -21,7 +23,7 @@ const DropdownInput = ({
         value={value}
         onChange={onChange}
         placeholder={CONVERT_LABELS_TO_PLACEHOLDERS ? renderedLabel : undefined}
-        options={Object.keys(options).map(opt => ({
+        options={_map(_keys(options), opt => ({
           label: options[opt],
           value: opt,
         }))}

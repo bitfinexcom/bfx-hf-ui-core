@@ -1,3 +1,1 @@
-import NotificationsSidebar from './NotificationsSidebar.container'
-
-export default NotificationsSidebar
+export { default } from './NotificationsSidebar.container'

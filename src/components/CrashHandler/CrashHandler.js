@@ -3,6 +3,7 @@ import React from 'react'
 import Debug from 'debug'
 import _isError from 'lodash/isError'
 import _toString from 'lodash/toString'
+
 import './style.css'
 
 const debug = Debug('hfui:crash-screen')

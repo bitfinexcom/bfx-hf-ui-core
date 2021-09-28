@@ -1,0 +1,42 @@
+@import "../../variables.scss";
+
+.hfui-active-ao-modal__wrapper {
+  .modal__body {
+    max-height: 500px;
+    overflow: auto;
+
+    .ao-modal-virtual-table {
+      position: inherit;
+      width: 100%;
+      max-height: 400px;
+      height: 180px;
+
+      .checkbox {
+        width: 18px;
+        height: 18px;
+      }
+    }
+
+    .ReactVirtualized__Table__row {
+      user-select: none;
+
+      .ReactVirtualized__Table__rowColumn {
+        word-wrap: break-word;
+        white-space: normal;
+      }
+
+      &:hover {
+        cursor: pointer;
+        background-color: $darker-background-color;
+      }
+    }
+
+    .select-all {
+      margin-top: 10px !important;
+    }
+
+    .modal__footer {
+      margin-top: 5px;
+    }
+  }
+}

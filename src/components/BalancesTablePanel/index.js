@@ -1,3 +1,1 @@
-import BalancesTablePanel from './BalancesTablePanel'
-
-export default BalancesTablePanel
+export { default } from './BalancesTablePanel'

@@ -1,3 +1,1 @@
-import AtomicOrdersTable from './AtomicOrdersTable.container'
-
-export default AtomicOrdersTable
+export { default } from './AtomicOrdersTable.container'

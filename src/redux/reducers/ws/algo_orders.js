@@ -1,3 +1,5 @@
+import _filter from 'lodash/filter'
+
 import types from '../../constants/ws'
 
 const getInitialState = () => {
@@ -15,7 +17,7 @@ export default (state = getInitialState(), action = {}) => {
 
     case types.DATA_ALGO_ORDER: {
       const { ao } = payload
-      const filtered = state.filter(({ gid }) => gid !== ao.gid)
+      const filtered = _filter(state, ({ gid }) => gid !== ao.gid)
 
       return [
         ...filtered,
@@ -26,7 +28,7 @@ export default (state = getInitialState(), action = {}) => {
     case types.DATA_ALGO_ORDER_STOPPED: {
       const { gid } = payload
 
-      return state.filter(ao => ao.gid !== gid)
+      return _filter(state, ao => ao.gid !== gid)
     }
 
     case types.CLEAR_ALGO_ORDERS:

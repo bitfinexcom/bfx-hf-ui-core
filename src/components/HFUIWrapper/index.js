@@ -1,3 +1,1 @@
-import HFUIWrapper from './HFUIWrapper'
-
-export default HFUIWrapper
+export { default } from './HFUIWrapper'

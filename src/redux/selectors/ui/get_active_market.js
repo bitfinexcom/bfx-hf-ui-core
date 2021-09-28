@@ -10,6 +10,4 @@ const DEFAULT_ACTIVE_MARKET = {
   q: 'USDT',
 }
 
-export default (state) => {
-  return _get(state, `${path}.activeMarket`, DEFAULT_ACTIVE_MARKET)
-}
+export default (state) => _get(state, `${path}.activeMarket`, DEFAULT_ACTIVE_MARKET)

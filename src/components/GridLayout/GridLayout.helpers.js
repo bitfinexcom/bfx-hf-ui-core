@@ -1,4 +1,8 @@
 import React, { Suspense, lazy } from 'react'
+import _assign from 'lodash/assign'
+import _map from 'lodash/map'
+import _forEach from 'lodash/forEach'
+import _find from 'lodash/find'
 
 const OrderForm = lazy(() => import('../OrderForm'))
 const OrderBookPanel = lazy(() => import('../OrderBookPanel'))
@@ -140,15 +144,15 @@ export const renderLayoutElement = (layoutID, def = {}, componentProps = {}, onR
   }
 
   if (C === ChartPanel && componentProps.chart) {
-    Object.assign(cProps, componentProps.chart)
+    _assign(cProps, componentProps.chart)
   } else if (C === OrderBookPanel && componentProps.book) {
-    Object.assign(cProps, componentProps.book)
+    _assign(cProps, componentProps.book)
   } else if (C === TradesTablePanel && componentProps.trades) {
-    Object.assign(cProps, componentProps.trades)
+    _assign(cProps, componentProps.trades)
   } else if (C === OrderForm && componentProps.orderForm) {
-    Object.assign(cProps, componentProps.orderForm)
+    _assign(cProps, componentProps.orderForm)
   } else if (C === AtomicOrdersTablePanel && componentProps.orders) {
-    Object.assign(cProps, componentProps.orders)
+    _assign(cProps, componentProps.orders)
   }
   return (
     <Suspense fallback={<></>}>
@@ -157,7 +161,7 @@ export const renderLayoutElement = (layoutID, def = {}, componentProps = {}, onR
   )
 }
 
-export const layoutDefToGridLayout = layoutDef => layoutDef.layout.map(l => ({
+export const layoutDefToGridLayout = layoutDef => _map(layoutDef.layout, l => ({
   i: l.i,
   x: l.x,
   y: l.y,
@@ -166,11 +170,11 @@ export const layoutDefToGridLayout = layoutDef => layoutDef.layout.map(l => ({
 }))
 
 export const gridLayoutToLayoutDef = (layoutDef, parentLayoutDef) => {
-  parentLayoutDef.layout.forEach((l) => {
-    const elm = layoutDef.layout.find(lElm => lElm.i === l.i)
+  _forEach(parentLayoutDef?.layout, (l) => {
+    const elm = _find(layoutDef?.layout, lElm => lElm.i === l?.i)
 
     if (elm) {
-      elm.c = l.c
+      elm.c = l?.c
     }
   })
 

@@ -1,5 +1,7 @@
 import _isEqual from 'lodash/isEqual'
 import _find from 'lodash/find'
+import _filter from 'lodash/filter'
+import _map from 'lodash/map'
 
 import types from '../../constants/ws'
 import { balanceAdapter } from '../../adapters/ws'
@@ -15,7 +17,7 @@ function reducer(state = getInitialState(), action = {}) {
     case types.DATA_BALANCES: {
       const { balances = [] } = payload
 
-      return balances.map(balanceAdapter)
+      return _map(balances, balanceAdapter)
     }
 
     case types.DATA_BALANCE: {
@@ -27,7 +29,7 @@ function reducer(state = getInitialState(), action = {}) {
         return state
       }
 
-      const filtered = state.filter(({ currency, context }) => context !== adaptedBalance.context || currency !== adaptedBalance.currency)
+      const filtered = _filter(state, ({ currency, context }) => context !== adaptedBalance.context || currency !== adaptedBalance.currency)
 
       return [
         ...filtered,
