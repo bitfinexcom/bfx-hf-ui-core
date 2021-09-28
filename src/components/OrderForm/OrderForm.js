@@ -343,7 +343,6 @@ class OrderForm extends React.Component {
   }
 
   render() {
-    console.log('Orderform: ')
     const {
       onRemove, apiClientState, apiCredentials, moveable, removeable, isPaperTrading, isOrderExecuting, t,
     } = this.props

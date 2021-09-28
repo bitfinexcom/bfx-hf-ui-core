@@ -10,7 +10,6 @@ import { removeStoredPassword, updateAutoLoginState } from '../../util/autologin
 const mapStateToProps = (state = {}) => {
   const { isPaperTrading } = state.ui
 
-  console.log('isSocketConnected(state): ', isSocketConnected(state))
   return {
     wsConnected: isSocketConnected(state),
     configured: getAuthConfigured(state),

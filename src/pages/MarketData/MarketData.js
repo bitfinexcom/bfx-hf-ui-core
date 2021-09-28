@@ -20,7 +20,6 @@ const commonComponentProps = {
 }
 
 const MarketData = ({ isGuideActive, isFirstLogin, finishGuide }) => {
-  console.log('MarketData: ')
   const { t } = useTranslation()
   const onGuideFinish = (data) => {
     const { status } = data

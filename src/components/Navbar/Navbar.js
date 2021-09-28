@@ -19,7 +19,6 @@ import { isElectronApp } from '../../redux/config'
 import './style.css'
 
 const Navbar = () => {
-  console.log('Navbar: ')
   const dispatch = useDispatch()
   const { t } = useTranslation()
 

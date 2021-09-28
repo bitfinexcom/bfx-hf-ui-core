@@ -25,7 +25,6 @@ const AppSettingsModal = ({
   isOpen,
   onClose: onModalClose,
 }) => {
-  console.log('AppSettingsModal: ')
   const [activeTab, setActiveTab] = useState(defaultTab)
 
   const onClose = (callback) => {
