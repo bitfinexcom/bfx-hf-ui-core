@@ -24,5 +24,5 @@ export default () => {
       // trigger getting the token
       tokenStore.get()
     }
-  }, [])
+  }, [authToken, dispatch, location.pathname])
 }

@@ -19,7 +19,7 @@ const ChartPanel = ({
     if (_isEmpty(_currentMarket) && activeMarket.restID !== currentMarket.restID) {
       setCurrentMarket(activeMarket)
     }
-  }, [activeMarket])
+  }, [_currentMarket, activeMarket, currentMarket.restID])
 
   useEffect(() => {
     if (!_isEmpty(_currentMarket)) {

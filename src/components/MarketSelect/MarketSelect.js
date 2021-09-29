@@ -36,7 +36,7 @@ const MarketSelect = ({
       const filteredPairs = _filter(favoritePairs, p => p !== pair)
       savePairs(filteredPairs, authToken, currentMode)
     }
-  }, [savePairs, favoritePairs])
+  }, [savePairs, favoritePairs, authToken, currentMode])
 
   const sortedOptions = useMemo(() => {
     const filtered = searchTerm ? _filter(markets,
@@ -51,7 +51,7 @@ const MarketSelect = ({
       value: m.uiID,
     })), [])
     return options.sort((a, b) => _includes(favoritePairs, b.value) - _includes(favoritePairs, a.value))
-  }, [searchTerm, favoritePairs, getCurrencySymbol])
+  }, [searchTerm, markets, getCurrencySymbol, favoritePairs])
 
   return (
     <Dropdown

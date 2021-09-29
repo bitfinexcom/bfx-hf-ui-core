@@ -22,7 +22,7 @@ const CcyInfoModal = ({
     if (isModalVisible && _isEmpty(article)) {
       fetchCcyArticle()
     }
-  }, [isModalVisible])
+  }, [article, fetchCcyArticle, isModalVisible])
 
   useEffect(() => {
     if (!body || !containerRef || !containerRef.current) {

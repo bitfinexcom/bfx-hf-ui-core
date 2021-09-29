@@ -44,7 +44,7 @@ const Trading = ({
     if (_includes(finishedStatuses, status) || data.action === CLOSE) {
       finishGuide()
     }
-  }, [])
+  }, [finishGuide])
 
   return (
     <Layout>
