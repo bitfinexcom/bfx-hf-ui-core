@@ -1,3 +1,1 @@
-import BalancesTable from './BalancesTable.container'
-
-export default BalancesTable
+export { default } from './BalancesTable.container'

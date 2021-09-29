@@ -1,9 +1,19 @@
-import _get from 'lodash/get'
-import { REDUCER_PATHS } from '../../config'
-import t from '../../constants/ws'
+import { createSelector } from 'reselect'
 
-const path = REDUCER_PATHS.WS
+import getSockets from './get_sockets'
+import t, { SOCKET_STATUS_MAP } from '../../constants/ws'
 
-export default (alias = t.ALIAS_API_SERVER) => (state) => {
-  return _get(state, `${path}.socket.${alias}`, {})
-}
+const EMPTY_OBJ = {}
+
+export const getSocket = createSelector(
+  [
+    getSockets,
+    (_, alias) => alias,
+  ],
+  (sockets, alias = t.ALIAS_API_SERVER) => sockets?.[alias] || EMPTY_OBJ,
+)
+
+export const isSocketConnected = createSelector(
+  getSocket,
+  (socket) => socket?.status === SOCKET_STATUS_MAP.ONLINE,
+)

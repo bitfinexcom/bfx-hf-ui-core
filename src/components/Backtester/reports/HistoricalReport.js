@@ -1,6 +1,7 @@
 import React from 'react'
-
 import { AutoSizer } from 'react-virtualized'
+import _map from 'lodash/map'
+
 // eslint-disable-next-line import/no-extraneous-dependencies
 import BFXChart from 'bfx-hf-chart'
 
@@ -15,7 +16,7 @@ const HistoricalReport = (opts, results, backtestData, backtestOptions, t) => {
   const hasCandles = candles.length !== 0
 
   // convert candles to array for the chart
-  const candleArr = Object.values(candles).map(c => (
+  const candleArr = _map(candles, c => (
     [
       c.mts,
       c.open,

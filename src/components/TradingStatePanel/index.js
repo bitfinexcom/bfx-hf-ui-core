@@ -1,3 +1,1 @@
-import TradingStatePanel from './TradingStatePanel.container'
-
-export default TradingStatePanel
+export { default } from './TradingStatePanel.container'

@@ -6,12 +6,15 @@ import _replace from 'lodash/replace'
 import _cloneDeep from 'lodash/cloneDeep'
 import _min from 'lodash/min'
 import _max from 'lodash/max'
+import _find from 'lodash/find'
+import _map from 'lodash/map'
 import _reduce from 'lodash/reduce'
 import _entries from 'lodash/entries'
 import _values from 'lodash/values'
 import _some from 'lodash/some'
 import _keys from 'lodash/keys'
 import _isUndefined from 'lodash/isUndefined'
+import _findIndex from 'lodash/findIndex'
 import { nonce } from 'bfx-api-node-util'
 import { VOLUME_UNIT, VOLUME_UNIT_PAPER } from '@ufx-ui/bfx-containers'
 
@@ -90,7 +93,7 @@ function getInitialState() {
   const layoutsComponentStateJSON = localStorage.getItem(LAYOUTS_STATE_KEY)
   const prevLanguage = localStorage.getItem(LANGUAGE)
   const parsedLocale = _replace(prevLanguage, '_', '-')
-  const lang = _keys(LANGUAGES).find(key => LANGUAGES[key] === parsedLocale)
+  const lang = _find(_keys(LANGUAGES), key => LANGUAGES[key] === parsedLocale)
 
   try {
     const storedLayouts = JSON.parse(layoutsJSON)
@@ -429,8 +432,8 @@ function reducer(state = getInitialState(), action = {}) {
     case types.ADD_COMPONENT: {
       const { component } = payload
       const layoutDef = getActiveLayoutDef(state)
-      const x = _min(layoutDef.layout.map(l => l.x)) || 0
-      const y = _max(layoutDef.layout.map(l => l.y)) || 0
+      const x = _min(_map(layoutDef.layout, l => l.x)) || 0
+      const y = _max(_map(layoutDef.layout, l => l.y)) || 0
 
       return {
         ...state,
@@ -453,7 +456,7 @@ function reducer(state = getInitialState(), action = {}) {
     case types.REMOVE_COMPONENT: {
       const { i } = payload
       const newLayoutDef = _cloneDeep(getActiveLayoutDef(state))
-      const index = newLayoutDef.layout.findIndex(l => l.i === i)
+      const index = _findIndex(newLayoutDef.layout, l => l.i === i)
 
       if (index >= 0) {
         newLayoutDef.layout.splice(index, 1)

@@ -3,12 +3,13 @@ import React, {
 } from 'react'
 import PropTypes from 'prop-types'
 import { useTranslation } from 'react-i18next'
+import _includes from 'lodash/includes'
 
 import Layout from '../../components/Layout'
 import { STEPS, STATUS } from '../../components/Joyride'
 import GridLayout from '../../components/GridLayout'
-import ActiveAlgoOrdersModal from '../../components/ActiveAlgoOrdersModal'
-import RefillBalanceModal from '../../components/RefillBalanceModal'
+import ActiveAlgoOrdersModal from '../../modals/ActiveAlgoOrdersModal'
+// import RefillBalanceModal from '../../modals/RefillBalanceModal'
 
 import './style.css'
 
@@ -40,10 +41,10 @@ const Trading = ({
     const { status } = data
     const finishedStatuses = [STATUS.FINISHED, STATUS.SKIPPED]
     const CLOSE = 'close'
-    if (finishedStatuses.includes(status) || data.action === CLOSE) {
+    if (_includes(finishedStatuses, status) || data.action === CLOSE) {
       finishGuide()
     }
-  }, [])
+  }, [finishGuide])
 
   return (
     <Layout>
@@ -66,7 +67,7 @@ const Trading = ({
         </div>
 
         <ActiveAlgoOrdersModal isOpen={showAlgoModal && hasActiveAlgoOrders && apiClientConnected} />
-        <RefillBalanceModal />
+        {/* <RefillBalanceModal /> */}
       </Layout.Main>
       <Layout.Footer />
     </Layout>

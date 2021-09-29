@@ -1,3 +1,1 @@
-import AtomicOrdersTablePanel from './AtomicOrdersTablePanel'
-
-export default AtomicOrdersTablePanel
+export { default } from './AtomicOrdersTablePanel'

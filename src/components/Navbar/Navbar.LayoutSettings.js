@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import cx from 'classnames'
 import _entries from 'lodash/entries'
 import _map from 'lodash/map'
+import _filter from 'lodash/filter'
 import _get from 'lodash/get'
 
 import OutsideClickHandler from 'react-outside-click-handler'
@@ -15,8 +16,8 @@ import { ReactComponent as LayoutIcon } from './layout-icon.svg'
 import NavbarButton from './Navbar.Button'
 import Routes from '../../constants/routes'
 
-import AddLayoutComponentModal from '../AddLayoutComponentModal'
-import CreateNewLayoutModal from '../CreateNewLayoutModal'
+import AddLayoutComponentModal from '../../modals/Layout/AddLayoutComponentModal'
+import CreateNewLayoutModal from '../../modals/Layout/CreateNewLayoutModal'
 import { makeShorterLongName } from '../../util/ui'
 
 const MAX_ID_LENGTH = 30
@@ -53,16 +54,8 @@ export default function LayoutSettings() {
   const { pathname } = useSelector(getLocation)
   const menuRef = useRef()
 
-  if (![
-    Routes.tradingTerminal.path,
-    Routes.marketData.path,
-  ].includes(pathname)) {
-    return null
-  }
-
-  const selectableLayouts = _entries(layouts)
-    // eslint-disable-next-line no-shadow
-    .filter(([, layout]) => layout.routePath === pathname)
+  // eslint-disable-next-line no-shadow
+  const selectableLayouts = _filter(_entries(layouts), ([, layout]) => layout.routePath === pathname)
     .sort((a, b) => a[1].savedAt - b[1].savedAt)
 
   const onSave = () => {
@@ -90,6 +83,12 @@ export default function LayoutSettings() {
   }, [isOpen])
 
   const { t } = useTranslation()
+
+  // eslint-disable-next-line lodash/prefer-lodash-method
+  if (![Routes.tradingTerminal.path, Routes.marketData.path]
+    .includes(pathname)) {
+    return null
+  }
 
   return (
     <div className='hfui-navbar__layout-settings'>

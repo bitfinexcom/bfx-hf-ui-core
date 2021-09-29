@@ -22,7 +22,7 @@ const MonacoEditor = ({ value, onChange }) => {
       },
     })
     monaco.editor.setTheme(HF_MONACO_THEME)
-  }, [monaco])
+  }, [])
 
   return (
     <Editor

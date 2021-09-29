@@ -3,6 +3,6 @@ import { REDUCER_PATHS } from '../../config'
 
 const path = REDUCER_PATHS.WS
 
-export default (state) => {
-  return _get(state, `${path}.balances`, [])
-}
+const EMPTY_ARR = []
+
+export default (state) => _get(state, `${path}.balances`, EMPTY_ARR)

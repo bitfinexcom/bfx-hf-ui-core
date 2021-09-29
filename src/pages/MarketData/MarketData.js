@@ -1,6 +1,8 @@
 import React, { memo, lazy, Suspense } from 'react'
 import PropTypes from 'prop-types'
 import { useTranslation } from 'react-i18next'
+import _includes from 'lodash/includes'
+
 import { STEPS, STATUS } from '../../components/Joyride'
 import Layout from '../../components/Layout'
 import GridLayout from '../../components/GridLayout'
@@ -23,7 +25,7 @@ const MarketData = ({ isGuideActive, isFirstLogin, finishGuide }) => {
     const { status } = data
     const finishedStatuses = [STATUS.FINISHED, STATUS.SKIPPED]
     const CLOSE = 'close'
-    if (finishedStatuses.includes(status) || data.action === CLOSE) {
+    if (_includes(finishedStatuses, status) || data.action === CLOSE) {
       finishGuide()
     }
   }

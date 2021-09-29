@@ -6,6 +6,7 @@ import _get from 'lodash/get'
 import _last from 'lodash/last'
 import _find from 'lodash/find'
 import _entries from 'lodash/entries'
+import _filter from 'lodash/filter'
 import { Responsive as RGL, WidthProvider } from 'react-grid-layout'
 import { getLocation } from '../../redux/selectors/router'
 import {
@@ -35,8 +36,7 @@ const GridLayout = ({
   const unsavedLayoutDef = useSelector(getCurrentUnsavedLayout)
   const isValidUnsavedLayout = _get(unsavedLayoutDef, 'routePath', null) === pathname
   const isValidSavedLayout = currentSavedLayout.routePath === pathname
-  const layoutsForCurrRoute = _entries(layouts)
-    .filter(([, layout]) => layout.routePath === pathname)
+  const layoutsForCurrRoute = _filter(_entries(layouts), ([, layout]) => layout.routePath === pathname)
   const lastUsedLayoutID = getLastUsedLayoutID(pathname)
 
   const [lastLayoutID, lastLayoutDef] = _find(layoutsForCurrRoute, ([id]) => id === lastUsedLayoutID) || _last(layoutsForCurrRoute
@@ -55,14 +55,14 @@ const GridLayout = ({
     if (!layoutID || !isValidSavedLayout) {
       dispatch(setLayoutID(lastLayoutID))
     }
-  }, [pathname, layoutID, lastLayoutID, isValidSavedLayout])
+  }, [pathname, layoutID, lastLayoutID, isValidSavedLayout, dispatch])
 
   useEffect(() => {
     // discard unsaved layout changes
     if (!isValidUnsavedLayout) {
       dispatch(storeUnsavedLayout(layoutDef))
     }
-  }, [isValidUnsavedLayout, layoutDef])
+  }, [dispatch, isValidUnsavedLayout, layoutDef])
 
   const componentProps = {
     orderForm: orderFormProps,

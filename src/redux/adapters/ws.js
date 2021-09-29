@@ -1,3 +1,4 @@
+import _toUpper from 'lodash/toUpper'
 import { Position, Notification } from 'bfx-api-node-models'
 
 const positionAdapter = (data = []) => {
@@ -29,7 +30,7 @@ const notificationAdapter = (data = []) => {
     return {
       mts: data[0],
       type: data[1],
-      status: data[4].level.toUpperCase(),
+      status: _toUpper(data[4].level),
       text: data[4].message,
     }
   }

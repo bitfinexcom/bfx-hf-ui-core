@@ -9,9 +9,10 @@ import { getMarkets } from '../meta'
 const { getCurrencySymbolMemo } = reduxSelectors
 
 const path = REDUCER_PATHS.WS
+const EMPTY_ARR = []
 
 const orderHistory = (state) => {
-  return _get(state, `${path}.orderHistory`, [])
+  return _get(state, `${path}.orderHistory`, EMPTY_ARR)
 }
 
 const orderHistoryWithReplacedPairs = createSelector([getMarkets, orderHistory, getCurrencySymbolMemo], (markets, orders, getCurrencySymbol) => {
@@ -22,7 +23,7 @@ const orderHistoryWithReplacedPairs = createSelector([getMarkets, orderHistory, 
       ...order,
       symbol: getPairFromMarket(currentMarket, getCurrencySymbol),
     }
-  }, [])
+  })
 })
 
 export default orderHistoryWithReplacedPairs

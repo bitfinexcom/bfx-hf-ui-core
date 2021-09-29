@@ -8,14 +8,19 @@ import { isElectronApp, appVersion } from '../../redux/config'
 import NavbarButton from '../Navbar/Navbar.Link'
 import './style.css'
 
+const RELEASE_URL = 'https://github.com/bitfinexcom/bfx-hf-ui/releases'
+
 const StatusBar = ({
-  wsConnected, remoteVersion, apiClientState, wsInterrupted, currentModeApiKeyState,
+  wsConnected, remoteVersion,
+  apiClientDisconnected: _apiClientDisconnected,
+  apiClientConnecting: _apiClientConnecting,
+  apiClientConnected,
+  wsInterrupted, currentModeApiKeyState,
 }) => {
   const [wsConnInterrupted, setWsConnInterrupted] = useState(false)
   const isWrongAPIKey = !currentModeApiKeyState.valid
-  const apiClientConnected = apiClientState === 2
-  const apiClientConnecting = !isWrongAPIKey && apiClientState === 1
-  const apiClientDisconnected = isWrongAPIKey || !apiClientState
+  const apiClientDisconnected = isWrongAPIKey || _apiClientDisconnected
+  const apiClientConnecting = !isWrongAPIKey && _apiClientConnecting
 
   const { t } = useTranslation()
 
@@ -23,7 +28,7 @@ const StatusBar = ({
     if (wsInterrupted && !wsConnInterrupted) {
       setWsConnInterrupted(true)
     }
-  }, [wsInterrupted])
+  }, [wsConnInterrupted, wsInterrupted])
 
   return (
     <div className='hfui-statusbar__wrapper'>
@@ -33,7 +38,7 @@ const StatusBar = ({
             {remoteVersion && remoteVersion !== appVersion && (
               <NavbarButton
                 label={t('statusbar.updateToLast')}
-                external='https://github.com/bitfinexcom/bfx-hf-ui/releases'
+                external={RELEASE_URL}
               />
             )}
             &nbsp;
@@ -75,8 +80,10 @@ const StatusBar = ({
 StatusBar.propTypes = {
   wsConnected: PropTypes.bool.isRequired,
   remoteVersion: PropTypes.string,
-  apiClientState: PropTypes.number.isRequired,
   wsInterrupted: PropTypes.bool.isRequired,
+  apiClientDisconnected: PropTypes.bool.isRequired,
+  apiClientConnecting: PropTypes.bool.isRequired,
+  apiClientConnected: PropTypes.bool.isRequired,
   currentModeApiKeyState: PropTypes.shape({
     valid: PropTypes.bool,
   }),

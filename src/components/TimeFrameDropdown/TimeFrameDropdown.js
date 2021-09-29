@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react'
+import React, { useMemo, memo } from 'react'
 import PropTypes from 'prop-types'
 import _map from 'lodash/map'
 import { useTranslation } from 'react-i18next'
@@ -35,4 +35,4 @@ TimeFrameDropdown.propTypes = {
   tf: PropTypes.string.isRequired,
 }
 
-export default TimeFrameDropdown
+export default memo(TimeFrameDropdown)

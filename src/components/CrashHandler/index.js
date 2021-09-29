@@ -1,3 +1,1 @@
-import CrashHandler from './CrashHandler'
-
-export default CrashHandler
+export { default } from './CrashHandler'

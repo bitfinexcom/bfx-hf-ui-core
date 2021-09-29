@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
 import { Checkbox } from '@ufx-ui/core'
 import _isEmpty from 'lodash/isEmpty'
@@ -36,7 +36,7 @@ const AuthenticationUnlockForm = ({ isPaperTrading, onUnlock: _onUnlock, onReset
 
   const OPTIONS = getModes(t)
 
-  const onUnlock = () => {
+  const onUnlock = useCallback(() => {
     if (!submitReady) return
 
     if (isDevEnv && password.length) {
@@ -45,7 +45,7 @@ const AuthenticationUnlockForm = ({ isPaperTrading, onUnlock: _onUnlock, onReset
     }
 
     _onUnlock(password, mode)
-  }
+  }, [_onUnlock, autoLoginState, mode, password, submitReady])
 
   const onFormSubmit = (event) => {
     event.preventDefault()
@@ -57,13 +57,13 @@ const AuthenticationUnlockForm = ({ isPaperTrading, onUnlock: _onUnlock, onReset
     if (isDevEnv && pass && autoLoginState) {
       setPassword(pass)
     }
-  }, [])
+  }, [autoLoginState])
 
   useEffect(() => {
     if (password && isDevEnv && initialAutoLoginSave) {
       onUnlock()
     }
-  }, [password])
+  }, [onUnlock, password])
 
   return (
     <div className='hfui-authenticationpage__content'>
@@ -84,6 +84,7 @@ const AuthenticationUnlockForm = ({ isPaperTrading, onUnlock: _onUnlock, onReset
           <Dropdown
             className='hfui-authenticationpage__trading-mode'
             placeholder={t('auth.selectMode')}
+            // eslint-disable-next-line lodash/prefer-lodash-method
             value={OPTIONS.find(o => o.value === mode)?.value}
             options={OPTIONS}
             onChange={(value) => setMode(value)}

@@ -1,3 +1,5 @@
+import _toUpper from 'lodash/toUpper'
+
 export default (t) => ({
   label: t('orderForm.marketTitle'),
   uiIcon: 'market-active',
@@ -63,7 +65,7 @@ export default (t) => ({
       component: 'input.price',
       label: `${t('table.price')} $QUOTE`,
       disabled: true,
-      default: t('orderForm.marketTitle').toUpperCase(),
+      default: _toUpper(t('orderForm.marketTitle')),
     },
 
     amount: {

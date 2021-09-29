@@ -6,13 +6,16 @@ import Scrollbars from '../Scrollbars'
 
 import './style.css'
 
+const FOCUSABLE_ELEMENTS = ['input', 'button', '[role=button]']
+
 const Modal = ({
   label, isOpen, onClose, children, className, scrollable, ...rest
 }) => {
   useEffect(() => {
     // focus on the first interactable element
     if (isOpen) {
-      const el = document.querySelector(['input', 'button', '[role=button]'].map(element => `.modal__body ${element}`).join(','))
+      // eslint-disable-next-line lodash/prefer-lodash-method
+      const el = document.querySelector(FOCUSABLE_ELEMENTS.map(element => `.modal__body ${element}`).join(','))
       const footer = document.querySelector('.modal__footer')
       if (el && footer && !footer.contains(el)) {
         el.focus()

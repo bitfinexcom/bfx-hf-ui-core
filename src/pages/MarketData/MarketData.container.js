@@ -15,7 +15,7 @@ const mapStateToProps = (state = {}) => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-  finishGuide() {
+  finishGuide: () => {
     dispatch(UIActions.finishGuide(MARKET_PAGE))
   },
 })
