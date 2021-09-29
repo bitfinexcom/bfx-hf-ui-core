@@ -1,5 +1,6 @@
 import React, { memo } from 'react'
 import PropTypes from 'prop-types'
+import { useTranslation } from 'react-i18next'
 
 import { preparePrice } from 'bfx-api-node-util'
 import ResultRow from './ResultRow'
@@ -25,44 +26,45 @@ const Results = ({ results }) => {
     maxPL, minPL, fees, vol, stdDeviation, avgPL,
   } = results
   const hasTrades = !!vol
+  const { t } = useTranslation()
 
   return (
     <div className='hfui-strategyeditor__results-wrapper'>
       <div className='hfui-strategyeditor__results-header'>
-        <ResultHeader label='Total P/L' value={resultNumber(preparePrice(pl), '$')} />
-        <ResultHeader label='Avg PL' value={resultNumber(avgPL, '$', 2)} />
-        <ResultHeader label='Profit Factor' value={resultNumber(pf, '', 2, false)} />
-        <ResultHeader label='Volatility' value={resultNumber(stdDeviation, '', 2, false)} />
+        <ResultHeader label={t('strategyEditor.totalPL')} value={resultNumber(preparePrice(pl), '$')} />
+        <ResultHeader label={t('strategyEditor.avgPL')} value={resultNumber(avgPL, '$', 2)} />
+        <ResultHeader label={t('strategyEditor.profitFactor')} value={resultNumber(pf, '', 2, false)} />
+        <ResultHeader label={t('strategyEditor.volatility')} value={resultNumber(stdDeviation, '', 2, false)} />
       </div>
       <div key='results-left' className='hfui-strategyeditor__results-section'>
         <ul>
-          <ResultRow label='Backtest Candles' value={nCandles} />
-          <ResultRow label='Backtest Trades' value={nTrades} />
+          <ResultRow label={t('strategyEditor.backtestCandles')} value={nCandles} />
+          <ResultRow label={t('strategyEditor.backtestTrades')} value={nTrades} />
           {hasTrades
-              && (
-                <>
-                  <ResultRow label='Trades' value={nStrategyTrades} />
-                  <ResultRow label='Positions' value={nOpens} />
-                  <ResultRow label='Gains' value={nGains} />
-                  <ResultRow label='Losses' value={nLosses} />
-                </>
-              )}
+            && (
+              <>
+                <ResultRow label={t('strategyEditor.trades')} value={nStrategyTrades} />
+                <ResultRow label={t('strategyEditor.positions')} value={nOpens} />
+                <ResultRow label={t('strategyEditor.gains')} value={nGains} />
+                <ResultRow label={t('strategyEditor.losses')} value={nLosses} />
+              </>
+            )}
         </ul>
       </div>
 
       <div key='results-right' className='hfui-strategyeditor__results-section'>
         <ul>
-          <ResultRow label='Fees' value={resultNumber(preparePrice(fees), '$')} />
-          <ResultRow label='Profit/Loss' value={resultNumber(preparePrice(pl), '$')} />
+          <ResultRow label={t('strategyEditor.fees')} value={resultNumber(preparePrice(fees), '$')} />
+          <ResultRow label={t('strategyEditor.profitLoss')} value={resultNumber(preparePrice(pl), '$')} />
           {hasTrades
-              && (
-                <>
-                  <ResultRow label='Profit Factor' value={resultNumber(pf, '', 2, false)} />
-                  <ResultRow label='Volume' value={resultNumber(vol, '$')} />
-                  <ResultRow label='Largest Gain' value={resultNumber(preparePrice(maxPL), '$')} />
-                  <ResultRow label='Largest Loss' value={resultNumber(preparePrice(minPL), '$')} />
-                </>
-              )}
+            && (
+              <>
+                <ResultRow label={t('strategyEditor.profitFactor')} value={resultNumber(pf, '', 2, false)} />
+                <ResultRow label={t('strategyEditor.volume')} value={resultNumber(vol, '$')} />
+                <ResultRow label={t('strategyEditor.largestGain')} value={resultNumber(preparePrice(maxPL), '$')} />
+                <ResultRow label={t('strategyEditor.largestLoss')} value={resultNumber(preparePrice(minPL), '$')} />
+              </>
+            )}
         </ul>
       </div>
     </div>

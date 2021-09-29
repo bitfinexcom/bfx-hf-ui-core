@@ -1,3 +1,9 @@
+export const SOCKET_STATUS_MAP = {
+  ONLINE: 'online',
+  OFFLINE: 'offline',
+  CONNECTING: 'connecting',
+}
+
 export default {
   SOCKET_ERROR: 'WS_SOCKET_ERROR',
   SEND: 'WS_SEND',

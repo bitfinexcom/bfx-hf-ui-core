@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
 import ClassNames from 'classnames'
 import PropTypes from 'prop-types'
+import _filter from 'lodash/filter'
+import _map from 'lodash/map'
 
 import Scrollbars from '../Scrollbars'
 import useSize from '../../hooks/useSize'
@@ -49,7 +51,7 @@ const Panel = (props) => {
     dropdown,
     forcedTab,
   } = props
-  const tabs = React.Children.toArray(children).filter(c => c && c.props.tabtitle)
+  const tabs = _filter(React.Children.toArray(children), c => c && c.props.tabtitle)
   const initTab = forcedTab.length ? getForcedTab(forcedTab, tabs) : 0
   const [selectedTab, setSelectedTab] = useState(initTab)
   const [panelRef, panelSize] = useSize()
@@ -89,7 +91,7 @@ const Panel = (props) => {
           </div>
           {tabs.length > 0 && (
           <ul className='hfui-panel__header-tabs'>
-            {tabs.map((tab, index) => (
+            {_map(tabs, (tab, index) => (
               <li
                 key={tab.props.htmlKey || tab.props.tabtitle}
                 className={ClassNames({ active: getTabTitle(tab) === getTabTitle(tabs[selectedTab]) })}

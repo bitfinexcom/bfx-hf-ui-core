@@ -11,7 +11,7 @@ const STYLES = {
   price: { justifyContent: 'flex-end' },
 }
 
-export default (authToken, cancelOrder, gaCancelOrder, { width }) => [{
+export default (authToken, cancelOrder, gaCancelOrder, { width }, t) => [{
   label: '',
   dataKey: '',
   width: 15,
@@ -21,25 +21,25 @@ export default (authToken, cancelOrder, gaCancelOrder, { width }) => [{
   ),
   disableSort: true,
 }, {
-  label: 'Pair',
+  label: t('table.pair'),
   dataKey: 'symbol',
   width: 135,
   flexGrow: 1.35,
   cellRenderer: ({ rowData = {} }) => defaultCellRenderer(rowData.uiID),
 }, {
-  label: 'Type',
+  label: t('table.type'),
   dataKey: 'type',
   width: 120,
   flexGrow: 1.2,
   cellRenderer: ({ rowData = {} }) => defaultCellRenderer(rowData.type),
 }, {
-  label: 'Created',
+  label: t('table.created'),
   dataKey: 'created',
   width: 145,
   flexGrow: 1.5,
   cellRenderer: ({ rowData = {} }) => defaultCellRenderer(new Date(+rowData.created).toLocaleString()),
 }, {
-  label: 'Amount',
+  label: t('table.amount'),
   dataKey: 'amount',
   width: 120,
   flexGrow: 1.2,
@@ -54,7 +54,7 @@ export default (authToken, cancelOrder, gaCancelOrder, { width }) => [{
     />,
   ),
 }, {
-  label: 'Price',
+  label: t('table.price'),
   dataKey: 'price',
   width: 120,
   flexGrow: 1.2,
@@ -68,7 +68,7 @@ export default (authToken, cancelOrder, gaCancelOrder, { width }) => [{
     />,
   ),
 }, {
-  label: 'Status',
+  label: t('table.status'),
   dataKey: 'status',
   width: 100,
   flexGrow: 1,

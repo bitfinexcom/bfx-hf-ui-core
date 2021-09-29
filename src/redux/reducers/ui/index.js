@@ -2,14 +2,19 @@ import Debug from 'debug'
 import _get from 'lodash/get'
 import _isEqual from 'lodash/isEqual'
 import _isEmpty from 'lodash/isEmpty'
+import _replace from 'lodash/replace'
 import _cloneDeep from 'lodash/cloneDeep'
 import _min from 'lodash/min'
 import _max from 'lodash/max'
+import _find from 'lodash/find'
+import _map from 'lodash/map'
 import _reduce from 'lodash/reduce'
 import _entries from 'lodash/entries'
 import _values from 'lodash/values'
 import _some from 'lodash/some'
+import _keys from 'lodash/keys'
 import _isUndefined from 'lodash/isUndefined'
+import _findIndex from 'lodash/findIndex'
 import { nonce } from 'bfx-api-node-util'
 import { VOLUME_UNIT, VOLUME_UNIT_PAPER } from '@ufx-ui/bfx-containers'
 
@@ -31,13 +36,15 @@ import {
 import { isElectronApp } from '../../config'
 
 import { storeLastUsedLayoutID } from '../../../util/layout'
+import { LANGUAGES } from '../../../locales/i18n'
 
 const debug = Debug('hfui:rx:r:ui')
 const LAYOUTS_KEY = 'HF_UI_LAYOUTS'
 const LAYOUTS_STATE_KEY = 'HF_UI_LAYOUTS_STATE'
 const ACTIVE_MARKET_KEY = 'HF_UI_ACTIVE_MARKET'
 const ACTIVE_MARKET_PAPER_KEY = 'HF_UI_PAPER_ACTIVE_MARKET'
-const IS_PAPER_TRADING = 'IS_PAPER_TRADING'
+const LANGUAGE = 'HF_LOCALE'
+export const IS_PAPER_TRADING = 'IS_PAPER_TRADING'
 export const PAPER_MODE = 'paper'
 export const MAIN_MODE = 'main'
 let shownOldFormatModal = false
@@ -74,6 +81,7 @@ function getInitialState() {
     content: {},
     unsavedLayout: null,
     layoutID: null,
+    language: 'en',
   }
 
   if (!localStorage) {
@@ -83,6 +91,9 @@ function getInitialState() {
   const isPaperTrading = localStorage.getItem(IS_PAPER_TRADING) === 'true'
   const layoutsJSON = localStorage.getItem(LAYOUTS_KEY)
   const layoutsComponentStateJSON = localStorage.getItem(LAYOUTS_STATE_KEY)
+  const prevLanguage = localStorage.getItem(LANGUAGE)
+  const parsedLocale = _replace(prevLanguage, '_', '-')
+  const lang = _find(_keys(LANGUAGES), key => LANGUAGES[key] === parsedLocale)
 
   try {
     const storedLayouts = JSON.parse(layoutsJSON)
@@ -154,6 +165,7 @@ function getInitialState() {
   }
 
   defaultState.isPaperTrading = isPaperTrading
+  defaultState.language = lang || defaultState.language
 
   return defaultState
 }
@@ -420,8 +432,8 @@ function reducer(state = getInitialState(), action = {}) {
     case types.ADD_COMPONENT: {
       const { component } = payload
       const layoutDef = getActiveLayoutDef(state)
-      const x = _min(layoutDef.layout.map(l => l.x)) || 0
-      const y = _max(layoutDef.layout.map(l => l.y)) || 0
+      const x = _min(_map(layoutDef.layout, l => l.x)) || 0
+      const y = _max(_map(layoutDef.layout, l => l.y)) || 0
 
       return {
         ...state,
@@ -444,7 +456,7 @@ function reducer(state = getInitialState(), action = {}) {
     case types.REMOVE_COMPONENT: {
       const { i } = payload
       const newLayoutDef = _cloneDeep(getActiveLayoutDef(state))
-      const index = newLayoutDef.layout.findIndex(l => l.i === i)
+      const index = _findIndex(newLayoutDef.layout, l => l.i === i)
 
       if (index >= 0) {
         newLayoutDef.layout.splice(index, 1)
@@ -511,6 +523,10 @@ function reducer(state = getInitialState(), action = {}) {
         ...state,
         isCcyInfoModalVisible: isVisible,
       }
+    }
+    case types.SET_LANGUAGE: {
+      const { language } = payload
+      return { ...state, language }
     }
     default: {
       return state

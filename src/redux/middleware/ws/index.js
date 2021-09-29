@@ -1,5 +1,8 @@
 import _isString from 'lodash/isString'
 import _omit from 'lodash/omit'
+import _findIndex from 'lodash/findIndex'
+import _find from 'lodash/find'
+import _isArray from 'lodash/isArray'
 import Debug from 'debug'
 
 import WSTypes from '../../constants/ws'
@@ -24,7 +27,7 @@ export default () => {
           return
         }
 
-        let id = sockets.findIndex(s => s.alias === alias)
+        let id = _findIndex(sockets, s => s.alias === alias)
         if (sockets[id]?.readyState < 2) {
           debug('requested connection, but already connected. closing...')
           sockets[id].close()
@@ -62,14 +65,14 @@ export default () => {
         const data = _isString(payload) ? JSON.parse(payload) : payload
         const alias = data.alias || WSTypes.ALIAS_API_SERVER
         const message = data.data || data
-        const socket = sockets.find(s => s.alias === alias)
+        const socket = _find(sockets, s => s.alias === alias)
 
         if (socket?.socket?.readyState !== 1) {
           debug('[socket.send] can\'t send, not online')
           break
         }
 
-        socket.socket.send(JSON.stringify(Array.isArray(message) ? message : _omit(message, ['alias'])))
+        socket.socket.send(JSON.stringify(_isArray(message) ? message : _omit(message, ['alias'])))
 
         break
       }

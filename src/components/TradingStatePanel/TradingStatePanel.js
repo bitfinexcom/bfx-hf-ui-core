@@ -1,6 +1,7 @@
 import React, { useState, memo } from 'react'
 import PropTypes from 'prop-types'
 import _isEmpty from 'lodash/isEmpty'
+import { useTranslation } from 'react-i18next'
 
 import Panel from '../../ui/Panel'
 import PositionsTable from '../PositionsTable'
@@ -18,10 +19,11 @@ const TradingStatePanel = ({
   const positionsCount = getPositionsCount(activeFilter)
   const atomicOrdersCount = getAtomicOrdersCount(activeFilter)
   const algoOrdersCount = getAlgoOrdersCount(activeFilter)
+  const { t } = useTranslation()
 
   return (
     <Panel
-      label='Trading Stage'
+      label={t('tradingStatePanel.title')}
       dark={dark}
       darkHeader={dark}
       className='hfui-tradingstatepanel__wrapper'
@@ -43,8 +45,7 @@ const TradingStatePanel = ({
       ), (
         <div key='filter-by'>
           <p className='hfui-uppercase'>
-            {_isEmpty(activeFilter) ? 'Filter' : 'Filtering'}
-            &nbsp;by:
+            {`${_isEmpty(activeFilter) ? t('tradingStatePanel.filterBy') : t('tradingStatePanel.filteringBy')}:`}
           </p>
         </div>
       )]}
@@ -58,25 +59,25 @@ const TradingStatePanel = ({
         <PositionsTable
           renderedInTradingState
           htmlKey='Positions'
-          tabtitle={<TabTitle heading='Positions' count={positionsCount} />}
+          tabtitle={<TabTitle heading={t('tradingStatePanel.positionsTab')} count={positionsCount} />}
           activeFilter={activeFilter}
         />
         <AtomicOrdersTable
           renderedInTradingState
           htmlKey='Atomics'
-          tabtitle={<TabTitle heading='Atomics' count={atomicOrdersCount} />}
+          tabtitle={<TabTitle heading={t('tradingStatePanel.atomicsTab')} count={atomicOrdersCount} />}
           activeFilter={activeFilter}
         />
         <AlgoOrdersTable
           renderedInTradingState
           htmlKey='Algos'
-          tabtitle={<TabTitle heading='Algos' count={algoOrdersCount} />}
+          tabtitle={<TabTitle heading={t('tradingStatePanel.algosTab')} count={algoOrdersCount} />}
           activeFilter={activeFilter}
         />
         <BalancesTable
           renderedInTradingState
           htmlKey='Balances'
-          tabtitle='Balances'
+          tabtitle={t('tradingStatePanel.balancesTab')}
           hideZeroBalances
           activeFilter={activeFilter}
         />

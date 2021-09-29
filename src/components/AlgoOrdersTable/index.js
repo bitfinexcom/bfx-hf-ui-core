@@ -1,3 +1,1 @@
-import AlgoOrdersTable from './AlgoOrdersTable.container'
-
-export default AlgoOrdersTable
+export { default } from './AlgoOrdersTable.container'

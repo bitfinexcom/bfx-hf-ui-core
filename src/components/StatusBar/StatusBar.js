@@ -1,26 +1,34 @@
 import React, { memo, useState, useEffect } from 'react'
 import ClassNames from 'classnames'
 import PropTypes from 'prop-types'
+import { useTranslation } from 'react-i18next'
 
 import { isElectronApp, appVersion } from '../../redux/config'
 
 import NavbarButton from '../Navbar/Navbar.Link'
 import './style.css'
 
+const RELEASE_URL = 'https://github.com/bitfinexcom/bfx-hf-ui/releases'
+
 const StatusBar = ({
-  wsConnected, remoteVersion, apiClientState, wsInterrupted, currentModeApiKeyState,
+  wsConnected, remoteVersion,
+  apiClientDisconnected: _apiClientDisconnected,
+  apiClientConnecting: _apiClientConnecting,
+  apiClientConnected,
+  wsInterrupted, currentModeApiKeyState,
 }) => {
   const [wsConnInterrupted, setWsConnInterrupted] = useState(false)
   const isWrongAPIKey = !currentModeApiKeyState.valid
-  const apiClientConnected = apiClientState === 2
-  const apiClientConnecting = !isWrongAPIKey && apiClientState === 1
-  const apiClientDisconnected = isWrongAPIKey || !apiClientState
+  const apiClientDisconnected = isWrongAPIKey || _apiClientDisconnected
+  const apiClientConnecting = !isWrongAPIKey && _apiClientConnecting
+
+  const { t } = useTranslation()
 
   useEffect(() => {
     if (wsInterrupted && !wsConnInterrupted) {
       setWsConnInterrupted(true)
     }
-  }, [wsInterrupted])
+  }, [wsConnInterrupted, wsInterrupted])
 
   return (
     <div className='hfui-statusbar__wrapper'>
@@ -29,17 +37,13 @@ const StatusBar = ({
           <p>
             {remoteVersion && remoteVersion !== appVersion && (
               <NavbarButton
-                label='Update to latest version'
-                external='https://github.com/bitfinexcom/bfx-hf-ui/releases'
+                label={t('statusbar.updateToLast')}
+                external={RELEASE_URL}
               />
             )}
             &nbsp;
             v
             {appVersion}
-          </p>
-
-          <p>
-            {apiClientConnected ? 'UNLOCKED' : 'LOCKED'}
           </p>
         </div>
       )}
@@ -47,28 +51,27 @@ const StatusBar = ({
       <div className='hfui-statusbar__right'>
         {isElectronApp && (
           <>
-            <p>
-              {apiClientConnected && 'HF Connected'}
-              {apiClientConnecting && 'HF Connecting'}
-              {apiClientDisconnected && 'HF Disconnected'}
-            </p>
-
             <span className={ClassNames('hfui-statusbar__statuscircle', {
               green: apiClientConnected,
               yellow: apiClientConnecting,
               red: apiClientDisconnected,
             })}
             />
+            <p>
+              {apiClientConnected && 'HF Connected'}
+              {apiClientConnecting && 'HF Connecting'}
+              {apiClientDisconnected && 'HF Disconnected'}
+            </p>
+            <div className='hfui-statusbar__divide' />
           </>
         )}
-
-        <p>{(wsConnected && !wsConnInterrupted) ? 'WS Connected' : 'WS Disconnected'}</p>
 
         <span className={ClassNames('hfui-statusbar__statuscircle', {
           green: wsConnected && !wsConnInterrupted,
           red: !wsConnected || wsConnInterrupted,
         })}
         />
+        <p>{`WS ${(wsConnected && !wsConnInterrupted) ? t('statusbar.connected') : t('statusbar.disconnected')}`}</p>
       </div>
     </div>
   )
@@ -77,8 +80,10 @@ const StatusBar = ({
 StatusBar.propTypes = {
   wsConnected: PropTypes.bool.isRequired,
   remoteVersion: PropTypes.string,
-  apiClientState: PropTypes.number.isRequired,
   wsInterrupted: PropTypes.bool.isRequired,
+  apiClientDisconnected: PropTypes.bool.isRequired,
+  apiClientConnecting: PropTypes.bool.isRequired,
+  apiClientConnected: PropTypes.bool.isRequired,
   currentModeApiKeyState: PropTypes.shape({
     valid: PropTypes.bool,
   }),

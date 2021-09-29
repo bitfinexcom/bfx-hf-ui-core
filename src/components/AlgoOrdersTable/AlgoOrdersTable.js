@@ -1,7 +1,8 @@
-import React from 'react'
+import React, { memo } from 'react'
 import PropTypes from 'prop-types'
 import { VirtualTable } from '@ufx-ui/core'
 import _isEmpty from 'lodash/isEmpty'
+import { useTranslation } from 'react-i18next'
 
 import AlgoOrdersTableColumns from './AlgoOrdersTable.columns'
 import './style.css'
@@ -10,15 +11,16 @@ const AlgoOrdersTable = ({
   filteredAlgoOrders, algoOrders, cancelOrder, authToken, gaCancelOrder, renderedInTradingState,
 }) => {
   const data = renderedInTradingState ? filteredAlgoOrders : algoOrders
+  const { t } = useTranslation()
 
   return (
     <div className='hfui-aolist__wrapper'>
       {_isEmpty(data) ? (
-        <p className='empty'>No active algorithmic orders</p>
+        <p className='empty'>{t('AOTableModal.noOrders')}</p>
       ) : (
         <VirtualTable
           data={data}
-          columns={AlgoOrdersTableColumns(authToken, cancelOrder, gaCancelOrder)}
+          columns={AlgoOrdersTableColumns(authToken, cancelOrder, gaCancelOrder, t)}
           defaultSortBy='gid'
           defaultSortDirection='ASC'
           rowHeight={30}
@@ -43,4 +45,4 @@ AlgoOrdersTable.defaultProps = {
   renderedInTradingState: false,
 }
 
-export default React.memo(AlgoOrdersTable)
+export default memo(AlgoOrdersTable)

@@ -1,3 +1,1 @@
-import ExchangeInfoBar from './ExchangeInfoBar.container'
-
-export default ExchangeInfoBar
+export { default } from './ExchangeInfoBar.container'

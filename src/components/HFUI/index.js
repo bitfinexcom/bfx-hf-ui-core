@@ -1,3 +1,1 @@
-import HFUI from './HFUI.container'
-
-export default HFUI
+export { default } from './HFUI.container'

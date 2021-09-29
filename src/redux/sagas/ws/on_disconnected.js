@@ -8,5 +8,6 @@ export default function* () {
     status: 'error',
     text: 'Disconnected from websocket server',
     cid: v4(),
+    i18n: { key: 'notifications.wsDisconnected' },
   }))
 }

@@ -11,20 +11,20 @@ const STYLES = {
   available: { justifyContent: 'flex-end' },
 }
 
-export default (getCurrencySymbol) => [{
-  label: 'Context',
+export default (getCurrencySymbol, t) => [{
+  label: t('table.context'),
   dataKey: 'context',
   width: 120,
   flexGrow: 1,
   cellRenderer: ({ rowData = {} }) => defaultCellRenderer(_capitalize(rowData.context)),
 }, {
-  label: 'Currency',
+  label: t('table.currency'),
   dataKey: 'currency',
   width: 100,
   flexGrow: 1,
   cellRenderer: ({ rowData = {} }) => defaultCellRenderer(getCurrencySymbol(rowData?.currency)),
 }, {
-  label: 'Total',
+  label: t('table.total'),
   dataKey: 'balance',
   width: 120,
   flexGrow: 1.4,
@@ -38,7 +38,7 @@ export default (getCurrencySymbol) => [{
     />,
   ),
 }, {
-  label: 'Available',
+  label: t('table.available'),
   dataKey: 'available',
   width: 120,
   flexGrow: 1.4,

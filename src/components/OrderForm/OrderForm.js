@@ -5,6 +5,8 @@ import _isEmpty from 'lodash/isEmpty'
 import _isString from 'lodash/isString'
 import _isBoolean from 'lodash/isBoolean'
 import _map from 'lodash/map'
+import _find from 'lodash/find'
+import _forEach from 'lodash/forEach'
 import _trim from 'lodash/trim'
 import _isNil from 'lodash/isNil'
 import PropTypes from 'prop-types'
@@ -21,36 +23,24 @@ import {
   fixComponentContext,
   COMPONENTS_FOR_ID,
 } from './OrderForm.helpers'
-
-import timeFrames from '../../util/time_frames'
-
+import { isElectronApp } from '../../redux/config'
 import Panel from '../../ui/Panel'
 
+import ConnectingModal from './Modals/ConnectingModal'
 import UnconfiguredModal from './Modals/UnconfiguredModal'
 import SubmitAPIKeysModal from './Modals/SubmitAPIKeysModal'
 import OrderFormMenu from './OrderFormMenu'
+import { getAOs, getAtomicOrders } from './OrderForm.orders.helpers'
 
 import './style.css'
-import { isElectronApp } from '../../redux/config'
 
 const debug = Debug('hfui:order-form')
 
 const CONTEXT_LABELS = {
-  e: 'Exchange',
-  m: 'Margin',
-  f: 'Derivatives',
+  e: 'orderForm.exchange',
+  m: 'orderForm.margin',
+  f: 'orderForm.derivatives',
 }
-
-const ALL_ALGO_ORDERS = [
-  MACrossover,
-  AccumulateDistribute,
-  PingPong,
-  Iceberg,
-  TWAP,
-  OCOCO,
-]
-
-const HOSTED_ALGO_ORDERS = [Iceberg, TWAP]
 
 class OrderForm extends React.Component {
   state = {
@@ -71,11 +61,8 @@ class OrderForm extends React.Component {
       marketDirty,
     } = savedState
 
-    const algoOrders = OrderForm.getAOs()
-
     this.state = {
       ...this.state,
-      algoOrders,
       currentMarket,
       marketDirty,
       fieldData: {},
@@ -96,14 +83,6 @@ class OrderForm extends React.Component {
     return !(_isEqual(nextProps, this.props)) || !(_isEqual(this.state, nextState))
   }
 
-  static getAOs() {
-    const algoOrders = isElectronApp ? ALL_ALGO_ORDERS : HOSTED_ALGO_ORDERS
-
-    return algoOrders.map(ao => ao.meta.getUIDef({
-      timeframes: Object.values(timeFrames),
-    }))
-  }
-
   static getDerivedStateFromProps(nextProps, prevState) {
     const { activeMarket } = nextProps
     const {
@@ -119,10 +98,7 @@ class OrderForm extends React.Component {
       }
     }
 
-    const algoOrders = OrderForm.getAOs()
-
     return {
-      algoOrders,
       currentMarket: activeMarket,
       context: activeMarket.contexts[0],
       fieldData: {},
@@ -164,13 +140,15 @@ class OrderForm extends React.Component {
   }
 
   onChangeActiveOrderLayout(orderLabel) {
-    const { orders } = this.props
-    const { algoOrders, currentMarket } = this.state
+    const { t } = this.props
+    const { currentMarket } = this.state
+    const algoOrders = getAOs(t)
+    const orders = getAtomicOrders(t)
 
-    let uiDef = orders.find(({ label }) => label === orderLabel)
+    let uiDef = _find(orders, ({ label }) => label === orderLabel)
 
     if (!uiDef) {
-      uiDef = algoOrders.find(({ label }) => label === orderLabel)
+      uiDef = _find(algoOrders, ({ label }) => label === orderLabel)
     }
 
     uiDef.fields = fixComponentContext(uiDef.fields, currentMarket)
@@ -265,7 +243,7 @@ class OrderForm extends React.Component {
 
   onSubmitAlgoOrder() {
     const {
-      submitAlgoOrder, authToken, gaSubmitAO, setIsOrderExecuting,
+      submitAlgoOrder, authToken, gaSubmitAO, setIsOrderExecuting, t,
     } = this.props
     const {
       currentMarket, currentLayout, fieldData, context,
@@ -290,11 +268,11 @@ class OrderForm extends React.Component {
       })
     } else {
       setIsOrderExecuting(false)
-      const { field, message } = errors
+      const { field, message, i18n } = errors
       this.setState(({ validationErrors }) => ({
         validationErrors: {
           ...validationErrors,
-          [field]: message,
+          [field]: i18n ? t(`algoOrderForm.validationMessages.${i18n.key}`, i18n.props) : message,
         },
       }))
     }
@@ -366,13 +344,16 @@ class OrderForm extends React.Component {
 
   render() {
     const {
-      onRemove, orders, apiClientState, apiCredentials, moveable, removeable, isPaperTrading, isOrderExecuting,
+      onRemove, apiClientState, apiCredentials, moveable, removeable, isPaperTrading, isOrderExecuting, t,
     } = this.props
+    const orders = getAtomicOrders(t)
 
     const {
       fieldData, validationErrors, creationError, context, currentLayout,
-      helpOpen, configureModalOpen, currentMarket, algoOrders,
+      helpOpen, configureModalOpen, currentMarket,
     } = this.state
+
+    const algoOrders = getAOs(t)
 
     const apiClientConnected = apiClientState === 2
     const apiClientConnecting = apiClientState === 1
@@ -383,13 +364,13 @@ class OrderForm extends React.Component {
     const atomicOrderTypes = []
     const algoOrderTypes = []
 
-    orders.forEach(({ label, id, uiIcon }) => atomicOrderTypes.push({
+    _forEach(orders, ({ label, id, uiIcon }) => atomicOrderTypes.push({
       id,
       label,
       uiIcon,
     }))
 
-    algoOrders.forEach(({ label, id, uiIcon }) => {
+    _forEach(algoOrders, ({ label, id, uiIcon }) => {
       algoOrderTypes.push({
         id,
         label,
@@ -403,7 +384,7 @@ class OrderForm extends React.Component {
           key='execute-order'
           darkHeader
           dark
-          label='Execute Order'
+          label={t('orderForm.title')}
           className='hfui-orderform__panel'
           moveable={moveable}
           removeable={removeable}
@@ -419,7 +400,11 @@ class OrderForm extends React.Component {
         >
           <div key='orderform-wrapper' className='hfui-orderform__wrapper'>
             {isElectronApp && [
-              !isConnectedWithValidAPI && !configureModalOpen && (
+              apiClientConnecting && (
+                <ConnectingModal key='connecting' />
+              ),
+
+              !apiClientConfigured && !configureModalOpen && (
                 <UnconfiguredModal
                   key='unconfigured'
                   onClick={this.onToggleConfigureModal}
@@ -428,7 +413,7 @@ class OrderForm extends React.Component {
                 />
               ),
 
-              !isConnectedWithValidAPI && configureModalOpen && (
+              !apiClientConfigured && configureModalOpen && (
                 <SubmitAPIKeysModal
                   key='submit-api-keys'
                   onClose={this.onToggleConfigureModal}
@@ -439,11 +424,11 @@ class OrderForm extends React.Component {
               ),
             ]}
 
-            {helpOpen && currentLayout && currentLayout.customHelp && (
+            {helpOpen && showOrderform && currentLayout && currentLayout.customHelp && (
               <div key='overlay-wrapper' className='hfui-orderform__overlay-wrapper'>
                 <div className='hfui-orderform__help-inner'>
                   <p className='hfui-orderform__help-title'>
-                    <span className='prefix'>HELP:</span>
+                    <span className='prefix'>{t('orderForm.help')}</span>
                     {currentLayout.label}
                     <i
                       role='button'
@@ -469,7 +454,7 @@ class OrderForm extends React.Component {
               </div>
             )}
 
-            {!helpOpen && currentLayout && [
+            {!helpOpen && currentLayout && showOrderform && [
               <div className='hfui-orderform__layout-label' key='layout-label'>
                 <i
                   className='icon-back-arrow'
@@ -485,7 +470,7 @@ class OrderForm extends React.Component {
                 <li key='item' className='hfui-orderform__centered-item'>
                   {_map(currentMarket.contexts, value => (
                     <div key={value} onClick={() => this.onContextChange(value)} className={`hfui__orderform-tab ${value === context ? 'active' : ''}`}>
-                      <p>{CONTEXT_LABELS[value]}</p>
+                      <p>{t(CONTEXT_LABELS[value])}</p>
                     </div>
                   ))}
                 </li>
@@ -498,6 +483,7 @@ class OrderForm extends React.Component {
                 validationErrors,
                 renderData,
                 isOrderExecuting,
+                t,
                 fieldData: {
                   ...fieldData,
                   _context: context,
@@ -518,7 +504,6 @@ class OrderForm extends React.Component {
 }
 
 OrderForm.propTypes = {
-  orders: PropTypes.arrayOf(PropTypes.object).isRequired,
   savedState: PropTypes.objectOf(PropTypes.oneOfType([
     PropTypes.string, PropTypes.bool, PropTypes.object,
   ])).isRequired,
@@ -545,6 +530,7 @@ OrderForm.propTypes = {
   isOrderExecuting: PropTypes.bool,
   moveable: PropTypes.bool,
   removeable: PropTypes.bool,
+  t: PropTypes.func.isRequired,
 }
 
 OrderForm.defaultProps = {

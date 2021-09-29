@@ -3,18 +3,22 @@ import Debug from 'debug'
 import ClassNames from 'classnames'
 import _ from 'lodash'
 import _isEmpty from 'lodash/isEmpty'
+import _keys from 'lodash/keys'
+import _values from 'lodash/values'
+import _forEach from 'lodash/forEach'
 import _find from 'lodash/find'
 import Indicators from 'bfx-hf-indicators'
 import { nonce } from 'bfx-api-node-util'
 import HFS from 'bfx-hf-strategy'
 import HFU from 'bfx-hf-util'
 import PropTypes from 'prop-types'
+import { useTranslation } from 'react-i18next'
 
 import Templates from './templates'
 import StrategyEditorPanel from './StrategyEditorPanel'
-import CreateNewStrategyModal from '../CreateNewStrategyModal'
-import RemoveExistingStrategyModal from '../RemoveExistingStrategyModal'
-import OpenExistingStrategyModal from '../OpenExistingStrategyModal'
+import CreateNewStrategyModal from '../../modals/Strategy/CreateNewStrategyModal'
+import RemoveExistingStrategyModal from '../../modals/Strategy/RemoveExistingStrategyModal'
+import OpenExistingStrategyModal from '../../modals/Strategy/OpenExistingStrategyModal'
 import MonacoEditor from './MonacoEditor'
 
 import './style.css'
@@ -47,6 +51,8 @@ const StrategyEditor = ({
   const [createNewStrategyModalOpen, setCreateNewStrategyModalOpen] = useState(false)
   const [openExistingStrategyModalOpen, setOpenExistingStrategyModalOpen] = useState(false)
   const [execError, setExecError] = useState('')
+
+  const { t } = useTranslation()
 
   const processStrategy = (updatedStrategy) => {
     const { id, label } = updatedStrategy
@@ -130,7 +136,7 @@ const StrategyEditor = ({
       }
     }
 
-    Object.values(indicators).forEach((i) => {
+    _forEach(_values(indicators), (i) => {
       i.key = `${nonce()}` // eslint-disable-line
     })
 
@@ -139,15 +145,15 @@ const StrategyEditor = ({
 
   const onCreateNewStrategy = (label, templateLabel) => {
     const newStrategy = { label }
-    const template = _find(Templates, t => t.label === templateLabel)
+    const template = _find(Templates, _t => _t.label === templateLabel)
 
     if (!template) {
       debug('unknown template: %s', templateLabel)
     }
 
-    const templateSections = Object.keys(template)
+    const templateSections = _keys(template)
 
-    templateSections.forEach((s) => {
+    _forEach(templateSections, (s) => {
       if (s === 'label') return
 
       newStrategy[s] = template[s]
@@ -240,19 +246,19 @@ const StrategyEditor = ({
     <div className='hfui-strategyeditor__empty-content'>
       <div>
         <p className='button' onClick={() => setCreateNewStrategyModalOpen(true)}>
-          Create
+          {t('strategyEditor.createStrategyStringPart1')}
         </p>
-        <p>a new strategy</p>
+        <p>{t('strategyEditor.createStrategyStringPart2')}</p>
         {!_isEmpty(strategies) ? (
           <>
-            <p>or</p>
+            <p>{t('strategyEditor.createStrategyStringPart3')}</p>
             <p className='button' onClick={() => setOpenExistingStrategyModalOpen(true)}>
-              open
+              {t('strategyEditor.createStrategyStringPart4')}
             </p>
-            <p>an existing one.</p>
+            <p>{t('strategyEditor.createStrategyStringPart5')}</p>
           </>
         ) : (
-          <p>to begin backtesting.</p>
+          <p>{t('strategyEditor.createStrategyStringPart6')}</p>
         )}
       </div>
       <CreateNewStrategyModal
@@ -293,6 +299,7 @@ const StrategyEditor = ({
         strategy={strategy}
       />
       <ul className='hfui-strategyeditor__func-select'>
+        {/* eslint-disable-next-line lodash/prefer-lodash-method */}
         {STRATEGY_SECTIONS.map(section => (
           <li
             key={section}
@@ -355,7 +362,7 @@ StrategyEditor.propTypes = {
       PropTypes.oneOf([null]).isRequired,
     ]),
   ),
-  strategies: PropTypes.arrayOf(PropTypes.object).isRequired,
+  strategies: PropTypes.objectOf(PropTypes.object).isRequired,
   backtestResults: PropTypes.objectOf(PropTypes.any),
 }
 

@@ -5,7 +5,7 @@ import { getSocket } from '../../selectors/ws'
 
 export default (alias, store) => () => {
   const state = store.getState()
-  const socket = getSocket(alias)(state)
+  const socket = getSocket(state, alias)
 
   // do not show bad-connection-modal when connecting first time and it fails i.e. when lastActivity = null
   if (!_isNil(socket?.lastActivity)) {

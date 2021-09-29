@@ -7,6 +7,7 @@ import _map from 'lodash/map'
 import _includes from 'lodash/includes'
 import _filter from 'lodash/filter'
 import { nonce } from 'bfx-api-node-util'
+import { withTranslation } from 'react-i18next'
 
 import Panel from '../../ui/Panel'
 import Button from '../../ui/Button'
@@ -30,7 +31,7 @@ class NotificationsSidebar extends React.PureComponent {
   }
 
   static getDerivedStateFromProps(nextProps, prevState) {
-    const { notifications = [] } = nextProps
+    const { notifications = [], t } = nextProps
     const { shownNotifications } = prevState
 
     if (notifications.length <= shownNotifications.length) {
@@ -42,9 +43,11 @@ class NotificationsSidebar extends React.PureComponent {
     return {
       lastShownMTS: showMTS,
       liveNotifications: [
-        ...notifications.filter(({ cid }) => !shownNotifications.includes(cid)).map(n => ({
+        // TODO: rework notifications state
+        // eslint-disable-next-line lodash/prefer-lodash-method
+        ...notifications.filter(({ cid }) => !_includes(shownNotifications, cid)).map(n => ({
           n: {
-            message: n.text,
+            message: n.i18n ? t(n.i18n.key, n.i18n.props) : n.text,
             level: n.status,
             ...n,
           },
@@ -54,7 +57,7 @@ class NotificationsSidebar extends React.PureComponent {
 
         ...prevState.liveNotifications,
       ],
-      shownNotifications: notifications.map(({ cid }) => cid),
+      shownNotifications: _map(notifications, ({ cid }) => cid),
     }
   }
 
@@ -106,7 +109,9 @@ class NotificationsSidebar extends React.PureComponent {
 
   render() {
     const { liveNotifications } = this.state
-    const { notifications, notificationsVisible, closeNotificationPanel } = this.props
+    const {
+      notifications, notificationsVisible, closeNotificationPanel, t,
+    } = this.props
 
     return (
       <>
@@ -116,7 +121,7 @@ class NotificationsSidebar extends React.PureComponent {
         })}
         >
           <Panel
-            label='Notifications'
+            label={t('notifications.title')}
             hideIcons
             closePanel={closeNotificationPanel}
             preHeaderComponents={[
@@ -127,13 +132,13 @@ class NotificationsSidebar extends React.PureComponent {
                 className='hfui-notificationssidebar__header-btn'
                 label={[
                   <i key='icon' className='icon-clear' />,
-                  <p key='text'>Clear all</p>,
+                  <p key='text'>{t('notifications.clearAllBtn')}</p>,
                 ]}
               />,
             ]}
           >
             {_isEmpty(notifications) ? (
-              <p className='hfui-notificationssidebar__empty'>There are no new notifications yet!</p>
+              <p className='hfui-notificationssidebar__empty'>{t('notifications.noNotifications')}</p>
             ) : (
               <Scrollbars>
                 <Notifications
@@ -141,7 +146,7 @@ class NotificationsSidebar extends React.PureComponent {
                   notifications={_map(notifications, item => ({
                     ...item,
                     level: item.status,
-                    message: item.text,
+                    message: item.i18n ? t(item.i18n.key, item.i18n.props) : item.text,
                   }))}
                   onClose={this.onClose}
                 />
@@ -160,6 +165,7 @@ NotificationsSidebar.propTypes = {
   removeNotifications: PropTypes.func.isRequired,
   clearNotifications: PropTypes.func.isRequired,
   closeNotificationPanel: PropTypes.func.isRequired,
+  t: PropTypes.func.isRequired,
   notificationsVisible: PropTypes.bool,
 }
 
@@ -167,4 +173,4 @@ NotificationsSidebar.defaultProps = {
   notificationsVisible: false,
 }
 
-export default NotificationsSidebar
+export default withTranslation()(NotificationsSidebar)

@@ -1,6 +1,9 @@
 import React from 'react'
 import { useDispatch } from 'react-redux'
+import _values from 'lodash/values'
+import _map from 'lodash/map'
 
+import { useTranslation } from 'react-i18next'
 import HFIcon from '../../ui/HFIcon'
 import UIActions from '../../redux/actions/ui'
 import NavbarLink from './Navbar.Link'
@@ -11,21 +14,23 @@ import LayoutSettings from './Navbar.LayoutSettings'
 import AppSettings from './Navbar.AppSettings'
 import Routes from '../../constants/routes'
 import { isElectronApp } from '../../redux/config'
+// import LanguageSettings from './Navbar.LanguageSettings'
 
 import './style.css'
 
 const Navbar = () => {
   const dispatch = useDispatch()
+  const { t } = useTranslation()
 
   return (
     <div className='hfui-navbar__wrapper'>
       <HFIcon className='hfui-navbar__logo' />
       <ul className='hfui-navbar__main-links'>
-        {Object.values(Routes).map(({ path, label }) => (
+        {_map(_values(Routes), ({ path, label }) => (
           <li key={path}>
             <NavbarLink
               route={path}
-              label={label}
+              label={t(label)}
             />
           </li>
         ))}
@@ -34,7 +39,7 @@ const Navbar = () => {
         <div className='hfui-exchangeinfobar__buttons'>
           <LayoutSettings />
           <NavbarButton
-            alt='Notifications'
+            alt={t('notifications.title')}
             icon='notifications'
             onClick={() => dispatch(UIActions.switchNotifcationPanel())}
           />
@@ -43,11 +48,12 @@ const Navbar = () => {
         {isElectronApp && (
         <div className='hfui-tradingpaper__control'>
           <div className='hfui-tradingpaper__control-toggle'>
-            <p>Paper Trading</p>
+            <p>{t('main.paper')}</p>
             <SwitchMode />
           </div>
         </div>
         )}
+        {/* <LanguageSettings /> TODO: hide until translations are ready */}
       </div>
     </div>
   )

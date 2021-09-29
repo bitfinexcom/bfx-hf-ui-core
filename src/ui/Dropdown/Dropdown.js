@@ -1,17 +1,20 @@
-import React, { memo } from 'react'
+import React, { memo, useMemo } from 'react'
 import PropTypes from 'prop-types'
+import _reduce from 'lodash/reduce'
 
 import { Dropdown as UfxDropdown } from '@ufx-ui/core'
 import './style.css'
+import { useTranslation } from 'react-i18next'
 
 function optionsAdaptor(options) {
-  return options.reduce((nextOptions, option) => ({
+  return _reduce(options, (nextOptions, option) => ({
     ...nextOptions,
     [option.value]: option.label,
   }), {})
 }
 
 function Dropdown(props) {
+  const { t } = useTranslation()
   const {
     icon,
     label,
@@ -20,9 +23,11 @@ function Dropdown(props) {
     options,
     highlight,
     className,
-    placeholder,
+    placeholder = t('ui.dropdown'),
     ...rest
   } = props
+
+  const adaptedOptions = useMemo(() => optionsAdaptor(options), [options])
 
   return (
     <div className='hfui-dropdown__wrapper'>
@@ -34,7 +39,7 @@ function Dropdown(props) {
         value={value}
         className={className}
         closeOnMouseLeave={false}
-        options={optionsAdaptor(options)}
+        options={adaptedOptions}
         valueRenderer={icon ? (_value, optionLabel) => (
           <div className='selected-text has-icon'>
             {icon && <i className={`icon-${icon}`} />}
@@ -70,7 +75,7 @@ Dropdown.defaultProps = {
   className: '',
   disabled: false,
   highlight: false,
-  placeholder: 'Select an option',
+  placeholder: undefined,
 }
 
 export default memo(Dropdown)

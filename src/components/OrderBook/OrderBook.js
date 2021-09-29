@@ -9,7 +9,6 @@ import './style.css'
 // Remove once the design can handle deep OBs
 const TEMP_OB_SIDE_LENGTH_LIMIT = 12
 
-// TODO: Unified/split views
 const OrderBook = ({ sumAmounts, stackedView, ...rest }) => {
   const rowMapping = getRowMapping(sumAmounts)
   const bookViz = getBookViz(sumAmounts)

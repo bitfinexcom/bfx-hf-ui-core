@@ -1,5 +1,7 @@
 /* eslint-disable consistent-return */
-import React, { useEffect, Suspense, lazy } from 'react'
+import React, {
+  useEffect, Suspense, lazy, useCallback,
+} from 'react'
 import { Route, Switch, Redirect } from 'react-router'
 import PropTypes from 'prop-types'
 import _isFunction from 'lodash/isFunction'
@@ -18,12 +20,12 @@ const TradingPage = lazy(() => import('../../pages/Trading'))
 const MarketDataPage = lazy(() => import('../../pages/MarketData'))
 const AuthenticationPage = lazy(() => import('../../pages/Authentication'))
 
-const TradingModeModal = lazy(() => import('../TradingModeModal'))
-const BadConnectionModal = lazy(() => import('../BadConnectionModal'))
-const OldFormatModal = lazy(() => import('../OldFormatModal'))
-const AOPauseModal = lazy(() => import('../AOPauseModal'))
-const BestExperienceMessageModal = lazy(() => import('../BestExperienceMessageModal'))
-const CcyInfoModal = lazy(() => import('../CcyInfoModal'))
+const TradingModeModal = lazy(() => import('../../modals/TradingModeModal'))
+const BadConnectionModal = lazy(() => import('../../modals/BadConnectionModal'))
+const OldFormatModal = lazy(() => import('../../modals/OldFormatModal'))
+const AOPauseModal = lazy(() => import('../../modals/AOPauseModal'))
+const BestExperienceMessageModal = lazy(() => import('../../modals/BestExperienceMessageModal'))
+const CcyInfoModal = lazy(() => import('../../modals/CcyInfoModal'))
 
 const HFUI = ({
   authToken,
@@ -40,19 +42,19 @@ const HFUI = ({
 }) => {
   useInjectBfxData()
 
-  function unloadHandler() {
+  const unloadHandler = useCallback(() => {
     if (authToken !== null) {
       onUnload(authToken, currentMode)
     }
-  }
+  }, [authToken, currentMode, onUnload])
 
-  function onElectronAppClose() {
+  const onElectronAppClose = useCallback(() => {
     if (!authToken || !settingsShowAlgoPauseInfo) {
       closeElectronApp()
     } else {
       shouldShowAOPauseModalState()
     }
-  }
+  }, [authToken, settingsShowAlgoPauseInfo, shouldShowAOPauseModalState])
 
   useEffect(() => {
     if (isElectronApp) {
@@ -62,7 +64,7 @@ const HFUI = ({
         window.removeEventListener('beforeunload', unloadHandler)
       }
     }
-  }, [authToken, currentMode])
+  }, [authToken, currentMode, unloadHandler])
 
   useEffect(() => {
     // if running in the electron environment
@@ -75,11 +77,11 @@ const HFUI = ({
         ipcRenderer.removeListener('app-close', onElectronAppClose)
       }
     }
-  }, [authToken, settingsShowAlgoPauseInfo])
+  }, [authToken, onElectronAppClose, settingsShowAlgoPauseInfo])
 
   useEffect(() => {
     GAPageview(currentPage)
-  }, [currentPage])
+  }, [GAPageview, currentPage])
 
   useEffect(() => {
     if (authToken) {
@@ -87,7 +89,7 @@ const HFUI = ({
       getFavoritePairs(authToken, currentMode)
       subscribeAllTickers()
     }
-  }, [authToken])
+  }, [authToken, currentMode, getFavoritePairs, getSettings, subscribeAllTickers])
 
   return (
     <Suspense fallback={<></>}>

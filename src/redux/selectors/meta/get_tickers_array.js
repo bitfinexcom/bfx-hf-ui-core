@@ -10,34 +10,39 @@ import getTickersKeys from './get_tickers_keys'
 import { getTickersVolumeUnit } from '../ui'
 import { getPairFromMarket } from '../../../util/market'
 
+const EMPTY_ARR = []
+
 const { getCurrencySymbolMemo, getTickers } = reduxSelectors
 
-const getTickersInfo = createSelector([getTickers, getMarkets, getCurrencySymbolMemo], (tickers, markets, getCurrencySymbol) => {
-  const fullTickersData = _reduce(markets, (acc, market) => {
-    const {
-      wsID, base, quote, uiID, ccyLabels, isPerp,
-    } = market
-    const id = getPairFromMarket(market, getCurrencySymbol)
-    const newTickerObject = {
-      id,
-      uiID,
-      baseCcy: base,
-      quoteCcy: quote,
-      changePerc: _get(tickers, `${wsID}.changePerc`, 0),
-      lastPrice: _get(tickers, `${wsID}.lastPrice`, 0),
-      volume: _get(tickers, `${wsID}.volume`, 0),
-      ccyLabels,
-      wsID,
-      isPerp,
-      perpUI: isPerp ? uiID : null,
-    }
+const getTickersInfo = createSelector(
+  [
+    getTickers, getMarkets, getCurrencySymbolMemo,
+  ],
+  (tickers, markets, getCurrencySymbol) => {
+    return _reduce(markets, (acc, market) => {
+      const {
+        wsID, base, quote, uiID, ccyLabels, isPerp,
+      } = market
+      const id = getPairFromMarket(market, getCurrencySymbol)
+      const newTickerObject = {
+        id,
+        uiID,
+        baseCcy: base,
+        quoteCcy: quote,
+        changePerc: _get(tickers, `${wsID}.changePerc`, 0),
+        lastPrice: _get(tickers, `${wsID}.lastPrice`, 0),
+        volume: _get(tickers, `${wsID}.volume`, 0),
+        ccyLabels,
+        wsID,
+        isPerp,
+        perpUI: isPerp ? uiID : null,
+      }
 
-    acc[wsID] = newTickerObject
-    return acc
-  }, {})
-
-  return fullTickersData
-})
+      acc[wsID] = newTickerObject
+      return acc
+    }, {})
+  },
+)
 
 const preparedTickersArray = createSelector(
   [
@@ -49,17 +54,21 @@ const preparedTickersArray = createSelector(
   ],
   (tickersInfo, tickersKeys, tickers, getCurrencySymbol, tickersVolumeUnit) => {
     if (_isEmpty(tickersInfo)) {
-      return []
+      return EMPTY_ARR
     }
+
     const prepared = prepareTickers(tickersKeys, tickers, tickersVolumeUnit, getCurrencySymbol)
 
     return _map(tickersKeys, (pair) => {
       const ticker = tickersInfo[pair]
       const preparedTicker = _find(prepared, (_ticker) => {
         return _ticker.id === ticker.wsID
-      },
-      null)
-      return { ...ticker, volume: preparedTicker ? preparedTicker.volumeConverted : ticker.volume }
+      })
+
+      return {
+        ...ticker,
+        volume: preparedTicker?.volumeConverted || ticker?.volume,
+      }
     })
   },
 )

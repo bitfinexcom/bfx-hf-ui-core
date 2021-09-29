@@ -1,13 +1,14 @@
 import React from 'react'
-
 import { AutoSizer } from 'react-virtualized'
+import _map from 'lodash/map'
+
 // eslint-disable-next-line import/no-extraneous-dependencies
 import BFXChart from 'bfx-hf-chart'
-import Results from '../Results'
 
+import Results from '../Results'
 import StrategyTradesTable from '../../StrategyTradesTable'
 
-const HistoricalReport = (opts, results, backtestData, backtestOptions) => {
+const HistoricalReport = (opts, results, backtestData, backtestOptions, t) => {
   const { trades = [] } = results
   const { indicators, onAddIndicator, onDeleteIndicator } = opts
   const { candles = [] } = backtestData
@@ -15,7 +16,7 @@ const HistoricalReport = (opts, results, backtestData, backtestOptions) => {
   const hasCandles = candles.length !== 0
 
   // convert candles to array for the chart
-  const candleArr = Object.values(candles).map(c => (
+  const candleArr = _map(candles, c => (
     [
       c.mts,
       c.open,
@@ -33,34 +34,34 @@ const HistoricalReport = (opts, results, backtestData, backtestOptions) => {
         execRunning={false}
       />
       {hasCandles && (
-      <AutoSizer disableHeight style={{ height: 400 }}>
-        {({ width, height = 400 }) => (
-          <BFXChart
-            indicators={indicators}
-            candles={candleArr}
-            trades={trades}
-            width={width}
-            height={height}
-            onAddIndicator={onAddIndicator}
-            onDeleteIndicator={onDeleteIndicator}
-            isSyncing={false}
-            candleLoadingThreshold={3} // we always get 1 candle when sub'ing
-            bgColor='#102331'
-            config={{
-              AXIS_COLOR: '#444',
-              AXIS_TICK_COLOR: '#00000000',
-            }}
-            candleWidth={tf}
-            disableToolbar
-            showMarketLabel={false}
-          />
-        )}
-      </AutoSizer>
+        <AutoSizer disableHeight style={{ height: 400 }}>
+          {({ width, height = 400 }) => (
+            <BFXChart
+              indicators={indicators}
+              candles={candleArr}
+              trades={trades}
+              width={width}
+              height={height}
+              onAddIndicator={onAddIndicator}
+              onDeleteIndicator={onDeleteIndicator}
+              isSyncing={false}
+              candleLoadingThreshold={3} // we always get 1 candle when sub'ing
+              bgColor='#102331'
+              config={{
+                AXIS_COLOR: '#444',
+                AXIS_TICK_COLOR: '#00000000',
+              }}
+              candleWidth={tf}
+              disableToolbar
+              showMarketLabel={false}
+            />
+          )}
+        </AutoSizer>
       )}
       <StrategyTradesTable
-        label='Trades'
+        label={t('tradesTableModal.title')}
         trades={trades}
-        onTradeClick={() => {}}
+        onTradeClick={() => { }}
       />
     </div>
   )

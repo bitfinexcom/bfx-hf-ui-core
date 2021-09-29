@@ -1,3 +1,1 @@
-import PositionsTable from './PositionsTable.container'
-
-export default PositionsTable
+export { default } from './PositionsTable.container'

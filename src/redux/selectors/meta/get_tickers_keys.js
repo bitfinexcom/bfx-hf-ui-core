@@ -12,7 +12,10 @@ const getTickersKeys = createSelector(
   getIsTradingPair,
   getIsDerivativePair,
   getIsSecuritiesPair,
-  (markets, isTradingPair, isDerivativePair, isSecuritiesPair) => _filter(_keys(markets), (pair) => (isTradingPair(pair) || isDerivativePair(pair)) && !isSecuritiesPair(pair)),
+  (markets, isTradingPair, isDerivativePair, isSecuritiesPair) => _filter(
+    _keys(markets),
+    (pair) => (isTradingPair(pair) || isDerivativePair(pair)) && !isSecuritiesPair(pair),
+  ),
 )
 
 export default getTickersKeys

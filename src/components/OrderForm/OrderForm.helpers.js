@@ -5,6 +5,12 @@ import _isBoolean from 'lodash/isBoolean'
 import _capitalize from 'lodash/capitalize'
 import _flatten from 'lodash/flatten'
 import _forOwn from 'lodash/forOwn'
+import _forEach from 'lodash/forEach'
+import _filter from 'lodash/filter'
+import _map from 'lodash/map'
+import _join from 'lodash/join'
+import _keys from 'lodash/keys'
+import _includes from 'lodash/includes'
 
 import NumberInput from './FieldComponents/input.number'
 import PriceInput from './FieldComponents/input.price'
@@ -33,7 +39,7 @@ const COMPONENTS_FOR_ID = {
   'ui.ticker': TickerBar,
 }
 
-const marketToQuoteBase = market => ({
+const marketToQuoteBase = (market) => ({
   QUOTE: market.quote,
   BASE: market.base,
 })
@@ -41,25 +47,30 @@ const marketToQuoteBase = market => ({
 const verifyCondition = (condition = {}, value) => {
   if (typeof condition.eq !== 'undefined') {
     return condition.eq === value
-  } if (typeof condition.neq !== 'undefined') {
+  }
+  if (typeof condition.neq !== 'undefined') {
     return condition.neq !== value
-  } if (typeof condition.gt !== 'undefined') {
+  }
+  if (typeof condition.gt !== 'undefined') {
     return value > condition.gt
-  } if (typeof condition.gte !== 'undefined') {
+  }
+  if (typeof condition.gte !== 'undefined') {
     return value >= condition.gte
-  } if (typeof condition.lt !== 'undefined') {
+  }
+  if (typeof condition.lt !== 'undefined') {
     return value < condition.lt
-  } if (typeof condition.lte !== 'undefined') {
+  }
+  if (typeof condition.lte !== 'undefined') {
     return value <= condition.lte
   }
 
-  console.error(`unknown condition: ${Object.keys(condition).join(', ')}`)
+  console.error(`unknown condition: ${_join(_keys(condition), ', ')}`)
 
   return false
 }
 
 const verifyConditionsMet = (conditions = {}, fieldData = {}) => {
-  const fields = Object.keys(conditions)
+  const fields = _keys(conditions)
 
   for (let i = 0; i < fields.length; i += 1) {
     if (!verifyCondition(conditions[fields[i]], fieldData[fields[i]])) {
@@ -74,7 +85,7 @@ const defaultDataForLayout = (layout = {}) => {
   const { fields = {} } = layout
   const defaultData = {}
 
-  Object.keys(fields).forEach((fieldName) => {
+  _forEach(_keys(fields), (fieldName) => {
     const field = fields[fieldName]
     const { component, default: defaultValue } = field
     const C = COMPONENTS_FOR_ID[component] || {}
@@ -89,7 +100,7 @@ const defaultDataForLayout = (layout = {}) => {
 
   return defaultData
 }
-const getValidValue = val => {
+const getValidValue = (val) => {
   if (typeof val === 'string' && val.length > 0) {
     if (val === 'true') return true
     if (val === 'false') return false
@@ -104,18 +115,14 @@ const processFieldData = ({ action, layout = {}, fieldData = {} }) => {
   const { fields = {} } = layout
   const data = {}
 
-  Object.keys(fieldData).forEach((fieldName) => {
+  _forEach(_keys(fieldData), (fieldName) => {
     const rawValue = fieldData[fieldName]
     const C = COMPONENTS_FOR_ID[(fields[fieldName] || {}).component]
 
     // TODO: Move this?
-    const v = action === 'sell' && fieldName === 'amount'
-      ? -1 * (+rawValue)
-      : rawValue
+    const v = action === 'sell' && fieldName === 'amount' ? -1 * +rawValue : rawValue
 
-    data[fieldName] = (C && C.processValue)
-      ? C.processValue(v)
-      : v
+    data[fieldName] = C && C.processValue ? C.processValue(v) : v
   })
 
   return data
@@ -134,6 +141,19 @@ const fixComponentContext = (orderFields, market) => {
   })
 
   return fields
+}
+
+const getActionsTranslate = (action, t) => {
+  switch (action) {
+    case 'sell':
+      return t('ui.sellBtn')
+    case 'buy':
+      return t('ui.buyBtn')
+    case 'submit':
+      return t('ui.submitBtn')
+    default:
+      return action
+  }
 }
 
 // Renders a single layout field component
@@ -169,7 +189,7 @@ const renderLayoutComponent = ({
       def={componentDef}
       renderData={renderData}
       onFieldChange={onFieldChange}
-      onChange={v => onFieldChange(fieldName, v)}
+      onChange={(v) => onFieldChange(fieldName, v)}
       value={getValidValue(fieldData[fieldName])}
       key={`${fieldName}-component`}
       id={`${fieldName}-component`}
@@ -180,9 +200,12 @@ const renderLayoutComponent = ({
   )
 }
 
-const renderLayoutActions = ({ layout = {}, onSubmit, isOrderExecuting }) => { // eslint-disable-line
+const renderLayoutActions = ({
+  layout = {}, onSubmit, isOrderExecuting, t,
+}) => {
+  // eslint-disable-line
   const { actions = [] } = layout
-  const validActions = actions.filter(action => action !== 'preview')
+  const validActions = _filter(actions, (action) => action !== 'preview')
 
   return (
     <div
@@ -191,10 +214,10 @@ const renderLayoutActions = ({ layout = {}, onSubmit, isOrderExecuting }) => { /
         'single-action': validActions.length === 1,
       })}
     >
-      {validActions.map(action => (
+      {_map(validActions, (action) => (
         <Button
           key={action}
-          label={_capitalize(action)}
+          label={_capitalize(getActionsTranslate(action, t))}
           onClick={() => onSubmit(action)}
           red={action === 'sell'}
           green={action === 'buy'}
@@ -223,7 +246,7 @@ const renderLayoutField = ({
     return null
   }
 
-  if (fieldDef.trading && !fieldDef.trading.includes(fieldData._context)) {
+  if (fieldDef.trading && !_includes(fieldDef.trading, fieldData._context)) {
     return null
   }
 
@@ -258,40 +281,46 @@ const renderLayoutSection = ({
         fullWidth,
       })}
     >
-      {title && (
-        <p className='hfui-orderform__layout-section-title'>{title}</p>
-      )}
+      {title && <p className='hfui-orderform__layout-section-title'>{title}</p>}
 
       <ul>
-        {_flatten(rows.map((row, i) => row.map((field, rowI) => {
-          if (field === null) { // spacing placeholder
+        {_flatten(
+          _map(rows, (row, i) => _map(row, (field, rowI) => {
+            if (field === null) {
+              // spacing placeholder
+              return (
+                <li key={`empty-${i}-${rowI}`} /> // eslint-disable-line
+              )
+            }
+
+            const fieldComponent = layout.fields[field]
+            const { visible } = fieldComponent
+
+            if (_isBoolean(visible) && !visible) {
+              return null
+            }
+            if (
+              _isObject(visible)
+              && !verifyConditionsMet(visible, fieldData)
+            ) {
+              return null
+            }
+
             return (
-              <li key={`empty-${i}-${rowI}`} /> // eslint-disable-line
+              <li key={field}>
+                {field
+                  && renderLayoutField({
+                    field,
+                    layout,
+                    fieldData,
+                    renderData,
+                    onFieldChange,
+                    validationErrors,
+                  })}
+              </li>
             )
-          }
-
-          const fieldComponent = layout.fields[field]
-          const { visible } = fieldComponent
-
-          if (_isBoolean(visible) && !visible) {
-            return null
-          } if (_isObject(visible) && !verifyConditionsMet(visible, fieldData)) {
-            return null
-          }
-
-          return (
-            <li key={field}>
-              {field && renderLayoutField({
-                field,
-                layout,
-                fieldData,
-                renderData,
-                onFieldChange,
-                validationErrors,
-              })}
-            </li>
-          )
-        })))}
+          })),
+        )}
       </ul>
     </div>
   )
@@ -306,6 +335,7 @@ const renderLayout = ({
   onSubmit, // eslint-disable-line
   onFieldChange, // eslint-disable-line
   isOrderExecuting, // eslint-disable-line
+  t,
 }) => {
   const { label, header, sections = [] } = layout
   const html = []
@@ -314,14 +344,14 @@ const renderLayout = ({
     const { component } = header
 
     if (component !== 'ui.checkbox_group') {
-      console.error(`layout ${label} has unsupported header component: ${component}`)
+      console.error(
+        `layout ${label} has unsupported header component: ${component}`,
+      )
     } else {
-      html.push((
-        <div
-          className='hfui-orderform__layout-header'
-          key='header-component'
-        >
-          {renderLayoutComponent({ // TODO: Handle field change for header
+      html.push(
+        <div className='hfui-orderform__layout-header' key='header-component'>
+          {renderLayoutComponent({
+            // TODO: Handle field change for header
             componentDef: header,
             fieldName: null, // meta field
             validationErrors,
@@ -330,31 +360,36 @@ const renderLayout = ({
             fieldData,
             layout,
           })}
-        </div>
-      ))
+        </div>,
+      )
     }
   }
 
-  sections.forEach((section = {}) => {
+  _forEach(sections, (section = {}) => {
     const { visible } = section
 
     if (_isBoolean(visible) && !visible) {
       return
-    } if (_isObject(visible) && !verifyConditionsMet(visible, fieldData)) {
+    }
+    if (_isObject(visible) && !verifyConditionsMet(visible, fieldData)) {
       return
     }
 
-    html.push(renderLayoutSection({
-      validationErrors,
-      onFieldChange,
-      renderData,
-      fieldData,
-      section,
-      layout,
-    }))
+    html.push(
+      renderLayoutSection({
+        validationErrors,
+        onFieldChange,
+        renderData,
+        fieldData,
+        section,
+        layout,
+      }),
+    )
   })
 
-  html.push(renderLayoutActions({ layout, onSubmit, isOrderExecuting }))
+  html.push(renderLayoutActions({
+    layout, onSubmit, isOrderExecuting, t,
+  }))
 
   return (
     <div className='hfui-orderform__layout' key='orderform-layout'>

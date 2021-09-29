@@ -1,4 +1,8 @@
 import React, { Suspense, lazy } from 'react'
+import _assign from 'lodash/assign'
+import _map from 'lodash/map'
+import _forEach from 'lodash/forEach'
+import _find from 'lodash/find'
 
 const OrderForm = lazy(() => import('../OrderForm'))
 const OrderBookPanel = lazy(() => import('../OrderBookPanel'))
@@ -27,17 +31,17 @@ export const COMPONENT_TYPES = {
 }
 
 export const COMPONENT_LABELS = {
-  [COMPONENT_TYPES.CHART]: 'Chart',
-  [COMPONENT_TYPES.ORDER_BOOK]: 'Order Book',
-  [COMPONENT_TYPES.ORDER_FORM]: 'Order Form',
-  [COMPONENT_TYPES.TRADES_TABLE]: 'Trades Table',
-  [COMPONENT_TYPES.BALANCES_TABLE]: 'Balances Table',
-  [COMPONENT_TYPES.POSITIONS_TABLE]: 'Positions Table',
-  [COMPONENT_TYPES.ALGO_ORDERS_TABLE]: 'Algo Orders Table',
-  [COMPONENT_TYPES.ATOMIC_ORDERS_TABLE]: 'Atomic Orders Table',
-  [COMPONENT_TYPES.ORDER_HISTORY_TABLE]: 'Order History Table',
-  [COMPONENT_TYPES.TRADING_STATE_PANEL]: 'Trading State Panel',
-  [COMPONENT_TYPES.EXCHANGE_INFO_BAR]: 'Ticker Panel',
+  [COMPONENT_TYPES.CHART]: 'chartModal.title',
+  [COMPONENT_TYPES.ORDER_BOOK]: 'orderBookModal.title',
+  [COMPONENT_TYPES.ORDER_FORM]: 'orderForm.title2',
+  [COMPONENT_TYPES.TRADES_TABLE]: 'tradesTableModal.title',
+  [COMPONENT_TYPES.BALANCES_TABLE]: 'balancesTableModal.title',
+  [COMPONENT_TYPES.POSITIONS_TABLE]: 'positionsTableModal.title',
+  [COMPONENT_TYPES.ALGO_ORDERS_TABLE]: 'AOTableModal.title',
+  [COMPONENT_TYPES.ATOMIC_ORDERS_TABLE]: 'atomicOrdersTableModal.title',
+  [COMPONENT_TYPES.ORDER_HISTORY_TABLE]: 'orderHistoryModal.title',
+  [COMPONENT_TYPES.TRADING_STATE_PANEL]: 'tradingStatePanel.title',
+  [COMPONENT_TYPES.EXCHANGE_INFO_BAR]: 'tickersPanel.title',
 }
 
 export const COMPONENT_DIMENSIONS = {
@@ -140,15 +144,15 @@ export const renderLayoutElement = (layoutID, def = {}, componentProps = {}, onR
   }
 
   if (C === ChartPanel && componentProps.chart) {
-    Object.assign(cProps, componentProps.chart)
+    _assign(cProps, componentProps.chart)
   } else if (C === OrderBookPanel && componentProps.book) {
-    Object.assign(cProps, componentProps.book)
+    _assign(cProps, componentProps.book)
   } else if (C === TradesTablePanel && componentProps.trades) {
-    Object.assign(cProps, componentProps.trades)
+    _assign(cProps, componentProps.trades)
   } else if (C === OrderForm && componentProps.orderForm) {
-    Object.assign(cProps, componentProps.orderForm)
+    _assign(cProps, componentProps.orderForm)
   } else if (C === AtomicOrdersTablePanel && componentProps.orders) {
-    Object.assign(cProps, componentProps.orders)
+    _assign(cProps, componentProps.orders)
   }
   return (
     <Suspense fallback={<></>}>
@@ -157,7 +161,7 @@ export const renderLayoutElement = (layoutID, def = {}, componentProps = {}, onR
   )
 }
 
-export const layoutDefToGridLayout = layoutDef => layoutDef.layout.map(l => ({
+export const layoutDefToGridLayout = layoutDef => _map(layoutDef.layout, l => ({
   i: l.i,
   x: l.x,
   y: l.y,
@@ -166,11 +170,11 @@ export const layoutDefToGridLayout = layoutDef => layoutDef.layout.map(l => ({
 }))
 
 export const gridLayoutToLayoutDef = (layoutDef, parentLayoutDef) => {
-  parentLayoutDef.layout.forEach((l) => {
-    const elm = layoutDef.layout.find(lElm => lElm.i === l.i)
+  _forEach(parentLayoutDef?.layout, (l) => {
+    const elm = _find(layoutDef?.layout, lElm => lElm.i === l?.i)
 
     if (elm) {
-      elm.c = l.c
+      elm.c = l?.c
     }
   })
 

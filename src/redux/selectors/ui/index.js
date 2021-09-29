@@ -1,9 +1,6 @@
-import getNumberOfLayouts from './get_number_of_layouts'
-import getPreviousMarket from './get_previous_market'
 import getComponentState from './get_component_state'
 import getActiveMarket from './get_active_market'
 import getLayouts from './get_layouts'
-import getLayout from './get_layout'
 import getLayoutID from './get_layout_id'
 import getRemoteVersion from './get_remote_version'
 import getIsTradingModeModalVisible from './get_is_trading_mode_modal_visible'
@@ -21,17 +18,15 @@ import getMarketComponents from './get_market_components'
 import getCurrentUnsavedLayout from './get_current_unsaved_layout'
 import getTickersVolumeUnit from './get_tickers_volume_unit'
 import getIsCcyInfoModalVisible from './get_is_ccy_info_modal_visible'
+import getCurrentLanguage from './get_current_language'
 
 export * from './get_settings'
 
 export {
   getRemoteVersion,
-  getNumberOfLayouts,
   getComponentState,
-  getPreviousMarket,
   getActiveMarket,
   getLayouts,
-  getLayout,
   getLayoutID,
   getIsTradingModeModalVisible,
   getIsInternetConnection,
@@ -48,4 +43,5 @@ export {
   getOldFormatModalState,
   getIsAOPausedModalVisible,
   getIsCcyInfoModalVisible,
+  getCurrentLanguage,
 }
