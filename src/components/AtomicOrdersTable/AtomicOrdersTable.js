@@ -23,8 +23,8 @@ const AtomicOrdersTable = ({
         <VirtualTable
           data={data}
           columns={AtomicOrdersTableColumns(authToken, cancelOrder, gaCancelOrder, size, t)}
-          defaultSortBy='id'
-          defaultSortDirection='ASC'
+          defaultSortBy='created'
+          defaultSortDirection='DESC'
         />
       )}
     </div>
