@@ -54,12 +54,6 @@ export default function LayoutSettings() {
   const { pathname } = useSelector(getLocation)
   const menuRef = useRef()
 
-  // eslint-disable-next-line lodash/prefer-lodash-method
-  if (![Routes.tradingTerminal.path, Routes.marketData.path]
-    .includes(pathname)) {
-    return null
-  }
-
   // eslint-disable-next-line no-shadow
   const selectableLayouts = _filter(_entries(layouts), ([, layout]) => layout.routePath === pathname)
     .sort((a, b) => a[1].savedAt - b[1].savedAt)
@@ -89,6 +83,12 @@ export default function LayoutSettings() {
   }, [isOpen])
 
   const { t } = useTranslation()
+
+  // eslint-disable-next-line lodash/prefer-lodash-method
+  if (![Routes.tradingTerminal.path, Routes.marketData.path]
+    .includes(pathname)) {
+    return null
+  }
 
   return (
     <div className='hfui-navbar__layout-settings'>
