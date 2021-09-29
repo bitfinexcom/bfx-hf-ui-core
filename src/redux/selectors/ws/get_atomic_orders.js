@@ -3,10 +3,10 @@ import { REDUCER_PATHS } from '../../config'
 
 const path = REDUCER_PATHS.WS
 
-const EMPTY_ARR = []
+const EMPTY_OBJ = {}
 
 const getAtomicOrders = (state) => {
-  return _get(state, `${path}.orders`, EMPTY_ARR)
+  return _get(state, `${path}.orders`, EMPTY_OBJ)
 }
 
 export default getAtomicOrders

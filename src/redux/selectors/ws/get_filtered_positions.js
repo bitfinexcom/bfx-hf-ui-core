@@ -1,5 +1,5 @@
 import _isEmpty from 'lodash/isEmpty'
-import _filter from 'lodash/filter'
+import _reduce from 'lodash/reduce'
 import { createSelector } from 'reselect'
 import memoizeOne from 'memoize-one'
 
@@ -12,7 +12,12 @@ const getFilteredPositions = createSelector(
       return positions
     }
 
-    return _filter(positions, p => p?.symbol === activeFilter?.wsID)
+    return _reduce(positions, (acc, p) => {
+      if (p?.symbol === activeFilter?.wsID) {
+        acc[p?.id] = p
+      }
+      return acc
+    }, {})
   }),
 )
 

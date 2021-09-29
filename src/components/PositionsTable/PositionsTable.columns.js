@@ -9,12 +9,12 @@ const STYLES = {
   rightAlign: { justifyContent: 'flex-end' },
 }
 
-export default ({ authToken, closePosition, t }) => [{
+export default (authToken, closePosition, t, getMarketPair) => [{
   label: t('table.pair'),
   dataKey: 'symbol',
   width: 145,
   flexGrow: 1.5,
-  cellRenderer: ({ rowData = {} }) => defaultCellRenderer(rowData.uiID),
+  cellRenderer: ({ rowData = {} }) => defaultCellRenderer(getMarketPair(rowData.symbol)),
 }, {
   label: t('table.amount'),
   dataKey: 'amount',
