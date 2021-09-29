@@ -6,6 +6,7 @@ import { getActiveMarket } from '../../redux/selectors/ui'
 import WSActions from '../../redux/actions/ws'
 import GAActions from '../../redux/actions/google_analytics'
 import AlgoOrdersTable from './AlgoOrdersTable'
+import { getMarketPair } from '../../redux/selectors/meta'
 
 const debug = Debug('hfui:c:algo-orders-table')
 
@@ -14,6 +15,7 @@ const mapStateToProps = (state = {}, { activeFilter }) => ({
   algoOrders: getAlgoOrders(state),
   filteredAlgoOrders: getFilteredAlgoOrders(state)(activeFilter),
   activeMarket: getActiveMarket(state),
+  getMarketPair: getMarketPair(state),
 })
 
 const mapDispatchToProps = dispatch => ({

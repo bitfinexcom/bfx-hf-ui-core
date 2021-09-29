@@ -2,7 +2,7 @@ import React from 'react'
 
 import { defaultCellRenderer } from '../../util/ui'
 
-export default (authToken, cancelOrder, gaCancelOrder, t) => [{
+export default (authToken, cancelOrder, gaCancelOrder, t, getMarketPair) => [{
   label: t('table.name'),
   dataKey: 'name',
   width: 90,
@@ -25,7 +25,7 @@ export default (authToken, cancelOrder, gaCancelOrder, t) => [{
   dataKey: 'args.symbol',
   width: 140,
   flexGrow: 1.4,
-  cellRenderer: ({ rowData = {} }) => defaultCellRenderer(rowData.args?.uiID),
+  cellRenderer: ({ rowData = {} }) => defaultCellRenderer(getMarketPair(rowData.args?.symbol)),
 }, {
   label: t('table.label'),
   dataKey: 'label',
