@@ -55,14 +55,14 @@ const GridLayout = ({
     if (!layoutID || !isValidSavedLayout) {
       dispatch(setLayoutID(lastLayoutID))
     }
-  }, [pathname, layoutID, lastLayoutID, isValidSavedLayout])
+  }, [pathname, layoutID, lastLayoutID, isValidSavedLayout, dispatch])
 
   useEffect(() => {
     // discard unsaved layout changes
     if (!isValidUnsavedLayout) {
       dispatch(storeUnsavedLayout(layoutDef))
     }
-  }, [isValidUnsavedLayout, layoutDef])
+  }, [dispatch, isValidUnsavedLayout, layoutDef])
 
   const componentProps = {
     orderForm: orderFormProps,

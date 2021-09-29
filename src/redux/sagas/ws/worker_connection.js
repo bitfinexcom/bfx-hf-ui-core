@@ -6,6 +6,7 @@ import Debug from 'debug'
 import WSActions from '../../actions/ws'
 import { isElectronApp } from '../../config'
 import { getSockets } from '../../selectors/ws'
+import { isDevEnv } from '../../../util/autologin'
 
 import WSTypes, { SOCKET_STATUS_MAP } from '../../constants/ws'
 
@@ -19,7 +20,7 @@ const debug = Debug('hfui:rx:s:ws-hfui:worker-connection')
 
 export default function* () {
   // on app start, wait for port to open before attempting api/ds ws connection
-  if (isElectronApp) {
+  if (isElectronApp && !isDevEnv()) {
     yield delay(CHECK_CONNECTION_INITIAL_DELAY)
   }
 

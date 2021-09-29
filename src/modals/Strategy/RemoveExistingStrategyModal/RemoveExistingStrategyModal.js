@@ -28,7 +28,7 @@ const RemoveExistingStrategyModal = ({
       return
     }
     setCanDeleteStrategy(true)
-  }, [inputValue])
+  }, [canDeleteStrategy, inputValue, label])
 
   return (
     <Modal

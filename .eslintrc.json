@@ -5,7 +5,7 @@
     "eslint:recommended",
     "plugin:react/recommended"
   ],
-  "plugins": ["lodash"],
+  "plugins": ["lodash", "react-hooks"],
   "rules": {
     "arrow-body-style": "off",
     "arrow-parens": "off",
@@ -36,7 +36,9 @@
     "react/state-in-constructor": "off",
     "react/static-property-placement": "off",
     "semi": [ "warn", "never" ],
-    "lodash/prefer-lodash-method": "warn"
+    "lodash/prefer-lodash-method": "warn",
+    "react-hooks/rules-of-hooks": "error", // Checks rules of Hooks
+    "react-hooks/exhaustive-deps": "warn" // Checks effect dependencie
   },
   "settings": {
     "import/resolver": {

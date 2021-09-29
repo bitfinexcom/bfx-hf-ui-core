@@ -25,7 +25,7 @@ const ActiveAlgoOrdersModal = ({
 
   useEffect(() => {
     setOrdersList(activeAlgoOrders)
-  }, [])
+  }, [activeAlgoOrders])
 
   const onOrderSelect = (e, gid, algoID) => {
     if (e) {

@@ -1,5 +1,7 @@
 /* eslint-disable consistent-return */
-import React, { useEffect, Suspense, lazy } from 'react'
+import React, {
+  useEffect, Suspense, lazy, useCallback,
+} from 'react'
 import { Route, Switch, Redirect } from 'react-router'
 import PropTypes from 'prop-types'
 import _isFunction from 'lodash/isFunction'
@@ -40,19 +42,19 @@ const HFUI = ({
 }) => {
   useInjectBfxData()
 
-  function unloadHandler() {
+  const unloadHandler = useCallback(() => {
     if (authToken !== null) {
       onUnload(authToken, currentMode)
     }
-  }
+  }, [authToken, currentMode, onUnload])
 
-  function onElectronAppClose() {
+  const onElectronAppClose = useCallback(() => {
     if (!authToken || !settingsShowAlgoPauseInfo) {
       closeElectronApp()
     } else {
       shouldShowAOPauseModalState()
     }
-  }
+  }, [authToken, settingsShowAlgoPauseInfo, shouldShowAOPauseModalState])
 
   useEffect(() => {
     if (isElectronApp) {
@@ -62,7 +64,7 @@ const HFUI = ({
         window.removeEventListener('beforeunload', unloadHandler)
       }
     }
-  }, [authToken, currentMode])
+  }, [authToken, currentMode, unloadHandler])
 
   useEffect(() => {
     // if running in the electron environment
@@ -75,11 +77,11 @@ const HFUI = ({
         ipcRenderer.removeListener('app-close', onElectronAppClose)
       }
     }
-  }, [authToken, settingsShowAlgoPauseInfo])
+  }, [authToken, onElectronAppClose, settingsShowAlgoPauseInfo])
 
   useEffect(() => {
     GAPageview(currentPage)
-  }, [currentPage])
+  }, [GAPageview, currentPage])
 
   useEffect(() => {
     if (authToken) {
@@ -87,7 +89,7 @@ const HFUI = ({
       getFavoritePairs(authToken, currentMode)
       subscribeAllTickers()
     }
-  }, [authToken])
+  }, [authToken, currentMode, getFavoritePairs, getSettings, subscribeAllTickers])
 
   return (
     <Suspense fallback={<></>}>

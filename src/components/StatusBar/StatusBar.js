@@ -28,7 +28,7 @@ const StatusBar = ({
     if (wsInterrupted && !wsConnInterrupted) {
       setWsConnInterrupted(true)
     }
-  }, [wsInterrupted])
+  }, [wsConnInterrupted, wsInterrupted])
 
   return (
     <div className='hfui-statusbar__wrapper'>
