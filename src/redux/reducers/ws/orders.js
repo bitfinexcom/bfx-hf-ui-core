@@ -1,11 +1,11 @@
-import _map from 'lodash/map'
-import _filter from 'lodash/filter'
+import _omit from 'lodash/omit'
+import _forEach from 'lodash/forEach'
 
 import types from '../../constants/ws'
 import { orderAdapter } from '../../adapters/ws'
 
 const getInitialState = () => {
-  return []
+  return {}
 }
 
 export default (state = getInitialState(), action = {}) => {
@@ -14,26 +14,30 @@ export default (state = getInitialState(), action = {}) => {
   switch (type) {
     case types.DATA_ORDERS: {
       const { orders = [] } = payload
+      const transformed = {}
+      _forEach(orders, order => {
+        const adapted = orderAdapter(order)
+        transformed[adapted?.id] = adapted
+      })
 
-      return _map(orders, orderAdapter)
+      return transformed
     }
 
     case types.DATA_ORDER: {
       const { order = [] } = payload
       const adapted = orderAdapter(order)
-      const filtered = _filter(state, ({ id, gid }) => id !== adapted.id || gid !== adapted.gid)
 
-      return [
-        ...filtered,
-        adapted,
-      ]
+      return {
+        ...state,
+        [adapted?.id]: adapted,
+      }
     }
 
     case types.DATA_ORDER_CLOSE: {
       const { order = [] } = payload
-      const o = orderAdapter(order)
+      const adapted = orderAdapter(order)
 
-      return _filter(state, or => o.id !== or.id)
+      return _omit(state, adapted?.id)
     }
 
     case types.DEAUTH: {
