@@ -1,6 +1,6 @@
 import { put } from 'redux-saga/effects'
 import { v4 } from 'uuid'
-import { i18n } from '@ufx-ui/core'
+import i18n from '../../../locales/i18n'
 import WSActions from '../../actions/ws'
 
 export default function* () {

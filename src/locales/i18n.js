@@ -67,7 +67,7 @@ i18n
     debug: (REACT_APP_ENV === 'development'),
 
     react: {
-      useSuspense: true,
+      useSuspense: false,
       //   bindI18n: 'languageChanged loaded',
       //   bindStore: 'added removed',
       //   nsMode: 'default'
