@@ -12,7 +12,7 @@ let queue = []
 // Place every outgoing message in a queue if connection is offline
 export default function* (action = {}) {
   const sockets = yield select(getSockets)
-  const offline = _some(_keys(sockets), s => sockets[s].status !== SOCKET_STATUS_MAP.ONLINE && s !== WSTypes.ALIAS_PUB_WS_API)
+  const offline = _some(_keys(sockets), s => sockets[s].status !== SOCKET_STATUS_MAP.ONLINE)
 
   if (action.type !== WSTypes.FLUSH_QUEUE) {
     queue = [...queue, action]

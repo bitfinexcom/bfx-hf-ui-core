@@ -9,10 +9,6 @@ const initialState = () => ({
     status: SOCKET_STATUS_MAP.OFFLINE,
     lastActivity: null,
   },
-  [types.ALIAS_PUB_WS_API]: {
-    status: 'offline',
-    lastActivity: null,
-  },
 })
 
 export default function (state = initialState(), action = {}) {
