@@ -1,5 +1,5 @@
 import { v4 } from 'uuid'
-import { i18n } from '@ufx-ui/core'
+import i18n from '../../../locales/i18n'
 
 import UIActions from '../../actions/ui'
 import UITypes from '../../constants/ui'

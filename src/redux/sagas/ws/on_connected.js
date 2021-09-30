@@ -1,6 +1,6 @@
-import { put } from 'redux-saga/effects'
+import { put, delay } from 'redux-saga/effects'
 import { v4 } from 'uuid'
-import { i18n } from '@ufx-ui/core'
+import i18n from '../../../locales/i18n'
 
 import A from '../../actions/ws'
 import { getAuthToken } from '../../../util/token_store'
@@ -15,6 +15,9 @@ export default function* ({ payload }) {
   if (wasConnected) {
     yield put(A.reconnected())
   }
+
+  // delay so i18n is initialised
+  yield delay(50)
 
   yield put(A.recvNotification({
     mts: Date.now(),
