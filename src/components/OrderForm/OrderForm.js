@@ -157,7 +157,6 @@ class OrderForm extends React.Component {
 
     if (!uiDef) {
       uiDef = _find(algoOrders, ({ label }) => label === orderLabel)
-    }
 
       if (!_isArray(aoParams[currentMarket.wsID]?.[uiDef.id])) {
         getAlgoOrderParams(uiDef.id, currentMarket.wsID)
