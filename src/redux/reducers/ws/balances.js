@@ -1,14 +1,15 @@
 import _isEqual from 'lodash/isEqual'
-import _find from 'lodash/find'
-import _filter from 'lodash/filter'
-import _map from 'lodash/map'
+import _get from 'lodash/get'
+import _forEach from 'lodash/forEach'
 
 import types from '../../constants/ws'
 import { balanceAdapter } from '../../adapters/ws'
 
 function getInitialState() {
-  return []
+  return {}
 }
+
+export const getKey = ({ currency, context } = {}) => `${currency}_${context}`
 
 function reducer(state = getInitialState(), action = {}) {
   const { type, payload = [] } = action
@@ -17,24 +18,29 @@ function reducer(state = getInitialState(), action = {}) {
     case types.DATA_BALANCES: {
       const { balances = [] } = payload
 
-      return _map(balances, balanceAdapter)
+      const transformed = {}
+      _forEach(balances, balance => {
+        const adapted = balanceAdapter(balance)
+        transformed[getKey(adapted)] = adapted
+      })
+
+      return transformed
     }
 
     case types.DATA_BALANCE: {
       const { balance = [] } = payload
-      const adaptedBalance = balanceAdapter(balance)
+      const adapted = balanceAdapter(balance)
 
-      const prevBalance = _find(state, ({ currency, context }) => context === adaptedBalance?.context && currency === adaptedBalance?.currency)
-      if (_isEqual(adaptedBalance, prevBalance)) {
+      const key = getKey(adapted)
+      const prevBalance = _get(state, key)
+      if (_isEqual(adapted, prevBalance)) {
         return state
       }
 
-      const filtered = _filter(state, ({ currency, context }) => context !== adaptedBalance.context || currency !== adaptedBalance.currency)
-
-      return [
-        ...filtered,
-        adaptedBalance,
-      ]
+      return {
+        ...state,
+        [key]: adapted,
+      }
     }
 
     case types.DEAUTH: {
