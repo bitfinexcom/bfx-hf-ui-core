@@ -42,15 +42,15 @@ const BalancesTable = ({
 }
 
 BalancesTable.propTypes = {
-  balances: PropTypes.arrayOf(PropTypes.object),
-  filteredBalances: PropTypes.arrayOf(PropTypes.object),
+  balances: PropTypes.objectOf(PropTypes.object),
+  filteredBalances: PropTypes.objectOf(PropTypes.object),
   renderedInTradingState: PropTypes.bool,
   hideZeroBalances: PropTypes.bool,
 }
 
 BalancesTable.defaultProps = {
-  balances: [],
-  filteredBalances: [],
+  balances: {},
+  filteredBalances: {},
   renderedInTradingState: false,
   hideZeroBalances: true,
 }

@@ -1,4 +1,6 @@
 import { v4 } from 'uuid'
+import { i18n } from '@ufx-ui/core'
+
 import UIActions from '../../actions/ui'
 import UITypes from '../../constants/ui'
 
@@ -11,9 +13,8 @@ export default () => {
         store.dispatch(UIActions.recvNotification({
           mts: Date.now(),
           status: 'success',
-          text: 'Successfully saved layout',
+          text: i18n.t('notifications.layoutSaved'),
           cid: v4(),
-          i18n: { key: 'notifications.layoutSaved' },
         }))
         next(action)
         break

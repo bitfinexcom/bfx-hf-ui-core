@@ -3,6 +3,7 @@ import { prepareAmount } from 'bfx-api-node-util'
 import Debug from 'debug'
 
 import { getAuthToken, getAllPositions, getFilteredPositions } from '../../redux/selectors/ws'
+import { getMarketPair } from '../../redux/selectors/meta'
 import orders from '../../orders'
 import WSActions from '../../redux/actions/ws'
 import PositionsTable from './PositionsTable'
@@ -13,6 +14,7 @@ const mapStateToProps = (state, { activeFilter } = {}) => ({
   authToken: getAuthToken(state),
   filteredPositions: getFilteredPositions(state)(activeFilter),
   positions: getAllPositions(state),
+  getMarketPair: getMarketPair(state),
 })
 
 const mapDispatchToProps = dispatch => ({

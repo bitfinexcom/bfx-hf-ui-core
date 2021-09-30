@@ -1,13 +1,12 @@
-import _filter from 'lodash/filter'
-import _map from 'lodash/map'
+import _omit from 'lodash/omit'
 import _isEqual from 'lodash/isEqual'
-import _find from 'lodash/find'
+import _forEach from 'lodash/forEach'
 
 import types from '../../constants/ws'
 import { positionAdapter } from '../../adapters/ws'
 
 function getInitialState() {
-  return []
+  return {}
 }
 
 function reducer(state = getInitialState(), action = {}) {
@@ -16,32 +15,35 @@ function reducer(state = getInitialState(), action = {}) {
   switch (type) {
     case types.DATA_POSITIONS: {
       const { positions = [] } = payload
+      const transformed = {}
+      _forEach(positions, position => {
+        const adapted = positionAdapter(position)
+        transformed[adapted?.id] = adapted
+      })
 
-      return _map(positions, positionAdapter)
+      return transformed
     }
 
     case types.DATA_POSITION: {
       const { position = [] } = payload
-      const adaptedPosition = positionAdapter(position)
+      const adapted = positionAdapter(position)
 
-      const prevPosition = _find(state, ({ id }) => id === adaptedPosition.id)
-      if (_isEqual(adaptedPosition, prevPosition)) {
+      const prevPosition = state?.[adapted?.id]
+      if (_isEqual(adapted, prevPosition)) {
         return state
       }
 
-      const filtered = _filter(state, ({ id }) => id !== adaptedPosition.id)
-
-      return [
-        ...filtered,
-        adaptedPosition,
-      ]
+      return {
+        ...state,
+        [adapted?.id]: adapted,
+      }
     }
 
     case types.DATA_POSITION_CLOSE: {
       const { position = [] } = payload
-      const p = positionAdapter(position)
+      const adapted = positionAdapter(position)
 
-      return _filter(state, ({ id }) => id !== p.id)
+      return _omit(state, adapted?.id)
     }
 
     case types.DEAUTH: {

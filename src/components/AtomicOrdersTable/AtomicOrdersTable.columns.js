@@ -11,7 +11,7 @@ const STYLES = {
   price: { justifyContent: 'flex-end' },
 }
 
-export default (authToken, cancelOrder, gaCancelOrder, { width }, t) => [{
+export default (authToken, cancelOrder, gaCancelOrder, { width }, t, getMarketPair) => [{
   label: '',
   dataKey: '',
   width: 15,
@@ -25,7 +25,7 @@ export default (authToken, cancelOrder, gaCancelOrder, { width }, t) => [{
   dataKey: 'symbol',
   width: 135,
   flexGrow: 1.35,
-  cellRenderer: ({ rowData = {} }) => defaultCellRenderer(rowData.uiID),
+  cellRenderer: ({ rowData = {} }) => defaultCellRenderer(getMarketPair(rowData.symbol)),
 }, {
   label: t('table.type'),
   dataKey: 'type',

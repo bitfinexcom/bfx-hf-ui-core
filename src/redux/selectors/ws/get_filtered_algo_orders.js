@@ -1,5 +1,5 @@
 import _isEmpty from 'lodash/isEmpty'
-import _filter from 'lodash/filter'
+import _reduce from 'lodash/reduce'
 import { createSelector } from 'reselect'
 import memoizeOne from 'memoize-one'
 
@@ -12,7 +12,12 @@ const getFilteredAlgoOrders = createSelector(
       return orders
     }
 
-    return _filter(orders, o => o?.args?.symbol === activeFilter?.wsID)
+    return _reduce(orders, (acc, o) => {
+      if (o?.args?.symbol === activeFilter?.wsID) {
+        acc[o?.gid] = o
+      }
+      return acc
+    }, {})
   }),
 )
 

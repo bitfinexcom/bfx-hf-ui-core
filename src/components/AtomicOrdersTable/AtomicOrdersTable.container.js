@@ -6,6 +6,7 @@ import WSActions from '../../redux/actions/ws'
 import GAActions from '../../redux/actions/google_analytics'
 
 import AtomicOrdersTable from './AtomicOrdersTable'
+import { getMarketPair } from '../../redux/selectors/meta'
 
 const debug = Debug('hfui:c:atomic-orders-table')
 
@@ -13,6 +14,7 @@ const mapStateToProps = (state = {}, { activeFilter }) => ({
   authToken: getAuthToken(state),
   filteredAtomicOrders: getFilteredAtomicOrders(state)(activeFilter),
   atomicOrders: getAtomicOrders(state),
+  getMarketPair: getMarketPair(state),
 })
 
 const mapDispatchToProps = dispatch => ({

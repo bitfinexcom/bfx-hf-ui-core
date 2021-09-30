@@ -1,8 +1,9 @@
 import _isEmpty from 'lodash/isEmpty'
-import _filter from 'lodash/filter'
+import _reduce from 'lodash/reduce'
 import { createSelector } from 'reselect'
 
 import getAllBalances from './get_all_balances'
+import { getKey } from '../../reducers/ws/balances'
 
 const getFilteredBalances = createSelector(
   getAllBalances,
@@ -13,9 +14,14 @@ const getFilteredBalances = createSelector(
     }
 
     const { base, quote } = activeFilter
-    const filteredBalances = _filter(balances, ({ currency }) => currency === base || currency === quote)
 
-    return filteredBalances
+    return _reduce(balances, (acc, b) => {
+      const { currency } = b || {}
+      if (currency === base || currency === quote) {
+        acc[getKey(b)] = b
+      }
+      return acc
+    }, {})
   },
 )
 
