@@ -128,6 +128,20 @@ export default (alias, store) => (e = {}) => {
         break
       }
 
+      case 'data.algo_order_params': {
+        const [, algoID, symbol, algoOrderParams] = payload
+        store.dispatch(AOActions.setAlgoOrderParams(algoID, symbol, algoOrderParams))
+        break
+      }
+
+      case 'data.algo_order_params.saved': {
+        const [, id, algoOrderParams] = payload
+        const { algoID, symbol } = algoOrderParams
+        store.dispatch(AOActions.getAlgoOrderParams(algoID, symbol))
+        store.dispatch(AOActions.setActiveAOParamsID(id))
+        break
+      }
+
       case 'data.algo_order.submit_status':
       case 'data.order.submit_status':
         store.dispatch(UIActions.setIsOrderExecuting(false))
