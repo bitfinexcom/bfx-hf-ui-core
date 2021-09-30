@@ -31,12 +31,16 @@ const notificationAdapter = (data = []) => {
       mts: data[0],
       type: data[1],
       status: _toUpper(data[4].level),
+      level: _toUpper(data[4].level),
       text: data[4].message,
+      message: data[4].message,
     }
   }
   const notification = new Notification(data).toJS()
   notification.cid = data.cid || data.uid
   notification.i18n = data.i18n || null
+  notification.level = data.status
+  notification.message = data.text
 
   return notification
 }

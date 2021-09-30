@@ -1,12 +1,12 @@
-import React from 'react'
-import { Notifications } from '@ufx-ui/core'
+import React, {
+  memo, useState, useEffect, useCallback,
+} from 'react'
+import { Notifications, useInterval } from '@ufx-ui/core'
 import ClassNames from 'classnames'
 import PropTypes from 'prop-types'
 import _isEmpty from 'lodash/isEmpty'
 import _map from 'lodash/map'
-import _includes from 'lodash/includes'
 import _filter from 'lodash/filter'
-import { nonce } from 'bfx-api-node-util'
 import { withTranslation } from 'react-i18next'
 
 import Panel from '../../ui/Panel'
@@ -14,68 +14,16 @@ import Button from '../../ui/Button'
 import Scrollbars from '../../ui/Scrollbars'
 import './style.css'
 
-const LIVE_NOTIFICATION_LIFETIME_MS = 5000
+const REFRESH_NOTIFICATIONS_MS = 1000
+const LIVE_NOTIFICATIONS_MS = 5000
 
-class NotificationsSidebar extends React.PureComponent {
-  state = {
-    lastShownMTS: 0,
-    liveNotifications: [],
-    shownNotifications: [],
-  }
+const NotificationsSidebar = (props) => {
+  const {
+    notifications, notificationsVisible, closeNotificationPanel, removeNotifications, clearNotifications, t,
+  } = props
+  const [newNotifications, setNewNotifications] = useState([])
 
-  constructor(props) {
-    super(props)
-
-    this.onClose = this.onClose.bind(this)
-    this.onClearNotifications = this.onClearNotifications.bind(this)
-  }
-
-  static getDerivedStateFromProps(nextProps, prevState) {
-    const { notifications = [], t } = nextProps
-    const { shownNotifications } = prevState
-
-    if (notifications.length <= shownNotifications.length) {
-      return {}
-    }
-
-    const showMTS = Date.now()
-
-    return {
-      lastShownMTS: showMTS,
-      liveNotifications: [
-        // TODO: rework notifications state
-        // eslint-disable-next-line lodash/prefer-lodash-method
-        ...notifications.filter(({ cid }) => !_includes(shownNotifications, cid)).map(n => ({
-          n: {
-            message: n.i18n ? t(n.i18n.key, n.i18n.props) : n.text,
-            level: n.status,
-            ...n,
-          },
-          showMTS,
-          id: nonce(),
-        })),
-
-        ...prevState.liveNotifications,
-      ],
-      shownNotifications: _map(notifications, ({ cid }) => cid),
-    }
-  }
-
-  componentDidUpdate(prevProps, prevState) {
-    const { liveNotifications, lastShownMTS } = this.state
-
-    if (liveNotifications.length === prevState.liveNotifications.length) {
-      return
-    }
-
-    setTimeout(
-      this.timeoutLiveNotifications.bind(this, lastShownMTS),
-      LIVE_NOTIFICATION_LIFETIME_MS,
-    )
-  }
-
-  onClose({ cid, group }) {
-    const { removeNotifications } = this.props
+  const onClose = useCallback(({ cid, group }) => {
     let cids = []
 
     if (!_isEmpty(group)) {
@@ -84,80 +32,71 @@ class NotificationsSidebar extends React.PureComponent {
       cids = [cid]
     }
 
-    this.setState(({ shownNotifications }) => ({
-      shownNotifications: _filter(shownNotifications, n => !_includes(cids, n.cid)),
-    }))
     removeNotifications(cids)
-  }
+  },
+  [removeNotifications])
 
-  onClearNotifications() {
-    const { clearNotifications } = this.props
+  const onClearNotifications = () => {
     clearNotifications()
 
-    setTimeout(() => {
-      this.setState({
-        shownNotifications: [],
-      })
-    }, 1000)
+    setNewNotifications([])
   }
 
-  timeoutLiveNotifications(shownMTS) {
-    this.setState(({ liveNotifications }) => ({
-      liveNotifications: _filter(liveNotifications, ({ showMTS }) => showMTS !== shownMTS),
-    }))
+  const checkNotificationsTime = () => {
+    const nextNotifications = _filter(notifications, n => n?.mts > new Date().getTime() - LIVE_NOTIFICATIONS_MS)
+
+    setNewNotifications(nextNotifications)
   }
 
-  render() {
-    const { liveNotifications } = this.state
-    const {
-      notifications, notificationsVisible, closeNotificationPanel, t,
-    } = this.props
+  // set notification on component mount
+  useEffect(() => {
+    setNewNotifications(notifications)
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
-    return (
-      <>
-        <div className={ClassNames('hfui-notificationssidebar__wrapper', {
-          visible: notificationsVisible,
-          hidden: !notificationsVisible,
-        })}
+  // get notifications prop update with delay
+  useInterval(() => checkNotificationsTime(), REFRESH_NOTIFICATIONS_MS)
+
+  return (
+    <>
+      <div className={ClassNames('hfui-notificationssidebar__wrapper', {
+        visible: notificationsVisible,
+        hidden: !notificationsVisible,
+      })}
+      >
+        <Panel
+          label={t('notifications.title')}
+          hideIcons
+          closePanel={closeNotificationPanel}
+          preHeaderComponents={[
+            <Button
+              onClick={onClearNotifications}
+              key='clear-btn'
+              disabled={_isEmpty(notifications)}
+              className='hfui-notificationssidebar__header-btn'
+              label={[
+                <i key='icon' className='icon-clear' />,
+                <p key='text'>{t('notifications.clearAllBtn')}</p>,
+              ]}
+            />,
+          ]}
         >
-          <Panel
-            label={t('notifications.title')}
-            hideIcons
-            closePanel={closeNotificationPanel}
-            preHeaderComponents={[
-              <Button
-                onClick={this.onClearNotifications}
-                key='clear-btn'
-                disabled={_isEmpty(notifications)}
-                className='hfui-notificationssidebar__header-btn'
-                label={[
-                  <i key='icon' className='icon-clear' />,
-                  <p key='text'>{t('notifications.clearAllBtn')}</p>,
-                ]}
-              />,
-            ]}
-          >
-            {_isEmpty(notifications) ? (
-              <p className='hfui-notificationssidebar__empty'>{t('notifications.noNotifications')}</p>
-            ) : (
-              <Scrollbars>
-                <Notifications
-                  className='hfui-sidebar-notifications'
-                  notifications={_map(notifications, item => ({
-                    ...item,
-                    level: item.status,
-                    message: item.i18n ? t(item.i18n.key, item.i18n.props) : item.text,
-                  }))}
-                  onClose={this.onClose}
-                />
-              </Scrollbars>
-            )}
-          </Panel>
-        </div>
-        <Notifications className='hfui-notificationssidebar__external' notifications={_map(liveNotifications, item => item.n)} />
-      </>
-    )
-  }
+          {_isEmpty(notifications) ? (
+            <p className='hfui-notificationssidebar__empty'>{t('notifications.noNotifications')}</p>
+          ) : (
+            <Scrollbars>
+              <Notifications
+                className='hfui-sidebar-notifications'
+                notifications={notifications}
+                onClose={onClose}
+              />
+            </Scrollbars>
+          )}
+        </Panel>
+      </div>
+      <Notifications className='hfui-notificationssidebar__external' notifications={newNotifications} />
+    </>
+  )
 }
 
 NotificationsSidebar.propTypes = {
@@ -173,4 +112,4 @@ NotificationsSidebar.defaultProps = {
   notificationsVisible: false,
 }
 
-export default withTranslation()(NotificationsSidebar)
+export default withTranslation()(memo(NotificationsSidebar))
