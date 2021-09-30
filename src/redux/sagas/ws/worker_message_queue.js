@@ -22,9 +22,7 @@ export default function* (action = {}) {
     return
   }
 
-  if (queue.length > 1) {
-    debug('flushing %d messages', queue.length)
-  }
+  debug('flushing %d messages', queue.length)
 
   for (let i = 0; i < queue.length; i += 1) {
     const queuedAction = queue[i]
