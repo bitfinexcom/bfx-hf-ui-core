@@ -4,11 +4,11 @@ import { reduxSelectors } from '@ufx-ui/bfx-containers'
 import UIActions from '../../actions/ui'
 import { isElectronApp } from '../../config'
 
-const PING_CONNECTION_EVERY_MS = 30 * 1000 // 30 seconds
+const CHECK_CONNECTION_EVERY_MS = 30 * 1000 // 30 seconds
 
 export default function* () {
   while (true && isElectronApp) {
-    yield delay(PING_CONNECTION_EVERY_MS)
+    yield delay(CHECK_CONNECTION_EVERY_MS)
     const isWSconnected = yield select(reduxSelectors.getWSConnected)
 
     if (!isWSconnected) {
