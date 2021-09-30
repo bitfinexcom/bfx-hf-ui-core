@@ -1,6 +1,6 @@
 import _toUpper from 'lodash/toUpper'
 
-export default (t) => ({
+export default (t = () => {}) => ({
   label: t('orderForm.marketTitle'),
   uiIcon: 'market-active',
   customHelp: t('orderForm.marketHelp'),
