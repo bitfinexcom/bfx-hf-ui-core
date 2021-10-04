@@ -516,9 +516,9 @@
   },
   "statusbar": {
     "updateToLast": "Update to latest version",
-    "connected": "Connected",
-    "connecting": "Connecting",
-    "disconnected": "Disconnected"
+    "connected": "HF Connected",
+    "connecting": "HF Connecting",
+    "disconnected": "HF Disconnected"
   },
   "strategyEditor": {
     "docsTab": "Docs",
