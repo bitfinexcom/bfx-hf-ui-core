@@ -47,8 +47,10 @@ i18n
     },
 
     detection: {
-      order: ['querystring', 'localStorage'],
-      lookupQuerystring: 'locale',
+      order: ['querystring', 'cookie', 'localStorage'],
+      lookupCookie: 'bfx_locale',
+      cookieDomain: '.bitfinex.com',
+      caches: ['cookie', 'localStorage'],
     },
 
     parseMissingKeyHandler: (key) => {
