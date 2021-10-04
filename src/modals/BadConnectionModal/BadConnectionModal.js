@@ -14,7 +14,6 @@ const REBOOT_AFTER = 25
 const BadConnection = ({
   changeBadInternetConnectionState, visible, rebootAutomatically, updateReboot,
 }) => {
-  const [isRebootChecked, setIsRebootChecked] = useState(rebootAutomatically)
   const [countdown, setCountdown] = useState(REBOOT_AFTER)
   const countdownRef = useRef()
   countdownRef.current = countdown
@@ -25,11 +24,6 @@ const BadConnection = ({
 
   const onSubmit = () => {
     location.replace('/index.html') // eslint-disable-line
-  }
-
-  const onRebootUpdate = (nextReboot) => {
-    setIsRebootChecked(nextReboot)
-    updateReboot(nextReboot)
   }
 
   useEffect(() => {
@@ -67,8 +61,8 @@ const BadConnection = ({
       <Modal.Footer>
         <Checkbox
           label={t('badConnectionModal.checkbox')}
-          checked={isRebootChecked}
-          onChange={onRebootUpdate}
+          checked={rebootAutomatically}
+          onChange={updateReboot}
         />
         <Modal.Button onClick={onSubmit} primary>
           {t('ui.ok')}
