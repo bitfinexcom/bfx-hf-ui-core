@@ -44,6 +44,19 @@ const BadConnection = ({
 
   const { t } = useTranslation()
 
+  // reboot without showing prompt when connection issue and rebootAutomatically is true
+  const reboot = rebootAutomatically && visible
+
+  useEffect(() => {
+    if (reboot) {
+      onSubmit()
+    }
+  }, [reboot])
+
+  if (reboot) {
+    return ''
+  }
+
   return (
     <Modal
       label={t('badConnectionModal.title')}
