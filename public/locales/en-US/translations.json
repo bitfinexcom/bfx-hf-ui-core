@@ -385,7 +385,8 @@
     "connectedTo": "Connected to {{target}}",
     "authenticatedWith": "Authenticated with {{target}}",
     "disconnectedFrom": "Disconnected from {{target}}",
-    "decryptedCredentialsFor": "Decrypted credentials for {{target}} ({{mode}})"
+    "decryptedCredentialsFor": "Decrypted credentials for {{target}} ({{mode}})",
+    "reboot_notify": "Noticed several internet connection issues. Rebooting app..."
   },
   "tradingModeModal": {
     "title": "Switch Trade Mode",

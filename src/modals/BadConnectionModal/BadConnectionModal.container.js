@@ -1,4 +1,5 @@
 import { connect } from 'react-redux'
+import { v4 } from 'uuid'
 
 import WSActions from '../../redux/actions/ws'
 import GAActions from '../../redux/actions/google_analytics'
@@ -20,6 +21,12 @@ const mapDispatchToProps = dispatch => ({
     dispatch(WSActions.saveSettings(SETTINGS.REBOOT_AUTOMATICALLY, reboot))
     dispatch(GAActions.updateSettings())
   },
+  rebootnNotify: (text) => dispatch(UIActions.recvNotification({
+    mts: Date.now(),
+    status: 'info',
+    text,
+    cid: v4(),
+  })),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(BadConnectionModal)

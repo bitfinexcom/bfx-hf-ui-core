@@ -12,7 +12,7 @@ import './style.css'
 const REBOOT_AFTER = 25
 
 const BadConnection = ({
-  changeBadInternetConnectionState, visible, rebootAutomatically, updateReboot,
+  changeBadInternetConnectionState, visible, rebootAutomatically, updateReboot, rebootnNotify,
 }) => {
   const [countdown, setCountdown] = useState(REBOOT_AFTER)
   const countdownRef = useRef()
@@ -44,14 +44,17 @@ const BadConnection = ({
 
   const { t } = useTranslation()
 
-  // reboot without showing prompt when connection issue and rebootAutomatically is true
+  // reboot without showing prompt if connection issue and rebootAutomatically is true
   const reboot = rebootAutomatically && visible
-
   useEffect(() => {
     if (reboot) {
-      onSubmit()
+      rebootnNotify(t('notifications.reboot_notify'))
+      // timeout to give user time to see above notification
+      setTimeout(() => {
+        onSubmit()
+      }, 4000)
     }
-  }, [reboot])
+  }, [reboot, rebootnNotify, t])
 
   if (reboot) {
     return ''
@@ -90,6 +93,7 @@ BadConnection.propTypes = {
   visible: PropTypes.bool.isRequired,
   updateReboot: PropTypes.func.isRequired,
   rebootAutomatically: PropTypes.bool.isRequired,
+  rebootnNotify: PropTypes.func.isRequired,
 }
 
 export default memo(BadConnection)
