@@ -411,6 +411,8 @@
     "submitKeys": "Submit {{mode}} api keys",
     "exchangeConnecting": "Connecting to exchange...",
     "help": "HELP:",
+    "bid": "BID",
+    "ask": "ASK",
     "exchange": "Exchange",
     "margin": "Margin",
     "derivatives": "Derivatives",
