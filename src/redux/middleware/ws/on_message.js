@@ -3,7 +3,7 @@ import _isObject from 'lodash/isObject'
 import _isNumber from 'lodash/isNumber'
 import Debug from 'debug'
 import { v4 } from 'uuid'
-import { i18n as i18nLib } from '@ufx-ui/core'
+import i18nLib from '../../../locales/i18n'
 
 import UIActions from '../../actions/ui'
 import WSActions from '../../actions/ws'
@@ -153,7 +153,7 @@ export default (alias, store) => (e = {}) => {
 
         store.dispatch(WSActions.recvNotification({
           status: 'error',
-          text: i18n ? i18nLib.t(`notifications.${i18n.key}`) : message,
+          text: i18n ? i18nLib.t(`notifications.${i18n.key}`, i18n.props) : message,
           mts: Date.now(),
           cid: v4(),
         }))
@@ -162,9 +162,10 @@ export default (alias, store) => (e = {}) => {
 
       case 'notify': {
         const [, status, message, i18n] = payload
+
         const notificationObject = {
           status,
-          text: i18n ? i18nLib.t(`notifications.${i18n.key}`) : message,
+          text: i18n ? i18nLib.t(`notifications.${i18n.key}`, i18n.props) : message,
           mts: Date.now(),
           cid: v4(),
           i18n,
