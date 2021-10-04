@@ -62,7 +62,7 @@ const BadConnection = ({
       <p>{t('badConnectionModal.text3')}</p>
       <br />
       <p>
-        {t('badConnectionModal.text3', { countdown })}
+        {t('badConnectionModal.text4', { countdown })}
       </p>
       <Modal.Footer>
         <Checkbox
