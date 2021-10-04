@@ -136,7 +136,7 @@ class HistoricalForm extends React.PureComponent {
               renderWithFavorites
             />
           </div>
-          <div className='hfui-backtester__flex_start' style={{ marginRight: -15 }}>
+          <div className='hfui-backtester__flex_start'>
             <TimeFrameDropdown
               tf={selectedTimeFrame}
               onChange={tf => {
