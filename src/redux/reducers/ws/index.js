@@ -10,6 +10,7 @@ import orders from './orders'
 import orderHistory from './order_history'
 import algoOrders from './algo_orders'
 import backtest from './backtest'
+import execution from './execution'
 import favoriteTradingPairs from './favorite_pairs'
 
 export default combineReducers({
@@ -23,5 +24,6 @@ export default combineReducers({
   socket,
   auth,
   backtest,
+  execution,
   favoriteTradingPairs,
 })

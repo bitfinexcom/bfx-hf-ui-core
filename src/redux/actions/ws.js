@@ -227,6 +227,23 @@ export default {
     payload: { options },
   }),
 
+  setExecutionOptions: options => ({
+    type: t.SET_EXECUTION_OPTIONS,
+    payload: { options },
+  }),
+
+  resetExecutionData: () => ({
+    type: t.RESET_DATA_EXECUTION,
+  }),
+
+  startLiveExecution: () => ({
+    type: t.EXECUTION_START,
+  }),
+
+  stopLiveExecution: () => ({
+    type: t.EXECUTION_STOP,
+  }),
+
   purgeBacktestData: () => ({
     type: t.PURGE_DATA_BACKTEST,
   }),

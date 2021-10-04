@@ -9,6 +9,7 @@ const mapStateToProps = state => ({
   firstLogin: getFirstLogin(state),
   isGuideActive: getGuideStatusForPage(state, STRATEGY_PAGE),
   strategyId: state.ui.id,
+  strategyContent: state.ui.content,
 }) // eslint-disable-line
 
 const mapDispatchToProps = dispatch => ({
