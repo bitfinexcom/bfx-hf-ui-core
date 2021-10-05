@@ -244,6 +244,11 @@ export default {
     type: t.EXECUTION_STOP,
   }),
 
+  setExecutionLoading: (loading) => ({
+    type: t.EXECUTION_LOADING,
+    payload: { loading },
+  }),
+
   purgeBacktestData: () => ({
     type: t.PURGE_DATA_BACKTEST,
   }),

@@ -4,6 +4,7 @@ import types from '../../constants/ws'
 function getInitialState() {
   return {
     executing: false,
+    loading: false,
     options: {},
   }
 }
@@ -22,6 +23,15 @@ function reducer(state = getInitialState(), action = {}) {
       return {
         ...state,
         executing: false,
+      }
+    }
+
+    case types.EXECUTION_LOADING: {
+      const { loading } = payload
+
+      return {
+        ...state,
+        loading,
       }
     }
 
