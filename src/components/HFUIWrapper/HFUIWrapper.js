@@ -1,5 +1,4 @@
 import React from 'react'
-import { useInjectBfxData } from '@ufx-ui/bfx-containers'
 import { StoreProvider as UfxStoreProvider } from '@ufx-ui/core'
 import { useSelector } from 'react-redux'
 import useAuthToken from '../../hooks/useAuthToken'
@@ -7,6 +6,7 @@ import HFUI from '../HFUI'
 import CrashHandler from '../CrashHandler'
 import { getCurrentLanguage } from '../../redux/selectors/ui'
 
+import useInjectBfxData from '../../hooks/useInjectBfxData'
 import ruTrans from '../../locales/ufx-ui/ru.json'
 import esTrans from '../../locales/ufx-ui/es.json'
 import trTrans from '../../locales/ufx-ui/tr.json'
