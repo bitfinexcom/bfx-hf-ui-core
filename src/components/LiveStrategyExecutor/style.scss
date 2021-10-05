@@ -1,1 +1,7 @@
-.hfui-live-strategy-executor__wrapper { }
+.hfui-live-strategy-executor__wrapper {
+  .hfui-backtester__flex_start {
+    &-number-input {
+      width: 55% !important;
+    }
+  }
+}
