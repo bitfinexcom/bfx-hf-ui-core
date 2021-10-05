@@ -13,6 +13,8 @@ const mapStateToProps = (state = {}) => ({
   strategyContent: state.ui.content,
   strategies: getStrategies(state),
   backtestResults: getBacktestResults(state),
+  liveExecuting: state.ws.execution.executing,
+  liveLoading: state.ws.execution.loading,
 })
 
 const mapDispatchToProps = dispatch => ({
