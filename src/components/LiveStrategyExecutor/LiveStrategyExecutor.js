@@ -13,21 +13,26 @@ import { getDefaultMarket } from '../../util/market'
 
 import './style.css'
 
+const DEFAULT_TIMEFRAME = '1m'
+const DEFAULT_SEED_COUNT = 150
+
 const LiveStrategyExecutor = ({
-  strategyContent, markets, dsExecuteLiveStrategy, dsStopLiveStrategy, isExecuting, authToken,
+  strategyContent, markets, dsExecuteLiveStrategy, dsStopLiveStrategy, isExecuting, authToken, isLoading, options,
 }) => {
   const { t } = useTranslation()
-  const [timeframe, setTimeframe] = useState('1m')
-  const [symbol, setSymbol] = useState(getDefaultMarket(markets))
-  const [trades, setTrades] = useState(false)
-  const [candleSeed, setCandleSeed] = useState(150)
+  const [timeframe, setTimeframe] = useState(options.tf || DEFAULT_TIMEFRAME)
+  const [symbol, setSymbol] = useState(options.symbol ? _find(markets, m => m.wsID === options.symbol) : getDefaultMarket(markets))
+  const [trades, setTrades] = useState(options.includeTrades || false)
+  const [candleSeed, setCandleSeed] = useState(options.seedCandleCount || DEFAULT_SEED_COUNT)
   const [seedError, setSeedError] = useState(null)
 
   const toggleExecutionState = () => {
-    if (isExecuting) {
-      dsStopLiveStrategy(authToken)
-    } else {
-      dsExecuteLiveStrategy(authToken, symbol, timeframe, trades, strategyContent)
+    if (!seedError) {
+      if (isExecuting) {
+        dsStopLiveStrategy(authToken)
+      } else {
+        dsExecuteLiveStrategy(authToken, symbol?.wsID, timeframe, trades, strategyContent, candleSeed)
+      }
     }
   }
 
@@ -52,7 +57,7 @@ const LiveStrategyExecutor = ({
           <MarketSelect
             value={symbol}
             onChange={(selection) => {
-              const sel = _find(markets, m => m.uiID === selection.uiID)
+              const sel = _find(markets, m => m.wsID === selection.wsID)
               setSymbol(sel)
             }}
             markets={markets}
@@ -67,6 +72,7 @@ const LiveStrategyExecutor = ({
             onClick={toggleExecutionState}
             className='hfui-backtester__flex_start hfui-backtester__start-button'
             label={isExecuting ? 'Stop' : 'Start'}
+            disabled={isLoading}
             green={!isExecuting}
           />
         </div>
@@ -74,6 +80,7 @@ const LiveStrategyExecutor = ({
       <div className='hfui-backtester_row'>
         <div className='hfui-backtester__flex_start'>
           <AmountInput
+            className='hfui-backtester__flex_start-number-input'
             def={{ label: 'Candle seed count' }}
             validationError={seedError}
             value={candleSeed}
@@ -88,7 +95,18 @@ const LiveStrategyExecutor = ({
           />
         </div>
       </div>
-      <p>NOTE: By pressing start, you will be executing your strategy on your live account with real balances.</p>
+      {isExecuting && !isLoading && (
+        <p>Your strategy is being executed on your live account with real balances.</p>
+      )}
+      {isExecuting && isLoading && (
+        <p>Stopping strategy execution...</p>
+      )}
+      {!isExecuting && isLoading && (
+        <p>Processing and preparing the strategy before execution...</p>
+      )}
+      {!isExecuting && !isLoading && (
+        <p>NOTE: By pressing start, you will be executing your strategy on your live account with real balances.</p>
+      )}
     </div>
   )
 }
@@ -98,6 +116,10 @@ LiveStrategyExecutor.propTypes = {
   dsStopLiveStrategy: PropTypes.func.isRequired,
   authToken: PropTypes.string.isRequired,
   isExecuting: PropTypes.bool.isRequired,
+  isLoading: PropTypes.bool.isRequired,
+  options: PropTypes.objectOf(PropTypes.oneOfType([
+    PropTypes.string, PropTypes.number, PropTypes.bool,
+  ])).isRequired,
   strategyContent: PropTypes.objectOf(
     PropTypes.oneOfType([
       PropTypes.string.isRequired,
