@@ -21,7 +21,7 @@ const MAX_STORED_TRADES = 25
 
 const isElectronApp = process.env.REACT_APP_IS_ELECTRON_APP === 'true'
 
-const PUB_REST_API_URL = isElectronApp ? 'http://localhost:45001' : process.env.REACT_APP_REST_PUBLIC_API_URL
+const PUB_REST_API_URL = isElectronApp ? 'http://localhost:45001' : process.env.REACT_APP_UFX_PUBLIC_API_URL
 
 const appVersion = process.env.npm_package_version
 
