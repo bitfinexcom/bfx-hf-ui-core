@@ -113,7 +113,7 @@ const ApiKeys = () => {
           onClick={onSaveMainModeApiKey}
           disabled={!isProductionKeysTouched}
         >
-          {mainAPIKeyState.configured ? t('ui.updateBtn') : t('ui.saveBtn')}
+          {mainAPIKeyState.configured ? t('ui.updateBtn') : t('ui.save')}
         </Button>
       </div>
       <div className='appsettings-modal__setting'>
@@ -156,7 +156,7 @@ const ApiKeys = () => {
           onClick={onSavePaperModeApiKey}
           disabled={!isPaperKeysTouched}
         >
-          {paperAPIKeyState.configured ? t('ui.updateBtn') : t('ui.saveBtn')}
+          {paperAPIKeyState.configured ? t('ui.updateBtn') : t('ui.save')}
         </Button>
       </div>
     </div>
