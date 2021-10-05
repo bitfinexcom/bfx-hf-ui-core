@@ -45,7 +45,9 @@ const LiveStrategyExecutor = ({
   if (_isEmpty(strategyContent)) {
     return (
       <div className='hfui-live-strategy-executor__wrapper'>
-        <p>Create a strategy to begin executing.</p>
+        <p>
+          {t('strategyEditor.liveExecution.createStrategy')}
+        </p>
       </div>
     )
   }
@@ -96,16 +98,24 @@ const LiveStrategyExecutor = ({
         </div>
       </div>
       {isExecuting && !isLoading && (
-        <p>Your strategy is being executed on your live account with real balances.</p>
+        <p>
+          {t('strategyEditor.liveExecution.executing')}
+        </p>
       )}
       {isExecuting && isLoading && (
-        <p>Stopping strategy execution...</p>
+        <p>
+          {t('strategyEditor.liveExecution.stopping')}
+        </p>
       )}
       {!isExecuting && isLoading && (
-        <p>Processing and preparing the strategy before execution...</p>
+        <p>
+          {t('strategyEditor.liveExecution.preparing')}
+        </p>
       )}
       {!isExecuting && !isLoading && (
-        <p>NOTE: By pressing start, you will be executing your strategy on your live account with real balances.</p>
+        <p>
+          {t('strategyEditor.liveExecution.realBalancesWarning')}
+        </p>
       )}
     </div>
   )
