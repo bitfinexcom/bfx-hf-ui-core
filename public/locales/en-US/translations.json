@@ -522,6 +522,7 @@
   "strategyEditor": {
     "docsTab": "Docs",
     "backtestTab": "Backtest",
+    "executeTab": "Execute",
     "unsavedStartegy": "Unsaved strategy",
     "newStrategy": "New Strategy",
     "createStrategyStringPart1": "Create",
