@@ -15,6 +15,7 @@ import Layout from '../../components/Layout'
 import Panel from '../../ui/Panel'
 import Markdown from '../../ui/Markdown'
 import Backtester from '../../components/Backtester'
+import { isElectronApp } from '../../redux/config'
 
 import LiveStrategyExecutor from '../../components/LiveStrategyExecutor'
 import './style.css'
@@ -151,9 +152,7 @@ const StrategyEditorPage = (props) => {
                 tabtitle={t('strategyEditor.docsTab')}
                 text={docsText}
               />
-              <div
-                tabtitle={t('strategyEditor.backtestTab')}
-              >
+              <div tabtitle={t('strategyEditor.backtestTab')}>
                 <Backtester
                   {...props}
                   indicators={indicators}
@@ -161,13 +160,13 @@ const StrategyEditorPage = (props) => {
                   onDeleteIndicator={onDeleteIndicator}
                 />
               </div>
-              <div
-                tabtitle='Execute'
-              >
-                <LiveStrategyExecutor
-                  strategyContent={strategyContent}
-                />
-              </div>
+              {isElectronApp && (
+                <div tabtitle={t('strategyEditor.executeTab')}>
+                  <LiveStrategyExecutor
+                    strategyContent={strategyContent}
+                  />
+                </div>
+              )}
             </Panel>
           </div>
         </div>
