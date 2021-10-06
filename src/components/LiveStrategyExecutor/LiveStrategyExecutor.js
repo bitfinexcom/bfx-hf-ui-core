@@ -15,6 +15,7 @@ import './style.css'
 
 const DEFAULT_TIMEFRAME = '1m'
 const DEFAULT_SEED_COUNT = 150
+const DEFAULT_USE_TRADES = false
 
 const LiveStrategyExecutor = ({
   strategyContent, markets, dsExecuteLiveStrategy, dsStopLiveStrategy, isExecuting, authToken, isLoading, options,
@@ -22,7 +23,7 @@ const LiveStrategyExecutor = ({
   const { t } = useTranslation()
   const [timeframe, setTimeframe] = useState(options.tf || DEFAULT_TIMEFRAME)
   const [symbol, setSymbol] = useState(options.symbol ? _find(markets, m => m.wsID === options.symbol) : getDefaultMarket(markets))
-  const [trades, setTrades] = useState(options.includeTrades || false)
+  const [trades, setTrades] = useState(options.includeTrades || DEFAULT_USE_TRADES)
   const [candleSeed, setCandleSeed] = useState(options.seedCandleCount || DEFAULT_SEED_COUNT)
   const [seedError, setSeedError] = useState(null)
 
