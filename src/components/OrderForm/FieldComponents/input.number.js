@@ -61,10 +61,12 @@ NumberInput.propTypes = {
     PropTypes.string, PropTypes.object, PropTypes.number, PropTypes.bool,
   ])),
   renderData: PropTypes.shape({
-    QUOTE: PropTypes.string.isRequired,
-    BASE: PropTypes.string.isRequired,
+    QUOTE: PropTypes.string,
+    BASE: PropTypes.string,
   }),
-  value: PropTypes.string.isRequired,
+  value: PropTypes.oneOfType([
+    PropTypes.string, PropTypes.number,
+  ]).isRequired,
   onChange: PropTypes.func.isRequired,
   validationError: PropTypes.string,
   disabled: PropTypes.bool,
