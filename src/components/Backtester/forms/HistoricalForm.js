@@ -143,14 +143,14 @@ const HistoricalForm = ({
           <Checkbox
             label={t('strategyEditor.useCandlesCheckbox')}
             checked={candles}
-            onChange={val => toggleCandles(val)}
+            onChange={toggleCandles}
           />
         </div>
         <div className='hfui-backtester_dateInput hfui-backtester__flex_start'>
           <Checkbox
             label={t('strategyEditor.useTradesCheckbox')}
             checked={trades}
-            onChange={val => toggleTrades(val)}
+            onChange={toggleTrades}
           />
         </div>
       </div>
