@@ -24,8 +24,9 @@ const getTickersInfo = createSelector(
         wsID, base, quote, uiID, ccyLabels, isPerp,
       } = market
       const id = getPairFromMarket(market, getCurrencySymbol)
+      const perpUI = isPerp ? uiID : null
       const newTickerObject = {
-        id,
+        id: isPerp ? perpUI : id,
         uiID,
         baseCcy: base,
         quoteCcy: quote,
@@ -35,7 +36,7 @@ const getTickersInfo = createSelector(
         ccyLabels,
         wsID,
         isPerp,
-        perpUI: isPerp ? uiID : null,
+        perpUI,
       }
 
       acc[wsID] = newTickerObject

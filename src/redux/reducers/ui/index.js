@@ -36,14 +36,13 @@ import {
 import { isElectronApp } from '../../config'
 
 import { storeLastUsedLayoutID } from '../../../util/layout'
-import { LANGUAGES } from '../../../locales/i18n'
+import { LANGUAGES, LOCAL_STORAGE_I18N_KEY } from '../../../locales/i18n'
 
 const debug = Debug('hfui:rx:r:ui')
 const LAYOUTS_KEY = 'HF_UI_LAYOUTS'
 const LAYOUTS_STATE_KEY = 'HF_UI_LAYOUTS_STATE'
 const ACTIVE_MARKET_KEY = 'HF_UI_ACTIVE_MARKET'
 const ACTIVE_MARKET_PAPER_KEY = 'HF_UI_PAPER_ACTIVE_MARKET'
-const LANGUAGE = 'HF_LOCALE'
 export const IS_PAPER_TRADING = 'IS_PAPER_TRADING'
 export const PAPER_MODE = 'paper'
 export const MAIN_MODE = 'main'
@@ -91,7 +90,7 @@ function getInitialState() {
   const isPaperTrading = localStorage.getItem(IS_PAPER_TRADING) === 'true'
   const layoutsJSON = localStorage.getItem(LAYOUTS_KEY)
   const layoutsComponentStateJSON = localStorage.getItem(LAYOUTS_STATE_KEY)
-  const prevLanguage = localStorage.getItem(LANGUAGE)
+  const prevLanguage = localStorage.getItem(LOCAL_STORAGE_I18N_KEY)
   const parsedLocale = _replace(prevLanguage, '_', '-')
   const lang = _find(_keys(LANGUAGES), key => LANGUAGES[key] === parsedLocale)
 

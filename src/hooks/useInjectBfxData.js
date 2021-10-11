@@ -5,7 +5,7 @@ import { useBeforeunload } from 'react-beforeunload'
 import { useSelector, useDispatch } from 'react-redux'
 import { reduxActions, reduxSelectors } from '@ufx-ui/bfx-containers'
 
-import { isSocketConnected } from '../redux/selectors/ws'
+import { getAuthToken } from '../redux/selectors/ws'
 import { isElectronApp } from '../redux/config'
 
 const {
@@ -19,20 +19,20 @@ const { getWSConnected } = reduxSelectors
 
 const useInjectBfxData = () => {
   const dispatch = useDispatch()
-  const _isSocketConnected = useSelector(isSocketConnected)
+  const authToken = useSelector(getAuthToken)
   /*
     electron-app: api will be fetched on localhost:45001, which will be available once api-server is started
     hosted-app: can fetch early without waiting for api-server
   */
-  const isAPIServerConnected = !isElectronApp ? true : _isSocketConnected
+  const isReady = !isElectronApp ? true : !!authToken
 
   // start: fetch common data used across all ufx-containers
   useEffect(() => {
-    if (isAPIServerConnected) {
+    if (isReady) {
       dispatch(requestCurrenciesInfo())
       dispatch(requestSymbolDetails())
     }
-  }, [dispatch, isAPIServerConnected])
+  }, [dispatch, isReady])
 
   // end: fetch common data used across all containers
 
@@ -40,11 +40,12 @@ const useInjectBfxData = () => {
   const isWSConnected = useSelector(getWSConnected)
 
   // connect/disconnect websocket
+
   useEffect(() => {
-    if (!isWSConnected) {
+    if (!isWSConnected && isReady) {
       WSConnectThrottled(dispatch)
     }
-  }, [dispatch, isWSConnected])
+  }, [dispatch, isWSConnected, isReady])
 
   // disconnect before page unload
   useBeforeunload(() => {

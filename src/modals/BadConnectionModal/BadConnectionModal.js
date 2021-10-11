@@ -12,9 +12,8 @@ import './style.css'
 const REBOOT_AFTER = 25
 
 const BadConnection = ({
-  changeBadInternetConnectionState, visible, rebootAutomatically, updateReboot,
+  changeBadInternetConnectionState, visible, rebootAutomatically, updateReboot, rebootnNotify,
 }) => {
-  const [isRebootChecked, setIsRebootChecked] = useState(rebootAutomatically)
   const [countdown, setCountdown] = useState(REBOOT_AFTER)
   const countdownRef = useRef()
   countdownRef.current = countdown
@@ -25,11 +24,6 @@ const BadConnection = ({
 
   const onSubmit = () => {
     location.replace('/index.html') // eslint-disable-line
-  }
-
-  const onRebootUpdate = (nextReboot) => {
-    setIsRebootChecked(nextReboot)
-    updateReboot(nextReboot)
   }
 
   useEffect(() => {
@@ -50,6 +44,22 @@ const BadConnection = ({
 
   const { t } = useTranslation()
 
+  // reboot without showing prompt if connection issue and rebootAutomatically is true
+  const reboot = rebootAutomatically && visible
+  useEffect(() => {
+    if (reboot) {
+      rebootnNotify(t('notifications.reboot_notify'))
+      // timeout to give user time to see above notification
+      setTimeout(() => {
+        onSubmit()
+      }, 4000)
+    }
+  }, [reboot, rebootnNotify, t])
+
+  if (reboot) {
+    return ''
+  }
+
   return (
     <Modal
       label={t('badConnectionModal.title')}
@@ -62,13 +72,13 @@ const BadConnection = ({
       <p>{t('badConnectionModal.text3')}</p>
       <br />
       <p>
-        {t('badConnectionModal.text3', { countdown })}
+        {t('badConnectionModal.text4', { countdown })}
       </p>
       <Modal.Footer>
         <Checkbox
           label={t('badConnectionModal.checkbox')}
-          checked={isRebootChecked}
-          onChange={onRebootUpdate}
+          checked={rebootAutomatically}
+          onChange={updateReboot}
         />
         <Modal.Button onClick={onSubmit} primary>
           {t('ui.ok')}
@@ -83,6 +93,7 @@ BadConnection.propTypes = {
   visible: PropTypes.bool.isRequired,
   updateReboot: PropTypes.func.isRequired,
   rebootAutomatically: PropTypes.bool.isRequired,
+  rebootnNotify: PropTypes.func.isRequired,
 }
 
 export default memo(BadConnection)

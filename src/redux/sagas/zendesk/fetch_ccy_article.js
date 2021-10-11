@@ -14,7 +14,7 @@ export default function* fetchCcyArticle() {
   try {
     const id = yield select(getActiveMarketCcyId)
     const language = yield select(getCurrentLanguage)
-    const url = `${process.env.REACT_APP_UFX_PUBLIC_API_URL}/v1/articles?type=zendesk&id=${id}&lang=${language}`
+    const url = `${process.env.REACT_APP_UFX_API_URL}/v1/articles?type=zendesk&id=${id}&lang=${language}`
     const { data } = yield axios.get(url)
     const { status, data: result } = data
     if (status !== 'success' || _isEmpty(result)) {

@@ -10,7 +10,7 @@ import PositionsTable from './PositionsTable'
 
 const debug = Debug('hfui:c:positions-table')
 
-const mapStateToProps = (state, { activeFilter } = {}) => ({
+const mapStateToProps = (state = {}, { activeFilter } = {}) => ({
   authToken: getAuthToken(state),
   filteredPositions: getFilteredPositions(state)(activeFilter),
   positions: getAllPositions(state),
