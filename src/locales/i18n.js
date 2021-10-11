@@ -37,6 +37,8 @@ export const LANGUAGES_MAP = {
   tw: 'zh-TW',
 }
 
+export const LOCAL_STORAGE_I18N_KEY = 'HF_LOCALE'
+
 i18n
   .use(backend)
   .use(detector)
@@ -49,6 +51,8 @@ i18n
     detection: {
       order: ['querystring', 'cookie', 'localStorage'],
       lookupCookie: 'bfx_locale',
+      lookupQuerystring: 'locale',
+      lookupLocalStorage: LOCAL_STORAGE_I18N_KEY,
       cookieDomain: '.bitfinex.com',
       caches: ['cookie', 'localStorage'],
     },

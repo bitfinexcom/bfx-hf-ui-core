@@ -58,9 +58,9 @@ const StatusBar = ({
             })}
             />
             <p>
-              {apiClientConnected && 'HF Connected'}
-              {apiClientConnecting && 'HF Connecting'}
-              {apiClientDisconnected && 'HF Disconnected'}
+              {apiClientConnected && `HF ${t('statusbar.connected')}`}
+              {apiClientConnecting && `HF ${t('statusbar.connecting')}`}
+              {apiClientDisconnected && `HF ${t('statusbar.disconnected')}`}
             </p>
             <div className='hfui-statusbar__divide' />
           </>
