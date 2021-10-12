@@ -21,7 +21,7 @@ const AlgoOrdersTable = ({
         className='ao-modal-virtual-table'
         data={orders}
         columns={columns(onOrderSelect, isOrderSelected, t)}
-        defaultSortBy='gid'
+        defaultSortBy='createdAt'
         defaultSortDirection='ASC'
         onRowClick={({ rowData }) => onOrderSelect(!isOrderSelected(rowData.gid), rowData.gid, rowData.algoID)}
         rowHeight={40}
