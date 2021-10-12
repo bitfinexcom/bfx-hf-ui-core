@@ -16,10 +16,10 @@ export default (authToken, cancelOrder, gaCancelOrder, t, getMarketPair) => [{
   cellRenderer: ({ rowData = {} }) => defaultCellRenderer(rowData.args?._margin ? 'Margin' : 'Exchange'),
 }, {
   label: t('table.created'),
-  dataKey: 'gid',
+  dataKey: 'createdAt',
   width: 155,
   flexGrow: 1.55,
-  cellRenderer: ({ rowData = {} }) => defaultCellRenderer(new Date(+rowData.gid).toLocaleString()),
+  cellRenderer: ({ rowData = {} }) => defaultCellRenderer(new Date(rowData.createdAt).toLocaleString()),
 }, {
   label: t('table.symbol'),
   dataKey: 'args.symbol',

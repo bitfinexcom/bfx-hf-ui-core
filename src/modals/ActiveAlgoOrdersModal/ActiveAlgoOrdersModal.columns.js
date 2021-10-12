@@ -27,10 +27,10 @@ export default (onOrderSelect, isOrderSelected, t) => [{
   cellRenderer: ({ rowData = {} }) => (rowData.args?._margin ? 'Margin' : 'Exchange'),
 }, {
   label: t('table.created'),
-  dataKey: 'gid',
+  dataKey: 'createdAt',
   width: 125,
   flexGrow: 1.25,
-  cellRenderer: ({ rowData = {} }) => new Date(+rowData.gid).toLocaleString(),
+  cellRenderer: ({ rowData = {} }) => new Date(rowData.createdAt).toLocaleString(),
 }, {
   label: t('table.symbol'),
   dataKey: 'args.symbol',
