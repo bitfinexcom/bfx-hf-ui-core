@@ -21,7 +21,7 @@ const AlgoOrdersTable = ({
         <VirtualTable
           data={data}
           columns={AlgoOrdersTableColumns(authToken, cancelOrder, gaCancelOrder, t, getMarketPair)}
-          defaultSortBy='gid'
+          defaultSortBy='createdAt'
           defaultSortDirection='ASC'
           rowHeight={30}
         />
