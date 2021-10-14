@@ -16,17 +16,13 @@ const TimeFrameDropdown = ({ tf, onChange }) => {
   }, [t])
 
   return (
-    <div className='hfui-backtester__executionform'>
-      <div className='hfui-backtester__executiondropdown input-label'>
-        <Dropdown
-          key='tf-dropdown'
-          placeholder='Select a time frame'
-          onChange={onChange}
-          value={tf}
-          options={options}
-        />
-      </div>
-    </div>
+    <Dropdown
+      key='tf-dropdown'
+      placeholder='Select a time frame'
+      onChange={onChange}
+      value={tf}
+      options={options}
+    />
   )
 }
 

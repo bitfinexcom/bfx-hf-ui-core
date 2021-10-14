@@ -65,6 +65,7 @@ export default (alias, store) => (e = {}) => {
         const [, token] = payload
         store.dispatch(WSActions.recvAuthToken(token))
         store.dispatch(AOActions.getActiveAlgoOrders())
+        store.dispatch(WSActions.send(['strategy.execute_status', token]))
         break
       }
 
@@ -330,6 +331,46 @@ export default (alias, store) => (e = {}) => {
       case 'algo.reload': {
         store.dispatch(WSActions.clearAlgoOrders())
         store.dispatch(AOActions.getActiveAlgoOrders())
+        break
+      }
+
+      case 'strategy.start_live_execution_submit_status': {
+        const [, status] = payload
+
+        if (status) {
+          store.dispatch(WSActions.startLiveExecution())
+        } else {
+          store.dispatch(WSActions.stopLiveExecution())
+        }
+        store.dispatch(WSActions.setExecutionLoading(false))
+
+        break
+      }
+
+      case 'strategy.stop_live_execution_submit_status': {
+        const [, status] = payload
+
+        if (status) {
+          store.dispatch(WSActions.stopLiveExecution())
+        } else {
+          store.dispatch(WSActions.startLiveExecution())
+        }
+        store.dispatch(WSActions.setExecutionLoading(false))
+
+        break
+      }
+
+      case 'strategy.live_execution_status': {
+        const [, status, options] = payload
+
+        if (status) {
+          store.dispatch(WSActions.startLiveExecution())
+        } else {
+          store.dispatch(WSActions.stopLiveExecution())
+        }
+        store.dispatch(WSActions.setExecutionOptions(options))
+        store.dispatch(WSActions.setExecutionLoading(false))
+
         break
       }
 

@@ -525,6 +525,7 @@
   "strategyEditor": {
     "docsTab": "Docs",
     "backtestTab": "Backtest",
+    "executeTab": "Execute",
     "unsavedStartegy": "Unsaved strategy",
     "newStrategy": "New Strategy",
     "recent": "Recent",
@@ -559,7 +560,14 @@
     "profitLoss": "Profit/Loss",
     "volume": "Volume",
     "largestGain": "Largest Gain",
-    "largestLoss": "Largest Loss"
+    "largestLoss": "Largest Loss",
+    "liveExecution": {
+      "executing": "Your strategy is being executed on your live account with real balances.",
+      "stopping": "Stopping strategy execution...",
+      "preparing": "Processing and preparing the strategy before execution...",
+      "realBalancesWarning": "NOTE: By pressing start, you will be executing your strategy on your live account with real balances.",
+      "createStrategy": "Create a strategy to begin executing."
+    }
   },
   "ui": {
     "ok": "Okay",

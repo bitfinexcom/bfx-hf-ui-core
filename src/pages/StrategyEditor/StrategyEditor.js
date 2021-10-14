@@ -15,8 +15,9 @@ import Layout from '../../components/Layout'
 import Panel from '../../ui/Panel'
 import Markdown from '../../ui/Markdown'
 import Backtester from '../../components/Backtester'
+import { isElectronApp } from '../../redux/config'
 
-// import LiveStrategyExecutor from '../../components/LiveStrategyExecutor'
+import LiveStrategyExecutor from '../../components/LiveStrategyExecutor'
 import './style.css'
 
 const DocsPath = require('bfx-hf-strategy/docs/api.md')
@@ -26,7 +27,7 @@ const Joyride = lazy(() => import('../../components/Joyride'))
 
 const StrategyEditorPage = (props) => {
   const {
-    selectStrategy, finishGuide, setStrategyContent, firstLogin, isGuideActive, // strategyContent,
+    selectStrategy, finishGuide, setStrategyContent, firstLogin, isGuideActive, strategyContent,
   } = props
   const [indicators, setIndicators] = useState([])
   const [docsText, setDocsText] = useState('')
@@ -151,9 +152,7 @@ const StrategyEditorPage = (props) => {
                 tabtitle={t('strategyEditor.docsTab')}
                 text={docsText}
               />
-              <div
-                tabtitle={t('strategyEditor.backtestTab')}
-              >
+              <div tabtitle={t('strategyEditor.backtestTab')}>
                 <Backtester
                   {...props}
                   indicators={indicators}
@@ -161,15 +160,13 @@ const StrategyEditorPage = (props) => {
                   onDeleteIndicator={onDeleteIndicator}
                 />
               </div>
-              {/* hidden until this feature will be implemented
-                <div
-                  tabtitle='Execute'
-                >
+              {isElectronApp && (
+                <div tabtitle={t('strategyEditor.executeTab')}>
                   <LiveStrategyExecutor
                     strategyContent={strategyContent}
                   />
                 </div>
-              */}
+              )}
             </Panel>
           </div>
         </div>
@@ -186,14 +183,14 @@ StrategyEditorPage.propTypes = {
   finishGuide: PropTypes.func.isRequired,
   selectStrategy: PropTypes.func.isRequired,
   setStrategyContent: PropTypes.func.isRequired,
-  // strategyContent: PropTypes.objectOf(Object),
+  strategyContent: PropTypes.objectOf(Object),
 }
 
 StrategyEditorPage.defaultProps = {
   dark: true,
   firstLogin: false,
   isGuideActive: true,
-  // strategyContent: {},
+  strategyContent: {},
 }
 
 export default memo(StrategyEditorPage)

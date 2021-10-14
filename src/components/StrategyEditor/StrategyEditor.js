@@ -41,7 +41,8 @@ const STRATEGY_SECTIONS = [
 
 const StrategyEditor = ({
   moveable, removeable, strategyId, renderResults, onSave, onRemove, authToken, onStrategyChange, onStrategySelect,
-  gaCreateStrategy, onIndicatorsChange, clearBacktestOptions, strategyContent, strategies, backtestResults,
+  gaCreateStrategy, onIndicatorsChange, clearBacktestOptions, strategyContent, strategies, backtestResults, liveExecuting,
+  liveLoading,
 }) => {
   const [strategy, setStrategy] = useState(strategyContent)
   const [sectionErrors, setSectionErrors] = useState({})
@@ -225,7 +226,7 @@ const StrategyEditor = ({
       onRemove={onRemove}
       moveable={moveable}
       removeable={removeable}
-      execRunning={backtestResults.executing || backtestResults.loading}
+      execRunning={backtestResults.executing || backtestResults.loading || liveExecuting || liveLoading}
       strategyDirty={strategyDirty}
       strategy={strategy}
       strategies={strategies}
@@ -325,6 +326,8 @@ StrategyEditor.propTypes = {
   gaCreateStrategy: PropTypes.func.isRequired,
   onIndicatorsChange: PropTypes.func.isRequired,
   clearBacktestOptions: PropTypes.func.isRequired,
+  liveExecuting: PropTypes.bool.isRequired,
+  liveLoading: PropTypes.bool.isRequired,
   strategyContent: PropTypes.objectOf(
     PropTypes.oneOfType([
       PropTypes.string.isRequired,

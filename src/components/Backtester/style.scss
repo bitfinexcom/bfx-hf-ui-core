@@ -4,10 +4,10 @@
   display: flex;
   flex: 1;
   flex-direction: column;
-  margin-bottom: 10px;
 
   .hfui-backtester_row {
-    margin-bottom: spacing(0.25) !important;
+    margin-bottom: spacing(0.75) !important;
+    gap: spacing(0.75);
   }
 
   .hfui-dropdown__button, .react-datepicker__input-container input {
@@ -70,13 +70,13 @@
   input {
     max-width: 100%;
     padding: 10px 8px;
-    background-color: lightgray;
-    color: $grey-color;
+    background-color: $lighter-background-color;
+    color: $text-color;
   }
 }
 
 .hfui-backtester__wrapper {
-  .ufx-dropdown {
-    margin-right: spacing(0.75);
+  .react-datepicker__input-container > input {
+    padding-left: 0 !important;
   }
 }
