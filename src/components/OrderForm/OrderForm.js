@@ -429,12 +429,14 @@ class OrderForm extends React.Component {
           extraIcons={[
             !helpOpen && currentLayout && currentLayout.customHelp && (
               <Icon
+                key='question'
                 name='question'
                 onClick={this.onToggleHelp}
               />
             ),
             !helpOpen && currentLayout && currentLayout.id && (
               <AOParamSettings
+                key='ao-settings'
                 algoID={currentLayout.id}
                 symbol={activeMarket.wsID}
                 processAOData={this.processAOData}
