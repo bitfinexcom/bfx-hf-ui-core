@@ -46,7 +46,7 @@ const marketToQuoteBase = (market) => ({
 
 const verifyCondition = (condition = {}, value) => {
   if (typeof condition.eq !== 'undefined') {
-    return condition.eq === value
+    return condition.eq == value // eslint-disable-line
   }
   if (typeof condition.neq !== 'undefined') {
     return condition.neq !== value
