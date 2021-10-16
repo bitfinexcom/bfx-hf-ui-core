@@ -151,10 +151,21 @@ export default (alias, store) => (e = {}) => {
 
       case 'error': {
         const [, message, i18n] = payload
-
+        let text = message
+        if (i18n) {
+          const isNotificationMessage = i18nLib.exists(`notifications.${i18n.key}`)
+          if (isNotificationMessage) {
+            text = i18nLib.t(`notifications.${i18n.key}`, i18n.props)
+          } else {
+            const isAlgoOrderValidMessage = i18nLib.exists(`algoOrderForm.validationMessages.${i18n.key}`)
+            if (isAlgoOrderValidMessage) {
+              i18nLib.t(`algoOrderForm.validationMessages.${i18n.key}`, i18n.props)
+            }
+          }
+        }
         store.dispatch(WSActions.recvNotification({
           status: 'error',
-          text: i18n ? i18nLib.t(`notifications.${i18n.key}`, i18n.props) : message,
+          text,
           mts: Date.now(),
           cid: v4(),
         }))
