@@ -29,3 +29,32 @@ export const getAOs = memoizeOne((t) => _map(algoOrders, ao => ao.meta.getUIDef(
 })))
 
 export const getAtomicOrders = memoizeOne((t) => _map(_values(rawOrders), uiDef => uiDef(t)))
+
+// TODO: get from selector and backend
+const MAX_ORDERS = {
+  total: 2500,
+  pair: 250,
+}
+
+export const validateOrderLimits = (orderCount, pair, existingOrders, maxOrders = MAX_ORDERS) => {
+  const errors = {}
+  const newOrderCountTotal = orderCount + existingOrders?.total
+  const newOrderCountPair = orderCount + existingOrders?.pair
+
+  const totalLimitExceeds = newOrderCountTotal > maxOrders?.total
+  const pairLimitExceeds = newOrderCountPair > maxOrders?.pair
+
+  if (totalLimitExceeds || pairLimitExceeds) {
+    errors.field = 'orderCount'
+    errors.i18n = {
+      key: totalLimitExceeds ? 'orderCountExceedsTotalMaxLimit' : 'orderCountExceedsPairMaxLimit',
+      props: {
+        count: totalLimitExceeds ? newOrderCountTotal : newOrderCountPair,
+        limit: totalLimitExceeds ? maxOrders?.total : maxOrders?.pair,
+        pair,
+      },
+    }
+  }
+
+  return errors
+}

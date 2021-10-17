@@ -32,7 +32,7 @@ import ConnectingModal from './Modals/ConnectingModal'
 import UnconfiguredModal from './Modals/UnconfiguredModal'
 import SubmitAPIKeysModal from './Modals/SubmitAPIKeysModal'
 import OrderFormMenu from './OrderFormMenu'
-import { getAOs, getAtomicOrders } from './OrderForm.orders.helpers'
+import { getAOs, getAtomicOrders, validateOrderLimits } from './OrderForm.orders.helpers'
 
 import './style.css'
 
@@ -306,7 +306,8 @@ class OrderForm extends React.Component {
   }
 
   validateAOData(data) {
-    const { currentLayout } = this.state
+    const { currentLayout, currentMarket } = this.state
+    const { atomicOrdersCount, atomicOrdersCountActiveMarket } = this.props
     let errors = {}
 
     switch (currentLayout.id) {
@@ -331,6 +332,14 @@ class OrderForm extends React.Component {
       case PingPong.id: {
         const processedData = PingPong.meta.processParams(data)
         errors = PingPong.meta.validateParams(processedData)
+        console.log('errors: ', errors)
+        // frontend validation
+        if (_isEmpty(errors)) {
+          errors = validateOrderLimits(processedData?.orderCount, currentMarket.wsID, {
+            total: atomicOrdersCount,
+            pair: atomicOrdersCountActiveMarket,
+          })
+        }
         break
       }
 
@@ -583,6 +592,8 @@ OrderForm.propTypes = {
   moveable: PropTypes.bool,
   removeable: PropTypes.bool,
   t: PropTypes.func.isRequired,
+  atomicOrdersCount: PropTypes.string.isRequired,
+  atomicOrdersCountActiveMarket: PropTypes.string.isRequired,
 }
 
 OrderForm.defaultProps = {
