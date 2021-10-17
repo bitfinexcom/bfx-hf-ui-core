@@ -332,7 +332,6 @@ class OrderForm extends React.Component {
       case PingPong.id: {
         const processedData = PingPong.meta.processParams(data)
         errors = PingPong.meta.validateParams(processedData)
-        console.log('errors: ', errors)
         // frontend validation
         if (_isEmpty(errors)) {
           errors = validateOrderLimits(processedData?.orderCount, currentMarket.wsID, {
