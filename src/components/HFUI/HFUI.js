@@ -104,9 +104,9 @@ const HFUI = ({
           {isElectronApp ? (
             <>
               <TradingModeModal />
-              <BadConnectionModal />
               <OldFormatModal />
               <AOPauseModal />
+              <BadConnectionModal />
             </>
           ) : (
             <BestExperienceMessageModal />
