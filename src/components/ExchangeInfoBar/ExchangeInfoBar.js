@@ -93,7 +93,7 @@ const ExchangeInfoBar = ({
             }}
             dataMapping={tickerMapping}
             className='hfui-exchangeinfobar__ticker'
-            volumeUnit={tickersVolumeUnit !== 'SELF' ? tickersVolumeUnit : quote}
+            volumeUnit={tickersVolumeUnit !== 'SELF' ? tickersVolumeUnit : base}
             ccyIcon={<CCYIcon ccy={base} />}
             showCoinInfoIcon={isCcyArticleAvailbale}
             onShowInfoClick={showCcyIconModal}
