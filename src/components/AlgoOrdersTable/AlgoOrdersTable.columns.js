@@ -19,7 +19,7 @@ export default (authToken, cancelOrder, gaCancelOrder, t, getMarketPair) => [{
   dataKey: 'createdAt',
   width: 155,
   flexGrow: 1.55,
-  cellRenderer: ({ rowData = {} }) => defaultCellRenderer(new Date(rowData.createdAt).toLocaleString()),
+  cellRenderer: ({ rowData = {} }) => defaultCellRenderer(new Date(rowData.createdAt || +rowData.gid).toLocaleString()),
 }, {
   label: t('table.symbol'),
   dataKey: 'args.symbol',
