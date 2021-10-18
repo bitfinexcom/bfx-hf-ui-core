@@ -45,3 +45,37 @@ export const makeShorterLongName = (name, limit) => _truncate(name, {
 })
 
 export const defaultCellRenderer = (content) => (<Truncate>{content}</Truncate>)
+
+export const saveAsJSON = (obj, fileName) => {
+  const data = `data:text/json;charset=utf-8,${encodeURIComponent(JSON.stringify(obj))}`
+  const node = document.createElement('a')
+  node.setAttribute('href', data)
+  node.setAttribute('download', `${fileName}.json`)
+  document.body.appendChild(node)
+  node.click()
+  node.remove()
+}
+
+export const readStrategyFromJSON = () => new Promise((resolve, reject) => {
+  const input = document.createElement('input')
+  input.type = 'file'
+  input.accept = 'application/JSON'
+
+  input.onchange = () => {
+    const strategyJSONRaw = input.files[0]
+    const fr = new FileReader()
+
+    fr.addEventListener('load', () => {
+      try {
+        resolve(JSON.parse(fr.result))
+      } catch (e) {
+        reject(e)
+      }
+    })
+
+    fr.readAsText(strategyJSONRaw)
+  }
+
+  input.click()
+  input.remove()
+})
