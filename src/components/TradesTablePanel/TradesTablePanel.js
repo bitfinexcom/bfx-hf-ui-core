@@ -41,7 +41,9 @@ const TradesTablePanel = (props) => {
   } = props
 
   const { currentMarket = activeMarket } = savedState
-  const { base, quote } = currentMarket
+  const {
+    base, quote, isPerp, uiID,
+  } = currentMarket
   const currentPair = getPairFromMarket(activeMarket, getCurrencySymbol)
 
   const { symbol, dispatch, isWSConnected } = useCommonBfxData(base, quote)
@@ -119,7 +121,7 @@ const TradesTablePanel = (props) => {
       secondaryHeaderComponents={
         showMarket && canChangeMarket && renderMarketDropdown()
       }
-      headerComponents={showMarket && !canChangeMarket && <p>{currentPair}</p>}
+      headerComponents={showMarket && !canChangeMarket && <p>{isPerp ? uiID : currentPair}</p>}
     >
       <Trades
         market={marketData}
