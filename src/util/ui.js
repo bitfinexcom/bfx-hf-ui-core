@@ -56,7 +56,7 @@ export const saveAsJSON = (obj, fileName) => {
   node.remove()
 }
 
-export const readStrategyFromJSON = () => new Promise((resolve, reject) => {
+export const readJSONFile = () => new Promise((resolve, reject) => {
   const input = document.createElement('input')
   input.type = 'file'
   input.accept = 'application/JSON'
