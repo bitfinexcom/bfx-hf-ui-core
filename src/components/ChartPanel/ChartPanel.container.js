@@ -10,7 +10,7 @@ const mapStateToProps = (state = {}, ownProps = {}) => {
   const { layoutID, layoutI: id } = ownProps
 
   return {
-    savedState: getComponentState(state, layoutID, 'trades', id),
+    savedState: getComponentState(state, layoutID, 'chart', id),
     activeMarket: getActiveMarket(state),
     markets: getMarkets(state),
     getCurrencySymbol: reduxSelectors.getCurrencySymbolMemo(state),
