@@ -14,7 +14,8 @@ import HFS from 'bfx-hf-strategy'
 import HFU from 'bfx-hf-util'
 import PropTypes from 'prop-types'
 
-import { saveAsJSON, readStrategyFromJSON } from '../../util/ui'
+import { saveAsJSON, readJSONFile } from '../../util/ui'
+import { MAX_STRATEGY_LABEL_LENGTH } from '../../constants/variables'
 import Templates from './templates'
 import StrategyEditorPanel from './components/StrategyEditorPanel'
 import CreateNewStrategyModal from '../../modals/Strategy/CreateNewStrategyModal'
@@ -39,8 +40,6 @@ const STRATEGY_SECTIONS = [
   'onStart',
   'onStop',
 ]
-
-const MAX_LABEL_LENGTH = 150
 
 const StrategyEditor = ({
   moveable, removeable, strategyId, renderResults, onSave, onRemove, authToken, onStrategyChange, onStrategySelect,
@@ -217,8 +216,8 @@ const StrategyEditor = ({
 
   const onImportStrategy = async () => {
     try {
-      const newStrategy = await readStrategyFromJSON()
-      if ('label' in newStrategy && _size(newStrategy.label) < MAX_LABEL_LENGTH) {
+      const newStrategy = await readJSONFile()
+      if ('label' in newStrategy && _size(newStrategy.label) < MAX_STRATEGY_LABEL_LENGTH) {
         delete newStrategy.id
         onCreateNewStrategy(newStrategy.label, null, newStrategy)
       }
