@@ -1,5 +1,3 @@
-/* eslint-disable */
-
 export default `const whenShort = async (state = {}, update = {}) => {
   const { price, mts } = update
   const { macd } = HFS.indicatorValues(state)
