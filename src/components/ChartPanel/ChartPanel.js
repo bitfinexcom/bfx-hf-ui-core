@@ -14,6 +14,7 @@ const ChartPanel = ({
 }) => {
   const [currentMarket, setCurrentMarket] = useState(_currentMarket || activeMarket)
   const currentPair = getPairFromMarket(currentMarket, getCurrencySymbol)
+  const { isPerp, uiID } = currentMarket
 
   useEffect(() => {
     if (_isEmpty(_currentMarket) && activeMarket.restID !== currentMarket.restID) {
@@ -62,7 +63,7 @@ const ChartPanel = ({
       removeable={removeable}
       showChartMarket={showChartMarket}
       chartMarketSelect={showChartMarket && canChangeMarket && renderMarketDropdown()}
-      headerComponents={showMarket && !canChangeMarket && <p>{currentPair}</p>}
+      headerComponents={showMarket && !canChangeMarket && <p>{isPerp ? uiID : currentPair}</p>}
       className='hfui-chart__wrapper'
     >
       <Chart market={currentMarket} />

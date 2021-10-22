@@ -101,7 +101,11 @@ const StrategyEditorPage = (props) => {
   }
 
   const setContent = (content) => {
-    setForcedTab('Backtest')
+    if (content?.id) {
+      setForcedTab('Backtest')
+    } else {
+      setForcedTab('Docs')
+    }
     setStrategyContent(content)
   }
 

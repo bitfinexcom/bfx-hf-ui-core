@@ -30,7 +30,7 @@ export default (onOrderSelect, isOrderSelected, t) => [{
   dataKey: 'createdAt',
   width: 125,
   flexGrow: 1.25,
-  cellRenderer: ({ rowData = {} }) => new Date(rowData.createdAt).toLocaleString(),
+  cellRenderer: ({ rowData = {} }) => new Date(rowData.createdAt || +rowData.gid).toLocaleString(),
 }, {
   label: t('table.symbol'),
   dataKey: 'args.symbol',
