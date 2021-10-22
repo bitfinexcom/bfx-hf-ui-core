@@ -7,13 +7,13 @@ import { useTranslation } from 'react-i18next'
 
 import Templates from '../../../components/StrategyEditor/templates'
 
+import {
+  MAX_STRATEGY_LABEL_LENGTH as MAX_LABEL_LENGTH,
+} from '../../../constants/variables'
 import Input from '../../../ui/Input'
 import Modal from '../../../ui/Modal'
 import Dropdown from '../../../ui/Dropdown'
-
 import './style.css'
-
-const MAX_LABEL_LENGTH = 150
 
 const CreateNewStrategyModal = ({
   onSubmit, onClose, gaCreateStrategy, isOpen,
