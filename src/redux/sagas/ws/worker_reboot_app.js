@@ -7,7 +7,7 @@ import { isElectronApp } from '../../config'
 const CHECK_CONNECTION_EVERY_MS = 30 * 1000 // 30 seconds
 
 export default function* () {
-  while (true && isElectronApp) {
+  while (isElectronApp) {
     yield delay(CHECK_CONNECTION_EVERY_MS)
     const isWSconnected = yield select(reduxSelectors.getWSConnected)
 
