@@ -16,6 +16,7 @@ const DEFAULT_STATE = {
   trades: {
     marketDirty: false,
   },
+  trading_state: {},
 }
 
 const getDefaultStateForComponentType = createSelector(
@@ -25,7 +26,8 @@ const getDefaultStateForComponentType = createSelector(
   ],
   (activeMarket, type) => {
     switch (type) {
-      case 'orderform': {
+      case 'orderform':
+      case 'trading_state': {
         return DEFAULT_STATE[type]
       }
 

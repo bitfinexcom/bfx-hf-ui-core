@@ -1,4 +1,4 @@
-import React, { useState, memo } from 'react'
+import React, { memo } from 'react'
 import PropTypes from 'prop-types'
 import _isEmpty from 'lodash/isEmpty'
 import { useTranslation } from 'react-i18next'
@@ -13,13 +13,20 @@ import TabTitle from './TabTitle'
 import './style.css'
 
 const TradingStatePanel = ({
-  dark, onRemove, moveable, removeable, getPositionsCount, getAtomicOrdersCount, getAlgoOrdersCount, markets,
+  dark, onRemove, moveable, removeable, getPositionsCount, getAtomicOrdersCount, getAlgoOrdersCount, markets, savedState, updateState,
+  layoutID, layoutI,
 }) => {
-  const [activeFilter, setActiveFilter] = useState({})
+  const { currentMarket: activeFilter = {} } = savedState
   const positionsCount = getPositionsCount(activeFilter)
   const atomicOrdersCount = getAtomicOrdersCount(activeFilter)
   const algoOrdersCount = getAlgoOrdersCount(activeFilter)
   const { t } = useTranslation()
+
+  const setActiveFilter = (market) => {
+    updateState(layoutID, layoutI, {
+      currentMarket: market,
+    })
+  }
 
   return (
     <Panel
@@ -33,7 +40,7 @@ const TradingStatePanel = ({
         <MarketSelect
           key='filter-market'
           markets={markets}
-          value={{}}
+          value={activeFilter}
           onChange={setActiveFilter}
           renderWithFavorites
         />
@@ -95,6 +102,15 @@ TradingStatePanel.propTypes = {
   getAtomicOrdersCount: PropTypes.func,
   getAlgoOrdersCount: PropTypes.func,
   markets: PropTypes.objectOf(PropTypes.object).isRequired,
+  savedState: PropTypes.shape({
+    currentMarket: PropTypes.shape({
+      base: PropTypes.string,
+      quote: PropTypes.string,
+    }),
+  }),
+  updateState: PropTypes.func.isRequired,
+  layoutI: PropTypes.string.isRequired,
+  layoutID: PropTypes.string,
 }
 
 TradingStatePanel.defaultProps = {
@@ -105,6 +121,8 @@ TradingStatePanel.defaultProps = {
   getAtomicOrdersCount: () => { },
   getAlgoOrdersCount: () => { },
   onRemove: () => { },
+  savedState: {},
+  layoutID: '',
 }
 
 export default memo(TradingStatePanel)
