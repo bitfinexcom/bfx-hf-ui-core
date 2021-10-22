@@ -6,7 +6,6 @@ import randomColor from 'randomcolor'
 import _values from 'lodash/values'
 import _map from 'lodash/map'
 import _remove from 'lodash/remove'
-import _isNull from 'lodash/isNull'
 import { useTranslation } from 'react-i18next'
 
 import {
@@ -30,10 +29,9 @@ const StrategyEditorPage = (props) => {
   const {
     selectStrategy, finishGuide, setStrategyContent, firstLogin, isGuideActive, strategyContent, setStrategyTab, selectedTab,
   } = props
-  const tab = _isNull(selectedTab) ? '' : selectedTab
   const [indicators, setIndicators] = useState([])
   const [docsText, setDocsText] = useState('')
-  const [forcedTab, setForcedTab] = useState(tab)
+  const [forcedTab, setForcedTab] = useState(selectedTab)
   const [tourStep, setTourStep] = useState(0)
   const [startTour, setStartTour] = useState(false)
 
