@@ -5,13 +5,13 @@ import WSActions from '../../redux/actions/ws'
 import GAActions from '../../redux/actions/google_analytics'
 import UIActions from '../../redux/actions/ui'
 import {
-  getIsInternetConnection, SETTINGS, getRebootSetting,
+  getIsBadInternetConnection, SETTINGS, getRebootSetting,
 } from '../../redux/selectors/ui'
 
 import BadConnectionModal from './BadConnectionModal'
 
 const mapStateToProps = (state = {}) => ({
-  visible: getIsInternetConnection(state),
+  visible: getIsBadInternetConnection(state),
   rebootAutomatically: getRebootSetting(state),
 })
 

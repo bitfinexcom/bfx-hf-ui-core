@@ -34,6 +34,7 @@ const Trading = ({
   apiClientConnected,
   hasActiveAlgoOrders,
   finishGuide,
+  isBadConnection,
 }) => {
   const { t } = useTranslation()
 
@@ -66,7 +67,7 @@ const Trading = ({
           />
         </div>
 
-        <ActiveAlgoOrdersModal isOpen={showAlgoModal && hasActiveAlgoOrders && apiClientConnected} />
+        <ActiveAlgoOrdersModal isOpen={showAlgoModal && hasActiveAlgoOrders && apiClientConnected && !isBadConnection} />
         {/* <RefillBalanceModal /> */}
       </Layout.Main>
       <Layout.Footer />
@@ -81,6 +82,7 @@ Trading.propTypes = {
   apiClientConnected: PropTypes.bool,
   hasActiveAlgoOrders: PropTypes.bool,
   finishGuide: PropTypes.func.isRequired,
+  isBadConnection: PropTypes.bool.isRequired,
 }
 
 Trading.defaultProps = {
