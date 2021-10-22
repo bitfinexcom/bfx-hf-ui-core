@@ -6,7 +6,7 @@ import PropTypes from 'prop-types'
 import { useTranslation } from 'react-i18next'
 
 import Templates from '../../../components/StrategyEditor/templates'
-
+import MACD from '../../../components/StrategyEditor/templates/macd_cross'
 import {
   MAX_STRATEGY_LABEL_LENGTH as MAX_LABEL_LENGTH,
 } from '../../../constants/variables'
@@ -20,7 +20,7 @@ const CreateNewStrategyModal = ({
 }) => {
   const [label, setLabel] = useState('')
   const [error, setError] = useState('')
-  const [template, setTemplate] = useState('Blank')
+  const [template, setTemplate] = useState(MACD.label)
 
   const { t } = useTranslation()
 
