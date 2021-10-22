@@ -11,7 +11,7 @@ const mapStateToProps = state => ({
   strategyId: state.ui.id,
   strategyContent: state.ui.content,
   selectedTab: state.ui.tab,
-}) // eslint-disable-line
+})
 
 const mapDispatchToProps = dispatch => ({
   finishGuide() {
@@ -26,6 +26,6 @@ const mapDispatchToProps = dispatch => ({
   setStrategyTab(tab) {
     dispatch(UIActions.setStrategyTab(tab))
   },
-}) // eslint-disable-line
+})
 
 export default connect(mapStateToProps, mapDispatchToProps)(StrategyEditor)

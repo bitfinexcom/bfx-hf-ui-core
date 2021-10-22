@@ -22,10 +22,14 @@ const TradingStatePanel = ({
   const algoOrdersCount = getAlgoOrdersCount(activeFilter)
   const { t } = useTranslation()
 
-  const setActiveFilter = (market) => {
+  const saveState = (param, value) => {
     updateState(layoutID, layoutI, {
-      currentMarket: market,
+      [param]: value,
     })
+  }
+
+  const setActiveFilter = (market) => {
+    saveState('currentMarket', market)
   }
 
   return (
@@ -61,6 +65,8 @@ const TradingStatePanel = ({
         onRemove={onRemove}
         moveable={moveable}
         removeable={removeable}
+        forcedTab={savedState.tab}
+        onTabChange={(tab) => saveState('tab', tab)}
         darkHeader
       >
         <PositionsTable
@@ -107,6 +113,7 @@ TradingStatePanel.propTypes = {
       base: PropTypes.string,
       quote: PropTypes.string,
     }),
+    tab: PropTypes.number,
   }),
   updateState: PropTypes.func.isRequired,
   layoutI: PropTypes.string.isRequired,

@@ -54,7 +54,7 @@ const Panel = ({
 
   useEffect(() => {
     _setSelectedTab(initTab)
-  }, [initTab])
+  }, [initTab]) // eslint-disable-line
 
   return (
     <div
