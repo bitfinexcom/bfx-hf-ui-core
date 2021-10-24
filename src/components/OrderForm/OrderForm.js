@@ -307,7 +307,7 @@ class OrderForm extends React.Component {
 
   validateAOData(data) {
     const { currentLayout, currentMarket } = this.state
-    const { atomicOrdersCount, atomicOrdersCountActiveMarket } = this.props
+    const { atomicOrdersCount, atomicOrdersCountActiveMarket, maxOrderCounts } = this.props
     let errors = {}
 
     switch (currentLayout.id) {
@@ -334,10 +334,15 @@ class OrderForm extends React.Component {
         errors = PingPong.meta.validateParams(processedData)
         // frontend validation
         if (_isEmpty(errors)) {
-          errors = validateOrderLimits(processedData?.orderCount, currentMarket.wsID, {
-            total: atomicOrdersCount,
-            pair: atomicOrdersCountActiveMarket,
-          })
+          errors = validateOrderLimits(
+            processedData?.orderCount,
+            currentMarket.wsID,
+            {
+              total: atomicOrdersCount,
+              pair: atomicOrdersCountActiveMarket,
+            },
+            maxOrderCounts,
+          )
         }
         break
       }
@@ -593,6 +598,7 @@ OrderForm.propTypes = {
   t: PropTypes.func.isRequired,
   atomicOrdersCount: PropTypes.string.isRequired,
   atomicOrdersCountActiveMarket: PropTypes.string.isRequired,
+  maxOrderCounts: PropTypes.objectOf(PropTypes.string).isRequired,
 }
 
 OrderForm.defaultProps = {

@@ -47,6 +47,11 @@ export default {
     },
   }),
 
+  recvCoreSettings: settings => ({
+    type: ui.RECEIVE_CORE_SETTINGS,
+    payload: settings,
+  }),
+
   bufferDataFromExchange: (
     chanID, data, rawData = null,
   ) => ({

@@ -22,6 +22,7 @@ const mapStateToProps = (state = {}) => {
 const mapDispatchToProps = dispatch => ({
   getSettings: (authToken) => {
     dispatch(WSActions.send(['get.settings', authToken]))
+    dispatch(WSActions.send(['get.core_settings', authToken]))
   },
   GAPageview: (page) => {
     dispatch(GAActions.pageview(page))

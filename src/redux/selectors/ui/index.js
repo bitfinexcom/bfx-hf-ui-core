@@ -21,6 +21,7 @@ import getIsCcyInfoModalVisible from './get_is_ccy_info_modal_visible'
 import getCurrentLanguage from './get_current_language'
 
 export * from './get_settings'
+export * from './get_core_settings'
 
 export {
   getRemoteVersion,

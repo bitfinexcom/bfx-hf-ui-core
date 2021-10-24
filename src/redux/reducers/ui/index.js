@@ -214,6 +214,13 @@ function reducer(state = getInitialState(), action = {}) {
       }
     }
 
+    case types.RECEIVE_CORE_SETTINGS: {
+      return {
+        ...state,
+        coreSettings: payload,
+      }
+    }
+
     case types.OPEN_NOTIFICATIONS: {
       return {
         ...state,

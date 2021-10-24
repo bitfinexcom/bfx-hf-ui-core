@@ -1,6 +1,7 @@
 import _isArray from 'lodash/isArray'
 import _isObject from 'lodash/isObject'
 import _isNumber from 'lodash/isNumber'
+import _reduce from 'lodash/reduce'
 import Debug from 'debug'
 import { v4 } from 'uuid'
 import i18nLib from '../../../locales/i18n'
@@ -213,6 +214,28 @@ export default (alias, store) => (e = {}) => {
       case 'data.settings.updated': {
         const [, settings] = payload
         store.dispatch(WSActions.recvUpdatedSettings(settings))
+        break
+      }
+
+      /* settings format
+        [{
+            key: 'te_limit_order_*',
+            value: [
+              ['te_limit_order_cnt', '3000'],
+              ['te_limit_order_symbol_cnt', '300'],
+            ],
+          }]
+      */
+      case 'data.core_settings': {
+        const [, settings] = payload
+        const transformed = _reduce(settings, (acc, { key, value }) => {
+          return {
+            ...acc,
+            [key]: value,
+          }
+        }, {})
+
+        store.dispatch(WSActions.recvCoreSettings(transformed))
         break
       }
 
