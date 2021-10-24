@@ -596,9 +596,9 @@ OrderForm.propTypes = {
   moveable: PropTypes.bool,
   removeable: PropTypes.bool,
   t: PropTypes.func.isRequired,
-  atomicOrdersCount: PropTypes.string.isRequired,
-  atomicOrdersCountActiveMarket: PropTypes.string.isRequired,
-  maxOrderCounts: PropTypes.objectOf(PropTypes.string).isRequired,
+  atomicOrdersCount: PropTypes.number.isRequired,
+  atomicOrdersCountActiveMarket: PropTypes.number.isRequired,
+  maxOrderCounts: PropTypes.objectOf(PropTypes.number).isRequired,
 }
 
 OrderForm.defaultProps = {
