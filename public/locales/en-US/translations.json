@@ -577,6 +577,8 @@
     "dontShowAgain": "I understood. Don't show me again!",
     "dropdown": "Select an option",
     "backBtn": "Back",
+    "export": "Export",
+    "import": "Import",
     "closeBtn": "Close",
     "lastBtn": "Finish",
     "nextBtn": "Next",

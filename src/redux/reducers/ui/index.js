@@ -245,6 +245,7 @@ function reducer(state = getInitialState(), action = {}) {
     case types.CREATE_LAYOUT: {
       const { id } = payload
       const layoutDef = getActiveLayoutDef(state)
+      const { layoutComponentState, layoutID } = state || {}
 
       storeLastUsedLayoutID(id, layoutDef?.routePath)
 
@@ -261,6 +262,12 @@ function reducer(state = getInitialState(), action = {}) {
           },
         },
         layoutID: id,
+        layoutComponentState: {
+          ...layoutComponentState,
+          [id]: {
+            ...layoutComponentState?.[layoutID],
+          },
+        },
       }
     }
 
@@ -548,7 +555,8 @@ function reducerWithStorage(state = getInitialState(), action = {}) {
       case types.SAVE_LAYOUT:
       case types.CREATE_LAYOUT:
       case types.DELETE_LAYOUT: {
-        const { layouts } = newState
+        const { layoutComponentState, layouts } = newState
+        localStorage.setItem(LAYOUTS_STATE_KEY, JSON.stringify(layoutComponentState))
         localStorage.setItem(LAYOUTS_KEY, JSON.stringify(layouts))
         break
       }

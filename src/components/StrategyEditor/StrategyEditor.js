@@ -6,6 +6,7 @@ import _isEmpty from 'lodash/isEmpty'
 import _keys from 'lodash/keys'
 import _values from 'lodash/values'
 import _forEach from 'lodash/forEach'
+import _size from 'lodash/size'
 import _find from 'lodash/find'
 import Indicators from 'bfx-hf-indicators'
 import { nonce } from 'bfx-api-node-util'
@@ -13,6 +14,8 @@ import HFS from 'bfx-hf-strategy'
 import HFU from 'bfx-hf-util'
 import PropTypes from 'prop-types'
 
+import { saveAsJSON, readJSONFile } from '../../util/ui'
+import { MAX_STRATEGY_LABEL_LENGTH } from '../../constants/variables'
 import Templates from './templates'
 import StrategyEditorPanel from './components/StrategyEditorPanel'
 import CreateNewStrategyModal from '../../modals/Strategy/CreateNewStrategyModal'
@@ -20,7 +23,6 @@ import RemoveExistingStrategyModal from '../../modals/Strategy/RemoveExistingStr
 import OpenExistingStrategyModal from '../../modals/Strategy/OpenExistingStrategyModal'
 import MonacoEditor from './components/MonacoEditor'
 import EmptyContent from './components/StrategyEditorEmpty'
-
 import './style.css'
 
 const debug = Debug('hfui-ui:c:strategy-editor')
@@ -142,8 +144,8 @@ const StrategyEditor = ({
     onIndicatorsChange(indicators)
   }
 
-  const onCreateNewStrategy = (label, templateLabel) => {
-    const newStrategy = { label }
+  const onCreateNewStrategy = (label, templateLabel, content = {}) => {
+    const newStrategy = { label, ...content }
     const template = _find(Templates, _t => _t.label === templateLabel)
 
     if (!template) {
@@ -207,6 +209,23 @@ const StrategyEditor = ({
     onStrategyChange(content)
   }
 
+  const onExportStrategy = () => {
+    const { label } = strategyContent
+    saveAsJSON(strategyContent, label)
+  }
+
+  const onImportStrategy = async () => {
+    try {
+      const newStrategy = await readJSONFile()
+      if ('label' in newStrategy && _size(newStrategy.label) < MAX_STRATEGY_LABEL_LENGTH) {
+        delete newStrategy.id
+        onCreateNewStrategy(newStrategy.label, null, newStrategy)
+      }
+    } catch (e) {
+      debug('Error while importing strategy: %s', e)
+    }
+  }
+
   const onEditorContentChange = (code) => {
     setStrategyDirty(true)
     updateStrategy({
@@ -236,6 +255,8 @@ const StrategyEditor = ({
       onOpenRemoveModal={() => setIsRemoveModalOpened(true)}
       onSaveStrategy={onSaveStrategy}
       onRemoveStrategy={onRemoveStrategy}
+      onExportStrategy={onExportStrategy}
+      onImportStrategy={onImportStrategy}
     >
       {!strategy || _isEmpty(strategy)
         ? (

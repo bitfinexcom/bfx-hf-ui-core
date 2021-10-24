@@ -46,7 +46,9 @@ const OrderBookPanel = (props) => {
     currentMarket = activeMarket,
   } = savedState
   const bookMarket = isTradingTerminal ? activeMarket : currentMarket
-  const { base, quote } = bookMarket
+  const {
+    base, quote, isPerp, uiID,
+  } = bookMarket
   const currentPair = getPairFromMarket(activeMarket, getCurrencySymbol)
 
   const [settingsOpen, setSettingsOpen] = useState(false)
@@ -150,7 +152,7 @@ const OrderBookPanel = (props) => {
       secondaryHeaderComponents={
         showMarket && canChangeMarket && renderMarketDropdown()
       }
-      headerComponents={showMarket && !canChangeMarket && <p>{currentPair}</p>}
+      headerComponents={showMarket && !canChangeMarket && <p>{isPerp ? uiID : currentPair}</p>}
       settingsOpen={settingsOpen}
       onToggleSettings={onToggleSettings}
       className='hfui-book__wrapper'

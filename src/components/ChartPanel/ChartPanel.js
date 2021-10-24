@@ -10,10 +10,11 @@ import { getPairFromMarket } from '../../util/market'
 
 const ChartPanel = ({
   dark, label, onRemove, moveable, removeable, showChartMarket, markets, canChangeMarket,
-  activeMarket, savedState: { currentMarket: _currentMarket }, saveState, layoutID, layoutI, showMarket, getCurrencySymbol,
+  activeMarket, savedState: { currentMarket: _currentMarket }, updateState, layoutID, layoutI, showMarket, getCurrencySymbol,
 }) => {
   const [currentMarket, setCurrentMarket] = useState(_currentMarket || activeMarket)
   const currentPair = getPairFromMarket(currentMarket, getCurrencySymbol)
+  const { isPerp, uiID } = currentMarket
 
   useEffect(() => {
     if (_isEmpty(_currentMarket) && activeMarket.restID !== currentMarket.restID) {
@@ -33,7 +34,7 @@ const ChartPanel = ({
     }
 
     setCurrentMarket(market)
-    saveState(layoutID, layoutI, {
+    updateState(layoutID, layoutI, {
       currentMarket: market,
     })
   }
@@ -62,7 +63,7 @@ const ChartPanel = ({
       removeable={removeable}
       showChartMarket={showChartMarket}
       chartMarketSelect={showChartMarket && canChangeMarket && renderMarketDropdown()}
-      headerComponents={showMarket && !canChangeMarket && <p>{currentPair}</p>}
+      headerComponents={showMarket && !canChangeMarket && <p>{isPerp ? uiID : currentPair}</p>}
       className='hfui-chart__wrapper'
     >
       <Chart market={currentMarket} />
@@ -81,7 +82,7 @@ ChartPanel.propTypes = {
     quote: PropTypes.string,
     restID: PropTypes.string,
   }),
-  saveState: PropTypes.func,
+  updateState: PropTypes.func,
   canChangeMarket: PropTypes.bool,
   showChartMarket: PropTypes.bool,
   showMarket: PropTypes.bool,
@@ -109,7 +110,7 @@ ChartPanel.defaultProps = {
     quote: 'USD',
     restID: 'tBTCUSD',
   },
-  saveState: () => { },
+  updateState: () => { },
   showChartMarket: false,
   canChangeMarket: false,
   showMarket: false,

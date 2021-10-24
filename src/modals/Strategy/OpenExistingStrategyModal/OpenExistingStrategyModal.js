@@ -1,9 +1,10 @@
-import React, { useState, memo } from 'react'
+import React, { useState, memo, useMemo } from 'react'
 import PropTypes from 'prop-types'
 import Debug from 'debug'
 import _isEmpty from 'lodash/isEmpty'
 import _find from 'lodash/find'
-import _mapValues from 'lodash/mapValues'
+import _map from 'lodash/map'
+import _values from 'lodash/values'
 import { useTranslation } from 'react-i18next'
 
 import Modal from '../../../ui/Modal'
@@ -40,6 +41,14 @@ const OpenExistingStrategyModal = ({
     onClose()
   }
 
+  const strategiesOptionsArray = useMemo(() => {
+    const strategiesArray = _values(strategies)
+    return _map(strategiesArray, ({ label, id }) => ({
+      label: makeShorterLongName(label, MAX_STRATEGY_LABEL_LENGTH),
+      value: id,
+    }))
+  }, [strategies])
+
   return (
     <Modal
       isOpen={isOpen}
@@ -50,10 +59,7 @@ const OpenExistingStrategyModal = ({
       <Dropdown
         value={strategyID}
         onChange={setStrategyID}
-        options={_mapValues(strategies, ({ label, id }) => ({
-          label: makeShorterLongName(label, MAX_STRATEGY_LABEL_LENGTH),
-          value: id,
-        }))}
+        options={strategiesOptionsArray}
       />
 
       {!_isEmpty(error) && (
