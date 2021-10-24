@@ -1,5 +1,5 @@
 import React, {
-  useMemo, useCallback, memo, useState,
+  useMemo, useCallback, memo, useState, forwardRef,
 } from 'react'
 import _filter from 'lodash/filter'
 import _includes from 'lodash/includes'
@@ -15,19 +15,21 @@ import FavoriteIcon from '../../ui/Icons/FavoriteIcon'
 import './style.css'
 import { getPairFromMarket } from '../../util/market'
 
-const MarketSelect = ({
-  savePairs,
-  authToken,
-  favoritePairs = [],
-  currentMode, value,
-  onChange,
-  markets,
-  className,
-  renderLabel,
-  renderWithFavorites,
-  getCurrencySymbol,
-  ...otherProps
-}) => {
+// eslint-disable-next-line prefer-arrow-callback
+const MarketSelect = forwardRef(function MarketSelect(props, ref) {
+  const {
+    savePairs,
+    authToken,
+    favoritePairs = [],
+    currentMode, value,
+    onChange,
+    markets,
+    className,
+    renderLabel,
+    renderWithFavorites,
+    getCurrencySymbol,
+    ...otherProps
+  } = props
   const [searchTerm, setSearchTerm] = useState('')
   const favoriteSelect = useCallback((pair, isPairSelected) => {
     if (isPairSelected) {
@@ -55,6 +57,7 @@ const MarketSelect = ({
 
   return (
     <Dropdown
+      ref={ref}
       label={renderLabel ? 'Market' : undefined}
       searchable
       className={ClassNames('hfui-marketselect', className)}
@@ -90,7 +93,7 @@ const MarketSelect = ({
       {...otherProps}
     />
   )
-}
+})
 
 MarketSelect.propTypes = {
   value: PropTypes.instanceOf(Object).isRequired,

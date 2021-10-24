@@ -1,4 +1,6 @@
-import React, { useState, memo } from 'react'
+import React, {
+  useRef, useState, memo, useEffect,
+} from 'react'
 import { useDispatch } from 'react-redux'
 import _isEmpty from 'lodash/isEmpty'
 import _values from 'lodash/values'
@@ -32,6 +34,14 @@ const AddLayoutComponentModal = ({ onClose, isOpen }) => {
     onClose()
   }
 
+  const dropdownRef = useRef()
+
+  useEffect(() => {
+    if (isOpen && dropdownRef?.current) {
+      dropdownRef.current.click()
+    }
+  }, [isOpen])
+
   return (
     <Modal
       isOpen={isOpen}
@@ -40,12 +50,14 @@ const AddLayoutComponentModal = ({ onClose, isOpen }) => {
       label={t('layoutSettings.addComponent')}
     >
       <Dropdown
+        ref={dropdownRef}
         value={componentType}
         onChange={setComponentType}
         options={_map(_values(COMPONENT_TYPES), type => ({
           label: t(COMPONENT_LABELS[type]),
           value: type,
         }))}
+        searchable
       />
 
       {!_isEmpty(error) && (

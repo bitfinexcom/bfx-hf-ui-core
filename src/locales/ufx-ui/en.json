@@ -20,6 +20,10 @@
     "copy_to_clipboard": "Copy to clipboard",
     "no": "No"
   },
+  "ui": {
+    "typeToSearch": "Type to search..",
+    "selectOption": "Select an option"
+  },
   "error": {
     "not_enough_balance": "Not enough balance, available balance is {{amount}}",
     "must_be_number": "Must be a number",

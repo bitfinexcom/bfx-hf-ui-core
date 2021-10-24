@@ -1,8 +1,14 @@
-@import '../../variables.scss';
+@import "../../variables.scss";
 
 .ufx-dropdown {
   font-weight: 500;
   color: $light-color-800;
+
+  .ufx-input {
+    input {
+      height: auto;
+    }
+  }
 
   &.is-highlighted {
     .dropdown-field {
@@ -10,13 +16,11 @@
     }
   }
 
-  .selected-text.has-icon {
-    display: flex;
-    align-items: center;
-    width: 100%;
+  div.list-wrapper {
+    top: 36px;
   }
 
-  [class*=icon-] {
+  [class*="icon-"] {
     margin-right: spacing(0.5);
 
     &:before {
