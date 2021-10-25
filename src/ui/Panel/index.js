@@ -1,4 +1,6 @@
-import React, { useState, useEffect } from 'react'
+import React, {
+  useState, useEffect, useCallback,
+} from 'react'
 import ClassNames from 'classnames'
 import PropTypes from 'prop-types'
 import _filter from 'lodash/filter'
@@ -47,14 +49,14 @@ const Panel = ({
   const [panelRef, panelSize] = useSize()
   const [headerRef, headerSize] = useSize()
 
-  const _setSelectedTab = (tab) => {
+  const _setSelectedTab = useCallback((tab) => {
     onTabChange(tab)
     setSelectedTab(tab)
-  }
+  }, [onTabChange])
 
   useEffect(() => {
     _setSelectedTab(initTab)
-  }, [initTab]) // eslint-disable-line
+  }, [_setSelectedTab, initTab])
 
   return (
     <div
