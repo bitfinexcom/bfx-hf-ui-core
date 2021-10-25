@@ -20,6 +20,8 @@ const mapStateToProps = (state = {}) => {
 const mapDispatchToProps = dispatch => ({ // eslint-disable-line
   onInit: (password) => {
     dispatch(UIActions.setTradingMode(false))
+    removeStoredPassword(password)
+    updateAutoLoginState()
     dispatch(WSActions.initAuth(password))
     dispatch(UIActions.firstLogin())
   },
