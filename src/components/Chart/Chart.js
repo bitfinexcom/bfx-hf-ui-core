@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import './style.css'
 import { PUB_REST_API_URL, PUB_WSS_API_URL } from '../../redux/config'
 
-const CHART_URL = 'http://localhost:3001/bfx-hf-tradingview'
+const CHART_URL = 'https://bitfinexcom.github.io/bfx-hf-tradingview'
 
 const Chart = ({ market: { wsID, base, quote } }) => {
   const queryString = new URLSearchParams({
