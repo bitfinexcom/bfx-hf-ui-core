@@ -1,10 +1,10 @@
 import React, {
   lazy, Suspense, useState, useEffect, memo,
 } from 'react'
+import PropTypes from 'prop-types'
+import randomColor from 'randomcolor'
 import _values from 'lodash/values'
 import _map from 'lodash/map'
-import randomColor from 'randomcolor'
-import PropTypes from 'prop-types'
 import _remove from 'lodash/remove'
 import { useTranslation } from 'react-i18next'
 
@@ -27,11 +27,11 @@ const Joyride = lazy(() => import('../../components/Joyride'))
 
 const StrategyEditorPage = (props) => {
   const {
-    selectStrategy, finishGuide, setStrategyContent, firstLogin, isGuideActive, strategyContent,
+    selectStrategy, finishGuide, setStrategyContent, firstLogin, isGuideActive, strategyContent, setStrategyTab, selectedTab,
   } = props
   const [indicators, setIndicators] = useState([])
   const [docsText, setDocsText] = useState('')
-  const [forcedTab, setForcedTab] = useState('')
+  const [forcedTab, setForcedTab] = useState(selectedTab)
   const [tourStep, setTourStep] = useState(0)
   const [startTour, setStartTour] = useState(false)
 
@@ -150,6 +150,7 @@ const StrategyEditorPage = (props) => {
               moveable={false}
               removeable={false}
               forcedTab={forcedTab}
+              onTabChange={setStrategyTab}
               darkHeader
             >
               <Markdown
@@ -187,6 +188,8 @@ StrategyEditorPage.propTypes = {
   finishGuide: PropTypes.func.isRequired,
   selectStrategy: PropTypes.func.isRequired,
   setStrategyContent: PropTypes.func.isRequired,
+  setStrategyTab: PropTypes.func.isRequired,
+  selectedTab: PropTypes.number,
   strategyContent: PropTypes.objectOf(Object),
 }
 
@@ -195,6 +198,7 @@ StrategyEditorPage.defaultProps = {
   firstLogin: false,
   isGuideActive: true,
   strategyContent: {},
+  selectedTab: null,
 }
 
 export default memo(StrategyEditorPage)

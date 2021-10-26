@@ -1,4 +1,4 @@
-import React, { memo } from 'react'
+import React, { memo, useCallback } from 'react'
 import PropTypes from 'prop-types'
 import _isEmpty from 'lodash/isEmpty'
 import { useTranslation } from 'react-i18next'
@@ -22,10 +22,18 @@ const TradingStatePanel = ({
   const algoOrdersCount = getAlgoOrdersCount(activeFilter)
   const { t } = useTranslation()
 
-  const setActiveFilter = (market) => {
+  const saveState = useCallback((param, value) => {
     updateState(layoutID, layoutI, {
-      currentMarket: market,
+      [param]: value,
     })
+  }, [layoutID, layoutI, updateState])
+
+  const onTabChange = useCallback((tab) => {
+    saveState('tab', tab)
+  }, [saveState])
+
+  const setActiveFilter = (market) => {
+    saveState('currentMarket', market)
   }
 
   return (
@@ -61,6 +69,8 @@ const TradingStatePanel = ({
         onRemove={onRemove}
         moveable={moveable}
         removeable={removeable}
+        forcedTab={savedState.tab}
+        onTabChange={onTabChange}
         darkHeader
       >
         <PositionsTable
@@ -107,6 +117,7 @@ TradingStatePanel.propTypes = {
       base: PropTypes.string,
       quote: PropTypes.string,
     }),
+    tab: PropTypes.number,
   }),
   updateState: PropTypes.func.isRequired,
   layoutI: PropTypes.string.isRequired,

@@ -205,9 +205,14 @@ export const changeCcyInfoModalState = (isVisible) => ({
   payload: { isVisible },
 })
 
-const setLanguage = language => ({
+export const setLanguage = language => ({
   type: types.SET_LANGUAGE,
   payload: { language },
+})
+
+export const setStrategyTab = tab => ({
+  type: types.SET_STRATEGY_TAB,
+  payload: { tab },
 })
 
 export default {
@@ -244,4 +249,5 @@ export default {
   changeAOPauseModalState,
   changeCcyInfoModalState,
   setLanguage,
+  setStrategyTab,
 }
