@@ -81,6 +81,7 @@ function getInitialState() {
     unsavedLayout: null,
     layoutID: null,
     language: 'en',
+    tab: null,
   }
 
   if (!localStorage) {
@@ -532,7 +533,19 @@ function reducer(state = getInitialState(), action = {}) {
     }
     case types.SET_LANGUAGE: {
       const { language } = payload
-      return { ...state, language }
+
+      return {
+        ...state,
+        language,
+      }
+    }
+    case types.SET_STRATEGY_TAB: {
+      const { tab } = payload
+
+      return {
+        ...state,
+        tab,
+      }
     }
     default: {
       return state
