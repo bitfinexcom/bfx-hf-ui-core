@@ -180,7 +180,7 @@ Panel.propTypes = {
   chartMarketSelect: PropTypes.node,
   closePanel: PropTypes.func,
   preHeaderComponents: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.node), PropTypes.node]),
-  forcedTab: PropTypes.string,
+  forcedTab: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   onTabChange: PropTypes.func,
   dropdown: PropTypes.node,
 }
