@@ -121,7 +121,7 @@
   }
 
   input:focus {
-    border: 1px solid $green-color;
+    border: 1px solid mix(white, lighten($input-background-color, 6%), 8%);
   }
 }
 
@@ -133,8 +133,11 @@
   width: 400px;
   margin-top: 16px;
 
-  &.ufx-dropdown .dropdown-field:not(:focus) {
-    background-color: $panel-background-color;
+  &.ufx-dropdown .dropdown-field {
+    .input-field,
+    .input-field-container .arrow-icon {
+      background-color: $panel-background-color !important;
+    }
   }
 }
 .hfui-authenticationpage__mode-select {

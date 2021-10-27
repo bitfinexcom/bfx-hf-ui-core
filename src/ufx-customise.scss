@@ -14,6 +14,7 @@ $ufx-table-odd-row-background-color: $panel-background-color;
 $ufx-table-hover-row-background-color: $light-color-50;
 $ufx-table-hover-row-color: $light-color-900;
 $ufx-table-active-row-background-color: $panel-background-color;
+$input-placeholder-color: $light-color-400;
 
 $ufx-font-family: $font-family;
 $ufx-font-size: 13px;
@@ -23,13 +24,17 @@ $ufx-background-color: $background-color;
 
 $ufx-dropdown-height: 32px;
 $ufx-dropdown-padding: spacing();
-$ufx-dropdown-background-color: $input-background-color;
-$ufx-dropdown-border-color: $input-background-color;
+$ufx-dropdown-border-color: mix(
+  white,
+  lighten($input-background-color, 6%),
+  8%
+);
 $ufx-dropdown-list-border: none;
 $ufx-dropdown-text-color: $text-color;
 $ufx-dropdown-list-background-color: $input-background-color;
-$ufx-dropdown-active-item-background-color: $light-color-100;
-$ufx-dropdown-input-background-color: $background-color;
+$ufx-dropdown-list-active-item-background-color: $light-color-100;
+$ufx-dropdown-input-background-color: $input-background-color;
+$ufx-dropdown-arrow-background-color: $input-background-color;
 $ufx-dropdown-input-border: 0;
 
 $ufx-dialog-padding-desktop: spacing(1.5);

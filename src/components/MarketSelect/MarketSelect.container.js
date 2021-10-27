@@ -24,4 +24,4 @@ const mapDispatchToProps = dispatch => ({
   },
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(MarketSelect)
+export default connect(mapStateToProps, mapDispatchToProps, null, { forwardRef: true })(MarketSelect)

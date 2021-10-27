@@ -1,10 +1,9 @@
-import React, { memo, useMemo } from 'react'
+import React, { memo, useMemo, forwardRef } from 'react'
 import PropTypes from 'prop-types'
 import _reduce from 'lodash/reduce'
 
 import { Dropdown as UfxDropdown } from '@ufx-ui/core'
 import './style.css'
-import { useTranslation } from 'react-i18next'
 
 function optionsAdaptor(options) {
   return _reduce(options, (nextOptions, option) => ({
@@ -13,8 +12,8 @@ function optionsAdaptor(options) {
   }), {})
 }
 
-function Dropdown(props) {
-  const { t } = useTranslation()
+// eslint-disable-next-line prefer-arrow-callback
+const Dropdown = forwardRef(function Dropdown(props, ref) {
   const {
     icon,
     label,
@@ -23,7 +22,6 @@ function Dropdown(props) {
     options,
     highlight,
     className,
-    placeholder = t('ui.dropdown'),
     ...rest
   } = props
 
@@ -36,24 +34,16 @@ function Dropdown(props) {
       )}
 
       <UfxDropdown
+        ref={ref}
         value={value}
         className={className}
         closeOnMouseLeave={false}
         options={adaptedOptions}
-        valueRenderer={icon ? (_value, optionLabel) => (
-          <div className='selected-text has-icon'>
-            {icon && <i className={`icon-${icon}`} />}
-            <div>
-              {optionLabel || placeholder}
-            </div>
-          </div>
-        ) : undefined}
-        placeholder={placeholder}
         {...rest}
       />
     </div>
   )
-}
+})
 
 Dropdown.propTypes = {
   isOpen: PropTypes.bool,
