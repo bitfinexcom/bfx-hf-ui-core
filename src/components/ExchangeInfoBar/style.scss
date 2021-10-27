@@ -188,31 +188,6 @@
   color: $light-color-900;
 }
 
-.react-switch-bg {
-  opacity: 0.3;
-}
-
-.react-switch-bg svg * {
-  display: none;
-}
-
-.hfui-tradingpaper__control {
-  display: flex;
-  border-right: 1px solid $panel-background-color;
-  flex-direction: row;
-  // margin-right: 16px; TODO: add once LanguageSettings is added
-
-  .hfui-tradingpaper__control-toggle {
-    p {
-      font-size: 13px;
-      padding-right: 10px;
-    }
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-}
-
 .hfui-panel--tickerlist {
   .ufx-virtual-table--container .ReactVirtualized__Table__headerTruncatedText,
   .ufx-virtual-table--container .ReactVirtualized__Table__row > * {
