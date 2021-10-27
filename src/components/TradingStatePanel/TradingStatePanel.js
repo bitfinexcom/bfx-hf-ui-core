@@ -1,5 +1,5 @@
 import React, {
-  memo, useRef, useMemo, useCallback,
+  memo, useRef, useMemo, useCallback, Fragment,
 } from 'react'
 import PropTypes from 'prop-types'
 import _isEmpty from 'lodash/isEmpty'
@@ -58,11 +58,10 @@ const TradingStatePanel = ({
       className='hfui-tradingstatepanel__wrapper'
       moveable={false}
       removeable={false}
-      extraIcons={[(
-        <>
+      extraIcons={[
+        <Fragment key='filter-market'>
           <div style={styles}>
             <MarketSelect
-              key='filter-market'
               markets={markets}
               value={activeFilter}
               onChange={setActiveFilter}
@@ -72,7 +71,6 @@ const TradingStatePanel = ({
           </div>
           {!showMarketDropdown && (
           <div
-            key='filter-market'
             onClick={handleSelectedFilterClick}
             className='hfui-tspanel-header-button active'
           >
@@ -80,14 +78,14 @@ const TradingStatePanel = ({
             <p>{activeFilter.uiID}</p>
           </div>
           )}
-        </>
-      ), (
-        <div key='filter-by'>
-          <p className='hfui-uppercase'>
-            {`${showMarketDropdown ? t('tradingStatePanel.filterBy') : t('tradingStatePanel.filteringBy')}:`}
-          </p>
-        </div>
-      )]}
+        </Fragment>,
+        (
+          <div key='filter-by'>
+            <p className='hfui-uppercase'>
+              {`${showMarketDropdown ? t('tradingStatePanel.filterBy') : t('tradingStatePanel.filteringBy')}:`}
+            </p>
+          </div>
+        )]}
     >
       <Panel
         onRemove={onRemove}

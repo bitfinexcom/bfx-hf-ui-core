@@ -55,10 +55,10 @@ Dropdown.propTypes = {
   className: PropTypes.string,
   placeholder: PropTypes.string,
   onChange: PropTypes.func.isRequired,
-  options: PropTypes.shape({
+  options: PropTypes.arrayOf(PropTypes.shape({
     label: PropTypes.any, // eslint-disable-line
     value: PropTypes.any, // eslint-disable-line
-  }).isRequired,
+  })).isRequired,
 }
 Dropdown.defaultProps = {
   value: '',
