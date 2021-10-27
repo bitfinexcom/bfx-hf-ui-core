@@ -1,4 +1,6 @@
-import React, { memo, useRef, useMemo, useCallback } from 'react'
+import React, {
+  memo, useRef, useMemo, useCallback,
+} from 'react'
 import PropTypes from 'prop-types'
 import _isEmpty from 'lodash/isEmpty'
 import { useTranslation } from 'react-i18next'
