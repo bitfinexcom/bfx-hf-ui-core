@@ -6,7 +6,6 @@ import HFUI from '../HFUI'
 import CrashHandler from '../CrashHandler'
 import { getCurrentLanguage } from '../../redux/selectors/ui'
 
-import useInjectBfxData from '../../hooks/useInjectBfxData'
 import ruTrans from '../../locales/ufx-ui/ru.json'
 import esTrans from '../../locales/ufx-ui/es.json'
 import trTrans from '../../locales/ufx-ui/tr.json'
@@ -25,7 +24,6 @@ const translations = {
 }
 
 const HFUIWrapper = () => {
-  useInjectBfxData()
   useAuthToken()
   const language = useSelector(getCurrentLanguage)
 
