@@ -9,7 +9,7 @@ import _keys from 'lodash/keys'
 import { useTranslation } from 'react-i18next'
 import Panel from '../../ui/Panel'
 import useSize from '../../hooks/useSize'
-import { getTickerDataMapping, rowMapping } from './ExchangeInforBar.constants'
+import { getTickerDataMapping, getTickerListMapping } from './ExchangeInforBar.constants'
 import { MAIN_MODE } from '../../redux/reducers/ui'
 import CCYIcon from './CCYIcon'
 
@@ -41,7 +41,7 @@ const ExchangeInfoBar = ({
     updateFavorites(authToken, arrayWithFavorites, currentMode)
   }
   const onChangeMarketHandler = ({ rowData } = {}) => {
-    const newMarket = _find(markets, market => market.uiID === rowData?.uiID)
+    const newMarket = _find(markets, market => market.wsID === rowData?.id)
     if (!newMarket) {
       return
     }
@@ -64,6 +64,7 @@ const ExchangeInfoBar = ({
   const { t } = useTranslation()
 
   const tickerMapping = useMemo(() => getTickerDataMapping(getCurrencySymbol), [getCurrencySymbol])
+  const tickerListMapping = useMemo(() => getTickerListMapping(getCurrencySymbol, markets), [getCurrencySymbol, markets])
 
   return (
     <Panel
@@ -89,7 +90,7 @@ const ExchangeInfoBar = ({
               low,
               high,
               isPerp,
-              perpUI: isPerp ? uiID : null,
+              uiID,
             }}
             dataMapping={tickerMapping}
             className='hfui-exchangeinfobar__ticker'
@@ -113,7 +114,7 @@ const ExchangeInfoBar = ({
             className='hfui-exchangeinfobar__tickerlist'
             volumeUnit={tickersVolumeUnit}
             volumeUnitList={currentMode === MAIN_MODE ? VOLUME_UNIT : VOLUME_UNIT_PAPER}
-            rowMapping={rowMapping}
+            rowMapping={tickerListMapping}
             setVolumeUnit={setVolumeUnit}
             showVolumeUnit
           />
