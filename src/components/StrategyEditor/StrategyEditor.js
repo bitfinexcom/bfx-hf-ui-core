@@ -170,6 +170,7 @@ const StrategyEditor = ({
   }
 
   const onLoadStrategy = (newStrategy) => {
+    onSave(authToken, { ...newStrategy, savedTs: Date.now() })
     setSectionErrors({})
     setStrategyDirty(false)
     selectStrategy(newStrategy)
@@ -191,7 +192,7 @@ const StrategyEditor = ({
   }
 
   const onSaveStrategy = () => {
-    onSave(authToken, { id: strategyId, ...strategy })
+    onSave(authToken, { ...strategy, savedTs: Date.now() })
     setStrategyDirty(false)
     onCloseModals()
   }
