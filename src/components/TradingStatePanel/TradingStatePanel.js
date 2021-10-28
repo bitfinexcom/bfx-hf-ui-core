@@ -5,6 +5,7 @@ import PropTypes from 'prop-types'
 import _isEmpty from 'lodash/isEmpty'
 import { useTranslation } from 'react-i18next'
 
+import { getPairFromMarket } from '../../util/market'
 import Panel from '../../ui/Panel'
 import PositionsTable from '../PositionsTable'
 import AtomicOrdersTable from '../AtomicOrdersTable'
@@ -15,8 +16,7 @@ import TabTitle from './TabTitle'
 import './style.css'
 
 const TradingStatePanel = ({
-  dark, onRemove, moveable, removeable, getPositionsCount, getAtomicOrdersCount, getAlgoOrdersCount, markets, savedState, updateState,
-  layoutID, layoutI,
+  dark, onRemove, moveable, removeable, getPositionsCount, getAtomicOrdersCount, getAlgoOrdersCount, markets, savedState, updateState, layoutID, layoutI, getCurrencySymbol,
 }) => {
   const { currentMarket: activeFilter = {} } = savedState
   const positionsCount = getPositionsCount(activeFilter)
@@ -50,6 +50,9 @@ const TradingStatePanel = ({
 
   const styles = useMemo(() => ({ display: showMarketDropdown ? 'block' : 'none' }), [showMarketDropdown])
 
+  const { isPerp, uiID } = activeFilter
+  const activeFilterID = isPerp ? uiID : getPairFromMarket(activeFilter, getCurrencySymbol)
+
   return (
     <Panel
       label={t('tradingStatePanel.title')}
@@ -75,7 +78,7 @@ const TradingStatePanel = ({
             className='hfui-tspanel-header-button active'
           >
             <i className='icon-filter-active' />
-            <p>{activeFilter.uiID}</p>
+            <p>{activeFilterID}</p>
           </div>
           )}
         </Fragment>,
@@ -144,6 +147,7 @@ TradingStatePanel.propTypes = {
   updateState: PropTypes.func.isRequired,
   layoutI: PropTypes.string.isRequired,
   layoutID: PropTypes.string,
+  getCurrencySymbol: PropTypes.func.isRequired,
 }
 
 TradingStatePanel.defaultProps = {
