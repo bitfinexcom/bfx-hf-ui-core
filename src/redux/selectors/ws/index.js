@@ -4,7 +4,7 @@ import { getSocket, isSocketConnected } from './get_socket'
 import getSockets from './get_sockets'
 import getAuthToken from './get_auth_token'
 import getAuthConfigured from './get_auth_configured'
-import getStrategies from './get_strategies'
+import getSortedByTimeStrategies from './get_sorted_by_time_strategies'
 import getAllPositions from './get_all_positions'
 import getFilteredPositions from './get_filtered_positions'
 import getFilteredPositionsCount from './get_filtered_positions_count'
@@ -42,7 +42,7 @@ export {
   getAuthConfigured,
   getOrderHistory,
 
-  getStrategies,
+  getSortedByTimeStrategies,
 
   getBacktestState,
   getBacktestData,
