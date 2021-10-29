@@ -1,0 +1,16 @@
+"project_identifier": "bitfinex"
+"api_key": ""
+"base_path": ""
+"preserve_hierarchy": true
+
+files:
+  [
+    {
+      "source": "/bfx-hf-ui-core/public/locales/en-US/translations.json",
+      "translation": "/bfx-hf-ui-core/public/locales/%locale%/translations.json",
+    },
+    {
+      "source": "/bfx-hf-ui-core/src/locales/ufx-ui/en.json",
+      "translation": "/bfx-hf-ui-core/src/locales/ufx-ui/%locale%.json",
+    },
+  ]
