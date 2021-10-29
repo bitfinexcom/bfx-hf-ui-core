@@ -1,0 +1,99 @@
+{
+  "http_errors": {
+    "rate_limit": "Вы превысили количество запросов, пожалуйста, попробуйте еще раз через минуту"
+  },
+  "common": {
+    "no_data_available": "Нет доступных данных",
+    "websocket_offiline": "Websocket соединение офлайн",
+    "websocket_connected": "WebSocket подключен",
+    "websocket_disconnected": "WebSocket отключен",
+    "cancel": "Отменить",
+    "filter": "Фильтр",
+    "search": "Поиск",
+    "no_results_found": "Результаты не найдены",
+    "created": "Создано",
+    "modified": "Изменено",
+    "at": " в ",
+    "yes": "Да",
+    "copy": "Копировать",
+    "copied": "Скопировано",
+    "copy_to_clipboard": "Скопировать в буфер обмена",
+    "no": "Нет"
+  },
+  "error": {
+    "not_enough_balance": "Недостаточно средств, доступный баланс {{amount}}",
+    "must_be_number": "Должно быть числом",
+    "must_be_positive": "Должно быть положительным числом",
+    "required": "необходимо указать {{fieldLabel}}",
+    "max_length": "{{fieldLabel}} не может быть длиннее {{maxLength}} символов",
+    "no_decimals": "{{fieldLabel}} не может иметь десятичных знаков",
+    "max_decimals": "Максимальное количество десятичных знаков: {{allowedDecimals}}",
+    "invalid_date": "Некорректная дата",
+    "must_be_date": "Должна быть указана корректная дата",
+    "date_must_be_within_interval": "Дата должна находиться в интервале от 1 до 7 дней, начиная с сегодняшнего дня",
+    "must_be_before_max_date": "Указанная дата находится за пределами максимально допустимого интервала",
+    "must_be_after_min_date": "Указанная дата находится за пределами минимально допустимого интервала"
+  },
+  "ticker": {
+    "volume": "Объем",
+    "high": "Высокий",
+    "low": "Низкий"
+  },
+  "tickerlist": {
+    "pair": "Пара",
+    "last_price": "Последняя цена",
+    "last": "Посл.",
+    "24h_change": "24ч",
+    "volume": "Объем",
+    "favorites": "Избранное",
+    "empty": "Нет элементов для просмотра",
+    "fav_tooltip": "Показать только избранные тикеры",
+    "volume_tooltip": "Просмотр 24-часового объема в эквиваленте {{volumeUnit}}. Нажмите для переключения",
+    "volume_tooltip_self": "Просмотр 24-часового объема каждой валюты в ее эквиваленте. Нажмите для переключения"
+  },
+  "trades": {
+    "time": "Время",
+    "amount": "Количество",
+    "price": "Цена",
+    "market": "Рынок",
+    "user": "Пользователь",
+    "change_to_market": "Изменить на рынок",
+    "change_to_user": "Изменить на пользователя"
+  },
+  "orderhistory": {
+    "pair": "Пара",
+    "type": "Тип",
+    "amount": "Сумма",
+    "ccy": "Ccy",
+    "price": "Цена",
+    "average_price": "Средн. цена",
+    "status": "Статус",
+    "placed": "Размещено",
+    "no_orders": "Нет истории ордеров",
+    "sell_order_title": "Ордер на продажу (id: {{id}})",
+    "buy_order_title": "Ордер на покупку (id: {{id}})"
+  },
+  "orders": {
+    "pair": "Пара",
+    "type": "Тип",
+    "amount": "Сумма",
+    "ccy": "Ccy",
+    "price": "Цена",
+    "status": "Статус",
+    "placed": "Размещено",
+    "no_orders": "Нет активных ордеров",
+    "sell_order_title": "Ордер на продажу (id: {{id}})",
+    "buy_order_title": "Ордер на покупку (id: {{id}})"
+  },
+  "book": {
+    "cancel_order": "Отменить ордер",
+    "count": "Количество",
+    "amount": "Сумма",
+    "total": "Всего",
+    "price": "Цена",
+    "decrease_precision": "Снизить точность",
+    "increase_precision": "Повысить точность",
+    "decrease_zoom": "Уменьшить масштаб",
+    "increase_zoom": "Увеличить масштаб"
+  }
+}
