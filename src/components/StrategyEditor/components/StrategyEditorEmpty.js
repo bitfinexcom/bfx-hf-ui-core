@@ -1,7 +1,6 @@
 import React, { memo, useMemo } from 'react'
 import _isEmpty from 'lodash/isEmpty'
 import _map from 'lodash/map'
-import _keys from 'lodash/keys'
 import PropTypes from 'prop-types'
 import { useTranslation } from 'react-i18next'
 
@@ -14,12 +13,10 @@ const EmptyContent = ({
   const { t } = useTranslation()
 
   const strategyNodesArray = useMemo(() => {
-    const strategyKeys = _keys(strategies)
-    return _map(strategyKeys, (key, index) => {
+    return _map(strategies, (strategy, index) => {
       if (index >= 6) {
         return null
       }
-      const strategy = strategies[key]
       return (
         <li
           key={strategy.id}
@@ -65,7 +62,7 @@ const EmptyContent = ({
 }
 
 EmptyContent.propTypes = {
-  strategies: PropTypes.objectOf(PropTypes.object).isRequired,
+  strategies: PropTypes.arrayOf(PropTypes.object).isRequired,
   openCreateNewStrategyModal: PropTypes.func.isRequired,
   openSelectExistingStrategyModal: PropTypes.func.isRequired,
   onOpen: PropTypes.func.isRequired,
