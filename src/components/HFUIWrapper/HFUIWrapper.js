@@ -6,20 +6,20 @@ import HFUI from '../HFUI'
 import CrashHandler from '../CrashHandler'
 import { getCurrentLanguage } from '../../redux/selectors/ui'
 
-import ruTrans from '../../locales/ufx-ui/ru.json'
-import esTrans from '../../locales/ufx-ui/es.json'
-import trTrans from '../../locales/ufx-ui/tr.json'
-import twTrans from '../../locales/ufx-ui/tw.json'
-import cnTrans from '../../locales/ufx-ui/cn.json'
+import ruTrans from '../../locales/ufx-ui/ru-RU.json'
+import twTrans from '../../locales/ufx-ui/zh-TW.json'
+import cnTrans from '../../locales/ufx-ui/zh-CN.json'
+import esTrans from '../../locales/ufx-ui/es-EM.json'
+import trTrans from '../../locales/ufx-ui/tr-TR.json'
 // add en.json again even though already present in ufx-ui, so can be set as source file for crowdin
 import enTrans from '../../locales/ufx-ui/en.json'
 
 const translations = {
   en: enTrans,
   ru: ruTrans,
-  es: esTrans,
   cn: cnTrans,
   tw: twTrans,
+  es: esTrans,
   tr: trTrans,
 }
 
