@@ -269,10 +269,8 @@
   }
 }
 
-.react-switch-bg {
-  opacity: 0.3;
-}
-
-.react-switch-bg svg * {
-  display: none;
+.toggle-switch {
+  > input {
+    margin-left: 5px;
+  }
 }
