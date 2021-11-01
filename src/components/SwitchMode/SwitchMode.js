@@ -10,7 +10,7 @@ const SwitchMode = ({
     onChange={openTradingModeModal}
     disabled={isTradingModeModalVisible}
     onColor='#244e3f'
-    offColor='#d8d8d8'
+    offColor='#4c5a63'
     className='toggle-switch'
     aria-label='Switch Paper Trading mode'
   />
