@@ -26,7 +26,7 @@ const AddLayoutComponentModal = ({ onClose, isOpen }) => {
 
   const onSubmitHandler = () => {
     if (_isEmpty(componentType) || !COMPONENT_LABELS[componentType]) {
-      setError(t('layoutSettings.invalidComponentErrors'))
+      setError(t('layoutSettings.invalidComponentError'))
       return
     }
 
