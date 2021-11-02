@@ -16,6 +16,9 @@ const RemoveExistingStrategyModal = ({
   const isLong = _size(label) > MAX_STRATEGY_LABEL_LENGTH
 
   const removeStrategy = () => {
+    if (!canDeleteStrategy) {
+      return
+    }
     onRemoveStrategy()
     setCanDeleteStrategy(false)
   }
@@ -34,6 +37,7 @@ const RemoveExistingStrategyModal = ({
     <Modal
       isOpen={isOpen}
       onClose={onClose}
+      onSubmit={removeStrategy}
       className='hfui-removestrategymodal__wrapper'
       label='Remove Strategy'
     >

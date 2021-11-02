@@ -48,6 +48,7 @@ const AddLayoutComponentModal = ({ onClose, isOpen }) => {
       onClose={onClose}
       className='hfui-addlayoutcomponentmodal__wrapper'
       label={t('layoutSettings.addComponent')}
+      onSubmit={onSubmitHandler}
     >
       <Dropdown
         ref={dropdownRef}

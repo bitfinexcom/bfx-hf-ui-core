@@ -27,6 +27,7 @@ const TradingModeModal = ({
       label={t('tradingModeModal.title')}
       isOpen={isTradingModeModalVisible}
       onClose={onTradingModeModalClose}
+      onSubmit={onTradingModeModalSubmit}
     >
       <p>{t('tradingModeModal.text')}</p>
       <Modal.Footer>

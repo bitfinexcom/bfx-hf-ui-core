@@ -47,6 +47,7 @@ const CreateNewStrategyModal = ({
     <Modal
       isOpen={isOpen}
       onClose={onClose}
+      onSubmit={onSubmitHandler}
       className='hfui-createnewstrategymodal__wrapper'
       label={t('strategyEditor.newStrategyModalTitle')}
     >

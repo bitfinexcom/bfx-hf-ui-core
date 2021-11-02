@@ -53,6 +53,7 @@ const OpenExistingStrategyModal = ({
     <Modal
       isOpen={isOpen}
       onClose={onClose}
+      onSubmit={onSubmit}
       className='hfui-openexistingstrategymodal__wrapper'
       label={t('strategyEditor.openStrategyModalTitle')}
     >

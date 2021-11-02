@@ -16,6 +16,7 @@ const OldFormatModal = ({ changeOldFormatModalState, visible }) => {
       label={t('oldFormatModal.title')}
       isOpen={visible}
       onClose={onSubmit}
+      onSubmit={onSubmit}
     >
       <p>{t('oldFormatModal.text1')}</p>
       <p>{t('oldFormatModal.text2')}</p>
