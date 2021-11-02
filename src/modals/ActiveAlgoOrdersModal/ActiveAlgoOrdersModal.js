@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useCallback } from 'react'
 import PropTypes from 'prop-types'
 import _isEqual from 'lodash/isEqual'
 import _isEmpty from 'lodash/isEmpty'
@@ -72,7 +72,7 @@ const ActiveAlgoOrdersModal = ({
     return preparedOrders
   }
 
-  const onSubmit = (type) => {
+  const onSubmit = useCallback((type) => {
     const ordersLeft = _differenceBy(ordersList, selectedOrders, 'gid')
     const allOrders = prepareOrders(ordersList)
     const unselectedOrders = prepareOrders(ordersLeft)
@@ -82,7 +82,14 @@ const ActiveAlgoOrdersModal = ({
       selectedOrders,
       unselectedOrders,
     })
-  }
+  }, [handleActiveOrders, ordersList, selectedOrders])
+
+  const onResumeButtonClickHandler = useCallback(() => {
+    if (_isEmpty(selectedOrders)) {
+      return
+    }
+    onSubmit('resume')
+  }, [selectedOrders, onSubmit])
 
   const { t } = useTranslation()
 
@@ -93,6 +100,7 @@ const ActiveAlgoOrdersModal = ({
         showActiveOrdersModal(false)
         onSubmit('cancel_all')
       }}
+      onSubmit={onResumeButtonClickHandler}
       label={t('activeAlgoOrdersModal.title')}
       className='hfui-active-ao-modal__wrapper'
       width={800}
@@ -114,7 +122,7 @@ const ActiveAlgoOrdersModal = ({
         </Modal.Button>
         <Modal.Button
           primary
-          onClick={() => onSubmit('resume')}
+          onClick={onResumeButtonClickHandler}
           disabled={_isEmpty(selectedOrders)}
           className='hfui-active-ao-modal-btn'
         >
