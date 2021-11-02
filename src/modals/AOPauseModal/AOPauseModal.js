@@ -28,7 +28,8 @@ const AOPauseModal = ({
     <Modal
       label={t('AOPauseModal.title')}
       isOpen={visible}
-      onClose={onClose}
+      onClose={onCancel}
+      onSubmit={onClose}
     >
       <p>{t('AOPauseModal.text1')}</p>
       <br />
