@@ -19,6 +19,11 @@ const Modal = ({
       const footer = document.querySelector('.modal__footer')
       if (el && footer && !footer.contains(el)) {
         el.focus()
+      } else {
+        const titleNode = document.querySelector('.modal__title')
+        if (titleNode && titleNode.focus) {
+          titleNode.focus()
+        }
       }
     }
   }, [isOpen])
