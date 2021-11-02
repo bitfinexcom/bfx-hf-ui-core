@@ -18,7 +18,6 @@ const ActiveAlgoOrdersModal = ({
   isOpen,
   activeAlgoOrders,
   handleActiveOrders,
-  showActiveOrdersModal,
 }) => {
   const [ordersList, setOrdersList] = useState([])
   const [selectedOrders, setSelectedOrders] = useState([])
@@ -91,15 +90,15 @@ const ActiveAlgoOrdersModal = ({
     onSubmit('resume')
   }, [selectedOrders, onSubmit])
 
+  const cancellOrders = useCallback(() => onSubmit('cancel_all'),
+    [onSubmit])
+
   const { t } = useTranslation()
 
   return (
     <Modal
       isOpen={isOpen}
-      onClose={() => {
-        showActiveOrdersModal(false)
-        onSubmit('cancel_all')
-      }}
+      onClose={cancellOrders}
       onSubmit={onResumeButtonClickHandler}
       label={t('activeAlgoOrdersModal.title')}
       className='hfui-active-ao-modal__wrapper'
@@ -115,7 +114,7 @@ const ActiveAlgoOrdersModal = ({
       <Modal.Footer>
         <Modal.Button
           primary
-          onClick={() => onSubmit('cancel_all')}
+          onClick={cancellOrders}
           className='hfui-active-ao-modal-btn mr-10'
         >
           {t('activeAlgoOrdersModal.cancellBtn')}
@@ -136,7 +135,6 @@ const ActiveAlgoOrdersModal = ({
 ActiveAlgoOrdersModal.propTypes = {
   handleActiveOrders: PropTypes.func.isRequired,
   activeAlgoOrders: PropTypes.arrayOf(PropTypes.object),
-  showActiveOrdersModal: PropTypes.func.isRequired,
   isOpen: PropTypes.bool.isRequired,
 }
 
