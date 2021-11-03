@@ -12,6 +12,7 @@ export const SETTINGS = {
   SHOW_ALGO_PAUSE_INFO: 'showAlgoPauseInfo',
   SHOW_ONLY_FAVORITE_PAIRS: 'showOnlyFavoritePairs',
   REBOOT_AUTOMATICALLY: 'rebootAutomatically',
+  DARK_THEME: 'darkTheme',
 }
 
 const getSettings = (state) => _get(state, `${path}.settings`, EMPTY_OBJ)
@@ -34,6 +35,11 @@ export const getDMSSetting = createSelector(
 export const getGASetting = createSelector(
   getSettings,
   (settings) => _get(settings, SETTINGS.GA, true),
+)
+
+export const getDarkThemeSetting = createSelector(
+  getSettings,
+  (settings) => _get(settings, SETTINGS.DARK_THEME, false), // TODO: Change default to TRUE
 )
 
 export const getRebootSetting = createSelector(
