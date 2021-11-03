@@ -1,7 +1,7 @@
 @import '../../variables.scss';
 
 .hfui-markdown__wrapper {
-  background: $code-background-color;
+  background: var(--darker-background-color);
   
   code { 
     background-color: rgba(0, 0, 0, 0.3);
@@ -48,7 +48,7 @@
     }
   }
   h2:first-child { 
-    color: $light-color-800;
+    color: var(--shade-8);
     font-size: 14px;
   }
   table * {

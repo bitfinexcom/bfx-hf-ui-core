@@ -20,7 +20,7 @@
   }
 
   .hfui-dropdown__button-wrapper {
-    background: $panel-background-color;
+    background: var(--darker-background-color);
 
     .hfui-dropdown__button {
       margin-left: 0;

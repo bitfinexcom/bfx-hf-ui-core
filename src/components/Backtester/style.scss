@@ -42,7 +42,7 @@
     min-height: 100%;
     padding-top:7px;
     padding-bottom: 7px;
-    background-color: $panel-background-color;
+    background-color: var(--darker-background-color);
   }
   .hfui-backtester_row {
     display: flex;
@@ -70,8 +70,8 @@
   input {
     max-width: 100%;
     padding: 10px 8px;
-    background-color: $lighter-background-color;
-    color: $text-color;
+    background-color: var(--lighter-background-color);
+    color: var(--shade-7);
   }
 }
 

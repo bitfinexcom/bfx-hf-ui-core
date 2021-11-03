@@ -8,7 +8,7 @@ const monacoOptions = {
   automaticLayout: true,
 }
 
-const MonacoEditor = ({ value, onChange }) => {
+const MonacoEditor = ({ value, onChange, dark }) => {
   useEffect(() => {
     if (_isEmpty(monaco)) {
       return
@@ -24,12 +24,16 @@ const MonacoEditor = ({ value, onChange }) => {
     monaco.editor.setTheme(HF_MONACO_THEME)
   }, [])
 
+  useEffect(() => {
+    monaco.editor.setTheme(dark ? HF_MONACO_THEME : 'vs')
+  }, [dark])
+
   return (
     <Editor
       height='100%'
       width='100%'
       language='javascript'
-      theme={HF_MONACO_THEME}
+      theme={dark ? HF_MONACO_THEME : 'vs'}
       value={value}
       onChange={onChange}
       options={monacoOptions}
@@ -40,6 +44,7 @@ const MonacoEditor = ({ value, onChange }) => {
 MonacoEditor.propTypes = {
   value: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
+  dark: PropTypes.bool.isRequired,
 }
 
 export default MonacoEditor

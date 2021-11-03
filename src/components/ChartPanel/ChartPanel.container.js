@@ -4,7 +4,9 @@ import { reduxSelectors } from '@ufx-ui/bfx-containers'
 import ChartPanel from './ChartPanel'
 import { updateComponentState as updateState } from '../../redux/actions/ui'
 import { getMarkets } from '../../redux/selectors/meta'
-import { getActiveMarket, getComponentState } from '../../redux/selectors/ui'
+import {
+  getActiveMarket, getComponentState, getDarkThemeSetting,
+} from '../../redux/selectors/ui'
 
 const mapStateToProps = (state = {}, ownProps = {}) => {
   const { layoutID, layoutI: id } = ownProps
@@ -14,6 +16,7 @@ const mapStateToProps = (state = {}, ownProps = {}) => {
     activeMarket: getActiveMarket(state),
     markets: getMarkets(state),
     getCurrencySymbol: reduxSelectors.getCurrencySymbolMemo(state),
+    settingsDarkTheme: getDarkThemeSetting(state),
   }
 }
 

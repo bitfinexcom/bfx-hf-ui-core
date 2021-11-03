@@ -22,7 +22,7 @@
   width: 50%;
 }
 .hfui-authenticationpage__inner-left {
-  background: $panel-background-color;
+  background: var(--darker-background-color);
 
   svg {
     margin: 0 auto;
@@ -61,11 +61,11 @@
 
 .hfui-authenticationpage__content {
   padding-left: 5%;
-  background: $background-color;
+  background: var(--background-color);
 
   h2 {
     margin-bottom: 10px;
-    color: $light-color-900;
+    color: var(--shade-9);
     font-style: normal;
     font-weight: 700;
     font-size: 32px;
@@ -81,7 +81,7 @@
   }
 
   .hfui-input {
-    background-color: $panel-background-color;
+    background-color: var(--darker-background-color);
     border: none;
     width: 400px;
     border-radius: 4px;
@@ -121,7 +121,7 @@
   }
 
   input:focus {
-    border: 1px solid mix(white, lighten($input-background-color, 6%), 8%);
+    border: 1px solid var(--light-background-mix)
   }
 }
 
@@ -136,7 +136,7 @@
   &.ufx-dropdown .dropdown-field {
     .input-field,
     .input-field-container .arrow-icon {
-      background-color: $panel-background-color !important;
+      background-color: var(--darker-background-color) !important;
     }
   }
 }

@@ -3,7 +3,7 @@ import { reduxActions } from '@ufx-ui/bfx-containers'
 
 import WSActions from '../../redux/actions/ws'
 import GAActions from '../../redux/actions/google_analytics'
-import { getCurrentMode, getShowAlgoPauseInfoSetting } from '../../redux/selectors/ui'
+import { getCurrentMode, getShowAlgoPauseInfoSetting, getDarkThemeSetting } from '../../redux/selectors/ui'
 import { getAuthToken } from '../../redux/selectors/ws'
 import HFUI from './HFUI'
 
@@ -16,6 +16,7 @@ const mapStateToProps = (state = {}) => {
     notificationsVisible,
     currentMode: getCurrentMode(state),
     settingsShowAlgoPauseInfo: getShowAlgoPauseInfoSetting(state),
+    settingsDarkTheme: getDarkThemeSetting(state),
   }
 }
 

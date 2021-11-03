@@ -3,7 +3,7 @@
 .hfui-orderformmenu__wrapper {
   h4 {
     font-weight: 600;
-    color: $light-color-600;
+    color: var(--shade-6);
     margin-bottom: spacing(.5);
 
     &:not(:first-child) {
@@ -14,7 +14,7 @@
   ul {
     margin-bottom: spacing(1);
     border-radius: $border-radius;
-    background: $background-color;
+    background: var(--background-color);
     overflow: hidden;
   }
 
@@ -26,8 +26,8 @@
     padding: 0 spacing(.75);
     cursor: pointer;
     transition: all .2s;
-    border-bottom: 1px solid $light-color-50;
-    color: $light-color-600;
+    border-bottom: 1px solid var(--shade-0);
+    color: var(--shade-6);
 
     &:last-child {
       border-bottom: 0;
@@ -40,27 +40,27 @@
       width: 20px;
       height: 20px;
       border-radius: $border-radius;
-      border: 1px solid $light-color-200;
+      border: 1px solid var(--shade-2);
       font-size: 12px;
       margin-right: spacing(0.75);
       transition: border-color .2s;
 
       &:before {
         font-weight: 600 !important;
-        color: $light-color-500;
+        color: var(--shade-5);
         transition: color .2s;
       }
     }
 
     &:hover {
-      color: $light-color-900;
-      background-color: $light-color-50;
+      color: var(--shade-9);
+      background-color: var(--shade-0);
 
       i {
-        border-color: $light-color-500;
+        border-color: var(--shade-5);
 
         &:before {
-          color: $light-color-900;
+          color: var(--shade-9);
         }
       }
     }

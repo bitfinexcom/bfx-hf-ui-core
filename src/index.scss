@@ -23,13 +23,13 @@ body button:focus {
 }
 
 .react-datepicker {
-  background-color: $panel-background-color;
-  color: $text-color;
+  background-color: var(--darker-background-color);
+  color: var(--shade-7);
   border: none;
 }
 
 .react-datepicker__time-container .react-datepicker__time {
-  background: $panel-background-color;
+  background: var(--darker-background-color);
   border: none;
 }
 .react-datepicker__time-container {
@@ -67,7 +67,7 @@ body button:focus {
 }
 
 .react-datepicker-time__header {
-  color: $text-color;
+  color: var(--shade-7);
   border: none;
 }
 
@@ -90,7 +90,7 @@ body button:focus {
 .react-datepicker__day-name,
 .react-datepicker__day,
 .react-datepicker__time-name {
-  color: $text-color;
+  color: var(--shade-7);
 }
 
 .react-datepicker__day:hover,
@@ -121,7 +121,7 @@ body button:focus {
   margin: 0 5px;
 
   select {
-    color: $text-color;
+    color: var(--shade-7);
     background-color: $black-color;
     font-weight: bold;
     font-size: 0.9rem;
@@ -191,8 +191,8 @@ body {
   -moz-osx-font-smoothing: grayscale;
   font-weight: 500;
 
-  background: $background-color;
-  color: $text-color;
+  background: var(--background-color);
+  color: var(--shade-7);
 
   margin: 0;
   overflow: hidden;
@@ -291,24 +291,24 @@ a:visited {
 }
 
 ::-webkit-input-placeholder {
-  color: $light-color-300;
+  color: var(--shade-3);
   -webkit-font-smoothing: antialiased;
 }
 
 :-moz-placeholder {
-  color: $light-color-300;
+  color: var(--shade-3);
   opacity: 1;
   -moz-osx-font-smoothing: grayscale;
 }
 
 ::-moz-placeholder {
-  color: $light-color-300;
+  color: var(--shade-3);
   opacity: 1;
   -moz-osx-font-smoothing: grayscale;
 }
 
 :-ms-input-placeholder {
-  color: $light-color-300;
+  color: var(--shade-3);
   -webkit-font-smoothing: antialiased;
 }
 
@@ -319,12 +319,12 @@ a:visited {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: $light-color-100 !important;
+  background: var(--shade-1) !important;
   border: 0 !important;
   transition: background-color 0.1s;
 
   &:hover {
-    background: $light-color-300 !important;
+    background: var(--shade-3) !important;
   }
 }
 

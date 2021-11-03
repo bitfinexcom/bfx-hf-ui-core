@@ -39,6 +39,7 @@ const HFUI = ({
   subscribeAllTickers,
   shouldShowAOPauseModalState,
   settingsShowAlgoPauseInfo,
+  settingsDarkTheme,
 }) => {
   useInjectBfxData()
 
@@ -78,6 +79,14 @@ const HFUI = ({
       }
     }
   }, [authToken, onElectronAppClose, settingsShowAlgoPauseInfo])
+
+  useEffect(() => {
+    const { body } = document
+
+    body.classList.remove('dark')
+    body.classList.remove('light')
+    body.classList.add(settingsDarkTheme ? 'dark' : 'light')
+  }, [settingsDarkTheme])
 
   useEffect(() => {
     GAPageview(currentPage)
@@ -137,12 +146,14 @@ HFUI.propTypes = {
   subscribeAllTickers: PropTypes.func.isRequired,
   shouldShowAOPauseModalState: PropTypes.func.isRequired,
   settingsShowAlgoPauseInfo: PropTypes.bool,
+  settingsDarkTheme: PropTypes.bool,
 }
 
 HFUI.defaultProps = {
   authToken: '',
   currentPage: '',
   settingsShowAlgoPauseInfo: true,
+  settingsDarkTheme: true,
 }
 
 export default HFUI

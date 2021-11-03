@@ -9,12 +9,12 @@
   }
 
   input {
-    background: $input-background-color;
+    background: var(--lighter-background-color);
   }
 
   .hfui-dropdown__button {
     margin-left: 0;
-    background: $background-color;
+    background: var(--background-color);
     position: relative;
     width: 165;
     padding-left: 8px;
@@ -29,7 +29,7 @@
     i {
       position: absolute;
       right: 10px;
-      color: $text-color;
+      color: var(--shade-7);
     }
   }
 
@@ -62,7 +62,7 @@
 .hfui-orderform__upgrade {
   width: calc(100% + 32px);
   text-align: center;
-  background: #060606;
+  background: var(--background-color);
   border-bottom: 1px solid $black-color;
   margin-left: -16px;
 
@@ -80,10 +80,10 @@
 .hfui-orderform__panel {
   .hfui-panel__footer {
     width: 100%;
-    background: $background-color;
+    background: var(--background-color);
     line-height: 32px;
     font-size: 13px;
-    color: $text-color;
+    color: var(--shade-7);
     padding: 0 8px;
     display: flex;
     flex-direction: row;
@@ -137,7 +137,7 @@
   font-weight: 600;
   line-height: 32px;
   padding: 0 spacing(0.5);
-  color: $text-color;
+  color: var(--shade-7);
   height: 32px;
   cursor: pointer;
   transition: all 0.2s;
@@ -150,13 +150,13 @@
 
   &:hover {
     opacity: 1;
-    border-bottom: 1px solid $text-color;
+    border-bottom: 1px solid var(--shade-7);
   }
 
   &.active {
     opacity: 1;
-    border-bottom: 1px solid $primary-color-800;
-    color: $primary-color-800;
+    border-bottom: 1px solid var(--primary-8);
+    color: var(--primary-8);
   }
 }
 
@@ -261,7 +261,7 @@
   text-align: center;
   font-size: 13px;
   margin-bottom: 16px;
-  border-top: 1px solid $panel-background-color;
+  border-top: 1px solid var(--darker-background-color);
   text-transform: uppercase;
   padding-top: 14px;
   color: $white-color;
@@ -368,7 +368,7 @@
   }
 
   .hfui-orderform__input-label {
-    color: $light-color-400;
+    color: var(--shade-4);
     font-size: 12px;
     font-weight: 600;
     line-height: 16px;
@@ -384,7 +384,7 @@
   }
 
   &.text p:first-child {
-    color: $text-color;
+    color: var(--shade-7);
     font-size: 13px;
     line-height: 24px;
     width: 138px;
@@ -441,7 +441,7 @@
     }
 
     .prefix {
-      color: $light-color-400;
+      color: var(--shade-4);
       margin-right: 8px;
     }
   }
@@ -464,11 +464,11 @@
   }
 
   .submit-keys {
-    color: $primary-color-800;
+    color: var(--primary-8);
     font-weight: 700;
 
     &:hover {
-      color: $primary-color-900;
+      color: var(--primary-9);
       text-decoration: underline;
     }
   }
@@ -574,7 +574,7 @@
 }
 
 .hfui-orderform__wrapper-nomodal {
-  background: $background-color;
+  background: var(--background-color);
   width: calc(100% - 1px);
   height: 500px;
   user-select: none;
@@ -687,7 +687,7 @@
   display: flex;
   flex-direction: row;
   margin-bottom: spacing();
-  background: $primary-color-50;
+  background: var(--primary-0);
   border-radius: $border-radius;
   padding: spacing(0.5);
 
@@ -699,13 +699,13 @@
     height: 32px;
     border-radius: $border-radius;
     font-size: 15px;
-    color: $primary-color-500;
+    color: var(--primary-5);
     cursor: pointer;
     margin-right: 8px;
 
     &:hover,
     &:focus {
-      background: $primary-color-100;
+      background: var(--primary-1);
     }
 
     &:active {
@@ -716,7 +716,7 @@
   .hfui-orderform__layout-label-inner {
     display: flex;
     align-items: center;
-    color: $primary-color-900;
+    color: var(--primary-9);
 
     i,
     p {
@@ -738,7 +738,7 @@
 
 .hfui-orderform__question-btn {
   font-size: 18px;
-  color: $text-color;
+  color: var(--shade-7);
   padding: 3px 7px;
 
   &:hover {

@@ -44,7 +44,7 @@ const STRATEGY_SECTIONS = [
 const StrategyEditor = ({
   moveable, removeable, strategyId, renderResults, onSave, onRemove, authToken, onStrategyChange, onStrategySelect,
   gaCreateStrategy, onIndicatorsChange, clearBacktestOptions, strategyContent, strategies, backtestResults, liveExecuting,
-  liveLoading,
+  liveLoading, settingsDarkTheme,
 }) => {
   const [strategy, setStrategy] = useState(strategyContent)
   const [sectionErrors, setSectionErrors] = useState({})
@@ -300,6 +300,7 @@ const StrategyEditor = ({
                 <MonacoEditor
                   value={strategy[activeContent] || ''}
                   onChange={onEditorContentChange}
+                  dark={settingsDarkTheme}
                 />
                 {(execError || sectionErrors[activeContent]) && (
                   <div className='hfui-strategyeditor__editor-error-output'>
@@ -357,6 +358,7 @@ StrategyEditor.propTypes = {
   ),
   strategies: PropTypes.objectOf(PropTypes.object).isRequired,
   backtestResults: PropTypes.objectOf(PropTypes.any),
+  settingsDarkTheme: PropTypes.bool,
 }
 
 StrategyEditor.defaultProps = {
@@ -366,6 +368,7 @@ StrategyEditor.defaultProps = {
   renderResults: true,
   strategyContent: {},
   backtestResults: {},
+  settingsDarkTheme: true,
 }
 
 export default memo(StrategyEditor)

@@ -21,7 +21,7 @@
       font-size: 18px;
       line-height: 18px;
       font-weight: 700;
-      color: $light-color-900;
+      color: var(--shade-9);
     }
 
     .info {
@@ -30,22 +30,22 @@
         font-weight: 600;
         line-height: 18px;
         margin-left: 4px;
-        color: $light-color-400;
+        color: var(--shade-4);
       }
     }
 
     .price-change.ufx-green-text {
-      color: $primary-color-900;
+      color: var(--primary-9);
     }
 
     .label {
       font-size: 12px;
       font-weight: 500;
-      color: $light-color-400;
+      color: var(--shade-4);
     }
 
     .value {
-      color: $light-color-800;
+      color: var(--shade-8);
     }
   }
 
@@ -100,14 +100,14 @@
     }
 
     .input-field-container {
-      border: $light-color-400 !important;
+      border: var(--shade-4) !important;
 
       input {
         font-weight: 500;
       }
 
       input::placeholder {
-        color: $light-color-400;
+        color: var(--shade-4);
       }
     }
 
@@ -148,7 +148,7 @@
   font-size: 12px;
   line-height: 1;
   margin-bottom: 2px;
-  color: $light-color-500;
+  color: var(--shade-5);
   user-select: none;
   margin-right: spacing(0.5);
 }
@@ -158,7 +158,7 @@
 }
 
 .hfui-exchangeinfobar__item-data {
-  color: $light-color-800;
+  color: var(--shade-8);
   font-weight: 700;
   font-size: 14px;
 
@@ -167,7 +167,7 @@
   }
 
   &.hfui-green {
-    color: $primary-color-900;
+    color: var(--primary-9);
   }
 
   .hfui-select {
@@ -185,7 +185,7 @@
 }
 
 .hfui-exchangeinfobar__item:first-child .hfui-exchangeinfobar__item-data {
-  color: $light-color-900;
+  color: var(--shade-9);
 }
 
 .hfui-panel--tickerlist {

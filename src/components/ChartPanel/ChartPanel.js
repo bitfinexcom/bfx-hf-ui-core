@@ -9,8 +9,8 @@ import './style.css'
 import { getPairFromMarket } from '../../util/market'
 
 const ChartPanel = ({
-  dark, label, onRemove, moveable, removeable, showChartMarket, markets, canChangeMarket,
-  activeMarket, savedState: { currentMarket: _currentMarket }, updateState, layoutID, layoutI, showMarket, getCurrencySymbol,
+  dark, label, onRemove, moveable, removeable, showChartMarket, markets, canChangeMarket, activeMarket,
+  savedState: { currentMarket: _currentMarket }, updateState, layoutID, layoutI, showMarket, getCurrencySymbol, settingsDarkTheme,
 }) => {
   const [currentMarket, setCurrentMarket] = useState(_currentMarket || activeMarket)
   const currentPair = getPairFromMarket(currentMarket, getCurrencySymbol)
@@ -66,7 +66,7 @@ const ChartPanel = ({
       headerComponents={showMarket && !canChangeMarket && <p>{isPerp ? uiID : currentPair}</p>}
       className='hfui-chart__wrapper'
     >
-      <Chart market={currentMarket} />
+      <Chart market={currentMarket} dark={settingsDarkTheme} />
     </Panel>
   )
 }
@@ -95,6 +95,7 @@ ChartPanel.propTypes = {
   }),
   markets: PropTypes.objectOf(PropTypes.object),
   getCurrencySymbol: PropTypes.func.isRequired,
+  settingsDarkTheme: PropTypes.bool,
 }
 
 ChartPanel.defaultProps = {
@@ -115,6 +116,7 @@ ChartPanel.defaultProps = {
   canChangeMarket: false,
   showMarket: false,
   layoutID: '',
+  settingsDarkTheme: true,
 }
 
 export default memo(ChartPanel)

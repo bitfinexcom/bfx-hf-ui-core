@@ -30,7 +30,7 @@
 .hfui-strategyeditor__editor-error-output {
   font-family: monospace;
   padding: 0 16px;
-  background: $panel-background-color;
+  background: var(--darker-background-color);
   color: $red-color;
   font-size: 13px;
   position: absolute;
@@ -66,8 +66,8 @@
     padding: 0 spacing();
     cursor: pointer;
     transition: all 0.2s;
-    border-bottom: 1px solid $light-color-50;
-    background: $background-color;
+    border-bottom: 1px solid var(--shade-0);
+    background: var(--background-color);
 
     &:first-child {
       border-top-left-radius: $border-radius;
@@ -90,7 +90,7 @@
     }
 
     &:not(.active) {
-      color: $light-color-500;
+      color: var(--shade-5);
     }
 
     &.empty {
@@ -99,8 +99,8 @@
 
     &:hover {
       cursor: pointer;
-      color: $light-color-900;
-      background-color: $light-color-50;
+      color: var(--shade-9);
+      background-color: var(--shade-0);
     }
 
     &.hasError {
@@ -109,8 +109,8 @@
 
     &.active {
       font-weight: 600;
-      color: $primary-color-900;
-      background: $primary-color-50;
+      color: var(--primary-9);
+      background: var(--primary-0);
     }
   }
 }
@@ -134,7 +134,7 @@
 .hfui-strategyeditor__panel {
   .notch-icon {
     font-size: 18px;
-    color: $text-color !important;
+    color: var(--shade-7) !important;
     padding: 3px 7px;
   }
 }
@@ -183,12 +183,12 @@
   }
 
   .button {
-    color: $primary-color-800;
+    color: var(--primary-8);
     font-weight: 700;
 
     &:hover {
       cursor: pointer;
-      color: $primary-color-900;
+      color: var(--primary-9);
       text-decoration: underline;
     }
   }
