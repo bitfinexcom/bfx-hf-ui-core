@@ -12,7 +12,7 @@ import {
   updateAutoLoginState,
 } from '../../util/autologin'
 import {
-  SETTINGS, getDMSSetting, getGASetting, getShowAlgoPauseInfoSetting, getRebootSetting,
+  SETTINGS, getDMSSetting, getGASetting, getShowAlgoPauseInfoSetting, getRebootSetting, getDarkThemeSetting,
 } from '../../redux/selectors/ui'
 
 const INITIAL_AUTO_LOGIN = getAutoLoginState()
@@ -21,12 +21,14 @@ const General = () => {
   const dispatch = useDispatch()
   const settingsDms = useSelector(getDMSSetting)
   const settingsGa = useSelector(getGASetting)
+  const settingsDarkTheme = useSelector(getDarkThemeSetting)
   const settingsShowAlgoPauseInfo = useSelector(getShowAlgoPauseInfoSetting)
   const settingsRebootAutomatically = useSelector(getRebootSetting)
 
   const [isAutoLoginChecked, setIsAutoLoginChecked] = useState(INITIAL_AUTO_LOGIN)
   const [isDmsChecked, setIsDmsChecked] = useState(settingsDms)
   const [isGaChecked, setIsGaChecked] = useState(settingsGa)
+  const [isDarkThemeChecked, setIsDarkThemeChecked] = useState(settingsDarkTheme)
   const [isRebootChecked, setIsRebootChecked] = useState(settingsRebootAutomatically)
   const [isShowAlgoPauseInfoChecked, setIsShowAlgoPauseInfoChecked] = useState(settingsShowAlgoPauseInfo)
 
@@ -39,6 +41,10 @@ const General = () => {
   useEffect(() => {
     setIsGaChecked(settingsGa)
   }, [settingsGa])
+
+  useEffect(() => {
+    setIsDarkThemeChecked(settingsDarkTheme)
+  }, [settingsDarkTheme])
 
   useEffect(() => {
     setIsShowAlgoPauseInfoChecked(settingsShowAlgoPauseInfo)
@@ -54,6 +60,12 @@ const General = () => {
   const updateGa = (nextGa) => {
     setIsGaChecked(nextGa)
     dispatch(WSActions.saveSettings(SETTINGS.GA, nextGa))
+    dispatch(GAActions.updateSettings())
+  }
+
+  const updateDarkTheme = (nextTheme) => {
+    setIsDarkThemeChecked(nextTheme)
+    dispatch(WSActions.saveSettings(SETTINGS.DARK_THEME, nextTheme))
     dispatch(GAActions.updateSettings())
   }
 
@@ -98,6 +110,14 @@ const General = () => {
           onChange={updateGa}
           label={t('appSettings.usageReportingCheckbox')}
           checked={isGaChecked}
+          className='appsettings-modal__checkbox'
+        />
+      </div>
+      <div className='appsettings-modal__setting'>
+        <Checkbox
+          onChange={updateDarkTheme}
+          label={t('appSettings.darkThemeCheckbox')}
+          checked={isDarkThemeChecked}
           className='appsettings-modal__checkbox'
         />
       </div>

@@ -288,6 +288,7 @@
     "apiKey": "API Key",
     "apiSecret": "API Secret",
     "deadManCheckbox": "Dead Man Switch",
+    "darkThemeCheckbox": "Use dark theme",
     "deadManText1": "Enabling the Dead Man switch will automatically cancel all active orders when the application closes.",
     "deadManText2": "Algorithmic orders are cancelled on application close; without the Dead Man switch, any atomic orders created by an AO will remain open, and state may be lost when the application is started up again.",
     "deadManWarning": "Disabling this should be done with caution!",
