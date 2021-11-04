@@ -17,6 +17,7 @@ $green-button-color: mix(#00e0ad, $background-color, 70%);
 $blue-color: mix(#0089ff, $background-color, 70%);
 $yellow-color: #fcd206;
 $red-color: #f05359;
+$red-button-color: mix($red-color, $background-color, 70%);
 
 // Component colors
 $strategy-empty-color: #99b4c8;
