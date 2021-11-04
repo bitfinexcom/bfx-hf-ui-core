@@ -9,11 +9,11 @@ import Modal from '../../ui/Modal'
 
 import './style.css'
 
+const CHART_COLOUR_BLACK = '#c0bfbc'
+const CHART_COLOUR_WHITE = '#efefef'
+
 const CcyInfoModal = ({
-  onClose,
-  isModalVisible,
-  fetchCcyArticle,
-  article,
+  onClose, isModalVisible, fetchCcyArticle, article, settingsDarkTheme,
 }) => {
   const { body, title } = article
 
@@ -30,11 +30,15 @@ const CcyInfoModal = ({
     }
 
     const links = containerRef.current.querySelectorAll('a')
+    const chart = containerRef.current.querySelectorAll('div.coingecko-coin-ticker-widget')[0]
+
     _forEach(links, link => {
       link.target = '_blank'
       link.rel = 'noopener noreferrer'
     })
-  }, [body])
+
+    chart.setAttribute('data-background-color', settingsDarkTheme ? CHART_COLOUR_BLACK : CHART_COLOUR_WHITE)
+  }, [body, settingsDarkTheme])
 
   return (
     <Modal
@@ -60,6 +64,7 @@ CcyInfoModal.propTypes = {
     body: PropTypes.string,
     title: PropTypes.string,
   }),
+  settingsDarkTheme: PropTypes.bool,
 }
 
 CcyInfoModal.defaultProps = {
@@ -67,6 +72,7 @@ CcyInfoModal.defaultProps = {
     body: null,
     title: null,
   },
+  settingsDarkTheme: true,
 }
 
 export default memo(CcyInfoModal)
