@@ -1,5 +1,27 @@
 @import "../../variables.scss";
 
+body.light {
+  .hfui-exchangeinfobar__wrapper {
+    .ccy-icon {
+      filter: saturate(180) brightness(0);
+    }
+    .ccy-icon-small {
+      filter: saturate(180) brightness(0);
+    }
+  }
+}
+
+body.dark {
+  .hfui-exchangeinfobar__wrapper {
+    .ccy-icon {
+      filter: saturate(0) brightness(180);
+    }
+    .ccy-icon-small {
+      filter: saturate(0) brightness(180);
+    }
+  }
+}
+
 .hfui-exchangeinfobar__wrapper {
   position: absolute;
   top: 0;
@@ -14,7 +36,6 @@
     .ccy-icon {
       width: 30px;
       height: 30px;
-      filter: saturate(0) brightness(180);
     }
 
     .highlight {
@@ -66,7 +87,6 @@
       width: 15px;
       height: 15px;
       margin-right: 3px;
-      filter: saturate(0) brightness(180);
     }
 
     .ufx-virtual-table--container {
