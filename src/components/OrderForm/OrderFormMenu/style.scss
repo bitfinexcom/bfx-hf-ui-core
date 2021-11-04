@@ -1,5 +1,15 @@
 @import '../../../variables.scss';
 
+body.light {
+  .hfui-orderformmenu__wrapper ul {
+    background: var(--lighter-background-color) !important;
+
+    li:hover {
+      background: var(--background-color) !important;
+    }
+  }
+}
+
 .hfui-orderformmenu__wrapper {
   h4 {
     font-weight: 600;
