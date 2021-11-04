@@ -17,10 +17,9 @@ import './style.css'
 const REFRESH_NOTIFICATIONS_MS = 1000
 const LIVE_NOTIFICATIONS_MS = 5000
 
-const NotificationsSidebar = (props) => {
-  const {
-    notifications, notificationsVisible, closeNotificationPanel, removeNotifications, clearNotifications, t,
-  } = props
+const NotificationsSidebar = ({
+  notifications, notificationsVisible, closeNotificationPanel, removeNotifications, clearNotifications, t,
+}) => {
   const [newNotifications, setNewNotifications] = useState([])
 
   const onClose = useCallback(({ cid, group }) => {
@@ -59,6 +58,13 @@ const NotificationsSidebar = (props) => {
 
   return (
     <>
+      <div
+        className={ClassNames('hfui-notificationssidebar__background', {
+          visible: notificationsVisible,
+          hidden: !notificationsVisible,
+        })}
+        onClick={closeNotificationPanel}
+      />
       <div className={ClassNames('hfui-notificationssidebar__wrapper', {
         visible: notificationsVisible,
         hidden: !notificationsVisible,
