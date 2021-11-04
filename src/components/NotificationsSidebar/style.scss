@@ -115,17 +115,17 @@
 }
 
 .hfui-notificationssidebar__header-btn {
-  color: transparentize($white-color, 0.3);
+  color: var(--text-color);
   background: var(--background-color);
   transition: all .2s;
 
   &:hover {
-    background: rgba(255, 255, 255, .1);
-    color: $white-color;
+    background: var(--lighter-background-color) !important;
+    color: var(--shade-8);
   }
 
   &:active {
-    background: rgba(0, 0, 0, .1)
+    background: var(--darker-background-color);
   }
 }
 
