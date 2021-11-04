@@ -53,6 +53,14 @@ body.light {
     margin-right: 5px;
     background-color: var(--background-color) !important;
   }
+
+  .ufx-dropdown {
+    color: var(--text-color) !important;
+
+    .list-wrapper {
+      background-color: var(--background-color) !important;
+    }
+  }
 }
 
 .react-datepicker__input-container input {
