@@ -10,12 +10,6 @@
     gap: spacing(0.75);
   }
 
-  .hfui-dropdown__button, .react-datepicker__input-container input {
-    color: $white-color;
-    margin-right: 5px;
-    background-color: rgb(16, 35, 49);
-  }
-
   .react-datepicker__input-container input {
     color: $green-color;
     width: calc(100% - 23px);
@@ -72,11 +66,5 @@
     padding: 10px 8px;
     background-color: var(--lighter-background-color);
     color: var(--shade-7);
-  }
-}
-
-.hfui-backtester__wrapper {
-  .react-datepicker__input-container > input {
-    padding-left: 0 !important;
   }
 }
