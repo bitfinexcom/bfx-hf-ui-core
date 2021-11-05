@@ -1,5 +1,14 @@
 @import '../../variables.scss';
 
+body.light {
+  .ufx-notifications .expand-button {
+    &:hover {
+      opacity: .6;
+      color: var(--text-color);
+    }
+  }
+}
+
 .hfui-notificationssidebar__wrapper {
   position: fixed;
   top: 0;
