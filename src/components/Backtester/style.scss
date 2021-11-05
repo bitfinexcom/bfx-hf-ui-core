@@ -1,5 +1,34 @@
 @import '../../variables.scss';
 
+body.light {
+  .bfxc__topbar {
+    background: var(--background-color);
+  }
+
+  .bfxc__dropdown-menu {
+    background: var(--lighter-background-color);
+    border-color: var(--shade-5);
+
+    li {
+      color: var(--text-color);
+      border-color: var(--shade-5);
+
+      &:hover {
+        color: var(--primary-7);
+      }
+    }
+  }
+
+  .bfxc__dropdown-wrapper > p:first-child,
+  .icon-move {
+    color: var(--text-color);
+
+    &:hover {
+      color: var(--shade-5);
+    }
+  }
+}
+
 .hfui-backtester__executionform {
   display: flex;
   flex: 1;

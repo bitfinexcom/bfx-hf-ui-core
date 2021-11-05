@@ -8,7 +8,24 @@ import BFXChart from 'bfx-hf-chart'
 import Results from '../Results'
 import StrategyTradesTable from '../../StrategyTradesTable'
 
-const HistoricalReport = (opts, results, backtestData, backtestOptions, t) => {
+const CHART_THEME = {
+  light: {
+    bgColor: '#efefef',
+    AXIS_COLOR: '#444',
+    AXIS_TICK_COLOR: '#00000000',
+    AXIS_LABEL_COLOR: '#000e1a',
+    OHLC_LABEL_COLOR: '#000e1a',
+    OHLC_LABEL_VALUE_COLOR: '#414f5a',
+  },
+  dark: {
+    bgColor: '#102331',
+    AXIS_COLOR: '#444',
+    AXIS_TICK_COLOR: '#00000000',
+  },
+}
+
+const HistoricalReport = (opts, results, backtestData, backtestOptions, t, settingsDarkTheme) => {
+  const chartColours = CHART_THEME[settingsDarkTheme ? 'dark' : 'light']
   const { trades = [] } = results
   const { indicators, onAddIndicator, onDeleteIndicator } = opts
   const { candles = [] } = backtestData
@@ -46,11 +63,8 @@ const HistoricalReport = (opts, results, backtestData, backtestOptions, t) => {
               onDeleteIndicator={onDeleteIndicator}
               isSyncing={false}
               candleLoadingThreshold={3} // we always get 1 candle when sub'ing
-              bgColor='#102331'
-              config={{
-                AXIS_COLOR: '#444',
-                AXIS_TICK_COLOR: '#00000000',
-              }}
+              bgColor={chartColours.bgColor}
+              config={chartColours}
               candleWidth={tf}
               disableToolbar
               showMarketLabel={false}

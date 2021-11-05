@@ -30,17 +30,8 @@ const backtestMethods = [
 ]
 
 const Backtester = ({
-  backtestData,
-  strategyContent,
-  markets,
-  backtestResults,
-  backtestOptions,
-  authToken,
-  dsExecuteBacktest,
-  setBacktestOptions,
-  indicators,
-  onAddIndicator,
-  onDeleteIndicator,
+  backtestData, strategyContent, markets, backtestResults, backtestOptions, authToken, dsExecuteBacktest, setBacktestOptions,
+  indicators, onAddIndicator, onDeleteIndicator, settingsDarkTheme,
 }) => {
   const [execError, setExecError] = useState(null)
   const [executionType, setExecutionType] = useState(backtestMethods[0])
@@ -111,7 +102,7 @@ const Backtester = ({
     return (
       <div className='hfui-backtester__wrapper'>
         <executionType.form {...opts} />
-        {executionType.renderReport({ ...opts }, backtestResults, backtestData, backtestOptions, t)}
+        {executionType.renderReport({ ...opts }, backtestResults, backtestData, backtestOptions, t, settingsDarkTheme)}
       </div>
     )
   }
@@ -148,6 +139,7 @@ Backtester.propTypes = {
   setBacktestOptions: PropTypes.func.isRequired,
   onAddIndicator: PropTypes.func,
   onDeleteIndicator: PropTypes.func,
+  settingsDarkTheme: PropTypes.bool,
 }
 
 Backtester.defaultProps = {
@@ -166,6 +158,7 @@ Backtester.defaultProps = {
   backtestOptions: {},
   onAddIndicator: () => { },
   onDeleteIndicator: () => { },
+  settingsDarkTheme: true,
 }
 
 export default memo(Backtester)

@@ -7,6 +7,7 @@ import {
 } from '../../redux/selectors/ws'
 import { getMarkets } from '../../redux/selectors/meta'
 import WSTypes from '../../redux/constants/ws'
+import { getDarkThemeSetting } from '../../redux/selectors/ui'
 
 import Backtester from './Backtester'
 
@@ -18,6 +19,7 @@ const mapStateToProps = (state = {}) => ({
   strategyContent: state.ui.content,
   backtestOptions: state.ws.backtest.backtestOptions || {},
   authToken: getAuthToken(state),
+  settingsDarkTheme: getDarkThemeSetting(state),
 })
 
 const mapDispatchToProps = dispatch => ({
