@@ -201,8 +201,8 @@ body.light {
 
 .__react_component_tooltip,
 .ufx-tooltip {
-  background-color: $tooltip-background-color !important;
-  color: $tooltip-text-color !important;
+  background-color: var(--darker-background-color) !important;
+  color: var(--text-color) !important;
 }
 
 .tooltip-arrow {
