@@ -28,6 +28,16 @@ body button:focus {
   border: none;
 }
 
+.ufx-input {
+  .input-field-container {
+    background: var(--lighter-background-color) !important;
+
+    > input {
+      background: var(--lighter-background-color) !important;
+    }
+  }
+}
+
 body.light {
   .react-datepicker__header {
     background-color: var(--background-color) !important;
