@@ -125,7 +125,7 @@ const General = () => {
       </div>
       <div className='appsettings-modal__setting appsettings-modal__dropdown'>
         <Dropdown
-          label={t('appSettings.darkThemeCheckbox')}
+          label={t('appSettings.themeSetting')}
           onChange={updateTheme}
           value={currentTheme}
           options={themes}
