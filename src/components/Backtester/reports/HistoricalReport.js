@@ -17,6 +17,8 @@ const CHART_THEME = {
     AXIS_LABEL_COLOR: '#000e1a',
     OHLC_LABEL_COLOR: '#000e1a',
     OHLC_LABEL_VALUE_COLOR: '#414f5a',
+    RISING_VOL_FILL: 'rgba(9, 220, 34, 0.05)',
+    FALLING_VOL_FILL: 'rgba(94, 32, 35, 0.05)',
   },
   [THEMES.DARK]: {
     bgColor: '#102331',
