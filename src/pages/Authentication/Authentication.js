@@ -8,7 +8,7 @@ import AuthenticationInitForm from './AuthenticationInitForm'
 import AuthenticationUnlockForm from './AuthenticationUnlockForm'
 import AuthenticationConnectingForm from './AuthenticationConnectingForm'
 import { isElectronApp, appVersion } from '../../redux/config'
-import { getDarkThemeSetting } from '../../redux/selectors/ui'
+import { getThemeSetting, THEMES } from '../../redux/selectors/ui'
 
 import './style.css'
 
@@ -21,13 +21,13 @@ const Authentication = ({
   isPaperTrading,
 }) => {
   const { t } = useTranslation()
-  const settingsDarkTheme = useSelector(getDarkThemeSetting)
+  const settingsTheme = useSelector(getThemeSetting)
 
   return (
     <div className='hfui-authenticationpage__wrapper'>
       <div className='hfui-authenticationpage__inner'>
         <div className='hfui-authenticationpage__inner-left'>
-          <HFIcon fill={settingsDarkTheme ? 'white' : 'black'} />
+          <HFIcon fill={settingsTheme === THEMES.DARK ? 'white' : 'black'} />
           <div className='hfui-authenticationpage__inner-left-version-container'>
             <div className='hfui-authenticationpage__inner-left-version'>
               <h6>{t('main.craftedBy')}</h6>

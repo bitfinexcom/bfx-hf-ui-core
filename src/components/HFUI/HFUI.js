@@ -6,6 +6,7 @@ import { Route, Switch, Redirect } from 'react-router'
 import PropTypes from 'prop-types'
 import _isFunction from 'lodash/isFunction'
 
+import { THEMES } from '../../redux/selectors/ui'
 import useInjectBfxData from '../../hooks/useInjectBfxData'
 import StrategyEditorPage from '../../pages/StrategyEditor'
 import NotificationsSidebar from '../NotificationsSidebar'
@@ -28,18 +29,8 @@ const BestExperienceMessageModal = lazy(() => import('../../modals/BestExperienc
 const CcyInfoModal = lazy(() => import('../../modals/CcyInfoModal'))
 
 const HFUI = ({
-  authToken,
-  getSettings,
-  notificationsVisible,
-  getFavoritePairs,
-  currentMode,
-  GAPageview,
-  currentPage,
-  onUnload,
-  subscribeAllTickers,
-  shouldShowAOPauseModalState,
-  settingsShowAlgoPauseInfo,
-  settingsDarkTheme,
+  authToken, getSettings, notificationsVisible, getFavoritePairs, currentMode, GAPageview, currentPage,
+  onUnload, subscribeAllTickers, shouldShowAOPauseModalState, settingsShowAlgoPauseInfo, settingsTheme,
 }) => {
   useInjectBfxData()
 
@@ -83,10 +74,10 @@ const HFUI = ({
   useEffect(() => {
     const { body } = document
 
-    body.classList.remove('dark')
-    body.classList.remove('light')
-    body.classList.add(settingsDarkTheme ? 'dark' : 'light')
-  }, [settingsDarkTheme])
+    body.classList.remove(THEMES.DARK)
+    body.classList.remove(THEMES.LIGHT)
+    body.classList.add(settingsTheme)
+  }, [settingsTheme])
 
   useEffect(() => {
     GAPageview(currentPage)
@@ -146,14 +137,14 @@ HFUI.propTypes = {
   subscribeAllTickers: PropTypes.func.isRequired,
   shouldShowAOPauseModalState: PropTypes.func.isRequired,
   settingsShowAlgoPauseInfo: PropTypes.bool,
-  settingsDarkTheme: PropTypes.bool,
+  settingsTheme: PropTypes.oneOf([THEMES.LIGHT, THEMES.DARK]),
 }
 
 HFUI.defaultProps = {
   authToken: '',
   currentPage: '',
   settingsShowAlgoPauseInfo: true,
-  settingsDarkTheme: true,
+  settingsTheme: THEMES.DARK,
 }
 
 export default HFUI

@@ -89,6 +89,14 @@
     margin-bottom: spacing(0.5);
   }
 
+  &__dropdown {
+    .hfui-dropdown__wrapper {
+      p {
+        margin-bottom: 10px;
+      }
+    }
+  }
+
   &__input {
     margin-bottom: spacing(0.5);
 

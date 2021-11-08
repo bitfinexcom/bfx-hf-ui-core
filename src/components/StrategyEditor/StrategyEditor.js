@@ -15,6 +15,7 @@ import HFU from 'bfx-hf-util'
 import PropTypes from 'prop-types'
 
 import { saveAsJSON, readJSONFile } from '../../util/ui'
+import { THEMES } from '../../redux/selectors/ui'
 import { MAX_STRATEGY_LABEL_LENGTH } from '../../constants/variables'
 import Templates from './templates'
 import StrategyEditorPanel from './components/StrategyEditorPanel'
@@ -44,7 +45,7 @@ const STRATEGY_SECTIONS = [
 const StrategyEditor = ({
   moveable, removeable, strategyId, renderResults, onSave, onRemove, authToken, onStrategyChange, onStrategySelect,
   gaCreateStrategy, onIndicatorsChange, clearBacktestOptions, strategyContent, strategies, backtestResults, liveExecuting,
-  liveLoading, settingsDarkTheme,
+  liveLoading, settingsTheme,
 }) => {
   const [strategy, setStrategy] = useState(strategyContent)
   const [sectionErrors, setSectionErrors] = useState({})
@@ -300,7 +301,7 @@ const StrategyEditor = ({
                 <MonacoEditor
                   value={strategy[activeContent] || ''}
                   onChange={onEditorContentChange}
-                  dark={settingsDarkTheme}
+                  theme={settingsTheme}
                 />
                 {(execError || sectionErrors[activeContent]) && (
                   <div className='hfui-strategyeditor__editor-error-output'>
@@ -358,7 +359,7 @@ StrategyEditor.propTypes = {
   ),
   strategies: PropTypes.objectOf(PropTypes.object).isRequired,
   backtestResults: PropTypes.objectOf(PropTypes.any),
-  settingsDarkTheme: PropTypes.bool,
+  settingsTheme: PropTypes.oneOf([THEMES.LIGHT, THEMES.DARK]),
 }
 
 StrategyEditor.defaultProps = {
@@ -368,7 +369,7 @@ StrategyEditor.defaultProps = {
   renderResults: true,
   strategyContent: {},
   backtestResults: {},
-  settingsDarkTheme: true,
+  settingsTheme: THEMES.DARK,
 }
 
 export default memo(StrategyEditor)

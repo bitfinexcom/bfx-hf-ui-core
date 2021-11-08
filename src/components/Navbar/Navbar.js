@@ -14,7 +14,7 @@ import LayoutSettings from './Navbar.LayoutSettings'
 import AppSettings from './Navbar.AppSettings'
 import Routes from '../../constants/routes'
 import { isElectronApp } from '../../redux/config'
-import { getDarkThemeSetting } from '../../redux/selectors/ui'
+import { getThemeSetting, THEMES } from '../../redux/selectors/ui'
 // import LanguageSettings from './Navbar.LanguageSettings'
 
 import './style.css'
@@ -22,11 +22,11 @@ import './style.css'
 const Navbar = () => {
   const dispatch = useDispatch()
   const { t } = useTranslation()
-  const settingsDarkTheme = useSelector(getDarkThemeSetting)
+  const settingsTheme = useSelector(getThemeSetting)
 
   return (
     <div className='hfui-navbar__wrapper'>
-      <HFIcon className='hfui-navbar__logo' fill={settingsDarkTheme ? 'white' : 'black'} />
+      <HFIcon className='hfui-navbar__logo' fill={settingsTheme === THEMES.DARK ? 'white' : 'black'} />
       <ul className='hfui-navbar__main-links'>
         {_map(_values(Routes), ({ path, label }) => (
           <li key={path}>

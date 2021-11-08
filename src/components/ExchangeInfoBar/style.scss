@@ -1,6 +1,6 @@
 @import "../../variables.scss";
 
-body.light {
+body.Light {
   .hfui-exchangeinfobar__wrapper {
     .ccy-icon {
       filter: saturate(180) brightness(0);
@@ -11,7 +11,7 @@ body.light {
   }
 }
 
-body.dark {
+body.Dark {
   .hfui-exchangeinfobar__wrapper {
     .ccy-icon {
       filter: saturate(0) brightness(180);

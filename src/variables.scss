@@ -36,7 +36,7 @@ $code-text-color: #9effff;
 $code-anchor-color: #ffac2c;
 
 $themes: (
-  "light": (
+  "Light": (
     "colors": (
       "primary-0": mix(#00e0ad, $background-color-light, 10%),
       "primary-1": mix(#00e0ad, $background-color-light, 20%),
@@ -122,7 +122,7 @@ $themes: (
       "light-background-mix": mix(white, lighten($lighter-background-color-light, 6%), 8%)
     )
   ),
-  "dark": (
+  "Dark": (
     "colors": (
       "primary-0": mix(#00e0ad, $background-color, 10%),
       "primary-1": mix(#00e0ad, $background-color, 20%),

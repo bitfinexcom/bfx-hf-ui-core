@@ -5,11 +5,12 @@ import _map from 'lodash/map'
 // eslint-disable-next-line import/no-extraneous-dependencies
 import BFXChart from 'bfx-hf-chart'
 
+import { THEMES } from '../../../redux/selectors/ui'
 import Results from '../Results'
 import StrategyTradesTable from '../../StrategyTradesTable'
 
 const CHART_THEME = {
-  light: {
+  [THEMES.LIGHT]: {
     bgColor: '#efefef',
     AXIS_COLOR: '#444',
     AXIS_TICK_COLOR: '#00000000',
@@ -17,15 +18,15 @@ const CHART_THEME = {
     OHLC_LABEL_COLOR: '#000e1a',
     OHLC_LABEL_VALUE_COLOR: '#414f5a',
   },
-  dark: {
+  [THEMES.DARK]: {
     bgColor: '#102331',
     AXIS_COLOR: '#444',
     AXIS_TICK_COLOR: '#00000000',
   },
 }
 
-const HistoricalReport = (opts, results, backtestData, backtestOptions, t, settingsDarkTheme) => {
-  const chartColours = CHART_THEME[settingsDarkTheme ? 'dark' : 'light']
+const HistoricalReport = (opts, results, backtestData, backtestOptions, t, settingsTheme) => {
+  const chartColours = CHART_THEME[settingsTheme]
   const { trades = [] } = results
   const { indicators, onAddIndicator, onDeleteIndicator } = opts
   const { candles = [] } = backtestData

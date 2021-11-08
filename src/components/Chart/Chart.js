@@ -1,12 +1,14 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import './style.css'
+
+import { THEMES } from '../../redux/selectors/ui'
 import { PUB_REST_API_URL, PUB_WSS_API_URL } from '../../redux/config'
+import './style.css'
 
 const CHART_URL = 'https://bitfinexcom.github.io/bfx-hf-tradingview'
 
 const Chart = ({
-  market: { wsID, base, quote }, dark,
+  market: { wsID, base, quote }, theme,
 }) => {
   const queryString = new URLSearchParams({
     wsID,
@@ -14,7 +16,7 @@ const Chart = ({
     quote,
     apiBaseUrl: PUB_REST_API_URL,
     wsBaseURL: PUB_WSS_API_URL,
-    theme: dark ? 'honeyframework-theme:dark-mode' : 'default-theme:light-mode',
+    theme: theme === THEMES.DARK ? 'honeyframework-theme:dark-mode' : 'default-theme:light-mode',
   }).toString()
 
   return (
@@ -32,7 +34,7 @@ Chart.propTypes = {
     base: PropTypes.string,
     quote: PropTypes.string,
   }),
-  dark: PropTypes.bool.isRequired,
+  theme: PropTypes.oneOf([THEMES.LIGHT, THEMES.DARK]).isRequired,
 }
 
 Chart.defaultProps = {

@@ -5,7 +5,7 @@ import ChartPanel from './ChartPanel'
 import { updateComponentState as updateState } from '../../redux/actions/ui'
 import { getMarkets } from '../../redux/selectors/meta'
 import {
-  getActiveMarket, getComponentState, getDarkThemeSetting,
+  getActiveMarket, getComponentState, getThemeSetting,
 } from '../../redux/selectors/ui'
 
 const mapStateToProps = (state = {}, ownProps = {}) => {
@@ -16,7 +16,7 @@ const mapStateToProps = (state = {}, ownProps = {}) => {
     activeMarket: getActiveMarket(state),
     markets: getMarkets(state),
     getCurrencySymbol: reduxSelectors.getCurrencySymbolMemo(state),
-    settingsDarkTheme: getDarkThemeSetting(state),
+    settingsTheme: getThemeSetting(state),
   }
 }
 
