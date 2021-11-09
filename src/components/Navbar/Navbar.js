@@ -1,11 +1,14 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { Icon } from 'react-fa'
 import _values from 'lodash/values'
 import _map from 'lodash/map'
 
 import { useTranslation } from 'react-i18next'
 import HFIcon from '../../ui/HFIcon'
 import UIActions from '../../redux/actions/ui'
+import WSActions from '../../redux/actions/ws'
+import GAActions from '../../redux/actions/google_analytics'
 import NavbarLink from './Navbar.Link'
 import NavbarButton from './Navbar.Button'
 import SwitchMode from '../SwitchMode'
@@ -14,7 +17,7 @@ import LayoutSettings from './Navbar.LayoutSettings'
 import AppSettings from './Navbar.AppSettings'
 import Routes from '../../constants/routes'
 import { isElectronApp } from '../../redux/config'
-import { getThemeSetting, THEMES } from '../../redux/selectors/ui'
+import { getThemeSetting, THEMES, SETTINGS } from '../../redux/selectors/ui'
 // import LanguageSettings from './Navbar.LanguageSettings'
 
 import './style.css'
@@ -23,6 +26,14 @@ const Navbar = () => {
   const dispatch = useDispatch()
   const { t } = useTranslation()
   const settingsTheme = useSelector(getThemeSetting)
+  const themeIconName = settingsTheme === THEMES.DARK ? 'sun-o' : 'moon-o'
+
+  const switchTheme = () => {
+    const nextTheme = settingsTheme === THEMES.DARK ? THEMES.LIGHT : THEMES.DARK
+    dispatch(WSActions.saveSettings(SETTINGS.THEME, nextTheme))
+    dispatch(GAActions.updateSettings())
+    localStorage.setItem(SETTINGS.THEME, nextTheme)
+  }
 
   return (
     <div className='hfui-navbar__wrapper'>
@@ -45,15 +56,26 @@ const Navbar = () => {
             icon='notifications'
             onClick={() => dispatch(UIActions.switchNotifcationPanel())}
           />
-          {isElectronApp && <AppSettings />}
+          {isElectronApp ? (
+            <AppSettings />
+          ) : (
+            <button
+              type='button'
+              className='hfui-exchangeinfobar__button'
+              onClick={switchTheme}
+              alt={t('appSettings.themeSetting')}
+            >
+              <Icon name={themeIconName} />
+            </button>
+          )}
         </div>
         {isElectronApp && (
-        <div className='hfui-tradingpaper__control'>
-          <div className='hfui-tradingpaper__control-toggle'>
-            <p>{t('main.paper')}</p>
-            <SwitchMode />
+          <div className='hfui-tradingpaper__control'>
+            <div className='hfui-tradingpaper__control-toggle'>
+              <p>{t('main.paper')}</p>
+              <SwitchMode />
+            </div>
           </div>
-        </div>
         )}
         {/* <LanguageSettings /> TODO: hide until translations are ready */}
       </div>
