@@ -83,7 +83,7 @@ const HFUI = ({
     body.classList.remove(THEMES.DARK)
     body.classList.remove(THEMES.LIGHT)
     body.classList.add(settingsTheme)
-  }, [settingsTheme])
+  }, [settingsTheme, authToken])
 
   useEffect(() => {
     GAPageview(currentPage)
