@@ -5,8 +5,9 @@ import React, {
 import { Route, Switch, Redirect } from 'react-router'
 import PropTypes from 'prop-types'
 import _isFunction from 'lodash/isFunction'
+import _includes from 'lodash/includes'
 
-import { THEMES } from '../../redux/selectors/ui'
+import { THEMES, SETTINGS } from '../../redux/selectors/ui'
 import useInjectBfxData from '../../hooks/useInjectBfxData'
 import StrategyEditorPage from '../../pages/StrategyEditor'
 import NotificationsSidebar from '../NotificationsSidebar'
@@ -73,6 +74,11 @@ const HFUI = ({
 
   useEffect(() => {
     const { body } = document
+    const lsTheme = localStorage.getItem(SETTINGS.THEME)
+
+    if (authToken && !_includes(THEMES, lsTheme)) {
+      localStorage.setItem(SETTINGS.THEME, settingsTheme)
+    }
 
     body.classList.remove(THEMES.DARK)
     body.classList.remove(THEMES.LIGHT)
