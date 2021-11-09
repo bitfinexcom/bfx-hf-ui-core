@@ -4,7 +4,6 @@ import Debug from 'debug'
 import _isEmpty from 'lodash/isEmpty'
 import _find from 'lodash/find'
 import _map from 'lodash/map'
-import _values from 'lodash/values'
 import { useTranslation } from 'react-i18next'
 
 import Modal from '../../../ui/Modal'
@@ -42,8 +41,7 @@ const OpenExistingStrategyModal = ({
   }
 
   const strategiesOptionsArray = useMemo(() => {
-    const strategiesArray = _values(strategies)
-    return _map(strategiesArray, ({ label, id }) => ({
+    return _map(strategies, ({ label, id }) => ({
       label: makeShorterLongName(label, MAX_STRATEGY_LABEL_LENGTH),
       value: id,
     }))
@@ -78,7 +76,7 @@ const OpenExistingStrategyModal = ({
 OpenExistingStrategyModal.propTypes = {
   onClose: PropTypes.func.isRequired,
   onOpen: PropTypes.func.isRequired,
-  strategies: PropTypes.objectOf(PropTypes.object).isRequired,
+  strategies: PropTypes.arrayOf(PropTypes.object).isRequired,
   isOpen: PropTypes.bool,
 }
 

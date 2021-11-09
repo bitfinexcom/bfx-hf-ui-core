@@ -52,6 +52,7 @@ class OrderForm extends React.Component {
     context: 'e',
     helpOpen: false,
     configureModalOpen: false,
+    isAlgoOrder: false,
   }
 
   constructor(props) {
@@ -82,10 +83,19 @@ class OrderForm extends React.Component {
     this.processAOData = this.processAOData.bind(this)
     this.setFieldData = this.setFieldData.bind(this)
     this.validateAOData = this.validateAOData.bind(this)
+    this.handleKeydown = this.handleKeydown.bind(this)
+  }
+
+  componentDidMount() {
+    window.addEventListener('keydown', this.handleKeydown)
   }
 
   shouldComponentUpdate(nextProps, nextState) {
     return !(_isEqual(nextProps, this.props)) || !(_isEqual(this.state, nextState))
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('keydown', this.handleKeydown)
   }
 
   static getDerivedStateFromProps(nextProps, prevState) {
@@ -109,6 +119,17 @@ class OrderForm extends React.Component {
       fieldData: {},
       currentLayout: null,
       validationErrors: nextValidationErrors,
+    }
+  }
+
+  handleKeydown(e) {
+    const { isAlgoOrder } = this.state
+    const { key } = e
+    if (key === 'Escape') {
+      this.onClearOrderLayout()
+    }
+    if (key === 'Enter' && isAlgoOrder) {
+      this.onSubmit('submit')
     }
   }
 
@@ -154,6 +175,7 @@ class OrderForm extends React.Component {
     resetActiveAOParamsID()
 
     let uiDef = _find(orders, ({ label }) => label === orderLabel)
+    const isAlgoOrder = !uiDef
 
     if (!uiDef) {
       uiDef = _find(algoOrders, ({ label }) => label === orderLabel)
@@ -167,6 +189,7 @@ class OrderForm extends React.Component {
     this.setState(() => ({
       currentLayout: uiDef,
       fieldData: defaultDataForLayout(uiDef),
+      isAlgoOrder,
     }))
   }
 

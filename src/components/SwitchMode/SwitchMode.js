@@ -1,18 +1,17 @@
 import React, { memo } from 'react'
 import PropTypes from 'prop-types'
-import Switch from 'react-switch'
+import { ToggleSwitch } from 'react-dragswitch'
 
 const SwitchMode = ({
   isPaperTrading, isTradingModeModalVisible, openTradingModeModal,
 }) => (
-  <Switch
+  <ToggleSwitch
     checked={isPaperTrading}
     onChange={openTradingModeModal}
     disabled={isTradingModeModalVisible}
-    onColor='#54b361'
-    offColor='#d8d8d8'
-    height={21}
-    width={35}
+    onColor='#244e3f'
+    offColor='#4c5a63'
+    className='toggle-switch'
     aria-label='Switch Paper Trading mode'
   />
 )
