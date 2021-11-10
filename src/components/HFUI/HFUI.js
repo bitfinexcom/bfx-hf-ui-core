@@ -76,7 +76,7 @@ const HFUI = ({
     const { body } = document
     const lsTheme = localStorage.getItem(SETTINGS.THEME)
 
-    if (authToken && !_includes(THEMES, lsTheme)) {
+    if (authToken && lsTheme !== settingsTheme) {
       localStorage.setItem(SETTINGS.THEME, settingsTheme)
     }
 
