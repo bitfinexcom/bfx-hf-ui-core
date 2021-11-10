@@ -71,6 +71,11 @@ body.Light {
     .list-wrapper {
       background-color: var(--background-color) !important;
     }
+
+    .list-item:active {
+      background-color: var(--shade-4);
+      color: var(--background-color);
+    }
   }
 }
 
