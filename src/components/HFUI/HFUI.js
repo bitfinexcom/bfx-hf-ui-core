@@ -5,7 +5,6 @@ import React, {
 import { Route, Switch, Redirect } from 'react-router'
 import PropTypes from 'prop-types'
 import _isFunction from 'lodash/isFunction'
-import _includes from 'lodash/includes'
 
 import { THEMES, SETTINGS } from '../../redux/selectors/ui'
 import useInjectBfxData from '../../hooks/useInjectBfxData'
