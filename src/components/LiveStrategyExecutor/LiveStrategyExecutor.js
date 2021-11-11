@@ -19,7 +19,7 @@ const DEFAULT_USE_TRADES = false
 const DEFAULT_USE_MARGIN = false
 
 const LiveStrategyExecutor = ({
-  strategyContent, markets, dsExecuteLiveStrategy, dsStopLiveStrategy, isExecuting, authToken, isLoading, options,
+  strategyContent, markets, dsExecuteLiveStrategy, dsStopLiveStrategy, isExecuting, authToken, isLoading, options, isPaperTrading,
 }) => {
   const { t } = useTranslation()
   const [timeframe, setTimeframe] = useState(options.tf || DEFAULT_TIMEFRAME)
@@ -83,13 +83,15 @@ const LiveStrategyExecutor = ({
         </div>
       </div>
       <div className='hfui-backtester_row'>
-        <div className='hfui-backtester__flex_start'>
-          <Checkbox
-            label={t('strategyEditor.useMarginCheckbox')}
-            checked={margin}
-            onChange={setMargin}
-          />
-        </div>
+        {!isPaperTrading && (
+          <div className='hfui-backtester__flex_start'>
+            <Checkbox
+              label={t('strategyEditor.useMarginCheckbox')}
+              checked={margin}
+              onChange={setMargin}
+            />
+          </div>
+        )}
         <div className='hfui-backtester__flex_start'>
           <Checkbox
             label={t('strategyEditor.useTradesCheckbox')}
@@ -150,6 +152,7 @@ LiveStrategyExecutor.propTypes = {
     ]),
   ),
   markets: PropTypes.objectOf(PropTypes.object),
+  isPaperTrading: PropTypes.bool.isRequired,
 }
 
 LiveStrategyExecutor.defaultProps = {
