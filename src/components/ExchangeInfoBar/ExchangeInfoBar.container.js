@@ -20,11 +20,12 @@ const { getCurrencySymbolMemo } = reduxSelectors
 
 const mapStateToProps = (state = {}) => {
   const activeMarket = getActiveMarket(state)
+  const allTickersArray = getTickersArray(state)
 
   return {
     activeMarket,
     activeMarketTicker: getTicker(state, activeMarket),
-    allTickersArray: getTickersArray(state),
+    allTickersArray,
     favoritePairs: getFavoritePairsObject(state),
     markets: getMarkets(state),
     authToken: getAuthToken(state),

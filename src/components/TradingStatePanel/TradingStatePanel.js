@@ -1,8 +1,11 @@
-import React, { memo } from 'react'
+import React, {
+  memo, useRef, useMemo, useCallback, Fragment,
+} from 'react'
 import PropTypes from 'prop-types'
 import _isEmpty from 'lodash/isEmpty'
 import { useTranslation } from 'react-i18next'
 
+import { getPairFromMarket } from '../../util/market'
 import Panel from '../../ui/Panel'
 import PositionsTable from '../PositionsTable'
 import AtomicOrdersTable from '../AtomicOrdersTable'
@@ -13,8 +16,7 @@ import TabTitle from './TabTitle'
 import './style.css'
 
 const TradingStatePanel = ({
-  dark, onRemove, moveable, removeable, getPositionsCount, getAtomicOrdersCount, getAlgoOrdersCount, markets, savedState, updateState,
-  layoutID, layoutI,
+  dark, onRemove, moveable, removeable, getPositionsCount, getAtomicOrdersCount, getAlgoOrdersCount, markets, savedState, updateState, layoutID, layoutI, getCurrencySymbol,
 }) => {
   const { currentMarket: activeFilter = {} } = savedState
   const positionsCount = getPositionsCount(activeFilter)
@@ -22,11 +24,34 @@ const TradingStatePanel = ({
   const algoOrdersCount = getAlgoOrdersCount(activeFilter)
   const { t } = useTranslation()
 
-  const setActiveFilter = (market) => {
+  const saveState = useCallback((param, value) => {
     updateState(layoutID, layoutI, {
-      currentMarket: market,
+      [param]: value,
     })
+  }, [layoutID, layoutI, updateState])
+
+  const onTabChange = useCallback((tab) => {
+    saveState('tab', tab)
+  }, [saveState])
+
+  const setActiveFilter = (market) => {
+    saveState('currentMarket', market)
   }
+  const marketRef = useRef('')
+
+  const handleSelectedFilterClick = () => {
+    setActiveFilter({})
+    if (marketRef?.current) {
+      marketRef.current.click()
+    }
+  }
+
+  const showMarketDropdown = _isEmpty(activeFilter)
+
+  const styles = useMemo(() => ({ display: showMarketDropdown ? 'block' : 'none' }), [showMarketDropdown])
+
+  const { isPerp, uiID } = activeFilter
+  const activeFilterID = isPerp ? uiID : getPairFromMarket(activeFilter, getCurrencySymbol)
 
   return (
     <Panel
@@ -36,31 +61,41 @@ const TradingStatePanel = ({
       className='hfui-tradingstatepanel__wrapper'
       moveable={false}
       removeable={false}
-      extraIcons={[_isEmpty(activeFilter) ? (
-        <MarketSelect
-          key='filter-market'
-          markets={markets}
-          value={activeFilter}
-          onChange={setActiveFilter}
-          renderWithFavorites
-        />
-      ) : (
-        <div key='filter-market' onClick={() => setActiveFilter({})} className='hfui-tspanel-header-button active'>
-          <i className='icon-filter-active' />
-          <p>{activeFilter.uiID}</p>
-        </div>
-      ), (
-        <div key='filter-by'>
-          <p className='hfui-uppercase'>
-            {`${_isEmpty(activeFilter) ? t('tradingStatePanel.filterBy') : t('tradingStatePanel.filteringBy')}:`}
-          </p>
-        </div>
-      )]}
+      extraIcons={[
+        <Fragment key='filter-market'>
+          <div style={styles}>
+            <MarketSelect
+              markets={markets}
+              value={activeFilter}
+              onChange={setActiveFilter}
+              renderWithFavorites
+              ref={marketRef}
+            />
+          </div>
+          {!showMarketDropdown && (
+          <div
+            onClick={handleSelectedFilterClick}
+            className='hfui-tspanel-header-button active'
+          >
+            <i className='icon-filter-active' />
+            <p>{activeFilterID}</p>
+          </div>
+          )}
+        </Fragment>,
+        (
+          <div key='filter-by'>
+            <p className='hfui-uppercase'>
+              {`${showMarketDropdown ? t('tradingStatePanel.filterBy') : t('tradingStatePanel.filteringBy')}:`}
+            </p>
+          </div>
+        )]}
     >
       <Panel
         onRemove={onRemove}
         moveable={moveable}
         removeable={removeable}
+        forcedTab={savedState.tab}
+        onTabChange={onTabChange}
         darkHeader
       >
         <PositionsTable
@@ -107,10 +142,12 @@ TradingStatePanel.propTypes = {
       base: PropTypes.string,
       quote: PropTypes.string,
     }),
+    tab: PropTypes.number,
   }),
   updateState: PropTypes.func.isRequired,
   layoutI: PropTypes.string.isRequired,
   layoutID: PropTypes.string,
+  getCurrencySymbol: PropTypes.func.isRequired,
 }
 
 TradingStatePanel.defaultProps = {

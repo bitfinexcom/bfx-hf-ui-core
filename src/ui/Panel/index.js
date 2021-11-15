@@ -1,8 +1,12 @@
-import React, { useState, useEffect } from 'react'
+import React, {
+  useState, useEffect, useCallback,
+} from 'react'
 import ClassNames from 'classnames'
 import PropTypes from 'prop-types'
 import _filter from 'lodash/filter'
 import _map from 'lodash/map'
+import _isNumber from 'lodash/isNumber'
+import _isEmpty from 'lodash/isEmpty'
 
 import Scrollbars from '../Scrollbars'
 import useSize from '../../hooks/useSize'
@@ -19,6 +23,14 @@ const getTabTitle = (tab) => { // eslint-disable-line
 }
 
 const getForcedTab = (forcedTab, tabs) => { // eslint-disable-line
+  if (_isNumber(forcedTab)) {
+    return forcedTab
+  }
+
+  if (_isEmpty(forcedTab)) {
+    return 0
+  }
+
   for (let i = 0; i < tabs.length; i++) {
     if (tabs[i].props.tabtitle === forcedTab) {
       return i
@@ -26,40 +38,25 @@ const getForcedTab = (forcedTab, tabs) => { // eslint-disable-line
   }
 }
 
-const Panel = (props) => {
-  const {
-    label,
-    className,
-    onRemove,
-    hideIcons,
-    children,
-    headerComponents,
-    extraIcons,
-    moveable,
-    removeable,
-    modal,
-    footer,
-    settingsOpen,
-    onToggleSettings,
-    darkHeader,
-    dark,
-    showChartMarket,
-    chartMarketSelect,
-    secondaryHeaderComponents,
-    closePanel,
-    preHeaderComponents,
-    dropdown,
-    forcedTab,
-  } = props
+const Panel = ({
+  label, className, onRemove, hideIcons, children, headerComponents, extraIcons,
+  moveable, removeable, modal, footer, settingsOpen, onToggleSettings, darkHeader, dark, showChartMarket,
+  chartMarketSelect, secondaryHeaderComponents, closePanel, preHeaderComponents, dropdown, forcedTab, onTabChange,
+}) => {
   const tabs = _filter(React.Children.toArray(children), c => c && c.props.tabtitle)
-  const initTab = forcedTab.length ? getForcedTab(forcedTab, tabs) : 0
+  const initTab = getForcedTab(forcedTab, tabs)
   const [selectedTab, setSelectedTab] = useState(initTab)
   const [panelRef, panelSize] = useSize()
   const [headerRef, headerSize] = useSize()
 
+  const _setSelectedTab = useCallback((tab) => {
+    onTabChange(tab)
+    setSelectedTab(tab)
+  }, [onTabChange])
+
   useEffect(() => {
-    setSelectedTab(initTab)
-  }, [initTab])
+    _setSelectedTab(initTab)
+  }, [_setSelectedTab, initTab])
 
   return (
     <div
@@ -99,7 +96,7 @@ const Panel = (props) => {
                 <li
                   key={tab.props.htmlKey || tab.props.tabtitle}
                   className={ClassNames({ active: getTabTitle(tab) === getTabTitle(tabs[selectedTab]) })}
-                  onClick={() => setSelectedTab(index)}
+                  onClick={() => _setSelectedTab(index)}
                 >
                   <p className='hfui-panel__label'>
                     {tab.props.tabtitle}
@@ -183,7 +180,8 @@ Panel.propTypes = {
   chartMarketSelect: PropTypes.node,
   closePanel: PropTypes.func,
   preHeaderComponents: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.node), PropTypes.node]),
-  forcedTab: PropTypes.string,
+  forcedTab: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  onTabChange: PropTypes.func,
   dropdown: PropTypes.node,
 }
 
@@ -209,6 +207,7 @@ Panel.defaultProps = {
   closePanel: null,
   preHeaderComponents: null,
   forcedTab: '',
+  onTabChange: () => { },
   dropdown: null,
 }
 

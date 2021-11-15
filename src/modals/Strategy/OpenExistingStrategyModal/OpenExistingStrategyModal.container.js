@@ -1,10 +1,10 @@
 import { connect } from 'react-redux'
 
-import { getStrategies } from '../../../redux/selectors/ws'
+import { getSortedByTimeStrategies } from '../../../redux/selectors/ws'
 import OpenExistingStrategyModal from './OpenExistingStrategyModal'
 
 const mapStateToProps = (state = {}) => ({
-  strategies: getStrategies(state),
+  strategies: getSortedByTimeStrategies(state),
 })
 
 export default connect(mapStateToProps)(OpenExistingStrategyModal)

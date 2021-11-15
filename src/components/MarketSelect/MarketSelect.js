@@ -1,5 +1,5 @@
 import React, {
-  useMemo, useCallback, memo, useState,
+  useMemo, useCallback, memo, useState, forwardRef,
 } from 'react'
 import _filter from 'lodash/filter'
 import _includes from 'lodash/includes'
@@ -15,19 +15,21 @@ import FavoriteIcon from '../../ui/Icons/FavoriteIcon'
 import './style.css'
 import { getPairFromMarket } from '../../util/market'
 
-const MarketSelect = ({
-  savePairs,
-  authToken,
-  favoritePairs = [],
-  currentMode, value,
-  onChange,
-  markets,
-  className,
-  renderLabel,
-  renderWithFavorites,
-  getCurrencySymbol,
-  ...otherProps
-}) => {
+// eslint-disable-next-line prefer-arrow-callback
+const MarketSelect = forwardRef(function MarketSelect(props, ref) {
+  const {
+    savePairs,
+    authToken,
+    favoritePairs = [],
+    currentMode, value,
+    onChange,
+    markets,
+    className,
+    renderLabel,
+    renderWithFavorites,
+    getCurrencySymbol,
+    ...otherProps
+  } = props
   const [searchTerm, setSearchTerm] = useState('')
   const favoriteSelect = useCallback((pair, isPairSelected) => {
     if (isPairSelected) {
@@ -42,19 +44,33 @@ const MarketSelect = ({
     const filtered = searchTerm ? _filter(markets,
       (market) => {
         const { quote, base, ccyLabels = [] } = market
-        const defaultLabels = [base, quote, base + quote, `${base}/${quote}`]
+        const baseSymbol = getCurrencySymbol(base)
+        const quoteSymbol = getCurrencySymbol(quote)
+        const defaultLabels = [
+          base,
+          quote,
+          base + quote,
+          `${base}/${quote}`,
+          baseSymbol,
+          quoteSymbol,
+          baseSymbol + quoteSymbol,
+          `${baseSymbol}/${quoteSymbol}`,
+        ]
         const matches = _toLower(_join([...ccyLabels, ...defaultLabels]))
         return _includes(matches, _toLower(searchTerm))
       }, []) : markets
+
     const options = _map(filtered, (m => ({
-      label: getPairFromMarket(m, getCurrencySymbol) || `${m.base}/${m.quote}`,
+      label: m.isPerp ? m.uiID : getPairFromMarket(m, getCurrencySymbol) || `${m.base}/${m.quote}`,
       value: m.uiID,
     })), [])
+
     return options.sort((a, b) => _includes(favoritePairs, b.value) - _includes(favoritePairs, a.value))
   }, [searchTerm, markets, getCurrencySymbol, favoritePairs])
 
   return (
     <Dropdown
+      ref={ref}
       label={renderLabel ? 'Market' : undefined}
       searchable
       className={ClassNames('hfui-marketselect', className)}
@@ -90,7 +106,7 @@ const MarketSelect = ({
       {...otherProps}
     />
   )
-}
+})
 
 MarketSelect.propTypes = {
   value: PropTypes.instanceOf(Object).isRequired,

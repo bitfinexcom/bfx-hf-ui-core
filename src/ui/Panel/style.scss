@@ -36,12 +36,17 @@
 .hfui-panel__header-icons {
   .ufx-dropdown {
     .dropdown-field {
-      background: none !important;
-      border: none !important;
       transition: all 0.2s;
 
-      &:hover {
-        color: $light-color-900;
+      .input-field,
+      .arrow-icon {
+        background: $darker-background-color !important;
+      }
+
+      .input-field {
+        &:hover {
+          color: $light-color-900 !important;
+        }
       }
     }
   }
@@ -206,7 +211,8 @@
     line-height: 32px;
   }
 
-  i, span {
+  i,
+  span {
     display: flex;
     justify-content: center;
     align-items: center;

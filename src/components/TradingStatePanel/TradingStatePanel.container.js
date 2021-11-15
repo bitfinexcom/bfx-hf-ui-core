@@ -1,4 +1,5 @@
 import { connect } from 'react-redux'
+import { reduxSelectors } from '@ufx-ui/bfx-containers'
 
 import {
   getFilteredPositionsCount,
@@ -17,6 +18,7 @@ const mapStateToProps = (state = {}, { layoutID, layoutI: id } = {}) => ({
   getAlgoOrdersCount: getFilteredAlgoOrdersCount(state),
   markets: getMarkets(state),
   savedState: getComponentState(state, layoutID, 'trading_state', id),
+  getCurrencySymbol: reduxSelectors.getCurrencySymbolMemo(state),
 })
 
 const mapDispatchToProps = dispatch => ({

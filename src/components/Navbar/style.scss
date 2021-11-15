@@ -251,3 +251,26 @@
     color: $primary-color-900;
   }
 }
+
+.hfui-tradingpaper__control {
+  display: flex;
+  border-right: 1px solid $panel-background-color;
+  flex-direction: row;
+  // margin-right: 16px; TODO: add once LanguageSettings is added
+
+  .hfui-tradingpaper__control-toggle {
+    p {
+      font-size: 13px;
+      padding-right: 10px;
+    }
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}
+
+.toggle-switch {
+  > input {
+    margin-left: 5px;
+  }
+}
