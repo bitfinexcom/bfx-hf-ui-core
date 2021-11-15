@@ -1,11 +1,9 @@
-import React from 'react'
+import React, { memo } from 'react'
 import PropTypes from 'prop-types'
 
 import { THEMES } from '../../redux/selectors/ui'
-import { PUB_REST_API_URL, PUB_WSS_API_URL } from '../../redux/config'
+import { CHART_URL, env } from '../../redux/config'
 import './style.css'
-
-const CHART_URL = 'https://bitfinexcom.github.io/bfx-hf-tradingview'
 
 const Chart = ({
   market: { wsID, base, quote }, theme,
@@ -14,8 +12,7 @@ const Chart = ({
     wsID,
     base,
     quote,
-    apiBaseUrl: PUB_REST_API_URL,
-    wsBaseURL: PUB_WSS_API_URL,
+    env,
     theme: theme === THEMES.DARK ? 'honeyframework-theme:dark-mode' : 'default-theme:light-mode',
   }).toString()
 
@@ -23,7 +20,7 @@ const Chart = ({
     <iframe
       className='hfui-chart-iframe'
       src={`${CHART_URL}/?${queryString}`}
-      title='thumbnails'
+      title='Chart'
     />
   )
 }
@@ -45,4 +42,4 @@ Chart.defaultProps = {
   },
 }
 
-export default React.memo(Chart)
+export default memo(Chart)
