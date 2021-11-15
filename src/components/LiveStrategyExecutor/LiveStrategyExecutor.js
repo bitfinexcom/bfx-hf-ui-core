@@ -39,8 +39,10 @@ const LiveStrategyExecutor = ({
 
   const updateSeed = (v) => {
     const error = AmountInput.validateValue(v)
+    const processed = AmountInput.processValue(v)
+
     setSeedError(error)
-    setCandleSeed(v)
+    setCandleSeed(processed)
   }
 
   if (_isEmpty(strategyContent)) {

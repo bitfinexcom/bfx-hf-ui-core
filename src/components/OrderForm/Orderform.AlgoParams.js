@@ -118,9 +118,11 @@ const AlgoParams = ({
                       onClick={() => onSelect(params)}
                     >
                       {makeShorterLongName(params.name, MAX_NAME_LENGTH)}
-                      <div className='hfui-orderform__ao-settings__delete'>
-                        <i className='icon-clear' role='button' aria-label='Delete Algo parameters' tabIndex={0} onClick={() => onDelete(params.id)} />
-                      </div>
+                      {!_isEmpty(params?.id) && (
+                        <div className='hfui-orderform__ao-settings__delete'>
+                          <i className='icon-clear' role='button' aria-label='Delete Algo parameters' tabIndex={0} onClick={() => onDelete(params.id)} />
+                        </div>
+                      )}
                     </Item>
                   ))}
                 </>

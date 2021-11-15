@@ -2,9 +2,8 @@ import React, { memo } from 'react'
 import PropTypes from 'prop-types'
 
 import { env } from '../../redux/config'
+import { CHART_URL, PUB_REST_API_URL, PUB_WSS_API_URL } from '../../redux/config'
 import './style.css'
-
-const CHART_URL = 'https://bitfinexcom.github.io/bfx-hf-tradingview'
 
 const Chart = ({ market: { wsID, base, quote } }) => {
   const queryString = new URLSearchParams({
