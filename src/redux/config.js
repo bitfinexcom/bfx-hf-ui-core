@@ -34,6 +34,5 @@ export {
   isElectronApp,
   appVersion,
   env,
-  PUB_WSS_API_URL,
   CHART_URL,
 }
