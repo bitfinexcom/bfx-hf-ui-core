@@ -3,9 +3,11 @@ import React, {
 } from 'react'
 import { Checkbox } from '@ufx-ui/core'
 import PropTypes from 'prop-types'
+import _capitalize from 'lodash/capitalize'
 
 import { useTranslation } from 'react-i18next'
 import Modal from '../../ui/Modal'
+import { isElectronApp } from '../../redux/config'
 
 import './style.css'
 
@@ -23,7 +25,8 @@ const BadConnection = ({
   }
 
   const onSubmit = () => {
-    location.replace('/index.html') // eslint-disable-line
+    const path = isElectronApp ? '/index.html' : ''
+    location.replace(path) // eslint-disable-line
   }
 
   useEffect(() => {
@@ -60,6 +63,8 @@ const BadConnection = ({
     return ''
   }
 
+  const action = isElectronApp ? t('badConnectionModal.reboot') : t('badConnectionModal.restart')
+
   return (
     <Modal
       label={t('badConnectionModal.title')}
@@ -67,19 +72,20 @@ const BadConnection = ({
       isOpen={visible}
       onClose={onClose}
     >
-      <p>{t('badConnectionModal.text1')}</p>
+      <p>{t('badConnectionModal.text1', { action })}</p>
       <p>{t('badConnectionModal.text2')}</p>
-      <p>{t('badConnectionModal.text3')}</p>
+      <p>{t('badConnectionModal.text3', { action })}</p>
       <br />
       <p>
-        {t('badConnectionModal.text4', { countdown })}
+        {t('badConnectionModal.text4', { countdown, action })}
       </p>
       <Modal.Footer>
         <Checkbox
-          label={t('badConnectionModal.checkbox')}
+          label={t('badConnectionModal.checkbox', { action: _capitalize(action) })}
           checked={rebootAutomatically}
           onChange={updateReboot}
         />
+
         <Modal.Button onClick={onSubmit} primary>
           {t('ui.ok')}
         </Modal.Button>
