@@ -25,7 +25,7 @@ const LiveStrategyExecutor = ({
   const [timeframe, setTimeframe] = useState(options.tf || DEFAULT_TIMEFRAME)
   const [symbol, setSymbol] = useState(options.symbol ? _find(markets, m => m.wsID === options.symbol) : getDefaultMarket(markets))
   const [trades, setTrades] = useState(options.includeTrades || DEFAULT_USE_TRADES)
-  const [margin, setMargin] = useState(options.includeMargin || DEFAULT_USE_MARGIN)
+  const [margin, setMargin] = useState(options.margin || DEFAULT_USE_MARGIN)
   const [candleSeed, setCandleSeed] = useState(options.seedCandleCount || DEFAULT_SEED_COUNT)
   const [seedError, setSeedError] = useState(null)
 
