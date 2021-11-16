@@ -19,5 +19,6 @@ export default function* onSaveSettings(action = {}) {
     settings.showAlgoPauseInfo,
     settings.showOnlyFavoritePairs,
     settings.rebootAutomatically,
+    settings.theme,
   ]))
 }
