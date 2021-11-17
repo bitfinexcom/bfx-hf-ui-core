@@ -3,13 +3,14 @@ import { useSelector, useDispatch } from 'react-redux'
 import { push } from 'connected-react-router'
 import ClassNames from 'classnames'
 import PropTypes from 'prop-types'
+import _isFunction from 'lodash/isFunction'
 
 import './style.css'
 
 import { getLocation } from '../../redux/selectors/router'
 
 const NavbarButton = ({
-  route, label, external,
+  route, label, external, className, onClick,
 }) => {
   const { pathname } = useSelector(getLocation)
   const dispatch = useDispatch()
@@ -17,17 +18,28 @@ const NavbarButton = ({
 
   if (external) {
     return (
-      <a href={external} target='_blank' rel='noopener noreferrer'>
+      <a href={external} className={className} target='_blank' rel='noopener noreferrer'>
         {label}
       </a>
     )
   }
 
+  const onButtonClick = () => {
+    if (_isFunction(onClick)) {
+      onClick()
+      return
+    }
+
+    if (route !== pathname) {
+      navigate(route)
+    }
+  }
+
   return (
     <button
       type='button'
-      className={ClassNames('hfui-navbarbutton', { active: pathname === route })}
-      onClick={route === pathname ? undefined : () => navigate(route)}
+      className={ClassNames('hfui-navbarbutton', className, { active: pathname === route })}
+      onClick={onButtonClick}
     >
       {label}
     </button>
@@ -40,11 +52,13 @@ NavbarButton.propTypes = {
     PropTypes.string, PropTypes.array, PropTypes.element,
   ]).isRequired,
   external: PropTypes.string,
+  onClick: PropTypes.func,
 }
 
 NavbarButton.defaultProps = {
   external: '',
   route: '',
+  onClick: null,
 }
 
 export default memo(NavbarButton)

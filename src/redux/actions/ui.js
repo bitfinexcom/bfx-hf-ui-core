@@ -165,6 +165,11 @@ export const changeBadInternetConnectionState = (isVisible) => ({
   payload: { isVisible },
 })
 
+export const changeFeedbackVisibilityState = (isVisible) => ({
+  type: types.CHANGE_FEEDBACK_VISIBILITY_STATE,
+  payload: { isVisible },
+})
+
 export const setIsOrderExecuting = (executing) => ({
   type: types.SET_IS_ORDER_EXECUTING,
   payload: { executing },
@@ -250,4 +255,5 @@ export default {
   changeCcyInfoModalState,
   setLanguage,
   setStrategyTab,
+  changeFeedbackVisibilityState,
 }

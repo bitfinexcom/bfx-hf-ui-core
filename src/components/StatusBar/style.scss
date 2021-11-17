@@ -24,6 +24,7 @@
 .hfui-statusbar__left {
   display: flex;
   flex-direction: row;
+  align-items: center;
   padding-left: 16px;
   flex-shrink: 0;
 
@@ -88,4 +89,14 @@
 .hfui-statusbar__divide {
   border-left: 1px solid $lighter-background-color;
   height: 60%;
+}
+
+.htui-statusbar__button {
+  background: none !important;
+  border: none;
+  padding: 0 !important;
+  color: #05bc97;
+  text-decoration: underline;
+  font-weight: normal;
+  cursor: pointer;
 }

@@ -1,10 +1,11 @@
 import { connect } from 'react-redux'
 
-import StatusBar from './StatusBar'
+import UIActions from '../../redux/actions/ui'
 import { getRemoteVersion, getIsBadInternetConnection } from '../../redux/selectors/ui'
 import {
   apiClientConnected, apiClientConnecting, apiClientDisconnected, getCurrentModeAPIKeyState, isSocketConnected,
 } from '../../redux/selectors/ws'
+import StatusBar from './StatusBar'
 
 const mapStateToProps = (state) => ({
   wsConnected: isSocketConnected(state),
@@ -16,4 +17,10 @@ const mapStateToProps = (state) => ({
   currentModeApiKeyState: getCurrentModeAPIKeyState(state),
 })
 
-export default connect(mapStateToProps)(StatusBar)
+const mapDispatchToProps = (dispatch) => ({
+  changeFeedbackVisibility: (visible) => {
+    dispatch(UIActions.changeFeedbackVisibilityState(visible))
+  },
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(StatusBar)

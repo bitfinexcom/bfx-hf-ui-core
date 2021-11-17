@@ -76,6 +76,7 @@ function getInitialState() {
     isAOPauseModalVisible: false,
     isCcyInfoModalVisible: false,
     isBadInternetConnection: false,
+    isFeedbackModalVisible: false,
     isOrderExecuting: false,
     content: {},
     unsavedLayout: null,
@@ -403,6 +404,13 @@ function reducer(state = getInitialState(), action = {}) {
       return {
         ...state,
         isBadInternetConnection: isVisible,
+      }
+    }
+    case types.CHANGE_FEEDBACK_VISIBILITY_STATE: {
+      const { isVisible } = payload
+      return {
+        ...state,
+        isFeedbackModalVisible: isVisible,
       }
     }
     case types.SET_IS_ORDER_EXECUTING: {

@@ -14,8 +14,7 @@ const StatusBar = ({
   wsConnected, remoteVersion,
   apiClientDisconnected: _apiClientDisconnected,
   apiClientConnecting: _apiClientConnecting,
-  apiClientConnected,
-  wsInterrupted, currentModeApiKeyState,
+  apiClientConnected, wsInterrupted, currentModeApiKeyState, changeFeedbackVisibility,
 }) => {
   const [wsConnInterrupted, setWsConnInterrupted] = useState(false)
   const isWrongAPIKey = !currentModeApiKeyState.valid
@@ -30,23 +29,35 @@ const StatusBar = ({
     }
   }, [wsConnInterrupted, wsInterrupted])
 
+  const onFeedbackClick = () => {
+    changeFeedbackVisibility(true)
+  }
+
   return (
     <div className='hfui-statusbar__wrapper'>
-      {isElectronApp && (
-        <div className='hfui-statusbar__left'>
-          <p>
-            {remoteVersion && remoteVersion !== appVersion && (
-              <NavbarButton
-                label={t('statusbar.updateToLast')}
-                external={RELEASE_URL}
-              />
-            )}
-            &nbsp;
-            v
-            {appVersion}
-          </p>
-        </div>
-      )}
+      <div className='hfui-statusbar__left'>
+        {isElectronApp && (
+          <>
+            <p>
+              {remoteVersion && remoteVersion !== appVersion && (
+                <NavbarButton
+                  label={t('statusbar.updateToLast')}
+                  external={RELEASE_URL}
+                />
+              )}
+              &nbsp;
+              v
+              {appVersion}
+            </p>
+            <div className='hfui-statusbar__divide' />
+          </>
+        )}
+        <NavbarButton
+          label='Feedback'
+          onClick={onFeedbackClick}
+          className='htui-statusbar__button'
+        />
+      </div>
 
       <div className='hfui-statusbar__right'>
         {isElectronApp && (
@@ -87,6 +98,7 @@ StatusBar.propTypes = {
   currentModeApiKeyState: PropTypes.shape({
     valid: PropTypes.bool,
   }),
+  changeFeedbackVisibility: PropTypes.func.isRequired,
 }
 
 StatusBar.defaultProps = {
