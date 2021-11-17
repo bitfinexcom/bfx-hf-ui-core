@@ -1,4 +1,4 @@
-import { put, delay } from 'redux-saga/effects'
+import { put } from 'redux-saga/effects'
 import { v4 } from 'uuid'
 import i18n from '../../../locales/i18n'
 
@@ -16,13 +16,10 @@ export default function* ({ payload }) {
     yield put(A.reconnected())
   }
 
-  // delay so i18n is initialised
-  yield delay(50)
-
   yield put(A.recvNotification({
     mts: Date.now(),
     status: 'success',
-    text: i18n.t('notifications.wsConnected'),
+    text: i18n.isInitialized ? i18n.t('notifications.wsConnected') : 'Successfully connected to websocket server',
     cid: v4(),
   }))
 
