@@ -27,6 +27,9 @@ const BadConnection = ({
 
   const onClose = () => {
     changeFeedbackVisibility(false)
+    setReason(REASON_TYPES.BUG_REPORT)
+    setMessage('')
+    setError('')
   }
 
   const onSubmit = () => {
@@ -42,7 +45,7 @@ const BadConnection = ({
       return
     }
 
-    submitFeedback(reason, message)
+    submitFeedback(reason, message, t)
     onClose()
   }
 
