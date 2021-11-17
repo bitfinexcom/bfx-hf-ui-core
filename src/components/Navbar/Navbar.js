@@ -2,6 +2,7 @@ import React from 'react'
 import { useDispatch } from 'react-redux'
 import _values from 'lodash/values'
 import _map from 'lodash/map'
+import cx from 'classnames'
 
 import { useTranslation } from 'react-i18next'
 import HFIcon from '../../ui/HFIcon'
@@ -9,6 +10,7 @@ import UIActions from '../../redux/actions/ui'
 import NavbarLink from './Navbar.Link'
 import NavbarButton from './Navbar.Button'
 import SwitchMode from '../SwitchMode'
+import Logout from './Navbar.Logout'
 
 import LayoutSettings from './Navbar.LayoutSettings'
 import AppSettings from './Navbar.AppSettings'
@@ -36,7 +38,7 @@ const Navbar = () => {
         ))}
       </ul>
       <div className='hfui-tradingpage__menu'>
-        <div className='hfui-exchangeinfobar__buttons'>
+        <div className={cx('hfui-exchangeinfobar__buttons', { 'is-web': !isElectronApp })}>
           <LayoutSettings />
           <NavbarButton
             alt={t('notifications.title')}
@@ -44,6 +46,7 @@ const Navbar = () => {
             onClick={() => dispatch(UIActions.switchNotifcationPanel())}
           />
           {isElectronApp && <AppSettings />}
+          {!isElectronApp && <Logout />}
         </div>
         {isElectronApp && (
         <div className='hfui-tradingpaper__control'>
