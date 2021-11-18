@@ -1,13 +1,13 @@
 import React, { memo, useState } from 'react'
 import PropTypes from 'prop-types'
-import _capitalize from 'lodash/capitalize'
 import _isEmpty from 'lodash/isEmpty'
 import _size from 'lodash/size'
+import _map from 'lodash/map'
+import _values from 'lodash/values'
 import { useTranslation } from 'react-i18next'
 
 import Modal from '../../ui/Modal'
 import Dropdown from '../../ui/Dropdown'
-import Button from '../../ui/Button'
 import Textarea from '../../ui/Textarea'
 import { REASON_TYPES, getReasonLabels } from './FeedbackModal.helpers'
 
@@ -66,7 +66,7 @@ const BadConnection = ({
           className='select'
           placeholder={t('feedbackModal.feedbackReason')}
           onChange={setReason}
-          options={Object.values(REASON_TYPES).map(type => ({
+          options={_map(_values(REASON_TYPES), type => ({
             label: reasonLabels[type],
             value: type,
           }))}

@@ -53,12 +53,14 @@ NavbarButton.propTypes = {
   ]).isRequired,
   external: PropTypes.string,
   onClick: PropTypes.func,
+  className: PropTypes.string,
 }
 
 NavbarButton.defaultProps = {
   external: '',
   route: '',
   onClick: null,
+  className: null,
 }
 
 export default memo(NavbarButton)
