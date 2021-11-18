@@ -39,7 +39,7 @@ const Item = ({
 )
 
 const AlgoParams = ({
-  algoID, symbol, processAOData, setFieldData, validateAOData, updateValidationErrors,
+  algoID, symbol, processAOData, setFieldData, validateAOData, updateValidationErrors, context, setContext,
 }) => {
   const dispatch = useDispatch()
   const [isOpen, setIsOpen] = useState(false)
@@ -52,12 +52,16 @@ const AlgoParams = ({
   const onSave = () => {
     if (!_isNull(activeAOID)) {
       const { name, id } = _find(selectedAOParams, (p) => p?.id === activeAOID)
-      const params = processAOData()
+      let params = processAOData()
       const errors = validateAOData(params)
 
       if (!_isEmpty(errors)) {
         updateValidationErrors(errors)
         return
+      }
+      params = {
+        ...params,
+        context,
       }
 
       const payload = {
@@ -81,6 +85,10 @@ const AlgoParams = ({
       if (percentageParams[i] in updatedParams) {
         updatedParams[percentageParams[i]] *= 100
       }
+    }
+
+    if (updatedParams?.context) {
+      setContext(updatedParams.context)
     }
 
     dispatch(setActiveAOParamsID(id))
@@ -136,6 +144,7 @@ const AlgoParams = ({
         onClose={() => setIsAddNewParamModalOpen(false)}
         algoID={algoID}
         symbol={symbol}
+        context={context}
         processAOData={processAOData}
         validateAOData={validateAOData}
       />
@@ -150,6 +159,8 @@ AlgoParams.propTypes = {
   setFieldData: PropTypes.func.isRequired,
   validateAOData: PropTypes.func.isRequired,
   updateValidationErrors: PropTypes.func.isRequired,
+  context: PropTypes.string.isRequired,
+  setContext: PropTypes.func.isRequired,
 }
 
 export default memo(AlgoParams)
