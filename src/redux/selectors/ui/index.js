@@ -8,6 +8,7 @@ import getIsBadInternetConnection from './get_is_bad_internet_connection'
 import getIsAOPausedModalVisible from './get_is_ao_paused'
 import getOldFormatModalState from './get_old_modal_format_state'
 import getIsRefillBalanceModalVisible from './get_is_refill_balance_modal_visible'
+import getIsFeedbackModalVisible from './get_is_feedback_modal_visible'
 import getIsPaperTrading from './get_is_paper_trading'
 import getIsOrderExecuting from './get_is_order_executing'
 import getFirstLogin from './get_first_login'
@@ -31,6 +32,7 @@ export {
   getIsTradingModeModalVisible,
   getIsBadInternetConnection,
   getIsRefillBalanceModalVisible,
+  getIsFeedbackModalVisible,
   getIsPaperTrading,
   getFirstLogin,
   getCurrentMode,

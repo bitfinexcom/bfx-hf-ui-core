@@ -1,0 +1,11 @@
+@import '../../variables.scss';
+
+.hfui-feedback_modal {
+  &-textarea {
+    margin-top: 20px;
+  }
+
+  .modal__footer {
+    margin-top: 20px !important;
+  }
+}

@@ -318,6 +318,20 @@
     "reboot": "reboot",
     "restart": "Restart"
   },
+  "feedbackModal": {
+    "errorNoFeedback": "Please write your feedback",
+    "errorFeedbackTooLong": "Your feedback message is too long ({{messageSize}}/{{MAX_MESSAGE_LENGTH}} characters)",
+    "selectFeedbackReason": "Select feedback reason",
+    "feedbackReason": "Feedback reason",
+    "feedbackMessage": "Your feedback message",
+    "feedback": "Feedback",
+    "successNotification": "Feedback has been submitted",
+    "feedbackReasons": {
+      "bug_report": "Bug report",
+      "feature_request": "Feature request",
+      "other": "Other"
+    }
+  },
   "balancesTableModal": {
     "title": "Balances",
     "hideZeroCheckbox": "Hide Zero Balances",

@@ -26,6 +26,7 @@ const OldFormatModal = lazy(() => import('../../modals/OldFormatModal'))
 const AOPauseModal = lazy(() => import('../../modals/AOPauseModal'))
 const BestExperienceMessageModal = lazy(() => import('../../modals/BestExperienceMessageModal'))
 const CcyInfoModal = lazy(() => import('../../modals/CcyInfoModal'))
+const FeedbackModal = lazy(() => import('../../modals/FeedbackModal'))
 
 const HFUI = ({
   authToken,
@@ -112,6 +113,7 @@ const HFUI = ({
           )}
           <BadConnectionModal />
           <CcyInfoModal />
+          <FeedbackModal />
         </>
       ) : (
         <>
