@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { Icon } from 'react-fa'
 import _values from 'lodash/values'
 import _map from 'lodash/map'
+import cx from 'classnames'
 
 import { useTranslation } from 'react-i18next'
 import HFIcon from '../../ui/HFIcon'
@@ -12,6 +13,7 @@ import GAActions from '../../redux/actions/google_analytics'
 import NavbarLink from './Navbar.Link'
 import NavbarButton from './Navbar.Button'
 import SwitchMode from '../SwitchMode'
+import Logout from './Navbar.Logout'
 
 import LayoutSettings from './Navbar.LayoutSettings'
 import AppSettings from './Navbar.AppSettings'
@@ -49,7 +51,7 @@ const Navbar = () => {
         ))}
       </ul>
       <div className='hfui-tradingpage__menu'>
-        <div className='hfui-exchangeinfobar__buttons'>
+        <div className={cx('hfui-exchangeinfobar__buttons', { 'is-web': !isElectronApp })}>
           <LayoutSettings />
           <NavbarButton
             alt={t('notifications.title')}
@@ -59,14 +61,17 @@ const Navbar = () => {
           {isElectronApp ? (
             <AppSettings />
           ) : (
-            <button
-              type='button'
-              className='hfui-exchangeinfobar__button'
-              onClick={switchTheme}
-              alt={t('appSettings.themeSetting')}
-            >
-              <Icon name={themeIconName} />
-            </button>
+            <>
+              <button
+                type='button'
+                className='hfui-exchangeinfobar__button'
+                onClick={switchTheme}
+                alt={t('appSettings.themeSetting')}
+              >
+                <Icon name={themeIconName} />
+              </button>
+              <Logout />
+            </>
           )}
         </div>
         {isElectronApp && (

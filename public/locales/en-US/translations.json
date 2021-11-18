@@ -313,11 +313,13 @@
   },
   "badConnectionModal": {
     "title": "Connection issue",
-    "text1": "We've noticed several internet connection issues. It's required to reboot the app to continue normal operation.",
+    "text1": "We've noticed several internet connection issues. It's required to {{action}} the app to continue normal operation.",
     "text2": "Please make sure you have stable and good internet connection.",
-    "text3": "The Honey Framework will reboot after you press 'Okay'.",
-    "text4": "The app will reboot automatically in {{countdown}} seconds.",
-    "checkbox": "Reboot automatically"
+    "text3": "The Honey Framework will {{action}} after you press 'Okay'.",
+    "text4": "The app will {{action}} automatically in {{countdown}} seconds.",
+    "checkbox": "{{action}} automatically",
+    "reboot": "reboot",
+    "restart": "Restart"
   },
   "balancesTableModal": {
     "title": "Balances",
@@ -328,7 +330,7 @@
     "title": "Best experience warning",
     "text1": "Web verison of Honey Framework designed for desktops. For having best experience in using application, we strongly recommend using desktop.",
     "text2": "It's adviced to use this app in a landscape mode.",
-    "text3": "Best regards, your Honey Framework&apos;s team!"
+    "text3": "Best regards, your Honey Framework's team!"
   },
   "chartModal": {
     "title": "Chart"

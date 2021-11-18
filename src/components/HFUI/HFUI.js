@@ -111,11 +111,11 @@ const HFUI = ({
               <TradingModeModal />
               <OldFormatModal />
               <AOPauseModal />
-              <BadConnectionModal />
             </>
           ) : (
             <BestExperienceMessageModal />
           )}
+          <BadConnectionModal />
           <CcyInfoModal />
         </>
       ) : (

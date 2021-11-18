@@ -1,4 +1,4 @@
-@import '../../variables.scss';
+@import "../../variables.scss";
 
 .hfui-navbar__wrapper {
   width: 100%;
@@ -43,7 +43,7 @@
     border-bottom: 2px solid transparent;
     border-radius: 0;
     padding: 0;
-    margin: 0 spacing(.5);
+    margin: 0 spacing(0.5);
     outline: none;
     height: 52px;
     font-size: 13px;
@@ -146,7 +146,7 @@
   font-weight: 500;
   padding: spacing(0.5) spacing(1);
   cursor: pointer;
-  transition: all .2s;
+  transition: all 0.2s;
 
   &.is-disabled {
     cursor: default;
@@ -173,7 +173,7 @@
       border-radius: $border-radius;
       justify-content: center;
       align-items: center;
-      transition: all .2s;
+      transition: all 0.2s;
       opacity: 0;
 
       .icon-clear:before {
@@ -200,7 +200,7 @@
     top: spacing(0.5) + 1;
     left: spacing(1);
     font-family: "untitled-font-4";
-    content: 'S'; // check
+    content: "S"; // check
   }
 
   .hfui-navbar__layout-settings__item-unsaved,
@@ -212,6 +212,10 @@
 .hfui-exchangeinfobar__buttons {
   display: flex;
   margin-right: spacing();
+
+  &.is-web {
+    margin-right: 0;
+  }
 }
 
 .hfui-exchangeinfobar__button {
@@ -273,4 +277,11 @@
   > input {
     margin-left: 5px;
   }
+}
+
+.hfui-navbar__logout {
+  width: auto;
+  font-weight: 500;
+  padding: 0 spacing(0.75);
+  background: none;
 }
