@@ -1,9 +1,9 @@
 /* eslint-disable no-restricted-globals */
 import React from 'react'
-// import { useDispatch } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { BFX_TOKEN_COOKIE } from '../../constants/cookies'
 
-// import WSActions from '../../redux/actions/ws'
+import WSActions from '../../redux/actions/ws'
 import { removeCookie } from '../../util/cookies'
 
 const propTypes = {}
@@ -13,15 +13,17 @@ const defaultProps = {}
 const homeUrl = process.env.REACT_APP_ENVIRONMENT === 'staging' ? 'https://bfx-ui-api.staging.bitfinex.com/' : 'https://honey.bitfinex.com'
 
 export default function NavbarLogout() {
-  // const dispatch = useDispatch()
+  const dispatch = useDispatch()
 
   const logout = () => {
+    dispatch(WSActions.send([
+      'auth.logout',
+    ]))
     removeCookie(BFX_TOKEN_COOKIE)
-    // eslint-disable-next-line lodash/prefer-lodash-method
-    location.replace(homeUrl)
-  //   dispatch(WSActions.send([
-  //   'auth.logout',
-  // ]))
+    setTimeout(() => {
+      // eslint-disable-next-line lodash/prefer-lodash-method
+      location.replace(homeUrl)
+    }, 1000)
   }
 
   return (
