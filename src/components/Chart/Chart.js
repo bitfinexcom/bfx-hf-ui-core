@@ -3,7 +3,8 @@ import { useSelector } from 'react-redux'
 import { reduxSelectors } from '@ufx-ui/bfx-containers'
 import PropTypes from 'prop-types'
 
-import { THEMES } from '../../redux/selectors/ui'
+import { LANGUAGES_CHART_TABLE } from '../../locales/i18n'
+import { getCurrentLanguage, THEMES } from '../../redux/selectors/ui'
 import { CHART_URL, env } from '../../redux/config'
 import { getPairFromMarket } from '../../util/market'
 
@@ -16,6 +17,7 @@ const Chart = ({ market, theme }) => {
     wsID, base, quote, isPerp, uiID: _uiID,
   } = market
   const getCurrencySymbol = useSelector(getCurrencySymbolMemo)
+  const language = useSelector(getCurrentLanguage)
 
   const uiID = isPerp ? _uiID : getPairFromMarket(market, getCurrencySymbol)
 
@@ -26,6 +28,7 @@ const Chart = ({ market, theme }) => {
     quote,
     env,
     theme: theme === THEMES.DARK ? 'honeyframework-theme:dark-mode' : 'default-theme:light-mode',
+    locale: LANGUAGES_CHART_TABLE[language],
   }).toString()
 
   return (
