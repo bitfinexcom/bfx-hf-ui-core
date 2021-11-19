@@ -20,6 +20,7 @@ import getTickersVolumeUnit from './get_tickers_volume_unit'
 import getIsCcyInfoModalVisible from './get_is_ccy_info_modal_visible'
 import getCurrentLanguage from './get_current_language'
 import getIsAddNewParamModalVisible from './get_is_add_new_param_modal_visible'
+import getIsAppSettingsModalVisible from './get_is_app_settings_modal_visible'
 import getIsAnyModalIsOpen from './get_is_any_modal_is_open'
 
 export * from './get_settings'
@@ -47,5 +48,6 @@ export {
   getIsCcyInfoModalVisible,
   getCurrentLanguage,
   getIsAddNewParamModalVisible,
+  getIsAppSettingsModalVisible,
   getIsAnyModalIsOpen,
 }

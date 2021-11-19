@@ -170,6 +170,11 @@ export const changeAddNewParamModalState = (isVisible) => ({
   payload: { isVisible },
 })
 
+export const changeAppSettingsModalState = (isVisible) => ({
+  type: types.CHANGE_APP_SETTINGS_MODAL_STATE,
+  payload: { isVisible },
+})
+
 export const setIsOrderExecuting = (executing) => ({
   type: types.SET_IS_ORDER_EXECUTING,
   payload: { executing },

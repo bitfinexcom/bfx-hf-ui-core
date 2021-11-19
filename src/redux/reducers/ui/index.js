@@ -76,6 +76,7 @@ function getInitialState() {
     isAOPauseModalVisible: false,
     isAddNewParamModalOpen: false,
     isCcyInfoModalVisible: false,
+    isAppSettingsModalVisible: false,
     isBadInternetConnection: false,
     isOrderExecuting: false,
     content: {},
@@ -443,6 +444,14 @@ function reducer(state = getInitialState(), action = {}) {
       return {
         ...state,
         isAddNewParamModalOpen: isVisible,
+      }
+    }
+    case types.CHANGE_APP_SETTINGS_MODAL_STATE: {
+      const { isVisible } = payload
+
+      return {
+        ...state,
+        isAppSettingsModalVisible: isVisible,
       }
     }
     case types.ADD_COMPONENT: {
