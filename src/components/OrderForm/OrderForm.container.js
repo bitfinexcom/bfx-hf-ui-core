@@ -14,7 +14,7 @@ import {
   getAPIClientState, getAuthToken, getCurrentModeAPIKeyState,
 } from '../../redux/selectors/ws'
 import {
-  getComponentState, getActiveMarket, getCurrentMode, getIsPaperTrading, getIsOrderExecuting,
+  getComponentState, getActiveMarket, getCurrentMode, getIsPaperTrading, getIsOrderExecuting, getIsAnyModalIsOpen,
 } from '../../redux/selectors/ui'
 
 const debug = Debug('hfui:c:order-form')
@@ -35,6 +35,7 @@ const mapStateToProps = (state = {}, ownProps = {}) => {
     isPaperTrading: getIsPaperTrading(state),
     isOrderExecuting: getIsOrderExecuting(state),
     aoParams: getAOParams(state),
+    isAnyModalIsOpened: getIsAnyModalIsOpen(state),
   }
 }
 

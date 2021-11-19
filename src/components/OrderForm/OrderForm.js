@@ -124,7 +124,12 @@ class OrderForm extends React.Component {
 
   handleKeydown(e) {
     const { isAlgoOrder } = this.state
+    const { isAnyModalIsOpened } = this.props
     const { key } = e
+
+    if (isAnyModalIsOpened) {
+      return
+    }
     if (key === 'Escape') {
       this.onClearOrderLayout()
     }
@@ -576,6 +581,7 @@ class OrderForm extends React.Component {
 }
 
 OrderForm.propTypes = {
+  isAnyModalIsOpened: PropTypes.bool.isRequired,
   savedState: PropTypes.objectOf(PropTypes.oneOfType([
     PropTypes.string, PropTypes.bool, PropTypes.object,
   ])).isRequired,
