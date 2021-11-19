@@ -5,8 +5,9 @@ import { useTranslation } from 'react-i18next'
 import Panel from '../../ui/Panel'
 import Chart from '../Chart'
 import MarketSelect from '../MarketSelect'
-import './style.css'
 import { getPairFromMarket } from '../../util/market'
+
+import './style.css'
 
 const ChartPanel = ({
   dark, label, onRemove, moveable, removeable, showChartMarket, markets, canChangeMarket,
