@@ -68,7 +68,7 @@ const HFUI = ({
 
   useEffect(() => {
     // if running in the electron environment
-    if (_isFunction(window.require)) {
+    if (_isFunction(window.require) && isElectronApp) {
       const electron = window.require('electron')
       const { ipcRenderer } = electron
       ipcRenderer.on('app-close', onElectronAppClose)
