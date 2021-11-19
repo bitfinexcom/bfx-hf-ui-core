@@ -165,6 +165,11 @@ export const changeBadInternetConnectionState = (isVisible) => ({
   payload: { isVisible },
 })
 
+export const changeAddNewParamModalState = (isVisible) => ({
+  type: types.CHANGE_ADD_NEW_PARAM_MODAL_STATE,
+  payload: { isVisible },
+})
+
 export const setIsOrderExecuting = (executing) => ({
   type: types.SET_IS_ORDER_EXECUTING,
   payload: { executing },
@@ -248,6 +253,7 @@ export default {
   changeOldFormatModalState,
   changeAOPauseModalState,
   changeCcyInfoModalState,
+  changeAddNewParamModalState,
   setLanguage,
   setStrategyTab,
 }

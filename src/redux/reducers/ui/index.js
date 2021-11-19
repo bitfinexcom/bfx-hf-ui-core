@@ -74,6 +74,7 @@ function getInitialState() {
     isRefillBalanceModalVisible: false,
     isOldFormatModalVisible: false,
     isAOPauseModalVisible: false,
+    isAddNewParamModalOpen: false,
     isCcyInfoModalVisible: false,
     isBadInternetConnection: false,
     isOrderExecuting: false,
@@ -434,6 +435,14 @@ function reducer(state = getInitialState(), action = {}) {
       return {
         ...state,
         isAOPauseModalVisible: isVisible,
+      }
+    }
+    case types.CHANGE_ADD_NEW_PARAM_MODAL_STATE: {
+      const { isVisible } = payload
+
+      return {
+        ...state,
+        isAddNewParamModalOpen: isVisible,
       }
     }
     case types.ADD_COMPONENT: {

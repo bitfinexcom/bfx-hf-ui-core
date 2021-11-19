@@ -18,6 +18,8 @@ import NavbarButton from '../Navbar/Navbar.Button'
 
 import AddNewParam from './Modals/AddNewParam'
 import { makeShorterLongName } from '../../util/ui'
+import { getIsAddNewParamModalVisible } from '../../redux/selectors/ui'
+import { changeAddNewParamModalState } from '../../redux/actions/ui'
 
 const MAX_NAME_LENGTH = 30
 
@@ -43,9 +45,10 @@ const AlgoParams = ({
 }) => {
   const dispatch = useDispatch()
   const [isOpen, setIsOpen] = useState(false)
-  const [isAddNewParamModalOpen, setIsAddNewParamModalOpen] = useState(false)
+
   const activeAOID = useSelector(getActiveAOparamsID)
   const aoParams = useSelector(getAOParams)
+  const isAddNewParamModalOpen = useSelector(getIsAddNewParamModalVisible)
 
   const selectedAOParams = aoParams[symbol]?.[algoID]
 
@@ -87,6 +90,10 @@ const AlgoParams = ({
     setFieldData(updatedParams)
   }
 
+  const openAddNewParamModal = () => dispatch(changeAddNewParamModalState(true))
+
+  const closeAddNewParamModal = () => dispatch(changeAddNewParamModalState(false))
+
   return (
     <div className='hfui-orderform__ao-settings'>
       <NavbarButton
@@ -105,7 +112,7 @@ const AlgoParams = ({
               <Item onClick={onSave} isDisabled={_isNull(activeAOID)}>
                 Save
               </Item>
-              <Item onClick={() => setIsAddNewParamModalOpen(true)}>
+              <Item onClick={openAddNewParamModal}>
                 Save As...
               </Item>
               {!_isEmpty(selectedAOParams) && (
@@ -133,7 +140,7 @@ const AlgoParams = ({
       )}
       <AddNewParam
         isOpen={isAddNewParamModalOpen}
-        onClose={() => setIsAddNewParamModalOpen(false)}
+        onClose={closeAddNewParamModal}
         algoID={algoID}
         symbol={symbol}
         processAOData={processAOData}
