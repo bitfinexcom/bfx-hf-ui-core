@@ -25,6 +25,14 @@ const orderAdapter = (data = []) => ({
   price: data[9],
 })
 
+const AOAdapter = (data = []) => ({
+  gid: data[0],
+  name: data[1],
+  label: data[2],
+  args: data[3],
+  createdAt: data[4],
+})
+
 const notificationAdapter = (data = []) => {
   if (data[1] === 'ucm-notify-ui') { // HF notification
     return {
@@ -50,4 +58,5 @@ export {
   positionAdapter,
   balanceAdapter,
   orderAdapter,
+  AOAdapter,
 }

@@ -2,6 +2,7 @@ import _isArray from 'lodash/isArray'
 import _isObject from 'lodash/isObject'
 import _isNumber from 'lodash/isNumber'
 import _reduce from 'lodash/reduce'
+import _map from 'lodash/map'
 import Debug from 'debug'
 import { v4 } from 'uuid'
 import i18nLib from '../../../locales/i18n'
@@ -14,6 +15,7 @@ import marketActions from '../../actions/market'
 import closeElectronApp from '../../helpers/close_electron_app'
 import { MAIN_MODE, PAPER_MODE } from '../../reducers/ui'
 import tokenStore from '../../../util/token_store'
+import { AOAdapter } from '../../adapters/ws'
 
 const debug = Debug('hfui:rx:m:ws-hfui-server:msg')
 
@@ -295,7 +297,8 @@ export default (alias, store) => (e = {}) => {
 
       case 'data.aos': {
         const [, , aos] = payload
-        store.dispatch(WSActions.recvDataAlgoOrders({ aos }))
+        const adapted = _map(aos, ao => (_isArray(ao) ? AOAdapter(ao) : ao))
+        store.dispatch(WSActions.recvDataAlgoOrders({ aos: adapted }))
         break
       }
 

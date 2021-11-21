@@ -3,7 +3,7 @@ import t from '../../constants/ws'
 
 import connectionWorker from './worker_connection'
 import messageQueueWorker from './worker_message_queue'
-import rebootAppWorker from './worker_reboot_app'
+import pingRebootAppWorker from './worker_ping_reboot_app'
 
 import onConnected from './on_connected'
 import onDisconnected from './on_disconnected'
@@ -15,5 +15,5 @@ export default function* () {
   yield takeEvery(t.DISCONNECTED, onDisconnected)
 
   yield fork(connectionWorker)
-  yield fork(rebootAppWorker)
+  yield fork(pingRebootAppWorker)
 }

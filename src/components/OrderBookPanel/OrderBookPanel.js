@@ -13,6 +13,7 @@ import {
 } from '@ufx-ui/bfx-containers'
 import { useTranslation } from 'react-i18next'
 
+import routes from '../../constants/routes'
 import MarketSelect from '../MarketSelect'
 import OrderBook from '../OrderBook'
 import PanelSettings from '../../ui/PanelSettings'
@@ -35,10 +36,12 @@ const {
 } = reduxSelectors
 
 const OrderBookPanel = (props) => {
+  const isTradingTerminal = window.location.pathname === routes.tradingTerminal.path
+
   const {
     onRemove, showMarket, canChangeStacked, moveable,
     removeable, dark, savedState, activeMarket,
-    markets, canChangeMarket, layoutID, layoutI, updateState, isTradingTerminal, allMarketBooks, getCurrencySymbol,
+    markets, canChangeMarket, layoutID, layoutI, updateState, allMarketBooks, getCurrencySymbol,
   } = props
   const {
     sumAmounts = true,
@@ -217,7 +220,6 @@ OrderBookPanel.propTypes = {
   layoutID: PropTypes.string,
   layoutI: PropTypes.string.isRequired,
   updateState: PropTypes.func.isRequired,
-  isTradingTerminal: PropTypes.bool,
   allMarketBooks: PropTypes.arrayOf(PropTypes.object),
   getCurrencySymbol: PropTypes.func.isRequired,
 }
@@ -234,7 +236,6 @@ OrderBookPanel.defaultProps = {
   removeable: true,
   dark: true,
   savedState: {},
-  isTradingTerminal: true,
   allMarketBooks: [],
   layoutID: '',
 }
