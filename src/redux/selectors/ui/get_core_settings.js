@@ -1,5 +1,4 @@
 import _get from 'lodash/get'
-import _find from 'lodash/find'
 import { createSelector } from 'reselect'
 
 import { REDUCER_PATHS } from '../../config'
@@ -8,7 +7,7 @@ const path = REDUCER_PATHS.UI
 
 const EMPTY_OBJ = {}
 
-const MAX_ORDER_COUNT_SETTING = 'te_limit_order_*'
+export const MAX_ORDER_COUNT_SETTING = 'te_limit_order_*'
 const MAX_ORDER_COUNT = 'te_limit_order_cnt'
 const MAX_ORDER_COUNT_SYMBOL = 'te_limit_order_symbol_cnt'
 
@@ -19,10 +18,7 @@ const MAX_ORDERS = {
   [MAX_ORDER_COUNT_SYMBOL]: 250,
 }
 
-const findOrderCountValue = (settings, key) => {
-  const match = _find(settings?.[MAX_ORDER_COUNT_SETTING], ([_key]) => key === _key)
-  return Number(_get(match, 1, MAX_ORDERS[key]))
-}
+const findOrderCountValue = (settings, key) => Number(_get(settings, [MAX_ORDER_COUNT_SETTING, key]))
 
 export const getMaxOrderCount = createSelector(
   getCoreSettings,
