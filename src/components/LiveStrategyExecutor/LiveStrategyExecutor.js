@@ -16,14 +16,16 @@ import './style.css'
 const DEFAULT_TIMEFRAME = '1m'
 const DEFAULT_SEED_COUNT = 150
 const DEFAULT_USE_TRADES = false
+const DEFAULT_USE_MARGIN = false
 
 const LiveStrategyExecutor = ({
-  strategyContent, markets, dsExecuteLiveStrategy, dsStopLiveStrategy, isExecuting, authToken, isLoading, options,
+  strategyContent, markets, dsExecuteLiveStrategy, dsStopLiveStrategy, isExecuting, authToken, isLoading, options, isPaperTrading,
 }) => {
   const { t } = useTranslation()
   const [timeframe, setTimeframe] = useState(options.tf || DEFAULT_TIMEFRAME)
   const [symbol, setSymbol] = useState(options.symbol ? _find(markets, m => m.wsID === options.symbol) : getDefaultMarket(markets))
   const [trades, setTrades] = useState(options.includeTrades || DEFAULT_USE_TRADES)
+  const [margin, setMargin] = useState(options.margin || DEFAULT_USE_MARGIN)
   const [candleSeed, setCandleSeed] = useState(options.seedCandleCount || DEFAULT_SEED_COUNT)
   const [seedError, setSeedError] = useState(null)
 
@@ -32,7 +34,7 @@ const LiveStrategyExecutor = ({
       if (isExecuting) {
         dsStopLiveStrategy(authToken)
       } else {
-        dsExecuteLiveStrategy(authToken, symbol?.wsID, timeframe, trades, strategyContent, candleSeed)
+        dsExecuteLiveStrategy(authToken, symbol?.wsID, timeframe, trades, strategyContent, candleSeed, margin)
       }
     }
   }
@@ -83,6 +85,24 @@ const LiveStrategyExecutor = ({
         </div>
       </div>
       <div className='hfui-backtester_row'>
+        {!isPaperTrading && (
+          <div className='hfui-backtester__flex_start'>
+            <Checkbox
+              label={t('strategyEditor.useMarginCheckbox')}
+              checked={margin}
+              onChange={setMargin}
+            />
+          </div>
+        )}
+        <div className='hfui-backtester__flex_start'>
+          <Checkbox
+            label={t('strategyEditor.useTradesCheckbox')}
+            checked={trades}
+            onChange={setTrades}
+          />
+        </div>
+      </div>
+      <div className='hfui-backtester_row'>
         <div className='hfui-backtester__flex_start'>
           <AmountInput
             className='hfui-backtester__flex_start-number-input'
@@ -92,13 +112,7 @@ const LiveStrategyExecutor = ({
             onChange={updateSeed}
           />
         </div>
-        <div className='hfui-backtester__flex_start'>
-          <Checkbox
-            label={t('strategyEditor.useTradesCheckbox')}
-            checked={trades}
-            onChange={setTrades}
-          />
-        </div>
+        <div className='hfui-backtester__flex_start' />
       </div>
       {isExecuting && !isLoading && (
         <p>
@@ -140,6 +154,7 @@ LiveStrategyExecutor.propTypes = {
     ]),
   ),
   markets: PropTypes.objectOf(PropTypes.object),
+  isPaperTrading: PropTypes.bool.isRequired,
 }
 
 LiveStrategyExecutor.defaultProps = {

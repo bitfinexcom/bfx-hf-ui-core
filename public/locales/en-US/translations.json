@@ -555,6 +555,7 @@
     "endDate": "End Date",
     "useCandlesCheckbox": "Use candles",
     "useTradesCheckbox": "Use trades",
+    "useMarginCheckbox": "Use margin trading",
     "checkboxWarningMessage": "At least one checkbox should be selected",
     "totalPL": "Total P/L",
     "avgPL": "Avg PL",

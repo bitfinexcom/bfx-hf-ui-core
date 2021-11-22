@@ -2,7 +2,9 @@ import { connect } from 'react-redux'
 
 import WSActions from '../../redux/actions/ws'
 import { getMarkets } from '../../redux/selectors/meta'
+import { getIsPaperTrading } from '../../redux/selectors/ui'
 import { getAuthToken } from '../../redux/selectors/ws'
+
 import LiveStrategyExecutor from './LiveStrategyExecutor'
 
 const mapStateToProps = (state = {}) => ({
@@ -12,14 +14,15 @@ const mapStateToProps = (state = {}) => ({
   isLoading: state.ws.execution.loading,
   options: state.ws.execution.options,
   authToken: getAuthToken(state),
+  isPaperTrading: getIsPaperTrading(state),
 })
 
 const mapDispatchToProps = (dispatch) => ({
-  dsExecuteLiveStrategy: (authToken, symbol, tf, includeTrades, strategy, seedCandleCount) => {
+  dsExecuteLiveStrategy: (authToken, symbol, tf, includeTrades, strategy, seedCandleCount, margin) => {
     dispatch(WSActions.setExecutionOptions({
-      includeTrades, seedCandleCount, symbol, tf,
+      includeTrades, seedCandleCount, symbol, tf, margin,
     }))
-    dispatch(WSActions.send(['strategy.execute_start', authToken, symbol, tf, includeTrades, strategy, seedCandleCount]))
+    dispatch(WSActions.send(['strategy.execute_start', authToken, symbol, tf, includeTrades, strategy, seedCandleCount, margin]))
     dispatch(WSActions.setExecutionLoading(true))
   },
   dsStopLiveStrategy: (authToken) => {
