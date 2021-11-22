@@ -461,9 +461,11 @@ class OrderForm extends React.Component {
               <AOParamSettings
                 key='ao-settings'
                 algoID={currentLayout.id}
+                context={context}
                 symbol={activeMarket.wsID}
                 processAOData={this.processAOData}
                 setFieldData={this.setFieldData}
+                setContext={this.onContextChange}
                 validateAOData={this.validateAOData}
                 updateValidationErrors={this.updateValidationErrors}
               />
