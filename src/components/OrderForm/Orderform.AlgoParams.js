@@ -68,7 +68,8 @@ const AlgoParams = ({
     }
   }
 
-  const onDelete = (id) => {
+  const onDelete = (e, id) => {
+    e.stopPropagation()
     dispatch(setActiveAOParamsID(null))
     dispatch(removeAlgoOrderParams(algoID, symbol, id))
   }
@@ -119,8 +120,8 @@ const AlgoParams = ({
                     >
                       {makeShorterLongName(params.name, MAX_NAME_LENGTH)}
                       {!_isEmpty(params?.id) && (
-                        <div className='hfui-orderform__ao-settings__delete'>
-                          <i className='icon-clear' role='button' aria-label='Delete Algo parameters' tabIndex={0} onClick={() => onDelete(params.id)} />
+                        <div className='hfui-orderform__ao-settings__delete' onClick={(e) => onDelete(e, params.id)}>
+                          <i className='icon-clear' role='button' aria-label='Delete Algo parameters' tabIndex={0} />
                         </div>
                       )}
                     </Item>
