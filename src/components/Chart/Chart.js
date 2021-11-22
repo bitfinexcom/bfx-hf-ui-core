@@ -4,19 +4,19 @@ import { reduxSelectors } from '@ufx-ui/bfx-containers'
 import PropTypes from 'prop-types'
 
 import { CHART_URL, env } from '../../redux/config'
+import { getPairFromMarket } from '../../util/market'
 
 import './style.css'
 
 const { getCurrencySymbolMemo } = reduxSelectors
 
-const Chart = ({
-  market: {
+const Chart = ({ market }) => {
+  const {
     wsID, base, quote, isPerp, uiID: _uiID,
-  },
-}) => {
+  } = market
   const getCurrencySymbol = useSelector(getCurrencySymbolMemo)
 
-  const uiID = isPerp ? _uiID : `${getCurrencySymbol(base)}/${getCurrencySymbol(quote)}`
+  const uiID = isPerp ? _uiID : getPairFromMarket(market, getCurrencySymbol)
 
   const queryString = new URLSearchParams({
     wsID,
