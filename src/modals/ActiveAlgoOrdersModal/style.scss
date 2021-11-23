@@ -27,7 +27,7 @@
 
       &:hover {
         cursor: pointer;
-        background-color: $darker-background-color;
+        background-color: var(--darker-background-color);
       }
     }
 

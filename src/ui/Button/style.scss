@@ -1,9 +1,9 @@
 @import '../../variables.scss';
 
 .hfui-button, button {
-  background: $input-background-color;
+  background: var(--lighter-background-color);
   border: none;
-  color: $light-color-800;
+  color: var(--shade-8);
   font-size: 13px;
   font-weight: 600;
   border-radius: $border-radius;
@@ -12,17 +12,18 @@
 
   &:hover:not(.disabled),
   &:focus:not(.disabled) {
-    background-color: lighten($input-background-color, 6%);
+    opacity: .8;
   }
 
   &:active:not(.disabled) {
     transition-duration: .05s;
-    background-color: $input-background-color;
+    background-color: var(--lighter-background-color);
   }
 
   &.red {
     background: $red-color;
     border-color: $red-color;
+    color: mix(white, $red-button-color, 90%);
 
     &:hover:not(.disabled),
     &:focus:not(.disabled) {

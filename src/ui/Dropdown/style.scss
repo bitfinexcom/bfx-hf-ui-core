@@ -2,7 +2,7 @@
 
 .ufx-dropdown {
   font-weight: 500;
-  color: $light-color-800;
+  color: var(--shade-8);
 
   .ufx-input {
     input {
@@ -12,7 +12,7 @@
 
   &.is-highlighted {
     .dropdown-field {
-      border: 1px solid mix($white-color, $input-background-color, 15%);
+      border: 1px solid var(--white-background-mix);
     }
   }
 

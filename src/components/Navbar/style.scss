@@ -7,7 +7,7 @@
   flex-wrap: wrap;
 
   font-size: 13px;
-  background: $panel-background-color;
+  background: var(--darker-background-color);
   height: 52px;
   padding: 0 spacing(1.25);
   margin-bottom: 20px;
@@ -22,9 +22,8 @@
     background-color: transparent !important;
   }
 
-  &,
-  button {
-    color: $text-color;
+  &, button {
+    color: var(--text-color);
   }
 
   > p {
@@ -49,13 +48,12 @@
     height: 52px;
     font-size: 13px;
     font-weight: 600;
-    transition: all 0.2s;
-    color: $light-color-600;
+    transition: all .2s;
+    color: var(--shade-6);
 
-    &:hover,
-    &.active {
-      border-bottom: 2px solid $primary-color-900;
-      color: $light-color-900;
+    &:hover, &.active {
+      border-bottom: 2px solid var(--primary-9);
+      color: var(--shade-9);
     }
 
     &.hover {
@@ -121,14 +119,14 @@
   transform: translateX(-50%);
   min-width: 256px;
   padding: spacing(0.5) 0;
-  background: $lighter-background-color;
+  background: var(--lighter-background-color);
   border-radius: $border-radius;
-  // border: 1px solid $light-color-100;
+  // border: 1px solid var(--shade-1);
 }
 
 .hfui-navbar__layout-settings__title,
 .hfui-orderform__ao-settings__title {
-  color: $light-color-900;
+  color: var(--shade-9);
   font-size: 14px;
   font-weight: 600;
   padding: spacing(0.5) spacing(1);
@@ -137,13 +135,13 @@
 .hfui-navbar__layout-settings__separator,
 .hfui-orderform__ao-settings__separator {
   height: 1px;
-  background: $light-color-100;
+  background: var(--shade-1);
   margin: spacing(0.5) 0;
 }
 
 .hfui-navbar__layout-settings__item,
 .hfui-orderform__ao-settings__item {
-  color: $light-color-600;
+  color: var(--shade-6);
   font-size: 14px;
   font-weight: 500;
   padding: spacing(0.5) spacing(1);
@@ -152,12 +150,12 @@
 
   &.is-disabled {
     cursor: default;
-    color: $light-color-200;
+    color: var(--shade-2);
   }
 
   &:hover:not(.is-disabled) {
-    background: $light-color-100;
-    color: $light-color-900;
+    background: var(--shade-1);
+    color: var(--shade-9);
   }
 
   &.is-layout {
@@ -190,7 +188,7 @@
         opacity: 1;
 
         &:hover {
-          background: $light-color-300;
+          background: var(--shade-3);
         }
       }
     }
@@ -207,7 +205,7 @@
 
   .hfui-navbar__layout-settings__item-unsaved,
   .hfui-orderform__ao-settings__item-unsaved {
-    color: $light-color-300;
+    color: var(--shade-3);
   }
 }
 
@@ -244,8 +242,8 @@
 
   &:hover,
   &:focus {
-    background: $light-color-50 !important;
-    color: $light-color-900;
+    background: var(--shade-0) !important;
+    color: var(--shade-9);
   }
 
   &:active {
@@ -253,14 +251,14 @@
   }
 
   &.is-open {
-    background: $primary-color-100 !important;
-    color: $primary-color-900;
+    background: var(--primary-1) !important;
+    color: var(--primary-9);
   }
 }
 
 .hfui-tradingpaper__control {
   display: flex;
-  border-right: 1px solid $panel-background-color;
+  border-right: 1px solid var(--darker-background-color);
   flex-direction: row;
   // margin-right: 16px; TODO: add once LanguageSettings is added
 

@@ -14,7 +14,7 @@
   
     &:hover {
       cursor: pointer;
-      color: $text-color;
+      color: var(--shade-7);
     }
   }
 }

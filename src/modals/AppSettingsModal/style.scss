@@ -14,7 +14,7 @@
   &__title {
     font-weight: 600;
     font-size: 14px;
-    color: $light-color-900;
+    color: var(--shade-9);
     margin-bottom: spacing();
   }
 
@@ -24,7 +24,7 @@
 
   &__tabs {
     border-radius: $border-radius;
-    background: $panel-background-color;
+    background: var(--darker-background-color);
     padding: spacing(0.75) spacing(0.5);
   }
 
@@ -34,7 +34,7 @@
     cursor: pointer;
     border-radius: $border-radius;
     transition: all 0.2s;
-    color: $light-color-500;
+    color: var(--shade-5);
     margin-bottom: spacing(0.5);
     font-weight: 600;
 
@@ -43,13 +43,13 @@
     }
 
     &:hover {
-      color: $light-color-800;
-      background-color: $light-color-50;
+      color: var(--shade-8);
+      background-color: var(--shade-0);
     }
 
     &.is-active {
-      background: $primary-color-50;
-      color: $primary-color-800;
+      background: var(--primary-0);
+      color: var(--primary-8);
     }
   }
 
@@ -72,12 +72,12 @@
 
   &__description {
     padding-left: 25px; // match ufx checkbox
-    color: $light-color-500;
+    color: var(--shade-5);
   }
 
   &__warning {
     display: inline-block;
-    background: mix($red-color, $background-color, 10%);
+    background: var(--red-background);
     border-radius: $border-radius;
     color: $red-color;
     padding: spacing(0.5) spacing();
@@ -85,8 +85,16 @@
 
   &__checkbox {
     font-weight: 600;
-    color: $light-color-800;
+    color: var(--shade-8);
     margin-bottom: spacing(0.5);
+  }
+
+  &__dropdown {
+    .hfui-dropdown__wrapper {
+      p {
+        margin-bottom: 10px;
+      }
+    }
   }
 
   &__input {
@@ -105,18 +113,18 @@
     margin-bottom: spacing(1.5);
 
     &.is-success {
-      color: $primary-color-900;
-      background: $primary-color-50;
+      color: var(--primary-9);
+      background: var(--primary-0);
     }
 
     &.is-error {
       color: $red-color;
-      background: mix($red-color, $background-color, 10%);
+      background: var(--red-background);
     }
 
     &.is-warning {
       color: $yellow-color;
-      background: mix($yellow-color, $background-color, 10%);
+      background: var(--yellow-background-mix);
     }
 
     svg {

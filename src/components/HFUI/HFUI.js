@@ -6,6 +6,7 @@ import { Route, Switch, Redirect } from 'react-router'
 import PropTypes from 'prop-types'
 import _isFunction from 'lodash/isFunction'
 
+import { THEMES, SETTINGS } from '../../redux/selectors/ui'
 import useInjectBfxData from '../../hooks/useInjectBfxData'
 import StrategyEditorPage from '../../pages/StrategyEditor'
 import NotificationsSidebar from '../NotificationsSidebar'
@@ -40,6 +41,7 @@ const HFUI = ({
   subscribeAllTickers,
   shouldShowAOPauseModalState,
   settingsShowAlgoPauseInfo,
+  settingsTheme,
   isBfxConnected,
 }) => {
   useInjectBfxData()
@@ -80,6 +82,19 @@ const HFUI = ({
       }
     }
   }, [authToken, onElectronAppClose, settingsShowAlgoPauseInfo])
+
+  useEffect(() => {
+    const { body } = document
+    const lsTheme = localStorage.getItem(SETTINGS.THEME)
+
+    if (authToken && lsTheme !== settingsTheme) {
+      localStorage.setItem(SETTINGS.THEME, settingsTheme)
+    }
+
+    body.classList.remove(THEMES.DARK)
+    body.classList.remove(THEMES.LIGHT)
+    body.classList.add(settingsTheme)
+  }, [settingsTheme, authToken])
 
   useEffect(() => {
     GAPageview(currentPage)
@@ -147,6 +162,7 @@ HFUI.propTypes = {
   subscribeAllTickers: PropTypes.func.isRequired,
   shouldShowAOPauseModalState: PropTypes.func.isRequired,
   settingsShowAlgoPauseInfo: PropTypes.bool,
+  settingsTheme: PropTypes.oneOf([THEMES.LIGHT, THEMES.DARK]),
   isBfxConnected: PropTypes.bool,
 }
 
@@ -154,6 +170,7 @@ HFUI.defaultProps = {
   authToken: '',
   currentPage: '',
   settingsShowAlgoPauseInfo: true,
+  settingsTheme: THEMES.DARK,
   isBfxConnected: false,
 }
 

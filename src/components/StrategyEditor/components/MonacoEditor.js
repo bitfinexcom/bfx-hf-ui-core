@@ -3,12 +3,14 @@ import React, { useEffect } from 'react'
 import PropTypes from 'prop-types'
 import _isEmpty from 'lodash/isEmpty'
 
+import { THEMES } from '../../../redux/selectors/ui'
+
 const HF_MONACO_THEME = 'HFTheme'
 const monacoOptions = {
   automaticLayout: true,
 }
 
-const MonacoEditor = ({ value, onChange }) => {
+const MonacoEditor = ({ value, onChange, theme }) => {
   useEffect(() => {
     if (_isEmpty(monaco)) {
       return
@@ -24,12 +26,16 @@ const MonacoEditor = ({ value, onChange }) => {
     monaco.editor.setTheme(HF_MONACO_THEME)
   }, [])
 
+  useEffect(() => {
+    monaco.editor.setTheme(theme === THEMES.DARK ? HF_MONACO_THEME : 'vs')
+  }, [theme])
+
   return (
     <Editor
       height='100%'
       width='100%'
       language='javascript'
-      theme={HF_MONACO_THEME}
+      theme={theme === THEMES.DARK ? HF_MONACO_THEME : 'vs'}
       value={value}
       onChange={onChange}
       options={monacoOptions}
@@ -40,6 +46,7 @@ const MonacoEditor = ({ value, onChange }) => {
 MonacoEditor.propTypes = {
   value: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
+  theme: PropTypes.oneOf([THEMES.LIGHT, THEMES.DARK]).isRequired,
 }
 
 export default MonacoEditor

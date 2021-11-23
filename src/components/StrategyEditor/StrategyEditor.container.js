@@ -3,7 +3,7 @@ import WSActions from '../../redux/actions/ws'
 import UIActions from '../../redux/actions/ui'
 import GAActions from '../../redux/actions/google_analytics'
 import { getAuthToken, getSortedByTimeStrategies, getBacktestResults } from '../../redux/selectors/ws'
-import { getStrategyId } from '../../redux/selectors/ui'
+import { getStrategyId, getThemeSetting } from '../../redux/selectors/ui'
 
 import StrategyEditor from './StrategyEditor'
 
@@ -15,6 +15,7 @@ const mapStateToProps = (state = {}) => ({
   backtestResults: getBacktestResults(state),
   liveExecuting: state.ws.execution.executing,
   liveLoading: state.ws.execution.loading,
+  settingsTheme: getThemeSetting(state),
 })
 
 const mapDispatchToProps = dispatch => ({

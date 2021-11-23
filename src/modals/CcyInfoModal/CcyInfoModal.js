@@ -7,13 +7,14 @@ import InnerHTML from 'dangerously-set-html-content'
 import { Spinner } from '@ufx-ui/core'
 import Modal from '../../ui/Modal'
 
+import { THEMES } from '../../redux/selectors/ui'
 import './style.css'
 
+const CHART_COLOUR_BLACK = '#c0bfbc'
+const CHART_COLOUR_WHITE = '#efefef'
+
 const CcyInfoModal = ({
-  onClose,
-  isModalVisible,
-  fetchCcyArticle,
-  article,
+  onClose, isModalVisible, fetchCcyArticle, article, settingsTheme,
 }) => {
   const { body, title } = article
 
@@ -30,11 +31,16 @@ const CcyInfoModal = ({
     }
 
     const links = containerRef.current.querySelectorAll('a')
+    const chart = containerRef.current.querySelectorAll('div.coingecko-coin-ticker-widget')[0]
+    const chartBgColour = settingsTheme === THEMES.DARK ? CHART_COLOUR_BLACK : CHART_COLOUR_WHITE
+
     _forEach(links, link => {
       link.target = '_blank'
       link.rel = 'noopener noreferrer'
     })
-  }, [body])
+
+    chart.setAttribute('data-background-color', chartBgColour)
+  }, [body, settingsTheme])
 
   return (
     <Modal
@@ -60,6 +66,7 @@ CcyInfoModal.propTypes = {
     body: PropTypes.string,
     title: PropTypes.string,
   }),
+  settingsTheme: PropTypes.oneOf([THEMES.LIGHT, THEMES.DARK]),
 }
 
 CcyInfoModal.defaultProps = {
@@ -67,6 +74,7 @@ CcyInfoModal.defaultProps = {
     body: null,
     title: null,
   },
+  settingsTheme: THEMES.DARK,
 }
 
 export default memo(CcyInfoModal)

@@ -6,6 +6,7 @@ import _omitBy from 'lodash/omitBy'
 import _isNil from 'lodash/isNil'
 import { useTranslation } from 'react-i18next'
 
+import { THEMES } from '../../redux/selectors/ui'
 import RenderHistoricalReport from './reports/HistoricalReport'
 import RenderHistoricalForm from './forms/HistoricalForm'
 
@@ -30,17 +31,8 @@ const backtestMethods = [
 ]
 
 const Backtester = ({
-  backtestData,
-  strategyContent,
-  markets,
-  backtestResults,
-  backtestOptions,
-  authToken,
-  dsExecuteBacktest,
-  setBacktestOptions,
-  indicators,
-  onAddIndicator,
-  onDeleteIndicator,
+  backtestData, strategyContent, markets, backtestResults, backtestOptions, authToken, dsExecuteBacktest, setBacktestOptions,
+  indicators, onAddIndicator, onDeleteIndicator, settingsTheme,
 }) => {
   const [execError, setExecError] = useState(null)
   const [executionType, setExecutionType] = useState(backtestMethods[0])
@@ -111,7 +103,7 @@ const Backtester = ({
     return (
       <div className='hfui-backtester__wrapper'>
         <executionType.form {...opts} />
-        {executionType.renderReport({ ...opts }, backtestResults, backtestData, backtestOptions, t)}
+        {executionType.renderReport({ ...opts }, backtestResults, backtestData, backtestOptions, t, settingsTheme)}
       </div>
     )
   }
@@ -148,6 +140,7 @@ Backtester.propTypes = {
   setBacktestOptions: PropTypes.func.isRequired,
   onAddIndicator: PropTypes.func,
   onDeleteIndicator: PropTypes.func,
+  settingsTheme: PropTypes.oneOf([THEMES.LIGHT, THEMES.DARK]),
 }
 
 Backtester.defaultProps = {
@@ -166,6 +159,7 @@ Backtester.defaultProps = {
   backtestOptions: {},
   onAddIndicator: () => { },
   onDeleteIndicator: () => { },
+  settingsTheme: THEMES.DARK,
 }
 
 export default memo(Backtester)

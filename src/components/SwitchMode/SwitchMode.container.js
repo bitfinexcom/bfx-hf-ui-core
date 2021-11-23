@@ -1,12 +1,13 @@
 import { connect } from 'react-redux'
 
 import UIActions from '../../redux/actions/ui'
-import { getIsPaperTrading, getIsTradingModeModalVisible } from '../../redux/selectors/ui'
+import { getIsPaperTrading, getIsTradingModeModalVisible, getThemeSetting } from '../../redux/selectors/ui'
 import SwitchMode from './SwitchMode'
 
 const mapStateToProps = (state = {}) => ({
   isPaperTrading: getIsPaperTrading(state),
   isTradingModeModalVisible: getIsTradingModeModalVisible(state),
+  settingsTheme: getThemeSetting(state),
 })
 
 const mapDispatchToProps = dispatch => ({

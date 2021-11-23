@@ -5,10 +5,30 @@ import _map from 'lodash/map'
 // eslint-disable-next-line import/no-extraneous-dependencies
 import BFXChart from 'bfx-hf-chart'
 
+import { THEMES } from '../../../redux/selectors/ui'
 import Results from '../Results'
 import StrategyTradesTable from '../../StrategyTradesTable'
 
-const HistoricalReport = (opts, results, backtestData, backtestOptions, t) => {
+const CHART_THEME = {
+  [THEMES.LIGHT]: {
+    bgColor: '#efefef',
+    AXIS_COLOR: '#444',
+    AXIS_TICK_COLOR: '#00000000',
+    AXIS_LABEL_COLOR: '#000e1a',
+    OHLC_LABEL_COLOR: '#000e1a',
+    OHLC_LABEL_VALUE_COLOR: '#414f5a',
+    RISING_VOL_FILL: 'rgba(9, 220, 34, 0.05)',
+    FALLING_VOL_FILL: 'rgba(94, 32, 35, 0.05)',
+  },
+  [THEMES.DARK]: {
+    bgColor: '#102331',
+    AXIS_COLOR: '#444',
+    AXIS_TICK_COLOR: '#00000000',
+  },
+}
+
+const HistoricalReport = (opts, results, backtestData, backtestOptions, t, settingsTheme) => {
+  const chartColours = CHART_THEME[settingsTheme]
   const { trades = [] } = results
   const { indicators, onAddIndicator, onDeleteIndicator } = opts
   const { candles = [] } = backtestData
@@ -46,11 +66,8 @@ const HistoricalReport = (opts, results, backtestData, backtestOptions, t) => {
               onDeleteIndicator={onDeleteIndicator}
               isSyncing={false}
               candleLoadingThreshold={3} // we always get 1 candle when sub'ing
-              bgColor='#102331'
-              config={{
-                AXIS_COLOR: '#444',
-                AXIS_TICK_COLOR: '#00000000',
-              }}
+              bgColor={chartColours.bgColor}
+              config={chartColours}
               candleWidth={tf}
               disableToolbar
               showMarketLabel={false}

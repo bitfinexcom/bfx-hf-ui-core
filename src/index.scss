@@ -24,13 +24,70 @@ body button:focus {
 }
 
 .react-datepicker {
-  background-color: $panel-background-color;
-  color: $text-color;
+  background-color: var(--darker-background-color);
+  color: var(--shade-7);
   border: none;
 }
 
+.ufx-input {
+  .input-field-container {
+    background: var(--lighter-background-color) !important;
+
+    > input {
+      background: var(--lighter-background-color) !important;
+    }
+  }
+}
+
+body.Light {
+  .react-datepicker__header {
+    background-color: var(--background-color) !important;
+  }
+
+  .react-datepicker__day--selected {
+    color: $white-color !important;
+    background-color: var(--secondary-5);
+  }
+
+  li.react-datepicker__time-list-item:hover {
+    background-color: var(--background-color) !important;
+  }
+
+  .react-datepicker__year-select,
+  .react-datepicker__month-select {
+    background-color: var(--background-color) !important;
+    color: var(--text-color) !important;
+    border: 1px solid var(--shade-3);
+  }
+
+  .react-datepicker__input-container input {
+    margin-right: 5px;
+    background-color: var(--background-color) !important;
+  }
+
+  .ufx-dropdown {
+    color: var(--text-color) !important;
+
+    .list-wrapper {
+      background-color: var(--background-color) !important;
+    }
+
+    .list-item:active {
+      background-color: var(--shade-4);
+      color: var(--background-color);
+    }
+  }
+}
+
+.react-datepicker__input-container input {
+  color: var(--text-color);
+  padding-left: 10px !important;
+  margin-right: 5px;
+  background-color: rgb(16, 35, 49);
+}
+
 .react-datepicker__time-container .react-datepicker__time {
-  background: $panel-background-color;
+  background: var(--darker-background-color);
   border: none;
 }
 .react-datepicker__time-container {
@@ -53,6 +110,8 @@ body button:focus {
 .react-datepicker__time-list-item {
   width: auto !important;
   flex-direction: row;
+  margin-bottom: 0 !important;
+  align-items: center;
 }
 
 .react-datepicker-popper {
@@ -68,7 +127,7 @@ body button:focus {
 }
 
 .react-datepicker-time__header {
-  color: $text-color;
+  color: var(--shade-7);
   border: none;
 }
 
@@ -91,12 +150,12 @@ body button:focus {
 .react-datepicker__day-name,
 .react-datepicker__day,
 .react-datepicker__time-name {
-  color: $text-color;
+  color: var(--shade-7);
 }
 
 .react-datepicker__day:hover,
 .react-datepicker__month-text:hover {
-  background-color: $grey-color;
+  background-color: var(--background-color);
 }
 
 .react-datepicker__day--keyboard-selected,
@@ -104,7 +163,7 @@ body button:focus {
 .react-datepicker__day--keyboard-selected,
 .react-datepicker__month-text--keyboard-selected {
   background: $yellow-color;
-  color: $black-color;
+  color: var(--text-color);
 }
 
 .react-datepicker-wrapper,
@@ -122,7 +181,7 @@ body button:focus {
   margin: 0 5px;
 
   select {
-    color: $text-color;
+    color: var(--shade-7);
     background-color: $black-color;
     font-weight: bold;
     font-size: 0.9rem;
@@ -148,8 +207,8 @@ body button:focus {
 
 .__react_component_tooltip,
 .ufx-tooltip {
-  background-color: $tooltip-background-color !important;
-  color: $tooltip-text-color !important;
+  background-color: var(--darker-background-color) !important;
+  color: var(--text-color) !important;
 }
 
 .tooltip-arrow {
@@ -192,8 +251,8 @@ body {
   -moz-osx-font-smoothing: grayscale;
   font-weight: 500;
 
-  background: $background-color;
-  color: $text-color;
+  background: var(--background-color);
+  color: var(--shade-7);
 
   margin: 0;
   overflow: hidden;
@@ -292,24 +351,24 @@ a:visited {
 }
 
 ::-webkit-input-placeholder {
-  color: $light-color-300;
+  color: var(--shade-3);
   -webkit-font-smoothing: antialiased;
 }
 
 :-moz-placeholder {
-  color: $light-color-300;
+  color: var(--shade-3);
   opacity: 1;
   -moz-osx-font-smoothing: grayscale;
 }
 
 ::-moz-placeholder {
-  color: $light-color-300;
+  color: var(--shade-3);
   opacity: 1;
   -moz-osx-font-smoothing: grayscale;
 }
 
 :-ms-input-placeholder {
-  color: $light-color-300;
+  color: var(--shade-3);
   -webkit-font-smoothing: antialiased;
 }
 
@@ -320,12 +379,12 @@ a:visited {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: $light-color-100 !important;
+  background: var(--shade-1) !important;
   border: 0 !important;
   transition: background-color 0.1s;
 
   &:hover {
-    background: $light-color-300 !important;
+    background: var(--shade-3) !important;
   }
 }
 

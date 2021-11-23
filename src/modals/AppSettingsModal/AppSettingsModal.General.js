@@ -1,8 +1,13 @@
-import React, { memo, useState, useEffect } from 'react'
+import React, {
+  memo, useState, useEffect, useMemo,
+} from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Checkbox } from '@ufx-ui/core'
 import { useTranslation } from 'react-i18next'
+import _values from 'lodash/values'
+import _map from 'lodash/map'
 
+import Dropdown from '../../ui/Dropdown'
 import WSActions from '../../redux/actions/ws'
 import GAActions from '../../redux/actions/google_analytics'
 import { getActiveAlgoOrders } from '../../redux/actions/ao'
@@ -12,15 +17,17 @@ import {
   updateAutoLoginState,
 } from '../../util/autologin'
 import {
-  SETTINGS, getDMSSetting, getGASetting, getShowAlgoPauseInfoSetting, getRebootSetting,
+  SETTINGS, getDMSSetting, getGASetting, getShowAlgoPauseInfoSetting, getRebootSetting, getThemeSetting, THEMES,
 } from '../../redux/selectors/ui'
 
 const INITIAL_AUTO_LOGIN = getAutoLoginState()
 
 const General = () => {
   const dispatch = useDispatch()
+  const { t } = useTranslation()
   const settingsDms = useSelector(getDMSSetting)
   const settingsGa = useSelector(getGASetting)
+  const settingsTheme = useSelector(getThemeSetting)
   const settingsShowAlgoPauseInfo = useSelector(getShowAlgoPauseInfoSetting)
   const settingsRebootAutomatically = useSelector(getRebootSetting)
 
@@ -29,8 +36,12 @@ const General = () => {
   const [isGaChecked, setIsGaChecked] = useState(settingsGa)
   const [isRebootChecked, setIsRebootChecked] = useState(settingsRebootAutomatically)
   const [isShowAlgoPauseInfoChecked, setIsShowAlgoPauseInfoChecked] = useState(settingsShowAlgoPauseInfo)
+  const [currentTheme, setCurrentTheme] = useState(settingsTheme)
 
-  const { t } = useTranslation()
+  const themes = useMemo(() => _map(_values(THEMES), (value) => ({
+    label: t(`appSettings.${value}`),
+    value,
+  })), [t])
 
   useEffect(() => {
     setIsDmsChecked(settingsDms)
@@ -39,6 +50,10 @@ const General = () => {
   useEffect(() => {
     setIsGaChecked(settingsGa)
   }, [settingsGa])
+
+  useEffect(() => {
+    setCurrentTheme(settingsTheme)
+  }, [settingsTheme])
 
   useEffect(() => {
     setIsShowAlgoPauseInfoChecked(settingsShowAlgoPauseInfo)
@@ -55,6 +70,13 @@ const General = () => {
     setIsGaChecked(nextGa)
     dispatch(WSActions.saveSettings(SETTINGS.GA, nextGa))
     dispatch(GAActions.updateSettings())
+  }
+
+  const updateTheme = (nextTheme) => {
+    setCurrentTheme(nextTheme)
+    dispatch(WSActions.saveSettings(SETTINGS.THEME, nextTheme))
+    dispatch(GAActions.updateSettings())
+    localStorage.setItem(SETTINGS.THEME, nextTheme)
   }
 
   const updateAOPause = (nextAOPause) => {
@@ -99,6 +121,14 @@ const General = () => {
           label={t('appSettings.usageReportingCheckbox')}
           checked={isGaChecked}
           className='appsettings-modal__checkbox'
+        />
+      </div>
+      <div className='appsettings-modal__setting appsettings-modal__dropdown'>
+        <Dropdown
+          label={t('appSettings.themeSetting')}
+          onChange={updateTheme}
+          value={currentTheme}
+          options={themes}
         />
       </div>
       <div className='appsettings-modal__setting'>

@@ -2,16 +2,19 @@ import React, { useState, useEffect, memo } from 'react'
 import PropTypes from 'prop-types'
 import _isEmpty from 'lodash/isEmpty'
 import { useTranslation } from 'react-i18next'
+
+import { THEMES } from '../../redux/selectors/ui'
 import Panel from '../../ui/Panel'
 import Chart from '../Chart'
 import MarketSelect from '../MarketSelect'
 import { getPairFromMarket } from '../../util/market'
+import './style.css'
 
 import './style.css'
 
 const ChartPanel = ({
-  dark, label, onRemove, moveable, removeable, showChartMarket, markets, canChangeMarket,
-  activeMarket, savedState: { currentMarket: _currentMarket }, updateState, layoutID, layoutI, showMarket, getCurrencySymbol,
+  dark, label, onRemove, moveable, removeable, showChartMarket, markets, canChangeMarket, activeMarket,
+  savedState: { currentMarket: _currentMarket }, updateState, layoutID, layoutI, showMarket, getCurrencySymbol, settingsTheme,
 }) => {
   const [currentMarket, setCurrentMarket] = useState(_currentMarket || activeMarket)
   const currentPair = getPairFromMarket(currentMarket, getCurrencySymbol)
@@ -67,7 +70,7 @@ const ChartPanel = ({
       headerComponents={showMarket && !canChangeMarket && <p>{isPerp ? uiID : currentPair}</p>}
       className='hfui-chart__wrapper'
     >
-      <Chart market={currentMarket} />
+      <Chart market={currentMarket} theme={settingsTheme} />
     </Panel>
   )
 }
@@ -96,6 +99,7 @@ ChartPanel.propTypes = {
   }),
   markets: PropTypes.objectOf(PropTypes.object),
   getCurrencySymbol: PropTypes.func.isRequired,
+  settingsTheme: PropTypes.oneOf([THEMES.LIGHT, THEMES.DARK]),
 }
 
 ChartPanel.defaultProps = {
@@ -116,6 +120,7 @@ ChartPanel.defaultProps = {
   canChangeMarket: false,
   showMarket: false,
   layoutID: '',
+  settingsTheme: THEMES.DARK,
 }
 
 export default memo(ChartPanel)
