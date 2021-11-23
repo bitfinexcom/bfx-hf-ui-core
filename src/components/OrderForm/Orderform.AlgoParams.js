@@ -39,7 +39,7 @@ const Item = ({
 )
 
 const AlgoParams = ({
-  algoID, symbol, processAOData, setFieldData, validateAOData, updateValidationErrors,
+  algoID, symbol, processAOData, setFieldData, validateAOData, updateValidationErrors, context, setContext,
 }) => {
   const dispatch = useDispatch()
   const [isOpen, setIsOpen] = useState(false)
@@ -52,12 +52,16 @@ const AlgoParams = ({
   const onSave = () => {
     if (!_isNull(activeAOID)) {
       const { name, id } = _find(selectedAOParams, (p) => p?.id === activeAOID)
-      const params = processAOData()
+      let params = processAOData()
       const errors = validateAOData(params)
 
       if (!_isEmpty(errors)) {
         updateValidationErrors(errors)
         return
+      }
+      params = {
+        ...params,
+        context,
       }
 
       const payload = {
@@ -68,7 +72,8 @@ const AlgoParams = ({
     }
   }
 
-  const onDelete = (id) => {
+  const onDelete = (e, id) => {
+    e.stopPropagation()
     dispatch(setActiveAOParamsID(null))
     dispatch(removeAlgoOrderParams(algoID, symbol, id))
   }
@@ -81,6 +86,10 @@ const AlgoParams = ({
       if (percentageParams[i] in updatedParams) {
         updatedParams[percentageParams[i]] *= 100
       }
+    }
+
+    if (updatedParams?.context) {
+      setContext(updatedParams.context)
     }
 
     dispatch(setActiveAOParamsID(id))
@@ -119,8 +128,8 @@ const AlgoParams = ({
                     >
                       {makeShorterLongName(params.name, MAX_NAME_LENGTH)}
                       {!_isEmpty(params?.id) && (
-                        <div className='hfui-orderform__ao-settings__delete'>
-                          <i className='icon-clear' role='button' aria-label='Delete Algo parameters' tabIndex={0} onClick={() => onDelete(params.id)} />
+                        <div className='hfui-orderform__ao-settings__delete' onClick={(e) => onDelete(e, params.id)}>
+                          <i className='icon-clear' role='button' aria-label='Delete Algo parameters' tabIndex={0} />
                         </div>
                       )}
                     </Item>
@@ -136,6 +145,7 @@ const AlgoParams = ({
         onClose={() => setIsAddNewParamModalOpen(false)}
         algoID={algoID}
         symbol={symbol}
+        context={context}
         processAOData={processAOData}
         validateAOData={validateAOData}
       />
@@ -150,6 +160,8 @@ AlgoParams.propTypes = {
   setFieldData: PropTypes.func.isRequired,
   validateAOData: PropTypes.func.isRequired,
   updateValidationErrors: PropTypes.func.isRequired,
+  context: PropTypes.string.isRequired,
+  setContext: PropTypes.func.isRequired,
 }
 
 export default memo(AlgoParams)

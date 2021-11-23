@@ -11,7 +11,7 @@ import { saveAlgoOrderParams } from '../../../../redux/actions/ao'
 const MAX_LABEL_LENGTH = 30
 
 const AddNewParamModal = ({
-  onClose, isOpen, algoID, symbol, processAOData, validateAOData,
+  onClose, isOpen, algoID, symbol, processAOData, validateAOData, context,
 }) => {
   const dispatch = useDispatch()
   const [name, setName] = useState('')
@@ -35,12 +35,16 @@ const AddNewParamModal = ({
       return
     }
 
-    const params = processAOData()
+    let params = processAOData()
     const errors = validateAOData(params)
     if (!_isEmpty(errors)) {
       const { field, message } = errors
       setError(`AO Params Validation Error: ${field} - ${message}`)
       return
+    }
+    params = {
+      ...params,
+      context,
     }
 
     const payload = {
@@ -80,6 +84,7 @@ AddNewParamModal.propTypes = {
   symbol: PropTypes.string.isRequired,
   processAOData: PropTypes.func.isRequired,
   validateAOData: PropTypes.func.isRequired,
+  context: PropTypes.string.isRequired,
 }
 
 export default memo(AddNewParamModal)
