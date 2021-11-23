@@ -32,6 +32,7 @@ const CreateNewLayoutModal = ({ onClose, isOpen }) => {
     <Modal
       isOpen={isOpen}
       onClose={onClose}
+      onSubmit={onSubmitHandler}
       className='hfui-createnewlayoutmodal__wrapper'
       label={t('layoutSettings.addLayout')}
     >

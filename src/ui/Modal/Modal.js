@@ -9,7 +9,7 @@ import './style.css'
 const FOCUSABLE_ELEMENTS = ['input', 'button', '[role=button]']
 
 const Modal = ({
-  label, isOpen, onClose, children, className, scrollable, ...rest
+  label, isOpen, onClose, onSubmit, children, className, scrollable, ...rest
 }) => {
   useEffect(() => {
     // focus on the first interactable element
@@ -19,6 +19,11 @@ const Modal = ({
       const footer = document.querySelector('.modal__footer')
       if (el && footer && !footer.contains(el)) {
         el.focus()
+      } else {
+        const titleNode = document.querySelector('.modal__title')
+        if (titleNode && titleNode.focus) {
+          titleNode.focus()
+        }
       }
     }
   }, [isOpen])
@@ -28,6 +33,7 @@ const Modal = ({
       isOpen={isOpen}
       title={label}
       onClose={onClose}
+      onSubmit={onSubmit}
       className={className}
       textAlign='left'
       {...rest}
@@ -46,6 +52,7 @@ Modal.propTypes = {
   label: PropTypes.string,
   className: PropTypes.string,
   onClose: PropTypes.func.isRequired,
+  onSubmit: PropTypes.func,
   children: PropTypes.oneOfType([PropTypes.array, PropTypes.object]).isRequired,
   scrollable: PropTypes.bool,
 }
@@ -54,6 +61,7 @@ Modal.defaultProps = {
   label: '',
   className: '',
   scrollable: false,
+  onSubmit: () => { },
 }
 
 Modal.Footer = Dialog.Footer

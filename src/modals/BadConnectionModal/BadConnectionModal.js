@@ -71,6 +71,7 @@ const BadConnection = ({
       className='hfui-bad-conn-modal__wrapper'
       isOpen={visible}
       onClose={onClose}
+      onSubmit={onSubmit}
     >
       <p>{t('badConnectionModal.text1', { action })}</p>
       <p>{t('badConnectionModal.text2')}</p>

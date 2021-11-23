@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 
-import { handleActiveOrders, showActiveOrdersModal } from '../../redux/actions/ao'
+import { handleActiveOrders } from '../../redux/actions/ao'
 import { getActiveAlgoOrders } from '../../redux/selectors/ao'
 
 import ActiveAlgoOrdersModal from './ActiveAlgoOrdersModal'
@@ -10,7 +10,6 @@ const mapStateToProps = (state = {}) => ({
 })
 
 const mapDispatchToProps = {
-  showActiveOrdersModal,
   handleActiveOrders,
 }
 

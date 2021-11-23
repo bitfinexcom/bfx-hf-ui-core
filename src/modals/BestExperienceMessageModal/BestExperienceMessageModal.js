@@ -37,6 +37,7 @@ const BestExperienceMessageModal = () => {
       label={t('bestExperienceMessageModal.title')}
       isOpen={isOpen}
       onClose={closeBestExperienceModal}
+      onSubmit={onSubmitBestExperienceModal}
     >
       <p>{t('bestExperienceMessageModal.text1')}</p>
       <p>{t('bestExperienceMessageModal.text2')}</p>
