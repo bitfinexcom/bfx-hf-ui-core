@@ -18,6 +18,7 @@ import getMarketComponents from './get_market_components'
 import getCurrentUnsavedLayout from './get_current_unsaved_layout'
 import getTickersVolumeUnit from './get_tickers_volume_unit'
 import getIsCcyInfoModalVisible from './get_is_ccy_info_modal_visible'
+import getIsConfirmDMSModalVisible from './get_confirm_dms_modal_visible'
 import getCurrentLanguage from './get_current_language'
 
 export * from './get_settings'
@@ -44,5 +45,6 @@ export {
   getOldFormatModalState,
   getIsAOPausedModalVisible,
   getIsCcyInfoModalVisible,
+  getIsConfirmDMSModalVisible,
   getCurrentLanguage,
 }

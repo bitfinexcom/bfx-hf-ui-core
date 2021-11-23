@@ -45,7 +45,7 @@ export const getShowAlgoPauseInfoSetting = createSelector(
 
 export const getDMSSetting = createSelector(
   getSettings,
-  (settings) => _get(settings, SETTINGS.DMS, true),
+  (settings) => _get(settings, SETTINGS.DMS, false),
 )
 
 export const getGASetting = createSelector(

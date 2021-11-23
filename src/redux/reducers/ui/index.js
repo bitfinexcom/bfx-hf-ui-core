@@ -75,6 +75,7 @@ function getInitialState() {
     isOldFormatModalVisible: false,
     isAOPauseModalVisible: false,
     isCcyInfoModalVisible: false,
+    isConfirmDMSModalVisible: false,
     isBadInternetConnection: false,
     isOrderExecuting: false,
     content: {},
@@ -433,6 +434,14 @@ function reducer(state = getInitialState(), action = {}) {
       return {
         ...state,
         isOldFormatModalVisible: isVisible,
+      }
+    }
+    case types.CHANGE_CONFIRM_DMS_MODAL_VISIBLE: {
+      const { isVisible } = payload
+
+      return {
+        ...state,
+        isConfirmDMSModalVisible: isVisible,
       }
     }
     case types.CHANGE_AO_PAUSE_MODAL_STATE: {
