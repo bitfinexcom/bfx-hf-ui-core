@@ -24,3 +24,7 @@ logs/*
 Session.vim
 
 .vscode
+
+
+crowdin.yml
+.crowdin.yml
