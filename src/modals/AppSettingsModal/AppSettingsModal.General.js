@@ -10,6 +10,7 @@ import _map from 'lodash/map'
 import Dropdown from '../../ui/Dropdown'
 import WSActions from '../../redux/actions/ws'
 import GAActions from '../../redux/actions/google_analytics'
+import UIActions from '../../redux/actions/ui'
 import { getActiveAlgoOrders } from '../../redux/actions/ao'
 import {
   isDevEnv,
@@ -60,10 +61,14 @@ const General = () => {
   }, [settingsShowAlgoPauseInfo])
 
   const updateDms = (nextDms) => {
-    setIsDmsChecked(nextDms)
-    dispatch(WSActions.saveSettings(SETTINGS.DMS, nextDms))
-    dispatch(getActiveAlgoOrders())
-    dispatch(GAActions.updateSettings())
+    if (nextDms === true) {
+      dispatch(UIActions.changeConfirmDMSModalState(true))
+    } else {
+      setIsDmsChecked(nextDms)
+      dispatch(WSActions.saveSettings(SETTINGS.DMS, nextDms))
+      dispatch(getActiveAlgoOrders())
+      dispatch(GAActions.updateSettings())
+    }
   }
 
   const updateGa = (nextGa) => {
