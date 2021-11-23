@@ -20,6 +20,7 @@ import {
 import {
   SETTINGS, getDMSSetting, getGASetting, getShowAlgoPauseInfoSetting, getRebootSetting, getThemeSetting, THEMES,
 } from '../../redux/selectors/ui'
+import { DONT_SHOW_DMS_MODAL_KEY } from '../../constants/variables'
 
 const INITIAL_AUTO_LOGIN = getAutoLoginState()
 
@@ -61,7 +62,9 @@ const General = () => {
   }, [settingsShowAlgoPauseInfo])
 
   const updateDms = (nextDms) => {
-    if (nextDms === true) {
+    const dontShowDMSModal = localStorage.getItem(DONT_SHOW_DMS_MODAL_KEY)
+
+    if (nextDms === true && dontShowDMSModal !== 'true') {
       dispatch(UIActions.changeConfirmDMSModalState(true))
     } else {
       setIsDmsChecked(nextDms)

@@ -3,5 +3,12 @@
     > p {
       white-space: pre-line;
     }
+
+    .modal__footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-left: 0;
+    }
   }
 }

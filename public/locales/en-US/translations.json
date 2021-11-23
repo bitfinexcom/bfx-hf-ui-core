@@ -409,7 +409,8 @@
   },
   "confirmDMSModal": {
     "title": "Enable Dead Man Switch",
-    "text": "Please be aware that when this setting is enabled, closing the app will not only cancel all orders that have been created by the Honey Framework, but will also cancel all other orders, including those that have been opened on the Bitfinex website or elsewhere.\n\nThis is a recommended setting, but you should be aware of the possible consequences."
+    "text": "Please be aware that when this setting is enabled, closing the app will not only cancel all orders that have been created by the Honey Framework, but will also cancel all other orders, including those that have been opened on the Bitfinex website or elsewhere.\n\nThis is a recommended setting, but you should be aware of the possible consequences.",
+    "dontShowAgain": "Don't show again"
   },
   "oldFormatModal": {
     "title": "Layout upgrade",
