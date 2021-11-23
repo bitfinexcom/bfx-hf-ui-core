@@ -1,15 +1,27 @@
 import React, { memo } from 'react'
+import { useSelector } from 'react-redux'
+import { reduxSelectors } from '@ufx-ui/bfx-containers'
 import PropTypes from 'prop-types'
 
 import { THEMES } from '../../redux/selectors/ui'
 import { CHART_URL, env } from '../../redux/config'
+import { getPairFromMarket } from '../../util/market'
+
 import './style.css'
 
-const Chart = ({
-  market: { wsID, base, quote }, theme,
-}) => {
+const { getCurrencySymbolMemo } = reduxSelectors
+
+const Chart = ({ market, theme }) => {
+  const {
+    wsID, base, quote, isPerp, uiID: _uiID,
+  } = market
+  const getCurrencySymbol = useSelector(getCurrencySymbolMemo)
+
+  const uiID = isPerp ? _uiID : getPairFromMarket(market, getCurrencySymbol)
+
   const queryString = new URLSearchParams({
     wsID,
+    uiID,
     base,
     quote,
     env,
@@ -30,6 +42,8 @@ Chart.propTypes = {
     wsID: PropTypes.string,
     base: PropTypes.string,
     quote: PropTypes.string,
+    uiID: PropTypes.string,
+    isPerp: PropTypes.bool.isRequired,
   }),
   theme: PropTypes.oneOf([THEMES.LIGHT, THEMES.DARK]).isRequired,
 }
@@ -39,6 +53,7 @@ Chart.defaultProps = {
     base: 'BTC',
     quote: 'USD',
     wsID: 'tBTCUSD',
+    uiID: 'BTC/USD',
   },
 }
 

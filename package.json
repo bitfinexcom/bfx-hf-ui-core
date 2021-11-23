@@ -1,12 +1,14 @@
 {
   "name": "bfx-hf-ui-core",
-  "version": "3.15.3",
+  "version": "3.15.5",
   "description": "Web based Honey Framework UI - for live trading and executing algorithmic orders and strategies",
   "engines": {
     "node": ">=6"
   },
   "homepage": "./",
   "scripts": {
+    "crowdin-upload": "cp ./crowdin.yml ../ && cd ../ && crowdin upload && cd ./bfx-hf-ui-core",
+    "crowdin-download": "cp ./crowdin.yml ../ && cd ../ && crowdin download && cd ./bfx-hf-ui-core",
     "build-css": "cross-env sass --no-source-map src:src --load-path ./node_modules --style compressed",
     "watch-css": "cross-env npm run build-css && cross-env sass --no-source-map src:src --load-path ./node_modules --style compressed --watch",
     "start": "node scripts/per-env.js",

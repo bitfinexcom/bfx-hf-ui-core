@@ -32,7 +32,8 @@ import ConnectingModal from './Modals/ConnectingModal'
 import UnconfiguredModal from './Modals/UnconfiguredModal'
 import SubmitAPIKeysModal from './Modals/SubmitAPIKeysModal'
 import OrderFormMenu from './OrderFormMenu'
-import { getAOs, getAtomicOrders } from './OrderForm.orders.helpers'
+import { getIsAnyModalOpen } from '../../util/document'
+import { getAOs, getAtomicOrders, validateOrderLimits } from './OrderForm.orders.helpers'
 
 import './style.css'
 
@@ -123,6 +124,11 @@ class OrderForm extends React.Component {
   }
 
   handleKeydown(e) {
+    // handle keys only when no modal is open, and it is orderform-details view
+    if (getIsAnyModalOpen() || !this.getIsOrderFormInputsView()) {
+      return
+    }
+
     const { isAlgoOrder } = this.state
     const { key } = e
     if (key === 'Escape') {
@@ -312,6 +318,20 @@ class OrderForm extends React.Component {
     }
   }
 
+  getIsOrderFormInputsView() {
+    const { apiClientState, apiCredentials } = this.props
+    const { currentLayout, helpOpen } = this.state
+
+    const apiClientConnected = apiClientState === 2
+    const apiClientConfigured = apiCredentials?.configured && apiCredentials?.valid
+    const isConnectedWithValidAPI = apiClientConnected && apiClientConfigured
+    const showOrderform = isConnectedWithValidAPI || !isElectronApp
+
+    const isOrderFormInputsView = !helpOpen && currentLayout && showOrderform
+
+    return isOrderFormInputsView
+  }
+
   setFieldData(data) {
     this.setState({
       fieldData: data,
@@ -329,7 +349,8 @@ class OrderForm extends React.Component {
   }
 
   validateAOData(data) {
-    const { currentLayout } = this.state
+    const { currentLayout, currentMarket } = this.state
+    const { atomicOrdersCount, atomicOrdersCountActiveMarket, maxOrderCounts } = this.props
     let errors = {}
 
     switch (currentLayout.id) {
@@ -354,6 +375,18 @@ class OrderForm extends React.Component {
       case PingPong.id: {
         const processedData = PingPong.meta.processParams(data)
         errors = PingPong.meta.validateParams(processedData)
+        // frontend validation
+        if (_isEmpty(errors)) {
+          errors = validateOrderLimits(
+            processedData?.orderCount,
+            currentMarket.wsID,
+            {
+              total: atomicOrdersCount,
+              pair: atomicOrdersCountActiveMarket,
+            },
+            maxOrderCounts,
+          )
+        }
         break
       }
 
@@ -461,9 +494,11 @@ class OrderForm extends React.Component {
               <AOParamSettings
                 key='ao-settings'
                 algoID={currentLayout.id}
+                context={context}
                 symbol={activeMarket.wsID}
                 processAOData={this.processAOData}
                 setFieldData={this.setFieldData}
+                setContext={this.onContextChange}
                 validateAOData={this.validateAOData}
                 updateValidationErrors={this.updateValidationErrors}
               />
@@ -526,7 +561,7 @@ class OrderForm extends React.Component {
               </div>
             )}
 
-            {!helpOpen && currentLayout && showOrderform && [
+            {this.getIsOrderFormInputsView() && [
               <div className='hfui-orderform__layout-label' key='layout-label'>
                 <i
                   className='icon-back-arrow'
@@ -606,6 +641,9 @@ OrderForm.propTypes = {
   moveable: PropTypes.bool,
   removeable: PropTypes.bool,
   t: PropTypes.func.isRequired,
+  atomicOrdersCount: PropTypes.number.isRequired,
+  atomicOrdersCountActiveMarket: PropTypes.number.isRequired,
+  maxOrderCounts: PropTypes.objectOf(PropTypes.number).isRequired,
 }
 
 OrderForm.defaultProps = {

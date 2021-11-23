@@ -10,6 +10,8 @@ import MarketSelect from '../MarketSelect'
 import { getPairFromMarket } from '../../util/market'
 import './style.css'
 
+import './style.css'
+
 const ChartPanel = ({
   dark, label, onRemove, moveable, removeable, showChartMarket, markets, canChangeMarket, activeMarket,
   savedState: { currentMarket: _currentMarket }, updateState, layoutID, layoutI, showMarket, getCurrencySymbol, settingsTheme,
