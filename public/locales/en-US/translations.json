@@ -258,7 +258,9 @@
       "negativeCustomPriceTarget": "Negative custom price target",
       "invalidConditionForCustomPriceTarget": "Invalid condition for custom price target",
       "invalidMatchedPriceTarget": "Invalid matched price target",
-      "invalidPriceDeltaProvided": "Invalid price delta provided"
+      "invalidPriceDeltaProvided": "Invalid price delta provided",
+      "orderCountExceedsTotalMaxLimit" : "limit: placed count exceeded ({{count}}/{{limit}})",
+      "orderCountExceedsPairMaxLimit" : "limit: placed count exceeded ({{count}}/{{limit}} for {{pair}})"
     }
   },
   "AOPauseModal": {

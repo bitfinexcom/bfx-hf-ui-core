@@ -3,6 +3,7 @@ import getFavoritePairsObject from './get_favorite_pairs_object'
 import { getSocket, isSocketConnected } from './get_socket'
 import getSockets from './get_sockets'
 import getAuthToken from './get_auth_token'
+import getIsBitfinexConnected from './get_is_bitfinex_connected'
 import getAuthConfigured from './get_auth_configured'
 import getSortedByTimeStrategies from './get_sorted_by_time_strategies'
 import getAllPositions from './get_all_positions'
@@ -39,6 +40,7 @@ export {
   isSocketConnected,
 
   getAuthToken,
+  getIsBitfinexConnected,
   getAuthConfigured,
   getOrderHistory,
 
