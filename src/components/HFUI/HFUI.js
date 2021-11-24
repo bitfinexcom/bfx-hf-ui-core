@@ -130,6 +130,7 @@ const HFUI = ({
             <>
               <TradingModeModal />
               <OldFormatModal />
+              <ConfirmDMSModal />
               <AOPauseModal />
             </>
           ) : (
@@ -137,7 +138,6 @@ const HFUI = ({
           )}
           <BadConnectionModal />
           <CcyInfoModal />
-          <ConfirmDMSModal />
         </>
       ) : (
         <>
