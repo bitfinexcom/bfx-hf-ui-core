@@ -160,6 +160,11 @@ export const changeAOPauseModalState = (isVisible) => ({
   payload: { isVisible },
 })
 
+export const changeConfirmDMSModalState = (isVisible) => ({
+  type: types.CHANGE_CONFIRM_DMS_MODAL_VISIBLE,
+  payload: { isVisible },
+})
+
 export const changeBadInternetConnectionState = (isVisible) => ({
   type: types.CHANGE_BAD_INTERNET_STATE,
   payload: { isVisible },
@@ -250,4 +255,5 @@ export default {
   changeCcyInfoModalState,
   setLanguage,
   setStrategyTab,
+  changeConfirmDMSModalState,
 }

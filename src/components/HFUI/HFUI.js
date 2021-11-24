@@ -27,6 +27,7 @@ const OldFormatModal = lazy(() => import('../../modals/OldFormatModal'))
 const AOPauseModal = lazy(() => import('../../modals/AOPauseModal'))
 const BestExperienceMessageModal = lazy(() => import('../../modals/BestExperienceMessageModal'))
 const CcyInfoModal = lazy(() => import('../../modals/CcyInfoModal'))
+const ConfirmDMSModal = lazy(() => import('../../modals/ConfirmDMSModal'))
 
 const HFUI = ({
   authToken,
@@ -129,6 +130,7 @@ const HFUI = ({
             <>
               <TradingModeModal />
               <OldFormatModal />
+              <ConfirmDMSModal />
               <AOPauseModal />
             </>
           ) : (

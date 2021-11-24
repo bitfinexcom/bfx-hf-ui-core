@@ -407,6 +407,11 @@
     "title": "Switch Trade Mode",
     "text": "The app will reboot after you press Okay. It's required for switching trading mode. Open algo orders are paused."
   },
+  "confirmDMSModal": {
+    "title": "Enable Dead Man Switch",
+    "text": "Please be aware that when this setting is enabled, closing the app will not only cancel all orders that have been created by the Honey Framework, but will also cancel all other orders, including those that have been opened on the Bitfinex website or elsewhere.\n\nThis is a recommended setting, but you should be aware of the possible consequences.",
+    "dontShowAgain": "Don't show again"
+  },
   "oldFormatModal": {
     "title": "Layout upgrade",
     "text1": "Since the v3.12.0 update we have reworked the way of how the application layout works.",
