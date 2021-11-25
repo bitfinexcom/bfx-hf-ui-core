@@ -1,16 +1,18 @@
 import React, {
   memo, useState, useEffect, useRef,
 } from 'react'
+import { useTranslation } from 'react-i18next'
 import PropTypes from 'prop-types'
 import _find from 'lodash/find'
 import _isObject from 'lodash/isObject'
 import _isEmpty from 'lodash/isEmpty'
-import { useTranslation } from 'react-i18next'
+import _isBoolean from 'lodash/isBoolean'
+import _isString from 'lodash/isString'
+import _trim from 'lodash/trim'
 
 import Modal from '../../ui/Modal'
 import {
-  renderLayout,
-  symbolToQuoteBase,
+  renderLayout, symbolToQuoteBase, COMPONENTS_FOR_ID,
 } from '../../components/OrderForm/OrderForm.helpers'
 import {
   getAOs, getAtomicOrders, validateOrderLimits,
@@ -27,7 +29,8 @@ const EditOrderModal = ({
 }) => {
   const { t } = useTranslation()
   const [layout, setLayout] = useState({})
-  const [isAO, setIsAO] = useState(false)
+  const [args, setArgs] = useState({})
+  const [validationErrors, setValidationErrors] = useState({})
 
   useEffect(() => {
     if (!_isObject(order)) {
@@ -38,14 +41,13 @@ const EditOrderModal = ({
     const orders = getAtomicOrders(t)
 
     let uiDef = _find(orders, ({ label }) => label === order.name)
-    const isAlgoOrder = !uiDef
 
     if (!uiDef) {
       uiDef = _find(algoOrders, ({ label }) => label === order.name)
     }
     // uiDef.fields = fixComponentContext(uiDef.fields, currentMarket)
 
-    setIsAO(isAlgoOrder)
+    setArgs(order.args)
     setLayout(uiDef)
   }, [order])
 
@@ -57,8 +59,37 @@ const EditOrderModal = ({
     onClose()
   }
 
-  const onFieldChange = () => {
+  const onFieldChange = (key, value) => {
+    const { fields = {} } = layout
+    const field = fields[key] || {}
+    const { disabled } = field
 
+    if (_isBoolean(disabled) && disabled) {
+      return null
+    }
+
+    const { component } = field
+    const C = COMPONENTS_FOR_ID[component]
+    let processedValue = value
+
+    if (_isString(value)) {
+      processedValue = _trim(value)
+    }
+
+    const validationError = (C && C.validateValue)
+      ? C.validateValue(processedValue)
+      : null
+
+    setValidationErrors({
+      ...validationErrors,
+      [key]: validationError,
+    })
+    setArgs({
+      ...args,
+      [key]: processedValue,
+    })
+
+    return true
   }
 
   return (
@@ -75,12 +106,12 @@ const EditOrderModal = ({
         onSubmit,
         onFieldChange,
         layout,
-        validationErrors: {},
+        validationErrors,
         renderData: symbolToQuoteBase(order?.args?.symbol),
         isOrderExecuting: false,
         t,
         fieldData: {
-          ...order?.args,
+          ...args,
           _context: getContext(order.args?._futures, order.args?._margin),
         },
       })}
