@@ -1,5 +1,5 @@
 import React, {
-  memo, useState, useEffect, useRef,
+  memo, useState, useEffect,
 } from 'react'
 import { useTranslation } from 'react-i18next'
 import PropTypes from 'prop-types'
@@ -15,7 +15,7 @@ import {
   renderLayout, symbolToQuoteBase, COMPONENTS_FOR_ID,
 } from '../../components/OrderForm/OrderForm.helpers'
 import {
-  getAOs, getAtomicOrders, validateOrderLimits,
+  getAOs, getAtomicOrders,
 } from '../../components/OrderForm/OrderForm.orders.helpers'
 import '../../components/OrderForm/style.css'
 import './style.css'
@@ -49,7 +49,7 @@ const EditOrderModal = ({
 
     setArgs(order.args)
     setLayout(uiDef)
-  }, [order])
+  }, [order, t])
 
   const onClose = () => {
     changeVisibilityState(false)
