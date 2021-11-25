@@ -37,6 +37,15 @@ export const LANGUAGES_MAP = {
   tw: 'zh-TW',
 }
 
+export const LANGUAGES_CHART_TABLE = {
+  en: 'en',
+  es: 'es',
+  ru: 'ru',
+  tr: 'tr',
+  cn: 'zh',
+  tw: 'zh_TW',
+}
+
 export const LOCAL_STORAGE_I18N_KEY = 'HF_LOCALE'
 
 i18n
