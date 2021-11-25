@@ -10,6 +10,8 @@ import _filter from 'lodash/filter'
 import _map from 'lodash/map'
 import _join from 'lodash/join'
 import _keys from 'lodash/keys'
+import _split from 'lodash/split'
+import _replace from 'lodash/replace'
 import _includes from 'lodash/includes'
 
 import NumberInput from './FieldComponents/input.number'
@@ -43,6 +45,15 @@ const marketToQuoteBase = (market) => ({
   QUOTE: market.quote,
   BASE: market.base,
 })
+
+// 'tBTC:USD' -> { QUOTE: 'USD', BASE: 'BTC' }
+const symbolToQuoteBase = (symbol) => {
+  const market = _split(symbol, ':')
+  return {
+    BASE: _replace(market[0], /^t/, ''),
+    QUOTE: market[1],
+  }
+}
 
 const verifyCondition = (condition = {}, value) => {
   if (typeof condition.eq !== 'undefined') {
@@ -406,4 +417,5 @@ export {
   defaultDataForLayout,
   fixComponentContext,
   COMPONENTS_FOR_ID,
+  symbolToQuoteBase,
 }
