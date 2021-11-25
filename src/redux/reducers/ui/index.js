@@ -76,6 +76,8 @@ function getInitialState() {
     isAOPauseModalVisible: false,
     isCcyInfoModalVisible: false,
     isConfirmDMSModalVisible: false,
+    isEditOrderModalVisible: false,
+    orderToEdit: {},
     isBadInternetConnection: false,
     isOrderExecuting: false,
     content: {},
@@ -442,6 +444,23 @@ function reducer(state = getInitialState(), action = {}) {
       return {
         ...state,
         isConfirmDMSModalVisible: isVisible,
+      }
+    }
+    case types.CHANGE_EDIT_ORDER_MODAL_STATE: {
+      const { isVisible, order } = payload
+
+      if (_isEmpty(order)) {
+        return {
+          ...state,
+          orderToEdit: {},
+          isEditOrderModalVisible: false,
+        }
+      }
+
+      return {
+        ...state,
+        orderToEdit: order,
+        isEditOrderModalVisible: isVisible,
       }
     }
     case types.CHANGE_AO_PAUSE_MODAL_STATE: {

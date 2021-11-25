@@ -160,6 +160,11 @@ export const changeAOPauseModalState = (isVisible) => ({
   payload: { isVisible },
 })
 
+export const changeEditOrderModalState = (isVisible, order) => ({
+  type: types.CHANGE_EDIT_ORDER_MODAL_STATE,
+  payload: { isVisible, order },
+})
+
 export const changeConfirmDMSModalState = (isVisible) => ({
   type: types.CHANGE_CONFIRM_DMS_MODAL_VISIBLE,
   payload: { isVisible },
@@ -256,4 +261,5 @@ export default {
   setLanguage,
   setStrategyTab,
   changeConfirmDMSModalState,
+  changeEditOrderModalState,
 }
