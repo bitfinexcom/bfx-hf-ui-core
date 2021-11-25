@@ -6,12 +6,15 @@ import 'react-perfect-scrollbar/dist/css/styles.css'
 
 import './style.css'
 
+const scrollbarOptions = {
+  minScrollbarLength: 25,
+  maxScrollbarLength: 100,
+  handlers: ['click-rail', 'keyboard', 'wheel', 'touch'],
+}
+
 const Scrollbars = ({ children, ...rest }) => (
   <PerfectScrollbar
-    options={{
-      minScrollbarLength: 25,
-      maxScrollbarLength: 100,
-    }}
+    options={scrollbarOptions}
     {...rest}
   >
     {children}
