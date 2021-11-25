@@ -16,7 +16,6 @@ const gaID = isElectronApp ? GA_ID_ELECTRON_APP : GA_ID_HOSTED_WEB
 const gaCustomerId = getGACustomerId()
 
 if (!gaCustomerId) {
-  console.log('storeGACustomerId: ')
   storeGACustomerId(v4())
 }
 
