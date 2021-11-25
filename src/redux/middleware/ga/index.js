@@ -1,9 +1,26 @@
 import ua from 'universal-analytics'
+import { v4 } from 'uuid'
+
 import {
   GA_CANCEL_AO, GA_PAGEVIEW, GA_CANCEL_ATOMIC_ORDER, GA_CREATE_STRATEGY, GA_SUBMIT_ATOMIC_ORDER, GA_SUBMIT_AO, GA_UPDATE_SETTINGS,
 } from '../../constants/ga'
 
-const ReactGA = ua('UA-163797164-1')
+import { isElectronApp } from '../../config'
+import { getGACustomerId, storeGACustomerId } from '../../../util/ga'
+
+const GA_ID_ELECTRON_APP = 'UA-163797164-1'
+const GA_ID_HOSTED_WEB = 'UA-212993021-1'
+
+const gaID = isElectronApp ? GA_ID_ELECTRON_APP : GA_ID_HOSTED_WEB
+
+const gaCustomerId = getGACustomerId()
+
+if (!gaCustomerId) {
+  console.log('storeGACustomerId: ')
+  storeGACustomerId(v4())
+}
+
+const ReactGA = ua(gaID, getGACustomerId())
 ReactGA.set('aip', '1')
 
 export default () => {
@@ -12,7 +29,7 @@ export default () => {
     const state = store.getState()
     const { ui = {} } = state
     const { settings = {} } = ui
-    const { ga } = settings
+    const ga = isElectronApp ? settings?.ga : true
 
     switch (type) {
       case GA_SUBMIT_ATOMIC_ORDER: {

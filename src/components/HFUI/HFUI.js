@@ -2,7 +2,9 @@
 import React, {
   useEffect, Suspense, lazy, useCallback,
 } from 'react'
-import { Route, Switch, Redirect } from 'react-router'
+import {
+  Route, Switch, Redirect, useLocation,
+} from 'react-router'
 import PropTypes from 'prop-types'
 import _isFunction from 'lodash/isFunction'
 
@@ -28,22 +30,22 @@ const AOPauseModal = lazy(() => import('../../modals/AOPauseModal'))
 const BestExperienceMessageModal = lazy(() => import('../../modals/BestExperienceMessageModal'))
 const CcyInfoModal = lazy(() => import('../../modals/CcyInfoModal'))
 
-const HFUI = ({
-  authToken,
-  getSettings,
-  getCoreSettings,
-  notificationsVisible,
-  getFavoritePairs,
-  currentMode,
-  GAPageview,
-  currentPage,
-  onUnload,
-  subscribeAllTickers,
-  shouldShowAOPauseModalState,
-  settingsShowAlgoPauseInfo,
-  settingsTheme,
-  isBfxConnected,
-}) => {
+const HFUI = (props) => {
+  const {
+    authToken,
+    getSettings,
+    getCoreSettings,
+    notificationsVisible,
+    getFavoritePairs,
+    currentMode,
+    GAPageview,
+    onUnload,
+    subscribeAllTickers,
+    shouldShowAOPauseModalState,
+    settingsShowAlgoPauseInfo,
+    settingsTheme,
+    isBfxConnected,
+  } = props
   useInjectBfxData()
 
   const unloadHandler = useCallback(() => {
@@ -96,9 +98,11 @@ const HFUI = ({
     body.classList.add(settingsTheme)
   }, [settingsTheme, authToken])
 
+  const location = useLocation()
+  const { pathname } = location
   useEffect(() => {
-    GAPageview(currentPage)
-  }, [GAPageview, currentPage])
+    GAPageview(pathname)
+  }, [GAPageview, pathname])
 
   useEffect(() => {
     if (authToken) {
@@ -151,7 +155,6 @@ const HFUI = ({
 
 HFUI.propTypes = {
   authToken: PropTypes.string,
-  currentPage: PropTypes.string,
   currentMode: PropTypes.string.isRequired,
   getSettings: PropTypes.func.isRequired,
   getCoreSettings: PropTypes.func.isRequired,
@@ -168,7 +171,6 @@ HFUI.propTypes = {
 
 HFUI.defaultProps = {
   authToken: '',
-  currentPage: '',
   settingsShowAlgoPauseInfo: true,
   settingsTheme: THEMES.DARK,
   isBfxConnected: false,
