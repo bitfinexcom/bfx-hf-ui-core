@@ -1,8 +1,9 @@
 import React from 'react'
+import { Icon } from 'react-fa'
 
 import { defaultCellRenderer } from '../../util/ui'
 
-export default (authToken, cancelOrder, gaCancelOrder, t, getMarketPair) => [{
+export default (authToken, cancelOrder, gaCancelOrder, t, getMarketPair, editOrder) => [{
   label: t('table.name'),
   dataKey: 'name',
   width: 90,
@@ -34,10 +35,15 @@ export default (authToken, cancelOrder, gaCancelOrder, t, getMarketPair) => [{
   cellRenderer: ({ rowData = {} }) => defaultCellRenderer(rowData.label),
 }, {
   dataKey: 'cid',
-  width: 40,
-  flexGrow: 0.4,
+  width: 80,
+  flexGrow: 0.8,
   cellRenderer: ({ rowData = {} }) => ( // eslint-disable-line
     <div className='icons-cell'>
+      <Icon
+        name='pencil'
+        aria-label='Edit order'
+        onClick={() => editOrder(rowData)}
+      />
       <i
         role='button'
         aria-label='Cancel order'
