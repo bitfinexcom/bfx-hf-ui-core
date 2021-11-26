@@ -8,6 +8,8 @@ import _isObject from 'lodash/isObject'
 import _isEmpty from 'lodash/isEmpty'
 import _isBoolean from 'lodash/isBoolean'
 import _isString from 'lodash/isString'
+import _toLower from 'lodash/toLower'
+import _replace from 'lodash/replace'
 import _trim from 'lodash/trim'
 
 import Modal from '../../ui/Modal'
@@ -36,18 +38,19 @@ const EditOrderModal = ({
     if (!_isObject(order)) {
       return
     }
-
+    let isAlgoOrder = true
     const algoOrders = getAOs(t)
     const orders = getAtomicOrders(t)
-
-    let uiDef = _find(orders, ({ label }) => label === order.name)
+    let uiDef = _find(algoOrders, ({ label }) => label === order.name)
 
     if (!uiDef) {
-      uiDef = _find(algoOrders, ({ label }) => label === order.name)
+      const processedType = _replace(_toLower(order.type), /(exchange )/i, '')
+      uiDef = _find(orders, ({ label }) => _toLower(label) === processedType)
+      isAlgoOrder = false
     }
     // uiDef.fields = fixComponentContext(uiDef.fields, currentMarket)
 
-    setArgs(order.args)
+    setArgs(isAlgoOrder ? order.args : order)
     setLayout(uiDef)
   }, [order, t])
 
