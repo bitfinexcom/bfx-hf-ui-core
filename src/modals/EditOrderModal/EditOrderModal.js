@@ -70,11 +70,15 @@ const EditOrderModal = ({
     changeVisibilityState(false)
   }
 
-  const onSubmit = (action) => {
+  const onOrderSubmit = (action) => {
     setLayout({
       ...layout,
       action,
     })
+  }
+
+  const onSubmit = () => {
+    onClose()
   }
 
   const onFieldChange = (key, value) => {
@@ -115,12 +119,13 @@ const EditOrderModal = ({
       label='Edit order modal'
       className='hfui-edit-order-modal__wrapper'
       isOpen={visible}
-      onSubmit={onClose}
+      onClose={onClose}
+      onSubmit={onSubmit}
     >
       {_isEmpty(order) ? (
         'No order selected'
       ) : renderLayout({
-        onSubmit,
+        onSubmit: onOrderSubmit,
         onFieldChange,
         layout,
         validationErrors,
@@ -133,7 +138,10 @@ const EditOrderModal = ({
         },
       })}
       <Modal.Footer>
-        <Modal.Button onClick={onClose} primary>
+        <Modal.Button onClick={onClose} secondary>
+          {t('ui.cancel')}
+        </Modal.Button>
+        <Modal.Button onClick={onSubmit} primary>
           {t('ui.ok')}
         </Modal.Button>
       </Modal.Footer>
