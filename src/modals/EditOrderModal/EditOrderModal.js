@@ -38,28 +38,43 @@ const EditOrderModal = ({
     if (!_isObject(order)) {
       return
     }
+    const updOrder = { ...order }
     let isAlgoOrder = true
     const algoOrders = getAOs(t)
     const orders = getAtomicOrders(t)
-    let uiDef = _find(algoOrders, ({ label }) => label === order.name)
+    let uiDef = _find(algoOrders, ({ label }) => label === updOrder.name)
 
     if (!uiDef) {
-      const processedType = _replace(_toLower(order.type), /(exchange )/i, '')
+      const processedType = _replace(_toLower(updOrder.type), /(exchange )/i, '')
       uiDef = _find(orders, ({ label }) => _toLower(label) === processedType)
       isAlgoOrder = false
     }
     // uiDef.fields = fixComponentContext(uiDef.fields, currentMarket)
 
-    setArgs(isAlgoOrder ? order.args : order)
+    if (!uiDef) {
+      return
+    }
+
+    if (!isAlgoOrder) {
+      console.log(uiDef)
+      uiDef.action = updOrder.amount < 0 ? 'sell' : 'buy'
+      updOrder.amount = Math.abs(updOrder.amount)
+    }
+
+    setArgs(isAlgoOrder ? order.args : updOrder)
     setLayout(uiDef)
+    console.log(updOrder)
   }, [order, t])
 
   const onClose = () => {
     changeVisibilityState(false)
   }
 
-  const onSubmit = () => {
-    onClose()
+  const onSubmit = (action) => {
+    setLayout({
+      ...layout,
+      action,
+    })
   }
 
   const onFieldChange = (key, value) => {
@@ -100,8 +115,7 @@ const EditOrderModal = ({
       label='Edit order modal'
       className='hfui-edit-order-modal__wrapper'
       isOpen={visible}
-      onClose={onClose}
-      onSubmit={onSubmit}
+      onSubmit={onClose}
     >
       {_isEmpty(order) ? (
         'No order selected'
@@ -119,7 +133,7 @@ const EditOrderModal = ({
         },
       })}
       <Modal.Footer>
-        <Modal.Button onClick={onSubmit} primary>
+        <Modal.Button onClick={onClose} primary>
           {t('ui.ok')}
         </Modal.Button>
       </Modal.Footer>

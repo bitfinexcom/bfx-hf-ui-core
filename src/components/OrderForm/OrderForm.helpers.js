@@ -233,6 +233,7 @@ const renderLayoutActions = ({
           red={action === 'sell'}
           green={action === 'buy'}
           blue={action === 'submit'}
+          inactive={action === layout.action}
           disabled={isOrderExecuting}
         />
       ))}
@@ -346,7 +347,7 @@ const renderLayout = ({
   onSubmit, // eslint-disable-line
   onFieldChange, // eslint-disable-line
   isOrderExecuting, // eslint-disable-line
-  t,
+  t, // eslint-disable-line
 }) => {
   const { label, header, sections = [] } = layout
   const html = []
