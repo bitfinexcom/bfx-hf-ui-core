@@ -116,14 +116,14 @@ const EditOrderModal = ({
 
   return (
     <Modal
-      label='Edit order modal'
+      label={t('editOrderModal.title')}
       className='hfui-edit-order-modal__wrapper'
       isOpen={visible}
       onClose={onClose}
       onSubmit={onSubmit}
     >
       {_isEmpty(order) ? (
-        'No order selected'
+        t('editOrderModal.noOrder')
       ) : renderLayout({
         onSubmit: onOrderSubmit,
         onFieldChange,
