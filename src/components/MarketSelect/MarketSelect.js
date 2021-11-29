@@ -9,11 +9,23 @@ import _join from 'lodash/join'
 import _map from 'lodash/map'
 import ClassNames from 'classnames'
 import PropTypes from 'prop-types'
+
 import Dropdown from '../../ui/Dropdown'
 import FavoriteIcon from '../../ui/Icons/FavoriteIcon'
-
-import './style.css'
+import { THEMES } from '../../redux/selectors/ui'
 import { getPairFromMarket } from '../../util/market'
+import './style.css'
+
+const favIconColourMapping = {
+  [THEMES.DARK]: {
+    favIconSelected: '#F7F7F9',
+    strokeColor: 'white',
+  },
+  [THEMES.LIGHT]: {
+    favIconSelected: '#414f5a',
+    strokeColor: '#414f5a',
+  },
+}
 
 // eslint-disable-next-line prefer-arrow-callback
 const MarketSelect = forwardRef(function MarketSelect(props, ref) {
@@ -28,6 +40,7 @@ const MarketSelect = forwardRef(function MarketSelect(props, ref) {
     renderLabel,
     renderWithFavorites,
     getCurrencySymbol,
+    settingsTheme,
     ...otherProps
   } = props
   const [searchTerm, setSearchTerm] = useState('')
@@ -97,7 +110,8 @@ const MarketSelect = forwardRef(function MarketSelect(props, ref) {
                 value={optionValue}
                 nonFilled={!isSelected}
                 isSelected={isSelected}
-                selectedColor='#F7F7F9'
+                selectedColor={favIconColourMapping[settingsTheme].favIconSelected}
+                strokeColor={favIconColourMapping[settingsTheme].strokeColor}
               />
             </div>
           </div>
@@ -120,6 +134,7 @@ MarketSelect.propTypes = {
   favoritePairs: PropTypes.instanceOf(Array),
   renderWithFavorites: PropTypes.bool,
   getCurrencySymbol: PropTypes.func.isRequired,
+  settingsTheme: PropTypes.oneOf([THEMES.LIGHT, THEMES.DARK]),
 }
 
 MarketSelect.defaultProps = {
@@ -128,6 +143,7 @@ MarketSelect.defaultProps = {
   currentMode: '',
   renderLabel: false,
   renderWithFavorites: false,
+  settingsTheme: THEMES.DARK,
 }
 
 export default memo(MarketSelect)
