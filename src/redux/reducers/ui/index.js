@@ -452,7 +452,6 @@ function reducer(state = getInitialState(), action = {}) {
       if (_isEmpty(order)) {
         return {
           ...state,
-          orderToEdit: {},
           isEditOrderModalVisible: false,
         }
       }
