@@ -29,14 +29,13 @@ const getMarket = (markets, rowData) => markets?.[rowData?.id] || {}
 export const getTickerListMapping = (getCurrencySymbol, markets) => ({
   [TICKERLIST_KEYS.BASE_CCY]: {
     renderer: ({ rowData = {} }) => {
-      const { baseCcy } = rowData
       const market = getMarket(markets, rowData)
-      const { uiID, isPerp } = market
+      const { uiID, isPerp, base } = market
       const id = getPairFromMarket(market, getCurrencySymbol)
 
       return (
         <span className='ccy-pair'>
-          <CCYIcon small ccy={baseCcy} />
+          <CCYIcon small ccy={base} />
           <span>{isPerp ? uiID : id}</span>
         </span>
       )
