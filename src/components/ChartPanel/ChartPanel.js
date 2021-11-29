@@ -68,7 +68,7 @@ const ChartPanel = ({
       headerComponents={showMarket && !canChangeMarket && <p>{isPerp ? uiID : currentPair}</p>}
       className='hfui-chart__wrapper'
     >
-      <Chart market={currentMarket} theme={settingsTheme} />
+      <Chart market={currentMarket} theme={settingsTheme} layoutI={layoutI} />
     </Panel>
   )
 }
