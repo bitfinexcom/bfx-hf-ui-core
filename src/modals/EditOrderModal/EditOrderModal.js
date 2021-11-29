@@ -10,11 +10,13 @@ import _isBoolean from 'lodash/isBoolean'
 import _isString from 'lodash/isString'
 import _toLower from 'lodash/toLower'
 import _replace from 'lodash/replace'
+import _values from 'lodash/values'
+import _some from 'lodash/some'
 import _trim from 'lodash/trim'
 
 import Modal from '../../ui/Modal'
 import {
-  renderLayout, symbolToQuoteBase, COMPONENTS_FOR_ID,
+  renderLayout, symbolToQuoteBase, COMPONENTS_FOR_ID, processFieldData,
 } from '../../components/OrderForm/OrderForm.helpers'
 import {
   getAOs, getAtomicOrders,
@@ -27,12 +29,14 @@ const getContext = (_futures, _margin) => {
 }
 
 const EditOrderModal = ({
-  changeVisibilityState, visible, order,
+  changeVisibilityState, visible, order, updateOrder, authToken,
 }) => {
   const { t } = useTranslation()
   const [layout, setLayout] = useState({})
   const [args, setArgs] = useState({})
   const [validationErrors, setValidationErrors] = useState({})
+  const [isAO, setIsAO] = useState(true)
+  const hasError = _some(_values(validationErrors), _isString)
 
   useEffect(() => {
     if (!_isObject(order)) {
@@ -49,21 +53,19 @@ const EditOrderModal = ({
       uiDef = _find(orders, ({ label }) => _toLower(label) === processedType)
       isAlgoOrder = false
     }
-    // uiDef.fields = fixComponentContext(uiDef.fields, currentMarket)
 
     if (!uiDef) {
       return
     }
 
     if (!isAlgoOrder) {
-      console.log(uiDef)
       uiDef.action = updOrder.amount < 0 ? 'sell' : 'buy'
       updOrder.amount = Math.abs(updOrder.amount)
     }
 
     setArgs(isAlgoOrder ? order.args : updOrder)
     setLayout(uiDef)
-    console.log(updOrder)
+    setIsAO(isAlgoOrder)
   }, [order, t])
 
   const onClose = () => {
@@ -78,6 +80,19 @@ const EditOrderModal = ({
   }
 
   const onSubmit = () => {
+    if (hasError) {
+      return
+    }
+
+    const { generateOrder } = layout
+    const data = processFieldData({
+      layout,
+      fieldData: args,
+      action: layout.action,
+    })
+    const generated = generateOrder(data, data.symbol, getContext(order.args?._futures, order.args?._margin))
+
+    updateOrder(authToken, generated, isAO)
     onClose()
   }
 
@@ -141,7 +156,7 @@ const EditOrderModal = ({
         <Modal.Button onClick={onClose} secondary>
           {t('ui.cancel')}
         </Modal.Button>
-        <Modal.Button onClick={onSubmit} primary>
+        <Modal.Button onClick={onSubmit} disabled={hasError} primary>
           {t('ui.ok')}
         </Modal.Button>
       </Modal.Footer>
@@ -153,6 +168,8 @@ EditOrderModal.propTypes = {
   changeVisibilityState: PropTypes.func.isRequired,
   visible: PropTypes.bool.isRequired,
   order: PropTypes.object.isRequired, // eslint-disable-line
+  updateOrder: PropTypes.func.isRequired,
+  authToken: PropTypes.string.isRequired,
 }
 
 export default memo(EditOrderModal)
