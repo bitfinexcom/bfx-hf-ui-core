@@ -4,7 +4,7 @@ import React from 'react'
 import { TICKERLIST_KEYS, TICKER_KEYS } from '@ufx-ui/core'
 
 import CCYIcon from './CCYIcon'
-import { getPairFromMarket } from '../../util/market'
+import { getCorrectIconNameOfPerpCcy, getPairFromMarket } from '../../util/market'
 
 export const getTickerDataMapping = (getCurrencySymbol) => ({
   [TICKER_KEYS.BASE_CCY]: {
@@ -35,7 +35,7 @@ export const getTickerListMapping = (getCurrencySymbol, markets) => ({
 
       return (
         <span className='ccy-pair'>
-          <CCYIcon small ccy={base} />
+          <CCYIcon small ccy={isPerp ? getCorrectIconNameOfPerpCcy(base) : base} />
           <span>{isPerp ? uiID : id}</span>
         </span>
       )

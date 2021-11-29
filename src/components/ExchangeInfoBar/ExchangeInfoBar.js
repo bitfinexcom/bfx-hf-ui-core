@@ -10,6 +10,7 @@ import { useTranslation } from 'react-i18next'
 import Panel from '../../ui/Panel'
 import useSize from '../../hooks/useSize'
 import { getTickerDataMapping, getTickerListMapping } from './ExchangeInforBar.constants'
+import { getCorrectIconNameOfPerpCcy } from '../../util/market'
 import { MAIN_MODE } from '../../redux/reducers/ui'
 import CCYIcon from './CCYIcon'
 
@@ -95,7 +96,7 @@ const ExchangeInfoBar = ({
             dataMapping={tickerMapping}
             className='hfui-exchangeinfobar__ticker'
             volumeUnit={tickersVolumeUnit !== 'SELF' ? tickersVolumeUnit : base}
-            ccyIcon={<CCYIcon ccy={base} />}
+            ccyIcon={<CCYIcon ccy={isPerp ? getCorrectIconNameOfPerpCcy(base) : base} />}
             showCoinInfoIcon={isCcyArticleAvailbale}
             onShowInfoClick={showCcyIconModal}
           />
