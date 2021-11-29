@@ -36,7 +36,7 @@ const Chart = ({ market, theme, layoutI }) => {
       wsID, uiID, base, quote,
     }
     sendMarketToChartIframe(marketProps)
-  }, [base, quote, uiID, wsID, iframeID, sendMarketToChartIframe])
+  }, [base, quote, uiID, wsID, sendMarketToChartIframe])
 
   return (
     <iframe
