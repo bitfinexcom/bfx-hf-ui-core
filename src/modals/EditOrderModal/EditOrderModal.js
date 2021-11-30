@@ -206,6 +206,7 @@ EditOrderModal.propTypes = {
   maxOrderCounts: PropTypes.objectOf(PropTypes.number).isRequired,
   gaEditAO: PropTypes.func.isRequired,
   cancelAlgoOrder: PropTypes.func.isRequired,
+  submitAlgoOrder: PropTypes.func.isRequired,
 }
 
 export default memo(EditOrderModal)
