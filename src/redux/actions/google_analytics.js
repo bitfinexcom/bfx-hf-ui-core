@@ -1,5 +1,5 @@
 import {
-  GA_CANCEL_AO, GA_PAGEVIEW, GA_CANCEL_ATOMIC_ORDER, GA_CREATE_STRATEGY, GA_SUBMIT_AO, GA_SUBMIT_ATOMIC_ORDER, GA_UPDATE_SETTINGS,
+  GA_CANCEL_AO, GA_PAGEVIEW, GA_CANCEL_ATOMIC_ORDER, GA_CREATE_STRATEGY, GA_SUBMIT_AO, GA_SUBMIT_ATOMIC_ORDER, GA_UPDATE_SETTINGS, GA_EDIT_AO,
 } from '../constants/ga'
 
 const cancelAO = () => {
@@ -8,6 +8,9 @@ const cancelAO = () => {
 const submitAO = () => {
   return { type: GA_SUBMIT_AO }
 }
+const editAO = () => ({
+  type: GA_EDIT_AO,
+})
 const cancelAtomicOrder = () => {
   return { type: GA_CANCEL_ATOMIC_ORDER }
 }
@@ -29,5 +32,5 @@ const createStrategy = () => {
 }
 
 export default {
-  pageview, cancelAO, cancelAtomicOrder, createStrategy, submitAO, submitAtomicOrder, updateSettings,
+  pageview, cancelAO, cancelAtomicOrder, createStrategy, submitAO, submitAtomicOrder, updateSettings, editAO,
 }

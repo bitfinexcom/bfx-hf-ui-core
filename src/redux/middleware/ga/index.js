@@ -2,7 +2,7 @@ import ua from 'universal-analytics'
 import { v4 } from 'uuid'
 
 import {
-  GA_CANCEL_AO, GA_PAGEVIEW, GA_CANCEL_ATOMIC_ORDER, GA_CREATE_STRATEGY, GA_SUBMIT_ATOMIC_ORDER, GA_SUBMIT_AO, GA_UPDATE_SETTINGS,
+  GA_CANCEL_AO, GA_PAGEVIEW, GA_CANCEL_ATOMIC_ORDER, GA_CREATE_STRATEGY, GA_SUBMIT_ATOMIC_ORDER, GA_SUBMIT_AO, GA_UPDATE_SETTINGS, GA_EDIT_AO,
 } from '../../constants/ga'
 
 import { isElectronApp } from '../../config'
@@ -46,6 +46,12 @@ export default () => {
       case GA_SUBMIT_AO: {
         if (ga) {
           ReactGA.event('ao', 'ao.submit').send()
+        }
+        break
+      }
+      case GA_EDIT_AO: {
+        if (ga) {
+          ReactGA.event('ao', 'ao.edit').send()
         }
         break
       }
