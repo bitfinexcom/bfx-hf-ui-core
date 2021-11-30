@@ -16,7 +16,7 @@ import _trim from 'lodash/trim'
 
 import Modal from '../../ui/Modal'
 import {
-  renderLayout, symbolToQuoteBase, COMPONENTS_FOR_ID, processFieldData,
+  renderLayout, symbolToQuoteBase, COMPONENTS_FOR_ID, processFieldData, validateAOData,
 } from '../../components/OrderForm/OrderForm.helpers'
 import {
   getAOs, getAtomicOrders,
@@ -29,7 +29,8 @@ const getContext = (_futures, _margin) => {
 }
 
 const EditOrderModal = ({
-  changeVisibilityState, visible, order, updateOrder, authToken,
+  changeVisibilityState, visible, order, updateOrder, authToken, atomicOrdersCount, countFilterAtomicOrdersByMarket,
+  maxOrderCounts, gaEditAO, cancelAlgoOrder, submitAlgoOrder,
 }) => {
   const { t } = useTranslation()
   const [layout, setLayout] = useState({})
@@ -79,8 +80,38 @@ const EditOrderModal = ({
     })
   }
 
+  const onSubmitAO = () => {
+    const market = { wsID: args?.symbol }
+    const activeMarketCount = countFilterAtomicOrdersByMarket(market)
+    const data = processFieldData({
+      layout,
+      fieldData: args,
+      action: 'submit',
+    })
+    const error = validateAOData(data, layout, market, atomicOrdersCount, activeMarketCount, maxOrderCounts)
+
+    if (_isEmpty(error)) {
+      const { symbol, _futures, _margin } = args
+      gaEditAO()
+      cancelAlgoOrder(authToken, order.gid)
+      submitAlgoOrder(authToken, layout.id, symbol, _futures, _margin, data)
+      onClose()
+    } else {
+      const { field, message, i18n } = error
+      setValidationErrors({
+        ...validationErrors,
+        [field]: i18n ? t(`algoOrderForm.validationMessages.${i18n.key}`, i18n.props) : message,
+      })
+    }
+  }
+
   const onSubmit = () => {
     if (hasError) {
+      return
+    }
+
+    if (isAO) {
+      onSubmitAO()
       return
     }
 
@@ -118,7 +149,6 @@ const EditOrderModal = ({
       : null
 
     setValidationErrors({
-      ...validationErrors,
       [key]: validationError,
     })
     setArgs({
@@ -129,6 +159,7 @@ const EditOrderModal = ({
     return true
   }
 
+  console.log(layout, args)
   return (
     <Modal
       label={t('editOrderModal.title')}
@@ -170,6 +201,11 @@ EditOrderModal.propTypes = {
   order: PropTypes.object.isRequired, // eslint-disable-line
   updateOrder: PropTypes.func.isRequired,
   authToken: PropTypes.string.isRequired,
+  atomicOrdersCount: PropTypes.number.isRequired,
+  countFilterAtomicOrdersByMarket: PropTypes.func.isRequired,
+  maxOrderCounts: PropTypes.objectOf(PropTypes.number).isRequired,
+  gaEditAO: PropTypes.func.isRequired,
+  cancelAlgoOrder: PropTypes.func.isRequired,
 }
 
 export default memo(EditOrderModal)

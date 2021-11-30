@@ -7,12 +7,17 @@ import _flatten from 'lodash/flatten'
 import _forOwn from 'lodash/forOwn'
 import _forEach from 'lodash/forEach'
 import _filter from 'lodash/filter'
+import _isEmpty from 'lodash/isEmpty'
 import _map from 'lodash/map'
 import _join from 'lodash/join'
 import _keys from 'lodash/keys'
 import _split from 'lodash/split'
 import _replace from 'lodash/replace'
 import _includes from 'lodash/includes'
+import {
+  Iceberg, TWAP, AccumulateDistribute, PingPong, MACrossover, OCOCO,
+} from 'bfx-hf-algo'
+import Debug from 'debug'
 
 import NumberInput from './FieldComponents/input.number'
 import PriceInput from './FieldComponents/input.price'
@@ -26,6 +31,9 @@ import RangeInput from './FieldComponents/input.range'
 import UICheckboxGroup from './FieldComponents/ui.checkboxGroup'
 import TickerBar from './FieldComponents/ui.ticker'
 import Button from '../../ui/Button'
+import { validateOrderLimits } from './OrderForm.orders.helpers'
+
+const debug = Debug('hfui:order-form:helpers')
 
 const COMPONENTS_FOR_ID = {
   'ui.checkbox_group': UICheckboxGroup,
@@ -167,6 +175,65 @@ const getActionsTranslate = (action, t) => {
   }
 }
 
+const validateAOData = (data, currentLayout, currentMarket, atomicOrdersCount, atomicOrdersCountActiveMarket, maxOrderCounts) => {
+  let errors = {}
+  console.log(currentLayout, currentMarket, atomicOrdersCount, atomicOrdersCountActiveMarket, maxOrderCounts)
+  switch (currentLayout.id) {
+    case Iceberg.id: {
+      const processedData = Iceberg.meta.processParams(data)
+      errors = Iceberg.meta.validateParams(processedData)
+      break
+    }
+
+    case TWAP.id: {
+      const processedData = TWAP.meta.processParams(data)
+      errors = TWAP.meta.validateParams(processedData)
+      break
+    }
+
+    case AccumulateDistribute.id: {
+      const processedData = AccumulateDistribute.meta.processParams(data)
+      errors = AccumulateDistribute.meta.validateParams(processedData)
+      break
+    }
+
+    case PingPong.id: {
+      const processedData = PingPong.meta.processParams(data)
+      errors = PingPong.meta.validateParams(processedData)
+      // frontend validation
+      if (_isEmpty(errors)) {
+        errors = validateOrderLimits(
+          processedData?.orderCount,
+          currentMarket.wsID,
+          {
+            total: atomicOrdersCount,
+            pair: atomicOrdersCountActiveMarket,
+          },
+          maxOrderCounts,
+        )
+      }
+      break
+    }
+
+    case MACrossover.id: {
+      const processedData = MACrossover.meta.processParams(data)
+      errors = MACrossover.meta.validateParams(processedData)
+      break
+    }
+
+    case OCOCO.id: {
+      const processedData = OCOCO.meta.processParams(data)
+      errors = OCOCO.meta.validateParams(processedData)
+      break
+    }
+
+    default:
+      debug('unknown layout %s', currentLayout.id)
+  }
+
+  return errors
+}
+
 // Renders a single layout field component
 const renderLayoutComponent = ({
   componentDef = {}, // eslint-disable-line
@@ -223,6 +290,7 @@ const renderLayoutActions = ({
       key='of-actions'
       className={ClassNames('hfui-orderform__layout-actions', {
         'single-action': validActions.length === 1,
+        'ao-submit-action': validActions[0] === 'submit',
       })}
     >
       {_map(validActions, (action) => (
@@ -419,4 +487,5 @@ export {
   fixComponentContext,
   COMPONENTS_FOR_ID,
   symbolToQuoteBase,
+  validateAOData,
 }

@@ -11,33 +11,23 @@ import _trim from 'lodash/trim'
 import _isArray from 'lodash/isArray'
 import _isNil from 'lodash/isNil'
 import PropTypes from 'prop-types'
-import {
-  Iceberg, TWAP, AccumulateDistribute, PingPong, MACrossover, OCOCO,
-} from 'bfx-hf-algo'
-import Debug from 'debug'
 
-import {
-  renderLayout,
-  processFieldData,
-  marketToQuoteBase,
-  defaultDataForLayout,
-  fixComponentContext,
-  COMPONENTS_FOR_ID,
-} from './OrderForm.helpers'
 import { isElectronApp } from '../../redux/config'
 import Panel from '../../ui/Panel'
+import { getIsAnyModalOpen } from '../../util/document'
 
 import AOParamSettings from './Orderform.AlgoParams'
 import ConnectingModal from './Modals/ConnectingModal'
 import UnconfiguredModal from './Modals/UnconfiguredModal'
 import SubmitAPIKeysModal from './Modals/SubmitAPIKeysModal'
 import OrderFormMenu from './OrderFormMenu'
-import { getIsAnyModalOpen } from '../../util/document'
-import { getAOs, getAtomicOrders, validateOrderLimits } from './OrderForm.orders.helpers'
+import { getAOs, getAtomicOrders } from './OrderForm.orders.helpers'
+import {
+  renderLayout, processFieldData, marketToQuoteBase, defaultDataForLayout, fixComponentContext,
+  COMPONENTS_FOR_ID, validateAOData,
+} from './OrderForm.helpers'
 
 import './style.css'
-
-const debug = Debug('hfui:order-form')
 
 const CONTEXT_LABELS = {
   e: 'orderForm.exchange',
@@ -351,62 +341,8 @@ class OrderForm extends React.Component {
   validateAOData(data) {
     const { currentLayout, currentMarket } = this.state
     const { atomicOrdersCount, atomicOrdersCountActiveMarket, maxOrderCounts } = this.props
-    let errors = {}
 
-    switch (currentLayout.id) {
-      case Iceberg.id: {
-        const processedData = Iceberg.meta.processParams(data)
-        errors = Iceberg.meta.validateParams(processedData)
-        break
-      }
-
-      case TWAP.id: {
-        const processedData = TWAP.meta.processParams(data)
-        errors = TWAP.meta.validateParams(processedData)
-        break
-      }
-
-      case AccumulateDistribute.id: {
-        const processedData = AccumulateDistribute.meta.processParams(data)
-        errors = AccumulateDistribute.meta.validateParams(processedData)
-        break
-      }
-
-      case PingPong.id: {
-        const processedData = PingPong.meta.processParams(data)
-        errors = PingPong.meta.validateParams(processedData)
-        // frontend validation
-        if (_isEmpty(errors)) {
-          errors = validateOrderLimits(
-            processedData?.orderCount,
-            currentMarket.wsID,
-            {
-              total: atomicOrdersCount,
-              pair: atomicOrdersCountActiveMarket,
-            },
-            maxOrderCounts,
-          )
-        }
-        break
-      }
-
-      case MACrossover.id: {
-        const processedData = MACrossover.meta.processParams(data)
-        errors = MACrossover.meta.validateParams(processedData)
-        break
-      }
-
-      case OCOCO.id: {
-        const processedData = OCOCO.meta.processParams(data)
-        errors = OCOCO.meta.validateParams(processedData)
-        break
-      }
-
-      default:
-        debug('unknown layout %s', currentLayout.id)
-    }
-
-    return errors
+    return validateAOData(data, currentLayout, currentMarket, atomicOrdersCount, atomicOrdersCountActiveMarket, maxOrderCounts)
   }
 
   processAOData() {
