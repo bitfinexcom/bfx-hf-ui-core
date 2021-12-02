@@ -24,14 +24,10 @@ const mapStateToProps = (state = {}) => ({
 
 const mapDispatchToProps = dispatch => ({
   changeVisibilityState: (visible) => dispatch(UIActions.changeEditOrderModalState(visible)),
-  updateOrder: (authToken, order, isAO) => {
-    if (isAO) {
-      // TODO: Algo Order support
-    } else {
-      dispatch(WSActions.send([
-        'order.update', authToken, order,
-      ]))
-    }
+  updateOrder: (authToken, order) => {
+    dispatch(WSActions.send([
+      'order.update', authToken, order,
+    ]))
   },
   gaEditAO: () => {
     dispatch(GAActions.editAO())

@@ -123,7 +123,7 @@ const EditOrderModal = ({
     })
     const generated = generateOrder(data, data.symbol, getContext(order.args?._futures, order.args?._margin))
 
-    updateOrder(authToken, generated, isAO)
+    updateOrder(authToken, generated)
     onClose()
   }
 
