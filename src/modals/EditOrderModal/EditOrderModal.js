@@ -10,6 +10,9 @@ import _isBoolean from 'lodash/isBoolean'
 import _isString from 'lodash/isString'
 import _toLower from 'lodash/toLower'
 import _replace from 'lodash/replace'
+import _toString from 'lodash/toString'
+import _keys from 'lodash/keys'
+import _reduce from 'lodash/reduce'
 import _values from 'lodash/values'
 import _some from 'lodash/some'
 import _trim from 'lodash/trim'
@@ -28,6 +31,32 @@ const getContext = (_futures, _margin) => {
   return _futures ? 'f' : _margin ? 'm' : 'e'
 }
 
+const flagsMapping = {
+  hidden: 64,
+  close: 512,
+  reduceonly: 1024,
+  postonly: 4096,
+  oco: 16384,
+}
+
+const calculateFlags = (order) => {
+  const flags = _keys(flagsMapping)
+  return _reduce(flags, (prev, curr) => {
+    return order[curr] ? prev + flagsMapping[curr] : prev
+  }, 0)
+}
+
+const processUpdateOrder = (order, id) => ({
+  ...order,
+  id,
+  amount: _toString(order.amount),
+  price: order.price && _toString(order.price),
+  price_trailing: order.priceTrailing && _toString(order.priceTrailing),
+  price_aux_limit: order.priceAuxLimit && _toString(order.priceAuxLimit),
+  delta: order.delta && _toString(order.delta),
+  flags: calculateFlags(order),
+})
+
 const EditOrderModal = ({
   changeVisibilityState, visible, order, updateOrder, authToken, atomicOrdersCount, countFilterAtomicOrdersByMarket,
   maxOrderCounts, gaEditAO, cancelAlgoOrder, submitAlgoOrder,
@@ -44,12 +73,12 @@ const EditOrderModal = ({
       return
     }
     const updOrder = { ...order }
-    let isAlgoOrder = true
     const algoOrders = getAOs(t)
-    const orders = getAtomicOrders(t)
+    let isAlgoOrder = true
     let uiDef = _find(algoOrders, ({ label }) => label === updOrder.name)
 
     if (!uiDef) {
+      const orders = getAtomicOrders(t)
       const processedType = _replace(_toLower(updOrder.type), /(exchange )/i, '')
       uiDef = _find(orders, ({ label }) => _toLower(label) === processedType)
       isAlgoOrder = false
@@ -121,9 +150,11 @@ const EditOrderModal = ({
       fieldData: args,
       action: layout.action,
     })
-    const generated = generateOrder(data, data.symbol, getContext(order.args?._futures, order.args?._margin))
 
-    updateOrder(authToken, generated)
+    const generated = generateOrder(data, data.symbol, getContext(order.args?._futures, order.args?._margin))
+    const processed = processUpdateOrder(generated, order.id)
+
+    updateOrder(authToken, processed)
     onClose()
   }
 
@@ -159,7 +190,6 @@ const EditOrderModal = ({
     return true
   }
 
-  console.log(layout, args)
   return (
     <Modal
       label={t('editOrderModal.title')}

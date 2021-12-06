@@ -363,6 +363,7 @@
     "orderSubmittedBuyDetailed": "Created {{exID}} {{type}} BUY order of {{amount}} {{symbol}} (ID: {{id}})",
     "orderSubmittedSellAtDetailed": "Created {{exID}} {{type}} SELL order of {{amount}} {{symbol}} at {{price}} (ID: {{id}})",
     "orderSubmittedSellDetailed": "Created {{exID}} {{type}} SELL order of {{amount}} {{symbol}} (ID: {{id}})",
+    "updatingOrderWithId": "Updating order (ID: {{orderId}})",
     "orderModifiedBuyAtDetailed": "Modified {{exID}} {{type}} BUY order of {{amount}} {{symbol}} at {{price}} (ID: {{id}})",
     "orderModifiedBuyDetailed": "Modified {{exID}} {{type}} BUY order of {{amount}} {{symbol}} (ID: {{id}})",
     "orderModifiedSellAtDetailed": "Modified {{exID}} {{type}} SELL order of {{amount}} {{symbol}} at {{price}} (ID: {{id}})",
