@@ -53,7 +53,6 @@ const processUpdateOrder = (order, id) => ({
   price: order.price && _toString(order.price),
   price_trailing: order.priceTrailing && _toString(order.priceTrailing),
   price_aux_limit: order.priceAuxLimit && _toString(order.priceAuxLimit),
-  delta: order.delta && _toString(order.delta),
   flags: calculateFlags(order),
 })
 
@@ -100,13 +99,6 @@ const EditOrderModal = ({
 
   const onClose = () => {
     changeVisibilityState(false)
-  }
-
-  const onOrderSubmit = (action) => {
-    setLayout({
-      ...layout,
-      action,
-    })
   }
 
   const onSubmitAO = () => {
@@ -201,7 +193,7 @@ const EditOrderModal = ({
       {_isEmpty(order) ? (
         t('editOrderModal.noOrder')
       ) : renderLayout({
-        onSubmit: onOrderSubmit,
+        onSubmit: () => {},
         onFieldChange,
         layout,
         validationErrors,

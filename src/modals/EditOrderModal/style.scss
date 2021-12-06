@@ -1,11 +1,5 @@
 .hfui-edit-order-modal__wrapper {
-  // .modal__body .modal__footer {
-  //   display: flex;
-  //   justify-content: space-between;
-  //   align-items: baseline;
-  //   margin-left: 0;
-  // }
-  .ao-submit-action {
+  .ao-submit-action, .hfui-orderform__layout-actions {
     display: none;
   }
 }

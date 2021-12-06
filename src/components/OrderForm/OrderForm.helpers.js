@@ -177,7 +177,6 @@ const getActionsTranslate = (action, t) => {
 
 const validateAOData = (data, currentLayout, currentMarket, atomicOrdersCount, atomicOrdersCountActiveMarket, maxOrderCounts) => {
   let errors = {}
-  console.log(currentLayout, currentMarket, atomicOrdersCount, atomicOrdersCountActiveMarket, maxOrderCounts)
   switch (currentLayout.id) {
     case Iceberg.id: {
       const processedData = Iceberg.meta.processParams(data)
@@ -301,7 +300,6 @@ const renderLayoutActions = ({
           red={action === 'sell'}
           green={action === 'buy'}
           blue={action === 'submit'}
-          inactive={action === layout.action}
           disabled={isOrderExecuting}
         />
       ))}
