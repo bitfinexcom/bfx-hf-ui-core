@@ -4,6 +4,7 @@ import { Checkbox } from '@ufx-ui/core'
 import PropTypes from 'prop-types'
 import _find from 'lodash/find'
 import _isEmpty from 'lodash/isEmpty'
+import _includes from 'lodash/includes'
 
 import Button from '../../ui/Button'
 import AmountInput from '../OrderForm/FieldComponents/input.amount'
@@ -85,7 +86,7 @@ const LiveStrategyExecutor = ({
         </div>
       </div>
       <div className='hfui-backtester_row'>
-        {!isPaperTrading && (
+        {!isPaperTrading && _includes(symbol?.contexts, 'm') && (
           <div className='hfui-backtester__flex_start'>
             <Checkbox
               label={t('strategyEditor.useMarginCheckbox')}
