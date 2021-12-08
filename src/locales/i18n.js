@@ -12,7 +12,7 @@ const { REACT_APP_ENV } = process.env
 export const LANGUAGES = {
   en: 'en-US',
   // es: 'es-EM',
-  ru: 'ru',
+  ru: 'ru-RU',
   // tr: 'tr',
   cn: 'zh-CN',
   tw: 'zh-TW',
@@ -31,7 +31,7 @@ export const LANGUAGE_NAMES = {
 export const LANGUAGES_MAP = {
   en: 'en',
   // es: 'es-EM',
-  ru: 'ru',
+  ru: 'ru-RU',
   // tr: 'tr',
   cn: 'zh-CN',
   tw: 'zh-TW',
