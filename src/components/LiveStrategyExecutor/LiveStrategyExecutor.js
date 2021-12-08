@@ -107,7 +107,7 @@ const LiveStrategyExecutor = ({
         <div className='hfui-backtester__flex_start'>
           <AmountInput
             className='hfui-backtester__flex_start-number-input'
-            def={{ label: 'Candle seed count' }}
+            def={{ label: t('strategyEditor.candleSeedCount') }}
             validationError={seedError}
             value={candleSeed}
             onChange={updateSeed}

@@ -10,6 +10,7 @@ import _isNull from 'lodash/isNull'
 import _find from 'lodash/find'
 
 import OutsideClickHandler from 'react-outside-click-handler'
+import { useTranslation } from 'react-i18next'
 import { removeAlgoOrderParams, saveAlgoOrderParams, setActiveAOParamsID } from '../../redux/actions/ao'
 import { getActiveAOparamsID, getAOParams } from '../../redux/selectors/ao'
 
@@ -46,6 +47,8 @@ const AlgoParams = ({
   const [isAddNewParamModalOpen, setIsAddNewParamModalOpen] = useState(false)
   const activeAOID = useSelector(getActiveAOparamsID)
   const aoParams = useSelector(getAOParams)
+
+  const { t } = useTranslation()
 
   const selectedAOParams = aoParams[symbol]?.[algoID]
 
@@ -108,14 +111,14 @@ const AlgoParams = ({
         <OutsideClickHandler onOutsideClick={() => setIsOpen(false)}>
           <div className='hfui-orderform__ao-settings__menu'>
             <div className='hfui-orderform__ao-settings__title'>
-              Algo Params settings
+              {t('algoOrderForm.saveParamsSettings')}
             </div>
             <div className='hfui-orderform__ao-settings__menu-buttons' onClick={() => setIsOpen(false)}>
               <Item onClick={onSave} isDisabled={_isNull(activeAOID)}>
-                Save
+                {t('ui.save')}
               </Item>
               <Item onClick={() => setIsAddNewParamModalOpen(true)}>
-                Save As...
+                {t('ui.saveAs')}
               </Item>
               {!_isEmpty(selectedAOParams) && (
                 <>
