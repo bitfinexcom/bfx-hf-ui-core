@@ -9,6 +9,8 @@ import _forEach from 'lodash/forEach'
 import _filter from 'lodash/filter'
 import _isEmpty from 'lodash/isEmpty'
 import _map from 'lodash/map'
+import _size from 'lodash/size'
+import _head from 'lodash/head'
 import _join from 'lodash/join'
 import _keys from 'lodash/keys'
 import _split from 'lodash/split'
@@ -91,7 +93,7 @@ const verifyCondition = (condition = {}, value) => {
 const verifyConditionsMet = (conditions = {}, fieldData = {}) => {
   const fields = _keys(conditions)
 
-  for (let i = 0; i < fields.length; i += 1) {
+  for (let i = 0; i < _size(fields); i += 1) {
     if (!verifyCondition(conditions[fields[i]], fieldData[fields[i]])) {
       return false
     }
@@ -120,13 +122,13 @@ const defaultDataForLayout = (layout = {}) => {
   return defaultData
 }
 const getValidValue = (val) => {
-  if (typeof val === 'string' && val.length > 0) {
+  if (typeof val === 'string' && !_isEmpty(val)) {
     if (val === 'true') return true
     if (val === 'false') return false
     return val
   }
   if (typeof val === 'number') return val.toString()
-  if (typeof val === 'string' && val.length === 0) return ' '
+  if (typeof val === 'string' && _isEmpty(val)) return ' '
 
   return val || ''
 }
@@ -288,8 +290,8 @@ const renderLayoutActions = ({
     <div
       key='of-actions'
       className={ClassNames('hfui-orderform__layout-actions', {
-        'single-action': validActions.length === 1,
-        'ao-submit-action': validActions[0] === 'submit',
+        'single-action': _size(validActions) === 1,
+        'ao-submit-action': _head(validActions) === 'submit',
       })}
     >
       {_map(validActions, (action) => (
