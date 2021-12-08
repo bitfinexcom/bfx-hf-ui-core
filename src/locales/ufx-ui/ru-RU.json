@@ -20,6 +20,10 @@
     "copy_to_clipboard": "Скопировать в буфер обмена",
     "no": "Нет"
   },
+  "ui": {
+    "typeToSearch": "Введите для поиска..",
+    "selectOption": "Выберите опцию"
+  },
   "error": {
     "not_enough_balance": "Недостаточно средств, доступный баланс {{amount}}",
     "must_be_number": "Должно быть числом",

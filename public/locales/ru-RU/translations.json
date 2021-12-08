@@ -258,7 +258,9 @@
       "negativeCustomPriceTarget": "Отрицательный ценовой ориентир",
       "invalidConditionForCustomPriceTarget": "Недопустимое условие для ценового ориентира",
       "invalidMatchedPriceTarget": "Недопустимый подобранный ценовой ориентир",
-      "invalidPriceDeltaProvided": "Предоставлена неверная дельта цены"
+      "invalidPriceDeltaProvided": "Предоставлена неверная дельта цены",
+      "orderCountExceedsTotalMaxLimit": "лимит: превышено допустимое значение размещенных ордеров ({{count}}/{{limit}})",
+      "orderCountExceedsPairMaxLimit": "лимит: превышено допустимое значение размещенных ордеров ({{count}}/{{limit}} для {{pair}})"
     }
   },
   "AOPauseModal": {
@@ -288,6 +290,7 @@
     "apiKey": "Ключ API",
     "apiSecret": "Секретный ключ API",
     "deadManCheckbox": "Dead Man Switch",
+    "themeSetting": "Тема приложения",
     "deadManText1": "Включение Dead Man switch автоматически отменит все активные ордера при закрытии приложения.",
     "deadManText2": "Алгоритмические ордеры отменяются при закрытии приложения; без включения переключателя Dead Man switch любые atomic ордеры, созданные AO, останутся открытыми, а текущее состояние может быть потеряно при повторном запуске приложения.",
     "deadManWarning": "Будьте предельно внимательны, отключая эту опцию!",
@@ -302,7 +305,9 @@
     "configured": "Настроено",
     "productionTradingCheckbox": "Торговля Production",
     "productionTradingText": "Торговля в режиме реального времени с настоящими деньгами.",
-    "paperTradingText": "Практикуйтесь в торговле без риска потерять реальные деньги."
+    "paperTradingText": "Практикуйтесь в торговле без риска потерять реальные деньги.",
+    "Dark": "Темная тема",
+    "Light": "Светлая тема"
   },
   "atomicOrdersTableModal": {
     "title": "Atomic ордеры",
@@ -310,11 +315,13 @@
   },
   "badConnectionModal": {
     "title": "Не удалось подключиться",
-    "text1": "Мы заметили проблемы с подключением к Интернету. Для продолжения нормальной работы необходимо перезагрузить приложение.",
+    "text1": "Мы заметили проблемы с подключением к Интернету. Для продолжения нормальной работы необходимо выполнить {{action}} приложения.",
     "text2": "Убедитесь, что у вас стабильное и хорошее интернет-соединение.",
-    "text3": "Honey Framework перезагрузится после того, как вы нажмете «ОК».",
-    "text4": "Приложение автоматически перезагрузится через {{countdown}} секунд.",
-    "checkbox": "Перезагружаться автоматически"
+    "text3": "Honey Framework совершит {{action}} после того, как вы нажмете «ОК».",
+    "text4": "Приложение автоматически совершит {{action}} через {{countdown}} секунд.",
+    "checkbox": "совершать {{action}} автоматически",
+    "reboot": "перезагрузку",
+    "restart": "Перезапуск"
   },
   "balancesTableModal": {
     "title": "Балансы",
@@ -356,6 +363,14 @@
     "orderSubmittedBuyDetailed": "Создан {{exID}} {{type}} ордер на ПОКУПКУ {{amount}} {{symbol}} (ID: {{id}})",
     "orderSubmittedSellAtDetailed": "Создан {{exID}} {{type}} ордер на ПРОДАЖУ {{amount}} {{symbol}} по цене {{price}} (ID: {{id}})",
     "orderSubmittedSellDetailed": "Создан {{exID}} {{type}} ордер на ПРОДАЖУ {{amount}} {{symbol}} (ID: {{id}})",
+    "orderModifiedBuyAtDetailed": "Изменен {{exID}} {{type}} ордер на ПОКУПКУ {{amount}} {{symbol}} по цене {{price}} (ID: {{id}})",
+    "orderModifiedBuyDetailed": "Изменен {{exID}} {{type}} ордер на ПОКУПКУ {{amount}} {{symbol}} (ID: {{id}})",
+    "orderModifiedSellAtDetailed": "Изменен {{exID}} {{type}} ордер на ПРОДАЖУ {{amount}} {{symbol}} по цене {{price}} (ID: {{id}})",
+    "orderModifiedSellDetailed": "Изменен {{exID}} {{type}} ордер на ПРОДАЖУ {{amount}} {{symbol}} (ID: {{id}})",
+    "orderPartiallyFilledBuyAtDetailed": "{{exID}} {{type}} Ордер на ПОКУПКУ {{amount}} {{symbol}} был частично исполнен по цене {{price}} (ID: {{id}})",
+    "orderPartiallyFilledBuyDetailed": "{{exID}} {{type}} Ордер на ПОКУПКУ {{amount}} {{symbol}} был частично исполнен (ID: {{id}})",
+    "orderPartiallyFilledSellAtDetailed": "{{exID}} {{type}} Ордер на ПРОДАЖУ {{amount}} {{symbol}} был частично исполнен по цене {{price}} (ID: {{id}})",
+    "orderPartiallyFilledSellDetailed": "{{exID}} {{type}} Ордер на ПРОДАЖУ {{amount}} {{symbol}} был частично исполнен (ID: {{id}})",
     "stoppedAO": "Остановленный алгоритмический ордер",
     "startedAO": "Запущен АО {{name}} на {{target}}",
     "unknownAlgoOrderId": "Неизвестный алгоритмический ордер ID: {{aoID}}",
@@ -385,7 +400,8 @@
     "connectedTo": "Подключено к {{target}}",
     "authenticatedWith": "Аутентифицировано с {{target}}",
     "disconnectedFrom": "Отключено от {{target}}",
-    "decryptedCredentialsFor": "Расшифрованы учетные данные для {{target}} ({{mode}})"
+    "decryptedCredentialsFor": "Расшифрованы учетные данные для {{target}} ({{mode}})",
+    "reboot_notify": "Обнаружено несколько проблем с интернет-соединением. Перезагружаем приложение..."
   },
   "tradingModeModal": {
     "title": "Переключить торговый режим",
@@ -410,6 +426,8 @@
     "submitKeys": "Ввести {{mode}} ключи api",
     "exchangeConnecting": "Подключаемся к платформе...",
     "help": "ПОМОЩЬ:",
+    "bid": "Цена покупки",
+    "ask": "Цена продажи",
     "exchange": "Обменный",
     "margin": "Маржинальный",
     "derivatives": "Деривативы",
@@ -522,14 +540,13 @@
   "strategyEditor": {
     "docsTab": "Документы",
     "backtestTab": "Backtest",
+    "executeTab": "Исполнить",
     "unsavedStartegy": "Несохраненная стратегия",
     "newStrategy": "Новая стратегия",
+    "recent": "Недавние",
+    "more": "Еще",
     "createStrategyStringPart1": "Создать",
-    "createStrategyStringPart2": "новую стратегию",
-    "createStrategyStringPart3": "или",
-    "createStrategyStringPart4": "открыть",
-    "createStrategyStringPart5": "существующую.",
-    "createStrategyStringPart6": ", чтобы начать backtesting тестирование.",
+    "createStrategyStringPart2": "новую стратегию, чтобы начать backtesting тестирование.",
     "newStrategyModalTitle": "Создать новую стратегию",
     "newStrategyModalEmptyError": "Отсутствует название",
     "newStrategyModalLongError": "Название стратегии слишком длинное ({{labelSize}}/{{MAX_LABEL_LENGTH}} знаков)",
@@ -543,6 +560,7 @@
     "endDate": "Конечная дата",
     "useCandlesCheckbox": "Использовать свечи",
     "useTradesCheckbox": "Использовать сделки",
+    "useMarginCheckbox": "Использовать маржинальную торговлю",
     "checkboxWarningMessage": "Вы должны отметить как минимум одну опцию",
     "totalPL": "Общий P/L",
     "avgPL": "Средний PL",
@@ -558,7 +576,14 @@
     "profitLoss": "Прибыль/Убытки",
     "volume": "Объем",
     "largestGain": "Наибольшая прибыль",
-    "largestLoss": "Наибольший убыток"
+    "largestLoss": "Наибольший убыток",
+    "liveExecution": {
+      "executing": "Ваша стратегия исполняется на вашем реальном аккаунте с реальными средствами.",
+      "stopping": "Останавливаем исполнение стратегии...",
+      "preparing": "Обрабатываем и подгатавливаем стратегию перед исполнением...",
+      "realBalancesWarning": "ПРИМЕЧАНИЕ: Нажимая кнопку \"начать\", вы исполните стратегию на вашем реальном аккаунте с использованием реальных средств.",
+      "createStrategy": "Создать стратегию для ее исполнения."
+    }
   },
   "ui": {
     "ok": "OK",
@@ -566,6 +591,8 @@
     "dontShowAgain": "Понятно. Больше не показывать!",
     "dropdown": "Выберите опцию",
     "backBtn": "Назад",
+    "export": "Экспорт",
+    "import": "Импорт",
     "closeBtn": "Закрыть",
     "lastBtn": "Завершить",
     "nextBtn": "Далее",

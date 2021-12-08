@@ -20,6 +20,10 @@
     "copy_to_clipboard": "复制到剪贴板",
     "no": "否"
   },
+  "ui": {
+    "typeToSearch": "输入以搜寻..",
+    "selectOption": "选择一个项目"
+  },
   "error": {
     "not_enough_balance": "余额不足，可用余额为 {{amount}}",
     "must_be_number": "必须为数字",

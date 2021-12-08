@@ -3,7 +3,7 @@
     "paper": "Trading de Simulación",
     "production": "Producción",
     "trading": "Terminal de Trading",
-    "market": "Estadística del Mercado",
+    "market": "Estadísticas del Mercado",
     "strategyEditor": "Configurador de Estrategias",
     "startingUp": "Iniciando aplicación...",
     "craftedBy": "Elaborado por Bitfinex"
@@ -16,7 +16,7 @@
     "resetMsg": "Alternativamente, borra tus credenciales y datos almacenados para establecer una nueva contraseña",
     "resetBtn": "Borrar Datos & Restablecer",
     "unlockBtn": "Desbloquear",
-    "initMsg": "Crea una contraseña para cifrar tus credenciales y estrategias de API. Todos los datos se almacenan localmente y tu contraseña tiene hash",
+    "initMsg": "Crea una contraseña para cifrar tus credenciales y estrategias de API. Todos los datos se almacenan localmente y tu contraseña tiene la función criptográfica hash",
     "saveCredentsBtn": "Guardar Credenciales"
   },
   "activeAlgoOrdersModal": {
@@ -28,7 +28,7 @@
   "algoOrderForm": {
     "accdist": {
       "title": "Acumular/Distribuir",
-      "help": "Acumular/Distribuir te permite dividir una orden grande en porciones aleatorias más pequeñas, enviadas a intervalos regulares o irregulares para minimizar la detección por parte de otros jugadores en el mercado.\n\nAl habilitar la opción 'Esperar llenado', el algoritmo se asegurará de que cada componente se llene antes de enviar órdenes posteriores.\n\nHabilitar el indicador 'Catch Up' hará que el algoritmo ignore el intervalo de corte para la siguiente orden si las órdenes anteriores han tardado más de lo esperado en completarse, lo que garantiza que el tiempo de procesamiento de toda la orden no se vea afectado negativamente. Además, al \"ponerse al día\", el intervalo de corte está codificado en 0,2 segundos.\n\nNota: Si el monto restante de la orden es menor que el tamaño mínimo de la orden, se ignorará.",
+      "help": "Acumular/Distribuir te permite dividir una orden grande en porciones aleatorias más pequeñas, enviadas a intervalos regulares o irregulares para minimizar la detección por parte de otros jugadores en el mercado.\n\nAl habilitar la opción 'Esperar llenado', el algoritmo se asegurará de que cada componente se llene antes de enviar órdenes posteriores.\n\nHabilitar el indicador 'Catch Up' hará que el algoritmo ignore el intervalo de corte para la siguiente orden si las órdenes anteriores han tardado más de lo esperado en completarse, lo que garantiza que el tiempo de procesamiento de toda la orden no se vea afectado negativamente. Además, al \"Ponerse al día (Catch Up)\", el intervalo de corte está codificado en 0,2 segundos.\n\nNota: Si el monto restante de la orden es menor que el tamaño mínimo de la orden, se ignorará.",
       "amountDistortion": "% de Cantidad de Distorsión",
       "amountDistortionHelp": "Cantidad para distorsionar los tamaños individuales de las órdenes para evitar la detección, en porcentaje",
       "sliceIntervalSec": "Intervalo Slice S",
@@ -152,8 +152,8 @@
       "pingPrice": "Precio Ping",
       "pongPrice": "Precio Pong",
       "pongDistance": "Distancia Pong",
-      "pingMinPrice": "Precio Ping Min",
-      "pingMaxPrice": "Precio Ping Max",
+      "pingMinPrice": "Precio Ping Mín",
+      "pingMaxPrice": "Precio Ping Máx",
       "pingAmount": "Monto Ping",
       "pingOrderSize": "Tamaño de la orden Ping",
       "pongAmount": "Monto Pong",
@@ -168,8 +168,8 @@
       "targetDeltaHelp": "± Distancia desde el precio objetivo para que coincida",
       "priceHelp": "Requiere precio objetivo \"personalizado\""
     },
-    "tradeBeyondEnd": "Opera Sin Fin",
-    "tradeBeyondEndHelp": "Continuar operando más allá del intervalo de corte",
+    "tradeBeyondEnd": "Trade Sin Fin",
+    "tradeBeyondEndHelp": "Continuar haciendo trade más allá del intervalo de corte",
     "amountDistortionPerc": "% de Cantidad de Distorsión",
     "amountDistortionPercHelp": "Cantidad para distorsionar los tamaños individuales de las órdenes para evitar la detección, en porcentaje",
     "sliceIntervalSec": "Intervalo Slice (seg)",
@@ -186,7 +186,7 @@
     "matchLastTrade": "Coincidir el precio del ultimo trade",
     "validationMessages": {
       "invalidOrderType": "Tipo de orden no valido: {{orderType}}",
-      "invalidAmount": "Cantidad No Valida",
+      "invalidAmount": "Cantidad no válida",
       "invalidSliceAmount": "Cantidad slice inválida",
       "boolCatchUpFlagRequired": "\"Bool catch up flag\" requerido",
       "boolAwaitFillFlagRequired": "\"Bool await fill flag\" requerido",
@@ -258,7 +258,9 @@
       "negativeCustomPriceTarget": "Precio objetivo personalizado negativo",
       "invalidConditionForCustomPriceTarget": "Condición no válida para el precio objetivo personalizado",
       "invalidMatchedPriceTarget": "Precio objetivo coincidente no válido",
-      "invalidPriceDeltaProvided": "Se proporcionó un delta de precio no válido"
+      "invalidPriceDeltaProvided": "Se proporcionó un delta de precio no válido",
+      "orderCountExceedsTotalMaxLimit": "límite: el recuento colocado ha excedido lo permitido ({{count}}/{{limit}})",
+      "orderCountExceedsPairMaxLimit": "límite: el recuento colocado ha excedido lo permitido ({{count}}/{{limit}} para {{pair}})"
     }
   },
   "AOPauseModal": {
@@ -278,16 +280,17 @@
     "title": "Configuraciones",
     "generalTab": "General",
     "tradingModeTab": "Modo de Trading",
-    "apiKeys": "Llaves API",
-    "productionKey": "Llave API de Producción",
-    "paperKey": "Llave API para el Trading de Simulación",
-    "apiNotValid": "Se ingresó una Llave de API no válida",
-    "apiNotConfigured": "Sin Configurar",
+    "apiKeys": "Claves API",
+    "productionKey": "Clave API de Producción",
+    "paperKey": "Clave API para el Trading de Simulación",
+    "apiNotValid": "Se ingresó una clave de API no válida",
+    "apiNotConfigured": "Sin configurar",
     "apiSubmit": "Confirmar",
     "autologin": "Inicio de sesión automático en modo de desarrollo",
-    "apiKey": "Llave API",
+    "apiKey": "Clave API",
     "apiSecret": "API Secreta",
-    "deadManCheckbox": "Interruptor de Hombre Muerto",
+    "deadManCheckbox": "Interruptor de Dead Man",
+    "themeSetting": "Tema de la aplicación",
     "deadManText1": "Habilitar el interruptor Dead Man cancelará automáticamente todas las órdenes activas cuando se cierre la aplicación.",
     "deadManText2": "Las órdenes algorítmicas se cancelan al cerrar la aplicación; sin el interruptor Dead Man, cualquier orden atómica creada por una AO permanecerá abierta y el estado puede perderse cuando la aplicación se inicie nuevamente.",
     "deadManWarning": "¡Deshabilitar esto debe hacerse con precaución!",
@@ -296,13 +299,15 @@
     "showPauseInfoText": "Si está marcada, el modal con explicaciones se mostrará cuando cierres la aplicación con Órdenes de Algoritmo activas.",
     "rebootCheckbox": "Reiniciar automáticamente en caso de mala conexión",
     "rebootText": " Cuando experimentes una conexión a internet deficiente, la ventana modal que te notifica sobre esto no se mostrará y la aplicación se reiniciará automáticamente.",
-    "howToCreate": "¿Cómo crear una Llave?",
+    "howToCreate": "¿Cómo crear una Clave?",
     "learnMore": "Más Información",
     "validating": "Validando...",
     "configured": "Configurado",
     "productionTradingCheckbox": "Trading de Producción",
     "productionTradingText": "Trading en vivo con dinero real.",
-    "paperTradingText": "Practica trading sin arriesgar dinero real."
+    "paperTradingText": "Practica trading sin arriesgar dinero real.",
+    "Dark": "Oscuro",
+    "Light": "Claro"
   },
   "atomicOrdersTableModal": {
     "title": "Órdenes Atómicas",
@@ -310,11 +315,13 @@
   },
   "badConnectionModal": {
     "title": "Error de conexión",
-    "text1": "Hemos notado varios problemas de conexión a internet. Es necesario reiniciar la aplicación para continuar con el funcionamiento normal.",
+    "text1": "Hemos notado varios problemas de conexión a internet. Es necesario {{action}} la aplicación para continuar con el funcionamiento normal.",
     "text2": "Asegúrate de tener una conexión a internet estable y buena.",
-    "text3": "Honey Framework se reiniciará después de presionar 'Aceptar'.",
-    "text4": "La aplicación se reiniciará automáticamente en {{countdown}} segundos.",
-    "checkbox": "Reiniciar automáticamente"
+    "text3": "Honey Framework hará {{action}} después de presionar 'Aceptar'.",
+    "text4": "La aplicación hará {{action}} automáticamente en {{countdown}} segundos.",
+    "checkbox": "{{action}} automáticamente",
+    "reboot": "reiniciar",
+    "restart": "Reiniciar"
   },
   "balancesTableModal": {
     "title": "Balances",
@@ -325,7 +332,7 @@
     "title": "Advertencia de mejor experiencia",
     "text1": "Versión web de Honey Framework diseñada para computadoras de escritorios. Para tener la mejor experiencia en el uso de la aplicación, recomendamos encarecidamente el uso de una computadora escritorio.",
     "text2": "Se recomienda utilizar esta aplicación en modo horizontal.",
-    "text3": "Saludos cordiales, el equipo &apos; de Honey Framework!"
+    "text3": "Saludos cordiales, el equipo de Honey Framework"
   },
   "chartModal": {
     "title": "Gráfico"
@@ -352,10 +359,18 @@
     "orderExecutedBuyDetailed": "{{exID}} {{type}} Orden de COMPRA de {{amount}} {{symbol}} ha ejecutada por completo (ID: {{id}})",
     "orderExecutedSellAtDetailed": "{{exID}} {{type}} Orden de VENTA de {{amount}} {{symbol}} ha sido ejecutada por completo a {{price}} (ID: {{id}})",
     "orderExecutedSellDetailed": "{{exID}} {{type}} Orden de VENTA de {{amount}} {{symbol}} ha sido ejecutada por completo (ID: {{id}})",
-    "orderSubmittedBuyAtDetailed": "Creada {{exID}} {{type}} Orden de COMPRA de {{amount}} {{symbol}} A {{price}} (ID: {{id}})",
+    "orderSubmittedBuyAtDetailed": "Creada {{exID}} {{type}} Orden de COMPRA de {{amount}} {{symbol}} a {{price}} (ID: {{id}})",
     "orderSubmittedBuyDetailed": "Creada {{exID}} {{type}} Orden de COMPRA de {{amount}} {{symbol}} (ID: {{id}})",
-    "orderSubmittedSellAtDetailed": "Creada {{exID}} {{type}} Orden de VENTA de {{amount}} {{symbol}} A {{price}} (ID: {{id}})",
+    "orderSubmittedSellAtDetailed": "Creada {{exID}} {{type}} Orden de VENTA de {{amount}} {{symbol}} a {{price}} (ID: {{id}})",
     "orderSubmittedSellDetailed": "Creada {{exID}} {{type}} Orden de VENTA de {{amount}} {{symbol}} (ID: {{id}})",
+    "orderModifiedBuyAtDetailed": "Modificada {{exID}} {{type}} Orden de COMPRA de {{amount}} {{symbol}} a {{price}} (ID: {{id}})",
+    "orderModifiedBuyDetailed": "Modificada {{exID}} {{type}} Orden de COMPRA de {{amount}} {{symbol}} (ID: {{id}})",
+    "orderModifiedSellAtDetailed": "Modificada {{exID}} {{type}} Orden de VENTA de {{amount}} {{symbol}} a {{price}} (ID: {{id}})",
+    "orderModifiedSellDetailed": "Modificada {{exID}} {{type}} Orden de VENTA de {{amount}} {{symbol}} (ID: {{id}})",
+    "orderPartiallyFilledBuyAtDetailed": "{{exID}} {{type}} orden de COMPRA de {{amount}} {{symbol}} parcialmente ejecutada a {{price}} (ID: {{id}})",
+    "orderPartiallyFilledBuyDetailed": "{{exID}} {{type}} orden de COMPRA de{{amount}} {{symbol}} parcialmente completada (ID: {{id}})",
+    "orderPartiallyFilledSellAtDetailed": "{{exID}} {{type}} orden de VENTA {{amount}} {{symbol}} parcialmente completada {{price}} (ID: {{id}})",
+    "orderPartiallyFilledSellDetailed": "{{exID}} {{type}} orden de VENTA{{amount}} {{symbol}} parcialmente completada (ID: {{id}})",
     "stoppedAO": "Orden de algoritmo detenida",
     "startedAO": "Comenzó AO {{name}} el {{target}}",
     "unknownAlgoOrderId": "ID de orden de algoritmo desconocido: {{aoID}}",
@@ -369,9 +384,9 @@
     "noClientOpenFor": "Ningún cliente abierto para {{target}}",
     "errorRemovingOrder": "Error al eliminar la orden: {{algoID}} [{{gid}}]",
     "alreadyAuthenticated": "Ya autenticado",
-    "credentialsAlreadyConfiguredResetThemBeforeReInitializing": "Credenciales ya configurados; restablecerlos antes de re-iniciar",
+    "credentialsAlreadyConfiguredResetThemBeforeReInitializing": "Credenciales ya configuradas; restablecerlas antes de re-iniciar",
     "clearedUserCredentialsAndData": "Credenciales y datos de usuario borrados",
-    "invalidPassword": "Contraseña No Valida",
+    "invalidPassword": "Contraseña no válida",
     "unrecognisedExchange": "Exchange no reconocido, no se puede enviar la orden",
     "submittingOrderTo": "Enviando orden a {{target}}",
     "strategyRemovedSuccessfully": "La estrategia se ha eliminado con éxito",
@@ -385,7 +400,8 @@
     "connectedTo": "Conectado a {{target}}",
     "authenticatedWith": "Autenticado con {{target}}",
     "disconnectedFrom": "Desconectado de {{target}}",
-    "decryptedCredentialsFor": "Credenciales descifradas para {{target}} ({{mode}})"
+    "decryptedCredentialsFor": "Credenciales descifradas para {{target}} ({{mode}})",
+    "reboot_notify": "Se han observado varios problemas de conexión a Internet. Reiniciando la aplicación..."
   },
   "tradingModeModal": {
     "title": "Cambiar Modo de Trade",
@@ -405,11 +421,13 @@
   "orderForm": {
     "title": "Ejecutar Orden",
     "title2": "Formulario de Orden",
-    "apiKeyRequired": "Llave API Requerida",
+    "apiKeyRequired": "Clave API Requerida",
     "apiSecretRequired": "Secreto API Requerido",
-    "submitKeys": "Enviar {{mode}} llaves api",
+    "submitKeys": "Enviar {{mode}} claves api",
     "exchangeConnecting": "Conectando a exchange...",
     "help": "AYUDA:",
+    "bid": "BID",
+    "ask": "ASK",
     "exchange": "Exchange",
     "margin": "Margen",
     "derivatives": "Derivados",
@@ -422,11 +440,11 @@
     "marketTitle": "Mercado",
     "marketHelp": "Una orden de mercado se ejecutará inmediatamente al precio de mercado actual.\n\nSi se especifica la opción 'solo reducir', la orden se cancelará si abrieras o aumentaras el tamaño de una posición abierta.",
     "stopLimitTitle": "Stop-Limit",
-    "stopLimitHelp": "El tipo de orden Stop-Limit se diferencia de la orden Stop básica al permitir la especificación de un precio exacto de ejecución.\n\nUna vez que se alcanza el precio 'stop', se crea una orden 'Límite' al precio límite especificado.\n\nSi la opción 'oculta' está habilitada, la orden se insertará en el libro de órdenes pero no será visible para otros usuarios y se ejecutará como TOMADOR.\n\nSi se especifica la opción 'solo reducir', la orden de límite resultante se cancelará si abriera o aumentara el tamaño de una posición abierta.\n\nSe puede especificar una fecha de Tiempo en Vigor, después de la cual el pedido se cancelará automáticamente.",
+    "stopLimitHelp": "El tipo de orden Stop-Limit se diferencia de la orden Stop básica al permitir la especificación de un precio exacto de ejecución.\n\nUna vez que se alcanza el precio 'stop', se crea una orden 'Límite' al precio límite especificado.\n\nSi la opción 'oculta' está habilitada, la orden se insertará en el libro de órdenes pero no será visible para otros usuarios y se ejecutará como TOMADOR.\n\nSi se especifica la opción 'solo reducir', la orden de límite resultante se cancelará si abriera o aumentara el tamaño de una posición abierta.\n\nSe puede especificar una fecha de Tiempo en Vigor, después de la cual la orden se cancelará automáticamente.",
     "stopTitle": "Stop",
     "stopHelp": "Las órdenes stop se convierten automáticamente en órdenes de mercado una vez que se alcanza el precio stop especificado.\n\nPara controlar el precio de ejecución, utiliza una orden Stop-Limit.\n\nSi se especifica la opción 'solo reducir', la orden se cancelará si abriera o aumentara el tamaño de una posición abierta.\n\nSe puede especificar una fecha de Tiempo en Vigor, después de la cual la orden se cancelará automáticamente.",
     "trailingStopTitle": "Stop Dinámico",
-    "trailingStopHelp": "Las órdenes de stop dinámico siguen ('rastrean') el precio de mercado hacia arriba (para órdenes de venta) o hacia abajo (para órdenes de compra) en la distancia de rastreo especificada. Si el precio de mercado se mueve contra la orden de stop dinámico, no se mueve y se ejecutará una vez que el mercado alcance la orden.\n\nSi se especifica la opción 'solo reducir', la orden se cancelará si abriera o aumentara el tamaño de una posición abierta.\n\nSe puede especificar una fecha de tiempo en vigor, después de la cual el pedido se cancelará automáticamente.",
+    "trailingStopHelp": "Las órdenes de stop dinámico siguen ('rastrean') el precio de mercado hacia arriba (para órdenes de venta) o hacia abajo (para órdenes de compra) en la distancia de rastreo especificada. Si el precio de mercado se mueve contra la orden de stop dinámico, no se mueve y se ejecutará una vez que el mercado alcance la orden.\n\nSi se especifica la opción 'solo reducir', la orden se cancelará si abriera o aumentara el tamaño de una posición abierta.\n\nSe puede especificar una fecha de tiempo en vigor, después de la cual la orden se cancelará automáticamente.",
     "reduceOnlyCheckbox": "SOLO REDUCIR",
     "reduceOnlyMessage": "Cancela la orden si deseas aumentar el tamaño de una posición abierta",
     "hiddenCheckbox": "OCULTO",
@@ -456,7 +474,7 @@
     "market": "Para personalizar tu diseño, puedes agregarle componentes",
     "strategyEditor1": "Crea tus propias estrategias",
     "strategyEditor2": "O abre una existente",
-    "strategyEditor3": "En esta sección encontrará las declaraciones de funciones disponibles para codificar tus propias estrategias"
+    "strategyEditor3": "En esta sección encontrarás las declaraciones de funciones disponibles para codificar tus propias estrategias"
   },
   "positionsTableModal": {
     "title": "Posiciones",
@@ -472,7 +490,7 @@
     "total": "Total",
     "available": "Disponible",
     "pair": "Par",
-    "amount": "Cantidad",
+    "amount": "Monto",
     "basePrice": "Precio Base",
     "liqPrice": "Precio de Liq",
     "pl": "G/P",
@@ -522,14 +540,13 @@
   "strategyEditor": {
     "docsTab": "Docs",
     "backtestTab": "Backtest",
+    "executeTab": "Ejecutar",
     "unsavedStartegy": "Estrategia sin guardar",
     "newStrategy": "Nueva Estrategia",
+    "recent": "Reciente",
+    "more": "Más",
     "createStrategyStringPart1": "Crear",
-    "createStrategyStringPart2": "una nueva estrategia",
-    "createStrategyStringPart3": "o",
-    "createStrategyStringPart4": "apertura",
-    "createStrategyStringPart5": "una existente.",
-    "createStrategyStringPart6": "para comenzar a hacer backtesting.",
+    "createStrategyStringPart2": "una nueva estrategia para comenzar a hacer backtesting.",
     "newStrategyModalTitle": "Crear una Nueva Estrategia",
     "newStrategyModalEmptyError": "La etiqueta está vacía",
     "newStrategyModalLongError": "El nombre de la estrategia es demasiado largo ({{labelSize}}/{{MAX_LABEL_LENGTH}} caracteres)",
@@ -543,6 +560,7 @@
     "endDate": "Fecha Final",
     "useCandlesCheckbox": "Usar velas",
     "useTradesCheckbox": "Usar trades",
+    "useMarginCheckbox": "Utiliza trading de margen",
     "checkboxWarningMessage": "Se debe seleccionar al menos una casilla de verificación",
     "totalPL": "G/P total",
     "avgPL": "GP Promedio",
@@ -558,7 +576,14 @@
     "profitLoss": "Ganancia/Pérdida",
     "volume": "Volumen",
     "largestGain": "Mayor Ganancia",
-    "largestLoss": "Mayor Pérdida"
+    "largestLoss": "Mayor Pérdida",
+    "liveExecution": {
+      "executing": "Tu estrategia se está ejecutando en tu cuenta real con balances reales.",
+      "stopping": "Deteniendo la ejecución de la estrategia...",
+      "preparing": "Procesar y preparar la estrategia antes de la ejecución...",
+      "realBalancesWarning": "NOTA: Al presionar inicio, estarás ejecutando tu estrategia en tu cuenta real con balances reales.",
+      "createStrategy": "Crea una estrategia para comenzar a ejecutar."
+    }
   },
   "ui": {
     "ok": "Ok",
@@ -566,6 +591,8 @@
     "dontShowAgain": "Entendí. ¡No me lo vuelvas a mostrar!",
     "dropdown": "Selecciona una opción",
     "backBtn": "Volver",
+    "export": "Exportar",
+    "import": "Importar",
     "closeBtn": "Cerrar",
     "lastBtn": "Terminar",
     "nextBtn": "Siguiente",
