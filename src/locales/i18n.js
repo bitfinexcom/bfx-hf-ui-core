@@ -12,7 +12,7 @@ export const LANGUAGES = {
   en: 'en-US',
   es: 'es-EM',
   ru: 'ru-RU',
-  tr: 'tr',
+  tr: 'tr-TR',
   cn: 'zh-CN',
   tw: 'zh-TW',
 }
