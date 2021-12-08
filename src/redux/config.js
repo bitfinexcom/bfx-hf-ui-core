@@ -25,7 +25,7 @@ const PUB_REST_API_URL = isElectronApp ? 'http://localhost:45001' : process.env.
 
 const appVersion = process.env.npm_package_version
 
-const CHART_URL = isElectronApp ? 'https://bitfinexcom.github.io/bfx-hf-tradingview' : process.env.REACT_APP_CHART_URL
+const CHART_URL = isElectronApp ? 'https://hchart.bitfinex.com/v0' : process.env.REACT_APP_CHART_URL
 
 export {
   REDUCER_PATHS,
