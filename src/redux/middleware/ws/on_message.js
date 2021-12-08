@@ -1,6 +1,7 @@
 import _isArray from 'lodash/isArray'
 import _isObject from 'lodash/isObject'
 import _isNumber from 'lodash/isNumber'
+import _isEmpty from 'lodash/isEmpty'
 import _reduce from 'lodash/reduce'
 import _map from 'lodash/map'
 import Debug from 'debug'
@@ -415,7 +416,11 @@ export default (alias, store) => (e = {}) => {
         } else {
           store.dispatch(WSActions.stopLiveExecution())
         }
-        store.dispatch(WSActions.setExecutionOptions(options))
+
+        if (!_isEmpty(options)) {
+          store.dispatch(WSActions.setExecutionOptions(options))
+        }
+
         store.dispatch(WSActions.setExecutionLoading(false))
 
         break
