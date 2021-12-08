@@ -3,6 +3,7 @@ import React from 'react'
 import Debug from 'debug'
 import _isError from 'lodash/isError'
 import _toString from 'lodash/toString'
+import { withTranslation } from 'react-i18next'
 
 import './style.css'
 
@@ -30,26 +31,32 @@ class CrashHandler extends React.Component {
 
   render() {
     const { appCrashed, crashStack } = this.state
-    const { children } = this.props
+    const { children, t } = this.props
 
     if (appCrashed) {
       return (
         <div className='hfui-crash_screen-wrapper'>
           <div className='hfui-crash_screen'>
             <h1>:(</h1>
-            <h2>An error occurred that caused the Honey Framework UI to halt. Please, restart the application to proceed working with it.</h2>
+            <h2>{t('crashHandler.text1')}</h2>
             <h4>
-              Please, report this issue at&nbsp;
-              <a href='https://github.com/bitfinexcom/bfx-hf-ui/issues' target='_blank' rel='noopener noreferrer'>https://github.com/bitfinexcom/bfx-hf-ui/issues</a>
+              {t('crashHandler.text2_1')}
+              &nbsp;
+              <a
+                href='https://github.com/bitfinexcom/bfx-hf-ui/issues'
+                target='_blank'
+                rel='noopener noreferrer'
+              >
+                https://github.com/bitfinexcom/bfx-hf-ui/issues
+              </a>
               ,&nbsp;
               <br />
-              so we would be able to fix it as soon as possible!
+              {t('crashHandler.text2_2')}
             </h4>
             <h5>
-              Technical crash info:
-              <div className='hfui-crash_screen-crashstack'>
-                {crashStack}
-              </div>
+              {t('crashHandler.text3')}
+              :
+              <div className='hfui-crash_screen-crashstack'>{crashStack}</div>
             </h5>
           </div>
         </div>
@@ -60,4 +67,4 @@ class CrashHandler extends React.Component {
   }
 }
 
-export default CrashHandler
+export default withTranslation()(CrashHandler)

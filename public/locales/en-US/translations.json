@@ -615,5 +615,11 @@
     "removeBtn": "Remove",
     "createBtn": "Create",
     "startBtn": "Start"
+  },
+  "crashHandler": {
+    "text1": "An error occurred that caused the Honey Framework UI to halt. Please, restart the application to proceed working with it",
+    "text2_1": "Please, report this issue at",
+    "text2_2": "so we would be able to fix it as soon as possible!",
+    "text3": "Technical crash info"
   }
 }
