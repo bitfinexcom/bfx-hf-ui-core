@@ -41,7 +41,7 @@ const Chart = ({ market, theme, layoutI }) => {
   return (
     <iframe
       className='hfui-chart-iframe'
-      src={`${CHART_URL}/?${queryString}`}
+      src={`${CHART_URL}?${queryString}`}
       title='Chart'
       id={iframeID}
     />
