@@ -258,7 +258,9 @@
       "negativeCustomPriceTarget": "自定义负值目标价",
       "invalidConditionForCustomPriceTarget": "无效条件：自定义目标价",
       "invalidMatchedPriceTarget": "无效匹配目标价",
-      "invalidPriceDeltaProvided": "提供的价格Delta无效"
+      "invalidPriceDeltaProvided": "提供的价格Delta无效",
+      "orderCountExceedsTotalMaxLimit": "限制：订单数总计已超过{{count}}/{{limit}}",
+      "orderCountExceedsPairMaxLimit": "限制：{{pair}} 的订单数总计已超过{{count}}/{{limit}}"
     }
   },
   "AOPauseModal": {
@@ -288,6 +290,7 @@
     "apiKey": "API密钥",
     "apiSecret": "API 私钥",
     "deadManCheckbox": "失能开关",
+    "themeSetting": "应用程式主题",
     "deadManText1": "启用失能开关将于关闭应用程式时，自动取消所有待执行订单。",
     "deadManText2": "关闭应用程式将取消演算法订单。如无启用失能开关，则不会取消演算法订单。于重启应用程式时，如提示说明订单则有可能会消失。",
     "deadManWarning": "禁用此设置将收到相关提醒！",
@@ -302,7 +305,9 @@
     "configured": "已配置",
     "productionTradingCheckbox": "真实交易",
     "productionTradingText": "通过真金进行真实交易",
-    "paperTradingText": "通过模拟金练习交易"
+    "paperTradingText": "通过模拟金练习交易",
+    "Dark": "深色主题",
+    "Light": "浅色主题"
   },
   "atomicOrdersTableModal": {
     "title": "自动订单",
@@ -310,11 +315,13 @@
   },
   "badConnectionModal": {
     "title": "连接问题",
-    "text1": "我们注意到数次连接问题。此需重启应用程式以继续正常运作。",
+    "text1": "我们注意到数次连接问题。此需{{action}} 应用程式以继续正常运作。",
     "text2": "请确保您有稳定且良好的网路连接",
-    "text3": "点击Okay后，将重启Honey Framework。",
-    "text4": "将于{{countdown}} 秒内，自动重启应用程式。",
-    "checkbox": "自动重新启用"
+    "text3": "点击Okay后，将{{action}} Honey Framework。",
+    "text4": "将于{{countdown}} 秒内，自动{{action}} 应用程式。",
+    "checkbox": "自动{{action}}",
+    "reboot": "重新启用",
+    "restart": "重新开始"
   },
   "balancesTableModal": {
     "title": "余额",
@@ -325,7 +332,7 @@
     "title": "最佳体验提醒",
     "text1": "Honey Framework网页版设计为桌机版。为享有运用程式最佳体验，我们高度推荐使用桌机版。",
     "text2": "建议采用横向模式使用应用程式。",
-    "text3": "敬启, Honey Framework &apos;团队!"
+    "text3": "敬启, Honey Framework 团队!"
   },
   "chartModal": {
     "title": "图表"
@@ -356,6 +363,14 @@
     "orderSubmittedBuyDetailed": "已创建{{exID}} {{type}} 的{{amount}}{{symbol}} 买单 (ID: {{id}})",
     "orderSubmittedSellAtDetailed": "已创建{{exID}} {{type}} 的{{amount}}{{symbol}} 卖单以{{price}} (ID: {{id}})",
     "orderSubmittedSellDetailed": "已创建{{exID}} {{type}} 的{{amount}}{{symbol}} 卖单 (ID: {{id}})",
+    "orderModifiedBuyAtDetailed": "已修改{{exID}} {{type}} 的{{amount}}{{symbol}} 买单以{{price}} (ID: {{id}})",
+    "orderModifiedBuyDetailed": "已修改{{exID}} {{type}} 的{{amount}}{{symbol}} 买单 (ID: {{id}})",
+    "orderModifiedSellAtDetailed": "已修改{{exID}} {{type}} 的{{amount}}{{symbol}} 卖单以{{price}} (ID: {{id}})",
+    "orderModifiedSellDetailed": "已修改{{exID}} {{type}} 的{{amount}}{{symbol}} 卖单 (ID: {{id}})",
+    "orderPartiallyFilledBuyAtDetailed": "{{exID}}{{type}} 的{{amount}}{{symbol}} 买单已以{{price}} 部分执行 (ID:{{id}})",
+    "orderPartiallyFilledBuyDetailed": "{{exID}}{{type}} 的{{amount}}{{symbol}} 买单已部分执行 (ID:{{id}})",
+    "orderPartiallyFilledSellAtDetailed": "{{exID}}{{type}} 的{{amount}}{{symbol}} 卖单已以{{price}} 部分执行 (ID:{{id}})",
+    "orderPartiallyFilledSellDetailed": "{{exID}}{{type}} 的{{amount}}{{symbol}} 卖单已部分执行 (ID:{{id}})",
     "stoppedAO": "已停止演算法订单",
     "startedAO": "已开始{{name}} 演算法订单以{{target}}",
     "unknownAlgoOrderId": "未知的演算法订单 ID:{{aoID}}",
@@ -385,7 +400,8 @@
     "connectedTo": "已连接至{{target}}",
     "authenticatedWith": "通过{{target}} 已验证",
     "disconnectedFrom": "已断开{{target}} 连接",
-    "decryptedCredentialsFor": "已解除{{target}}({{mode}}) 的加密凭证"
+    "decryptedCredentialsFor": "已解除{{target}}({{mode}}) 的加密凭证",
+    "reboot_notify": "已注意到数次网路连接问题。重启应用程式..."
   },
   "tradingModeModal": {
     "title": "切换交易模式",
@@ -410,6 +426,8 @@
     "submitKeys": "提交 {{mode}} api密钥",
     "exchangeConnecting": "正连接至交易平台...",
     "help": "帮助：",
+    "bid": "买入",
+    "ask": "卖出",
     "exchange": "现货交易",
     "margin": "保证金交易",
     "derivatives": "衍生品交易",
@@ -522,14 +540,13 @@
   "strategyEditor": {
     "docsTab": "文件",
     "backtestTab": "回测",
+    "executeTab": "执行",
     "unsavedStartegy": "未保存的交易策略",
     "newStrategy": "新交易策略",
+    "recent": "最近",
+    "more": "更多",
     "createStrategyStringPart1": "创建",
-    "createStrategyStringPart2": "一个新的交易策略",
-    "createStrategyStringPart3": "或者",
-    "createStrategyStringPart4": "打开",
-    "createStrategyStringPart5": "现有的交易策略",
-    "createStrategyStringPart6": "开始回测",
+    "createStrategyStringPart2": "开始回测新策略",
     "newStrategyModalTitle": "创建新的策略",
     "newStrategyModalEmptyError": "无标签",
     "newStrategyModalLongError": "策略标题超过限制({{labelSize}}/{{MAX_LABEL_LENGTH}} 字符)",
@@ -543,6 +560,7 @@
     "endDate": "结束日期",
     "useCandlesCheckbox": "使用K线",
     "useTradesCheckbox": "使用交易",
+    "useMarginCheckbox": "使用保证金交易",
     "checkboxWarningMessage": "须至少选取一个项目",
     "totalPL": "总损益",
     "avgPL": "平均损益",
@@ -558,7 +576,14 @@
     "profitLoss": "损益",
     "volume": "成交量",
     "largestGain": "最高利润",
-    "largestLoss": "最高损失"
+    "largestLoss": "最高损失",
+    "liveExecution": {
+      "executing": "您正使用真实账号与资金执行您的交易策略。",
+      "stopping": "策略执行停止中...",
+      "preparing": "于执行前，进行与准备交易策略...",
+      "realBalancesWarning": "提醒：点击开始后，您将通过真实账号与资金执行您的交易策略。",
+      "createStrategy": "创建策略开始回测."
+    }
   },
   "ui": {
     "ok": "确定",
@@ -566,6 +591,8 @@
     "dontShowAgain": "我已了解，请勿再次显示！",
     "dropdown": "选择一个项目",
     "backBtn": "返回",
+    "export": "导出",
+    "import": "导入",
     "closeBtn": "关闭",
     "lastBtn": "结束",
     "nextBtn": "下一步",

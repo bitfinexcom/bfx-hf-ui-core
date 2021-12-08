@@ -20,6 +20,10 @@
     "copy_to_clipboard": "複製到剪貼簿",
     "no": "否"
   },
+  "ui": {
+    "typeToSearch": "輸入搜索...",
+    "selectOption": "點選以下選項"
+  },
   "error": {
     "not_enough_balance": "餘額不足，目前可用餘額為 {{amount}}",
     "must_be_number": "須為數字",

@@ -20,6 +20,10 @@
     "copy_to_clipboard": "Copiar al portapapeles",
     "no": "No"
   },
+  "ui": {
+    "typeToSearch": "Escribe para buscar..",
+    "selectOption": "Selecciona una opción"
+  },
   "error": {
     "not_enough_balance": "No hay suficiente balance, el balance disponible es {{amount}}",
     "must_be_number": "Debe ser un número",
@@ -32,7 +36,7 @@
     "must_be_date": "La fecha debe ser una fecha válida",
     "date_must_be_within_interval": "La fecha debe ser entre 1 a 7 días a partir de hoy",
     "must_be_before_max_date": "Fecha después de fecha máxima",
-    "must_be_after_min_date": "Fecha antes de fecha minima"
+    "must_be_after_min_date": "Fecha antes de fecha mínima"
   },
   "ticker": {
     "volume": "Volumen",
@@ -63,7 +67,7 @@
   "orderhistory": {
     "pair": "Par",
     "type": "Tipo",
-    "amount": "Cantidad",
+    "amount": "Monto",
     "ccy": "Ccy",
     "price": "Precio",
     "average_price": "Precio Promedio",
@@ -76,7 +80,7 @@
   "orders": {
     "pair": "Par",
     "type": "Tipo",
-    "amount": "Cantidad",
+    "amount": "Monto",
     "ccy": "Ccy",
     "price": "Precio",
     "status": "Estado",
@@ -88,7 +92,7 @@
   "book": {
     "cancel_order": "Cancelar orden",
     "count": "Conteo",
-    "amount": "Cantidad",
+    "amount": "Monto",
     "total": "Total",
     "price": "Precio",
     "decrease_precision": "Disminuir Precisión",

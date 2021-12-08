@@ -20,6 +20,10 @@
     "copy_to_clipboard": "Panoya kopyala",
     "no": "Hayır"
   },
+  "ui": {
+    "typeToSearch": "Aramak için yazın..",
+    "selectOption": "Bir seçenek belirleyin"
+  },
   "error": {
     "not_enough_balance": "Yeterli bakiye yok, kullanılabilir bakiye {{amount}}",
     "must_be_number": "Bir sayı olmalı",

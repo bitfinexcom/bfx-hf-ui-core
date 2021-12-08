@@ -258,7 +258,9 @@
       "negativeCustomPriceTarget": "自訂價格指標為負",
       "invalidConditionForCustomPriceTarget": "自訂價格指標的條件無效",
       "invalidMatchedPriceTarget": "無效成交價格指標",
-      "invalidPriceDeltaProvided": "提供的價格Delta無效"
+      "invalidPriceDeltaProvided": "提供的價格Delta無效",
+      "orderCountExceedsTotalMaxLimit": "限制：訂單筆數超過上限 ({{count}}/{{limit}})",
+      "orderCountExceedsPairMaxLimit": "限制：{{pair}} 訂單筆數超過上限 ({{count}}/{{limit}})"
     }
   },
   "AOPauseModal": {
@@ -288,6 +290,7 @@
     "apiKey": "API 金鑰",
     "apiSecret": "API 密碼",
     "deadManCheckbox": "Dead Man Switch（自動關閉）",
+    "themeSetting": "應用程序主題",
     "deadManText1": "啟用 Dead Man switch （自動關閉），所有待執行訂單將在應用程序關閉時自動取消。",
     "deadManText2": "演算法訂單將於應用程序關閉時取消；如關閉 Dead Man switch （自動關閉），任何透過演算法訂單建立的自動訂單仍有效，但重新啟動應用程序時將重置其狀態。",
     "deadManWarning": "謹慎決定是否取消此選項！",
@@ -302,7 +305,9 @@
     "configured": "已配置",
     "productionTradingCheckbox": "真實帳戶交易",
     "productionTradingText": "以真實資金進行交易",
-    "paperTradingText": "以虛擬資金練習交易，無資金損失的風險"
+    "paperTradingText": "以虛擬資金練習交易，無資金損失的風險",
+    "Dark": "深色主題",
+    "Light": "淺色主題"
   },
   "atomicOrdersTableModal": {
     "title": "自動訂單",
@@ -310,11 +315,13 @@
   },
   "badConnectionModal": {
     "title": "連線問題",
-    "text1": "偵測到網路連線問題。 請重新啟動應用程序以繼續操作。",
+    "text1": "網路連線發生問題。 請 {{action}} 應用程序以恢復正常運作。",
     "text2": "請確保您的網路連線狀態穩定且良好。",
-    "text3": "Honey Framework 將於按下「Okay」後重新啟動。",
-    "text4": "此應用程序將在 {{countdown}} 秒後自動重啟。",
-    "checkbox": "自動重啟"
+    "text3": "按下「Okay」後，Honey Framework 將 {{action}}。",
+    "text4": "此應用程序將在 {{countdown}} 秒後自動 {{action}}。",
+    "checkbox": "自動 {{action}}",
+    "reboot": "重新加載",
+    "restart": "重新啟動"
   },
   "balancesTableModal": {
     "title": "餘額",
@@ -356,6 +363,14 @@
     "orderSubmittedBuyDetailed": "已建立{{amount}} {{symbol}} {{exID}} {{type}} 買單 (ID: {{id}})",
     "orderSubmittedSellAtDetailed": "已建立{{amount}} {{symbol}} {{exID}} {{type}} 賣單，價格為 {{price}} (ID: {{id}})",
     "orderSubmittedSellDetailed": "已建立{{amount}} {{symbol}} {{exID}} {{type}} 賣單 (ID: {{id}})",
+    "orderModifiedBuyAtDetailed": "已修改{{amount}} {{symbol}} {{exID}} {{type}} 買單價格為 {{price}} (ID: {{id}})",
+    "orderModifiedBuyDetailed": "已修改{{amount}} {{symbol}} {{exID}} {{type}} 買單 (ID: {{id}})",
+    "orderModifiedSellAtDetailed": "已修改{{amount}} {{symbol}} {{exID}} {{type}} 賣單價格為 {{price}} (ID: {{id}})",
+    "orderModifiedSellDetailed": "已修改{{amount}} {{symbol}} {{exID}} {{type}} 賣單 (ID: {{id}})",
+    "orderPartiallyFilledBuyAtDetailed": "{{amount}} {{symbol}} 的{{exID}} {{type}} 買單以 {{price}} 的價格部分成交 (ID: {{id}})",
+    "orderPartiallyFilledBuyDetailed": "{{amount}} {{symbol}} 的{{exID}} {{type}} 買單已部分成交 (ID: {{id}})",
+    "orderPartiallyFilledSellAtDetailed": "{{amount}} {{symbol}} 的{{exID}} {{type}} 賣單以 {{price}} 的價格部分成交 (ID: {{id}})",
+    "orderPartiallyFilledSellDetailed": "{{amount}} {{symbol}} 的{{exID}} {{type}} 賣單已部分成交 (ID: {{id}})",
     "stoppedAO": "已停止演算法訂單",
     "startedAO": "運行 {{target}} 中的演算法訂單 {{name}}",
     "unknownAlgoOrderId": "不明演算法訂單編號： {{aoID}}",
@@ -385,7 +400,8 @@
     "connectedTo": "已與 {{target}} 連線",
     "authenticatedWith": "已通過 {{target}} 驗證",
     "disconnectedFrom": "已與 {{target}} 中斷連線",
-    "decryptedCredentialsFor": "解除{{target}} ({{mode}}) 加密憑證"
+    "decryptedCredentialsFor": "解除{{target}} ({{mode}}) 加密憑證",
+    "reboot_notify": "網路連線發生問題。重新加載應用程序..."
   },
   "tradingModeModal": {
     "title": "切換交易模式",
@@ -410,6 +426,8 @@
     "submitKeys": "送出{{mode}} API金鑰",
     "exchangeConnecting": "正在連線交易平台...",
     "help": "說明：",
+    "bid": "買入",
+    "ask": "賣出",
     "exchange": "兌換",
     "margin": "保證金",
     "derivatives": "衍生品",
@@ -522,14 +540,13 @@
   "strategyEditor": {
     "docsTab": "文檔",
     "backtestTab": "回測",
+    "executeTab": "執行",
     "unsavedStartegy": "策略待存檔",
     "newStrategy": "新增策略",
+    "recent": "近期",
+    "more": "更多",
     "createStrategyStringPart1": "建立",
-    "createStrategyStringPart2": "新策略",
-    "createStrategyStringPart3": "或",
-    "createStrategyStringPart4": "開啟",
-    "createStrategyStringPart5": "現有的策略。",
-    "createStrategyStringPart6": "以開始回測。",
+    "createStrategyStringPart2": "進行回測的新策略",
     "newStrategyModalTitle": "建立新策略",
     "newStrategyModalEmptyError": "請填入標籤",
     "newStrategyModalLongError": "策略名稱過長 ({{labelSize}}/{{MAX_LABEL_LENGTH}} 個字符)",
@@ -543,6 +560,7 @@
     "endDate": "結束日期",
     "useCandlesCheckbox": "使用K線圖",
     "useTradesCheckbox": "使用交易紀錄",
+    "useMarginCheckbox": "進行保證金交易",
     "checkboxWarningMessage": "請勾選至少一個項目",
     "totalPL": "總損益",
     "avgPL": "平均損益",
@@ -558,7 +576,14 @@
     "profitLoss": "獲利／虧損",
     "volume": "交易量",
     "largestGain": "最大收益",
-    "largestLoss": "最大虧損"
+    "largestLoss": "最大虧損",
+    "liveExecution": {
+      "executing": "您正在使用真實帳戶中的餘額執行交易策略。",
+      "stopping": "中止策略執行...",
+      "preparing": "策略執行前處理和準備...",
+      "realBalancesWarning": "注意：按下「開始」後，您將使用真實帳戶中的資金執行您的交易策略。",
+      "createStrategy": "建立策略進行回測。"
+    }
   },
   "ui": {
     "ok": "Okay",
@@ -566,6 +591,8 @@
     "dontShowAgain": "了解！不要再顯示此訊息。",
     "dropdown": "點選以下選項",
     "backBtn": "返回",
+    "export": "匯出",
+    "import": "導入",
     "closeBtn": "關閉",
     "lastBtn": "結束",
     "nextBtn": "下一步",
