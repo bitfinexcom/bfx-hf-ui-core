@@ -96,7 +96,7 @@
     .hfui-button {
       margin-top: 25px;
       width: 140px;
-      height: 30px;
+      min-height: 30px;
       font-weight: 700;
     }
     p {
@@ -116,7 +116,7 @@
   }
   button.hfui-button.red {
     width: 150px;
-    height: 30px;
+    min-height: 30px;
     font-weight: 700;
   }
 
