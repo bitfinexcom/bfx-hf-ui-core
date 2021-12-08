@@ -22,7 +22,8 @@
     background-color: transparent !important;
   }
 
-  &, button {
+  &,
+  button {
     color: var(--text-color);
   }
 
@@ -48,10 +49,11 @@
     height: 52px;
     font-size: 13px;
     font-weight: 600;
-    transition: all .2s;
+    transition: all 0.2s;
     color: var(--shade-6);
 
-    &:hover, &.active {
+    &:hover,
+    &.active {
       border-bottom: 2px solid var(--primary-9);
       color: var(--shade-9);
     }
@@ -81,6 +83,10 @@
     &:last-child {
       margin-right: 0;
     }
+  }
+
+  .hfui-dropdown__wrapper {
+    width: 160px;
   }
 }
 
@@ -260,7 +266,7 @@
   display: flex;
   border-right: 1px solid var(--darker-background-color);
   flex-direction: row;
-  // margin-right: 16px; TODO: add once LanguageSettings is added
+  margin-right: 16px;
 
   .hfui-tradingpaper__control-toggle {
     p {

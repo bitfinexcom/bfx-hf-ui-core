@@ -20,7 +20,7 @@ import AppSettings from './Navbar.AppSettings'
 import Routes from '../../constants/routes'
 import { isElectronApp } from '../../redux/config'
 import { getThemeSetting, THEMES, SETTINGS } from '../../redux/selectors/ui'
-// import LanguageSettings from './Navbar.LanguageSettings'
+import LanguageSettings from './Navbar.LanguageSettings'
 
 import './style.css'
 
@@ -82,7 +82,7 @@ const Navbar = () => {
             </div>
           </div>
         )}
-        {/* <LanguageSettings /> TODO: hide until translations are ready */}
+        <LanguageSettings />
       </div>
     </div>
   )
