@@ -30,6 +30,7 @@ const AOPauseModal = lazy(() => import('../../modals/AOPauseModal'))
 const BestExperienceMessageModal = lazy(() => import('../../modals/BestExperienceMessageModal'))
 const CcyInfoModal = lazy(() => import('../../modals/CcyInfoModal'))
 const ConfirmDMSModal = lazy(() => import('../../modals/ConfirmDMSModal'))
+const EditOrderModal = lazy(() => import('../../modals/EditOrderModal'))
 
 const HFUI = (props) => {
   const {
@@ -142,6 +143,7 @@ const HFUI = (props) => {
           )}
           <BadConnectionModal />
           <CcyInfoModal />
+          <EditOrderModal />
         </>
       ) : (
         <>

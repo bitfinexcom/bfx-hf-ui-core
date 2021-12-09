@@ -4,6 +4,7 @@ import Debug from 'debug'
 import { getAuthToken, getAtomicOrders, getFilteredAtomicOrders } from '../../redux/selectors/ws'
 import WSActions from '../../redux/actions/ws'
 import GAActions from '../../redux/actions/google_analytics'
+import UIActions from '../../redux/actions/ui'
 
 import AtomicOrdersTable from './AtomicOrdersTable'
 import { getMarketPair } from '../../redux/selectors/meta'
@@ -26,6 +27,9 @@ const mapDispatchToProps = dispatch => ({
   },
   gaCancelOrder: () => {
     dispatch(GAActions.cancelAtomicOrder())
+  },
+  editOrder: (order) => {
+    dispatch(UIActions.changeEditOrderModalState(true, order))
   },
 })
 

@@ -2,6 +2,7 @@
 /* eslint-disable react/display-name */
 import React from 'react'
 import { PrettyValue } from '@ufx-ui/core'
+import { Icon } from 'react-fa'
 
 import { defaultCellRenderer } from '../../util/ui'
 import { AMOUNT_DECIMALS, PRICE_SIG_FIGS } from '../../constants/precision'
@@ -11,7 +12,7 @@ const STYLES = {
   price: { justifyContent: 'flex-end' },
 }
 
-export default (authToken, cancelOrder, gaCancelOrder, { width }, t, getMarketPair) => [{
+export default (authToken, cancelOrder, gaCancelOrder, { width }, t, getMarketPair, editOrder) => [{
   label: '',
   dataKey: '',
   width: 15,
@@ -79,6 +80,11 @@ export default (authToken, cancelOrder, gaCancelOrder, { width }, t, getMarketPa
   flexGrow: 0.4,
   cellRenderer: ({ rowData = {} }) => ( // eslint-disable-line
     <div className='icons-cell'>
+      <Icon
+        name='pencil'
+        aria-label='Edit order'
+        onClick={() => editOrder(rowData)}
+      />
       <i
         role='button'
         aria-label='Cancel order'

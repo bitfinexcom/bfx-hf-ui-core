@@ -8,7 +8,7 @@ import AlgoOrdersTableColumns from './AlgoOrdersTable.columns'
 import './style.css'
 
 const AlgoOrdersTable = ({
-  filteredAlgoOrders, algoOrders, cancelOrder, authToken, gaCancelOrder, renderedInTradingState, getMarketPair,
+  filteredAlgoOrders, algoOrders, cancelOrder, authToken, gaCancelOrder, renderedInTradingState, getMarketPair, editOrder,
 }) => {
   const data = renderedInTradingState ? filteredAlgoOrders : algoOrders
   const { t } = useTranslation()
@@ -20,7 +20,7 @@ const AlgoOrdersTable = ({
       ) : (
         <VirtualTable
           data={data}
-          columns={AlgoOrdersTableColumns(authToken, cancelOrder, gaCancelOrder, t, getMarketPair)}
+          columns={AlgoOrdersTableColumns(authToken, cancelOrder, gaCancelOrder, t, getMarketPair, editOrder)}
           defaultSortBy='createdAt'
           defaultSortDirection='ASC'
           rowHeight={30}
@@ -38,6 +38,7 @@ AlgoOrdersTable.propTypes = {
   authToken: PropTypes.string.isRequired,
   renderedInTradingState: PropTypes.bool,
   getMarketPair: PropTypes.func.isRequired,
+  editOrder: PropTypes.func.isRequired,
 }
 
 AlgoOrdersTable.defaultProps = {

@@ -364,6 +364,7 @@
     "orderSubmittedBuyDetailed": "Created {{exID}} {{type}} BUY order of {{amount}} {{symbol}} (ID: {{id}})",
     "orderSubmittedSellAtDetailed": "Created {{exID}} {{type}} SELL order of {{amount}} {{symbol}} at {{price}} (ID: {{id}})",
     "orderSubmittedSellDetailed": "Created {{exID}} {{type}} SELL order of {{amount}} {{symbol}} (ID: {{id}})",
+    "updatingOrderWithId": "Updating order (ID: {{orderId}})",
     "orderModifiedBuyAtDetailed": "Modified {{exID}} {{type}} BUY order of {{amount}} {{symbol}} at {{price}} (ID: {{id}})",
     "orderModifiedBuyDetailed": "Modified {{exID}} {{type}} BUY order of {{amount}} {{symbol}} (ID: {{id}})",
     "orderModifiedSellAtDetailed": "Modified {{exID}} {{type}} SELL order of {{amount}} {{symbol}} at {{price}} (ID: {{id}})",
@@ -414,6 +415,10 @@
     "title": "Enable Dead Man Switch",
     "text": "Please be aware that when this setting is enabled, closing the app will not only cancel all orders that have been created by the Honey Framework, but will also cancel all other orders, including those that have been opened on the Bitfinex website or elsewhere.\n\nThis is a recommended setting, but you should be aware of the possible consequences.",
     "dontShowAgain": "Don't show again"
+  },
+  "editOrderModal": {
+    "title": "Edit order",
+    "noOrder": "No order selected"
   },
   "oldFormatModal": {
     "title": "Layout upgrade",

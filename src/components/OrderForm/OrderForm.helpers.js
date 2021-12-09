@@ -7,10 +7,19 @@ import _flatten from 'lodash/flatten'
 import _forOwn from 'lodash/forOwn'
 import _forEach from 'lodash/forEach'
 import _filter from 'lodash/filter'
+import _isEmpty from 'lodash/isEmpty'
 import _map from 'lodash/map'
+import _size from 'lodash/size'
+import _head from 'lodash/head'
 import _join from 'lodash/join'
 import _keys from 'lodash/keys'
+import _split from 'lodash/split'
+import _replace from 'lodash/replace'
 import _includes from 'lodash/includes'
+import {
+  Iceberg, TWAP, AccumulateDistribute, PingPong, MACrossover, OCOCO,
+} from 'bfx-hf-algo'
+import Debug from 'debug'
 
 import NumberInput from './FieldComponents/input.number'
 import PriceInput from './FieldComponents/input.price'
@@ -24,6 +33,9 @@ import RangeInput from './FieldComponents/input.range'
 import UICheckboxGroup from './FieldComponents/ui.checkboxGroup'
 import TickerBar from './FieldComponents/ui.ticker'
 import Button from '../../ui/Button'
+import { validateOrderLimits } from './OrderForm.orders.helpers'
+
+const debug = Debug('hfui:order-form:helpers')
 
 const COMPONENTS_FOR_ID = {
   'ui.checkbox_group': UICheckboxGroup,
@@ -43,6 +55,25 @@ const marketToQuoteBase = (market) => ({
   QUOTE: market.quote,
   BASE: market.base,
 })
+
+// 'tBTC:USD' or 'tBTCUSD' -> { QUOTE: 'USD', BASE: 'BTC' }
+const symbolToQuoteBase = (symbol) => {
+  const sym = _replace(symbol, /^t/, '')
+
+  if (sym.match(/:/)) {
+    const symArr = _split(sym, ':')
+
+    return {
+      BASE: symArr[0],
+      QUOTE: symArr[1],
+    }
+  }
+
+  return {
+    BASE: sym.substring(0, 3),
+    QUOTE: sym.substring(3),
+  }
+}
 
 const verifyCondition = (condition = {}, value) => {
   if (typeof condition.eq !== 'undefined') {
@@ -72,7 +103,7 @@ const verifyCondition = (condition = {}, value) => {
 const verifyConditionsMet = (conditions = {}, fieldData = {}) => {
   const fields = _keys(conditions)
 
-  for (let i = 0; i < fields.length; i += 1) {
+  for (let i = 0; i < _size(fields); i += 1) {
     if (!verifyCondition(conditions[fields[i]], fieldData[fields[i]])) {
       return false
     }
@@ -101,13 +132,13 @@ const defaultDataForLayout = (layout = {}) => {
   return defaultData
 }
 const getValidValue = (val) => {
-  if (typeof val === 'string' && val.length > 0) {
+  if (typeof val === 'string' && !_isEmpty(val)) {
     if (val === 'true') return true
     if (val === 'false') return false
     return val
   }
   if (typeof val === 'number') return val.toString()
-  if (typeof val === 'string' && val.length === 0) return ' '
+  if (typeof val === 'string' && _isEmpty(val)) return ' '
 
   return val || ''
 }
@@ -154,6 +185,64 @@ const getActionsTranslate = (action, t) => {
     default:
       return action
   }
+}
+
+const validateAOData = (data, currentLayout, currentMarket, atomicOrdersCount, atomicOrdersCountActiveMarket, maxOrderCounts) => {
+  let errors = {}
+  switch (currentLayout.id) {
+    case Iceberg.id: {
+      const processedData = Iceberg.meta.processParams(data)
+      errors = Iceberg.meta.validateParams(processedData)
+      break
+    }
+
+    case TWAP.id: {
+      const processedData = TWAP.meta.processParams(data)
+      errors = TWAP.meta.validateParams(processedData)
+      break
+    }
+
+    case AccumulateDistribute.id: {
+      const processedData = AccumulateDistribute.meta.processParams(data)
+      errors = AccumulateDistribute.meta.validateParams(processedData)
+      break
+    }
+
+    case PingPong.id: {
+      const processedData = PingPong.meta.processParams(data)
+      errors = PingPong.meta.validateParams(processedData)
+      // frontend validation
+      if (_isEmpty(errors)) {
+        errors = validateOrderLimits(
+          processedData?.orderCount,
+          currentMarket.wsID,
+          {
+            total: atomicOrdersCount,
+            pair: atomicOrdersCountActiveMarket,
+          },
+          maxOrderCounts,
+        )
+      }
+      break
+    }
+
+    case MACrossover.id: {
+      const processedData = MACrossover.meta.processParams(data)
+      errors = MACrossover.meta.validateParams(processedData)
+      break
+    }
+
+    case OCOCO.id: {
+      const processedData = OCOCO.meta.processParams(data)
+      errors = OCOCO.meta.validateParams(processedData)
+      break
+    }
+
+    default:
+      debug('unknown layout %s', currentLayout.id)
+  }
+
+  return errors
 }
 
 // Renders a single layout field component
@@ -211,7 +300,8 @@ const renderLayoutActions = ({
     <div
       key='of-actions'
       className={ClassNames('hfui-orderform__layout-actions', {
-        'single-action': validActions.length === 1,
+        'single-action': _size(validActions) === 1,
+        'ao-submit-action': _head(validActions) === 'submit',
       })}
     >
       {_map(validActions, (action) => (
@@ -335,7 +425,7 @@ const renderLayout = ({
   onSubmit, // eslint-disable-line
   onFieldChange, // eslint-disable-line
   isOrderExecuting, // eslint-disable-line
-  t,
+  t, // eslint-disable-line
 }) => {
   const { label, header, sections = [] } = layout
   const html = []
@@ -406,4 +496,6 @@ export {
   defaultDataForLayout,
   fixComponentContext,
   COMPONENTS_FOR_ID,
+  symbolToQuoteBase,
+  validateAOData,
 }

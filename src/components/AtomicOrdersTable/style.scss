@@ -8,13 +8,19 @@
     text-align: center;
   }
 
-  .icons-cell > * {
-    margin-right: 8px;
-    font-size: 16px;
+  .icons-cell {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
   
-    &:hover {
-      cursor: pointer;
-      color: var(--shade-7);
+    > * {
+      margin-right: 8px;
+      font-size: 16px;
+    
+      &:hover {
+        cursor: pointer;
+        color: var(--shade-7);
+      }
     }
   }
 }

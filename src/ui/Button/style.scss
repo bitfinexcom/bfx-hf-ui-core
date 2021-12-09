@@ -55,6 +55,11 @@
     cursor: not-allowed;
   }
 
+  &.inactive {
+    opacity: 0.6;
+    pointer-events: none;
+  }
+
   > * {
     display: inline-block;
     vertical-align: middle;

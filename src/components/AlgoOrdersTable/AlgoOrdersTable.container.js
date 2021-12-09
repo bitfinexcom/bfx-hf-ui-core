@@ -4,6 +4,7 @@ import Debug from 'debug'
 import { getAlgoOrders, getFilteredAlgoOrders, getAuthToken } from '../../redux/selectors/ws'
 import { getActiveMarket } from '../../redux/selectors/ui'
 import WSActions from '../../redux/actions/ws'
+import UIActions from '../../redux/actions/ui'
 import GAActions from '../../redux/actions/google_analytics'
 import AlgoOrdersTable from './AlgoOrdersTable'
 import { getMarketPair } from '../../redux/selectors/meta'
@@ -27,6 +28,9 @@ const mapDispatchToProps = dispatch => ({
   },
   gaCancelOrder: () => {
     dispatch(GAActions.cancelAO())
+  },
+  editOrder: (order) => {
+    dispatch(UIActions.changeEditOrderModalState(true, order))
   },
 })
 
