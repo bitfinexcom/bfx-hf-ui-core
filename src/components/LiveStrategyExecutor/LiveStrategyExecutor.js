@@ -35,7 +35,7 @@ const LiveStrategyExecutor = ({
       if (isExecuting) {
         dsStopLiveStrategy(authToken)
       } else {
-        dsExecuteLiveStrategy(authToken, symbol?.wsID, timeframe, trades, strategyContent, candleSeed, margin)
+        dsExecuteLiveStrategy(authToken, strategyContent.label, symbol?.wsID, timeframe, trades, strategyContent, candleSeed, margin)
       }
     }
   }

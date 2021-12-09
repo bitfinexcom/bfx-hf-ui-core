@@ -18,11 +18,11 @@ const mapStateToProps = (state = {}) => ({
 })
 
 const mapDispatchToProps = (dispatch) => ({
-  dsExecuteLiveStrategy: (authToken, symbol, tf, includeTrades, strategy, seedCandleCount, margin) => {
+  dsExecuteLiveStrategy: (authToken, name, symbol, tf, includeTrades, strategy, seedCandleCount, margin) => {
     dispatch(WSActions.setExecutionOptions({
       includeTrades, seedCandleCount, symbol, tf, margin,
     }))
-    dispatch(WSActions.send(['strategy.execute_start', authToken, symbol, tf, includeTrades, strategy, seedCandleCount, margin]))
+    dispatch(WSActions.send(['strategy.execute_start', authToken, name, symbol, tf, includeTrades, strategy, seedCandleCount, margin]))
     dispatch(WSActions.setExecutionLoading(true))
   },
   dsStopLiveStrategy: (authToken) => {
