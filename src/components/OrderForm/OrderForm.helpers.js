@@ -56,12 +56,22 @@ const marketToQuoteBase = (market) => ({
   BASE: market.base,
 })
 
-// 'tBTC:USD' -> { QUOTE: 'USD', BASE: 'BTC' }
+// 'tBTC:USD' or 'tBTCUSD' -> { QUOTE: 'USD', BASE: 'BTC' }
 const symbolToQuoteBase = (symbol) => {
-  const market = _split(symbol, ':')
+  const sym = _replace(symbol, /^t/, '')
+
+  if (sym.match(/:/)) {
+    const symArr = _split(sym, ':')
+
+    return {
+      BASE: symArr[0],
+      QUOTE: symArr[1],
+    }
+  }
+
   return {
-    BASE: _replace(market[0], /^t/, ''),
-    QUOTE: market[1],
+    BASE: sym.substring(0, 3),
+    QUOTE: sym.substring(3),
   }
 }
 
