@@ -372,6 +372,8 @@
     "orderPartiallyFilledBuyDetailed": "{{exID}} {{type}} BUY order of {{amount}} {{symbol}} partially filled (ID: {{id}})",
     "orderPartiallyFilledSellAtDetailed": "{{exID}} {{type}} SELL order of {{amount}} {{symbol}} partially filled at {{price}} (ID: {{id}})",
     "orderPartiallyFilledSellDetailed": "{{exID}} {{type}} SELL order of {{amount}} {{symbol}} partially filled (ID: {{id}})",
+    "startedLiveStrategyExecution": "Started live strategy execution ({{name}}) for {{symbol}}-{{tf}}",
+    "stoppedLiveStrategyExecution": "Stopped live strategy execution ({{name}}) for {{symbol}}-{{tf}}",
     "stoppedAO": "Stopped algo order",
     "startedAO": "Started AO {{name}} on {{target}}",
     "unknownAlgoOrderId": "Unknown algo order ID: {{aoID}}",
