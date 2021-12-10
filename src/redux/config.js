@@ -27,6 +27,8 @@ const appVersion = process.env.npm_package_version
 
 const CHART_URL = isElectronApp ? 'https://hchart.bitfinex.com/v0' : process.env.REACT_APP_CHART_URL
 
+const HONEY_AUTH_URL = `${process.env.REACT_APP_UFX_API_URL}/honey`
+
 export {
   REDUCER_PATHS,
   PUB_REST_API_URL,
@@ -35,4 +37,5 @@ export {
   appVersion,
   env,
   CHART_URL,
+  HONEY_AUTH_URL,
 }
