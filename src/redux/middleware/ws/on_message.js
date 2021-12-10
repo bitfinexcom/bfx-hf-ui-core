@@ -90,7 +90,7 @@ export default (alias, store) => (e = {}) => {
         break
       }
 
-      case 'auth.failure': { // WIP: waiting for a similar event to be introduced at the backend side
+      case 'auth.failure': {
         // if the authorisation token on hosted app is not valid, redirect to a page where it will be updated
         if (!isElectronApp) {
           window.location.replace(HONEY_AUTH_URL) // eslint-disable-line lodash/prefer-lodash-method
