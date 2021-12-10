@@ -86,7 +86,7 @@ export const COMPONENT_DIMENSIONS = {
     w: 40, h: 6, minW: 21, minH: 5,
   },
   [COMPONENT_TYPES.TRADING_STATE_PANEL]: {
-    w: 40, h: 6, minW: 32, minH: 5,
+    w: 40, h: 6, minW: 35, minH: 5,
   },
   [COMPONENT_TYPES.EXCHANGE_INFO_BAR]: {
     w: 20, h: 8, minW: 20, minH: 4,
