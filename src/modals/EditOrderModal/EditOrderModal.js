@@ -99,6 +99,10 @@ const EditOrderModal = ({
 
   const onClose = () => {
     changeVisibilityState(false)
+    setTimeout(() => { // clearing order data after modal close amination ends
+      setLayout({})
+      setArgs({})
+    }, 600)
   }
 
   const onSubmitAO = () => {
@@ -190,19 +194,19 @@ const EditOrderModal = ({
       onClose={onClose}
       onSubmit={onSubmit}
     >
-      {_isEmpty(order) ? (
+      {_isEmpty(args) ? (
         t('editOrderModal.noOrder')
       ) : renderLayout({
         onSubmit: () => {},
         onFieldChange,
         layout,
         validationErrors,
-        renderData: symbolToQuoteBase(order?.args?.symbol),
+        renderData: symbolToQuoteBase(args?.symbol),
         isOrderExecuting: false,
         t,
         fieldData: {
           ...args,
-          _context: getContext(order.args?._futures, order.args?._margin),
+          _context: getContext(args?._futures, args?._margin),
         },
       })}
       <Modal.Footer>

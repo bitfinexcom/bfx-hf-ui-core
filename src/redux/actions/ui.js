@@ -160,7 +160,7 @@ export const changeAOPauseModalState = (isVisible) => ({
   payload: { isVisible },
 })
 
-export const changeEditOrderModalState = (isVisible, order) => ({
+export const changeEditOrderModalState = (isVisible, order = {}) => ({
   type: types.CHANGE_EDIT_ORDER_MODAL_STATE,
   payload: { isVisible, order },
 })

@@ -4,6 +4,7 @@ import _isEqual from 'lodash/isEqual'
 import _isEmpty from 'lodash/isEmpty'
 import _replace from 'lodash/replace'
 import _cloneDeep from 'lodash/cloneDeep'
+import _isObject from 'lodash/isObject'
 import _min from 'lodash/min'
 import _max from 'lodash/max'
 import _find from 'lodash/find'
@@ -448,13 +449,6 @@ function reducer(state = getInitialState(), action = {}) {
     }
     case types.CHANGE_EDIT_ORDER_MODAL_STATE: {
       const { isVisible, order } = payload
-
-      if (_isEmpty(order)) {
-        return {
-          ...state,
-          isEditOrderModalVisible: false,
-        }
-      }
 
       return {
         ...state,
