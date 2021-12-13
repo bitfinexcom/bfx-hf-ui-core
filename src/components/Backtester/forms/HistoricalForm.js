@@ -81,7 +81,7 @@ const HistoricalForm = ({
       <div className='hfui-backtester_row'>
         <div className='hfui-backtester__flex_start'>
           <Dropdown
-            value={t('strategyEditor.historical')}
+            value='Historical'
             disabled
             onChange={updateExecutionType}
             options={[{
