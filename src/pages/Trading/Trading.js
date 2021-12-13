@@ -1,5 +1,5 @@
 import React, {
-  memo, useCallback, lazy, Suspense,
+  memo, useCallback, lazy, Suspense, useState, useEffect,
 } from 'react'
 import PropTypes from 'prop-types'
 import { useTranslation } from 'react-i18next'
@@ -37,6 +37,15 @@ const Trading = ({
   isBadConnection,
 }) => {
   const { t } = useTranslation()
+  const [isGuideActiveLocal, setIsGuideActiveLocal] = useState(false)
+
+  // delay guide active status to avoid missing guide spotlight because of target not found error
+  useEffect(() => {
+    const delay = isGuideActive ? 500 : 0
+    setTimeout(() => {
+      setIsGuideActiveLocal(isGuideActive)
+    }, delay)
+  }, [isGuideActive])
 
   const onGuideFinish = useCallback((data) => {
     const { status } = data
@@ -56,7 +65,7 @@ const Trading = ({
             <Joyride
               callback={onGuideFinish}
               steps={STEPS.getTradingModes(t)}
-              run={isGuideActive}
+              run={isGuideActiveLocal}
             />
           </Suspense>
         )}
