@@ -21,7 +21,7 @@ export const LANGUAGE_NAMES = {
   en: 'English',
   es: 'Español',
   ru: 'Русский',
-  tr: 'Türk',
+  // tr: 'Türk',
   cn: '中文 (简化)',
   tw: '中文 (繁體)',
 }
