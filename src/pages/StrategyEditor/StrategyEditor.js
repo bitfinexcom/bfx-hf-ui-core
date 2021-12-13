@@ -18,7 +18,6 @@ import Backtester from '../../components/Backtester'
 import { isElectronApp } from '../../redux/config'
 
 import LiveStrategyExecutor from '../../components/LiveStrategyExecutor'
-
 import './style.css'
 
 const DocsPath = require('bfx-hf-strategy/docs/api.md')
@@ -32,6 +31,7 @@ const StrategyEditorPage = (props) => {
   } = props
   const [indicators, setIndicators] = useState([])
   const [docsText, setDocsText] = useState('')
+  const [forcedTab, setForcedTab] = useState(selectedTab)
   const [tourStep, setTourStep] = useState(0)
   const [startTour, setStartTour] = useState(false)
 
@@ -100,9 +100,20 @@ const StrategyEditorPage = (props) => {
     }
   }
 
+  const setContent = (content) => {
+    if (content?.id) {
+      // index of Backtest tab
+      setForcedTab(1)
+    } else {
+      // index of Docs tab
+      setForcedTab(0)
+    }
+    setStrategyContent(content)
+  }
+
   const selectStrategyHandler = (content) => {
     selectStrategy()
-    setStrategyContent(content)
+    setContent(content)
   }
 
   return (
@@ -114,7 +125,7 @@ const StrategyEditorPage = (props) => {
             <StrategyEditor
               dark
               onStrategySelect={selectStrategyHandler}
-              onStrategyChange={(content) => setStrategyContent(content)}
+              onStrategyChange={setContent}
               key='editor'
               onIndicatorsChange={onIndicatorsChange}
               moveable={false}
@@ -140,7 +151,7 @@ const StrategyEditorPage = (props) => {
               className='hfui-strategiespage__pannel-wrapper'
               moveable={false}
               removeable={false}
-              forcedTab={selectedTab}
+              forcedTab={forcedTab}
               onTabChange={setStrategyTab}
               darkHeader
             >
