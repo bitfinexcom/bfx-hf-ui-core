@@ -51,7 +51,7 @@ export default (t) => ({
 
   header: {
     component: 'ui.checkbox_group',
-    fields: ['oco', 'hidden', 'postonly', 'tif', 'reduceonly'],
+    fields: ['oco', 'hidden', 'postonly', 'tif', 'reduceonly', 'visibleOnHit'],
   },
 
   sections: [
@@ -104,6 +104,9 @@ export default (t) => ({
       customHelp: t('orderForm.reduceOnlyMessage'),
       trading: ['m', 'f'],
       default: false,
+      visible: {
+        _orderEditing: { neq: true },
+      },
     },
 
     hidden: {
@@ -113,11 +116,24 @@ export default (t) => ({
       default: false,
     },
 
+    visibleOnHit: {
+      component: 'input.checkbox',
+      label: t('orderForm.visibleOnHit'),
+      customHelp: t('orderForm.visibleOnHitHelp'),
+      default: false,
+      visible: {
+        hidden: { eq: true },
+      },
+    },
+
     oco: {
       component: 'input.checkbox',
       label: t('orderForm.ocoCheckbox'),
       customHelp: t('orderForm.ocoMessage'),
       default: false,
+      visible: {
+        _orderEditing: { neq: true },
+      },
     },
 
     postonly: {
@@ -125,6 +141,9 @@ export default (t) => ({
       label: t('orderForm.postOnlyCheckbox'),
       customHelp: t('orderForm.postOnlyMessage'),
       default: false,
+      visible: {
+        _orderEditing: { neq: true },
+      },
     },
 
     tif: {
@@ -132,6 +151,9 @@ export default (t) => ({
       label: t('orderForm.tifCheckbox'),
       customHelp: t('orderForm.tifMessage'),
       default: false,
+      visible: {
+        _orderEditing: { neq: true },
+      },
     },
 
     price: {

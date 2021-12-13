@@ -2,4 +2,8 @@
   .ao-submit-action, .hfui-orderform__layout-actions {
     display: none;
   }
+
+  .hfui-orderform__checkbox-group:empty {
+    display: none;
+  }
 }

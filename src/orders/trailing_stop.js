@@ -82,6 +82,9 @@ export default (t) => ({
       customHelp: t('orderForm.reduceOnlyMessage'),
       trading: ['m', 'f'],
       default: false,
+      visible: {
+        _orderEditing: { neq: true },
+      },
     },
 
     tif: {
@@ -89,6 +92,9 @@ export default (t) => ({
       label: t('orderForm.tifCheckbox'),
       customHelp: t('orderForm.tifMessage'),
       default: false,
+      visible: {
+        _orderEditing: { neq: true },
+      },
     },
 
     distance: {

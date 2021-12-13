@@ -207,6 +207,7 @@ const EditOrderModal = ({
         fieldData: {
           ...args,
           _context: getContext(args?._futures, args?._margin),
+          _orderEditing: true,
         },
       })}
       <Modal.Footer>
