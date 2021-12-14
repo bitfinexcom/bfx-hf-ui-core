@@ -2,7 +2,7 @@ import { connect } from 'react-redux'
 import Debug from 'debug'
 
 import { getAuthToken, getAtomicOrders, getFilteredAtomicOrders } from '../../redux/selectors/ws'
-import { getMarkets, getMarketPair } from '../../redux/selectors/meta'
+import { getMarketPair } from '../../redux/selectors/meta'
 import WSActions from '../../redux/actions/ws'
 import GAActions from '../../redux/actions/google_analytics'
 import UIActions from '../../redux/actions/ui'
@@ -16,7 +16,6 @@ const mapStateToProps = (state = {}, { activeFilter }) => ({
   filteredAtomicOrders: getFilteredAtomicOrders(state)(activeFilter),
   atomicOrders: getAtomicOrders(state),
   getMarketPair: getMarketPair(state),
-  markets: getMarkets(state),
 })
 
 const mapDispatchToProps = dispatch => ({

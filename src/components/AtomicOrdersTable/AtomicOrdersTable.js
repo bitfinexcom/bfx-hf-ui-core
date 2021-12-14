@@ -1,10 +1,6 @@
 import React, { useMemo } from 'react'
 import PropTypes from 'prop-types'
 import _isEmpty from 'lodash/isEmpty'
-import _filter from 'lodash/filter'
-import _keys from 'lodash/keys'
-import _reduce from 'lodash/reduce'
-import _isUndefined from 'lodash/isUndefined'
 import { VirtualTable } from '@ufx-ui/core'
 import { useTranslation } from 'react-i18next'
 
@@ -14,15 +10,10 @@ import './style.css'
 
 const AtomicOrdersTable = ({
   atomicOrders, filteredAtomicOrders, renderedInTradingState,
-  cancelOrder, authToken, gaCancelOrder, getMarketPair, editOrder, markets,
+  cancelOrder, authToken, gaCancelOrder, getMarketPair, editOrder,
 }) => {
   const [ref, size] = useSize()
-  const data = useMemo(() => {
-    const orders = renderedInTradingState ? filteredAtomicOrders : atomicOrders
-    const filtered = _filter(_keys(orders), (key) => !_isUndefined(markets[orders[key]?.symbol]))
-    return _reduce(filtered, (res, key) => ({ ...res, [key]: orders[key] }), {})
-  }, [renderedInTradingState, filteredAtomicOrders, atomicOrders, markets])
-
+  const data = renderedInTradingState ? filteredAtomicOrders : atomicOrders
   const { t } = useTranslation()
   const columns = useMemo(
     () => AtomicOrdersTableColumns(authToken, cancelOrder, gaCancelOrder, size, t, getMarketPair, editOrder),
@@ -54,7 +45,6 @@ AtomicOrdersTable.propTypes = {
   gaCancelOrder: PropTypes.func.isRequired,
   editOrder: PropTypes.func.isRequired,
   renderedInTradingState: PropTypes.bool,
-  markets: PropTypes.objectOf(PropTypes.object).isRequired,
 }
 
 AtomicOrdersTable.defaultProps = {
