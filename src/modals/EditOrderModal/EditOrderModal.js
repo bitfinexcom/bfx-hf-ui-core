@@ -7,6 +7,7 @@ import _find from 'lodash/find'
 import _isObject from 'lodash/isObject'
 import _isEmpty from 'lodash/isEmpty'
 import _isBoolean from 'lodash/isBoolean'
+import _toNumber from 'lodash/toNumber'
 import _isString from 'lodash/isString'
 import _toLower from 'lodash/toLower'
 import _replace from 'lodash/replace'
@@ -53,6 +54,9 @@ const processUpdateOrder = (order, id) => ({
   price: order.price && _toString(order.price),
   price_trailing: order.priceTrailing && _toString(order.priceTrailing),
   price_aux_limit: order.priceAuxLimit && _toString(order.priceAuxLimit),
+  meta: {
+    make_visible: _toNumber(order.visibleOnHit),
+  },
   flags: calculateFlags(order),
 })
 
@@ -149,7 +153,7 @@ const EditOrderModal = ({
 
     const generated = generateOrder(data, data.symbol, getContext(order.args?._futures, order.args?._margin))
     const processed = processUpdateOrder(generated, order.id)
-
+    console.log(processed)
     updateOrder(authToken, processed)
     onClose()
   }
