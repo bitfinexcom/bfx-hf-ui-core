@@ -16,6 +16,7 @@ const mapStateToProps = (state = {}, { activeFilter }) => ({
   filteredAtomicOrders: getFilteredAtomicOrders(state)(activeFilter),
   atomicOrders: getAtomicOrders(state),
   getMarketPair: getMarketPair(state),
+  markets: state.meta.markets,
 })
 
 const mapDispatchToProps = dispatch => ({
