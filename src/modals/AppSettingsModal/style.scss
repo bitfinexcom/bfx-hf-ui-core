@@ -9,6 +9,7 @@
     margin: 0 (0 - spacing(0.25)) (0 - spacing(0.25));
     text-align: left;
     padding-top: spacing(0.25) !important;
+    overflow: auto;
   }
 
   &__title {
