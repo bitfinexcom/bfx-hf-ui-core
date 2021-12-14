@@ -17,6 +17,7 @@ export default (t) => ({
       price,
       amount,
       lev,
+      visibleOnHit,
     } = data
 
     if (tif && (!isValidDate(tifDate) || tifDate === 0)) {
@@ -32,6 +33,7 @@ export default (t) => ({
       postonly,
       oco,
       reduceonly,
+      visibleOnHit,
     }
 
     if (oco) {
@@ -44,6 +46,12 @@ export default (t) => ({
 
     if (context === 'f') {
       orderDefinition.lev = lev
+    }
+
+    if (hidden && visibleOnHit) {
+      orderDefinition.visibleOnHit = true
+    } else {
+      orderDefinition.visibleOnHit = false
     }
 
     return orderDefinition

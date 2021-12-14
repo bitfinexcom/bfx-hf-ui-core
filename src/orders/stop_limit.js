@@ -7,7 +7,7 @@ export default (t) => ({
 
   generateOrder: (data = {}, symbol, context) => {
     const {
-      hidden, reduceonly, price, limitPrice, amount, tif, tifDate, lev,
+      hidden, reduceonly, price, limitPrice, amount, tif, tifDate, lev, visibleOnHit,
     } = data
 
     if (tif && (!isValidDate(tifDate) || tifDate === 0)) {
@@ -22,6 +22,7 @@ export default (t) => ({
       symbol,
       hidden,
       reduceonly,
+      visibleOnHit,
     }
 
     if (tif) {
@@ -30,6 +31,12 @@ export default (t) => ({
 
     if (context === 'f') {
       orderDefinition.lev = lev
+    }
+
+    if (hidden && visibleOnHit) {
+      orderDefinition.visibleOnHit = true
+    } else {
+      orderDefinition.visibleOnHit = false
     }
 
     return orderDefinition
