@@ -2,6 +2,7 @@ export default (t) => ({
   label: t('orderForm.fokTitle'),
   customHelp: t('orderForm.fokHelp'),
   uiIcon: 'fill-or-kill-active',
+  id: 'fill or kill',
 
   generateOrder: (data = {}, symbol, context) => {
     const {

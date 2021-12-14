@@ -75,11 +75,10 @@ const EditOrderModal = ({
     const algoOrders = getAOs(t)
     let isAlgoOrder = true
     let uiDef = _find(algoOrders, ({ label }) => label === updOrder.name)
-
     if (!uiDef) {
       const orders = getAtomicOrders(t)
       const processedType = _replace(_toLower(updOrder.type), /(exchange )/i, '')
-      uiDef = _find(orders, ({ label }) => _toLower(label) === processedType)
+      uiDef = _find(orders, ({ id }) => id === processedType)
       isAlgoOrder = false
     }
 
