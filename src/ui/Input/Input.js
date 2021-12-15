@@ -1,89 +1,97 @@
-import React from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { Icon } from 'react-fa'
 import PropTypes from 'prop-types'
 
 import { getLengthAfterPoint } from './Input.helpers'
 import './style.css'
 
-class Input extends React.PureComponent {
-  constructor(props) {
-    super(props)
+const Input = ({
+  type,
+  className,
+  onChange,
+  disabled,
+  value,
+  placeholder,
+  label,
+  autocomplete,
+  style,
+  min,
+  max,
+  percentage,
+  shouldBeAutofocused,
+}) => {
+  const [isHidden, setIsHidden] = useState(true)
+  const inputRef = useRef()
 
-    this.state = {
-      hidden: true,
-    }
-  }
+  const isPlaceholderValid = typeof placeholder !== 'boolean' || typeof placeholder === 'undefined'
 
-  isPlaceholderValid(placeholder) { // eslint-disable-line
-    return typeof placeholder !== 'boolean' || typeof placeholder === 'undefined'
-  }
+  const toggleShow = () => setIsHidden(!isHidden)
 
-  toggleShow() {
-    this.setState(({ hidden }) => ({ hidden: !hidden }))
-  }
-
-  onChange(value) {
-    const { percentage, onChange, max } = this.props
-
+  const onInputChangeHandler = (e) => {
+    const { value: _value } = e.target
     if (percentage) {
-      const number = Number(value)
+      const number = Number(_value)
 
-      if (!Number.isNaN(number) && number <= max && number >= 0 && getLengthAfterPoint(value) <= 2) {
-        onChange(value)
+      if (
+        !Number.isNaN(number)
+        && number <= max
+        && number >= 0
+        && getLengthAfterPoint(_value) <= 2
+      ) {
+        onChange(_value)
       }
     } else {
-      onChange(value)
+      onChange(_value)
     }
   }
 
-  render() {
-    const {
-      type, className, onChange, disabled, value, placeholder, label,
-      autocomplete, style, min, max,
-    } = this.props
-
-    const { hidden } = this.state
-    if (type === 'password') {
-      return (
-        <div className='hfui-input'>
-          <input
-            type={hidden ? 'password' : 'text'}
-            placeholder={this.isPlaceholderValid(placeholder) ? placeholder : null}
-            className={className}
-            onChange={e => onChange(e.target.value)}
-            value={value}
-          />
-          <button
-            className='field-icon'
-            type='button'
-            onClick={() => this.toggleShow()}
-          >
-            {hidden ? <Icon name='eye' /> : <Icon name='eye-slash' />}
-          </button>
-        </div>
-      )
+  useEffect(() => {
+    if (!shouldBeAutofocused || !inputRef.current) {
+      return
     }
+    inputRef.current.focus()
+  }, [shouldBeAutofocused, inputRef])
+
+  if (type === 'password') {
     return (
       <div className='hfui-input'>
-        {label && (
-          <p>{label}</p>
-        )}
-
         <input
-          type={type}
-          autoComplete={autocomplete}
+          type={isHidden ? 'password' : 'text'}
+          placeholder={isPlaceholderValid ? placeholder : null}
           className={className}
-          onChange={e => this.onChange(e.target.value)}
-          placeholder={this.isPlaceholderValid(placeholder) ? placeholder : null}
-          disabled={disabled}
-          style={style}
+          onChange={onInputChangeHandler}
           value={value}
-          min={min}
-          max={max}
+          ref={inputRef}
         />
+        <button
+          className='field-icon'
+          type='button'
+          onClick={toggleShow}
+        >
+          {isHidden ? <Icon name='eye' /> : <Icon name='eye-slash' />}
+        </button>
       </div>
     )
   }
+  return (
+    <div className='hfui-input'>
+      {label && <p>{label}</p>}
+
+      <input
+        type={type}
+        autoComplete={autocomplete}
+        className={className}
+        onChange={onInputChangeHandler}
+        placeholder={isPlaceholderValid ? placeholder : null}
+        disabled={disabled}
+        style={style}
+        value={value}
+        min={min}
+        max={max}
+        ref={inputRef}
+      />
+    </div>
+  )
 }
 
 Input.propTypes = {
@@ -96,11 +104,12 @@ Input.propTypes = {
   placeholder: PropTypes.string,
   label: PropTypes.string,
   percentage: PropTypes.bool,
-  style: PropTypes.objectOf(PropTypes.oneOfType([
-    PropTypes.string, PropTypes.number,
-  ])),
+  style: PropTypes.objectOf(
+    PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  ),
   min: PropTypes.number,
   max: PropTypes.number,
+  shouldBeAutofocused: PropTypes.bool,
 }
 
 Input.defaultProps = {
@@ -115,6 +124,7 @@ Input.defaultProps = {
   disabled: false,
   autocomplete: 'off',
   percentage: false,
+  shouldBeAutofocused: false,
 }
 
 export default Input
