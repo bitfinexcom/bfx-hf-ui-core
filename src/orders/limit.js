@@ -4,6 +4,7 @@ export default (t) => ({
   label: t('orderForm.limitTitle'),
   uiIcon: 'limit-active',
   customHelp: t('orderForm.limitHelp'),
+  id: 'limit',
 
   generateOrder: (data = {}, symbol, context) => {
     const {
