@@ -76,8 +76,8 @@ export default (authToken, cancelOrder, gaCancelOrder, { width }, t, getMarketPa
   cellRenderer: ({ rowData = {} }) => defaultCellRenderer(rowData.status),
 }, {
   dataKey: 'cid',
-  width: 40,
-  flexGrow: 0.4,
+  width: 50,
+  minWidth: 50,
   cellRenderer: ({ rowData = {} }) => ( // eslint-disable-line
     <div className='icons-cell'>
       <Icon
