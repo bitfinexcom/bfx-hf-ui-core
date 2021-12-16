@@ -432,6 +432,8 @@
     "margin": "Margen",
     "derivatives": "Derivados",
     "fokTitle": "Todo o Nada",
+    "visibleOnHit": "Visible al hit",
+    "visibleOnHitHelp": "El resto de la orden oculta será visible después del primer hit (ejecución parcial).",
     "fokHelp": "Una orden Todo o Nada (FOK) es una orden límite que debe completarse por completo inmediatamente o se cancela (nada).",
     "iocTitle": "Inmediato o Cancelar",
     "iocHelp": "Una orden IOC es una orden límite que debe completarse de inmediato, cancelando cualquier porción sin llenar.",

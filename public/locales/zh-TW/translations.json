@@ -432,6 +432,8 @@
     "margin": "保證金",
     "derivatives": "衍生品",
     "fokTitle": "成交或取消單",
+    "visibleOnHit": "時效訂單",
+    "visibleOnHitHelp": "指定自動取消訂單日期及時間。",
     "fokHelp": "成交或取消單（FOK）是須立即全部成交否則直接取消（終止）的限價單 。",
     "iocTitle": "立刻成交否則取消單",
     "iocHelp": "立刻成交否則取消單（IOC）是須立即執行並取消未成交部分的限價單。",
