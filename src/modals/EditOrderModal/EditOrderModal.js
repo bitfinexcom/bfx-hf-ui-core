@@ -12,6 +12,7 @@ import _toLower from 'lodash/toLower'
 import _replace from 'lodash/replace'
 import _toString from 'lodash/toString'
 import _keys from 'lodash/keys'
+import _includes from 'lodash/includes'
 import _reduce from 'lodash/reduce'
 import _values from 'lodash/values'
 import _some from 'lodash/some'
@@ -27,8 +28,14 @@ import {
 import '../../components/OrderForm/style.css'
 import './style.css'
 
-const getContext = (_futures, _margin) => {
-  return _futures ? 'f' : _margin ? 'm' : 'e'
+const getContext = (symbol, markets) => {
+  const market = markets[symbol]
+
+  if (_includes(market?.contexts, 'f')) {
+    return 'f'
+  }
+
+  return 'e'
 }
 
 const flagsMapping = {
@@ -58,7 +65,7 @@ const processUpdateOrder = (order, id) => ({
 
 const EditOrderModal = ({
   changeVisibilityState, visible, order, updateOrder, authToken, atomicOrdersCount, countFilterAtomicOrdersByMarket,
-  maxOrderCounts, gaEditAO, cancelAlgoOrder, submitAlgoOrder,
+  maxOrderCounts, gaEditAO, cancelAlgoOrder, submitAlgoOrder, markets,
 }) => {
   const { t } = useTranslation()
   const [layout, setLayout] = useState({})
@@ -202,7 +209,7 @@ const EditOrderModal = ({
         t,
         fieldData: {
           ...args,
-          _context: getContext(order.args?._futures, order.args?._margin),
+          _context: getContext(args?.symbol, markets),
         },
       })}
       <Modal.Footer>
@@ -229,6 +236,7 @@ EditOrderModal.propTypes = {
   gaEditAO: PropTypes.func.isRequired,
   cancelAlgoOrder: PropTypes.func.isRequired,
   submitAlgoOrder: PropTypes.func.isRequired,
+  markets: PropTypes.arrayOf(PropTypes.object).isRequired,
 }
 
 export default memo(EditOrderModal)
