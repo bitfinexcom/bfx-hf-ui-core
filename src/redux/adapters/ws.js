@@ -32,6 +32,7 @@ const orderAdapter = (data = []) => ({
   oco: data[16],
   reduceonly: data[17],
   visibleOnHit: data[18],
+  lev: data[19],
 })
 
 const AOAdapter = (data = []) => ({
