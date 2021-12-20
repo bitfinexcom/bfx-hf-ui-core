@@ -77,6 +77,7 @@ const AuthenticationUnlockForm = ({ isPaperTrading, onUnlock: _onUnlock, onReset
           placeholder={t('auth.password')}
           value={password}
           onChange={setPassword}
+          shouldBeAutofocused
         />
         <div className='hfui-authenticationpage__mode-select'>
           <p>{t('auth.selectMode')}</p>
@@ -103,6 +104,7 @@ const AuthenticationUnlockForm = ({ isPaperTrading, onUnlock: _onUnlock, onReset
           onClick={onUnlock}
           disabled={!submitReady}
           label={t('auth.unlockBtn')}
+          isSubmit
           green
         />
       </form>

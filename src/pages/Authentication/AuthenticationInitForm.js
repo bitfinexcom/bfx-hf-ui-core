@@ -6,17 +6,30 @@ import { useTranslation } from 'react-i18next'
 import Button from '../../ui/Button'
 import Input from '../../ui/Input'
 
+const hiddenInputStyle = {
+  display: 'none',
+}
+
 const AuthenticationInitForm = ({ onInit }) => {
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
 
-  const onSubmit = () => {
-    onInit(password)
-  }
   const submitReady = (
     (!_isEmpty(password) && !_isEmpty(confirmPassword))
     && (password === confirmPassword)
   )
+
+  const registerCredentials = () => {
+    if (!password || !confirmPassword || !submitReady) {
+      return
+    }
+    onInit(password)
+  }
+
+  const onSubmit = (e) => {
+    e.preventDefault()
+    registerCredentials()
+  }
 
   const { t } = useTranslation()
 
@@ -25,13 +38,13 @@ const AuthenticationInitForm = ({ onInit }) => {
       <h2>Honey Framework UI</h2>
       <p>{t('auth.initMsg')}</p>
 
-      <form className='hfui-authenticationpage__inner-form'>
+      <form className='hfui-authenticationpage__inner-form' onSubmit={onSubmit}>
         <Input
           type='text'
           name='username'
           placeholder='Username'
           autocomplete='username'
-          style={{ display: 'none' }}
+          style={hiddenInputStyle}
         />
 
         <Input
@@ -40,6 +53,7 @@ const AuthenticationInitForm = ({ onInit }) => {
           placeholder={t('auth.password')}
           value={password}
           onChange={setPassword}
+          shouldBeAutofocused
         />
 
         <Input
@@ -51,9 +65,10 @@ const AuthenticationInitForm = ({ onInit }) => {
         />
 
         <Button
-          onClick={onSubmit}
+          onClick={registerCredentials}
           disabled={!submitReady}
           label={t('auth.saveCredentsBtn')}
+          isSubmit
           green
         />
 
