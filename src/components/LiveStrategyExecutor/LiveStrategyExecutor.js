@@ -66,6 +66,9 @@ const LiveStrategyExecutor = ({
             value={symbol}
             onChange={(selection) => {
               const sel = _find(markets, m => m.wsID === selection.wsID)
+              if (!_includes(sel?.contexts, 'm')) {
+                setMargin(false)
+              }
               setSymbol(sel)
             }}
             markets={markets}
