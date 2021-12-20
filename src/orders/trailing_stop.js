@@ -4,6 +4,7 @@ export default (t) => ({
   label: t('orderForm.trailingStopTitle'),
   uiIcon: 'trailing-stop-active',
   customHelp: t('orderForm.trailingStopHelp'),
+  id: 'trailing stop',
 
   generateOrder: (data = {}, symbol, context) => {
     const {

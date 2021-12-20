@@ -5,6 +5,10 @@ import i18n from 'i18next'
 import backend from 'i18next-xhr-backend'
 import detector from 'i18next-browser-languagedetector'
 import { initReactI18next } from 'react-i18next'
+import {
+  ru, es, tr, zhCN, zhTW, enUS,
+} from 'date-fns/locale'
+import { registerLocale } from 'react-datepicker'
 
 const { REACT_APP_ENV } = process.env
 
@@ -21,7 +25,7 @@ export const LANGUAGE_NAMES = {
   en: 'English',
   es: 'Español',
   ru: 'Русский',
-  tr: 'Türk',
+  // tr: 'Türk',
   cn: '中文 (简化)',
   tw: '中文 (繁體)',
 }
@@ -34,6 +38,13 @@ export const LANGUAGES_CHART_TABLE = {
   cn: 'zh',
   tw: 'zh_TW',
 }
+
+registerLocale(LANGUAGES.en, enUS)
+registerLocale(LANGUAGES.ru, ru)
+registerLocale(LANGUAGES.es, es)
+registerLocale(LANGUAGES.tr, tr)
+registerLocale(LANGUAGES.tw, zhTW)
+registerLocale(LANGUAGES.cn, zhCN)
 
 export const LOCAL_STORAGE_I18N_KEY = 'HF_LOCALE'
 

@@ -1,5 +1,6 @@
 import React from 'react'
 import { Icon } from 'react-fa'
+import _isEmpty from 'lodash/isEmpty'
 
 import { defaultCellRenderer } from '../../util/ui'
 
@@ -35,8 +36,8 @@ export default (authToken, cancelOrder, gaCancelOrder, t, getMarketPair, editOrd
   cellRenderer: ({ rowData = {} }) => defaultCellRenderer(rowData.label),
 }, {
   dataKey: 'cid',
-  width: 80,
-  flexGrow: 0.8,
+  width: 50,
+  minWidth: 50,
   cellRenderer: ({ rowData = {} }) => ( // eslint-disable-line
     <div className='icons-cell'>
       <Icon
@@ -44,16 +45,18 @@ export default (authToken, cancelOrder, gaCancelOrder, t, getMarketPair, editOrd
         aria-label='Edit order'
         onClick={() => editOrder(rowData)}
       />
-      <i
-        role='button'
-        aria-label='Cancel order'
-        tabIndex={0}
-        className='icon-cancel'
-        onClick={() => {
-          cancelOrder(authToken, rowData)
-          gaCancelOrder()
-        }}
-      />
+      {!_isEmpty(rowData?.id) && (
+        <i
+          role='button'
+          aria-label='Cancel order'
+          tabIndex={0}
+          className='icon-cancel'
+          onClick={() => {
+            cancelOrder(authToken, rowData)
+            gaCancelOrder()
+          }}
+        />
+      )}
     </div>
   ),
   disableSort: true,

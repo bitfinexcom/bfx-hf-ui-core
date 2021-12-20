@@ -4,6 +4,7 @@ export default (t) => ({
   label: t('orderForm.stopLimitTitle'),
   uiIcon: 'stop-limit-active',
   customHelp: t('orderForm.stopLimitHelp'),
+  id: 'stop limit',
 
   generateOrder: (data = {}, symbol, context) => {
     const {

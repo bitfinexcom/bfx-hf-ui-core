@@ -53,7 +53,7 @@ export default {
     }, {
       w: 49,
       h: 10,
-      minW: 32,
+      minW: 35,
       minH: 5,
       x: 26,
       y: 11,

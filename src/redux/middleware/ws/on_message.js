@@ -17,6 +17,7 @@ import closeElectronApp from '../../helpers/close_electron_app'
 import { MAIN_MODE, PAPER_MODE } from '../../reducers/ui'
 import tokenStore from '../../../util/token_store'
 import { AOAdapter } from '../../adapters/ws'
+import { isElectronApp, HONEY_AUTH_URL } from '../../config'
 
 const debug = Debug('hfui:rx:m:ws-hfui-server:msg')
 
@@ -86,6 +87,15 @@ export default (alias, store) => (e = {}) => {
       case 'auth.token': {
         const [, tokenObj] = payload
         tokenStore.set(tokenObj?.authToken)
+        break
+      }
+
+      case 'auth.failure': {
+        // if the authorisation token on hosted app is not valid, redirect to a page where it will be updated
+        if (!isElectronApp) {
+          window.location.replace(HONEY_AUTH_URL) // eslint-disable-line lodash/prefer-lodash-method
+        }
+
         break
       }
 

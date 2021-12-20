@@ -4,6 +4,7 @@ export default (t) => ({
   label: t('orderForm.stopTitle'),
   uiIcon: 'stop-active',
   customHelp: t('orderForm.stopHelp'),
+  id: 'stop',
 
   generateOrder: (data = {}, symbol, context) => {
     const {

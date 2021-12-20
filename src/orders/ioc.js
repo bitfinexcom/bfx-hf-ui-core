@@ -2,6 +2,7 @@ export default (t) => ({
   label: t('orderForm.iocTitle'),
   customHelp: t('orderForm.iocHelp'),
   uiIcon: 'immediate-or-cancel-active',
+  id: 'immediate or cancel',
 
   generateOrder: (data = {}, symbol, context) => {
     const {

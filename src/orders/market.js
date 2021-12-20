@@ -4,6 +4,7 @@ export default (t = () => {}) => ({
   label: t('orderForm.marketTitle'),
   uiIcon: 'market-active',
   customHelp: t('orderForm.marketHelp'),
+  id: 'market',
 
   generateOrder: (data = {}, symbol, context) => {
     const { reduceonly, amount, lev } = data
