@@ -10,6 +10,7 @@ import {
 import {
   getAuthToken, getFilteredAtomicOrdersCount, getAtomicOrders,
 } from '../../redux/selectors/ws'
+import { getMarkets } from '../../redux/selectors/meta'
 
 import EditOrderModal from './EditOrderModal'
 
@@ -20,6 +21,7 @@ const mapStateToProps = (state = {}) => ({
   atomicOrdersCount: _size(getAtomicOrders(state)),
   countFilterAtomicOrdersByMarket: getFilteredAtomicOrdersCount(state),
   maxOrderCounts: getMaxOrderCounts(state),
+  markets: getMarkets(state),
 })
 
 const mapDispatchToProps = dispatch => ({
