@@ -245,7 +245,7 @@ EditOrderModal.propTypes = {
   gaEditAO: PropTypes.func.isRequired,
   cancelAlgoOrder: PropTypes.func.isRequired,
   submitAlgoOrder: PropTypes.func.isRequired,
-  markets: PropTypes.arrayOf(PropTypes.object).isRequired,
+  markets: PropTypes.objectOf(PropTypes.object).isRequired,
 }
 
 export default memo(EditOrderModal)
