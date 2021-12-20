@@ -255,7 +255,9 @@ const renderLayoutComponent = ({
   fieldName, // eslint-disable-line
   onFieldChange, // eslint-disable-line
 }) => {
-  const { disabled: disabledCond, component: id } = componentDef
+  const {
+    disabled: disabledCond, component: id, visible,
+  } = componentDef
   const C = COMPONENTS_FOR_ID[id]
 
   if (!C) {
@@ -264,6 +266,14 @@ const renderLayoutComponent = ({
   }
 
   let disabled = false
+
+  if (_isBoolean(visible) && !visible) {
+    return null
+  }
+
+  if (_isObject(visible) && !verifyConditionsMet(visible, fieldData)) {
+    return null
+  }
 
   if (_isBoolean(disabledCond)) {
     disabled = disabledCond

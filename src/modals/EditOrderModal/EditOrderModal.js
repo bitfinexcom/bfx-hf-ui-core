@@ -7,6 +7,7 @@ import _find from 'lodash/find'
 import _isObject from 'lodash/isObject'
 import _isEmpty from 'lodash/isEmpty'
 import _isBoolean from 'lodash/isBoolean'
+import _toNumber from 'lodash/toNumber'
 import _isString from 'lodash/isString'
 import _toLower from 'lodash/toLower'
 import _replace from 'lodash/replace'
@@ -60,6 +61,9 @@ const processUpdateOrder = (order, id) => ({
   price: order.price && _toString(order.price),
   price_trailing: order.priceTrailing && _toString(order.priceTrailing),
   price_aux_limit: order.priceAuxLimit && _toString(order.priceAuxLimit),
+  meta: {
+    make_visible: _toNumber(order.visibleOnHit),
+  },
   flags: calculateFlags(order),
 })
 
@@ -106,6 +110,10 @@ const EditOrderModal = ({
 
   const onClose = () => {
     changeVisibilityState(false)
+    setTimeout(() => { // clearing order data after modal close amination ends
+      setLayout({})
+      setArgs({})
+    }, 600)
   }
 
   const onSubmitAO = () => {
@@ -197,18 +205,19 @@ const EditOrderModal = ({
       onClose={onClose}
       onSubmit={onSubmit}
     >
-      {_isEmpty(order) ? (
+      {_isEmpty(args) ? (
         t('editOrderModal.noOrder')
       ) : renderLayout({
         onSubmit: () => {},
         onFieldChange,
         layout,
         validationErrors,
-        renderData: symbolToQuoteBase(order?.args?.symbol),
+        renderData: symbolToQuoteBase(args?.symbol),
         isOrderExecuting: false,
         t,
         fieldData: {
           ...args,
+          _orderEditing: true,
           _context: getContext(args?.symbol, markets),
         },
       })}

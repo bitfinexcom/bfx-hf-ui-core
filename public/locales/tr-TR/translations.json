@@ -432,6 +432,8 @@
     "margin": "Marjin",
     "derivatives": "Türevler",
     "fokTitle": "Gerçekleşmezse İptal Et",
+    "visibleOnHit": "İlk işleme kadar gizli",
+    "visibleOnHitHelp": "İlk gerçekleşme (kısmi yürütme) sonrasında gizli emrin kalan kısmı görünür olacaktır.",
     "fokHelp": "An FOK order is a limit order that must fully fill immediately or it is canceled (killed).",
     "iocTitle": "Kalanı İptal Et",
     "iocHelp": "An IOC order is a limit order that must fill immediately, with any unfilled portion cancelled.",

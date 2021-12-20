@@ -449,13 +449,6 @@ function reducer(state = getInitialState(), action = {}) {
     case types.CHANGE_EDIT_ORDER_MODAL_STATE: {
       const { isVisible, order } = payload
 
-      if (_isEmpty(order)) {
-        return {
-          ...state,
-          isEditOrderModalVisible: false,
-        }
-      }
-
       return {
         ...state,
         orderToEdit: order,

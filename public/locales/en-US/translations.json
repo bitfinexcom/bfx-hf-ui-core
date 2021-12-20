@@ -445,6 +445,8 @@
     "margin": "Margin",
     "derivatives": "Derivatives",
     "fokTitle": "Fill or Kill",
+    "visibleOnHit": "Visible on hit",
+    "visibleOnHitHelp": "The rest part of the hidden order will be visible after first hit (partial execution).",
     "fokHelp": "An FOK order is a limit order that must fully fill immediately or it is canceled (killed).",
     "iocTitle": "Immediate or Cancel",
     "iocHelp": "An IOC order is a limit order that must fill immediately, with any unfilled portion cancelled.",
