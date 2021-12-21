@@ -159,7 +159,7 @@ ExchangeInfoBar.propTypes = {
 }
 
 ExchangeInfoBar.defaultProps = {
-  markets: [],
+  markets: {},
   onRemove: () => { },
   showOnlyFavoritePairs: false,
   isCcyArticleAvailbale: false,
