@@ -1,6 +1,8 @@
 import React from 'react'
 import { Checkbox } from '@ufx-ui/core'
 
+import { getAOContext } from '../../util/order'
+
 export default (onOrderSelect, isOrderSelected, t) => [{
   dataKey: 'algoID',
   width: 30,
@@ -24,7 +26,7 @@ export default (onOrderSelect, isOrderSelected, t) => [{
   dataKey: 'args._margin',
   width: 90,
   flexGrow: 0.9,
-  cellRenderer: ({ rowData = {} }) => (rowData.args?._margin ? 'Margin' : 'Exchange'),
+  cellRenderer: ({ rowData = {} }) => (getAOContext(rowData)),
 }, {
   label: t('table.created'),
   dataKey: 'createdAt',
