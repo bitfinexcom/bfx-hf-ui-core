@@ -1,18 +1,22 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable react/display-name */
 import React from 'react'
-import { PrettyValue } from '@ufx-ui/core'
+import { PrettyValue, Tooltip } from '@ufx-ui/core'
 import { Icon } from 'react-fa'
 
 import { defaultCellRenderer } from '../../util/ui'
+import { orderContext } from '../../util/order'
 import { AMOUNT_DECIMALS, PRICE_SIG_FIGS } from '../../constants/precision'
 
 const STYLES = {
   amount: { justifyContent: 'flex-end' },
   price: { justifyContent: 'flex-end' },
+  status: { display: 'flex', flexDirection: 'row' },
+  statusText: { width: '30px' },
+  statusIcon: { width: '60px' },
 }
 
-export default (authToken, cancelOrder, gaCancelOrder, { width }, t, getMarketPair, editOrder) => [{
+export default (authToken, cancelOrder, gaCancelOrder, { width }, t, getMarketPair, editOrder, getIsDerivativePair) => [{
   label: '',
   dataKey: '',
   width: 15,
@@ -32,7 +36,7 @@ export default (authToken, cancelOrder, gaCancelOrder, { width }, t, getMarketPa
   dataKey: 'type',
   width: 120,
   flexGrow: 1.2,
-  cellRenderer: ({ rowData = {} }) => defaultCellRenderer(rowData.type),
+  cellRenderer: ({ rowData = {} }) => defaultCellRenderer(orderContext(rowData, getIsDerivativePair)),
 }, {
   label: t('table.created'),
   dataKey: 'created',
@@ -73,7 +77,40 @@ export default (authToken, cancelOrder, gaCancelOrder, { width }, t, getMarketPa
   dataKey: 'status',
   width: 100,
   flexGrow: 1,
-  cellRenderer: ({ rowData = {} }) => defaultCellRenderer(rowData.status),
+  cellRenderer: ({ rowData = {} }) => (
+    <div style={STYLES.status} className='order-status'>
+      <div style={STYLES.statusText}>
+        {defaultCellRenderer(rowData.status)}
+      </div>
+      <div style={STYLES.statusIcon}>
+        {rowData.hidden && !rowData.visibleOnHit && (
+          <Tooltip content={t('orderForm.hidden')}>
+            <Icon name='eye-slash' className='icon-status' />
+          </Tooltip>
+        )}
+        {rowData.hidden && rowData.visibleOnHit && (
+          <Tooltip content={t('orderForm.visibleOnHit')}>
+            <Icon name='eye-slash' />
+          </Tooltip>
+        )}
+        {rowData.tif && (
+          <Tooltip content={new Date(rowData.tif).toLocaleString()}>
+            <Icon name='clock-o' />
+          </Tooltip>
+        )}
+        {rowData.postonly && (
+          <Tooltip content={t('orderForm.postOnlyCheckbox')}>
+            <Icon name='info' />
+          </Tooltip>
+        )}
+        {rowData.reduceonly && (
+          <Tooltip content={t('orderForm.reduceOnlyCheckbox')}>
+            <Icon name='info-circle' />
+          </Tooltip>
+        )}
+      </div>
+    </div>
+  ),
 }, {
   dataKey: 'cid',
   width: 50,
