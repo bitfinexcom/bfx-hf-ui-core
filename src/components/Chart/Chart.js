@@ -54,7 +54,7 @@ Chart.propTypes = {
     base: PropTypes.string,
     quote: PropTypes.string,
     uiID: PropTypes.string,
-    isPerp: PropTypes.bool.isRequired,
+    isPerp: PropTypes.bool,
   }),
   theme: PropTypes.oneOf([THEMES.LIGHT, THEMES.DARK]).isRequired,
   layoutI: PropTypes.string.isRequired,

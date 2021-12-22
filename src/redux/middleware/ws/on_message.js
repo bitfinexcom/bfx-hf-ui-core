@@ -55,7 +55,6 @@ export default (alias, store) => (e = {}) => {
         const [, , markets] = payload
         store.dispatch(WSActions.recvDataMarkets(markets))
         store.dispatch(marketActions.getCCYFullNames())
-        store.dispatch(marketActions.getPerpsNames())
         store.dispatch(zendeskActions.getCcyIds())
         break
       }
