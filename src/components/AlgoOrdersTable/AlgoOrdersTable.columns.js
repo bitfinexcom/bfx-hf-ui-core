@@ -3,6 +3,7 @@ import { Icon } from 'react-fa'
 import _isEmpty from 'lodash/isEmpty'
 
 import { defaultCellRenderer } from '../../util/ui'
+import { getAOContext } from '../../util/order'
 
 export default (authToken, cancelOrder, gaCancelOrder, t, getMarketPair, editOrder) => [{
   label: t('table.name'),
@@ -13,20 +14,20 @@ export default (authToken, cancelOrder, gaCancelOrder, t, getMarketPair, editOrd
 }, {
   label: t('table.context'),
   dataKey: 'args._margin',
-  width: 65,
-  flexGrow: 0.65,
-  cellRenderer: ({ rowData = {} }) => defaultCellRenderer(rowData.args?._margin ? 'Margin' : 'Exchange'),
+  width: 85,
+  flexGrow: 0.85,
+  cellRenderer: ({ rowData = {} }) => defaultCellRenderer(getAOContext(rowData)),
 }, {
   label: t('table.created'),
   dataKey: 'createdAt',
-  width: 155,
-  flexGrow: 1.55,
+  width: 175,
+  flexGrow: 1.75,
   cellRenderer: ({ rowData = {} }) => defaultCellRenderer(new Date(rowData.createdAt || +rowData.gid).toLocaleString()),
 }, {
   label: t('table.symbol'),
   dataKey: 'args.symbol',
-  width: 140,
-  flexGrow: 1.4,
+  width: 150,
+  flexGrow: 1.5,
   cellRenderer: ({ rowData = {} }) => defaultCellRenderer(getMarketPair(rowData.args?.symbol)),
 }, {
   label: t('table.label'),
