@@ -1,4 +1,4 @@
-@import '../../variables.scss';
+@import "../../variables.scss";
 
 .hfui-orderstable__wrapper {
   padding-bottom: 8px;
@@ -12,15 +12,21 @@
     display: flex;
     justify-content: space-around;
     align-items: center;
-  
+
     > * {
       margin-right: 8px;
       font-size: 16px;
-    
+
       &:hover {
         cursor: pointer;
         color: var(--shade-7);
       }
+    }
+  }
+
+  .order-status {
+    span.fa {
+      margin-left: 5px;
     }
   }
 }
