@@ -1,6 +1,7 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import _keys from 'lodash/keys'
 import _map from 'lodash/map'
+import _findKey from 'lodash/findKey'
 
 import { useTranslation } from 'react-i18next'
 import { useDispatch, useSelector } from 'react-redux'
@@ -16,6 +17,12 @@ const LanguageSettings = () => {
   const { i18n } = useTranslation()
   const language = useSelector(getCurrentLanguage)
   const dispatch = useDispatch()
+  const i18nLang = i18n.language
+  const i18nMappedLang = _findKey(LANGUAGES, (value) => value === i18nLang)
+
+  useEffect(() => {
+    dispatch(UIActions.setLanguage(i18nMappedLang))
+  }, [dispatch, i18nMappedLang])
 
   const changeLanguageHandler = (lang) => {
     i18n.changeLanguage(LANGUAGES[lang])
