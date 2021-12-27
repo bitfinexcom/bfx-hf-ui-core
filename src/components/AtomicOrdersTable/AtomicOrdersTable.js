@@ -14,7 +14,6 @@ const AtomicOrdersTable = ({
 }) => {
   const [ref, size] = useSize()
   const data = renderedInTradingState ? filteredAtomicOrders : atomicOrders
-  console.log('data: ', data)
   const { t } = useTranslation()
   const columns = useMemo(
     () => AtomicOrdersTableColumns(authToken, cancelOrder, gaCancelOrder, size, t, getMarketPair, editOrder, getIsDerivativePair),
