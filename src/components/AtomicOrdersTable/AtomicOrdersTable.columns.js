@@ -94,7 +94,7 @@ export default (authToken, cancelOrder, gaCancelOrder, { width }, t, getMarketPa
           </Tooltip>
         )}
         {rowData.tif && (
-          <Tooltip content={new Date(rowData.tif).toLocaleString()}>
+          <Tooltip content={rowData.tifDate.toLocaleString()}>
             <Icon name='clock-o' />
           </Tooltip>
         )}
