@@ -16,13 +16,14 @@ import Panel from '../../ui/Panel'
 import Markdown from '../../ui/Markdown'
 import Backtester from '../../components/Backtester'
 import { isElectronApp } from '../../redux/config'
+import StrategyEditor from '../../components/StrategyEditor'
 
 import LiveStrategyExecutor from '../../components/LiveStrategyExecutor'
+
 import './style.css'
 
 const DocsPath = require('bfx-hf-strategy/docs/api.md')
 
-const StrategyEditor = lazy(() => import('../../components/StrategyEditor'))
 const Joyride = lazy(() => import('../../components/Joyride'))
 
 const StrategyEditorPage = (props) => {
@@ -121,18 +122,16 @@ const StrategyEditorPage = (props) => {
       <Layout.Header />
       <Layout.Main className='hfui-strategyeditorpage__wrapper'>
         <div className='hfui-strategyeditorpage__content-wrapper'>
-          <Suspense fallback={<></>}>
-            <StrategyEditor
-              dark
-              onStrategySelect={selectStrategyHandler}
-              onStrategyChange={setContent}
-              key='editor'
-              onIndicatorsChange={onIndicatorsChange}
-              moveable={false}
-              removeable={false}
-              tf='1m'
-            />
-          </Suspense>
+          <StrategyEditor
+            dark
+            onStrategySelect={selectStrategyHandler}
+            onStrategyChange={setContent}
+            key='editor'
+            onIndicatorsChange={onIndicatorsChange}
+            moveable={false}
+            removeable={false}
+            tf='1m'
+          />
           {firstLogin && (
             <Suspense fallback={<></>}>
               <Joyride
