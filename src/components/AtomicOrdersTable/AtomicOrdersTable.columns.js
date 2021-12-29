@@ -85,7 +85,7 @@ export default (authToken, cancelOrder, gaCancelOrder, { width }, t, getMarketPa
       <div style={STYLES.statusIcon}>
         {rowData.hidden && !rowData.visibleOnHit && (
           <Tooltip content={t('orderForm.hidden')}>
-            <Icon name='eye-slash' className='icon-status' />
+            <Icon name='eye-slash' />
           </Tooltip>
         )}
         {rowData.hidden && rowData.visibleOnHit && (
