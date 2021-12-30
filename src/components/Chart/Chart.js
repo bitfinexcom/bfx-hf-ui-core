@@ -27,7 +27,7 @@ const Chart = ({ market, theme, layoutI }) => {
   const queryString = new URLSearchParams({
     env,
     theme: theme === THEMES.DARK ? 'honeyframework-theme:dark-mode' : 'default-theme:light-mode',
-    locale: LANGUAGES_CHART_TABLE[language],
+    locale: LANGUAGES_CHART_TABLE[language] || LANGUAGES_CHART_TABLE.en,
     iframeID,
   }).toString()
 
