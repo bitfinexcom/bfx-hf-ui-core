@@ -27,7 +27,6 @@ import DEFAULT_MARKET_DATA_COMPONENT_STATE from './default_component_state_marke
 import DEFAULT_ACTIVE_MARKET_STATE from './default_active_market_state'
 
 import {
-  COMPONENT_DIMENSIONS,
   DEFAULT_TRADING_KEY,
   DEFAULT_MARKET_KEY,
   layoutDefToGridLayout,
@@ -481,7 +480,6 @@ function reducer(state = getInitialState(), action = {}) {
               c: component,
               x,
               y: y + 1,
-              ...COMPONENT_DIMENSIONS[component],
             },
           ],
         },
