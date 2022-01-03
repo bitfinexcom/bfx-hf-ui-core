@@ -15,7 +15,6 @@ const BalancesTable = ({
 }) => {
   const { t } = useTranslation()
   const data = renderedInTradingState ? filteredBalances : balances
-
   const filtered = hideZeroBalances
     ? _filter(data, b => +b.balance > DUST_THRESHOLD)
     : data
