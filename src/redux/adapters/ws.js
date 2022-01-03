@@ -5,11 +5,12 @@ const positionAdapter = (data = []) => {
   return new Position(data).toJS()
 }
 
-const balanceAdapter = (data = []) => ({
+const balanceAdapter = (data = [], getCurrencySymbol = () => {}) => ({
   currency: data[0],
   context: data[1],
   balance: data[2],
   available: data[3],
+  symbol: getCurrencySymbol(data[0]),
 })
 
 const orderAdapter = (data = []) => ({
