@@ -25,7 +25,9 @@
   }
 
   .order-status {
-    span.fa {
+    span.fa, svg {
+      color: var(--shade-6);
+      fill: var(--shade-6);
       margin-left: 5px;
     }
   }
