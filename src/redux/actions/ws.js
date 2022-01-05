@@ -142,6 +142,11 @@ export default {
   }),
 
   recvOrderClose: ({ order }) => ({
+    type: t.DATA_ORDER_CLOSE_ASYNC,
+    payload: { order },
+  }),
+
+  setOrderClose: ({ order }) => ({
     type: t.DATA_ORDER_CLOSE,
     payload: { order },
   }),

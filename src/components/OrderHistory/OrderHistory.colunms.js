@@ -19,7 +19,7 @@ const {
   STATUS,
 } = ORDER_HISTORY_KEYS
 
-export const getRowMapping = (getMarketPair) => ({
+export const rowMapping = {
   [ID]: {
     index: 0,
   },
@@ -28,7 +28,6 @@ export const getRowMapping = (getMarketPair) => ({
   },
   [PAIR]: {
     index: 1,
-    format: (_value, _, data) => getMarketPair(_get(data, 'symbol'))
   },
   [AMOUNT]: {
     index: 2,
@@ -95,4 +94,4 @@ export const getRowMapping = (getMarketPair) => ({
       return <FullDate ts={_get(data, 'created')} />
     },
   },
-})
+}
