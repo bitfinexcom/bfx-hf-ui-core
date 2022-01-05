@@ -32,7 +32,7 @@ CheckboxInput.displayName = 'CheckboxInput'
 CheckboxInput.propTypes = {
   id: PropTypes.string.isRequired,
   def: PropTypes.objectOf(PropTypes.oneOfType([
-    PropTypes.string, PropTypes.bool, PropTypes.array,
+    PropTypes.string, PropTypes.bool, PropTypes.array, PropTypes.object,
   ])).isRequired,
   renderData: PropTypes.shape({
     QUOTE: PropTypes.string.isRequired,
