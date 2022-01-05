@@ -26,6 +26,7 @@ const orderAdapter = (data = []) => ({
   status: data[9],
   price: data[10],
   priceAvg: data[11],
+  priceAverage: data[11],
   priceTrailing: data[12],
   priceAuxLimit: data[13],
   hidden: data[14],
