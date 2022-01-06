@@ -12,7 +12,7 @@ import { getLocation } from '../../redux/selectors/router'
 import {
   removeComponent, changeLayout, setLayoutID, storeUnsavedLayout,
 } from '../../redux/actions/ui'
-import { renderLayoutElement } from './GridLayout.helpers'
+import { renderLayoutElement, COMPONENT_DIMENSIONS } from './GridLayout.helpers'
 import './style.css'
 
 import {
@@ -73,7 +73,11 @@ const GridLayout = ({
     sharedProps,
   }
 
-  const currentLayouts = _get(layoutDef, 'layout', [])
+  const currentLayouts = _map(_get(layoutDef, 'layout', []), (layout) => ({
+    ...layout,
+    minW: COMPONENT_DIMENSIONS[layout?.c].minW,
+    minH: COMPONENT_DIMENSIONS[layout?.c].minH,
+  }))
   const onRemoveComponent = (i) => dispatch(removeComponent(i))
 
   /* fix-start: initial grid rendering issue
