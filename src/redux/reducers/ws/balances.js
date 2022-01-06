@@ -1,9 +1,7 @@
 import _isEqual from 'lodash/isEqual'
 import _get from 'lodash/get'
-import _forEach from 'lodash/forEach'
 
 import types from '../../constants/ws'
-import { balanceAdapter } from '../../adapters/ws'
 
 function getInitialState() {
   return {}
@@ -15,31 +13,23 @@ function reducer(state = getInitialState(), action = {}) {
   const { type, payload = [] } = action
 
   switch (type) {
-    case types.DATA_BALANCES: {
+    case types.SET_BALANCES: {
       const { balances = [] } = payload
-
-      const transformed = {}
-      _forEach(balances, balance => {
-        const adapted = balanceAdapter(balance)
-        transformed[getKey(adapted)] = adapted
-      })
-
-      return transformed
+      return balances
     }
 
-    case types.DATA_BALANCE: {
-      const { balance = [] } = payload
-      const adapted = balanceAdapter(balance)
+    case types.SET_BALANCE: {
+      const { balance = {} } = payload
 
-      const key = getKey(adapted)
+      const key = getKey(balance)
       const prevBalance = _get(state, key)
-      if (_isEqual(adapted, prevBalance)) {
+      if (_isEqual(balance, prevBalance)) {
         return state
       }
 
       return {
         ...state,
-        [key]: adapted,
+        [key]: balance,
       }
     }
 

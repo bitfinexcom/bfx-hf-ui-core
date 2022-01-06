@@ -2,6 +2,7 @@
 
 .hfui-orderstable__wrapper {
   padding-bottom: 8px;
+  height: 100%;
 
   .empty {
     margin-top: 10px;
@@ -25,7 +26,9 @@
   }
 
   .order-status {
-    span.fa {
+    span.fa, svg {
+      color: var(--shade-6);
+      fill: var(--shade-6);
       margin-left: 5px;
     }
   }

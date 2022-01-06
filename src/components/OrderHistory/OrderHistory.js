@@ -24,7 +24,7 @@ const OrderHistory = ({
       dark={dark}
       darkHeader={dark}
     >
-      <div ref={ref}>
+      <div ref={ref} className='orderhistroy__wrapper'>
         {_isEmpty(orders) ? (
           <p className='empty'>{t('orderHistoryModal.noHistory')}</p>
         ) : (

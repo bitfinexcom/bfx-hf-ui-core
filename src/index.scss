@@ -40,6 +40,12 @@ body button:focus {
 }
 
 body.Light {
+  .hfui-edit-order-modal__wrapper {
+    .react-datepicker__input-container input {
+      background-color: $white-color !important;
+    }
+  }
+
   .react-datepicker__header {
     background-color: var(--background-color) !important;
   }
