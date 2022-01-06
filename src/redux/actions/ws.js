@@ -131,6 +131,16 @@ export default {
     payload: { balance },
   }),
 
+  setBalances: (balances) => ({
+    type: t.SET_BALANCES,
+    payload: { balances },
+  }),
+
+  setBalance: (balance) => ({
+    type: t.SET_BALANCE,
+    payload: { balance },
+  }),
+
   recvOrders: ({ orders }) => ({
     type: t.DATA_ORDERS,
     payload: { orders },
