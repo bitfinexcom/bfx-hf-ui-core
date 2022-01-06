@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
 
 import _isEmpty from 'lodash/isEmpty'
@@ -8,15 +8,14 @@ import {
 import { useTranslation } from 'react-i18next'
 import Panel from '../../ui/Panel'
 import useSize from '../../hooks/useSize'
-import { getRowMapping } from './OrderHistory.colunms'
+import { rowMapping } from './OrderHistory.colunms'
 import './style.css'
 
 const OrderHistory = ({
-  onRemove, dark, orders, getMarketPair,
+  onRemove, dark, orders,
 }) => {
   const [ref, { width }] = useSize()
   const { t } = useTranslation()
-  const columns = useMemo(() => getRowMapping(getMarketPair), [getMarketPair])
 
   return (
     <Panel
@@ -31,7 +30,7 @@ const OrderHistory = ({
         ) : (
           <UfxOrderHistory
             orders={orders}
-            rowMapping={columns}
+            rowMapping={rowMapping}
             isMobileLayout={width < 700}
           />
         )}
@@ -44,7 +43,6 @@ OrderHistory.propTypes = {
   orders: PropTypes.arrayOf(PropTypes.object),
   dark: PropTypes.bool,
   onRemove: PropTypes.func,
-  getMarketPair: PropTypes.func.isRequired,
 }
 
 OrderHistory.defaultProps = {
