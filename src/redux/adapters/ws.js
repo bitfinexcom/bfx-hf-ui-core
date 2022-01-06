@@ -25,7 +25,6 @@ const orderAdapter = (data = [], getMarketPair = () => {}) => ({
   tifDate: new Date(data[8]),
   status: data[9],
   price: data[10],
-  priceAvg: data[11],
   priceAverage: data[11],
   priceTrailing: data[12],
   priceAuxLimit: data[13],
