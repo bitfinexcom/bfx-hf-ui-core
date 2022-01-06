@@ -40,7 +40,7 @@ const GridLayout = ({
   const lastUsedLayoutID = getLastUsedLayoutID(pathname)
 
   const [lastLayoutID, lastLayoutDef] = _find(layoutsForCurrRoute, ([id]) => id === lastUsedLayoutID) || _last(layoutsForCurrRoute
-    .sort((a, b) => a[1].savedAt - b[1].savedAt))
+    .sort((a, b) => a[1].savedAt - b[1].savedAt)) || []
 
   // should use unsaved one first, then saved one (if selected) else last saved one
   const layoutDef = isValidUnsavedLayout
