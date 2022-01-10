@@ -631,5 +631,13 @@
     "text2_1": "Please, report this issue at",
     "text2_2": "so we would be able to fix it as soon as possible!",
     "text3": "Technical crash info"
+  },
+  "orderContexts": {
+    "exchange": "Exchange",
+    "margin": "Margin",
+    "funding": "Derivative"
+  },
+  "orderStatuses": {
+    "ACTIVE": "ACTIVE"
   }
 }

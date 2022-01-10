@@ -1,5 +1,8 @@
 import _includes from 'lodash/includes'
 import _replace from 'lodash/replace'
+import _toLower from 'lodash/toLower'
+import _toUpper from 'lodash/toUpper'
+import _find from 'lodash/find'
 
 export const ORDER_CONTEXT = {
   EXCHANGE: 'EXCHANGE',
@@ -7,15 +10,19 @@ export const ORDER_CONTEXT = {
   DERIVATIVE: 'DERIVATIVE',
 }
 
-export const orderContext = ({ type, symbol, oco }, isDerivativePair) => {
-  const prefix = (oco) ? 'OCO ' : ''
-  const isExchange = _includes(type, 'EXCHANGE')
-  const _type = prefix + _replace(type, 'EXCHANGE', '')
-  if (isDerivativePair(symbol)) return `${ORDER_CONTEXT.DERIVATIVE} ${_type}`
+export const orderContext = ({
+  type, symbol, oco,
+}, isDerivativePair, t, orders) => {
+  const prefix = oco ? 'OCO ' : ''
+  const isExchange = _includes(type, ORDER_CONTEXT.EXCHANGE)
+  const _type = _replace(_toLower(type), /(exchange )/i, '')
+  let { label } = _find(orders, ({ id }) => id === _type) || { label: _type }
+  label = `${prefix}${label}`
 
+  if (isDerivativePair(symbol)) return _toUpper(`${t('orderContexts.funding')} ${label}`)
   return isExchange
-    ? `${ORDER_CONTEXT.EXCHANGE} ${_type}`
-    : `${ORDER_CONTEXT.MARGIN} ${_type}`
+    ? _toUpper(`${t('orderContexts.exchange')} ${label}`)
+    : _toUpper(`${t('orderContexts.margin')} ${label}`)
 }
 
 export const getAOContext = (rowData) => {

@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import _isEmpty from 'lodash/isEmpty'
 import { VirtualTable } from '@ufx-ui/core'
 import { useTranslation } from 'react-i18next'
+import { getAtomicOrders } from '../OrderForm/OrderForm.orders.helpers'
 
 import useSize from '../../hooks/useSize'
 import AtomicOrdersTableColumns from './AtomicOrdersTable.columns'
@@ -15,9 +16,10 @@ const AtomicOrdersTable = ({
   const [ref, size] = useSize()
   const data = renderedInTradingState ? filteredAtomicOrders : atomicOrders
   const { t } = useTranslation()
+  const orders = getAtomicOrders(t)
   const columns = useMemo(
-    () => AtomicOrdersTableColumns(authToken, cancelOrder, gaCancelOrder, size, t, getMarketPair, editOrder, getIsDerivativePair),
-    [authToken, cancelOrder, gaCancelOrder, getMarketPair, size, t, editOrder, getIsDerivativePair],
+    () => AtomicOrdersTableColumns(authToken, cancelOrder, gaCancelOrder, size, t, getMarketPair, editOrder, getIsDerivativePair, orders),
+    [authToken, cancelOrder, gaCancelOrder, getMarketPair, size, t, editOrder, getIsDerivativePair, orders],
   )
 
   return (

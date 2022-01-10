@@ -13,11 +13,11 @@ const STYLES = {
   amount: { justifyContent: 'flex-end' },
   price: { justifyContent: 'flex-end' },
   status: { display: 'flex', flexDirection: 'row' },
-  statusText: { width: '30px' },
-  statusIcon: { width: '60px' },
+  statusText: { width: '50px' },
+  statusIcon: { width: '10px' },
 }
 
-export default (authToken, cancelOrder, gaCancelOrder, { width }, t, getMarketPair, editOrder, getIsDerivativePair) => [{
+export default (authToken, cancelOrder, gaCancelOrder, { width }, t, getMarketPair, editOrder, getIsDerivativePair, orders) => [{
   label: '',
   dataKey: '',
   width: 15,
@@ -37,18 +37,18 @@ export default (authToken, cancelOrder, gaCancelOrder, { width }, t, getMarketPa
   dataKey: 'type',
   width: 120,
   flexGrow: 1.2,
-  cellRenderer: ({ rowData = {} }) => defaultCellRenderer(orderContext(rowData, getIsDerivativePair)),
+  cellRenderer: ({ rowData = {} }) => defaultCellRenderer(orderContext(rowData, getIsDerivativePair, t, orders)),
 }, {
   label: t('table.created'),
   dataKey: 'created',
-  width: 145,
-  flexGrow: 1.5,
+  width: 135,
+  flexGrow: 1.35,
   cellRenderer: ({ rowData = {} }) => defaultCellRenderer(new Date(+rowData.created).toLocaleString()),
 }, {
   label: t('table.amount'),
   dataKey: 'amount',
-  width: 120,
-  flexGrow: 1.2,
+  width: 110,
+  flexGrow: 1.1,
   headerStyle: STYLES.amount,
   style: STYLES.amount,
   cellRenderer: ({ rowData = {} }) => defaultCellRenderer(
@@ -62,8 +62,8 @@ export default (authToken, cancelOrder, gaCancelOrder, { width }, t, getMarketPa
 }, {
   label: t('table.price'),
   dataKey: 'price',
-  width: 120,
-  flexGrow: 1.2,
+  width: 100,
+  flexGrow: 1,
   headerStyle: STYLES.price,
   style: STYLES.price,
   cellRenderer: ({ rowData = {} }) => defaultCellRenderer(
@@ -76,12 +76,12 @@ export default (authToken, cancelOrder, gaCancelOrder, { width }, t, getMarketPa
 }, {
   label: t('table.status'),
   dataKey: 'status',
-  width: 100,
-  flexGrow: 1,
+  width: 120,
+  flexGrow: 1.2,
   cellRenderer: ({ rowData = {} }) => (
     <div style={STYLES.status} className='order-status'>
       <div style={STYLES.statusText}>
-        {defaultCellRenderer(rowData.status)}
+        {defaultCellRenderer(t(`orderStatuses.${rowData.status}`))}
       </div>
       <div style={STYLES.statusIcon}>
         {rowData.hidden && !rowData.visibleOnHit && (
