@@ -328,12 +328,6 @@
     "hideZeroCheckbox": "隱藏0餘額",
     "noBalances": "無可用餘額"
   },
-  "bestExperienceMessageModal": {
-    "title": "最佳瀏覽體驗建議",
-    "text1": "Honey Framework 設計為桌面版應用程序。為獲得最佳的使用體驗，我們強烈建議在電腦桌面使用此應用程序。",
-    "text2": "建議以橫向模式使用此應用程序。",
-    "text3": "Honey Framework 團隊 敬啟！"
-  },
   "chartModal": {
     "title": "圖表"
   },

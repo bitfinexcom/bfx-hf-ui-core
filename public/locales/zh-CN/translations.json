@@ -328,12 +328,6 @@
     "hideZeroCheckbox": "隐藏无余额",
     "noBalances": "无可用余额"
   },
-  "bestExperienceMessageModal": {
-    "title": "最佳体验提醒",
-    "text1": "Honey Framework网页版设计为桌机版。为享有运用程式最佳体验，我们高度推荐使用桌机版。",
-    "text2": "建议采用横向模式使用应用程式。",
-    "text3": "敬启, Honey Framework 团队!"
-  },
   "chartModal": {
     "title": "图表"
   },

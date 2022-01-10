@@ -328,12 +328,6 @@
     "hideZeroCheckbox": "Ocultar Balances Cero",
     "noBalances": "No hay balances disponibles"
   },
-  "bestExperienceMessageModal": {
-    "title": "Advertencia de mejor experiencia",
-    "text1": "Versión web de Honey Framework diseñada para computadoras de escritorios. Para tener la mejor experiencia en el uso de la aplicación, recomendamos encarecidamente el uso de una computadora escritorio.",
-    "text2": "Se recomienda utilizar esta aplicación en modo horizontal.",
-    "text3": "Saludos cordiales, el equipo de Honey Framework"
-  },
   "chartModal": {
     "title": "Gráfico"
   },

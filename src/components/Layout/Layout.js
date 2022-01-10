@@ -5,8 +5,6 @@ import './style.css'
 import Navbar from '../Navbar'
 import StatusBar from '../StatusBar'
 
-import { MIN_SAFE_WIDTH } from '../../constants/variables'
-
 // eslint-disable-next-line react/prop-types
 function Layout({ children, ...props }) {
   return (
@@ -21,13 +19,8 @@ Layout.Header = function Header({
   // eslint-disable-next-line react/prop-types
   children, buttons, style: styleProp, ...props
 }) {
-  const style = {
-    minWidth: MIN_SAFE_WIDTH,
-    ...styleProp,
-  }
-
   return (
-    <header className='layout__header' style={style} {...props}>
+    <header className='layout__header' style={styleProp} {...props}>
       <Navbar />
       {children}
     </header>
@@ -43,13 +36,8 @@ Layout.Main = function Main({
     'no-space-top': noSpaceTop,
   })
 
-  const style = {
-    minWidth: MIN_SAFE_WIDTH,
-    ...styleProp,
-  }
-
   return (
-    <main className={classes} style={style} {...props}>
+    <main className={classes} style={styleProp} {...props}>
       {children}
     </main>
   )
