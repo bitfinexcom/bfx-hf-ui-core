@@ -1,6 +1,7 @@
 import _isString from 'lodash/isString'
 import t from '../constants/ws'
 import ui from '../constants/ui'
+import { isElectronApp } from '../config'
 
 const send = payload => ({
   type: t.BUFF_SEND,
@@ -9,8 +10,13 @@ const send = payload => ({
     : JSON.stringify(payload),
 })
 
+const getScope = () => {
+  return isElectronApp ? 'app' : 'web'
+}
+
 export default {
   send,
+  getScope,
   error: payload => ({ type: t.ERROR, payload }),
   flushQueue: () => ({ type: t.FLUSH_QUEUE }),
 
@@ -279,8 +285,8 @@ export default {
     type: t.UPDATING_API_KEY,
     payload: { mode, isUpdating },
   }),
-  initAuth: password => send(['auth.init', password, 'main']),
-  auth: (password, mode) => send(['auth.submit', password, mode]),
+  initAuth: password => send(['auth.init', password, 'main', getScope()]),
+  auth: (password, mode) => send(['auth.submit', password, mode, getScope()]),
   resetAuth: () => send(['auth.reset']),
   webAuth: token => send({ event: 'auth', token }),
   onUnload: (authToken, mode) => send(['algo_order.pause', authToken, mode]),

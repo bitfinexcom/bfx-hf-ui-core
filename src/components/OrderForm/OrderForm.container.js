@@ -97,6 +97,7 @@ const mapDispatchToProps = dispatch => ({
       apiSecret,
       mode,
       mode,
+      WSActions.getScope(),
     ]))
   },
 

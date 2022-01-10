@@ -50,6 +50,7 @@ const ApiKeys = () => {
         apiSecret,
         MAIN_MODE,
         currentMode,
+        WSActions.getScope(),
       ]))
     }
   }
@@ -64,6 +65,7 @@ const ApiKeys = () => {
         paperApiSecret,
         PAPER_MODE,
         currentMode,
+        WSActions.getScope(),
       ]))
     }
   }
