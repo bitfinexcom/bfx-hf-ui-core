@@ -1,7 +1,6 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable react/display-name */
 import React from 'react'
-import _capitalize from 'lodash/capitalize'
 import { PrettyValue } from '@ufx-ui/core'
 import { defaultCellRenderer } from '../../util/ui'
 import { AMOUNT_DECIMALS } from '../../constants/precision'
@@ -16,7 +15,7 @@ export default (t) => [{
   dataKey: 'context',
   width: 120,
   flexGrow: 1,
-  cellRenderer: ({ rowData = {} }) => defaultCellRenderer(_capitalize(rowData.context)),
+  cellRenderer: ({ rowData = {} }) => defaultCellRenderer(t(`orderContexts.${rowData.context}`)),
 }, {
   label: t('table.currency'),
   dataKey: 'symbol',
