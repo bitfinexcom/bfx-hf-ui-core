@@ -33,6 +33,22 @@
       flex-shrink: 0;
     }
   }
+
+  @media screen and (max-width: 1230px) {
+    .hfui-strategyeditorpage__content-wrapper {
+      flex-direction: column;
+    }
+
+    .hfui-strategiespage__right {
+      width: 100%;
+      margin-top: 20px;
+    }
+
+    .hfui-strategyeditor__panel {
+      width: 100%;
+      margin-right: 0;
+    }
+  }
 }
 .hfui-strategiespage__pannel-backtest {
   height: 100%;
