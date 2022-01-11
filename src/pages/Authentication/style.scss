@@ -4,6 +4,39 @@
   height: 100%;
 }
 
+@media screen and (max-width: 940px) {
+  .hfui-authenticationpage__inner {
+    flex-direction: column !important;
+  
+    > * {
+      width: 100% !important;
+    }
+
+    .hfui-authenticationpage__inner-left {
+      height: 80px;
+    }
+
+    .hfui-authenticationpage__content {
+      align-items: center;
+      justify-content: flex-start;
+      padding-left: 0;
+    }
+
+    .hfui-authenticationpage__clear {
+      padding-top: 10px;
+      margin-left: 60px;
+    }
+
+    .hfui-authenticationpage__inner-left-version-container {
+      width: 100%;
+    }
+
+    .hfui-authenticationpage__trading-mode, .hfui-dropdown__wrapper {
+      width: 100% !important;
+    }
+  }
+}
+
 .hfui-authenticationpage__inner {
   height: 100%;
   display: flex;
