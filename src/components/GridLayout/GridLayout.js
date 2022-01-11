@@ -109,7 +109,7 @@ const GridLayout = ({
         breakpoints={{
           lg: 1200, md: 996, sm: 768, xs: 480, xxs: 0,
         }}
-        // onLayoutChange={(incomingLayout) => dispatch(changeLayout(incomingLayout))}
+        onLayoutChange={(_, { lg }) => dispatch(changeLayout(lg))}
         measureBeforeMount={false}
         useCSSTransforms={mounted}
       >
