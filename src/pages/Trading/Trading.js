@@ -1,5 +1,5 @@
 import React, {
-  memo, useCallback, lazy, Suspense, useState, useEffect,
+  memo, useCallback, lazy, Suspense,
 } from 'react'
 import PropTypes from 'prop-types'
 import { useTranslation } from 'react-i18next'
@@ -10,6 +10,7 @@ import { STEPS, STATUS } from '../../components/Joyride'
 import GridLayout from '../../components/GridLayout'
 import ActiveAlgoOrdersModal from '../../modals/ActiveAlgoOrdersModal'
 // import RefillBalanceModal from '../../modals/RefillBalanceModal'
+import useTourGuide from '../../hooks/useTourGuide'
 
 import './style.css'
 
@@ -37,15 +38,8 @@ const Trading = ({
   isBadConnection,
 }) => {
   const { t } = useTranslation()
-  const [isGuideActiveLocal, setIsGuideActiveLocal] = useState(false)
 
-  // delay guide active status to avoid missing guide spotlight because of target not found error
-  useEffect(() => {
-    const delay = isGuideActive ? 500 : 0
-    setTimeout(() => {
-      setIsGuideActiveLocal(isGuideActive)
-    }, delay)
-  }, [isGuideActive])
+  const showGuide = useTourGuide(isGuideActive)
 
   const onGuideFinish = useCallback((data) => {
     const { status } = data
@@ -65,7 +59,7 @@ const Trading = ({
             <Joyride
               callback={onGuideFinish}
               steps={STEPS.getTradingModes(t)}
-              run={isGuideActiveLocal}
+              run={showGuide}
             />
           </Suspense>
         )}

@@ -16,8 +16,9 @@ import Panel from '../../ui/Panel'
 import Markdown from '../../ui/Markdown'
 import Backtester from '../../components/Backtester'
 import { isElectronApp } from '../../redux/config'
-
 import LiveStrategyExecutor from '../../components/LiveStrategyExecutor'
+import useTourGuide from '../../hooks/useTourGuide'
+
 import './style.css'
 
 const DocsPath = require('bfx-hf-strategy/docs/api.md')
@@ -33,16 +34,8 @@ const StrategyEditorPage = (props) => {
   const [docsText, setDocsText] = useState('')
   const [forcedTab, setForcedTab] = useState(selectedTab)
   const [tourStep, setTourStep] = useState(0)
-  const [startTour, setStartTour] = useState(false)
 
-  // delay tour start a bit to mount all lazy loaded tour-targets
-  useEffect(() => {
-    if (isGuideActive) {
-      setTimeout(() => {
-        setStartTour(isGuideActive)
-      }, 200)
-    }
-  }, [isGuideActive])
+  const showGuide = useTourGuide(isGuideActive)
 
   useEffect(() => {
     // load readme docs (DocsPath is an object when running in electron window)
@@ -138,7 +131,7 @@ const StrategyEditorPage = (props) => {
               <Joyride
                 steps={STEPS.getStrategyEditorModes(t)}
                 callback={onTourUpdate}
-                run={startTour}
+                run={showGuide}
                 stepIndex={tourStep}
               />
             </Suspense>
