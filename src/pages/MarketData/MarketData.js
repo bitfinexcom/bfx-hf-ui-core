@@ -6,6 +6,7 @@ import _includes from 'lodash/includes'
 import { STEPS, STATUS } from '../../components/Joyride'
 import Layout from '../../components/Layout'
 import GridLayout from '../../components/GridLayout'
+import useTourGuide from '../../hooks/useTourGuide'
 
 import './style.css'
 
@@ -21,6 +22,9 @@ const commonComponentProps = {
 
 const MarketData = ({ isGuideActive, isFirstLogin, finishGuide }) => {
   const { t } = useTranslation()
+
+  const showGuide = useTourGuide(isGuideActive)
+
   const onGuideFinish = (data) => {
     const { status } = data
     const finishedStatuses = [STATUS.FINISHED, STATUS.SKIPPED]
@@ -39,7 +43,7 @@ const MarketData = ({ isGuideActive, isFirstLogin, finishGuide }) => {
             <Joyride
               callback={onGuideFinish}
               steps={STEPS.getMarketModes(t)}
-              run={isGuideActive}
+              run={showGuide}
             />
           </Suspense>
         )}
