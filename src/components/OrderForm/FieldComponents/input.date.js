@@ -34,6 +34,7 @@ const DateInput = ({
         onChange={onChange}
         placeholder={CONVERT_LABELS_TO_PLACEHOLDERS ? renderedLabel : undefined}
         locale={LANGUAGES[currentLanguage]}
+        calendarClassName='hfui-datepicker'
       />
 
       {!CONVERT_LABELS_TO_PLACEHOLDERS && (
