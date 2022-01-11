@@ -9,7 +9,7 @@ export default (state = getInitialState(), action = {}) => {
 
   switch (type) {
     case types.DATA_ORDER_CLOSE: {
-      const { order = [] } = payload
+      const { order = {} } = payload
       return [
         order,
         ...state,
