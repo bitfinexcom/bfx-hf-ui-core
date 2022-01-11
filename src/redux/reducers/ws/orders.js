@@ -34,10 +34,9 @@ export default (state = getInitialState(), action = {}) => {
     }
 
     case types.DATA_ORDER_CLOSE: {
-      const { order = [] } = payload
-      const adapted = orderAdapter(order)
+      const { order = {} } = payload
 
-      return _omit(state, adapted?.id)
+      return _omit(state, order?.id)
     }
 
     case types.DEAUTH: {
