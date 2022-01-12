@@ -6,13 +6,11 @@ import _replace from 'lodash/replace'
 import _cloneDeep from 'lodash/cloneDeep'
 import _min from 'lodash/min'
 import _max from 'lodash/max'
-import _find from 'lodash/find'
 import _map from 'lodash/map'
 import _reduce from 'lodash/reduce'
 import _entries from 'lodash/entries'
 import _values from 'lodash/values'
 import _some from 'lodash/some'
-import _keys from 'lodash/keys'
 import _isUndefined from 'lodash/isUndefined'
 import _findIndex from 'lodash/findIndex'
 import { nonce } from 'bfx-api-node-util'
@@ -36,7 +34,6 @@ import {
 import { isElectronApp } from '../../config'
 
 import { storeLastUsedLayoutID } from '../../../util/layout'
-import { LANGUAGES, LOCAL_STORAGE_I18N_KEY } from '../../../locales/i18n'
 
 const debug = Debug('hfui:rx:r:ui')
 const LAYOUTS_KEY = 'HF_UI_LAYOUTS'
@@ -83,7 +80,6 @@ function getInitialState() {
     content: {},
     unsavedLayout: null,
     layoutID: null,
-    language: 'en',
     tab: null,
   }
 
@@ -94,9 +90,6 @@ function getInitialState() {
   const isPaperTrading = localStorage.getItem(IS_PAPER_TRADING) === 'true'
   const layoutsJSON = localStorage.getItem(LAYOUTS_KEY)
   const layoutsComponentStateJSON = localStorage.getItem(LAYOUTS_STATE_KEY)
-  const prevLanguage = localStorage.getItem(LOCAL_STORAGE_I18N_KEY)
-  const parsedLocale = _replace(prevLanguage, '_', '-')
-  const lang = _find(_keys(LANGUAGES), key => LANGUAGES[key] === parsedLocale)
 
   try {
     const storedLayouts = JSON.parse(layoutsJSON)
@@ -168,7 +161,6 @@ function getInitialState() {
   }
 
   defaultState.isPaperTrading = isPaperTrading
-  defaultState.language = lang || defaultState.language
 
   return defaultState
 }
@@ -556,14 +548,6 @@ function reducer(state = getInitialState(), action = {}) {
       return {
         ...state,
         isCcyInfoModalVisible: isVisible,
-      }
-    }
-    case types.SET_LANGUAGE: {
-      const { language } = payload
-
-      return {
-        ...state,
-        language,
       }
     }
     case types.SET_STRATEGY_TAB: {
