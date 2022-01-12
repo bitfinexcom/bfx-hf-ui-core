@@ -4,6 +4,7 @@
 import i18n from 'i18next'
 import backend from 'i18next-xhr-backend'
 import detector from 'i18next-browser-languagedetector'
+import _findKey from 'lodash/findKey'
 import { initReactI18next } from 'react-i18next'
 import {
   ru, es, tr, zhCN, zhTW, enUS,
@@ -79,7 +80,7 @@ i18n
     ns: ['translations'],
     defaultNS: 'translations',
 
-    debug: (REACT_APP_ENV === 'development'),
+    debug: REACT_APP_ENV === 'development',
 
     react: {
       useSuspense: false,
@@ -92,5 +93,9 @@ i18n
       escapeValue: false, // react already safes from xss
     },
   })
+
+i18n.getMappedLanguageKey = function getMappedLanguageKey() {
+  return _findKey(LANGUAGES, (value) => value === this.language)
+}
 
 export default i18n
