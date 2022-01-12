@@ -52,8 +52,8 @@ NumberInput.displayName = 'NumberInput'
 
 NumberInput.DEFAULT_VALUE = ''
 NumberInput.processValue = v => +v
-NumberInput.validateValue = (v) => {
-  return _isFinite(+v) ? null : 'Must be a number'
+NumberInput.validateValue = (v, t) => {
+  return _isFinite(+v) ? null : t('orderForm.mustBeNumberMessage')
 }
 
 NumberInput.propTypes = {

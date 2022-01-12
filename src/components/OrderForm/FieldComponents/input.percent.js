@@ -13,8 +13,8 @@ PercentInput.displayName = 'PercentInput'
 
 PercentInput.processValue = v => _divide(v, 100)
 
-PercentInput.validateValue = (v) => {
-  return _isFinite(+v) ? null : 'Must be a number'
+PercentInput.validateValue = (v, t) => {
+  return _isFinite(+v) ? null : t('orderForm.mustBeNumberMessage')
 }
 
 PercentInput.DEFAULT_VALUE = ''

@@ -41,7 +41,7 @@ const LiveStrategyExecutor = ({
   }
 
   const updateSeed = (v) => {
-    const error = AmountInput.validateValue(v)
+    const error = AmountInput.validateValue(v, t)
     const processed = AmountInput.processValue(v)
 
     setSeedError(error)

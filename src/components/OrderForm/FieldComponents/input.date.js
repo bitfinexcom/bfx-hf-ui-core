@@ -58,11 +58,11 @@ DateInput.displayName = 'DateInput'
 
 DateInput.processValue = v => +v
 
-DateInput.validateValue = v => {
+DateInput.validateValue = (v, t) => {
   if (`${new Date(+v)}` === 'Invalid Date') {
-    return 'Invalid date'
+    return t('orderForm.invalidDateMessage')
   } if (v === '') {
-    return 'Date required'
+    return t('orderForm.dateRequiredMessage')
   }
 
   return false

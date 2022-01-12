@@ -8,15 +8,15 @@ const AmountInput = ({ ...props }) => (
 
 AmountInput.processValue = v => +prepareAmount(+v)
 
-AmountInput.validateValue = v => {
-  const numericError = NumberInput.validateValue(v)
+AmountInput.validateValue = (v, t) => {
+  const numericError = NumberInput.validateValue(v, t)
 
   if (numericError) {
     return numericError
   }
 
   if (+v < 0) {
-    return 'Must be greater than 0'
+    return t('orderForm.greaterThan0Message')
   }
 
   return null

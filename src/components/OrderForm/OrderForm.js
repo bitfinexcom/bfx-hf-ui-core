@@ -190,6 +190,8 @@ class OrderForm extends React.Component {
   }
 
   onFieldChange(fieldName, value) {
+    const { t } = this.props
+
     this.setState(({
       fieldData,
       currentLayout,
@@ -212,7 +214,7 @@ class OrderForm extends React.Component {
       }
 
       const validationError = (C && C.validateValue)
-        ? C.validateValue(processedValue)
+        ? C.validateValue(processedValue, t)
         : null
 
       return {

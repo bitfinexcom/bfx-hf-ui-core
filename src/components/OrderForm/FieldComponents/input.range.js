@@ -48,8 +48,8 @@ SliderInput.DEFAULT_VALUE = ''
 
 SliderInput.processValue = v => +v
 
-SliderInput.validateValue = (v) => {
-  return _isFinite(+v) ? null : 'Must be a number'
+SliderInput.validateValue = (v, t) => {
+  return _isFinite(+v) ? null : t('orderForm.mustBeNumberMessage')
 }
 
 SliderInput.displayName = 'SliderInput'
