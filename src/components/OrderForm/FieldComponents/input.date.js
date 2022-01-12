@@ -86,7 +86,7 @@ DateInput.propTypes = {
 }
 
 DateInput.defaultProps = {
-  minDate: new Date('01-01-2009'),
+  minDate: new Date('01/01/2009'),
   maxDate: null,
   renderData: {},
   validationError: '',
