@@ -116,7 +116,7 @@ const HistoricalForm = ({
             onChange={val => setFormState(() => ({ startDate: val }))}
             def={{ label: t('strategyEditor.startDate') }}
             value={startDate}
-            maxDate={MAX_DATE}
+            maxDate={endDate}
           />
         </div>
         <div className='hfui-backtester_dateInput hfui-backtester__flex_start'>
@@ -125,6 +125,7 @@ const HistoricalForm = ({
             def={{ label: t('strategyEditor.endDate') }}
             value={endDate}
             maxDate={MAX_DATE}
+            minDate={startDate}
           />
         </div>
         <div>
