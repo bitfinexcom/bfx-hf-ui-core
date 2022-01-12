@@ -62,10 +62,10 @@ const mapDispatchToProps = dispatch => ({
   submitOrder: ({ authToken, packet }) => {
     debug('submitting order %j', packet)
 
-    dispatch(WSActions.send(['order.submit', authToken, 'bitfinex', {
+    dispatch(WSActions.submitOrder(authToken, {
       symbol: packet.symbol.w,
       ...packet,
-    }]))
+    }))
   },
   gaSubmitOrder: () => {
     dispatch(GAActions.submitAtomicOrder())
@@ -78,12 +78,12 @@ const mapDispatchToProps = dispatch => ({
   }) => {
     debug('submitting algo order %s on %s [%s]', id, market.uiID, context)
 
-    dispatch(WSActions.send(['algo_order.submit', authToken, 'bitfinex', id, {
+    dispatch(WSActions.submitAlgoOrder(authToken, id, {
       ...data,
       _symbol: market.wsID,
       _margin: context === 'm',
       _futures: context === 'f',
-    }]))
+    }))
   },
 
   submitAPIKeys: ({

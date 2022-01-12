@@ -28,7 +28,7 @@ const mapDispatchToProps = dispatch => ({
     }, symbol, 'm')
 
     debug('closing position on %s %f @ %f', symbol, amount, basePrice)
-    dispatch(WSActions.send(['order.submit', authToken, 'bitfinex', packet]))
+    dispatch(WSActions.submitOrder(authToken, packet))
   },
 })
 

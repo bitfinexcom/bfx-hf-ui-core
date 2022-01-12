@@ -290,4 +290,31 @@ export default {
   resetAuth: () => send(['auth.reset']),
   webAuth: token => send({ event: 'auth', token }),
   onUnload: (authToken, mode) => send(['algo_order.pause', authToken, mode]),
+
+  submitAlgoOrder: (authToken, id, args) => ([
+    'algo_order.submit',
+    authToken,
+    'bitfinex',
+    id,
+    {
+      ...args,
+      meta: {
+        ...(args.meta || {}),
+        scope: getScope(),
+      },
+    },
+  ]),
+
+  submitOrder: (authToken, args) => ([
+    'order.submit',
+    authToken,
+    'bitfinex',
+    {
+      ...args,
+      meta: {
+        ...(args.meta || {}),
+        scope: getScope(),
+      },
+    },
+  ]),
 }
