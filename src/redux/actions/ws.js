@@ -291,7 +291,7 @@ export default {
   webAuth: token => send({ event: 'auth', token }),
   onUnload: (authToken, mode) => send(['algo_order.pause', authToken, mode]),
 
-  submitAlgoOrder: (authToken, id, args) => ([
+  submitAlgoOrder: (authToken, id, args) => send([
     'algo_order.submit',
     authToken,
     'bitfinex',
@@ -305,7 +305,7 @@ export default {
     },
   ]),
 
-  submitOrder: (authToken, args) => ([
+  submitOrder: (authToken, args) => send([
     'order.submit',
     authToken,
     'bitfinex',
