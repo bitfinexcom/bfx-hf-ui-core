@@ -336,8 +336,21 @@
   vertical-align: middle;
   margin: 0 0 16px 0;
 
-  .hfui-datepicker{
+  .hfui-datepicker {
     border: 1px solid $black-color;
+
+    .react-datepicker__day--disabled {
+      color: $grey-color;
+    }
+    .react-datepicker__month-select,
+    .react-datepicker__year-select {
+      border: 1px solid $grey-color;
+      padding: 3px;
+      font-weight: 500;
+    }
+    .react-datepicker-time__header {
+      font-weight: 500;
+    }
   }
 
   input[type="range"] {
