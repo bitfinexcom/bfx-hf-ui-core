@@ -38,6 +38,7 @@
       "title": "Iceberg",
       "help": "Iceberg te permite realizar una orden grande en el mercado y, al mismo tiempo, garantizar que solo una pequeña parte se llene a la vez.\n\nAl habilitar la opción 'Exceso como oculto', es posible ofrecer el resto como una orden oculta, lo que permite una interrupción mínima del mercado al ejecutar grandes operaciones."
     },
+    "saveParamsSettings": "Configuraciones \"Params\" del Algo",
     "intervalDistortion": "% de Intervalos de Distorsión",
     "intervalDistortionHelp": "Cantidad para distorsionar cada intervalo, en porcentaje",
     "limitPrice": "Precio",
@@ -363,6 +364,7 @@
     "orderSubmittedBuyDetailed": "Creada {{exID}} {{type}} Orden de COMPRA de {{amount}} {{symbol}} (ID: {{id}})",
     "orderSubmittedSellAtDetailed": "Creada {{exID}} {{type}} Orden de VENTA de {{amount}} {{symbol}} a {{price}} (ID: {{id}})",
     "orderSubmittedSellDetailed": "Creada {{exID}} {{type}} Orden de VENTA de {{amount}} {{symbol}} (ID: {{id}})",
+    "updatingOrderWithId": "Actualizando orden (ID: {{orderId}})",
     "orderModifiedBuyAtDetailed": "Modificada {{exID}} {{type}} Orden de COMPRA de {{amount}} {{symbol}} a {{price}} (ID: {{id}})",
     "orderModifiedBuyDetailed": "Modificada {{exID}} {{type}} Orden de COMPRA de {{amount}} {{symbol}} (ID: {{id}})",
     "orderModifiedSellAtDetailed": "Modificada {{exID}} {{type}} Orden de VENTA de {{amount}} {{symbol}} a {{price}} (ID: {{id}})",
@@ -371,6 +373,8 @@
     "orderPartiallyFilledBuyDetailed": "{{exID}} {{type}} orden de COMPRA de{{amount}} {{symbol}} parcialmente completada (ID: {{id}})",
     "orderPartiallyFilledSellAtDetailed": "{{exID}} {{type}} orden de VENTA {{amount}} {{symbol}} parcialmente completada {{price}} (ID: {{id}})",
     "orderPartiallyFilledSellDetailed": "{{exID}} {{type}} orden de VENTA{{amount}} {{symbol}} parcialmente completada (ID: {{id}})",
+    "startedLiveStrategyExecution": "Se inició la ejecución de la estrategia en vivo ({{name}}) para {{symbol}} - {{tf}}",
+    "stoppedLiveStrategyExecution": "Se pausó la ejecución de la estrategia en vivo ({{name}}) para {{symbol}} - {{tf}}",
     "stoppedAO": "Orden de algoritmo detenida",
     "startedAO": "Comenzó AO {{name}} el {{target}}",
     "unknownAlgoOrderId": "ID de orden de algoritmo desconocido: {{aoID}}",
@@ -406,6 +410,15 @@
   "tradingModeModal": {
     "title": "Cambiar Modo de Trade",
     "text": "La aplicación se reiniciará después de presionar Aceptar. Es necesario para cambiar el modo de trading. Las órdenes de algoritmo abiertas están en pausa."
+  },
+  "confirmDMSModal": {
+    "title": "Habilitar Interruptor de Dead Man",
+    "text": "Ten en cuenta que cuando esta configuración está habilitada, cerrar la aplicación no solo cancelará todos las órdenes creadas por Honey Framework, sino que también cancelará todas las demás órdenes, incluidas las que se han abierto en el sitio web de Bitfinex o en otro lugar.\n\nEsta es una configuración recomendada, pero debes tener en cuenta las posibles consecuencias.",
+    "dontShowAgain": "No volver a mostrar"
+  },
+  "editOrderModal": {
+    "title": "Editar orden",
+    "noOrder": "No se seleccionó ninguna orden"
   },
   "oldFormatModal": {
     "title": "Actualización de Diseño",
@@ -585,7 +598,8 @@
       "preparing": "Procesar y preparar la estrategia antes de la ejecución...",
       "realBalancesWarning": "NOTA: Al presionar inicio, estarás ejecutando tu estrategia en tu cuenta real con balances reales.",
       "createStrategy": "Crea una estrategia para comenzar a ejecutar."
-    }
+    },
+    "candleSeedCount": "Conteo semilla de Vela"
   },
   "ui": {
     "ok": "Ok",
@@ -610,5 +624,11 @@
     "removeBtn": "Eliminar",
     "createBtn": "Crear",
     "startBtn": "Comenzar"
+  },
+  "crashHandler": {
+    "text1": "Se produjo un error que hizo que se detuviera la interfaz de usuario de Honey Framework. Por favor, reinicia la aplicación para continuar trabajando con ella",
+    "text2_1": "Por favor, reporta este problema a",
+    "text2_2": "¡para que podamos solucionarlo lo antes posible!",
+    "text3": "Información técnica sobre accidentes"
   }
 }
