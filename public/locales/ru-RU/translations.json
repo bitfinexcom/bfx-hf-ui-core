@@ -610,13 +610,5 @@
     "removeBtn": "Удалить",
     "createBtn": "Создать",
     "startBtn": "Начать"
-  },
-  "orderContexts": {
-    "exchange": "Обменный",
-    "margin": "Маржинальный",
-    "funding": "Дериватив"
-  },
-  "orderStatuses": {
-    "ACTIVE": "АКТИВНЫЙ"
   }
 }
