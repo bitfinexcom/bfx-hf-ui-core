@@ -12,6 +12,10 @@
     flex-direction: column;
     height: auto;
     padding-bottom: 15px;
+
+    .hfui-tradingpage__menu, .hfui-navbar__main-links {
+      justify-content: center;
+    }
   }
 
   font-size: 13px;
@@ -110,6 +114,7 @@
   flex-direction: row;
   justify-content: flex-end;
   align-items: center;
+  flex-wrap: wrap;
   height: 100%;
 }
 
