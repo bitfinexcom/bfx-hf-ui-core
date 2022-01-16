@@ -19,6 +19,18 @@
   flex-direction: row;
 
   user-select: none;
+
+  @media screen and (max-width: 450px) {
+    flex-direction: column;
+    align-items: center;
+    height: auto;
+
+    .hfui-statusbar__right {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+  }
 }
 
 .hfui-statusbar__left {
