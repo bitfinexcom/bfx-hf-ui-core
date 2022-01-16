@@ -77,6 +77,8 @@ export default function LayoutSettings() {
 
           // adjust position
           menuEl.style.transform = `translateX(calc(-50% - ${overflowPixels + spacing}px))`
+        } else if (x < 0) {
+          menuEl.style.transform = `translateX(-50%) translateX(${Math.abs(x) + 20}px)`
         }
       })
     }
