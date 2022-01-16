@@ -130,6 +130,10 @@ body.Light {
   .message {
     color: rgba(255, 255, 255, .9) !important;
   }
+
+  @media screen and (max-width: 410px) {
+    margin-left: 22%;
+  }
 }
 
 .hfui-notificationssidebar__header-btn {
