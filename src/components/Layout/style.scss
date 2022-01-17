@@ -13,6 +13,10 @@
   padding: spacing(1.25);
   padding-top: 0;
 
+  @media screen and (max-width: 450px) {
+    padding-bottom: 50px;
+  }
+
   &.is-flex {
     display: flex;
   }

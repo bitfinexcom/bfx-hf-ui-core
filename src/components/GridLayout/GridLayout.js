@@ -13,7 +13,6 @@ import {
   removeComponent, changeLayout, setLayoutID, storeUnsavedLayout,
 } from '../../redux/actions/ui'
 import { renderLayoutElement, COMPONENT_DIMENSIONS } from './GridLayout.helpers'
-import './style.css'
 
 import {
   getLayouts,
