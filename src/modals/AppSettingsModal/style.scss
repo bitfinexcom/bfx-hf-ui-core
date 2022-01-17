@@ -3,6 +3,16 @@
 .appsettings-modal {
   min-height: 336px;
 
+  @media screen and (max-width: 650px) {
+    &__tabs {
+      width: 110px;
+    }
+
+    &__tab {
+      min-width: 95px !important;
+    }
+  }
+
   .modal__body {
     display: flex;
     width: 100%;
