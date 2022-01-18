@@ -27,23 +27,23 @@
     -->
     <title>The Honey Framework UI</title>
     <style>
-      body {
-        box-sizing: border-box;
-        margin: 0;
-        padding: 20px;
-        font-family: sans-serif;
-        background-color: #eaeaea;
-        text-align: center;
-      }
-      #notification123 {
+      #update-notification {
         position: fixed;
         bottom: 120px;
         left: 20px;
-        width: 200px;
+        width: 240px;
         padding: 20px;
         border-radius: 5px;
-        background-color: red;
+        background-color: var(--shade-1);
         box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+      }
+      #update-notification .btn-group {
+        margin-top: 10px;
+        display: flex;
+        justify-content: space-evenly;
+      }
+      #update-notification button {
+        padding: 5px 10px;
       }
       .hidden {
         display: none;
@@ -52,15 +52,16 @@
   </head>
   <body>
     <div id="root"></div>
-    <p id="version"></p>
-    <div id="notification123" class="hidden">
+    <div id="update-notification" class="hidden">
       <p id="message"></p>
-      <button id="close-button" onClick="closeNotification()">
-        Close
-      </button>
-      <button id="restart-button" onClick="restartApp()" class="hidden">
-        Restart
-      </button>
+      <div class="btn-group">
+        <button id="close-button" onClick="closeNotification()">
+          Close
+        </button>
+        <button id="restart-button" onClick="restartApp()" class="hidden">
+          Restart
+        </button>
+      </div>
     </div>
     <!--
       This HTML file is a template.
@@ -74,17 +75,9 @@
     -->
     <script>
       const { ipcRenderer } = require('electron');
-      const version = document.getElementById('version');
-      const notification = document.getElementById('notification123');
-      console.log('notification: ', notification);
+      const notification = document.getElementById('update-notification');
       const message = document.getElementById('message');
       const restartButton = document.getElementById('restart-button');
-
-      ipcRenderer.send('app_version');
-      ipcRenderer.on('app_version', (event, arg) => {
-        ipcRenderer.removeAllListeners('app_version');
-        version.innerText = 'Version ' + arg.version;
-      });
 
       ipcRenderer.on('update_available', () => {
         ipcRenderer.removeAllListeners('update_available');
