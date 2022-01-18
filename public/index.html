@@ -26,6 +26,29 @@
       Learn how to configure a non-root public URL by running `npm run build`.
     -->
     <title>The Honey Framework UI</title>
+    <style>
+      body {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 20px;
+        font-family: sans-serif;
+        background-color: #eaeaea;
+        text-align: center;
+      }
+      #notification {
+        position: fixed;
+        bottom: 20px;
+        left: 20px;
+        width: 200px;
+        padding: 20px;
+        border-radius: 5px;
+        background-color: white;
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+      }
+      .hidden {
+        display: none;
+      }
+    </style>
   </head>
   <body>
     <div id="root"></div>
