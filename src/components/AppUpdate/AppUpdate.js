@@ -1,34 +1,93 @@
-import React, { useState } from 'react'
-import PropTypes from 'prop-types'
+import React, { useState, useEffect } from 'react'
+import cx from 'classnames'
+import _isFunction from 'lodash/isFunction'
 
-import 'style.css'
+import { isElectronApp } from '../../redux/config'
 
-function AppUpdate(props) {
-  const [hidden, setHidden] = useState(true)
+import './style.css'
+
+// TODO: i18n
+function AppUpdate() {
+  const [hideNotification, setHideNotification] = useState(true)
+  const [hideRestart, setHideRestart] = useState(true)
+  const [message, setMessage] = useState('')
+
+  // init state
+  useEffect(() => {
+    setHideNotification(true)
+    setHideRestart(true)
+    setMessage('')
+  }, [])
+
+  const onUpdateAvailable = () => {
+    setMessage('A new update is available. Downloading now...')
+    setHideNotification(false)
+  }
+
+  const onUpdateDownloaded = () => {
+    setMessage('Update Downloaded. It will be installed on restart. Restart now?')
+    setHideRestart(false)
+    setHideNotification(false)
+  }
+
+  useEffect(() => {
+    // if running in the electron environment
+    if (_isFunction(window.require) && isElectronApp) {
+      const electron = window.require('electron')
+      const { ipcRenderer } = electron
+
+      const _onUpdateAvailable = () => {
+        ipcRenderer.removeAllListeners('update_available')
+        onUpdateAvailable()
+      }
+      const _onUpdateDownloaded = () => {
+        ipcRenderer.removeAllListeners('update_downloaded')
+        onUpdateDownloaded()
+      }
+
+      ipcRenderer.on('update_available', _onUpdateAvailable)
+      ipcRenderer.on('update_downloaded', _onUpdateDownloaded)
+
+      return () => {
+        ipcRenderer.removeListener('update_available', _onUpdateAvailable)
+        ipcRenderer.removeListener('update_downloaded', _onUpdateDownloaded)
+      }
+    }
+
+    return () => {} // consistent-return
+  }, [])
+
   const closeNotification = () => {
-    notification.classList.add('hidden')
+    setHideNotification(true)
   }
 
   const restartApp = () => {
-    ipcRenderer.send('restart_app')
+    if (_isFunction(window.require)) {
+      const electron = window.require('electron')
+      const { ipcRenderer } = electron
+      ipcRenderer.send('restart_app')
+    }
   }
 
   return (
-    <div id='hfui-app-update__notification' className='hidden'>
-      <p id='message' />
+    <div
+      className={cx('hfui-app-update__notification', { hidden: hideNotification })}
+    >
+      <p className='message'>{message}</p>
       <div className='btn-group'>
         <button
-          id='close-button'
+          className='close-button'
           type='button'
           onClick={closeNotification}
         >
           Close
         </button>
         <button
-          id='restart-button'
+          className={cx('restart', {
+            hidden: hideRestart,
+          })}
           type='button'
-          onClick='restartApp()'
-          className='hidden'
+          onClick={restartApp}
         >
           Restart
         </button>
@@ -37,8 +96,6 @@ function AppUpdate(props) {
   )
 }
 
-AppUpdate.propTypes = {
-
-}
+AppUpdate.propTypes = { }
 
 export default AppUpdate

@@ -1,4 +1,4 @@
-#hfui-app-update__notification {
+.hfui-app-update__notification {
   position: fixed;
   bottom: 120px;
   left: 20px;
@@ -8,6 +8,11 @@
   background-color: var(--shade-1);
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
 
+  &.hidden,
+  .hidden {
+    display: none;
+  }
+
   .btn-group {
     margin-top: 10px;
     display: flex;
@@ -16,9 +21,5 @@
 
   button {
     padding: 5px 10px;
-  }
-
-  &.hidden {
-    display: none;
   }
 }

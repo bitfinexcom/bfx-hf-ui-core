@@ -26,33 +26,10 @@
       Learn how to configure a non-root public URL by running `npm run build`.
     -->
     <title>The Honey Framework UI</title>
-    <style>
-      #update-notification {
-        position: fixed;
-        bottom: 120px;
-        left: 20px;
-        width: 240px;
-        padding: 20px;
-        border-radius: 5px;
-        background-color: var(--shade-1);
-        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-      }
-      #update-notification .btn-group {
-        margin-top: 10px;
-        display: flex;
-        justify-content: space-evenly;
-      }
-      #update-notification button {
-        padding: 5px 10px;
-      }
-      .hidden {
-        display: none;
-      }
-    </style>
   </head>
   <body>
     <div id="root"></div>
-    <div id="update-notification" class="hidden">
+    <!-- <div id="update-notification" class="hidden">
       <p id="message"></p>
       <div class="btn-group">
         <button id="close-button" onClick="closeNotification()">
@@ -62,7 +39,7 @@
           Restart
         </button>
       </div>
-    </div>
+    </div> -->
     <!--
       This HTML file is a template.
       If you open it directly in the browser, you will see an empty page.
@@ -73,32 +50,5 @@
       To begin the development, run `npm start` or `yarn start`.
       To create a production bundle, use `npm run build` or `yarn build`.
     -->
-    <script>
-      const { ipcRenderer } = require('electron');
-      const notification = document.getElementById('update-notification');
-      const message = document.getElementById('message');
-      const restartButton = document.getElementById('restart-button');
-
-      ipcRenderer.on('update_available', () => {
-        ipcRenderer.removeAllListeners('update_available');
-        message.innerText = 'A new update is available. Downloading now...';
-        notification.classList.remove('hidden');
-      });
-
-      ipcRenderer.on('update_downloaded', () => {
-        ipcRenderer.removeAllListeners('update_downloaded');
-        message.innerText = 'Update Downloaded. It will be installed on restart. Restart now?';
-        restartButton.classList.remove('hidden');
-        notification.classList.remove('hidden');
-      });
-
-      function closeNotification() {
-        notification.classList.add('hidden');
-      }
-
-      function restartApp() {
-        ipcRenderer.send('restart_app');
-      }
-    </script>
   </body>
 </html>

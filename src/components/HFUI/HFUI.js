@@ -17,6 +17,7 @@ import Routes from '../../constants/routes'
 import { isElectronApp } from '../../redux/config'
 
 import './style.css'
+import AppUpdate from '../AppUpdate'
 
 // const StrategyEditorPage = lazy(() => import('../../pages/StrategyEditor'))
 const TradingPage = lazy(() => import('../../pages/Trading'))
@@ -153,6 +154,7 @@ const HFUI = (props) => {
         </>
       )}
       <NotificationsSidebar notificationsVisible={notificationsVisible} />
+      {isElectronApp && <AppUpdate />}
     </Suspense>
   )
 }
