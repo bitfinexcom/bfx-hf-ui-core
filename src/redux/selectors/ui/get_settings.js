@@ -1,4 +1,5 @@
 import _get from 'lodash/get'
+import _includes from 'lodash/includes'
 import { createSelector } from 'reselect'
 import { REDUCER_PATHS } from '../../config'
 
@@ -12,6 +13,22 @@ export const SETTINGS = {
   SHOW_ALGO_PAUSE_INFO: 'showAlgoPauseInfo',
   SHOW_ONLY_FAVORITE_PAIRS: 'showOnlyFavoritePairs',
   REBOOT_AUTOMATICALLY: 'rebootAutomatically',
+  THEME: 'theme',
+}
+
+export const THEMES = {
+  DARK: 'Dark',
+  LIGHT: 'Light',
+}
+
+const getDefaultTheme = () => {
+  const lsTheme = localStorage.getItem(SETTINGS.THEME)
+
+  if (_includes(THEMES, lsTheme)) {
+    return lsTheme
+  }
+
+  return THEMES.DARK
 }
 
 const getSettings = (state) => _get(state, `${path}.settings`, EMPTY_OBJ)
@@ -28,12 +45,17 @@ export const getShowAlgoPauseInfoSetting = createSelector(
 
 export const getDMSSetting = createSelector(
   getSettings,
-  (settings) => _get(settings, SETTINGS.DMS, true),
+  (settings) => _get(settings, SETTINGS.DMS, false),
 )
 
 export const getGASetting = createSelector(
   getSettings,
   (settings) => _get(settings, SETTINGS.GA, true),
+)
+
+export const getThemeSetting = createSelector(
+  getSettings,
+  (settings) => _get(settings, SETTINGS.THEME, getDefaultTheme()),
 )
 
 export const getRebootSetting = createSelector(

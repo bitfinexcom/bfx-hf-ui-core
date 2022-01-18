@@ -1,15 +1,15 @@
 import React, { memo } from 'react'
-import ClassNames from 'classnames'
+import cx from 'classnames'
 import PropTypes from 'prop-types'
 
 const ExchangeInfoBarItem = ({
   label, value, valuePrefix, valueSuffix, dataClassName, labelClassName, text, vertical, tag: Tag,
 }) => (
-  <Tag className={ClassNames('hfui-exchangeinfobar__item', { text, vertical })}>
-    <p className={ClassNames('hfui-exchangeinfobar__item-label', labelClassName)}>
+  <Tag className={cx('hfui-exchangeinfobar__item', { text, vertical })}>
+    <p className={cx('hfui-exchangeinfobar__item-label', labelClassName)}>
       {label}
     </p>
-    <div className={ClassNames('hfui-exchangeinfobar__item-data', dataClassName)}>
+    <div className={cx('hfui-exchangeinfobar__item-data', dataClassName)}>
       {valuePrefix}
       {typeof value === 'number' ? value.toLocaleString('en-US', { maximumFractionDigits: 8 }) : value}
       {valueSuffix}

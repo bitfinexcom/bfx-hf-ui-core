@@ -6,8 +6,8 @@ import { PrettyValue } from '@ufx-ui/core'
 import { defaultCellRenderer } from '../../util/ui'
 import { AMOUNT_DECIMALS, PRICE_SIG_FIGS } from '../../constants/precision'
 
-export default [{
-  label: 'Price',
+export default (t) => [{
+  label: t('table.price'),
   dataKey: 'price',
   width: 60,
   cellRenderer: ({ rowData = {} }) => defaultCellRenderer(
@@ -18,7 +18,7 @@ export default [{
     />,
   ),
 }, {
-  label: 'Amount',
+  label: t('table.amount'),
   dataKey: 'amount',
   width: 120,
   cellRenderer: ({ rowData = {} }) => defaultCellRenderer(
@@ -30,7 +30,7 @@ export default [{
     />,
   ),
 }, {
-  label: 'P/L',
+  label: t('table.pl'),
   dataKey: 'pl',
   width: 120,
   cellRenderer: ({ rowData = {} }) => defaultCellRenderer(
@@ -42,12 +42,12 @@ export default [{
     />,
   ),
 }, {
-  label: 'Label',
+  label: t('table.label'),
   dataKey: 'label',
   width: 200,
   cellRenderer: ({ rowData = {} }) => defaultCellRenderer(rowData.label),
 }, {
-  label: 'Time',
+  label: t('table.time'),
   dataKey: 'mts',
   width: 150,
   cellRenderer: ({ rowData = {} }) => defaultCellRenderer(new Date(rowData.mts).toLocaleString()),

@@ -1,28 +1,35 @@
-import React from 'react'
+import React, { useMemo } from 'react'
 import PropTypes from 'prop-types'
 import _isEmpty from 'lodash/isEmpty'
 import { VirtualTable } from '@ufx-ui/core'
+import { useTranslation } from 'react-i18next'
 
 import useSize from '../../hooks/useSize'
 import AtomicOrdersTableColumns from './AtomicOrdersTable.columns'
 import './style.css'
 
 const AtomicOrdersTable = ({
-  atomicOrders, filteredAtomicOrders, renderedInTradingState, cancelOrder, authToken, gaCancelOrder,
+  atomicOrders, filteredAtomicOrders, renderedInTradingState,
+  cancelOrder, authToken, gaCancelOrder, getMarketPair, editOrder, getIsDerivativePair,
 }) => {
   const [ref, size] = useSize()
   const data = renderedInTradingState ? filteredAtomicOrders : atomicOrders
+  const { t } = useTranslation()
+  const columns = useMemo(
+    () => AtomicOrdersTableColumns(authToken, cancelOrder, gaCancelOrder, size, t, getMarketPair, editOrder, getIsDerivativePair),
+    [authToken, cancelOrder, gaCancelOrder, getMarketPair, size, t, editOrder, getIsDerivativePair],
+  )
 
   return (
     <div ref={ref} className='hfui-orderstable__wrapper'>
       {_isEmpty(data) ? (
-        <p className='empty'>No active atomic orders</p>
+        <p className='empty'>{t('atomicOrdersTableModal.noOrders')}</p>
       ) : (
         <VirtualTable
           data={data}
-          columns={AtomicOrdersTableColumns(authToken, cancelOrder, gaCancelOrder, size)}
-          defaultSortBy='id'
-          defaultSortDirection='ASC'
+          columns={columns}
+          defaultSortBy='created'
+          defaultSortDirection='DESC'
         />
       )}
     </div>
@@ -31,11 +38,14 @@ const AtomicOrdersTable = ({
 
 AtomicOrdersTable.propTypes = {
   authToken: PropTypes.string.isRequired,
-  atomicOrders: PropTypes.arrayOf(PropTypes.object),
-  filteredAtomicOrders: PropTypes.arrayOf(PropTypes.object),
+  atomicOrders: PropTypes.objectOf(PropTypes.object),
+  filteredAtomicOrders: PropTypes.objectOf(PropTypes.object),
+  getMarketPair: PropTypes.func.isRequired,
   cancelOrder: PropTypes.func.isRequired,
   gaCancelOrder: PropTypes.func.isRequired,
+  editOrder: PropTypes.func.isRequired,
   renderedInTradingState: PropTypes.bool,
+  getIsDerivativePair: PropTypes.func.isRequired,
 }
 
 AtomicOrdersTable.defaultProps = {

@@ -7,24 +7,20 @@
   height: 100%;
 
   overflow: hidden;
-  background: hsl(206, 46%, 17%);
+  background: var(--darker-background-color);
   border-radius: $border-radius;
 
   &.monokai {
     background: rgb(39, 40, 34);
   }
 
-  &.dark {
-    background: $panel-background-color;
-
-    .hfui-select {
-      background: $background-color;
-      padding: 0 spacing(1);
-    }
+  .hfui-select {
+    background: var(--background-color);
+    padding: 0 spacing(1);
   }
 
   &.dark-header .hfui-panel__header {
-    background: $panel-background-color;
+    background: var(--darker-background-color);
   }
 
   &__left-container {
@@ -36,12 +32,17 @@
 .hfui-panel__header-icons {
   .ufx-dropdown {
     .dropdown-field {
-      background: none !important;
-      border: none !important;
       transition: all 0.2s;
 
-      &:hover {
-        color: $light-color-900;
+      .input-field,
+      .arrow-icon {
+        background: var(--darker-background-color) !important;
+      }
+
+      .input-field {
+        &:hover {
+          color: var(--shade-9) !important;
+        }
       }
     }
   }
@@ -77,7 +78,7 @@
   display: flex;
   flex-shrink: 0;
   flex-direction: row;
-  background: $background-color;
+  background: var(--background-color);
   justify-content: space-between;
   padding: spacing(0.5) spacing(0.5) spacing(0.5) spacing(1);
 
@@ -120,18 +121,18 @@
 
     .hfui-panel__label {
       transition: all 0.2s;
-      color: $light-color-500;
+      color: var(--shade-5);
 
       &:hover {
-        color: $light-color-800;
+        color: var(--shade-8);
       }
     }
 
     &.active {
-      background: $primary-color-50;
+      background: var(--primary-0);
 
       .hfui-panel__label {
-        color: $primary-color-800;
+        color: var(--primary-8);
       }
     }
   }
@@ -206,30 +207,31 @@
     line-height: 32px;
   }
 
-  i, span {
+  i,
+  span {
     display: flex;
     justify-content: center;
     align-items: center;
     width: 32px;
     height: 32px;
     font-size: 20px;
-    color: $light-color-500;
+    color: var(--shade-5);
     transition: all 0.2s;
     cursor: pointer;
     border-radius: $border-radius;
 
     &.disabled {
       cursor: not-allowed;
-      color: $light-color-300;
+      color: var(--shade-3);
     }
 
     &:hover:not(.disabled) {
-      color: $light-color-900;
-      background: $light-color-50;
+      color: var(--shade-9);
+      background: var(--shade-0);
     }
 
     &.high-contrast {
-      background: $background-color;
+      background: var(--background-color);
     }
 
     &.no-margin {
@@ -256,7 +258,8 @@
   font-size: 14px;
   line-height: 32px;
   flex-shrink: 0;
-  color: $light-color-900;
+  color: var(--shade-9);
+  user-select: none;
 }
 
 .hfui-panel__close {
@@ -272,17 +275,17 @@
   cursor: pointer;
   justify-self: center;
   align-self: center;
-  color: transparentize($white-color, 0.3);
+  color: var(--text-color);
   transition: all 0.2s;
 
   &:hover,
   &:focus {
-    background: rgba(255, 255, 255, 0.1);
-    color: $white-color;
+    background: var(--lighter-background-color);
+    color: var(--shade-8);
   }
 
   &:active {
-    background: rgba(0, 0, 0, 0.1);
+    background: var(--darker-background-color);
   }
 }
 

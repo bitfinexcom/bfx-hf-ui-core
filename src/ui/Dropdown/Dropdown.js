@@ -1,17 +1,19 @@
-import React, { memo } from 'react'
+import React, { memo, useMemo, forwardRef } from 'react'
 import PropTypes from 'prop-types'
+import _reduce from 'lodash/reduce'
 
 import { Dropdown as UfxDropdown } from '@ufx-ui/core'
 import './style.css'
 
 function optionsAdaptor(options) {
-  return options.reduce((nextOptions, option) => ({
+  return _reduce(options, (nextOptions, option) => ({
     ...nextOptions,
     [option.value]: option.label,
   }), {})
 }
 
-function Dropdown(props) {
+// eslint-disable-next-line prefer-arrow-callback
+const Dropdown = forwardRef(function Dropdown(props, ref) {
   const {
     icon,
     label,
@@ -20,9 +22,10 @@ function Dropdown(props) {
     options,
     highlight,
     className,
-    placeholder,
     ...rest
   } = props
+
+  const adaptedOptions = useMemo(() => optionsAdaptor(options), [options])
 
   return (
     <div className='hfui-dropdown__wrapper'>
@@ -31,24 +34,16 @@ function Dropdown(props) {
       )}
 
       <UfxDropdown
+        ref={ref}
         value={value}
         className={className}
         closeOnMouseLeave={false}
-        options={optionsAdaptor(options)}
-        valueRenderer={icon ? (_value, optionLabel) => (
-          <div className='selected-text has-icon'>
-            {icon && <i className={`icon-${icon}`} />}
-            <div>
-              {optionLabel || placeholder}
-            </div>
-          </div>
-        ) : undefined}
-        placeholder={placeholder}
+        options={adaptedOptions}
         {...rest}
       />
     </div>
   )
-}
+})
 
 Dropdown.propTypes = {
   isOpen: PropTypes.bool,
@@ -60,7 +55,10 @@ Dropdown.propTypes = {
   className: PropTypes.string,
   placeholder: PropTypes.string,
   onChange: PropTypes.func.isRequired,
-  options: PropTypes.arrayOf(PropTypes.object).isRequired,
+  options: PropTypes.arrayOf(PropTypes.shape({
+    label: PropTypes.any, // eslint-disable-line
+    value: PropTypes.any, // eslint-disable-line
+  })).isRequired,
 }
 Dropdown.defaultProps = {
   value: '',
@@ -70,7 +68,7 @@ Dropdown.defaultProps = {
   className: '',
   disabled: false,
   highlight: false,
-  placeholder: 'Select an option',
+  placeholder: undefined,
 }
 
 export default memo(Dropdown)

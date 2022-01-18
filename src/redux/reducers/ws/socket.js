@@ -1,12 +1,12 @@
-import types from '../../constants/ws'
+import types, { SOCKET_STATUS_MAP } from '../../constants/ws'
 
 const initialState = () => ({
   [types.ALIAS_API_SERVER]: {
-    status: 'offline',
+    status: SOCKET_STATUS_MAP.OFFLINE,
     lastActivity: null,
   },
   [types.ALIAS_DATA_SERVER]: {
-    status: 'offline',
+    status: SOCKET_STATUS_MAP.OFFLINE,
     lastActivity: null,
   },
 })
@@ -22,7 +22,7 @@ export default function (state = initialState(), action = {}) {
         ...state,
         [alias]: {
           ...state[alias],
-          status: 'connecting',
+          status: SOCKET_STATUS_MAP.CONNECTING,
         },
       }
     }
@@ -33,7 +33,7 @@ export default function (state = initialState(), action = {}) {
         ...state,
         [alias]: {
           ...state[alias],
-          status: 'online',
+          status: SOCKET_STATUS_MAP.ONLINE,
           lastActivity,
         },
       }
@@ -56,8 +56,8 @@ export default function (state = initialState(), action = {}) {
         ...state,
         [alias]: {
           ...state[alias],
-          status: 'offline',
-          lastActivity: null,
+          status: SOCKET_STATUS_MAP.OFFLINE,
+          lastActivity,
         },
       }
     }
@@ -68,7 +68,7 @@ export default function (state = initialState(), action = {}) {
         ...state,
         [alias]: {
           ...state[alias],
-          status: 'online',
+          status: SOCKET_STATUS_MAP.ONLINE,
           lastActivity,
         },
       }

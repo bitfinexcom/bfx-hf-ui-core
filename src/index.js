@@ -1,17 +1,15 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import { StoreProvider as UfxStoreProvider } from '@ufx-ui/core'
-import { useInjectBfxData } from '@ufx-ui/bfx-containers'
+import { I18nextProvider } from 'react-i18next'
 import Debug from 'debug'
 import Manifest from '../package.json'
 
-import HFUI from './components/HFUI'
-import CrashHandler from './components/CrashHandler'
 import StoreWrapper from './StoreWrapper'
+import HFUIWrapper from './components/HFUIWrapper'
+import i18n from './locales/i18n'
 
 import './passive_listener_fix'
 import './index.css'
-import useAuthToken from './hooks/useAuthToken'
 
 console.log(`bfx-hf-ui-core v${Manifest.version}`)
 
@@ -35,26 +33,10 @@ if (localStorage) {
 
 debug('boot version %s', Manifest.version)
 
-const timezoneOffset = -(new Date().getTimezoneOffset())
-const config = {
-  timezoneOffset,
-}
-
-const HFUIWrapper = () => {
-  useInjectBfxData()
-  useAuthToken()
-
-  return (
-    <CrashHandler>
-      <HFUI />
-    </CrashHandler>
-  )
-}
-
 ReactDOM.render((
   <StoreWrapper>
-    <UfxStoreProvider value={config}>
+    <I18nextProvider i18n={i18n}>
       <HFUIWrapper />
-    </UfxStoreProvider>
+    </I18nextProvider>
   </StoreWrapper>
 ), document.getElementById('root'))

@@ -47,6 +47,11 @@ export default {
     },
   }),
 
+  recvCoreSettings: settings => ({
+    type: ui.RECEIVE_CORE_SETTINGS,
+    payload: settings,
+  }),
+
   bufferDataFromExchange: (
     chanID, data, rawData = null,
   ) => ({
@@ -126,6 +131,16 @@ export default {
     payload: { balance },
   }),
 
+  setBalances: (balances) => ({
+    type: t.SET_BALANCES,
+    payload: { balances },
+  }),
+
+  setBalance: (balance) => ({
+    type: t.SET_BALANCE,
+    payload: { balance },
+  }),
+
   recvOrders: ({ orders }) => ({
     type: t.DATA_ORDERS,
     payload: { orders },
@@ -137,6 +152,11 @@ export default {
   }),
 
   recvOrderClose: ({ order }) => ({
+    type: t.DATA_ORDER_CLOSE_ASYNC,
+    payload: { order },
+  }),
+
+  setOrderClose: ({ order }) => ({
     type: t.DATA_ORDER_CLOSE,
     payload: { order },
   }),
@@ -225,6 +245,28 @@ export default {
   setBacktestOptions: options => ({
     type: t.SET_BACKTEST_OPTIONS,
     payload: { options },
+  }),
+
+  setExecutionOptions: options => ({
+    type: t.SET_EXECUTION_OPTIONS,
+    payload: { options },
+  }),
+
+  resetExecutionData: () => ({
+    type: t.RESET_DATA_EXECUTION,
+  }),
+
+  startLiveExecution: () => ({
+    type: t.EXECUTION_START,
+  }),
+
+  stopLiveExecution: () => ({
+    type: t.EXECUTION_STOP,
+  }),
+
+  setExecutionLoading: (loading) => ({
+    type: t.EXECUTION_LOADING,
+    payload: { loading },
   }),
 
   purgeBacktestData: () => ({

@@ -5,6 +5,7 @@ import Debug from 'debug'
 import Request from 'request-promise'
 
 import UIActions from '../../actions/ui'
+import { isElectronApp } from '../../config'
 
 const CHECK_INTERVAL_MS = 60 * 60 * 1000 // 1hr
 const REMOTE_MANIFEST_URL = 'https://api.github.com/repos/bitfinexcom/bfx-hf-ui/tags?per_page=1'
@@ -12,7 +13,7 @@ const REMOTE_MANIFEST_URL = 'https://api.github.com/repos/bitfinexcom/bfx-hf-ui/
 const debug = Debug('hfui:rx:s:ws-hfui:worker-fetch-remote-version')
 
 export default function* () {
-  while (true) {
+  while (isElectronApp) {
     let remoteManifestData
 
     try {

@@ -20,6 +20,7 @@ const getCSSModuleLocalIdent = require('react-dev-utils/getCSSModuleLocalIdent')
 const ModuleNotFoundPlugin = require('react-dev-utils/ModuleNotFoundPlugin')
 const ForkTsCheckerWebpackPlugin = require('react-dev-utils/ForkTsCheckerWebpackPlugin')
 const typescriptFormatter = require('react-dev-utils/typescriptFormatter')
+const MonacoWebpackPlugin = require('monaco-editor-webpack-plugin')
 
 const postcssNormalize = require('postcss-normalize')
 const getClientEnvironment = require('./env')
@@ -500,6 +501,10 @@ module.exports = function (webpackEnv) {
       ],
     },
     plugins: [
+      new MonacoWebpackPlugin({
+        // available options are documented at https://github.com/Microsoft/monaco-editor-webpack-plugin#options
+        languages: ['javascript', 'typescript'],
+      }),
       // Generates an `index.html` file with the <script> injected.
       new HtmlWebpackPlugin(
         {

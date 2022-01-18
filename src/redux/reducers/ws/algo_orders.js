@@ -1,7 +1,10 @@
+import _omit from 'lodash/omit'
+import _forEach from 'lodash/forEach'
+
 import types from '../../constants/ws'
 
 const getInitialState = () => {
-  return []
+  return {}
 }
 
 export default (state = getInitialState(), action = {}) => {
@@ -10,23 +13,27 @@ export default (state = getInitialState(), action = {}) => {
   switch (type) {
     case types.DATA_ALGO_ORDERS: {
       const { aos } = payload
-      return aos
+      const transformed = {}
+      _forEach(aos, ao => {
+        transformed[ao?.gid] = ao
+      })
+
+      return transformed
     }
 
     case types.DATA_ALGO_ORDER: {
       const { ao } = payload
-      const filtered = state.filter(({ gid }) => gid !== ao.gid)
 
-      return [
-        ...filtered,
-        ao,
-      ]
+      return {
+        ...state,
+        [ao?.gid]: ao,
+      }
     }
 
     case types.DATA_ALGO_ORDER_STOPPED: {
       const { gid } = payload
 
-      return state.filter(ao => ao.gid !== gid)
+      return _omit(state, gid)
     }
 
     case types.CLEAR_ALGO_ORDERS:

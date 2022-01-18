@@ -1,22 +1,26 @@
-@import '../../variables.scss';
+@import "../../variables.scss";
 
 .ufx-dropdown {
   font-weight: 500;
-  color: $light-color-800;
+  color: var(--shade-8);
 
-  &.is-highlighted {
-    .dropdown-field {
-      border: 1px solid mix($white-color, $input-background-color, 15%);
+  .ufx-input {
+    input {
+      height: auto;
     }
   }
 
-  .selected-text.has-icon {
-    display: flex;
-    align-items: center;
-    width: 100%;
+  &.is-highlighted {
+    .dropdown-field {
+      border: 1px solid var(--white-background-mix);
+    }
   }
 
-  [class*=icon-] {
+  div.list-wrapper {
+    top: 36px;
+  }
+
+  [class*="icon-"] {
     margin-right: spacing(0.5);
 
     &:before {

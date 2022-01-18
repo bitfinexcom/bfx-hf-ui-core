@@ -25,7 +25,7 @@ const getMarketComponents = createSelector(
   ],
   (currUnsavedLayout, defComponentState, layoutState, componentType) => {
     const currUnsavedLayoutState = _get(currUnsavedLayout, 'layout', EMPTY_ARR)
-    const componentsList = _filter(currUnsavedLayoutState, ({ c }) => c === COMPONENT_MAPPING[componentType])
+    const componentsList = _filter(currUnsavedLayoutState, ({ c }) => c === COMPONENT_MAPPING?.[componentType])
 
     return _map(componentsList, ({ i: id }) => _get(layoutState, id, defComponentState))
   },

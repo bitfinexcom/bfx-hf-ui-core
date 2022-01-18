@@ -1,14 +1,14 @@
-import checkboxesHelpMessages from '../constants/AtomicOrdersCheckboxHelpText'
 import { isValidDate } from '../util/date'
 
-export default () => ({
-  label: 'Stop Limit',
+export default (t) => ({
+  label: t('orderForm.stopLimitTitle'),
   uiIcon: 'stop-limit-active',
-  customHelp: 'The Stop-Limit order type differs from the basic Stop order by allowing the specification of an exact price of execution.\n\nOnce the \'stop\' price is reached, a \'Limit\' order is created at the specified limit price.\n\nIf the \'hidden\' option is enabled, the order will be inserted in the order book but will not be visible to other users, and will execute as a TAKER.\n\nIf the \'reduce-only\' option is specified, the resulting Limit order will be cancelled if it would open or increase the size of an open position.\n\nA Time-In-Force date may be specified, after which the order will be automatically cancelled.',
+  customHelp: t('orderForm.stopLimitHelp'),
+  id: 'stop limit',
 
   generateOrder: (data = {}, symbol, context) => {
     const {
-      hidden, reduceonly, price, limitPrice, amount, tif, tifDate, lev,
+      hidden, reduceonly, price, limitPrice, amount, tif, tifDate, lev, visibleOnHit,
     } = data
 
     if (tif && (!isValidDate(tifDate) || tifDate === 0)) {
@@ -23,6 +23,7 @@ export default () => ({
       symbol,
       hidden,
       reduceonly,
+      visibleOnHit,
     }
 
     if (tif) {
@@ -33,12 +34,18 @@ export default () => ({
       orderDefinition.lev = lev
     }
 
+    if (hidden && visibleOnHit) {
+      orderDefinition.visibleOnHit = true
+    } else {
+      orderDefinition.visibleOnHit = false
+    }
+
     return orderDefinition
   },
 
   header: {
     component: 'ui.checkbox_group',
-    fields: ['hidden', 'reduceonly', 'tif'],
+    fields: ['hidden', 'reduceonly', 'tif', 'visibleOnHit'],
   },
 
   sections: [{
@@ -82,51 +89,67 @@ export default () => ({
   fields: {
     reduceonly: {
       component: 'input.checkbox',
-      label: 'REDUCE-ONLY',
-      customHelp: checkboxesHelpMessages['REDUCE-ONLY'],
+      label: t('orderForm.reduceOnlyCheckbox'),
+      customHelp: t('orderForm.reduceOnlyMessage'),
       trading: ['m', 'f'],
       default: false,
+      visible: {
+        _orderEditing: { neq: true },
+      },
     },
 
     hidden: {
       component: 'input.checkbox',
-      label: 'HIDDEN',
-      customHelp: checkboxesHelpMessages.HIDDEN,
+      label: t('orderForm.hiddenCheckbox'),
+      customHelp: t('orderForm.hiddenMessage'),
       default: false,
+    },
+
+    visibleOnHit: {
+      component: 'input.checkbox',
+      label: t('orderForm.visibleOnHit'),
+      customHelp: t('orderForm.visibleOnHitHelp'),
+      default: false,
+      visible: {
+        hidden: { eq: true },
+      },
     },
 
     tif: {
       component: 'input.checkbox',
-      label: 'TIF',
-      customHelp: checkboxesHelpMessages.TIF,
+      label: t('orderForm.tifCheckbox'),
+      customHelp: t('orderForm.tifMessage'),
       default: false,
+      visible: {
+        _orderEditing: { neq: true },
+      },
     },
 
     price: {
       component: 'input.price',
-      label: 'Stop Price $QUOTE',
+      label: `${t('orderForm.stopPrice')} $QUOTE`,
     },
 
     limitPrice: {
       component: 'input.price',
-      label: 'Limit Price $QUOTE',
+      label: `${t('orderForm.limitPrice')} $QUOTE`,
     },
 
     amount: {
       component: 'input.amount',
-      label: 'Amount $BASE',
+      label: `${t('table.amount')} $BASE`,
     },
 
     tifDate: {
       component: 'input.date',
-      label: 'TIF Date',
+      label: t('orderForm.tifDate'),
       default: new Date(Date.now() + 86400000),
       minDate: new Date(),
     },
 
     lev: {
       component: 'input.range',
-      label: 'Leverage',
+      label: t('orderForm.laverage'),
       min: 1,
       max: 100,
       default: 10,

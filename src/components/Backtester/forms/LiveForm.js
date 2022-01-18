@@ -20,7 +20,7 @@ const HistoricalForm = ({
           <Dropdown
             value={executionType.type}
             onChange={updateExecutionType}
-            options={executionTypes.map(et => ({
+            options={_map(executionTypes, et => ({
               label: et.type,
               value: et.type,
             }))}

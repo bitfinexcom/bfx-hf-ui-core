@@ -1,5 +1,5 @@
 import _isEmpty from 'lodash/isEmpty'
-import _filter from 'lodash/filter'
+import _reduce from 'lodash/reduce'
 import { createSelector } from 'reselect'
 import memoizeOne from 'memoize-one'
 
@@ -12,7 +12,12 @@ const getFilteredAtomicOrders = createSelector(
       return orders
     }
 
-    return _filter(orders, o => o?.symbol === activeFilter?.wsID)
+    return _reduce(orders, (acc, o) => {
+      if (o?.symbol === activeFilter?.wsID) {
+        acc[o?.id] = o
+      }
+      return acc
+    }, {})
   }),
 )
 

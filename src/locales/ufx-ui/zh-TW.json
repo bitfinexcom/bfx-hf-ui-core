@@ -1,0 +1,103 @@
+{
+  "http_errors": {
+    "rate_limit": "您已超過調用次數限制，請幾分鐘後再試"
+  },
+  "common": {
+    "no_data_available": "無可用資料",
+    "websocket_offiline": "Websocket 連線狀態：離線",
+    "websocket_connected": "已連線到 Websocket",
+    "websocket_disconnected": "連線到 Websocket已中斷",
+    "cancel": "取消",
+    "filter": "篩選",
+    "search": "搜尋",
+    "no_results_found": "找不到搜尋結果",
+    "created": "已建立",
+    "modified": "已修改",
+    "at": " 以 ",
+    "yes": "是",
+    "copy": "複製",
+    "copied": "已複製",
+    "copy_to_clipboard": "複製到剪貼簿",
+    "no": "否"
+  },
+  "ui": {
+    "typeToSearch": "輸入搜索...",
+    "selectOption": "點選以下選項"
+  },
+  "error": {
+    "not_enough_balance": "餘額不足，目前可用餘額為 {{amount}}",
+    "must_be_number": "須為數字",
+    "must_be_positive": "必須為正數",
+    "required": "{{fieldLabel}} 必填",
+    "max_length": "{{fieldLabel}} 字串長度不得超過 {{maxLength}} 個字元",
+    "no_decimals": "{{fieldLabel}} 不能是帶有小數的數值",
+    "max_decimals": "最長{{allowedDecimals}}個小數位",
+    "invalid_date": "日期無效",
+    "must_be_date": "日期必須是有效日期",
+    "date_must_be_within_interval": "日期必須在由今日起算的1至7日內",
+    "must_be_before_max_date": "日期晚於最大值",
+    "must_be_after_min_date": "日期早於最小值"
+  },
+  "ticker": {
+    "volume": "交易量",
+    "high": "最高價",
+    "low": "最低價"
+  },
+  "tickerlist": {
+    "pair": "交易對",
+    "last_price": "最新價格",
+    "last": "最新",
+    "24h_change": "24H",
+    "volume": "交易量",
+    "favorites": "收藏",
+    "empty": "無可顯示的內容",
+    "fav_tooltip": "僅顯示我的收藏",
+    "volume_tooltip": "以{{volumeUnit}} 顯示24小時交易量。 點擊切換幣別",
+    "volume_tooltip_self": "顯示各代幣24小時交易量。 點擊切換幣別"
+  },
+  "trades": {
+    "time": "時間",
+    "amount": "數量",
+    "price": "價格",
+    "market": "市況",
+    "user": "個人",
+    "change_to_market": "切換至市況",
+    "change_to_user": "切換至個人"
+  },
+  "orderhistory": {
+    "pair": "交易對",
+    "type": "類型",
+    "amount": "數量",
+    "ccy": "幣別",
+    "price": "價格",
+    "average_price": "平均價",
+    "status": "狀態",
+    "placed": "下單",
+    "no_orders": "無訂單紀錄",
+    "sell_order_title": "賣單 (id: {{id}})",
+    "buy_order_title": "買單 (id: {{id}})"
+  },
+  "orders": {
+    "pair": "交易對",
+    "type": "類型",
+    "amount": "數量",
+    "ccy": "幣別",
+    "price": "價格",
+    "status": "狀態",
+    "placed": "下單",
+    "no_orders": "無待成交訂單",
+    "sell_order_title": "賣單 (id: {{id}})",
+    "buy_order_title": "買單 (id: {{id}})"
+  },
+  "book": {
+    "cancel_order": "取消訂單",
+    "count": "計數",
+    "amount": "數量",
+    "total": "總計",
+    "price": "價格",
+    "decrease_precision": "降低精確度",
+    "increase_precision": "提高精確度",
+    "decrease_zoom": "縮小市場深度資料",
+    "increase_zoom": "放大市場深度資料"
+  }
+}

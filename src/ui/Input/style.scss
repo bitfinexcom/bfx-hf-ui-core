@@ -8,8 +8,8 @@
 
   input {
     width: 100%;
-    color: $text-color;
-    background: $panel-background-color;
+    color: var(--shade-7);
+    background: var(--darker-background-color);
     border: 0;
     padding: 10px 16px;
     font-size: 13px;

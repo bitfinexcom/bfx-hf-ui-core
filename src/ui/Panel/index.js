@@ -1,6 +1,12 @@
-import React, { useState } from 'react'
+import React, {
+  useState, useEffect, useCallback,
+} from 'react'
 import ClassNames from 'classnames'
 import PropTypes from 'prop-types'
+import _filter from 'lodash/filter'
+import _map from 'lodash/map'
+import _isNumber from 'lodash/isNumber'
+import _isEmpty from 'lodash/isEmpty'
 
 import Scrollbars from '../Scrollbars'
 import useSize from '../../hooks/useSize'
@@ -17,6 +23,14 @@ const getTabTitle = (tab) => { // eslint-disable-line
 }
 
 const getForcedTab = (forcedTab, tabs) => { // eslint-disable-line
+  if (_isNumber(forcedTab)) {
+    return forcedTab
+  }
+
+  if (_isEmpty(forcedTab)) {
+    return 0
+  }
+
   for (let i = 0; i < tabs.length; i++) {
     if (tabs[i].props.tabtitle === forcedTab) {
       return i
@@ -24,36 +38,25 @@ const getForcedTab = (forcedTab, tabs) => { // eslint-disable-line
   }
 }
 
-const Panel = (props) => {
-  const {
-    label,
-    className,
-    onRemove,
-    hideIcons,
-    children,
-    headerComponents,
-    extraIcons,
-    moveable,
-    removeable,
-    modal,
-    footer,
-    settingsOpen,
-    onToggleSettings,
-    darkHeader,
-    dark,
-    showChartMarket,
-    chartMarketSelect,
-    secondaryHeaderComponents,
-    closePanel,
-    preHeaderComponents,
-    dropdown,
-    forcedTab,
-  } = props
-  const tabs = React.Children.toArray(children).filter(c => c && c.props.tabtitle)
-  const initTab = forcedTab.length ? getForcedTab(forcedTab, tabs) : 0
+const Panel = ({
+  label, className, onRemove, hideIcons, children, headerComponents, extraIcons,
+  moveable, removeable, modal, footer, settingsOpen, onToggleSettings, darkHeader, dark, showChartMarket,
+  chartMarketSelect, secondaryHeaderComponents, closePanel, preHeaderComponents, dropdown, forcedTab, onTabChange,
+}) => {
+  const tabs = _filter(React.Children.toArray(children), c => c && c.props.tabtitle)
+  const initTab = getForcedTab(forcedTab, tabs)
   const [selectedTab, setSelectedTab] = useState(initTab)
   const [panelRef, panelSize] = useSize()
   const [headerRef, headerSize] = useSize()
+
+  const _setSelectedTab = useCallback((tab) => {
+    onTabChange(tab)
+    setSelectedTab(tab)
+  }, [onTabChange])
+
+  useEffect(() => {
+    _setSelectedTab(initTab)
+  }, [_setSelectedTab, initTab])
 
   return (
     <div
@@ -79,57 +82,57 @@ const Panel = (props) => {
           </div>
           <div className='hfui-panel__buttons-section'>
             {preHeaderComponents && (
-            <div className='hfui-panel__preheader'>
-              {preHeaderComponents}
-            </div>
+              <div className='hfui-panel__preheader'>
+                {preHeaderComponents}
+              </div>
             )}
             {closePanel && (
-            <p className='hfui-panel__close' onClick={closePanel}>&#10005;</p>
+              <p className='hfui-panel__close' onClick={closePanel}>&#10005;</p>
             )}
           </div>
           {tabs.length > 0 && (
-          <ul className='hfui-panel__header-tabs'>
-            {tabs.map((tab, index) => (
-              <li
-                key={tab.props.htmlKey || tab.props.tabtitle}
-                className={ClassNames({ active: getTabTitle(tab) === getTabTitle(tabs[selectedTab]) })}
-                onClick={() => setSelectedTab(index)}
-              >
-                <p className='hfui-panel__label'>
-                  {tab.props.tabtitle}
-                </p>
-              </li>
-            ))}
-          </ul>
+            <ul className='hfui-panel__header-tabs'>
+              {_map(tabs, (tab, index) => (
+                <li
+                  key={tab.props.htmlKey || tab.props.tabtitle}
+                  className={ClassNames({ active: getTabTitle(tab) === getTabTitle(tabs[selectedTab]) })}
+                  onClick={() => _setSelectedTab(index)}
+                >
+                  <p className='hfui-panel__label'>
+                    {tab.props.tabtitle}
+                  </p>
+                </li>
+              ))}
+            </ul>
           )}
 
           {!hideIcons && (
-          <div className='hfui-panel__header-icons'>
-            {removeable && (
-            <i onClick={onRemove} className='icon-cancel' />
-            )}
+            <div className='hfui-panel__header-icons'>
+              {removeable && (
+                <i onClick={onRemove} className='icon-cancel' />
+              )}
 
-            {moveable && <i className='icon-move' />}
+              {moveable && <i className='icon-move' />}
 
-            {showChartMarket && (
-            <div className='hfui-panel__chart-market-select'>
-              {chartMarketSelect}
+              {showChartMarket && (
+                <div className='hfui-panel__chart-market-select'>
+                  {chartMarketSelect}
+                </div>
+              )}
+
+              {onToggleSettings && (
+                <i
+                  onClick={onToggleSettings}
+                  className={ClassNames('icon-settings-icon', {
+                    yellow: settingsOpen,
+                  })}
+                />
+              )}
+
+              {extraIcons}
+
+              {dropdown}
             </div>
-            )}
-
-            {onToggleSettings && (
-            <i
-              onClick={onToggleSettings}
-              className={ClassNames('icon-settings-icon', {
-                yellow: settingsOpen,
-              })}
-            />
-            )}
-
-            {extraIcons}
-
-            {dropdown}
-          </div>
           )}
         </div>
 
@@ -177,7 +180,8 @@ Panel.propTypes = {
   chartMarketSelect: PropTypes.node,
   closePanel: PropTypes.func,
   preHeaderComponents: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.node), PropTypes.node]),
-  forcedTab: PropTypes.string,
+  forcedTab: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  onTabChange: PropTypes.func,
   dropdown: PropTypes.node,
 }
 
@@ -188,7 +192,7 @@ Panel.defaultProps = {
   dark: false,
   className: '',
   label: '',
-  onRemove: () => {},
+  onRemove: () => { },
   headerComponents: null,
   secondaryHeaderComponents: null,
   hideIcons: false,
@@ -203,6 +207,7 @@ Panel.defaultProps = {
   closePanel: null,
   preHeaderComponents: null,
   forcedTab: '',
+  onTabChange: () => { },
   dropdown: null,
 }
 

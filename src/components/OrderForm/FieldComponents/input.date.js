@@ -2,20 +2,29 @@ import React, { memo } from 'react'
 import DatePicker from 'react-datepicker'
 import PropTypes from 'prop-types'
 
+import { useSelector } from 'react-redux'
+import { useTranslation } from 'react-i18next'
 import { renderString, CONVERT_LABELS_TO_PLACEHOLDERS } from './fields.helpers'
+import { LANGUAGES } from '../../../locales/i18n'
+import { getCurrentLanguage } from '../../../redux/selectors/ui'
+import { getLocalDateFormat } from '../../../util/date'
 
 const DateInput = ({
   value, minDate, maxDate, onChange, def, renderData, validationError,
 }) => {
   const { label, minDate: MIN_DATE } = def
   const renderedLabel = renderString(label, renderData)
+  const currentLanguage = useSelector(getCurrentLanguage)
+
+  const { t } = useTranslation()
+
   return (
     <div className='hfui-orderform__input fullWidth hfui-input'>
       <DatePicker
         width='100%'
         popperPlacement='bottom-start'
-        dateFormat='MMMM d, yyyy h:mm aa'
-        timeCaption='Time'
+        dateFormat={getLocalDateFormat(LANGUAGES[currentLanguage])}
+        timeCaption={t('table.time')}
         timeFormat='HH:mm'
         dropdownMode='select'
         showTimeSelect
@@ -27,6 +36,8 @@ const DateInput = ({
         maxDate={maxDate}
         onChange={onChange}
         placeholder={CONVERT_LABELS_TO_PLACEHOLDERS ? renderedLabel : undefined}
+        locale={LANGUAGES[currentLanguage]}
+        calendarClassName='hfui-datepicker'
       />
 
       {!CONVERT_LABELS_TO_PLACEHOLDERS && (
@@ -75,7 +86,7 @@ DateInput.propTypes = {
 }
 
 DateInput.defaultProps = {
-  minDate: new Date('01-01-2009'),
+  minDate: new Date('01/01/2009'),
   maxDate: null,
   renderData: {},
   validationError: '',

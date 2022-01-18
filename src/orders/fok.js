@@ -1,9 +1,8 @@
-import checkboxesHelpMessages from '../constants/AtomicOrdersCheckboxHelpText'
-
-export default () => ({
-  label: 'Fill or Kill',
-  customHelp: 'An FOK order is a limit order that must fully fill immediately or it is canceled (killed).',
+export default (t) => ({
+  label: t('orderForm.fokTitle'),
+  customHelp: t('orderForm.fokHelp'),
   uiIcon: 'fill-or-kill-active',
+  id: 'fill or kill',
 
   generateOrder: (data = {}, symbol, context) => {
     const {
@@ -60,20 +59,22 @@ export default () => ({
   fields: {
     reduceonly: {
       component: 'input.checkbox',
-      label: 'REDUCE-ONLY',
-      customHelp: checkboxesHelpMessages['REDUCE-ONLY'],
+      label: t('orderForm.reduceOnlyCheckbox'),
+      customHelp: t('orderForm.reduceOnlyMessage'),
       trading: ['m', 'f'],
       default: false,
+      visible: {
+        _orderEditing: { neq: true },
+      },
     },
 
     price: {
       component: 'input.price',
-      label: 'Price $QUOTE',
+      label: `${t('table.price')} $QUOTE`,
     },
-
     amount: {
       component: 'input.amount',
-      label: 'Amount $BASE',
+      label: `${t('table.amount')} $BASE`,
     },
     ticker: {
       component: 'ui.ticker',
@@ -81,7 +82,7 @@ export default () => ({
 
     lev: {
       component: 'input.range',
-      label: 'Leverage',
+      label: t('orderForm.laverage'),
       min: 1,
       max: 100,
       default: 10,

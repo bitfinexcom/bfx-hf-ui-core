@@ -1,7 +1,7 @@
 @import "./variables.scss";
 
 $intent-primary: $green-color;
-$intent-secondary: $input-background-color;
+$intent-secondary: $lighter-background-color;
 $intent-success: $green-button-color;
 $intent-info: $blue-color;
 $intent-warning: $yellow-color;
@@ -9,27 +9,28 @@ $intent-error: $red-color;
 
 $ufx-border-radius: $border-radius;
 
-$ufx-table-even-row-background-color: $panel-background-color;
-$ufx-table-odd-row-background-color: $panel-background-color;
-$ufx-table-hover-row-background-color: $light-color-50;
-$ufx-table-hover-row-color: $light-color-900;
-$ufx-table-active-row-background-color: $panel-background-color;
+$ufx-table-even-row-background-color: var(--darker-background-color);
+$ufx-table-odd-row-background-color: var(--darker-background-color);
+$ufx-table-hover-row-background-color: var(--shade-0);
+$ufx-table-hover-row-color: var(--shade-9);
+$ufx-table-active-row-background-color: var(--darker-background-color);
+$input-placeholder-color: var(--shade-4);
 
 $ufx-font-family: $font-family;
 $ufx-font-size: 13px;
-$ufx-text-color: $light-color-600;
-$ufx-heading-color: $light-color-800;
-$ufx-background-color: $background-color;
+$ufx-text-color: var(--shade-6);
+$ufx-heading-color: var(--shade-8);
+$ufx-background-color: var(--background-color);
 
 $ufx-dropdown-height: 32px;
 $ufx-dropdown-padding: spacing();
-$ufx-dropdown-background-color: $input-background-color;
-$ufx-dropdown-border-color: $input-background-color;
+$ufx-dropdown-border-color: var(--lighten-background-mix);
 $ufx-dropdown-list-border: none;
-$ufx-dropdown-text-color: $text-color;
-$ufx-dropdown-list-background-color: $input-background-color;
-$ufx-dropdown-active-item-background-color: $light-color-100;
-$ufx-dropdown-input-background-color: $background-color;
+$ufx-dropdown-text-color: var(--shade-7);
+$ufx-dropdown-list-background-color: $lighter-background-color;
+$ufx-dropdown-list-active-item-background-color: var(--shade-1);
+$ufx-dropdown-input-background-color: var(--lighter-background-color);
+$ufx-dropdown-arrow-background-color: var(--lighter-background-color);
 $ufx-dropdown-input-border: 0;
 
 $ufx-dialog-padding-desktop: spacing(1.5);

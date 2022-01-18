@@ -1,5 +1,6 @@
 import { connect } from 'react-redux'
 import _isEqual from 'lodash/isEqual'
+import { reduxSelectors } from '@ufx-ui/bfx-containers'
 
 import WSActions from '../../redux/actions/ws'
 import UIActions from '../../redux/actions/ui'
@@ -15,13 +16,16 @@ import { getTicker, getTickersArray, getMarkets } from '../../redux/selectors/me
 import ExchangeInfoBar from './ExchangeInfoBar'
 import { getActiveMarketCcyId } from '../../redux/selectors/zendesk'
 
+const { getCurrencySymbolMemo } = reduxSelectors
+
 const mapStateToProps = (state = {}) => {
   const activeMarket = getActiveMarket(state)
+  const allTickersArray = getTickersArray(state)
 
   return {
     activeMarket,
     activeMarketTicker: getTicker(state, activeMarket),
-    allTickersArray: getTickersArray(state),
+    allTickersArray,
     favoritePairs: getFavoritePairsObject(state),
     markets: getMarkets(state),
     authToken: getAuthToken(state),
@@ -29,6 +33,7 @@ const mapStateToProps = (state = {}) => {
     tickersVolumeUnit: getTickersVolumeUnit(state),
     showOnlyFavoritePairs: getShowOnlyFavoritePairsSetting(state),
     isCcyArticleAvailbale: Boolean(getActiveMarketCcyId(state)),
+    getCurrencySymbol: getCurrencySymbolMemo(state),
   }
 }
 

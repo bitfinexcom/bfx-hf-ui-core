@@ -1,10 +1,10 @@
-import checkboxesHelpMessages from '../constants/AtomicOrdersCheckboxHelpText'
 import { isValidDate } from '../util/date'
 
-export default () => ({
-  label: 'Stop',
+export default (t) => ({
+  label: t('orderForm.stopTitle'),
   uiIcon: 'stop-active',
-  customHelp: 'Stop orders are automatically converted to Market orders once the specified stop price is reached.\n\nFor control over the execution price, use a Stop-Limit order.\n\nIf the \'reduce-only\' option is specified, the order will be cancelled if it would open or increase the size of an open position.\n\nA Time-In-Force date may be specified, after which the order will be automatically cancelled.',
+  customHelp: t('orderForm.stopHelp'),
+  id: 'stop',
 
   generateOrder: (data = {}, symbol, context) => {
     const {
@@ -79,39 +79,45 @@ export default () => ({
   fields: {
     reduceonly: {
       component: 'input.checkbox',
-      label: 'REDUCE-ONLY',
-      customHelp: checkboxesHelpMessages['REDUCE-ONLY'],
+      label: t('orderForm.reduceOnlyCheckbox'),
+      customHelp: t('orderForm.reduceOnlyMessage'),
       trading: ['m', 'f'],
       default: false,
+      visible: {
+        _orderEditing: { neq: true },
+      },
     },
 
     tif: {
       component: 'input.checkbox',
-      label: 'TIF',
-      customHelp: checkboxesHelpMessages.TIF,
+      label: t('orderForm.tifCheckbox'),
+      customHelp: t('orderForm.tifMessage'),
       default: false,
+      visible: {
+        _orderEditing: { neq: true },
+      },
     },
 
     price: {
       component: 'input.price',
-      label: 'Stop Price $QUOTE',
+      label: `${t('orderForm.stopPrice')} $QUOTE`,
     },
 
     amount: {
       component: 'input.amount',
-      label: 'Amount $BASE',
+      label: `${t('table.amount')} $BASE`,
     },
 
     tifDate: {
       component: 'input.date',
-      label: 'TIF Date',
+      label: t('orderForm.tifDate'),
       default: new Date(Date.now() + 86400000),
       minDate: new Date(),
     },
 
     lev: {
       component: 'input.range',
-      label: 'Leverage',
+      label: t('orderForm.laverage'),
       min: 1,
       max: 100,
       default: 10,

@@ -10,10 +10,12 @@ import {
   reduxConstants,
   useCommonBfxData,
 } from '@ufx-ui/bfx-containers'
+import { useTranslation } from 'react-i18next'
 
 import MarketSelect from '../MarketSelect'
 import Panel from '../../ui/Panel'
 import './style.css'
+import { getPairFromMarket } from '../../util/market'
 
 const { trades } = reduxConstants
 const { SUBSCRIPTION_CONFIG } = trades
@@ -35,15 +37,21 @@ const TradesTablePanel = (props) => {
     activeMarket,
     canChangeMarket,
     allMarketTrades,
+    getCurrencySymbol,
   } = props
 
   const { currentMarket = activeMarket } = savedState
-  const { base, quote } = currentMarket
+  const {
+    base, quote, isPerp, uiID,
+  } = currentMarket
+  const currentPair = getPairFromMarket(activeMarket, getCurrencySymbol)
 
   const { symbol, dispatch, isWSConnected } = useCommonBfxData(base, quote)
   const marketData = useSelector(state => getRecentTrades(state, symbol))
   const hasFetchedTrades = useSelector(state => hasFetchedTradesSelector(state, symbol))
   const isSubscribedToSymbol = useSelector(state => isSubscribedToTrades(state, symbol))
+
+  const { t } = useTranslation()
 
   useEffect(() => {
     if (isWSConnected && symbol && !isSubscribedToSymbol) {
@@ -104,7 +112,7 @@ const TradesTablePanel = (props) => {
   return (
     <Panel
       dark={dark}
-      label='Trades'
+      label={t('tradesTableModal.title')}
       darkHeader={dark}
       moveable={moveable}
       onRemove={handleOnRemove}
@@ -113,7 +121,7 @@ const TradesTablePanel = (props) => {
       secondaryHeaderComponents={
         showMarket && canChangeMarket && renderMarketDropdown()
       }
-      headerComponents={showMarket && !canChangeMarket && <p>{activeMarket.uiID}</p>}
+      headerComponents={showMarket && !canChangeMarket && <p>{isPerp ? uiID : currentPair}</p>}
     >
       <Trades
         market={marketData}
@@ -145,6 +153,7 @@ TradesTablePanel.propTypes = {
   activeMarket: PropTypes.shape({
     uiID: PropTypes.string,
   }).isRequired,
+  getCurrencySymbol: PropTypes.func.isRequired,
 }
 
 TradesTablePanel.defaultProps = {

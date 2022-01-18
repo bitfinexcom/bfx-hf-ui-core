@@ -1,22 +1,23 @@
 import { connect } from 'react-redux'
+import { compose } from 'redux'
 import { push } from 'connected-react-router'
 import Debug from 'debug'
-import _values from 'lodash/values'
-import _map from 'lodash/map'
+import _size from 'lodash/size'
 
+import { withTranslation } from 'react-i18next'
 import OrderForm from './OrderForm'
 import UIActions from '../../redux/actions/ui'
 import WSActions from '../../redux/actions/ws'
 import GAActions from '../../redux/actions/google_analytics'
+import AOActions from '../../redux/actions/ao'
+import { getAOParams } from '../../redux/selectors/ao'
 import {
-  getAPIClientState, getAuthToken, getCurrentModeAPIKeyState,
+  getAPIClientState, getAuthToken, getCurrentModeAPIKeyState, getFilteredAtomicOrdersCount, getAtomicOrders,
 } from '../../redux/selectors/ws'
 import {
-  getComponentState, getActiveMarket, getCurrentMode, getIsPaperTrading, getIsOrderExecuting,
+  getComponentState, getActiveMarket, getCurrentMode, getIsPaperTrading, getIsOrderExecuting, getMaxOrderCounts,
 } from '../../redux/selectors/ui'
-import rawOrders from '../../orders'
 
-const orders = _map(_values(rawOrders), uiDef => uiDef())
 const debug = Debug('hfui:c:order-form')
 
 const mapStateToProps = (state = {}, ownProps = {}) => {
@@ -24,8 +25,11 @@ const mapStateToProps = (state = {}, ownProps = {}) => {
   const { ws = {} } = state
   const { favoriteTradingPairs = {} } = ws
   const { favoritePairs = [] } = favoriteTradingPairs
+  const activeMarket = getActiveMarket(state)
   return {
-    activeMarket: getActiveMarket(state),
+    activeMarket,
+    atomicOrdersCount: _size(getAtomicOrders(state)),
+    atomicOrdersCountActiveMarket: getFilteredAtomicOrdersCount(state)(activeMarket),
     apiClientState: getAPIClientState(state),
     savedState: getComponentState(state, layoutID, 'orderform', id),
     authToken: getAuthToken(state),
@@ -34,7 +38,8 @@ const mapStateToProps = (state = {}, ownProps = {}) => {
     mode: getCurrentMode(state),
     isPaperTrading: getIsPaperTrading(state),
     isOrderExecuting: getIsOrderExecuting(state),
-    orders,
+    aoParams: getAOParams(state),
+    maxOrderCounts: getMaxOrderCounts(state),
   }
 }
 
@@ -103,6 +108,14 @@ const mapDispatchToProps = dispatch => ({
       mode,
     ]))
   },
+
+  getAlgoOrderParams: (aoID, symbol) => {
+    dispatch(AOActions.getAlgoOrderParams(aoID, symbol))
+  },
+
+  resetActiveAOParamsID: () => {
+    dispatch(AOActions.setActiveAOParamsID(null))
+  },
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(OrderForm)
+export default compose(withTranslation(), connect(mapStateToProps, mapDispatchToProps))(OrderForm)

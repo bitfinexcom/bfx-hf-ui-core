@@ -4,7 +4,9 @@ import _isEmpty from 'lodash/isEmpty'
 import _find from 'lodash/find'
 import _omitBy from 'lodash/omitBy'
 import _isNil from 'lodash/isNil'
+import { useTranslation } from 'react-i18next'
 
+import { THEMES } from '../../redux/selectors/ui'
 import RenderHistoricalReport from './reports/HistoricalReport'
 import RenderHistoricalForm from './forms/HistoricalForm'
 
@@ -29,17 +31,8 @@ const backtestMethods = [
 ]
 
 const Backtester = ({
-  backtestData,
-  strategyContent,
-  markets,
-  backtestResults,
-  backtestOptions,
-  authToken,
-  dsExecuteBacktest,
-  setBacktestOptions,
-  indicators,
-  onAddIndicator,
-  onDeleteIndicator,
+  backtestData, strategyContent, markets, backtestResults, backtestOptions, authToken, dsExecuteBacktest, setBacktestOptions,
+  indicators, onAddIndicator, onDeleteIndicator, settingsTheme,
 }) => {
   const [execError, setExecError] = useState(null)
   const [executionType, setExecutionType] = useState(backtestMethods[0])
@@ -87,10 +80,12 @@ const Backtester = ({
     },
   }
 
+  const { t } = useTranslation()
+
   if (!strategyContent || _isEmpty(_omitBy(strategyContent, _isNil))) {
     return (
       <div className='hfui-backtester__wrapper'>
-        <p>Create a strategy to begin backtesting.</p>
+        <p>{t('strategyEditor.backtestingCreateMessage')}</p>
       </div>
     )
   }
@@ -108,7 +103,7 @@ const Backtester = ({
     return (
       <div className='hfui-backtester__wrapper'>
         <executionType.form {...opts} />
-        {executionType.renderReport({ ...opts }, backtestResults, backtestData, backtestOptions)}
+        {executionType.renderReport({ ...opts }, backtestResults, backtestData, backtestOptions, t, settingsTheme)}
       </div>
     )
   }
@@ -116,7 +111,7 @@ const Backtester = ({
   return (
     <div className='hfui-backtester__wrapper'>
       <executionType.form {...opts} disabled={backtestResults.loading} />
-      <p>{backtestResults.loading ? 'Loading candles and executing strategy...' : 'Press start to begin backtesting.'}</p>
+      <p>{backtestResults.loading ? t('strategyEditor.backtestingLoadingMessage') : t('strategyEditor.backtestingStartingMessage')}</p>
     </div>
   )
 }
@@ -145,6 +140,7 @@ Backtester.propTypes = {
   setBacktestOptions: PropTypes.func.isRequired,
   onAddIndicator: PropTypes.func,
   onDeleteIndicator: PropTypes.func,
+  settingsTheme: PropTypes.oneOf([THEMES.LIGHT, THEMES.DARK]),
 }
 
 Backtester.defaultProps = {
@@ -161,8 +157,9 @@ Backtester.defaultProps = {
   markets: [],
   backtestResults: {},
   backtestOptions: {},
-  onAddIndicator: () => {},
-  onDeleteIndicator: () => {},
+  onAddIndicator: () => { },
+  onDeleteIndicator: () => { },
+  settingsTheme: THEMES.DARK,
 }
 
 export default memo(Backtester)

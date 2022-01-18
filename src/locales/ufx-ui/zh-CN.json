@@ -1,0 +1,103 @@
+{
+  "http_errors": {
+    "rate_limit": "您已达流量限制，请稍候重试"
+  },
+  "common": {
+    "no_data_available": "没有可用数据",
+    "websocket_offiline": "Websocket连接已断开",
+    "websocket_connected": "Websocket已连接",
+    "websocket_disconnected": "Websocket已断开",
+    "cancel": "取消",
+    "filter": "筛选",
+    "search": "搜索",
+    "no_results_found": "无搜寻结果",
+    "created": "已创建",
+    "modified": "已修改",
+    "at": " 以 ",
+    "yes": "是",
+    "copy": "复制",
+    "copied": "已复制",
+    "copy_to_clipboard": "复制到剪贴板",
+    "no": "否"
+  },
+  "ui": {
+    "typeToSearch": "输入以搜寻..",
+    "selectOption": "选择一个项目"
+  },
+  "error": {
+    "not_enough_balance": "余额不足，可用余额为 {{amount}}",
+    "must_be_number": "必须为数字",
+    "must_be_positive": "必须为整数",
+    "required": "{{fieldLabel}} 为必填",
+    "max_length": "{{fieldLabel}} 不可超过 {{maxLength}} 个字符",
+    "no_decimals": "{{fieldLabel}} 不能有任何小数位",
+    "max_decimals": "最多{{allowedDecimals}} 个小数位",
+    "invalid_date": "无效日期",
+    "must_be_date": "必须是有效日期",
+    "date_must_be_within_interval": "时间必须为今日后1至7天内",
+    "must_be_before_max_date": "最长7天或以内的日期",
+    "must_be_after_min_date": "需选取今日后的日期"
+  },
+  "ticker": {
+    "volume": "交易量",
+    "high": "最高价",
+    "low": "最低价"
+  },
+  "tickerlist": {
+    "pair": "对",
+    "last_price": "最新价格",
+    "last": "最新",
+    "24h_change": "24小时",
+    "volume": "交易量",
+    "favorites": "收藏",
+    "empty": "无可显示的内容",
+    "fav_tooltip": "仅显示收藏币种",
+    "volume_tooltip": "目前以 {{volumeUnit}} 等额显示24小时交易量。单击切换。",
+    "volume_tooltip_self": "目前以指定币种显示24小时交易量。单击切换。"
+  },
+  "trades": {
+    "time": "时间",
+    "amount": "数量",
+    "price": "价格",
+    "market": "市况",
+    "user": "个人",
+    "change_to_market": "切换至市况",
+    "change_to_user": "切换至个人"
+  },
+  "orderhistory": {
+    "pair": "交易对",
+    "type": "类型",
+    "amount": "数量",
+    "ccy": "币种",
+    "price": "价格",
+    "average_price": "均价",
+    "status": "状态",
+    "placed": "已下单",
+    "no_orders": "没有订单记录",
+    "sell_order_title": "卖出单 (id: {{id}})",
+    "buy_order_title": "买入单 (id: {{id}})"
+  },
+  "orders": {
+    "pair": "交易对",
+    "type": "类型",
+    "amount": "数量",
+    "ccy": "币种",
+    "price": "价格",
+    "status": "状态",
+    "placed": "已下单",
+    "no_orders": "无有效订单",
+    "sell_order_title": "卖出单 (id: {{id}})",
+    "buy_order_title": "买入单 (id: {{id}})"
+  },
+  "book": {
+    "cancel_order": "取消订单",
+    "count": "计数",
+    "amount": "数量",
+    "total": "总计",
+    "price": "价格",
+    "decrease_precision": "降低精度",
+    "increase_precision": "提高精度",
+    "decrease_zoom": "缩小市场深度",
+    "increase_zoom": "放大市场深度"
+  }
+}

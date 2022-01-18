@@ -1,19 +1,42 @@
 @import '../../variables.scss';
 
+body.Light {
+  .bfxc__topbar {
+    background: var(--background-color);
+  }
+
+  .bfxc__dropdown-menu {
+    background: var(--lighter-background-color);
+    border-color: var(--shade-5);
+
+    li {
+      color: var(--text-color);
+      border-color: var(--shade-5);
+
+      &:hover {
+        color: var(--primary-7);
+      }
+    }
+  }
+
+  .bfxc__dropdown-wrapper > p:first-child,
+  .icon-move {
+    color: var(--text-color);
+
+    &:hover {
+      color: var(--shade-5);
+    }
+  }
+}
+
 .hfui-backtester__executionform {
   display: flex;
   flex: 1;
   flex-direction: column;
-  margin-bottom: 10px;
 
   .hfui-backtester_row {
-    margin-bottom: spacing(0.25) !important;
-  }
-
-  .hfui-dropdown__button, .react-datepicker__input-container input {
-    color: $white-color;
-    margin-right: 5px;
-    background-color: rgb(16, 35, 49);
+    margin-bottom: spacing(0.75) !important;
+    gap: spacing(0.75);
   }
 
   .react-datepicker__input-container input {
@@ -42,7 +65,7 @@
     min-height: 100%;
     padding-top:7px;
     padding-bottom: 7px;
-    background-color: $panel-background-color;
+    background-color: var(--darker-background-color);
   }
   .hfui-backtester_row {
     display: flex;
@@ -70,13 +93,7 @@
   input {
     max-width: 100%;
     padding: 10px 8px;
-    background-color: lightgray;
-    color: $grey-color;
-  }
-}
-
-.hfui-backtester__wrapper {
-  .ufx-dropdown {
-    margin-right: spacing(0.75);
+    background-color: var(--lighter-background-color);
+    color: var(--shade-7);
   }
 }

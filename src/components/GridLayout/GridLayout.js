@@ -6,12 +6,13 @@ import _get from 'lodash/get'
 import _last from 'lodash/last'
 import _find from 'lodash/find'
 import _entries from 'lodash/entries'
+import _filter from 'lodash/filter'
 import { Responsive as RGL, WidthProvider } from 'react-grid-layout'
 import { getLocation } from '../../redux/selectors/router'
 import {
   removeComponent, changeLayout, setLayoutID, storeUnsavedLayout,
 } from '../../redux/actions/ui'
-import { renderLayoutElement } from './GridLayout.helpers'
+import { renderLayoutElement, COMPONENT_DIMENSIONS } from './GridLayout.helpers'
 import './style.css'
 
 import {
@@ -35,12 +36,11 @@ const GridLayout = ({
   const unsavedLayoutDef = useSelector(getCurrentUnsavedLayout)
   const isValidUnsavedLayout = _get(unsavedLayoutDef, 'routePath', null) === pathname
   const isValidSavedLayout = currentSavedLayout.routePath === pathname
-  const layoutsForCurrRoute = _entries(layouts)
-    .filter(([, layout]) => layout.routePath === pathname)
+  const layoutsForCurrRoute = _filter(_entries(layouts), ([, layout]) => layout.routePath === pathname)
   const lastUsedLayoutID = getLastUsedLayoutID(pathname)
 
   const [lastLayoutID, lastLayoutDef] = _find(layoutsForCurrRoute, ([id]) => id === lastUsedLayoutID) || _last(layoutsForCurrRoute
-    .sort((a, b) => a[1].savedAt - b[1].savedAt))
+    .sort((a, b) => a[1].savedAt - b[1].savedAt)) || []
 
   // should use unsaved one first, then saved one (if selected) else last saved one
   const layoutDef = isValidUnsavedLayout
@@ -55,14 +55,14 @@ const GridLayout = ({
     if (!layoutID || !isValidSavedLayout) {
       dispatch(setLayoutID(lastLayoutID))
     }
-  }, [pathname, layoutID, lastLayoutID, isValidSavedLayout])
+  }, [pathname, layoutID, lastLayoutID, isValidSavedLayout, dispatch])
 
   useEffect(() => {
     // discard unsaved layout changes
     if (!isValidUnsavedLayout) {
       dispatch(storeUnsavedLayout(layoutDef))
     }
-  }, [isValidUnsavedLayout, layoutDef])
+  }, [dispatch, isValidUnsavedLayout, layoutDef])
 
   const componentProps = {
     orderForm: orderFormProps,
@@ -73,7 +73,11 @@ const GridLayout = ({
     sharedProps,
   }
 
-  const currentLayouts = _get(layoutDef, 'layout', [])
+  const currentLayouts = _map(_get(layoutDef, 'layout', []), (layout) => ({
+    ...layout,
+    minW: COMPONENT_DIMENSIONS[layout?.c].minW,
+    minH: COMPONENT_DIMENSIONS[layout?.c].minH,
+  }))
   const onRemoveComponent = (i) => dispatch(removeComponent(i))
 
   /* fix-start: initial grid rendering issue

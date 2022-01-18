@@ -1,16 +1,20 @@
-import React from 'react'
+import React, { useMemo } from 'react'
 import PropTypes from 'prop-types'
 import { VOLUME_UNIT, VOLUME_UNIT_PAPER } from '@ufx-ui/bfx-containers'
 import { TickerList, Ticker } from '@ufx-ui/core'
 import _find from 'lodash/find'
+import _filter from 'lodash/filter'
+import _keys from 'lodash/keys'
 
+import { useTranslation } from 'react-i18next'
 import Panel from '../../ui/Panel'
 import useSize from '../../hooks/useSize'
-import { tickerDataMapping, rowMapping } from './ExchangeInforBar.constants'
-
-import './style.css'
+import { getTickerDataMapping, getTickerListMapping } from './ExchangeInforBar.constants'
+import { getCorrectIconNameOfPerpCcy } from '../../util/market'
 import { MAIN_MODE } from '../../redux/reducers/ui'
 import CCYIcon from './CCYIcon'
+
+import './style.css'
 
 const ExchangeInfoBar = ({
   onChangeMarket,
@@ -29,16 +33,16 @@ const ExchangeInfoBar = ({
   updateShowOnlyFavoritePairs,
   showCcyIconModal,
   isCcyArticleAvailbale,
+  getCurrencySymbol,
 }) => {
   const [tickerRef, size] = useSize()
 
   const _updateFavorites = (object) => {
-    const arrayWithPairs = Object.keys(object)
-    const arrayWithFavorites = arrayWithPairs.filter(pair => object[pair])
+    const arrayWithFavorites = _filter(_keys(object), pair => object[pair])
     updateFavorites(authToken, arrayWithFavorites, currentMode)
   }
-  const onChangeMarketHandler = ({ rowData: { id } }) => {
-    const newMarket = _find(markets, market => market.uiID === id)
+  const onChangeMarketHandler = ({ rowData } = {}) => {
+    const newMarket = _find(markets, market => market.wsID === rowData?.id)
     if (!newMarket) {
       return
     }
@@ -58,11 +62,15 @@ const ExchangeInfoBar = ({
     uiID,
     isPerp,
   } = activeMarket
+  const { t } = useTranslation()
+
+  const tickerMapping = useMemo(() => getTickerDataMapping(getCurrencySymbol), [getCurrencySymbol])
+  const tickerListMapping = useMemo(() => getTickerListMapping(getCurrencySymbol, markets), [getCurrencySymbol, markets])
 
   return (
     <Panel
       key='ticker-symbols'
-      label='Ticker symbols'
+      label={t('tickersPanel.title')}
       className='hfui-panel--tickerlist'
       onRemove={onRemove}
       darkHeader
@@ -83,12 +91,12 @@ const ExchangeInfoBar = ({
               low,
               high,
               isPerp,
-              perpUI: isPerp ? uiID : null,
+              uiID,
             }}
-            dataMapping={tickerDataMapping}
+            dataMapping={tickerMapping}
             className='hfui-exchangeinfobar__ticker'
-            volumeUnit={tickersVolumeUnit !== 'SELF' ? tickersVolumeUnit : quote}
-            ccyIcon={<CCYIcon ccy={base} />}
+            volumeUnit={tickersVolumeUnit !== 'SELF' ? tickersVolumeUnit : base}
+            ccyIcon={<CCYIcon ccy={isPerp ? getCorrectIconNameOfPerpCcy(base) : base} />}
             showCoinInfoIcon={isCcyArticleAvailbale}
             onShowInfoClick={showCcyIconModal}
           />
@@ -107,7 +115,7 @@ const ExchangeInfoBar = ({
             className='hfui-exchangeinfobar__tickerlist'
             volumeUnit={tickersVolumeUnit}
             volumeUnitList={currentMode === MAIN_MODE ? VOLUME_UNIT : VOLUME_UNIT_PAPER}
-            rowMapping={rowMapping}
+            rowMapping={tickerListMapping}
             setVolumeUnit={setVolumeUnit}
             showVolumeUnit
           />
@@ -147,11 +155,12 @@ ExchangeInfoBar.propTypes = {
   updateShowOnlyFavoritePairs: PropTypes.func.isRequired,
   showCcyIconModal: PropTypes.func.isRequired,
   isCcyArticleAvailbale: PropTypes.bool,
+  getCurrencySymbol: PropTypes.func.isRequired,
 }
 
 ExchangeInfoBar.defaultProps = {
-  markets: [],
-  onRemove: () => {},
+  markets: {},
+  onRemove: () => { },
   showOnlyFavoritePairs: false,
   isCcyArticleAvailbale: false,
 }

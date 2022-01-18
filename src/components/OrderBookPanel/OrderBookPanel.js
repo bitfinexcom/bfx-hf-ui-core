@@ -11,13 +11,16 @@ import {
   reduxConstants,
   reduxSelectors,
 } from '@ufx-ui/bfx-containers'
+import { useTranslation } from 'react-i18next'
 
+import routes from '../../constants/routes'
 import MarketSelect from '../MarketSelect'
 import OrderBook from '../OrderBook'
 import PanelSettings from '../../ui/PanelSettings'
 import Panel from '../../ui/Panel'
 
 import './style.css'
+import { getPairFromMarket } from '../../util/market'
 
 const { WSSubscribeChannel, WSUnsubscribeChannel } = reduxActions
 const { SUBSCRIPTION_CONFIG } = reduxConstants
@@ -33,10 +36,12 @@ const {
 } = reduxSelectors
 
 const OrderBookPanel = (props) => {
+  const isTradingTerminal = window.location.pathname === routes.tradingTerminal.path
+
   const {
     onRemove, showMarket, canChangeStacked, moveable,
     removeable, dark, savedState, activeMarket,
-    markets, canChangeMarket, layoutID, layoutI, updateState, isTradingTerminal, allMarketBooks,
+    markets, canChangeMarket, layoutID, layoutI, updateState, allMarketBooks, getCurrencySymbol,
   } = props
   const {
     sumAmounts = true,
@@ -44,7 +49,10 @@ const OrderBookPanel = (props) => {
     currentMarket = activeMarket,
   } = savedState
   const bookMarket = isTradingTerminal ? activeMarket : currentMarket
-  const { base, quote } = bookMarket
+  const {
+    base, quote, isPerp, uiID,
+  } = bookMarket
+  const currentPair = getPairFromMarket(activeMarket, getCurrencySymbol)
 
   const [settingsOpen, setSettingsOpen] = useState(false)
 
@@ -62,6 +70,8 @@ const OrderBookPanel = (props) => {
   const tAsks = useSelector(state => getBooktAsks(state, symbol))
   const tBids = useSelector(state => getBooktBids(state, symbol))
   const isSubscribedToSymbol = useSelector(state => isSubscribedToBook(state, symbol))
+
+  const { t } = useTranslation()
 
   // resubscribe book channel on market change
   useEffect(() => {
@@ -136,7 +146,7 @@ const OrderBookPanel = (props) => {
 
   return (
     <Panel
-      label='Order Book'
+      label={t('orderBookModal.title')}
       dark={dark}
       darkHeader={dark}
       onRemove={handleOnRemove}
@@ -145,7 +155,7 @@ const OrderBookPanel = (props) => {
       secondaryHeaderComponents={
         showMarket && canChangeMarket && renderMarketDropdown()
       }
-      headerComponents={showMarket && !canChangeMarket && <p>{activeMarket.uiID}</p>}
+      headerComponents={showMarket && !canChangeMarket && <p>{isPerp ? uiID : currentPair}</p>}
       settingsOpen={settingsOpen}
       onToggleSettings={onToggleSettings}
       className='hfui-book__wrapper'
@@ -157,17 +167,17 @@ const OrderBookPanel = (props) => {
             <>
               <Checkbox
                 key='sum-amounts'
-                label='Sum Amounts'
+                label={t('orderBookModal.sumAmountsCheckbox')}
                 checked={sumAmounts}
                 onChange={onChangeSumAmounts}
               />
               {canChangeStacked && (
-              <Checkbox
-                key='stacked-view'
-                label='Stacked View'
-                checked={stackedView}
-                onChange={onChangeStackedView}
-              />
+                <Checkbox
+                  key='stacked-view'
+                  label={t('orderBookModal.stackedViewCheckbox')}
+                  checked={stackedView}
+                  onChange={onChangeStackedView}
+                />
               )}
             </>
           )}
@@ -185,7 +195,7 @@ const OrderBookPanel = (props) => {
           tAsks={tAsks}
           tBids={tBids}
           loading={!snapshotReceived}
-          // ufx-ui/book props end
+        // ufx-ui/book props end
         />
       )}
     </Panel>
@@ -210,8 +220,8 @@ OrderBookPanel.propTypes = {
   layoutID: PropTypes.string,
   layoutI: PropTypes.string.isRequired,
   updateState: PropTypes.func.isRequired,
-  isTradingTerminal: PropTypes.bool,
   allMarketBooks: PropTypes.arrayOf(PropTypes.object),
+  getCurrencySymbol: PropTypes.func.isRequired,
 }
 
 OrderBookPanel.defaultProps = {
@@ -226,7 +236,6 @@ OrderBookPanel.defaultProps = {
   removeable: true,
   dark: true,
   savedState: {},
-  isTradingTerminal: true,
   allMarketBooks: [],
   layoutID: '',
 }

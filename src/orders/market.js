@@ -1,9 +1,10 @@
-import checkboxesHelpMessages from '../constants/AtomicOrdersCheckboxHelpText'
+import _toUpper from 'lodash/toUpper'
 
-export default () => ({
-  label: 'Market',
+export default (t = () => {}) => ({
+  label: t('orderForm.marketTitle'),
   uiIcon: 'market-active',
-  customHelp: 'A Market order will fill immediately at the current market price.\n\nIf the \'reduce-only\' option is specified, the order will be cancelled if it would open or increase the size of an open position.',
+  customHelp: t('orderForm.marketHelp'),
+  id: 'market',
 
   generateOrder: (data = {}, symbol, context) => {
     const { reduceonly, amount, lev } = data
@@ -55,27 +56,30 @@ export default () => ({
   fields: {
     reduceonly: {
       component: 'input.checkbox',
-      label: 'REDUCE-ONLY',
-      customHelp: checkboxesHelpMessages['REDUCE-ONLY'],
-      trading: ['m', 'f'], // margin, derivatives
+      label: t('orderForm.reduceOnlyCheckbox'),
+      customHelp: t('orderForm.reduceOnlyMessage'),
+      trading: ['m', 'f'],
       default: false,
+      visible: {
+        _orderEditing: { neq: true },
+      },
     },
 
     price: {
       component: 'input.price',
-      label: 'Price $QUOTE',
+      label: `${t('table.price')} $QUOTE`,
       disabled: true,
-      default: 'MARKET',
+      default: _toUpper(t('orderForm.marketTitle')),
     },
 
     amount: {
       component: 'input.amount',
-      label: 'Amount $BASE',
+      label: `${t('table.amount')} $BASE`,
     },
 
     lev: {
       component: 'input.range',
-      label: 'Leverage',
+      label: t('orderForm.laverage'),
       min: 1,
       max: 100,
       default: 10,

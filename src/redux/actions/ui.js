@@ -160,6 +160,16 @@ export const changeAOPauseModalState = (isVisible) => ({
   payload: { isVisible },
 })
 
+export const changeEditOrderModalState = (isVisible, order = {}) => ({
+  type: types.CHANGE_EDIT_ORDER_MODAL_STATE,
+  payload: { isVisible, order },
+})
+
+export const changeConfirmDMSModalState = (isVisible) => ({
+  type: types.CHANGE_CONFIRM_DMS_MODAL_VISIBLE,
+  payload: { isVisible },
+})
+
 export const changeBadInternetConnectionState = (isVisible) => ({
   type: types.CHANGE_BAD_INTERNET_STATE,
   payload: { isVisible },
@@ -205,6 +215,16 @@ export const changeCcyInfoModalState = (isVisible) => ({
   payload: { isVisible },
 })
 
+export const setLanguage = language => ({
+  type: types.SET_LANGUAGE,
+  payload: { language },
+})
+
+export const setStrategyTab = tab => ({
+  type: types.SET_STRATEGY_TAB,
+  payload: { tab },
+})
+
 export default {
   saveLayout,
   storeUnsavedLayout,
@@ -238,4 +258,8 @@ export default {
   changeOldFormatModalState,
   changeAOPauseModalState,
   changeCcyInfoModalState,
+  setLanguage,
+  setStrategyTab,
+  changeConfirmDMSModalState,
+  changeEditOrderModalState,
 }

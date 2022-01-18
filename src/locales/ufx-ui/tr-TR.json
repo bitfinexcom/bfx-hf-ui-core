@@ -1,0 +1,103 @@
+{
+  "http_errors": {
+    "rate_limit": "Çok fazla işlem yaptınız, lütfen bir süre sonra tekrar deneyin"
+  },
+  "common": {
+    "no_data_available": "Kullanılabilir veri yok",
+    "websocket_offiline": "Websocket connection offline",
+    "websocket_connected": "Websocket bağlı",
+    "websocket_disconnected": "Websocket bağlantısı kesildi",
+    "cancel": "İptal Et",
+    "filter": "Filtre",
+    "search": "Arama",
+    "no_results_found": "Sonuç bulunamadı",
+    "created": "Oluşturuldu",
+    "modified": "Değiştirildi",
+    "at": " at ",
+    "yes": "Evet",
+    "copy": "Kopyala",
+    "copied": "Kopyalandı",
+    "copy_to_clipboard": "Panoya kopyala",
+    "no": "Hayır"
+  },
+  "ui": {
+    "typeToSearch": "Aramak için yazın..",
+    "selectOption": "Bir seçenek belirleyin"
+  },
+  "error": {
+    "not_enough_balance": "Yeterli bakiye yok, kullanılabilir bakiye {{amount}}",
+    "must_be_number": "Bir sayı olmalı",
+    "must_be_positive": "Pozitif bir sayı olmalı",
+    "required": "{{fieldLabel}} gerekli",
+    "max_length": "{{fieldLabel}} cannot be longer than {{maxLength}} characters",
+    "no_decimals": "{{fieldLabel}} cannot have any decimal places",
+    "max_decimals": "Maximum {{allowedDecimals}} decimal places",
+    "invalid_date": "Geçersiz Tarih",
+    "must_be_date": "Tarih, geçerli bir tarih olmalı",
+    "date_must_be_within_interval": "Date must be between 1 to 7 days from today",
+    "must_be_before_max_date": "Date after max date",
+    "must_be_after_min_date": "Date before min date"
+  },
+  "ticker": {
+    "volume": "Hacim",
+    "high": "Yüksek",
+    "low": "Düşük"
+  },
+  "tickerlist": {
+    "pair": "Eş",
+    "last_price": "Son Fiyat",
+    "last": "Son",
+    "24h_change": "24h",
+    "volume": "Vol.",
+    "favorites": "Favoriler",
+    "empty": "Gösterilecek öğe yok",
+    "fav_tooltip": "Show favorite tickers only",
+    "volume_tooltip": "Viewing 24h volume in terms of {{volumeUnit}} equivalent. Click to toggle",
+    "volume_tooltip_self": "Viewing 24h volume in terms of each currency. Click to toggle"
+  },
+  "trades": {
+    "time": "Zaman",
+    "amount": "Tutar",
+    "price": "Fiyat",
+    "market": "Piyasa",
+    "user": "Kullanıcı",
+    "change_to_market": "Change to market",
+    "change_to_user": "Change to user"
+  },
+  "orderhistory": {
+    "pair": "Eş",
+    "type": "Tür",
+    "amount": "Tutar",
+    "ccy": "Ccy",
+    "price": "Fiyat",
+    "average_price": "Avg. Price",
+    "status": "Durum",
+    "placed": "Emir verildi",
+    "no_orders": "No historic orders",
+    "sell_order_title": "Sell order (id: {{id}})",
+    "buy_order_title": "Buy order (id: {{id}})"
+  },
+  "orders": {
+    "pair": "Eş",
+    "type": "Tür",
+    "amount": "Tutar",
+    "ccy": "Ccy",
+    "price": "Fiyat",
+    "status": "Durum",
+    "placed": "Emir verildi",
+    "no_orders": "Aktif emir yok",
+    "sell_order_title": "Sell order (id: {{id}})",
+    "buy_order_title": "Buy order (id: {{id}})"
+  },
+  "book": {
+    "cancel_order": "Emri iptal et",
+    "count": "Adet",
+    "amount": "Tutar",
+    "total": "Toplam",
+    "price": "Fiyat",
+    "decrease_precision": "Hassasiyeti Azalt",
+    "increase_precision": "Hassasiyeti Artır",
+    "decrease_zoom": "Decrease Zoom",
+    "increase_zoom": "Increase Zoom"
+  }
+}

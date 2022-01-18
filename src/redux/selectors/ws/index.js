@@ -1,18 +1,16 @@
 import getFavoritePairs from './get_favorite_pairs'
 import getFavoritePairsObject from './get_favorite_pairs_object'
-import getSyncRanges from './get_sync_ranges'
-import isSyncingCandles from './is_syncing_candles'
-import getSocket from './get_socket'
+import { getSocket, isSocketConnected } from './get_socket'
 import getSockets from './get_sockets'
 import getAuthToken from './get_auth_token'
+import getIsBitfinexConnected from './get_is_bitfinex_connected'
 import getAuthConfigured from './get_auth_configured'
-import getStrategies from './get_strategies'
+import getSortedByTimeStrategies from './get_sorted_by_time_strategies'
 import getAllPositions from './get_all_positions'
 import getFilteredPositions from './get_filtered_positions'
 import getFilteredPositionsCount from './get_filtered_positions_count'
 import getAllBalances from './get_all_balances'
 import getFilteredBalances from './get_filtered_balances'
-import getBalances from './get_balances'
 import getAtomicOrders from './get_atomic_orders'
 import getFilteredAtomicOrders from './get_filtered_atomic_orders'
 import getFilteredAtomicOrdersCount from './get_filtered_atomic_orders_count'
@@ -20,17 +18,15 @@ import getFilteredAlgoOrders from './get_filtered_algo_orders'
 import getFilteredAlgoOrdersCount from './get_filtered_algo_orders_count'
 import getAlgoOrders from './get_algo_orders'
 import getNotifications from './get_notifications'
-import getAllSyncRanges from './get_all_sync_ranges'
 import getOrderHistory from './get_order_history'
 
 import getBacktestState from './get_backtest_state'
 import getBacktestData from './get_backtest_data'
 import getBacktestResults from './get_backtest_results'
 
-import getAPIClientState from './get_api_client_state'
-import apiClientConnected from './api_client_connected'
-import apiClientConnecting from './api_client_connecting'
-import apiClientDisconnected from './api_client_disconnected'
+import {
+  getAPIClientState, apiClientConnected, apiClientConnecting, apiClientDisconnected,
+} from './api_client_state'
 
 import getPaperAPIKeyState from './get_paper_api_key_state'
 import getMainAPIKeyState from './get_main_api_key_state'
@@ -39,16 +35,16 @@ import getIsMainModeApiKeyUpdating from './get_is_main_mode_api_key_updating'
 import getIsPaperModeApiKeyUpdating from './get_is_paper_mode_api_key_updating'
 
 export {
-  getSocket,
   getSockets,
+  getSocket,
+  isSocketConnected,
 
   getAuthToken,
+  getIsBitfinexConnected,
   getAuthConfigured,
   getOrderHistory,
 
-  getSyncRanges,
-  isSyncingCandles,
-  getStrategies,
+  getSortedByTimeStrategies,
 
   getBacktestState,
   getBacktestData,
@@ -64,7 +60,6 @@ export {
   getFilteredPositionsCount,
   getAllBalances,
   getFilteredBalances,
-  getBalances,
   getAtomicOrders,
   getFilteredAtomicOrders,
   getFilteredAtomicOrdersCount,
@@ -75,7 +70,6 @@ export {
   getFavoritePairsObject,
 
   getNotifications,
-  getAllSyncRanges,
 
   getPaperAPIKeyState,
   getMainAPIKeyState,

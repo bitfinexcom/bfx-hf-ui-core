@@ -6,8 +6,6 @@ const getInitialState = () => ({
   ccyArticleIdsMap: [],
 })
 
-const EMPTY_OBJ = {}
-
 const reducer = (state = getInitialState(), action) => {
   const { type, payload = null } = action
   switch (type) {
@@ -17,7 +15,7 @@ const reducer = (state = getInitialState(), action) => {
         const [ccy, id] = element
         acc[ccy] = id
         return acc
-      }, EMPTY_OBJ)
+      }, {})
       return { ...state, ccyArticleIdsMap: newState }
     }
     case zendeskTypes.SET_CCY_ARTICLE: {

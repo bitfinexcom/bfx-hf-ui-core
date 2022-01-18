@@ -1,7 +1,8 @@
-@import '../../variables.scss';
+@import "../../variables.scss";
 
 .hfui-aolist__wrapper {
   padding-bottom: 8px;
+  height: 100%;
 
   .empty {
     margin-top: 10px;
@@ -9,17 +10,23 @@
   }
 }
 
-.icons-cell > * {
-  margin-right: 8px;
-  font-size: 16px;
+.icons-cell {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
 
-  .empty {
-    margin-top: 10px;
-    text-align: center;
-  }
+  > * {
+    margin-right: 8px;
+    font-size: 16px;
 
-  &:hover {
-    cursor: pointer;
-    color: $text-color;
+    .empty {
+      margin-top: 10px;
+      text-align: center;
+    }
+
+    &:hover {
+      cursor: pointer;
+      color: var(--shade-7);
+    }
   }
 }

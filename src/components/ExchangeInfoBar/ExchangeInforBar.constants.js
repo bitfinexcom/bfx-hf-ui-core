@@ -2,55 +2,49 @@
 /* eslint-disable react/display-name */
 import React from 'react'
 import { TICKERLIST_KEYS, TICKER_KEYS } from '@ufx-ui/core'
-import CCYIcon from './CCYIcon'
 
-export const tickerDataMapping = {
+import CCYIcon from './CCYIcon'
+import { getCorrectIconNameOfPerpCcy, getPairFromMarket } from '../../util/market'
+
+export const getTickerDataMapping = (getCurrencySymbol) => ({
   [TICKER_KEYS.BASE_CCY]: {
     renderer: ({ baseCcy, quoteCcy, data }) => {
-      const { isPerp, perpUI } = data
+      const { isPerp, uiID } = data
 
       return (
-        isPerp ? <div className='highlight'>{perpUI}</div> : (
+        isPerp ? <div className='highlight'>{uiID}</div> : (
           <>
-            <div className='highlight'>{baseCcy}</div>
+            <div className='highlight'>{getCurrencySymbol(baseCcy)}</div>
             /
-            <div className='quote-ccy'>{quoteCcy}</div>
+            <div className='quote-ccy'>{getCurrencySymbol(quoteCcy)}</div>
           </>
         )
       )
     },
   },
-}
+})
 
-export const rowMapping = {
+const getMarket = (markets, rowData) => markets?.[rowData?.id] || {}
+
+export const getTickerListMapping = (getCurrencySymbol, markets) => ({
   [TICKERLIST_KEYS.BASE_CCY]: {
-    renderer: (
-      { rowData },
-    ) => {
-      const {
-        baseCcy, quoteCcy, isPerp, perpUI,
-      } = rowData
+    renderer: ({ rowData = {} }) => {
+      const market = getMarket(markets, rowData)
+      const { uiID, isPerp, base } = market
+      const id = getPairFromMarket(market, getCurrencySymbol)
 
       return (
-        <>
-          {isPerp ? (
-            <span className='ccy-pair'>
-              <CCYIcon small ccy={baseCcy} />
-              <span>{perpUI}</span>
-            </span>
-          ) : (
-            <span className='ccy-pair'>
-              <CCYIcon small ccy={baseCcy} />
-              <span>
-                {baseCcy}
-                /
-                {quoteCcy}
-              </span>
-            </span>
-          )}
-        </>
-
+        <span className='ccy-pair'>
+          <CCYIcon small ccy={isPerp ? getCorrectIconNameOfPerpCcy(base) : base} />
+          <span>{isPerp ? uiID : id}</span>
+        </span>
       )
     },
   },
-}
+  [TICKERLIST_KEYS.VOLUME]: {
+    selector: 'volumeConverted',
+  },
+  [TICKERLIST_KEYS.CCY_LABELS]: {
+    format: (_, __, data) => getMarket(markets, data)?.ccyLabels,
+  },
+})

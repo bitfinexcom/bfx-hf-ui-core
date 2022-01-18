@@ -1,4 +1,5 @@
 import React, { memo } from 'react'
+import { useTranslation } from 'react-i18next'
 import PropTypes from 'prop-types'
 import { useSelector } from 'react-redux'
 import { getTicker } from '../../../redux/selectors/meta'
@@ -12,6 +13,7 @@ const TickerBar = (props) => {
   const { onFieldChange, layout: { fields } } = props
   const activeMarket = useSelector(getActiveMarket)
   const activeMarketTicker = useSelector((state) => getTicker(state, activeMarket))
+  const { t } = useTranslation()
 
   const { bid, ask } = activeMarketTicker
   const { quote } = activeMarket
@@ -28,7 +30,10 @@ const TickerBar = (props) => {
         role='button'
         tabIndex='0'
       >
-        <span className='ticker-name'>BID:</span>
+        <span className='ticker-name'>
+          {t('orderForm.bid')}
+          :
+        </span>
         <PLNumber
           value={bid}
           prepareFunc={preparePrice}
@@ -42,7 +47,10 @@ const TickerBar = (props) => {
         role='button'
         tabIndex='0'
       >
-        <span className='ticker-name'>ASK:</span>
+        <span className='ticker-name'>
+          {t('orderForm.ask')}
+          :
+        </span>
         <PLNumber value={ask} prepareFunc={preparePrice} ccy={quote} />
       </div>
     </div>

@@ -4,7 +4,7 @@
   .ps__thumb-y,
   .ps__thumb-x {
     width: 5px;
-    background: $light-color-100;
+    background: var(--shade-1);
     transition-duration: .05s !important;
     transition-timing-function: ease !important;
     opacity: 1 !important;
@@ -21,7 +21,7 @@
     > .ps__thumb-y,
     > .ps__thumb-x {
       width: 5px;
-      background: $light-color-300;
+      background: var(--shade-3);
     }
   }
 }

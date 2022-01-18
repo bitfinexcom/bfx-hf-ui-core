@@ -1,54 +1,58 @@
 import React, { memo } from 'react'
 import PropTypes from 'prop-types'
 import ClassNames from 'classnames'
-
+import { useTranslation } from 'react-i18next'
 import Scrollbars from '../../ui/Scrollbars'
 
 const OrderFormModal = ({
   content, className, icon, title, form, buttons, onClick, titleColor, apiClientConnecting, isModal,
-}) => (
-  <div className={ClassNames([{ 'hfui-orderform__modal-wrapper': isModal, 'hfui-orderform__wrapper-nomodal': !isModal }, className])}>
-    <Scrollbars>
-      <div
-        role='button'
-        tabIndex={0}
-        className='hfui-orderform__modal-inner fullheight'
-        onClick={onClick}
-      >
-        {icon && (<i className={icon} />)}
-        {title && (
-          <p
-            style={!titleColor ? {} : {
-              color: titleColor,
-            }}
-          >
-            {title}
-          </p>
-        )}
+}) => {
+  const { t } = useTranslation()
 
-        {content && (content)}
+  return (
+    <div className={ClassNames([{ 'hfui-orderform__modal-wrapper': isModal, 'hfui-orderform__wrapper-nomodal': !isModal }, className])}>
+      <Scrollbars>
+        <div
+          role='button'
+          tabIndex={0}
+          className='hfui-orderform__modal-inner fullheight'
+          onClick={onClick}
+        >
+          {icon && (<i className={icon} />)}
+          {title && (
+            <p
+              style={!titleColor ? {} : {
+                color: titleColor,
+              }}
+            >
+              {title}
+            </p>
+          )}
 
-        {form && (
-          <div className='hfui-orderform__modal-form'>
-            {form}
-          </div>
-        )}
+          {content && (content)}
 
-        {buttons && (
-          <div className='hfui-orderform__modal-buttons'>
-            {buttons}
-          </div>
-        )}
+          {form && (
+            <div className='hfui-orderform__modal-form'>
+              {form}
+            </div>
+          )}
 
-        {apiClientConnecting && (
-          <span>
-            Connecting to exchange...
-          </span>
-        )}
-      </div>
-    </Scrollbars>
-  </div>
-)
+          {buttons && (
+            <div className='hfui-orderform__modal-buttons'>
+              {buttons}
+            </div>
+          )}
+
+          {apiClientConnecting && (
+            <span>
+              {t('orderForm.exchangeConnectings')}
+            </span>
+          )}
+        </div>
+      </Scrollbars>
+    </div>
+  )
+}
 
 OrderFormModal.propTypes = {
   content: PropTypes.oneOfType([
@@ -73,7 +77,7 @@ OrderFormModal.defaultProps = {
   isModal: true,
   apiClientConnecting: false,
   titleColor: '',
-  onClick: () => {},
+  onClick: () => { },
   title: '',
   icon: '',
   className: '',

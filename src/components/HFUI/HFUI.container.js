@@ -3,8 +3,10 @@ import { reduxActions } from '@ufx-ui/bfx-containers'
 
 import WSActions from '../../redux/actions/ws'
 import GAActions from '../../redux/actions/google_analytics'
-import { getCurrentMode, getShowAlgoPauseInfoSetting } from '../../redux/selectors/ui'
-import { getAuthToken } from '../../redux/selectors/ws'
+import { getCurrentMode, getShowAlgoPauseInfoSetting, getThemeSetting } from '../../redux/selectors/ui'
+import { MAX_ORDER_COUNT_SETTING } from '../../redux/selectors/ui/get_core_settings'
+import { getAuthToken, getIsBitfinexConnected } from '../../redux/selectors/ws'
+
 import HFUI from './HFUI'
 
 const mapStateToProps = (state = {}) => {
@@ -16,12 +18,17 @@ const mapStateToProps = (state = {}) => {
     notificationsVisible,
     currentMode: getCurrentMode(state),
     settingsShowAlgoPauseInfo: getShowAlgoPauseInfoSetting(state),
+    settingsTheme: getThemeSetting(state),
+    isBfxConnected: getIsBitfinexConnected(state),
   }
 }
 
 const mapDispatchToProps = dispatch => ({
   getSettings: (authToken) => {
     dispatch(WSActions.send(['get.settings', authToken]))
+  },
+  getCoreSettings: (authToken) => {
+    dispatch(WSActions.send(['get.core_settings', authToken, [MAX_ORDER_COUNT_SETTING]]))
   },
   GAPageview: (page) => {
     dispatch(GAActions.pageview(page))

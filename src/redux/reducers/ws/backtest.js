@@ -1,3 +1,4 @@
+import _size from 'lodash/size'
 import types from '../../constants/ws'
 
 function getInitialState() {
@@ -54,7 +55,7 @@ function reducer(state = getInitialState(), action = {}) {
 
     case types.SET_BACKTEST_OPTIONS: {
       const { options = {} } = payload
-      if (!Object.keys(options).length) {
+      if (!_size(options)) {
         return {
           ...state,
         }

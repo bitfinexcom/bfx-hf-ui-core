@@ -1,15 +1,9 @@
-const getPriceFromStatus = (status) => {
-  if (!status.includes('@')) {
-    return '0.00'
-  }
-  return `${status.split('@')[1].split('(')[0]}`
-}
+import _split from 'lodash/split'
 
 const getFormatedStatus = (status) => {
-  return `${status.split('@')[0]}`
+  return `${_split(status, '@')?.[0]}`
 }
 
 export {
-  getPriceFromStatus,
   getFormatedStatus,
 }

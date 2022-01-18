@@ -1,0 +1,14 @@
+.hfui-edit-order-modal__wrapper {
+  .ao-submit-action,
+  .hfui-orderform__layout-actions {
+    display: none;
+  }
+
+  .hfui-orderform__checkbox-group:empty {
+    display: none;
+  }
+
+  .modal__body {
+    overflow-y: scroll;
+  }
+}

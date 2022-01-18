@@ -1,17 +1,19 @@
+import _toUpper from 'lodash/toUpper'
 import { Position, Notification } from 'bfx-api-node-models'
 
 const positionAdapter = (data = []) => {
   return new Position(data).toJS()
 }
 
-const balanceAdapter = (data = []) => ({
+const balanceAdapter = (data = [], getCurrencySymbol = () => {}) => ({
   currency: data[0],
   context: data[1],
   balance: data[2],
   available: data[3],
+  symbol: getCurrencySymbol(data[0]),
 })
 
-const orderAdapter = (data = []) => ({
+const orderAdapter = (data = [], getMarketPair = () => {}) => ({
   id: data[0],
   gid: data[1],
   cid: data[2],
@@ -20,8 +22,28 @@ const orderAdapter = (data = []) => ({
   amount: data[5],
   originalAmount: data[6],
   type: data[7],
-  status: data[8],
-  price: data[9],
+  tif: !!data[8],
+  tifDate: new Date(data[8]),
+  status: data[9],
+  price: data[10],
+  priceAverage: data[11],
+  priceTrailing: data[12],
+  priceAuxLimit: data[13],
+  hidden: data[14],
+  postonly: data[15],
+  oco: data[16],
+  reduceonly: data[17],
+  visibleOnHit: data[18],
+  lev: data[19],
+  pair: getMarketPair(data[3]),
+})
+
+const AOAdapter = (data = []) => ({
+  gid: data[0],
+  name: data[1],
+  label: data[2],
+  args: data[3],
+  createdAt: data[4],
 })
 
 const notificationAdapter = (data = []) => {
@@ -29,12 +51,17 @@ const notificationAdapter = (data = []) => {
     return {
       mts: data[0],
       type: data[1],
-      status: data[4].level.toUpperCase(),
+      status: _toUpper(data[4].level),
+      level: _toUpper(data[4].level),
       text: data[4].message,
+      message: data[4].message,
     }
   }
   const notification = new Notification(data).toJS()
   notification.cid = data.cid || data.uid
+  notification.i18n = data.i18n || null
+  notification.level = data.status
+  notification.message = data.text
 
   return notification
 }
@@ -44,4 +71,5 @@ export {
   positionAdapter,
   balanceAdapter,
   orderAdapter,
+  AOAdapter,
 }

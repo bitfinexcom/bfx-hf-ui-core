@@ -1,5 +1,5 @@
 import React, { memo } from 'react'
-import ClassNames from 'classnames'
+import cx from 'classnames'
 import _isFinite from 'lodash/isFinite'
 import PropTypes from 'prop-types'
 import { Tooltip } from '@ufx-ui/core'
@@ -8,15 +8,15 @@ import Input from '../../../ui/Input'
 import { renderString, CONVERT_LABELS_TO_PLACEHOLDERS } from './fields.helpers'
 
 const NumberInput = memo(({
-  value, def: { label, customHelp }, disabled, onChange, validationError, percentage, max, renderData,
+  value, def: { label, customHelp }, disabled, onChange, validationError, percentage, max, renderData, className,
 }) => {
   const renderedLabel = renderString(label, renderData)
 
   return (
-    <div className={ClassNames('hfui-orderform__input', {
+    <div className={cx('hfui-orderform__input', {
       disabled,
       invalid: !!validationError,
-    })}
+    }, className)}
     >
       <Input
         type='text'
@@ -61,15 +61,18 @@ NumberInput.propTypes = {
     PropTypes.string, PropTypes.object, PropTypes.number, PropTypes.bool,
   ])),
   renderData: PropTypes.shape({
-    QUOTE: PropTypes.string.isRequired,
-    BASE: PropTypes.string.isRequired,
+    QUOTE: PropTypes.string,
+    BASE: PropTypes.string,
   }),
-  value: PropTypes.string.isRequired,
+  value: PropTypes.oneOfType([
+    PropTypes.string, PropTypes.number,
+  ]).isRequired,
   onChange: PropTypes.func.isRequired,
   validationError: PropTypes.string,
   disabled: PropTypes.bool,
   percentage: PropTypes.bool,
   max: PropTypes.number,
+  className: PropTypes.string,
 }
 
 NumberInput.defaultProps = {
@@ -79,6 +82,7 @@ NumberInput.defaultProps = {
   renderData: {},
   percentage: false,
   max: Number.MAX_SAFE_INTEGER,
+  className: '',
 }
 
 export default NumberInput

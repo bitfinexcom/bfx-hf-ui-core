@@ -1,11 +1,10 @@
-import checkboxesHelpMessages from '../constants/AtomicOrdersCheckboxHelpText'
 import { isValidDate } from '../util/date'
 
-export default () => ({
-  label: 'Limit',
+export default (t) => ({
+  label: t('orderForm.limitTitle'),
   uiIcon: 'limit-active',
-  customHelp:
-    "A Limit order submits a buy or sell order at the specified price. If the price is above or below the current best ask/bid (respectively for buy/sell orders) it will execute immediately as a TAKER order. Otherwise, it will be inserted into the order book and execute as a MAKER order when the market reaches the order's price.\n\nIf the 'hidden' option is enabled, the order will be inserted in the order book but will not be visible to other users, and will execute as a TAKER.\n\nThe OCO (one-cancels-the-other) option may be used to submit a pair of orders; once one of the orders fills, the other is automatically cancelled.\n\nThe 'post-only' option ensures the order is inserted into the order book instead of being immediately filled, and cancels it otherwise.\n\nA Time-In-Force date may be specified, after which the order will be automatically cancelled.",
+  customHelp: t('orderForm.limitHelp'),
+  id: 'limit',
 
   generateOrder: (data = {}, symbol, context) => {
     const {
@@ -19,6 +18,7 @@ export default () => ({
       price,
       amount,
       lev,
+      visibleOnHit,
     } = data
 
     if (tif && (!isValidDate(tifDate) || tifDate === 0)) {
@@ -34,6 +34,7 @@ export default () => ({
       postonly,
       oco,
       reduceonly,
+      visibleOnHit,
     }
 
     if (oco) {
@@ -48,12 +49,18 @@ export default () => ({
       orderDefinition.lev = lev
     }
 
+    if (hidden && visibleOnHit) {
+      orderDefinition.visibleOnHit = true
+    } else {
+      orderDefinition.visibleOnHit = false
+    }
+
     return orderDefinition
   },
 
   header: {
     component: 'ui.checkbox_group',
-    fields: ['oco', 'hidden', 'postonly', 'tif', 'reduceonly'],
+    fields: ['oco', 'hidden', 'postonly', 'tif', 'reduceonly', 'visibleOnHit'],
   },
 
   sections: [
@@ -102,65 +109,87 @@ export default () => ({
   fields: {
     reduceonly: {
       component: 'input.checkbox',
-      label: 'REDUCE-ONLY',
-      customHelp: checkboxesHelpMessages['REDUCE-ONLY'],
+      label: t('orderForm.reduceOnlyCheckbox'),
+      customHelp: t('orderForm.reduceOnlyMessage'),
       trading: ['m', 'f'],
       default: false,
+      visible: {
+        _orderEditing: { neq: true },
+      },
     },
 
     hidden: {
       component: 'input.checkbox',
-      label: 'HIDDEN',
-      customHelp: checkboxesHelpMessages.HIDDEN,
+      label: t('orderForm.hiddenCheckbox'),
+      customHelp: t('orderForm.hiddenMessage'),
       default: false,
+    },
+
+    visibleOnHit: {
+      component: 'input.checkbox',
+      label: t('orderForm.visibleOnHit'),
+      customHelp: t('orderForm.visibleOnHitHelp'),
+      default: false,
+      visible: {
+        hidden: { eq: true },
+      },
     },
 
     oco: {
       component: 'input.checkbox',
-      label: 'OCO',
-      customHelp: checkboxesHelpMessages.OCO,
+      label: t('orderForm.ocoCheckbox'),
+      customHelp: t('orderForm.ocoMessage'),
       default: false,
+      visible: {
+        _orderEditing: { neq: true },
+      },
     },
 
     postonly: {
       component: 'input.checkbox',
-      label: 'POST-ONLY',
-      customHelp: checkboxesHelpMessages['POST-ONLY'],
+      label: t('orderForm.postOnlyCheckbox'),
+      customHelp: t('orderForm.postOnlyMessage'),
       default: false,
+      visible: {
+        _orderEditing: { neq: true },
+      },
     },
 
     tif: {
       component: 'input.checkbox',
-      label: 'TIF',
-      customHelp: checkboxesHelpMessages.TIF,
+      label: t('orderForm.tifCheckbox'),
+      customHelp: t('orderForm.tifMessage'),
       default: false,
+      visible: {
+        _orderEditing: { neq: true },
+      },
     },
 
     price: {
       component: 'input.price',
-      label: 'Price $QUOTE',
+      label: `${t('table.price')} $QUOTE`,
     },
 
     ocoStop: {
       component: 'input.price',
-      label: 'OCO Stop $QUOTE',
+      label: `${t('orderForm.ocoStop')} $QUOTE`,
     },
 
     amount: {
       component: 'input.amount',
-      label: 'Amount $BASE',
+      label: `${t('table.amount')} $BASE`,
     },
 
     tifDate: {
       component: 'input.date',
-      label: 'TIF Date',
+      label: t('orderForm.tifDate'),
       default: new Date(Date.now() + 86400000),
       minDate: new Date(),
     },
 
     lev: {
       component: 'input.range',
-      label: 'Leverage',
+      label: t('orderForm.laverage'),
       min: 1,
       max: 100,
       default: 10,

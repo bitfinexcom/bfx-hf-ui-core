@@ -2,12 +2,15 @@ import React, {
   memo, useCallback, lazy, Suspense,
 } from 'react'
 import PropTypes from 'prop-types'
+import { useTranslation } from 'react-i18next'
+import _includes from 'lodash/includes'
 
 import Layout from '../../components/Layout'
 import { STEPS, STATUS } from '../../components/Joyride'
 import GridLayout from '../../components/GridLayout'
-import ActiveAlgoOrdersModal from '../../components/ActiveAlgoOrdersModal'
-import RefillBalanceModal from '../../components/RefillBalanceModal'
+import ActiveAlgoOrdersModal from '../../modals/ActiveAlgoOrdersModal'
+// import RefillBalanceModal from '../../modals/RefillBalanceModal'
+import useTourGuide from '../../hooks/useTourGuide'
 
 import './style.css'
 
@@ -32,15 +35,20 @@ const Trading = ({
   apiClientConnected,
   hasActiveAlgoOrders,
   finishGuide,
+  isBadConnection,
 }) => {
+  const { t } = useTranslation()
+
+  const showGuide = useTourGuide(isGuideActive)
+
   const onGuideFinish = useCallback((data) => {
     const { status } = data
     const finishedStatuses = [STATUS.FINISHED, STATUS.SKIPPED]
     const CLOSE = 'close'
-    if (finishedStatuses.includes(status) || data.action === CLOSE) {
+    if (_includes(finishedStatuses, status) || data.action === CLOSE) {
       finishGuide()
     }
-  }, [])
+  }, [finishGuide])
 
   return (
     <Layout>
@@ -50,8 +58,8 @@ const Trading = ({
           <Suspense fallback={<></>}>
             <Joyride
               callback={onGuideFinish}
-              steps={STEPS.TRADING}
-              run={isGuideActive}
+              steps={STEPS.getTradingModes(t)}
+              run={showGuide}
             />
           </Suspense>
         )}
@@ -62,8 +70,8 @@ const Trading = ({
           />
         </div>
 
-        <ActiveAlgoOrdersModal isOpen={showAlgoModal && hasActiveAlgoOrders && apiClientConnected} />
-        <RefillBalanceModal />
+        <ActiveAlgoOrdersModal isOpen={showAlgoModal && hasActiveAlgoOrders && apiClientConnected && !isBadConnection} />
+        {/* <RefillBalanceModal /> */}
       </Layout.Main>
       <Layout.Footer />
     </Layout>
@@ -77,6 +85,7 @@ Trading.propTypes = {
   apiClientConnected: PropTypes.bool,
   hasActiveAlgoOrders: PropTypes.bool,
   finishGuide: PropTypes.func.isRequired,
+  isBadConnection: PropTypes.bool.isRequired,
 }
 
 Trading.defaultProps = {

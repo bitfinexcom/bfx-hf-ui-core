@@ -14,7 +14,7 @@
   }
 
   .hfui-panel__content {
-    background: $panel-background-color;
+    background: var(--darker-background-color);
   }
 
   .hfui-panel .hfui-panel__label {
@@ -27,9 +27,9 @@
     font-weight: 600;
     line-height: 32px;
     padding: 0 spacing(0.5);
-    background: $panel-background-color;
+    background: var(--darker-background-color);
     border-radius: $border-radius;
-    color: $text-color;
+    color: var(--shade-7);
     height: 32px;
     cursor: pointer;
     transition: all .2s;
@@ -45,12 +45,12 @@
 
     &:hover,
     &.active {
-      background: $light-color-50;
+      background: var(--shade-0);
     }
 
     &.active {
-      background: $primary-color-50;
-      color: $primary-color-800;
+      background: var(--primary-0);
+      color: var(--primary-8);
     }
   }
 }
