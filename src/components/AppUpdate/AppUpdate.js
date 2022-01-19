@@ -24,8 +24,8 @@ function AppUpdate() {
     setHideNotification(false)
   }
 
-  const onUpdateDownloaded = () => {
-    setMessage('Update Downloaded. It will be installed on restart. Restart now?')
+  const onUpdateDownloaded = (notes, name) => {
+    setMessage(notes || name || 'Update Downloaded. It will be installed on restart. Restart now?')
     setHideRestart(false)
     setHideNotification(false)
   }
@@ -46,7 +46,7 @@ function AppUpdate() {
         Debug('releaseNotes: ', releaseNotes)
         Debug('_onUpdateDownloaded: _onUpdateDownloaded: _onUpdateDownloaded: ', _onUpdateAvailable)
         // ipcRenderer.removeAllListeners('update_downloaded')
-        onUpdateDownloaded()
+        onUpdateDownloaded(releaseNotes, releaseName)
       }
 
       ipcRenderer.on('update_available', _onUpdateAvailable)
