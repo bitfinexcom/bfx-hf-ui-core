@@ -41,7 +41,9 @@ function AppUpdate() {
         // ipcRenderer.removeAllListeners('update_available')
         onUpdateAvailable()
       }
-      const _onUpdateDownloaded = () => {
+      const _onUpdateDownloaded = (event, releaseNotes, releaseName) => {
+        Debug('releaseName: ', releaseName)
+        Debug('releaseNotes: ', releaseNotes)
         Debug('_onUpdateDownloaded: _onUpdateDownloaded: _onUpdateDownloaded: ', _onUpdateAvailable)
         // ipcRenderer.removeAllListeners('update_downloaded')
         onUpdateDownloaded()
