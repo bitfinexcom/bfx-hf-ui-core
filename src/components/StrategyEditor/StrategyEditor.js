@@ -1,6 +1,6 @@
 import React, { memo, useState } from 'react'
 import Debug from 'debug'
-import ClassNames from 'classnames'
+import ClassNames from 'clsx'
 import _ from 'lodash'
 import _isEmpty from 'lodash/isEmpty'
 import _keys from 'lodash/keys'

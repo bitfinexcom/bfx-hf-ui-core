@@ -1,9 +1,9 @@
+/* eslint-disable react/prop-types */
 import React, { useMemo, memo } from 'react'
 import { useTranslation } from 'react-i18next'
 import Joyride from 'react-joyride'
 import { getLocaleOptions } from './Joyride.helpers'
 
-// eslint-disable-next-line react/prop-types
 const HoneyJoyride = ({ styles: _styles, ...props }) => {
   const { t } = useTranslation()
   const locale = useMemo(() => getLocaleOptions(t), [t])

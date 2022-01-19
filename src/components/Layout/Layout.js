@@ -1,5 +1,5 @@
 import React from 'react'
-import cx from 'classnames'
+import cx from 'clsx'
 import './style.css'
 
 import Navbar from '../Navbar'

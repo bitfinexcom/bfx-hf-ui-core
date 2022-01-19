@@ -1,5 +1,5 @@
 import React, { memo } from 'react'
-import ClassNames from 'classnames'
+import ClassNames from 'clsx'
 import PropTypes from 'prop-types'
 import { Checkbox, Tooltip } from '@ufx-ui/core'
 import _toUpper from 'lodash/toUpper'

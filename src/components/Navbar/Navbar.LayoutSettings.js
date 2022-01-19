@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import cx from 'classnames'
+import cx from 'clsx'
 import _entries from 'lodash/entries'
 import _map from 'lodash/map'
 import _filter from 'lodash/filter'

@@ -2,7 +2,7 @@ import React, {
   useState, memo,
 } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import cx from 'classnames'
+import cx from 'clsx'
 import PropTypes from 'prop-types'
 import _map from 'lodash/map'
 import _isEmpty from 'lodash/isEmpty'

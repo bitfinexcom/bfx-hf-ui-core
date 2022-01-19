@@ -3,7 +3,7 @@ import React, { useState, memo } from 'react'
 import _values from 'lodash/values'
 import _map from 'lodash/map'
 import _isFunction from 'lodash/isFunction'
-import cx from 'classnames'
+import cx from 'clsx'
 import { useTranslation } from 'react-i18next'
 
 import Modal from '../../ui/Modal'
