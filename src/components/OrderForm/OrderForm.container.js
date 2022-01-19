@@ -17,6 +17,7 @@ import {
 import {
   getComponentState, getActiveMarket, getCurrentMode, getIsPaperTrading, getIsOrderExecuting, getMaxOrderCounts,
 } from '../../redux/selectors/ui'
+import { getScope } from '../../util/scope'
 
 const debug = Debug('hfui:c:order-form')
 
@@ -97,7 +98,7 @@ const mapDispatchToProps = dispatch => ({
       apiSecret,
       mode,
       mode,
-      WSActions.getScope(),
+      getScope(),
     ]))
   },
 

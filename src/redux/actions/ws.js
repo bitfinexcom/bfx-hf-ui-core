@@ -1,7 +1,7 @@
 import _isString from 'lodash/isString'
 import t from '../constants/ws'
 import ui from '../constants/ui'
-import { isElectronApp } from '../config'
+import { getScope } from '../../util/scope'
 
 const send = payload => ({
   type: t.BUFF_SEND,
@@ -10,13 +10,8 @@ const send = payload => ({
     : JSON.stringify(payload),
 })
 
-const getScope = () => {
-  return isElectronApp ? 'app' : 'web'
-}
-
 export default {
   send,
-  getScope,
   error: payload => ({ type: t.ERROR, payload }),
   flushQueue: () => ({ type: t.FLUSH_QUEUE }),
 
