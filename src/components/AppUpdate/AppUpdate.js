@@ -63,6 +63,11 @@ function AppUpdate() {
 
   const closeNotification = () => {
     setHideNotification(true)
+    if (_isFunction(window.require)) {
+      const electron = window.require('electron')
+      const { ipcRenderer } = electron
+      ipcRenderer.send('clear_app_update_timer')
+    }
   }
 
   const restartApp = () => {
