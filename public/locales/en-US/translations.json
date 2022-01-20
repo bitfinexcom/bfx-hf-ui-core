@@ -470,7 +470,11 @@
     "laverage": "Leverage",
     "stopPrice": "Stop Price",
     "limitPrice": "Limit Price",
-    "distance": "Distance"
+    "distance": "Distance",
+    "greaterThan0Message": "Must be greater than 0",
+    "invalidDateMessage": "Invalid date",
+    "dateRequiredMessage": "Date required",
+    "mustBeNumberMessage": "Must be a number"
   },
   "orderHistoryModal": {
     "title": "Order History",

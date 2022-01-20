@@ -1,10 +1,9 @@
 import React from 'react'
 import { StoreProvider as UfxStoreProvider } from '@ufx-ui/core'
-import { useSelector } from 'react-redux'
+import { useTranslation } from 'react-i18next'
 import useAuthToken from '../../hooks/useAuthToken'
 import HFUI from '../HFUI'
 import CrashHandler from '../CrashHandler'
-import { getCurrentLanguage } from '../../redux/selectors/ui'
 
 import ruTrans from '../../locales/ufx-ui/ru-RU.json'
 import twTrans from '../../locales/ufx-ui/zh-TW.json'
@@ -25,13 +24,15 @@ const translations = {
 
 const HFUIWrapper = () => {
   useAuthToken()
-  const language = useSelector(getCurrentLanguage)
+  const { i18n } = useTranslation()
+
+  const i18nMappedKey = i18n.getMappedLanguageKey()
 
   const timezoneOffset = -(new Date().getTimezoneOffset())
   const config = {
     timezoneOffset,
     translations,
-    lang: language,
+    lang: i18nMappedKey,
   }
 
   return (

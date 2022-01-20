@@ -183,7 +183,7 @@ const EditOrderModal = ({
     }
 
     const validationError = (C && C.validateValue)
-      ? C.validateValue(processedValue)
+      ? C.validateValue(processedValue, t)
       : null
 
     setValidationErrors({
