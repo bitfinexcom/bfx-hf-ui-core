@@ -12,6 +12,7 @@ import { THEMES, SETTINGS } from '../../redux/selectors/ui'
 import useInjectBfxData from '../../hooks/useInjectBfxData'
 import StrategyEditorPage from '../../pages/StrategyEditor'
 import NotificationsSidebar from '../NotificationsSidebar'
+import AppUpdate from '../AppUpdate'
 import closeElectronApp from '../../redux/helpers/close_electron_app'
 import Routes from '../../constants/routes'
 import { isElectronApp } from '../../redux/config'
@@ -150,6 +151,7 @@ const HFUI = (props) => {
         </>
       )}
       <NotificationsSidebar notificationsVisible={notificationsVisible} />
+      {isElectronApp && <AppUpdate />}
     </Suspense>
   )
 }
