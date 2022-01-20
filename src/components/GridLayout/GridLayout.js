@@ -104,6 +104,7 @@ const GridLayout = ({
         }}
         rowHeight={32}
         margin={[20, 20]}
+        containerPadding={[0, 0]}
         layouts={{ lg: currentLayouts }}
         breakpoints={{
           lg: 1200, md: 996, sm: 768, xs: 480, xxs: 0,

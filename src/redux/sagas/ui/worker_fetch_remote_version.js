@@ -1,8 +1,7 @@
-import { put, delay } from 'redux-saga/effects'
+import { put, delay, call } from 'redux-saga/effects'
 import _head from 'lodash/head'
 import _replace from 'lodash/replace'
 import Debug from 'debug'
-import Request from 'request-promise'
 
 import UIActions from '../../actions/ui'
 import { isElectronApp } from '../../config'
@@ -14,17 +13,17 @@ const debug = Debug('hfui:rx:s:ws-hfui:worker-fetch-remote-version')
 
 export default function* () {
   while (isElectronApp) {
-    let remoteManifestData
+    let manifest
 
     try {
-      const manifest = yield Request(REMOTE_MANIFEST_URL)
-      remoteManifestData = JSON.parse(manifest)
+      const response = yield call(fetch, REMOTE_MANIFEST_URL)
+      manifest = yield response.json()
     } catch (err) {
       debug('failed to fetch remote manifest: %s', err.message)
       return
     }
 
-    let { name } = _head(remoteManifestData)
+    let { name } = _head(manifest)
     name = _replace(name, 'v', '')
 
     yield put(UIActions.saveRemoteVersion(name))

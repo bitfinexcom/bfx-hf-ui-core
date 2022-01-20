@@ -1,5 +1,5 @@
 import React, { memo } from 'react'
-import ClassNames from 'classnames'
+import ClassNames from 'clsx'
 import _isFinite from 'lodash/isFinite'
 import PropTypes from 'prop-types'
 

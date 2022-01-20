@@ -1,5 +1,5 @@
 import React from 'react'
-import ClassNames from 'classnames'
+import ClassNames from 'clsx'
 import _isObject from 'lodash/isObject'
 import _isBoolean from 'lodash/isBoolean'
 import _capitalize from 'lodash/capitalize'

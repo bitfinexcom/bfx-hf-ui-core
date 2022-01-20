@@ -1,7 +1,7 @@
 import React, { memo } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { push } from 'connected-react-router'
-import ClassNames from 'classnames'
+import ClassNames from 'clsx'
 import PropTypes from 'prop-types'
 
 import './style.css'

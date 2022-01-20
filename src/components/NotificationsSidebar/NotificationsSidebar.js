@@ -2,7 +2,7 @@ import React, {
   memo, useState, useEffect, useCallback,
 } from 'react'
 import { Notifications, useInterval } from '@ufx-ui/core'
-import ClassNames from 'classnames'
+import ClassNames from 'clsx'
 import PropTypes from 'prop-types'
 import _isEmpty from 'lodash/isEmpty'
 import _map from 'lodash/map'

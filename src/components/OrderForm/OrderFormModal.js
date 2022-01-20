@@ -1,6 +1,6 @@
 import React, { memo } from 'react'
 import PropTypes from 'prop-types'
-import ClassNames from 'classnames'
+import ClassNames from 'clsx'
 import { useTranslation } from 'react-i18next'
 import Scrollbars from '../../ui/Scrollbars'
 

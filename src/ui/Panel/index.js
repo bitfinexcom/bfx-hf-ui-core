@@ -1,7 +1,7 @@
 import React, {
   useState, useEffect, useCallback,
 } from 'react'
-import ClassNames from 'classnames'
+import ClassNames from 'clsx'
 import PropTypes from 'prop-types'
 import _filter from 'lodash/filter'
 import _map from 'lodash/map'

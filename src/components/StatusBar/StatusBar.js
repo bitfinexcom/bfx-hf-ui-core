@@ -1,5 +1,5 @@
 import React, { memo, useState, useEffect } from 'react'
-import ClassNames from 'classnames'
+import ClassNames from 'clsx'
 import PropTypes from 'prop-types'
 import { useTranslation } from 'react-i18next'
 

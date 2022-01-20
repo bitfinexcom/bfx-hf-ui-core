@@ -7,7 +7,7 @@ import _find from 'lodash/find'
 import _toLower from 'lodash/toLower'
 import _join from 'lodash/join'
 import _map from 'lodash/map'
-import ClassNames from 'classnames'
+import ClassNames from 'clsx'
 import PropTypes from 'prop-types'
 
 import Dropdown from '../../ui/Dropdown'

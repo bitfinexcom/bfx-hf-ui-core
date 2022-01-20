@@ -2,7 +2,6 @@ import React, { memo } from 'react'
 import PropTypes from 'prop-types'
 import { Remarkable } from 'remarkable'
 import { linkify } from 'remarkable/linkify'
-import hljs from 'highlight.js'
 import sanitizeHtml from 'sanitize-html'
 
 import Scrollbars from '../Scrollbars'
@@ -17,20 +16,6 @@ const md = new Remarkable({
   // Double + single quotes replacement pairs, when typographer enabled,
   // and smartquotes on. Set doubles to '«»' for Russian, '„“' for German.
   quotes: '“”‘’',
-  highlight: (str, lang) => {
-    if (lang && hljs.getLanguage(lang)) {
-      try {
-        return hljs.highlight(lang, str).value
-      } catch (err) {
-        return ''
-      }
-    }
-    try {
-      return hljs.highlightAuto(str).value
-    } catch (err) {
-      return ''
-    }
-  },
 }).use(linkify)
 
 const Panel = ({ text }) => (
