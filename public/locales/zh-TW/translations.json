@@ -38,6 +38,7 @@
       "title": "冰山訂單",
       "help": "冰山訂單允許您在市場上下一張大額訂單並確保一次僅成交訂單中一小部分數量。\n\n如選擇「隱藏剩餘訂單」選項，剩餘未執行訂單將不會顯示在掛單簿上，從而在執行大額訂單時避免干擾市場秩序。"
     },
+    "saveParamsSettings": "Algo參數設定",
     "intervalDistortion": "間隔偏離%",
     "intervalDistortionHelp": "每個分割訂單數間隔的偏離量（百分比） ",
     "limitPrice": "價格",
@@ -363,6 +364,7 @@
     "orderSubmittedBuyDetailed": "已建立{{amount}} {{symbol}} {{exID}} {{type}} 買單 (ID: {{id}})",
     "orderSubmittedSellAtDetailed": "已建立{{amount}} {{symbol}} {{exID}} {{type}} 賣單，價格為 {{price}} (ID: {{id}})",
     "orderSubmittedSellDetailed": "已建立{{amount}} {{symbol}} {{exID}} {{type}} 賣單 (ID: {{id}})",
+    "updatingOrderWithId": "更新訂單 (ID: {{orderId}})",
     "orderModifiedBuyAtDetailed": "已修改{{amount}} {{symbol}} {{exID}} {{type}} 買單價格為 {{price}} (ID: {{id}})",
     "orderModifiedBuyDetailed": "已修改{{amount}} {{symbol}} {{exID}} {{type}} 買單 (ID: {{id}})",
     "orderModifiedSellAtDetailed": "已修改{{amount}} {{symbol}} {{exID}} {{type}} 賣單價格為 {{price}} (ID: {{id}})",
@@ -371,6 +373,8 @@
     "orderPartiallyFilledBuyDetailed": "{{amount}} {{symbol}} 的{{exID}} {{type}} 買單已部分成交 (ID: {{id}})",
     "orderPartiallyFilledSellAtDetailed": "{{amount}} {{symbol}} 的{{exID}} {{type}} 賣單以 {{price}} 的價格部分成交 (ID: {{id}})",
     "orderPartiallyFilledSellDetailed": "{{amount}} {{symbol}} 的{{exID}} {{type}} 賣單已部分成交 (ID: {{id}})",
+    "startedLiveStrategyExecution": "已開始執行{{symbol}}-{{tf}}的({{name}})即時策略",
+    "stoppedLiveStrategyExecution": "已停止執行{{symbol}}-{{tf}}的({{name}})即時策略",
     "stoppedAO": "已停止演算法訂單",
     "startedAO": "運行 {{target}} 中的演算法訂單 {{name}}",
     "unknownAlgoOrderId": "不明演算法訂單編號： {{aoID}}",
@@ -407,6 +411,15 @@
     "title": "切換交易模式",
     "text": "切換交易模式須重啟應用程序。按下「Okay」後將重新啟動，並暫停待執行演算法訂單。"
   },
+  "confirmDMSModal": {
+    "title": "啟動「當關閉程式訂單將自動取消」功能",
+    "text": "請注意：當開啟此設定時，一旦關閉APP，系統將會取消您在Honey Framework、Bitfinex網頁及其它地方建立之所有訂單。\n\n此為建議設定，但您應了解設定後可能發生的狀況。",
+    "dontShowAgain": "不再顯示"
+  },
+  "editOrderModal": {
+    "title": "修改訂單",
+    "noOrder": "未選擇訂單"
+  },
   "oldFormatModal": {
     "title": "版面配置升級",
     "text1": "自v3.12.0 版本，我們提供全新的應用程序版面排列設計。",
@@ -432,8 +445,8 @@
     "margin": "保證金",
     "derivatives": "衍生品",
     "fokTitle": "成交或取消單",
-    "visibleOnHit": "時效訂單",
-    "visibleOnHitHelp": "指定自動取消訂單日期及時間。",
+    "visibleOnHit": "部分成交後取消隱藏",
+    "visibleOnHitHelp": "隱藏訂單部分成交後，餘下未成交部分將顯示於掛單簿中。",
     "fokHelp": "成交或取消單（FOK）是須立即全部成交否則直接取消（終止）的限價單 。",
     "iocTitle": "立刻成交否則取消單",
     "iocHelp": "立刻成交否則取消單（IOC）是須立即執行並取消未成交部分的限價單。",
@@ -585,7 +598,8 @@
       "preparing": "策略執行前處理和準備...",
       "realBalancesWarning": "注意：按下「開始」後，您將使用真實帳戶中的資金執行您的交易策略。",
       "createStrategy": "建立策略進行回測。"
-    }
+    },
+    "candleSeedCount": "candle seed數量"
   },
   "ui": {
     "ok": "Okay",
@@ -610,5 +624,11 @@
     "removeBtn": "移除",
     "createBtn": "建立",
     "startBtn": "開始"
+  },
+  "crashHandler": {
+    "text1": "發生導致Honey Framework UI停止運作的錯誤。請重啟應用程式以恢復運作。",
+    "text2_1": "請回報問題至",
+    "text2_2": "我們將會盡快修復此問題！",
+    "text3": "技術崩潰資訊"
   }
 }

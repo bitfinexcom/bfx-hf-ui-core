@@ -38,6 +38,7 @@
       "title": "Iceberg",
       "help": "Iceberg, piyasaya büyük bir sipariş vermenizi sağlarken aynı anda yalnızca küçük bir kısmının doldurulmasını sağlar.\n\n'Gizli Olarak Fazla' seçeneğini etkinleştirerek, kalanı gizli bir emir olarak sunmak ve büyük işlemler gerçekleştirirken minimum piyasa kesintisine izin vermek mümkündür."
     },
+    "saveParamsSettings": "Algo Parametreleri ayarları",
     "intervalDistortion": "Bozulma Aralığı %",
     "intervalDistortionHelp": "Yüzde olarak her dilim aralığını çarpıtacak miktar",
     "limitPrice": "Fiyat",
@@ -62,7 +63,7 @@
     "h": "{{number}}h",
     "D": "{{number}}D",
     "M": "{{number}}M",
-    "emaCandleTimeFrame": "EMA Candle Time Frame",
+    "emaCandleTimeFrame": "EMA Mum Zaman Çerçevesi",
     "priceCapType": "Fiyat Sınırı Türü",
     "priceCapTypeHelp": "Upper price limit for relative order type",
     "none": "Yok",
@@ -188,14 +189,14 @@
       "invalidOrderType": "Geçersiz emir türü: {{orderType}}",
       "invalidAmount": "Geçersiz tutar",
       "invalidSliceAmount": "Geçersiz dilim tutarı",
-      "boolCatchUpFlagRequired": "Bool catch up flag required",
-      "boolAwaitFillFlagRequired": "Bool await fill flag required",
+      "boolCatchUpFlagRequired": "Bool yakalama işareti gerekli",
+      "boolAwaitFillFlagRequired": "Bool bekliyor doldurma işareti gerekli",
       "invalidSliceInterval": "Geçersiz dilim aralığı",
       "invalidIntervalDistortion": "Geçersiz aralık bozulması",
       "invalidAmountDistortion": "Geçersiz tutar bozulması",
       "amountSliceAmountMustHaveSameSign": "Amount & slice amount must have same sign",
       "sliceAmountCannotBeGreaterThanAmount": "Slice amount cannot be greater than amount",
-      "limitPriceRequiredForLimitOrderType": "Limit price required for LIMIT order type",
+      "limitPriceRequiredForLimitOrderType": "LIMIT emir türü için limit fiyatı gerekli",
       "postOnlyFlagRequiredForLimitOrderType": "Post only flag required for LIMIT order type",
       "invalidRelativeCapDelta": "Invalid relative cap delta",
       "periodRequiredForRelativeCapIndicator": "{{capitalizedType}} period required for relative cap indicator",
@@ -363,6 +364,7 @@
     "orderSubmittedBuyDetailed": "Created {{exID}} {{type}} BUY order of {{amount}} {{symbol}} (ID: {{id}})",
     "orderSubmittedSellAtDetailed": "Created {{exID}} {{type}} SELL order of {{amount}} {{symbol}} at {{price}} (ID: {{id}})",
     "orderSubmittedSellDetailed": "Created {{exID}} {{type}} SELL order of {{amount}} {{symbol}} (ID: {{id}})",
+    "updatingOrderWithId": "Updating order (ID: {{orderId}})",
     "orderModifiedBuyAtDetailed": "{{price}} üzerinden {{amount}} {{symbol}} tutarındaki {{exID}} {{type}} SATIN AL emri değiştirildi (ID: {{id}})",
     "orderModifiedBuyDetailed": "{{exID}} {{type}} {{amount}} {{symbol}} SATIN AL emri değiştirildi (Kimlik: {{id}})",
     "orderModifiedSellAtDetailed": "{{price}} üzerinden {{amount}} {{symbol}} tutarındaki {{exID}} {{type}} SATIŞ emri değiştirildi (ID: {{id}})",
@@ -371,6 +373,8 @@
     "orderPartiallyFilledBuyDetailed": "{{exID}} {{type}} {{amount}} {{symbol}} SATIN AL emri kısmen tamamlanmış (Kimlik: {{id}})",
     "orderPartiallyFilledSellAtDetailed": "{{exID}} {{type}} {{amount}} {{symbol}} tutarındaki SATIŞ emri {{price}} ile kısmen tamamlanmış (Kimlik: {{id}})",
     "orderPartiallyFilledSellDetailed": "{{exID}} {{type}} {{amount}} {{symbol}} SATIŞ emri kısmen tamamlandı (Kimlik: {{id}})",
+    "startedLiveStrategyExecution": "Started live strategy execution ({{name}}) for {{symbol}}-{{tf}}",
+    "stoppedLiveStrategyExecution": "Stopped live strategy execution ({{name}}) for {{symbol}}-{{tf}}",
     "stoppedAO": "Algo emri durduruldu",
     "startedAO": "Started AO {{name}} on {{target}}",
     "unknownAlgoOrderId": "Unknown algo order ID: {{aoID}}",
@@ -407,6 +411,15 @@
     "title": "Switch Trade Mode",
     "text": "The app will reboot after you press Okay. It's required for switching trading mode. Open algo orders are paused."
   },
+  "confirmDMSModal": {
+    "title": "Enable Dead Man Switch",
+    "text": "Please be aware that when this setting is enabled, closing the app will not only cancel all orders that have been created by the Honey Framework, but will also cancel all other orders, including those that have been opened on the Bitfinex website or elsewhere.\n\nThis is a recommended setting, but you should be aware of the possible consequences.",
+    "dontShowAgain": "Don't show again"
+  },
+  "editOrderModal": {
+    "title": "Edit order",
+    "noOrder": "No order selected"
+  },
   "oldFormatModal": {
     "title": "Layout upgrade",
     "text1": "Since the v3.12.0 update we have reworked the way of how the application layout works.",
@@ -432,8 +445,8 @@
     "margin": "Marjin",
     "derivatives": "Türevler",
     "fokTitle": "Gerçekleşmezse İptal Et",
-    "visibleOnHit": "İlk işleme kadar gizli",
-    "visibleOnHitHelp": "İlk gerçekleşme (kısmi yürütme) sonrasında gizli emrin kalan kısmı görünür olacaktır.",
+    "visibleOnHit": "Visible on hit",
+    "visibleOnHitHelp": "The rest part of the hidden order will be visible after first hit (partial execution).",
     "fokHelp": "An FOK order is a limit order that must fully fill immediately or it is canceled (killed).",
     "iocTitle": "Kalanı İptal Et",
     "iocHelp": "An IOC order is a limit order that must fill immediately, with any unfilled portion cancelled.",
@@ -585,7 +598,8 @@
       "preparing": "Yürütme öncesi stratejinin işlenmesi ve hazırlanması...",
       "realBalancesWarning": "NOT: Başlat'a basarak stratejinizi gerçek bakiyelerle canlı hesabınızda yürütüyor olacaksınız.",
       "createStrategy": "Yürütmeye başlamak için bir strateji oluşturun."
-    }
+    },
+    "candleSeedCount": "Candle seed count"
   },
   "ui": {
     "ok": "Tamam",
@@ -610,5 +624,11 @@
     "removeBtn": "Kaldır",
     "createBtn": "Oluştur",
     "startBtn": "Başla"
+  },
+  "crashHandler": {
+    "text1": "An error occurred that caused the Honey Framework UI to halt. Please, restart the application to proceed working with it",
+    "text2_1": "Please, report this issue at",
+    "text2_2": "so we would be able to fix it as soon as possible!",
+    "text3": "Technical crash info"
   }
 }

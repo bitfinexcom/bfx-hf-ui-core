@@ -38,6 +38,7 @@
       "title": "冰山委托",
       "help": "冰山委托功能，允许您下达大笔订单时，系统仅显示订单的一小部份于挂单簿中，而大部分订单讲通过”隐藏剩余订单”功能执行。它最常见的用途是将大笔交易订单执行的市场影响最小化。"
     },
+    "saveParamsSettings": "演算参数设置",
     "intervalDistortion": "区间失真％",
     "intervalDistortionHelp": "每笔订单区间失真的数量 (设置百分比）",
     "limitPrice": "价格",
@@ -363,6 +364,7 @@
     "orderSubmittedBuyDetailed": "已创建{{exID}} {{type}} 的{{amount}}{{symbol}} 买单 (ID: {{id}})",
     "orderSubmittedSellAtDetailed": "已创建{{exID}} {{type}} 的{{amount}}{{symbol}} 卖单以{{price}} (ID: {{id}})",
     "orderSubmittedSellDetailed": "已创建{{exID}} {{type}} 的{{amount}}{{symbol}} 卖单 (ID: {{id}})",
+    "updatingOrderWithId": "更新订单中 (ID: {{orderId}})",
     "orderModifiedBuyAtDetailed": "已修改{{exID}} {{type}} 的{{amount}}{{symbol}} 买单以{{price}} (ID: {{id}})",
     "orderModifiedBuyDetailed": "已修改{{exID}} {{type}} 的{{amount}}{{symbol}} 买单 (ID: {{id}})",
     "orderModifiedSellAtDetailed": "已修改{{exID}} {{type}} 的{{amount}}{{symbol}} 卖单以{{price}} (ID: {{id}})",
@@ -371,6 +373,8 @@
     "orderPartiallyFilledBuyDetailed": "{{exID}}{{type}} 的{{amount}}{{symbol}} 买单已部分执行 (ID:{{id}})",
     "orderPartiallyFilledSellAtDetailed": "{{exID}}{{type}} 的{{amount}}{{symbol}} 卖单已以{{price}} 部分执行 (ID:{{id}})",
     "orderPartiallyFilledSellDetailed": "{{exID}}{{type}} 的{{amount}}{{symbol}} 卖单已部分执行 (ID:{{id}})",
+    "startedLiveStrategyExecution": "已开始执行真实交易策略 - ({{name}}) 于{{symbol}}-{{tf}}",
+    "stoppedLiveStrategyExecution": "已停止执行真实交易策略 - ({{name}}) 于{{symbol}}-{{tf}}",
     "stoppedAO": "已停止演算法订单",
     "startedAO": "已开始{{name}} 演算法订单以{{target}}",
     "unknownAlgoOrderId": "未知的演算法订单 ID:{{aoID}}",
@@ -406,6 +410,15 @@
   "tradingModeModal": {
     "title": "切换交易模式",
     "text": "切换至交易模式。点击Okay后将重启应用程式，并暂停待执行演算法订单。"
+  },
+  "confirmDMSModal": {
+    "title": "启用失能开关",
+    "text": "请了解启用此设置后，关闭应用程式将会取消所有于Honey Framework、Bitfinex平台或其他地方所创建的待成交订单。\n\n此仅为建议设置，应了解启用时其相关影响。",
+    "dontShowAgain": "不再显示"
+  },
+  "editOrderModal": {
+    "title": "修改订单",
+    "noOrder": "尚未选取订单"
   },
   "oldFormatModal": {
     "title": "版本升级",
@@ -585,7 +598,8 @@
       "preparing": "于执行前，进行与准备交易策略...",
       "realBalancesWarning": "提醒：点击开始后，您将通过真实账号与资金执行您的交易策略。",
       "createStrategy": "创建策略开始回测."
-    }
+    },
+    "candleSeedCount": "Candle Seed数量"
   },
   "ui": {
     "ok": "确定",
@@ -610,5 +624,11 @@
     "removeBtn": "移除",
     "createBtn": "创建",
     "startBtn": "开始"
+  },
+  "crashHandler": {
+    "text1": "错误发生，Honey Framework介面停止运作。请重启应用程式以继续使用。",
+    "text2_1": "请回报此问题于",
+    "text2_2": "我们将尽快修复此问题！",
+    "text3": "技术故障信息"
   }
 }
