@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import cx from 'classnames'
 import _isFunction from 'lodash/isFunction'
-import Debug from 'debug'
 import { isElectronApp } from '../../redux/config'
 
 import './style.css'
@@ -37,14 +36,10 @@ function AppUpdate() {
       const { ipcRenderer } = electron
 
       const _onUpdateAvailable = () => {
-        Debug('_onUpdateAvailable: _onUpdateAvailable:_onUpdateAvailable:_onUpdateAvailable: ')
         // ipcRenderer.removeAllListeners('update_available')
         onUpdateAvailable()
       }
       const _onUpdateDownloaded = (event, releaseNotes, releaseName) => {
-        Debug('releaseName: ', releaseName)
-        Debug('releaseNotes: ', releaseNotes)
-        Debug('_onUpdateDownloaded: _onUpdateDownloaded: _onUpdateDownloaded: ', _onUpdateAvailable)
         // ipcRenderer.removeAllListeners('update_downloaded')
         onUpdateDownloaded(releaseNotes, releaseName)
       }
