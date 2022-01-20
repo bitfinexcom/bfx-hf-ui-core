@@ -57,7 +57,10 @@ body.Light {
     display: flex;
     flex: 1;
     align-self: flex-start;
-    justify-self: flex-start;
+
+    @media screen and (max-width: 600px) {
+      align-self: auto;
+    }
   }
   .hfui-select__outer {
     display: block;
@@ -72,6 +75,10 @@ body.Light {
     flex-direction: row;
     flex: 1;
     margin-bottom: 10px;
+
+    @media screen and (max-width: 600px) {
+      flex-direction: column;
+    }
   }
 
   .hfui-backtester__start-button {

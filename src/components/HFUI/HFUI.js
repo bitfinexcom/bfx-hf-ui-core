@@ -27,7 +27,6 @@ const TradingModeModal = lazy(() => import('../../modals/TradingModeModal'))
 const BadConnectionModal = lazy(() => import('../../modals/BadConnectionModal'))
 const OldFormatModal = lazy(() => import('../../modals/OldFormatModal'))
 const AOPauseModal = lazy(() => import('../../modals/AOPauseModal'))
-const BestExperienceMessageModal = lazy(() => import('../../modals/BestExperienceMessageModal'))
 const CcyInfoModal = lazy(() => import('../../modals/CcyInfoModal'))
 const ConfirmDMSModal = lazy(() => import('../../modals/ConfirmDMSModal'))
 const EditOrderModal = lazy(() => import('../../modals/EditOrderModal'))
@@ -131,15 +130,13 @@ const HFUI = (props) => {
             {isElectronApp && Routes.strategyEditor && <Route path={Routes.strategyEditor.path} render={() => <StrategyEditorPage />} />}
             <Route path={Routes.marketData.path} render={() => <MarketDataPage />} />
           </Switch>
-          {isElectronApp ? (
+          {isElectronApp && (
             <>
               <TradingModeModal />
               <OldFormatModal />
               <ConfirmDMSModal />
               <AOPauseModal />
             </>
-          ) : (
-            <BestExperienceMessageModal />
           )}
           <BadConnectionModal />
           <CcyInfoModal />

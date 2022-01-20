@@ -6,6 +6,19 @@
   flex-direction: row;
   flex-wrap: wrap;
 
+  @media screen and (max-width: 1120px) {
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    height: auto;
+    padding-bottom: 15px;
+    padding-top: 10px;
+
+    .hfui-tradingpage__menu, .hfui-navbar__main-links {
+      justify-content: center;
+    }
+  }
+
   font-size: 13px;
   background: var(--darker-background-color);
   height: 52px;
@@ -102,6 +115,7 @@
   flex-direction: row;
   justify-content: flex-end;
   align-items: center;
+  flex-wrap: wrap;
   height: 100%;
 }
 

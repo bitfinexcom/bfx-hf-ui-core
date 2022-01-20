@@ -19,6 +19,14 @@ body.Light {
   z-index: 2147482999;
   margin-right: 0;
 
+  @media screen and (max-width: 800px) {
+    width: 100%;
+  }
+
+  @media screen and (min-width: 800px) and (max-width: 1280px) {
+    width: 70%;
+  }
+
   &.visible {
     transform: translateX(0%);
     transition: transform 700ms cubic-bezier(.29,.58,.05,1);
@@ -121,6 +129,10 @@ body.Light {
 
   .message {
     color: rgba(255, 255, 255, .9) !important;
+  }
+
+  @media screen and (max-width: 410px) {
+    margin-left: 22%;
   }
 }
 

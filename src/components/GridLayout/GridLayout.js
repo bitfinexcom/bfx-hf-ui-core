@@ -1,4 +1,4 @@
-import React, { memo, useEffect } from 'react'
+import React, { memo, useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import PropTypes from 'prop-types'
 import _map from 'lodash/map'
@@ -13,7 +13,6 @@ import {
   removeComponent, changeLayout, setLayoutID, storeUnsavedLayout,
 } from '../../redux/actions/ui'
 import { renderLayoutElement, COMPONENT_DIMENSIONS } from './GridLayout.helpers'
-import './style.css'
 
 import {
   getLayouts,
@@ -30,6 +29,7 @@ const GridLayout = ({
 }) => {
   const dispatch = useDispatch()
   const { pathname } = useSelector(getLocation)
+  const [mounted, setMounted] = useState(false)
   const layouts = useSelector(getLayouts)
   const layoutID = useSelector(getLayoutID)
   const currentSavedLayout = _get(layouts, layoutID, {})
@@ -80,30 +80,37 @@ const GridLayout = ({
   }))
   const onRemoveComponent = (i) => dispatch(removeComponent(i))
 
+  useEffect(() => {
+    setMounted(true)
+  }, [])
+
   /* fix-start: initial grid rendering issue
   * when screen is loaded the grids are arranged in stack of items instead of in a linear manner.
   * https://github.com/react-grid-layout/react-grid-layout/issues/879
   */
   useEffect(() => {
-    setTimeout(() => { window.dispatchEvent(new Event('resize')) }, 500)
-  }, [])
+    if (mounted) {
+      setTimeout(() => { window.dispatchEvent(new Event('resize')) }, 100)
+    }
+  }, [mounted])
   /* fix-end: initial grid rendering issue */
 
   return (
     <div className='hfui-gridlayoutpage__wrapper'>
       <ReactGridLayout
-        autoSize
         draggableHandle='.icon-move'
         cols={{
-          lg: 100, md: 100, sm: 100, xs: 100, xxs: 100,
+          lg: 100, md: 80, sm: 50, xs: 40, xxs: 20,
         }}
         rowHeight={32}
         margin={[20, 20]}
         layouts={{ lg: currentLayouts }}
         breakpoints={{
-          lg: 1000, md: 996, sm: 768, xs: 480, xxs: 0,
+          lg: 1200, md: 996, sm: 768, xs: 480, xxs: 0,
         }}
-        onLayoutChange={(incomingLayout) => dispatch(changeLayout(incomingLayout))}
+        onLayoutChange={(_, { lg }) => dispatch(changeLayout(lg))}
+        measureBeforeMount={false}
+        useCSSTransforms={mounted}
       >
         {_map(currentLayouts, def => (
           <div key={def.i}>

@@ -5,6 +5,10 @@
   padding: 0 8px;
   margin: 40px 0;
 
+  @media screen and (max-width: 600px) {
+    margin: 10px 0;
+  }
+
   > p:first-child {
     font-size: 13px;
     font-weight: 500;
@@ -46,12 +50,22 @@
 .hfui-strategyeditor__results-section {
   width: 50%;
   display: inline-block;
+
+
+  @media screen and (max-width: 500px) {
+    display: block;
+    width: 100%;
+  }
 }
 
 .hfui-strategyeditor__results-header {
   display: flex;
-  flex-direction: row;
   margin: 30px 0px;
+
+  @media screen and (max-width: 570px) {
+    flex-direction: column;
+    margin: 10px 0px;
+  }
 }
 
 .hfui-strategyeditor__results-header-item {
