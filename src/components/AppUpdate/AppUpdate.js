@@ -11,13 +11,6 @@ function AppUpdate() {
   const [hideRestart, setHideRestart] = useState(true)
   const [message, setMessage] = useState('')
 
-  // init state
-  useEffect(() => {
-    setHideNotification(true)
-    setHideRestart(true)
-    setMessage('')
-  }, [])
-
   const onUpdateAvailable = () => {
     setMessage('A new update is available. Downloading now...')
     setHideNotification(false)
