@@ -38,9 +38,9 @@ const mapDispatchToProps = dispatch => ({
     dispatch(WSActions.send(['algo_order.cancel', authToken, 'bitfinex', gid]))
   },
   submitAlgoOrder: (authToken, id, _symbol, _futures, _margin, data) => {
-    dispatch(WSActions.send(['algo_order.submit', authToken, 'bitfinex', id, {
+    dispatch(WSActions.submitAlgoOrder(authToken, id, {
       ...data, _symbol, _margin, _futures,
-    }]))
+    }))
   },
 })
 

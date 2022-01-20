@@ -1,6 +1,7 @@
 import _isString from 'lodash/isString'
 import t from '../constants/ws'
 import ui from '../constants/ui'
+import { getScope } from '../../util/scope'
 
 const send = payload => ({
   type: t.BUFF_SEND,
@@ -279,9 +280,36 @@ export default {
     type: t.UPDATING_API_KEY,
     payload: { mode, isUpdating },
   }),
-  initAuth: password => send(['auth.init', password, 'main']),
-  auth: (password, mode) => send(['auth.submit', password, mode]),
+  initAuth: password => send(['auth.init', password, 'main', getScope()]),
+  auth: (password, mode) => send(['auth.submit', password, mode, getScope()]),
   resetAuth: () => send(['auth.reset']),
   webAuth: token => send({ event: 'auth', token }),
   onUnload: (authToken, mode) => send(['algo_order.pause', authToken, mode]),
+
+  submitAlgoOrder: (authToken, id, args) => send([
+    'algo_order.submit',
+    authToken,
+    'bitfinex',
+    id,
+    {
+      ...args,
+      meta: {
+        ...(args.meta || {}),
+        scope: getScope(),
+      },
+    },
+  ]),
+
+  submitOrder: (authToken, args) => send([
+    'order.submit',
+    authToken,
+    'bitfinex',
+    {
+      ...args,
+      meta: {
+        ...(args.meta || {}),
+        scope: getScope(),
+      },
+    },
+  ]),
 }

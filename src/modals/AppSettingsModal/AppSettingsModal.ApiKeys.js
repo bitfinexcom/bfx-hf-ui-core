@@ -20,6 +20,7 @@ import {
   MAIN_MODE,
 } from '../../redux/reducers/ui'
 import ApiBanner from './AppSettingsModal.ApiBanner'
+import { getScope } from '../../util/scope'
 
 const ApiKeys = () => {
   const dispatch = useDispatch()
@@ -50,6 +51,7 @@ const ApiKeys = () => {
         apiSecret,
         MAIN_MODE,
         currentMode,
+        getScope(),
       ]))
     }
   }
@@ -64,6 +66,7 @@ const ApiKeys = () => {
         paperApiSecret,
         PAPER_MODE,
         currentMode,
+        getScope(),
       ]))
     }
   }
