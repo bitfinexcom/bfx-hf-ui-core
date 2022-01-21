@@ -21,8 +21,15 @@ import {
 } from '../../redux/selectors/ui'
 
 import { getLastUsedLayoutID } from '../../util/layout'
+import { isElectronApp } from '../../redux/config'
 
 const ReactGridLayout = WidthProvider(RGL)
+
+const cols = isElectronApp ? {
+  lg: 100, md: 100, sm: 100, xs: 100, xxs: 100,
+} : {
+  lg: 100, md: 80, sm: 50, xs: 40, xxs: 20,
+}
 
 const GridLayout = ({
   sharedProps, tradesProps, bookProps, chartProps, orderFormProps,
@@ -99,9 +106,7 @@ const GridLayout = ({
     <div className='hfui-gridlayoutpage__wrapper'>
       <ReactGridLayout
         draggableHandle='.icon-move'
-        cols={{
-          lg: 100, md: 80, sm: 50, xs: 40, xxs: 20,
-        }}
+        cols={cols}
         rowHeight={32}
         margin={[20, 20]}
         containerPadding={[0, 0]}

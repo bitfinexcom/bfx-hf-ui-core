@@ -1,23 +1,27 @@
 @import "../../variables.scss";
 
+body.hosted {
+  @media screen and (max-width: 1120px) {
+    .hfui-navbar__wrapper {
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      height: auto;
+      padding-bottom: 15px;
+      padding-top: 10px;
+
+      .hfui-tradingpage__menu, .hfui-navbar__main-links {
+        justify-content: center;
+      }
+    }
+  }
+}
+
 .hfui-navbar__wrapper {
   width: 100%;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-
-  @media screen and (max-width: 1120px) {
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    height: auto;
-    padding-bottom: 15px;
-    padding-top: 10px;
-
-    .hfui-tradingpage__menu, .hfui-navbar__main-links {
-      justify-content: center;
-    }
-  }
 
   font-size: 13px;
   background: var(--darker-background-color);

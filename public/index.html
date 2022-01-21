@@ -2,7 +2,16 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta id='viewport' name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Disabling mobile screen support for electron app -->
+    <script>
+      const isElectronApp = '%REACT_APP_IS_ELECTRON_APP%' === 'true'
+
+      if (isElectronApp) {
+        const viewport = document.getElementById('viewport')
+        viewport.setAttribute('content', 'width=1200')
+      }
+    </script>
     <meta name="theme-color" content="#000000">
     <meta name="description" content="Web based Honey Framework UI - for live trading and executing algorithmic orders">
     <!--

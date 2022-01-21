@@ -1,5 +1,35 @@
 @import '../../variables.scss';
 
+body.hosted {
+  @media screen and (max-width: 1230px) {
+    .hfui-strategyeditorpage__wrapper {
+      .hfui-strategyeditorpage__content-wrapper {
+        flex-direction: column;
+      }
+  
+      .hfui-strategyeditor__panel {
+        .scrollbar-container {
+          min-height: 700px !important;
+        }
+      }
+  
+      .hfui-strategiespage__right {
+        width: 100%;
+        margin-top: 20px;
+  
+        .scrollbar-container {
+          min-height: 700px !important;
+        }
+      }
+  
+      .hfui-strategyeditor__panel {
+        width: 100%;
+        margin-right: 0;
+      }
+    }
+  }
+}
+
 .hfui-strategyeditorpage__wrapper {
   .hfui-strategyeditorpage__content-wrapper {
     display: flex;
@@ -33,33 +63,8 @@
       flex-shrink: 0;
     }
   }
-
-  @media screen and (max-width: 1230px) {
-    .hfui-strategyeditorpage__content-wrapper {
-      flex-direction: column;
-    }
-
-    .hfui-strategyeditor__panel {
-      .scrollbar-container {
-        min-height: 700px !important;
-      }
-    }
-
-    .hfui-strategiespage__right {
-      width: 100%;
-      margin-top: 20px;
-
-      .scrollbar-container {
-        min-height: 700px !important;
-      }
-    }
-
-    .hfui-strategyeditor__panel {
-      width: 100%;
-      margin-right: 0;
-    }
-  }
 }
+
 .hfui-strategiespage__pannel-backtest {
   height: 100%;
 }
