@@ -7,6 +7,7 @@ import Manifest from '../package.json'
 import StoreWrapper from './StoreWrapper'
 import HFUIWrapper from './components/HFUIWrapper'
 import i18n from './locales/i18n'
+import { isElectronApp } from './redux/config'
 
 import './passive_listener_fix'
 import './index.css'
@@ -16,6 +17,12 @@ console.log(`bfx-hf-ui-core v${Manifest.version}`)
 const debug = Debug('hfui:main')
 const LOCAL_STORAGE_VERSION_KEY = 'HFUI_LS_VERSION'
 const LOCAL_STORAGE_VERSION = 2
+
+if (isElectronApp) {
+  document.body.classList.add('electron')
+} else {
+  document.body.classList.add('hosted')
+}
 
 if (localStorage) {
   const version = +localStorage.getItem(LOCAL_STORAGE_VERSION_KEY)
