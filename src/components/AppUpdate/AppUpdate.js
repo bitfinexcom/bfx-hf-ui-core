@@ -4,6 +4,8 @@ import { isElectronApp } from '../../redux/config'
 
 import './style.css'
 
+const ipcHelpers = window.electronService
+
 // @TODO: i18n
 function AppUpdate() {
   const [hideNotification, setHideNotification] = useState(true)
@@ -23,13 +25,13 @@ function AppUpdate() {
   }
 
   useEffect(() => {
-    if (window.electronAPI && isElectronApp) {
-      window.electronAPI.addAppUpdateAvailableEventListener(onUpdateAvailable)
-      window.electronAPI.addAppUpdateDownloadedEventListener(onUpdateDownloaded)
+    if (ipcHelpers && isElectronApp) {
+      ipcHelpers.addAppUpdateAvailableEventListener(onUpdateAvailable)
+      ipcHelpers.addAppUpdateDownloadedEventListener(onUpdateDownloaded)
 
       return () => {
-        window.electronAPI.removeAppUpdateAvailableEventListener(onUpdateAvailable)
-        window.electronAPI.removeAppUpdateDownloadedEventListener(onUpdateDownloaded)
+        ipcHelpers.removeAppUpdateAvailableEventListener(onUpdateAvailable)
+        ipcHelpers.removeAppUpdateDownloadedEventListener(onUpdateDownloaded)
       }
     }
 
@@ -38,14 +40,14 @@ function AppUpdate() {
 
   const closeNotification = () => {
     setHideNotification(true)
-    if (window.electronAPI) {
-      window.electronAPI.sendClearAppUpdateTimerEvent()
+    if (ipcHelpers) {
+      ipcHelpers.sendClearAppUpdateTimerEvent()
     }
   }
 
   const restartApp = () => {
-    if (window.electronAPI) {
-      window.electronAPI.sendRestartAppEvent()
+    if (ipcHelpers) {
+      ipcHelpers.sendRestartAppEvent()
     }
   }
 

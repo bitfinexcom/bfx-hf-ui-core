@@ -31,6 +31,8 @@ const CcyInfoModal = lazy(() => import('../../modals/CcyInfoModal'))
 const ConfirmDMSModal = lazy(() => import('../../modals/ConfirmDMSModal'))
 const EditOrderModal = lazy(() => import('../../modals/EditOrderModal'))
 
+const ipcHelpers = window.electronService
+
 const HFUI = (props) => {
   const {
     authToken,
@@ -75,11 +77,11 @@ const HFUI = (props) => {
 
   useEffect(() => {
     // if running in the electron environment
-    if (window.electronAPI && isElectronApp) {
-      window.electronAPI.addAppCloseEventListener(onElectronAppClose)
+    if (ipcHelpers && isElectronApp) {
+      ipcHelpers.addAppCloseEventListener(onElectronAppClose)
 
       return () => {
-        window.electronAPI.removeAppCloseEventListener(onElectronAppClose)
+        ipcHelpers.removeAppCloseEventListener(onElectronAppClose)
       }
     }
   }, [authToken, onElectronAppClose, settingsShowAlgoPauseInfo])

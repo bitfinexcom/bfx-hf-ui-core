@@ -1,6 +1,6 @@
 const closeElectronApp = () => {
-  if (window.electronAPI) {
-    window.electronAPI.sendAppClosedEvent()
+  if (window.electronService) {
+    window.electronService.sendAppClosedEvent()
   }
 }
 
