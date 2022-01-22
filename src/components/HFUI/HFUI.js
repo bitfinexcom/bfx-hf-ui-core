@@ -6,7 +6,6 @@ import {
   Route, Switch, Redirect, useLocation,
 } from 'react-router'
 import PropTypes from 'prop-types'
-import _isFunction from 'lodash/isFunction'
 
 import { THEMES, SETTINGS } from '../../redux/selectors/ui'
 import useInjectBfxData from '../../hooks/useInjectBfxData'
@@ -76,13 +75,11 @@ const HFUI = (props) => {
 
   useEffect(() => {
     // if running in the electron environment
-    if (_isFunction(window.require) && isElectronApp) {
-      const electron = window.require('electron')
-      const { ipcRenderer } = electron
-      ipcRenderer.on('app-close', onElectronAppClose)
+    if (window.electronAPI && isElectronApp) {
+      window.electronAPI.addAppCloseEventListener(onElectronAppClose)
 
       return () => {
-        ipcRenderer.removeListener('app-close', onElectronAppClose)
+        window.electronAPI.removeAppCloseEventListener(onElectronAppClose)
       }
     }
   }, [authToken, onElectronAppClose, settingsShowAlgoPauseInfo])
