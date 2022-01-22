@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react'
 import cx from 'clsx'
-import _isFunction from 'lodash/isFunction'
 import { isElectronApp } from '../../redux/config'
 
 import './style.css'
@@ -24,16 +23,13 @@ function AppUpdate() {
   }
 
   useEffect(() => {
-    if (_isFunction(window.require) && isElectronApp) {
-      const electron = window.require('electron')
-      const { ipcRenderer } = electron
-
-      ipcRenderer.on('update_available', onUpdateAvailable)
-      ipcRenderer.on('update_downloaded', onUpdateDownloaded)
+    if (window.electronAPI && isElectronApp) {
+      window.electronAPI.addAppUpdateAvailableEventListener(onUpdateAvailable)
+      window.electronAPI.addAppUpdateDownloadedEventListener(onUpdateDownloaded)
 
       return () => {
-        ipcRenderer.removeListener('update_available', onUpdateAvailable)
-        ipcRenderer.removeListener('update_downloaded', onUpdateDownloaded)
+        window.electronAPI.removeAppUpdateAvailableEventListener(onUpdateAvailable)
+        window.electronAPI.removeAppUpdateDownloadedEventListener(onUpdateDownloaded)
       }
     }
 
@@ -42,18 +38,14 @@ function AppUpdate() {
 
   const closeNotification = () => {
     setHideNotification(true)
-    if (_isFunction(window.require)) {
-      const electron = window.require('electron')
-      const { ipcRenderer } = electron
-      ipcRenderer.send('clear_app_update_timer')
+    if (window.electronAPI) {
+      window.electronAPI.sendClearAppUpdateTimerEvent()
     }
   }
 
   const restartApp = () => {
-    if (_isFunction(window.require)) {
-      const electron = window.require('electron')
-      const { ipcRenderer } = electron
-      ipcRenderer.send('restart_app')
+    if (window.electronAPI) {
+      window.electronAPI.sendRestartAppEvent()
     }
   }
 
