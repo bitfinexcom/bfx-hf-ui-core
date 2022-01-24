@@ -25,6 +25,7 @@ const HoneyJoyride = ({ styles: _styles, ...props }) => {
       continuous
       showProgress
       showSkipButton
+      disableScrollParentFix
       styles={styles}
       locale={locale}
       {...props}
