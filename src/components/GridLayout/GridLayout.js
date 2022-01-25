@@ -97,7 +97,7 @@ const GridLayout = ({
   */
   useEffect(() => {
     if (mounted) {
-      setTimeout(() => { window.dispatchEvent(new Event('resize')) }, 100)
+      setTimeout(() => { window.dispatchEvent(new Event('resize')) }, 200)
     }
   }, [mounted])
   /* fix-end: initial grid rendering issue */
