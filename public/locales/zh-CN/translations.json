@@ -38,6 +38,8 @@
       "title": "冰山委托",
       "help": "冰山委托功能，允许您下达大笔订单时，系统仅显示订单的一小部份于挂单簿中，而大部分订单讲通过”隐藏剩余订单”功能执行。它最常见的用途是将大笔交易订单执行的市场影响最小化。"
     },
+    "visibleOnHit": "部分成交后取消隐藏",
+    "visibleOnHitHelp": "隐藏订单部分成交后，余下未成交部分将显示于订单簿中。",
     "saveParamsSettings": "演算参数设置",
     "intervalDistortion": "区间失真％",
     "intervalDistortionHelp": "每笔订单区间失真的数量 (设置百分比）",
