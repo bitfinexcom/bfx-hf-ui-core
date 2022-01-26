@@ -270,6 +270,11 @@ export default {
     payload: { loading },
   }),
 
+  setExecutionResults: (results) => ({
+    type: t.SET_EXECUTION_RESULTS,
+    payload: { results },
+  }),
+
   purgeBacktestData: () => ({
     type: t.PURGE_DATA_BACKTEST,
   }),

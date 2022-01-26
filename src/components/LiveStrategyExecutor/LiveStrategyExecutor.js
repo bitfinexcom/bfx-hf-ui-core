@@ -6,6 +6,8 @@ import _find from 'lodash/find'
 import _isEmpty from 'lodash/isEmpty'
 import _includes from 'lodash/includes'
 
+import RenderHistoricalReport from '../Backtester/reports/HistoricalReport'
+import { THEMES } from '../../redux/selectors/ui'
 import Button from '../../ui/Button'
 import AmountInput from '../OrderForm/FieldComponents/input.amount'
 import MarketSelect from '../MarketSelect'
@@ -14,13 +16,16 @@ import { getDefaultMarket } from '../../util/market'
 
 import './style.css'
 
+const renderReport = RenderHistoricalReport
+
 const DEFAULT_TIMEFRAME = '1m'
 const DEFAULT_SEED_COUNT = 150
 const DEFAULT_USE_TRADES = false
 const DEFAULT_USE_MARGIN = false
 
 const LiveStrategyExecutor = ({
-  strategyContent, markets, dsExecuteLiveStrategy, dsStopLiveStrategy, isExecuting, authToken, isLoading, options, isPaperTrading,
+  strategyContent, markets, dsExecuteLiveStrategy, dsStopLiveStrategy, isExecuting,
+  authToken, isLoading, options, isPaperTrading, results, theme,
 }) => {
   const { t } = useTranslation()
   const [timeframe, setTimeframe] = useState(options.tf || DEFAULT_TIMEFRAME)
@@ -57,6 +62,8 @@ const LiveStrategyExecutor = ({
       </div>
     )
   }
+
+  console.log(results)
 
   return (
     <div className='hfui-backtester__executionform hfui-backtester__wrapper hfui-live-strategy-executor__wrapper'>
@@ -138,6 +145,9 @@ const LiveStrategyExecutor = ({
           {t('strategyEditor.liveExecution.realBalancesWarning')}
         </p>
       )}
+      {!_isEmpty(results) && (
+        renderReport({}, results, options, t, theme)
+      )}
     </div>
   )
 }
@@ -159,11 +169,17 @@ LiveStrategyExecutor.propTypes = {
   ),
   markets: PropTypes.objectOf(PropTypes.object),
   isPaperTrading: PropTypes.bool.isRequired,
+  theme: PropTypes.oneOf([THEMES.LIGHT, THEMES.DARK]),
+  results: PropTypes.objectOf([
+    PropTypes.number, PropTypes.array, PropTypes.object,
+  ]),
 }
 
 LiveStrategyExecutor.defaultProps = {
   strategyContent: {},
   markets: {},
+  theme: THEMES.DARK,
+  results: {},
 }
 
 export default memo(LiveStrategyExecutor)
