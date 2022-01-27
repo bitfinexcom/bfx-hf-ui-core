@@ -633,7 +633,8 @@
   "orderContexts": {
     "exchange": "Exchange",
     "margin": "Margin",
-    "funding": "Derivative"
+    "funding": "Derivative",
+    "contribution": "Capital Raise"
   },
   "orderStatuses": {
     "ACTIVE": "ACTIVE"
