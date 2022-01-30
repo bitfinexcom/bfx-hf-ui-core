@@ -72,15 +72,16 @@ const GridLayout = ({
       ? currentSavedLayout
       : lastLayoutDef
 
+  const layoutIsDirty = useSelector(state => state.ui.layoutIsDirty)
   const onLoadLayout = useCallback(() => {
     // generate default layout
     const nextLayout = generateLayout(layoutConfig)
-    if (layoutDef?.layout && !layoutDef?.isDefault) {
+    if (layoutDef?.layout && (layoutIsDirty || !layoutDef.isDefault)) {
       nextLayout[breakpoint] = [...layoutDef?.layout]
     }
 
     return nextLayout
-  }, [breakpoint, layoutConfig, layoutDef.isDefault, layoutDef.layout])
+  }, [breakpoint, layoutConfig, layoutDef, layoutIsDirty])
 
   const handleLoadLayout = useCallback(() => {
     const nextLayouts = onLoadLayout(layoutConfig.gridId)

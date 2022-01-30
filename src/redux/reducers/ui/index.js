@@ -532,6 +532,7 @@ function reducer(state = getInitialState(), action = {}) {
       return {
         ...state,
         unsavedLayout: null,
+        layoutIsDirty: false,
         layoutID: id,
       }
     }

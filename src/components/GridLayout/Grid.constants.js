@@ -3,6 +3,7 @@ export const GRID_LARGE = 'lg'
 export const GRID_MEDIUM = 'md'
 export const GRID_SMALL = 'sm'
 export const GRID_XSMALL = 'xs'
+export const GRID_XSSMALL = 'xss'
 
 export const STORED_LAYOUT_TRADING_KEY = 'hf-trading-terminal-layout'
 
@@ -11,12 +12,14 @@ const GRID_COLUMNS_LG = 16
 const GRID_COLUMNS_MD = 10
 const GRID_COLUMNS_SM = 6
 const GRID_COLUMNS_XS = 4
+const GRID_COLUMNS_XSS = 2
 
 // breakpoints
 const GRID_BREAKPOINT_LG = 1200
 const GRID_BREAKPOINT_MD = 996
 const GRID_BREAKPOINT_SM = 768
 const GRID_BREAKPOINT_XS = 480
+const GRID_BREAKPOINT_XSS = 0
 
 // config
 export const GRID_CELL_SPACING = [6, 6]
@@ -27,6 +30,7 @@ export const GRID_BREAKPOINTS = {
   [GRID_MEDIUM]: GRID_BREAKPOINT_MD,
   [GRID_SMALL]: GRID_BREAKPOINT_SM,
   [GRID_XSMALL]: GRID_BREAKPOINT_XS,
+  [GRID_XSSMALL]: GRID_BREAKPOINT_XSS,
 }
 
 export const GRID_COLUMNS = {
@@ -34,6 +38,7 @@ export const GRID_COLUMNS = {
   [GRID_MEDIUM]: GRID_COLUMNS_MD,
   [GRID_SMALL]: GRID_COLUMNS_SM,
   [GRID_XSMALL]: GRID_COLUMNS_XS,
+  [GRID_XSSMALL]: GRID_COLUMNS_XSS,
 }
 
 export const GRID_CELL_SPACINGS = {
@@ -41,4 +46,5 @@ export const GRID_CELL_SPACINGS = {
   [GRID_MEDIUM]: GRID_CELL_SPACING,
   [GRID_SMALL]: GRID_CELL_SPACING,
   [GRID_XSMALL]: GRID_CELL_SPACING,
+  [GRID_XSSMALL]: GRID_CELL_SPACING,
 }

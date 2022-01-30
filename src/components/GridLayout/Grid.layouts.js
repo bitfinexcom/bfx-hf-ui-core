@@ -5,6 +5,7 @@ import _keys from 'lodash/keys'
 import _reduce from 'lodash/reduce'
 import _filter from 'lodash/filter'
 import _includes from 'lodash/includes'
+import _min from 'lodash/min'
 
 import { GRID_COLUMNS } from './Grid.constants'
 
@@ -53,7 +54,7 @@ const buildGridColumns = (items, breakpoint, currentColumns, columnIdx) => {
       ...defaults,
       x: currentColumnX,
       y: nextY,
-      minW: itemWidth,
+      minW: _min(defaults.minW, itemWidth),
       w: itemWidth,
       ...itemOverwrites,
       c: defaults.c,
