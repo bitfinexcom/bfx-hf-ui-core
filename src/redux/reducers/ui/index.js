@@ -247,6 +247,7 @@ function reducer(state = getInitialState(), action = {}) {
       return {
         ...state,
         layoutIsDirty: false,
+        unsavedLayout: null,
         layouts: {
           ...state.layouts,
           [id]: {
