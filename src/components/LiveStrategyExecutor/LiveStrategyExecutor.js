@@ -25,7 +25,8 @@ const DEFAULT_USE_MARGIN = false
 
 const LiveStrategyExecutor = ({
   strategyContent, markets, dsExecuteLiveStrategy, dsStopLiveStrategy, isExecuting,
-  authToken, isLoading, options, isPaperTrading, results, theme,
+  authToken, isLoading, options, isPaperTrading, results, theme, onDeleteIndicator,
+  onAddIndicator, indicators,
 }) => {
   const { t } = useTranslation()
   const [timeframe, setTimeframe] = useState(options.tf || DEFAULT_TIMEFRAME)
@@ -34,6 +35,10 @@ const LiveStrategyExecutor = ({
   const [margin, setMargin] = useState(options.margin || DEFAULT_USE_MARGIN)
   const [candleSeed, setCandleSeed] = useState(options.seedCandleCount || DEFAULT_SEED_COUNT)
   const [seedError, setSeedError] = useState(null)
+
+  const opts = {
+    indicators, onAddIndicator, onDeleteIndicator,
+  }
 
   const toggleExecutionState = () => {
     if (!seedError) {
@@ -62,8 +67,6 @@ const LiveStrategyExecutor = ({
       </div>
     )
   }
-
-  console.log(results)
 
   return (
     <div className='hfui-backtester__executionform hfui-backtester__wrapper hfui-live-strategy-executor__wrapper'>
@@ -146,13 +149,14 @@ const LiveStrategyExecutor = ({
         </p>
       )}
       {!_isEmpty(results) && (
-        renderReport({}, results, options, t, theme)
+        renderReport(opts, results, results, options, t, theme)
       )}
     </div>
   )
 }
 
 LiveStrategyExecutor.propTypes = {
+  indicators: PropTypes.arrayOf(PropTypes.array),
   dsExecuteLiveStrategy: PropTypes.func.isRequired,
   dsStopLiveStrategy: PropTypes.func.isRequired,
   authToken: PropTypes.string.isRequired,
@@ -173,13 +177,18 @@ LiveStrategyExecutor.propTypes = {
   results: PropTypes.objectOf([
     PropTypes.number, PropTypes.array, PropTypes.object,
   ]),
+  onAddIndicator: PropTypes.func,
+  onDeleteIndicator: PropTypes.func,
 }
 
 LiveStrategyExecutor.defaultProps = {
+  indicators: [],
   strategyContent: {},
   markets: {},
   theme: THEMES.DARK,
   results: {},
+  onAddIndicator: () => { },
+  onDeleteIndicator: () => { },
 }
 
 export default memo(LiveStrategyExecutor)
