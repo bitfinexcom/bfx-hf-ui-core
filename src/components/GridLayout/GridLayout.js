@@ -33,6 +33,7 @@ import { getLastUsedLayoutID } from '../../util/layout'
 import { isElectronApp } from '../../redux/config'
 import { generateLayout } from './Grid.layouts'
 import tradingTerminalLayout from './layouts/trading'
+import marketDataLayout from './layouts/marketData'
 import { marketData } from '../../constants/routes'
 
 const ReactGridLayout = WidthProvider(RGL)
@@ -41,7 +42,7 @@ const cols = isElectronApp ? {
   lg: 100, md: 100, sm: 100, xs: 100, xxs: 100,
 } : GRID_COLUMNS
 
-const getLayoutConfig = pathname => (pathname === marketData.path ? tradingTerminalLayout : tradingTerminalLayout)
+const getLayoutConfig = pathname => (pathname === marketData.path ? marketDataLayout : tradingTerminalLayout)
 
 const GridLayout = ({
   sharedProps, tradesProps, bookProps, chartProps, orderFormProps,
@@ -49,7 +50,6 @@ const GridLayout = ({
   const dispatch = useDispatch()
   const [breakpoint, setBreakpoint] = useState(RGL.utils.getBreakpointFromWidth(GRID_BREAKPOINTS, document.body.clientWidth))
   const [mounted, setMounted] = useState(false)
-  const [layoutsState, setLayouts] = useState({})
 
   const { pathname } = useSelector(getLocation)
   const layoutConfig = useMemo(() => getLayoutConfig(pathname), [pathname])
@@ -73,6 +73,7 @@ const GridLayout = ({
       : lastLayoutDef
 
   const layoutIsDirty = useSelector(state => state.ui.layoutIsDirty)
+
   const onLoadLayout = useCallback(() => {
     // generate default layout
     const nextLayout = generateLayout(layoutConfig)
@@ -83,15 +84,7 @@ const GridLayout = ({
     return nextLayout
   }, [breakpoint, layoutConfig, layoutDef, layoutIsDirty])
 
-  const handleLoadLayout = useCallback(() => {
-    const nextLayouts = onLoadLayout(layoutConfig.gridId)
-    setLayouts(nextLayouts)
-  }, [layoutConfig.gridId, onLoadLayout])
-
-  // set the initial layout
-  useEffect(() => {
-    handleLoadLayout()
-  }, [handleLoadLayout])
+  const nextLayouts = useMemo(() => onLoadLayout(), [onLoadLayout])
 
   useEffect(() => {
     // set active layout id when there’s none selected (on initial load)
@@ -138,7 +131,7 @@ const GridLayout = ({
     dispatch(changeLayout(layout))
   }
 
-  const currentLayout = layoutsState?.[breakpoint] || []
+  const currentLayout = nextLayouts?.[breakpoint] || []
 
   return (
     <div className='hfui-gridlayoutpage__wrapper'>
@@ -149,7 +142,7 @@ const GridLayout = ({
         margin={GRID_CELL_SPACINGS}
         containerPadding={GRID_CELL_SPACINGS}
         rowHeight={GRID_ROW_HEIGHT}
-        layouts={layoutsState}
+        layouts={nextLayouts}
         onBreakpointChange={setBreakpoint}
         // layouts={{ lg: currentLayouts, sm: tabletLayout }}
         // breakpoints={{

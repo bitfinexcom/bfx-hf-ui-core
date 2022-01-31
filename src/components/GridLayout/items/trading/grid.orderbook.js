@@ -1,9 +1,8 @@
-import OrderBookPanel from '../../OrderBookPanel'
+import { COMPONENT_TYPES } from '../../GridLayout.helpers'
 
 export default {
-  component: OrderBookPanel,
   defaults: {
-    c: 'ORDER_BOOK',
+    c: COMPONENT_TYPES.ORDER_BOOK,
     w: 25,
     h: 7,
     minW: 21,

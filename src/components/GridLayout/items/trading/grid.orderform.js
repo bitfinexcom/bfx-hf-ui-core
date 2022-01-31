@@ -1,9 +1,8 @@
-import OrderForm from '../../OrderForm'
+import { COMPONENT_TYPES } from '../../GridLayout.helpers'
 
 export default {
-  component: OrderForm,
   defaults: {
-    c: 'ORDER_FORM',
+    c: COMPONENT_TYPES.ORDER_FORM,
     w: 26,
     h: 13,
     minW: 16,

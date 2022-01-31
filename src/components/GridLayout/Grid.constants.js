@@ -5,8 +5,6 @@ export const GRID_SMALL = 'sm'
 export const GRID_XSMALL = 'xs'
 export const GRID_XSSMALL = 'xss'
 
-export const STORED_LAYOUT_TRADING_KEY = 'hf-trading-terminal-layout'
-
 // columns
 const GRID_COLUMNS_LG = 16
 const GRID_COLUMNS_MD = 10
@@ -23,7 +21,7 @@ const GRID_BREAKPOINT_XSS = 0
 
 // config
 export const GRID_CELL_SPACING = [6, 6]
-export const GRID_ROW_HEIGHT = 32
+export const GRID_ROW_HEIGHT = 45
 
 export const GRID_BREAKPOINTS = {
   [GRID_LARGE]: GRID_BREAKPOINT_LG,

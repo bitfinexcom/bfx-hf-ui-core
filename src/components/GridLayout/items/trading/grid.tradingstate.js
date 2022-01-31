@@ -1,9 +1,8 @@
-import TradingStatePanel from '../../TradingStatePanel'
+import { COMPONENT_TYPES } from '../../GridLayout.helpers'
 
 export default {
-  component: TradingStatePanel,
   defaults: {
-    c: 'TRADING_STATE_PANEL',
+    c: COMPONENT_TYPES.TRADING_STATE_PANEL,
     w: 40,
     h: 10,
     minW: 40,

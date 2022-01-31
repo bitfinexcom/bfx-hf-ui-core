@@ -6,15 +6,14 @@ import {
   GRID_SMALL,
   GRID_XSMALL,
   GRID_XSSMALL,
-  STORED_LAYOUT_TRADING_KEY,
 } from '../Grid.constants'
-import gridChart from '../items/grid.chart'
-import gridExchangeInfoBar from '../items/grid.exchangeinfo'
-import gridOrderform from '../items/grid.orderform'
-import gridOrderHistory from '../items/grid.orderhistory'
-import gridTrades from '../items/grid.trades'
-import gridTradingStatePanel from '../items/grid.tradingstate'
-import gridOrderBook from '../items/grid.orderbook'
+import gridChart from '../items/trading/grid.chart'
+import gridExchangeInfoBar from '../items/trading/grid.exchangeinfo'
+import gridOrderform from '../items/trading/grid.orderform'
+import gridOrderHistory from '../items/trading/grid.orderhistory'
+import gridTrades from '../items/trading/grid.trades'
+import gridTradingStatePanel from '../items/trading/grid.tradingstate'
+import gridOrderBook from '../items/trading/grid.orderbook'
 
 const available = [
   gridExchangeInfoBar,
@@ -71,7 +70,6 @@ const mobileGrid = [
 ]
 
 export default {
-  gridId: STORED_LAYOUT_TRADING_KEY, // for save/load
   gridComponents: availableMap,
   defaultColumns: columns,
   defaultLayout: {

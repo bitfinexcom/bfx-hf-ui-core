@@ -1,9 +1,8 @@
-import OrderHistory from '../../OrderHistory'
+import { COMPONENT_TYPES } from '../../GridLayout.helpers'
 
 export default {
-  component: OrderHistory,
   defaults: {
-    c: 'ORDER_HISTORY_TABLE',
+    c: COMPONENT_TYPES.ORDER_HISTORY_TABLE,
     w: 25,
     h: 7,
     minW: 21,

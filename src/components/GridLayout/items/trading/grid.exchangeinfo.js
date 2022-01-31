@@ -1,9 +1,8 @@
-import ExchangeInfoBar from '../../ExchangeInfoBar'
+import { COMPONENT_TYPES } from '../../GridLayout.helpers'
 
 export default {
-  component: ExchangeInfoBar,
   defaults: {
-    c: 'EXCHANGE_INFO_BAR',
+    c: COMPONENT_TYPES.EXCHANGE_INFO_BAR,
     w: 20,
     h: 8,
     minW: 20,

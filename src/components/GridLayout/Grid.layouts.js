@@ -3,8 +3,6 @@ import _isFunction from 'lodash/isFunction'
 import _map from 'lodash/map'
 import _keys from 'lodash/keys'
 import _reduce from 'lodash/reduce'
-import _filter from 'lodash/filter'
-import _includes from 'lodash/includes'
 import _min from 'lodash/min'
 
 import { GRID_COLUMNS } from './Grid.constants'
@@ -144,11 +142,4 @@ export const addNewComponent = (component, currentLayout) => {
 
     return layout
   }).concat(newComponentLayout)
-}
-
-export const calculateNonVisible = (gridComponents, currentLayout) => {
-  const allComponents = _keys(gridComponents)
-  const visibleComponents = _map(currentLayout, item => item.i)
-  const nonVisible = _filter(allComponents, compId => !_includes(visibleComponents, compId))
-  return nonVisible
 }
