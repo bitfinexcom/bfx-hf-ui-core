@@ -176,6 +176,7 @@ export const renderLayoutElement = (layoutID, def = {}, componentProps = {}, onR
 
 export const layoutDefToGridLayout = layoutDef => _map(layoutDef.layout, l => ({
   i: l.i,
+  c: l.c,
   x: l.x,
   y: l.y,
   w: l.w,

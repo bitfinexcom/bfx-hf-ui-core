@@ -1,7 +1,6 @@
 import OrderBookPanel from '../../OrderBookPanel'
 
 export default {
-  // id: 'ORDER_BOOK',
   component: OrderBookPanel,
   defaults: {
     c: 'ORDER_BOOK',

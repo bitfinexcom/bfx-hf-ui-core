@@ -1,7 +1,6 @@
 import TradesTablePanel from '../../TradesTablePanel'
 
 export default {
-  // id: 'TRADES_TABLE',
   component: TradesTablePanel,
   defaults: {
     c: 'TRADES_TABLE',

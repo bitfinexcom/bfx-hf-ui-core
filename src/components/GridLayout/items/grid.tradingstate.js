@@ -1,7 +1,6 @@
 import TradingStatePanel from '../../TradingStatePanel'
 
 export default {
-  // id: 'TRADING_STATE_PANEL',
   component: TradingStatePanel,
   defaults: {
     c: 'TRADING_STATE_PANEL',

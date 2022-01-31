@@ -1,7 +1,6 @@
 import OrderHistory from '../../OrderHistory'
 
 export default {
-  // id: 'ORDER_HISTORY_TABLE',
   component: OrderHistory,
   defaults: {
     c: 'ORDER_HISTORY_TABLE',

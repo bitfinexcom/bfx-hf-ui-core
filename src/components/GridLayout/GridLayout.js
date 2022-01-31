@@ -49,7 +49,7 @@ const GridLayout = ({
   const dispatch = useDispatch()
   const [breakpoint, setBreakpoint] = useState(RGL.utils.getBreakpointFromWidth(GRID_BREAKPOINTS, document.body.clientWidth))
   const [mounted, setMounted] = useState(false)
-  const [layoutsState, setLayouts] = useState(null)
+  const [layoutsState, setLayouts] = useState({})
 
   const { pathname } = useSelector(getLocation)
   const layoutConfig = useMemo(() => getLayoutConfig(pathname), [pathname])
@@ -134,8 +134,7 @@ const GridLayout = ({
   }, [mounted])
   /* fix-end: initial grid rendering issue */
 
-  const onLayoutChange = (layout, allBreakpoints) => {
-    setLayouts(allBreakpoints)
+  const onLayoutChange = (layout) => {
     dispatch(changeLayout(layout))
   }
 
@@ -150,7 +149,7 @@ const GridLayout = ({
         margin={GRID_CELL_SPACINGS}
         containerPadding={GRID_CELL_SPACINGS}
         rowHeight={GRID_ROW_HEIGHT}
-        layouts={layoutsState || {}}
+        layouts={layoutsState}
         onBreakpointChange={setBreakpoint}
         // layouts={{ lg: currentLayouts, sm: tabletLayout }}
         // breakpoints={{

@@ -117,6 +117,7 @@ export const addNewComponent = (component, currentLayout) => {
   const {
     w = 0,
     minW = 0,
+    c,
   } = defaults
 
   const newW = w || minW
@@ -125,6 +126,7 @@ export const addNewComponent = (component, currentLayout) => {
   const newComponentLayout = {
     ...defaults,
     i: id,
+    c,
     x: 0,
     y: placeAtY,
     w: newW,

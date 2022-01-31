@@ -1,7 +1,6 @@
 import ExchangeInfoBar from '../../ExchangeInfoBar'
 
 export default {
-  // id: 'EXCHANGE_INFO_BAR',
   component: ExchangeInfoBar,
   defaults: {
     c: 'EXCHANGE_INFO_BAR',

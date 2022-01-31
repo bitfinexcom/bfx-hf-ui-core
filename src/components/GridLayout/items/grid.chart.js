@@ -1,7 +1,6 @@
 import ChartPanel from '../../ChartPanel'
 
 export default {
-  // id: 'CHART',
   component: ChartPanel,
   defaults: {
     c: 'CHART',

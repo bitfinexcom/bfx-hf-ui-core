@@ -1,7 +1,6 @@
 import OrderForm from '../../OrderForm'
 
 export default {
-  // id: 'ORDER_FORM',
   component: OrderForm,
   defaults: {
     c: 'ORDER_FORM',
