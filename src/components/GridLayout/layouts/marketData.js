@@ -30,8 +30,8 @@ const availableMap = _reduce(available,
 
 // default number of columns and their x starting point
 const columns = {
-  [GRID_LARGE]: [0, 8, 12],
-  [GRID_MEDIUM]: [0, 12],
+  [GRID_LARGE]: [0, 53, 76],
+  [GRID_MEDIUM]: [0, 53, 76],
   [GRID_SMALL]: [0],
   [GRID_XSMALL]: [0],
   [GRID_XSSMALL]: [0],

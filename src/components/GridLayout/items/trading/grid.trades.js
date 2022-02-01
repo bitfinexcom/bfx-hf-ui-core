@@ -3,7 +3,6 @@ import { COMPONENT_TYPES } from '../../GridLayout.helpers'
 export default {
   defaults: {
     c: COMPONENT_TYPES.TRADES_TABLE,
-    w: 25,
     h: 7,
     minW: 18,
     minH: 4,

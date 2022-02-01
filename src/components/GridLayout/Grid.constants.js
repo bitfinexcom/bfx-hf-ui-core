@@ -1,3 +1,5 @@
+import { isElectronApp } from '../../redux/config'
+
 // breakpoint keys
 export const GRID_LARGE = 'lg'
 export const GRID_MEDIUM = 'md'
@@ -6,11 +8,11 @@ export const GRID_XSMALL = 'xs'
 export const GRID_XSSMALL = 'xss'
 
 // columns
-const GRID_COLUMNS_LG = 16
-const GRID_COLUMNS_MD = 10
-const GRID_COLUMNS_SM = 6
-const GRID_COLUMNS_XS = 4
-const GRID_COLUMNS_XSS = 2
+const GRID_COLUMNS_LG = isElectronApp ? 100 : 100
+const GRID_COLUMNS_MD = isElectronApp ? 100 : 80
+const GRID_COLUMNS_SM = isElectronApp ? 100 : 50
+const GRID_COLUMNS_XS = isElectronApp ? 100 : 40
+const GRID_COLUMNS_XSS = isElectronApp ? 100 : 20
 
 // breakpoints
 const GRID_BREAKPOINT_LG = 1200
@@ -20,8 +22,9 @@ const GRID_BREAKPOINT_XS = 480
 const GRID_BREAKPOINT_XSS = 0
 
 // config
-export const GRID_CELL_SPACING = [6, 6]
-export const GRID_ROW_HEIGHT = 45
+export const GRID_CELL_SPACING = [20, 20]
+export const GRID_CONTAINER_SPACINGS = [0, 0]
+export const GRID_ROW_HEIGHT = 32
 
 export const GRID_BREAKPOINTS = {
   [GRID_LARGE]: GRID_BREAKPOINT_LG,

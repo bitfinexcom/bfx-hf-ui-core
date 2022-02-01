@@ -20,6 +20,7 @@ import {
   GRID_BREAKPOINTS,
   GRID_COLUMNS,
   GRID_CELL_SPACINGS,
+  GRID_CONTAINER_SPACINGS,
   GRID_ROW_HEIGHT,
 } from './Grid.constants'
 
@@ -30,17 +31,12 @@ import {
 } from '../../redux/selectors/ui'
 
 import { getLastUsedLayoutID } from '../../util/layout'
-import { isElectronApp } from '../../redux/config'
 import { generateLayout } from './Grid.layouts'
 import tradingTerminalLayout from './layouts/trading'
 import marketDataLayout from './layouts/marketData'
 import { marketData } from '../../constants/routes'
 
 const ReactGridLayout = WidthProvider(RGL)
-
-const cols = isElectronApp ? {
-  lg: 100, md: 100, sm: 100, xs: 100, xxs: 100,
-} : GRID_COLUMNS
 
 const getLayoutConfig = pathname => (pathname === marketData.path ? marketDataLayout : tradingTerminalLayout)
 
@@ -137,18 +133,13 @@ const GridLayout = ({
     <div className='hfui-gridlayoutpage__wrapper'>
       <ReactGridLayout
         draggableHandle='.icon-move'
-        cols={cols}
+        cols={GRID_COLUMNS}
         breakpoints={GRID_BREAKPOINTS}
         margin={GRID_CELL_SPACINGS}
-        containerPadding={GRID_CELL_SPACINGS}
+        containerPadding={GRID_CONTAINER_SPACINGS}
         rowHeight={GRID_ROW_HEIGHT}
         layouts={nextLayouts}
         onBreakpointChange={setBreakpoint}
-        // layouts={{ lg: currentLayouts, sm: tabletLayout }}
-        // breakpoints={{
-        //   lg: 1200, md: 996, sm: 768, xs: 480, xxs: 0,
-        // }}
-        // onLayoutChange={(_, { lg }) => dispatch(changeLayout(lg))}
         onLayoutChange={onLayoutChange}
         measureBeforeMount={false}
         useCSSTransforms={mounted}

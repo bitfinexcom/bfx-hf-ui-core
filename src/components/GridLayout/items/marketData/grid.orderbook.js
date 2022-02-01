@@ -3,7 +3,6 @@ import { COMPONENT_TYPES } from '../../GridLayout.helpers'
 export default {
   defaults: {
     c: COMPONENT_TYPES.ORDER_BOOK,
-    w: 24,
     h: 20,
     minW: 21,
     minH: 5,
