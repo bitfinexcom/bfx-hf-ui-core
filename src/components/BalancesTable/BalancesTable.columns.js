@@ -15,7 +15,7 @@ export default (t) => [{
   dataKey: 'context',
   width: 120,
   flexGrow: 1,
-  cellRenderer: ({ rowData = {} }) => defaultCellRenderer(t(`orderContexts.${rowData.context}`)),
+  cellRenderer: ({ rowData = {} }) => defaultCellRenderer(t(`balanceContexts.${rowData.context}`)),
 }, {
   label: t('table.currency'),
   dataKey: 'symbol',

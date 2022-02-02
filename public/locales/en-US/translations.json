@@ -633,6 +633,11 @@
   "orderContexts": {
     "exchange": "Exchange",
     "margin": "Margin",
+    "funding": "Derivative"
+  },
+  "balanceContexts": {
+    "exchange": "Exchange",
+    "margin": "Margin",
     "funding": "Derivative",
     "contribution": "Capital Raise"
   },
