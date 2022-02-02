@@ -461,6 +461,8 @@ function reducer(state = getInitialState(), action = {}) {
       const x = _min(_map(layoutDef.layout, l => l.x)) || 0
       const y = _max(_map(layoutDef.layout, l => l.y)) || 0
 
+      const newY = y + layoutDef.layout[layoutDef?.layout?.length - 1]?.h
+
       return {
         ...state,
         layoutIsDirty: true,
@@ -472,7 +474,17 @@ function reducer(state = getInitialState(), action = {}) {
               i: `${nonce()}`,
               c: component,
               x,
-              y: y + 1,
+              y: newY,
+              // default props (undefined/false) are added to avoid re-renders, otherwise react-grid-layout calls onLayoutChange with default props and it triggers re-render
+              isBounded: undefined,
+              isDraggable: undefined,
+              isResizable: undefined,
+              maxH: undefined,
+              maxW: undefined,
+              minW: undefined,
+              resizeHandles: undefined,
+              moved: false,
+              static: false,
               ...COMPONENT_DIMENSIONS[component],
             },
           ],
@@ -507,13 +519,19 @@ function reducer(state = getInitialState(), action = {}) {
       const newLayout = layoutDefToGridLayout({ layout: incomingLayout })
       const setIsDirty = !_isEqual(currentLayout, newLayout)
 
+      const updated = gridLayoutToLayoutDef({
+        ...layoutDef,
+        layout: incomingLayout,
+      }, layoutDef)
+
+      if (_isEqual(state.unsavedLayout, updated)) {
+        return state
+      }
+
       return {
         ...state,
         ...setIsDirty && { layoutIsDirty: true },
-        unsavedLayout: gridLayoutToLayoutDef({
-          ...layoutDef,
-          layout: incomingLayout,
-        }, layoutDef),
+        unsavedLayout: updated,
       }
     }
     case types.SET_LAYOUT_ID: {

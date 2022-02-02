@@ -21,6 +21,7 @@ import getIsCcyInfoModalVisible from './get_is_ccy_info_modal_visible'
 import getIsConfirmDMSModalVisible from './get_confirm_dms_modal_visible'
 import getIsEditOrderModalShown from './get_is_edit_order_modal_shown'
 import getOrderToEdit from './get_order_to_edit'
+import getLayoutForRoute from './layouts/get_layout_for_route'
 
 export * from './get_settings'
 export * from './get_core_settings'
@@ -49,4 +50,5 @@ export {
   getIsEditOrderModalShown,
   getOrderToEdit,
   getIsConfirmDMSModalVisible,
+  getLayoutForRoute,
 }

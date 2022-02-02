@@ -62,10 +62,10 @@ export const COMPONENT_DIMENSIONS = {
     w: 33, h: 10, minW: 30, minH: 8,
   },
   [COMPONENT_TYPES.ORDER_BOOK]: {
-    w: 24, h: 20, minW: 21, minH: 5,
+    w: 24, h: 12, minW: 21, minH: 5,
   },
   [COMPONENT_TYPES.ORDER_FORM]: {
-    w: 20, h: 10, minW: 16, minH: 6,
+    w: 24, h: 12, minW: 16, minH: 6,
   },
   [COMPONENT_TYPES.TRADES_TABLE]: {
     w: 24, h: 10, minW: 18, minH: 4,
@@ -176,7 +176,6 @@ export const renderLayoutElement = (layoutID, def = {}, componentProps = {}, onR
 
 export const layoutDefToGridLayout = layoutDef => _map(layoutDef.layout, l => ({
   i: l.i,
-  c: l.c,
   x: l.x,
   y: l.y,
   w: l.w,
