@@ -5,6 +5,8 @@ import React, {
 import { useDispatch, useSelector } from 'react-redux'
 import PropTypes from 'prop-types'
 import _map from 'lodash/map'
+import _forEach from 'lodash/forEach'
+import _keys from 'lodash/keys'
 import _get from 'lodash/get'
 import _last from 'lodash/last'
 import _find from 'lodash/find'
@@ -74,11 +76,13 @@ const GridLayout = ({
     // generate default layout
     const nextLayout = generateLayout(layoutConfig)
     if (layoutDef?.layout && (layoutIsDirty || !layoutDef.isDefault)) {
-      nextLayout[breakpoint] = [...layoutDef?.layout]
+      _forEach(_keys(nextLayout), (bp) => {
+        nextLayout[bp] = [...layoutDef?.layout]
+      })
     }
 
     return nextLayout
-  }, [breakpoint, layoutConfig, layoutDef, layoutIsDirty])
+  }, [layoutConfig, layoutDef, layoutIsDirty])
 
   const nextLayouts = useMemo(() => onLoadLayout(), [onLoadLayout])
 

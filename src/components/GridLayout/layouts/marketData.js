@@ -5,7 +5,6 @@ import {
   GRID_MEDIUM,
   GRID_SMALL,
   GRID_XSMALL,
-  GRID_XSSMALL,
 } from '../Grid.constants'
 import gridChart1 from '../items/marketData/grid.chart1'
 import gridChart2 from '../items/marketData/grid.chart2'
@@ -34,7 +33,6 @@ const columns = {
   [GRID_MEDIUM]: [0, 53, 76],
   [GRID_SMALL]: [0],
   [GRID_XSMALL]: [0],
-  [GRID_XSSMALL]: [0],
 }
 
 const grid = [

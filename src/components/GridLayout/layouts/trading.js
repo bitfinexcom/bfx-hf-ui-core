@@ -5,7 +5,6 @@ import {
   GRID_MEDIUM,
   GRID_SMALL,
   GRID_XSMALL,
-  GRID_XSSMALL,
 } from '../Grid.constants'
 import gridChart from '../items/trading/grid.chart'
 import gridExchangeInfoBar from '../items/trading/grid.exchangeinfo'
@@ -38,7 +37,6 @@ const columns = {
   [GRID_MEDIUM]: [0, 26, 75],
   [GRID_SMALL]: [0],
   [GRID_XSMALL]: [0],
-  [GRID_XSSMALL]: [0],
 }
 
 const grid = [
