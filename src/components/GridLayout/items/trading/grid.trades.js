@@ -1,4 +1,4 @@
-import { COMPONENT_TYPES } from '../../GridLayout.helpers'
+import { COMPONENT_IDS, COMPONENT_TYPES } from '../../GridLayout.helpers'
 
 export default {
   defaults: {
@@ -6,7 +6,7 @@ export default {
     h: 7,
     minW: 18,
     minH: 4,
-    i: '1591961760845000',
+    i: COMPONENT_IDS.TRADING_TRADES,
     moved: false,
     static: false,
   },
