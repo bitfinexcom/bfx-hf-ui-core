@@ -11,7 +11,6 @@ const GRID_COLUMNS_LG = isElectronApp ? 100 : 100
 const GRID_COLUMNS_MD = isElectronApp ? 100 : 100
 const GRID_COLUMNS_SM = isElectronApp ? 100 : 50
 const GRID_COLUMNS_XS = isElectronApp ? 100 : 50
-const GRID_COLUMNS_XSS = isElectronApp ? 100 : 50
 
 // breakpoints
 const GRID_BREAKPOINT_LG = 1200
