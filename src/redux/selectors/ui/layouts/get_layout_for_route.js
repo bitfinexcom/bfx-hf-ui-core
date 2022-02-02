@@ -19,7 +19,6 @@ const getLayoutForRoute = createSelector(
   getCurrentUnsavedLayout,
   getLocation,
   (layouts, layoutID, unsavedLayoutDef, { pathname } = {}) => {
-    console.log('unsavedLayoutDef: ', unsavedLayoutDef)
     const savedLayout = _get(layouts, layoutID, EMPTY_OBJ)
     const isMatchingUnsavedLayout = _get(unsavedLayoutDef, 'routePath', null) === pathname
     const isMatchingSavedLayout = savedLayout.routePath === pathname
