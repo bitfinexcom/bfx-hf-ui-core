@@ -6,7 +6,7 @@ export default {
     h: 20,
     minW: 21,
     minH: 5,
-    i: [COMPONENT_IDS.MARKET_ORDERBOOK],
+    i: COMPONENT_IDS.MARKET_ORDERBOOK,
     moved: false,
     static: false,
   },
