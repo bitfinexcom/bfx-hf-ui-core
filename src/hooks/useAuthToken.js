@@ -1,8 +1,8 @@
 import { useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { replace } from 'connected-react-router'
+import { useLocation } from 'react-router'
 import { isElectronApp } from '../redux/config'
-import { getLocation } from '../redux/selectors/router'
 import tokenStore from '../util/token_store'
 
 export default () => {
@@ -11,8 +11,8 @@ export default () => {
   }
 
   const dispatch = useDispatch()
-  const location = useSelector(getLocation)
-  const { authToken } = location.query
+  const location = useLocation()
+  const authToken = new URLSearchParams(location.search).get('authToken')
 
   useEffect(() => {
     if (authToken) {

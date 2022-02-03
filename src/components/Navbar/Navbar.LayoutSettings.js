@@ -8,9 +8,9 @@ import _get from 'lodash/get'
 
 import OutsideClickHandler from 'react-outside-click-handler'
 import { useTranslation } from 'react-i18next'
+import { useLocation } from 'react-router'
 import { selectLayout, deleteLayout, saveLayout } from '../../redux/actions/ui'
 import { getLayouts, getLayoutID } from '../../redux/selectors/ui'
-import { getLocation } from '../../redux/selectors/router'
 
 import { ReactComponent as LayoutIcon } from './layout-icon.svg'
 import NavbarButton from './Navbar.Button'
@@ -51,7 +51,7 @@ export default function LayoutSettings() {
   const layoutID = useSelector(getLayoutID)
   const layoutIsDirty = useSelector(state => state.ui.layoutIsDirty)
   const layout = _get(layouts, layoutID, {})
-  const { pathname } = useSelector(getLocation)
+  const { pathname } = useLocation()
   const menuRef = useRef()
 
   // eslint-disable-next-line no-shadow

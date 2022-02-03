@@ -5,7 +5,6 @@ import _entries from 'lodash/entries'
 import _find from 'lodash/find'
 import _last from 'lodash/last'
 
-import getLocation from '../../router/get_location'
 import getLayoutID from '../get_layout_id'
 import getLayouts from '../get_layouts'
 import getCurrentUnsavedLayout from '../get_current_unsaved_layout'
@@ -17,8 +16,8 @@ const getLayoutForRoute = createSelector(
   getLayouts,
   getLayoutID,
   getCurrentUnsavedLayout,
-  getLocation,
-  (layouts, layoutID, unsavedLayoutDef, { pathname } = {}) => {
+  (state, pathname) => pathname,
+  (layouts, layoutID, unsavedLayoutDef, pathname) => {
     const savedLayout = _get(layouts, layoutID, EMPTY_OBJ)
     const isMatchingUnsavedLayout = _get(unsavedLayoutDef, 'routePath', null) === pathname
     const isMatchingSavedLayout = savedLayout.routePath === pathname

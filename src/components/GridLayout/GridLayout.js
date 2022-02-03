@@ -10,7 +10,7 @@ import _keys from 'lodash/keys'
 import { Responsive as RGL, WidthProvider } from 'react-grid-layout'
 import { Spinner } from '@ufx-ui/core'
 
-import { getLocation } from '../../redux/selectors/router'
+import { useLocation } from 'react-router'
 import {
   removeComponent, changeLayout, setLayoutID, storeUnsavedLayout,
 } from '../../redux/actions/ui'
@@ -45,12 +45,12 @@ const GridLayout = ({
   const dispatch = useDispatch()
   const [breakpoint, setBreakpoint] = useState(RGL.utils.getBreakpointFromWidth(GRID_BREAKPOINTS, document.body.clientWidth))
 
-  const { pathname } = useSelector(getLocation)
+  const { pathname } = useLocation()
   const layoutConfig = useMemo(() => getLayoutConfig(pathname), [pathname])
   const layoutID = useSelector(getLayoutID)
 
   const layoutIsDirty = useSelector(state => state.ui.layoutIsDirty)
-  const [lastLayoutID, layoutDef, isMatchingUnsavedLayout, isMatchingSavedLayout] = useSelector(getLayoutForRoute)
+  const [lastLayoutID, layoutDef, isMatchingUnsavedLayout, isMatchingSavedLayout] = useSelector(state => getLayoutForRoute(state, pathname))
 
   const onLoadLayout = useCallback(() => {
     // generate default layout
