@@ -13,11 +13,6 @@ const MAX_ORDER_COUNT_SYMBOL = 'te_limit_order_symbol_cnt'
 
 const getCoreSettings = (state) => _get(state, `${path}.coreSettings`, EMPTY_OBJ)
 
-const MAX_ORDERS = {
-  [MAX_ORDER_COUNT]: 2500,
-  [MAX_ORDER_COUNT_SYMBOL]: 250,
-}
-
 const findOrderCountValue = (settings, key) => Number(_get(settings, [MAX_ORDER_COUNT_SETTING, key]))
 
 export const getMaxOrderCount = createSelector(
@@ -30,13 +25,24 @@ export const getMaxOrderCountSymbol = createSelector(
   (settings) => findOrderCountValue(settings, MAX_ORDER_COUNT_SYMBOL),
 )
 
+const MAX_ORDERS = {
+  total: 2500,
+  pair: 250,
+}
+
 export const getMaxOrderCounts = createSelector(
   getMaxOrderCount,
   getMaxOrderCountSymbol,
-  (total, pair) => ({
-    total: total || MAX_ORDERS[MAX_ORDER_COUNT],
-    pair: pair || MAX_ORDERS[MAX_ORDER_COUNT_SYMBOL],
-  }),
+  (total, pair) => {
+    if (total) {
+      MAX_ORDERS.total = total
+    }
+    if (pair) {
+      MAX_ORDERS.pair = pair
+    }
+
+    return MAX_ORDERS
+  },
 )
 
 export default getCoreSettings
