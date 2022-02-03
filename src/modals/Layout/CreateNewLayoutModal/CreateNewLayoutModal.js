@@ -1,4 +1,7 @@
-import React, { useState, memo } from 'react'
+import React, {
+  useEffect, useState, memo, useRef,
+  useCallback,
+} from 'react'
 import { useDispatch } from 'react-redux'
 import _isEmpty from 'lodash/isEmpty'
 import PropTypes from 'prop-types'
@@ -12,12 +15,19 @@ import './style.css'
 
 const CreateNewLayoutModal = ({ onClose, isOpen }) => {
   const { t } = useTranslation()
-
   const dispatch = useDispatch()
+
   const [label, setLabel] = useState('')
   const [error, setError] = useState('')
 
-  const onSubmitHandler = () => {
+  const inputRef = useRef()
+  useEffect(() => {
+    if (isOpen && inputRef?.current) {
+      inputRef.current.focus()
+    }
+  }, [isOpen])
+
+  const onSubmitHandler = useCallback(() => {
     if (_isEmpty(label)) {
       setError(t('layoutSettings.labelEmptyError'))
       return
@@ -26,7 +36,7 @@ const CreateNewLayoutModal = ({ onClose, isOpen }) => {
     dispatch(createLayout(label))
     setLabel('')
     onClose()
-  }
+  }, [dispatch, label, onClose, t])
 
   return (
     <Modal
@@ -41,6 +51,7 @@ const CreateNewLayoutModal = ({ onClose, isOpen }) => {
         placeholder={t('layoutSettings.layoutName')}
         value={label}
         onChange={setLabel}
+        shouldBeAutofocused
       />
 
       {!_isEmpty(error) && (

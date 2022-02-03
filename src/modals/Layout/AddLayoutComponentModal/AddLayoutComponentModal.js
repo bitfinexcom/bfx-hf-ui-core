@@ -1,5 +1,6 @@
 import React, {
   useRef, useState, memo, useEffect, useMemo,
+  useCallback,
 } from 'react'
 import { useDispatch } from 'react-redux'
 import _isEmpty from 'lodash/isEmpty'
@@ -29,7 +30,7 @@ const AddLayoutComponentModal = ({ onClose, isOpen }) => {
 
   const dispatch = useDispatch()
 
-  const onSubmitHandler = () => {
+  const onSubmitHandler = useCallback(() => {
     if (_isEmpty(componentType) || !COMPONENT_LABELS[componentType]) {
       setError(t('layoutSettings.invalidComponentError'))
       return
@@ -37,9 +38,9 @@ const AddLayoutComponentModal = ({ onClose, isOpen }) => {
 
     dispatch(addComponent(componentType))
     onClose()
-  }
-  const location = useLocation()
+  }, [componentType, dispatch, onClose, t])
 
+  const location = useLocation()
   const dropdownOptions = useMemo(() => {
     const componentsArray = _values(
       location.pathname === marketData.path
@@ -54,7 +55,6 @@ const AddLayoutComponentModal = ({ onClose, isOpen }) => {
   }, [location, t])
 
   const dropdownRef = useRef()
-
   useEffect(() => {
     if (isOpen && dropdownRef?.current) {
       dropdownRef.current.click()
