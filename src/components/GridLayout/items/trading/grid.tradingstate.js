@@ -6,7 +6,7 @@ export default {
     h: 10,
     minW: 40,
     minH: 5,
-    i: COMPONENT_IDS.TRADING_STATE_PANEL,
+    i: COMPONENT_IDS.TRADING_TRADING_STATE_PANEL,
     moved: false,
     static: false,
   },
