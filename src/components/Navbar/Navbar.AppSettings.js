@@ -1,10 +1,10 @@
-import React, { useState } from 'react'
+import React, { useState, memo } from 'react'
 
 import NavbarButton from './Navbar.Button'
 
 import AppSettingsModal from '../../modals/AppSettingsModal'
 
-export default function AppSettings() {
+const AppSettings = () => {
   const [isOpen, setIsOpen] = useState(false)
 
   return (
@@ -22,3 +22,5 @@ export default function AppSettings() {
     </div>
   )
 }
+
+export default memo(AppSettings)
