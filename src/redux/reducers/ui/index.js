@@ -80,6 +80,7 @@ function getInitialState() {
     unsavedLayout: null,
     layoutID: null,
     tab: null,
+    tickersVolumeUnit: null,
   }
 
   if (!localStorage) {
@@ -134,7 +135,6 @@ function getInitialState() {
     }
 
     defaultState.layouts = nextFormatLayouts
-    defaultState.tickersVolumeUnit = isPaperTrading ? VOLUME_UNIT_PAPER.TESTUSD : VOLUME_UNIT.USD
   } catch (e) {
     debug('Loading layouts error, check localStorage: %s', LAYOUTS_KEY)
   }
@@ -390,6 +390,7 @@ function reducer(state = getInitialState(), action = {}) {
         ...state,
         isPaperTrading,
         currentMode: mode,
+        tickersVolumeUnit: isPaperTrading ? VOLUME_UNIT_PAPER.TESTUSD : VOLUME_UNIT.USD,
       }
     }
     case types.CHANGE_TRADING_MODAL_STATE: {
