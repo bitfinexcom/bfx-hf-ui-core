@@ -11,7 +11,6 @@ import Dropdown from '../../ui/Dropdown'
 import WSActions from '../../redux/actions/ws'
 import GAActions from '../../redux/actions/google_analytics'
 import UIActions from '../../redux/actions/ui'
-import { getActiveAlgoOrders } from '../../redux/actions/ao'
 import {
   isDevEnv,
   getAutoLoginState,
@@ -69,7 +68,6 @@ const General = () => {
     } else {
       setIsDmsChecked(nextDms)
       dispatch(WSActions.saveSettings(SETTINGS.DMS, nextDms))
-      dispatch(getActiveAlgoOrders())
       dispatch(GAActions.updateSettings())
     }
   }

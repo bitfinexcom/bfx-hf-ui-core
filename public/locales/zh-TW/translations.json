@@ -38,6 +38,8 @@
       "title": "冰山訂單",
       "help": "冰山訂單允許您在市場上下一張大額訂單並確保一次僅成交訂單中一小部分數量。\n\n如選擇「隱藏剩餘訂單」選項，剩餘未執行訂單將不會顯示在掛單簿上，從而在執行大額訂單時避免干擾市場秩序。"
     },
+    "visibleOnHit": "部分成交後取消隱藏",
+    "visibleOnHitHelp": "隱藏訂單部分成交後，餘下未成交部分將顯示於掛單簿中。",
     "saveParamsSettings": "Algo參數設定",
     "intervalDistortion": "間隔偏離%",
     "intervalDistortionHelp": "每個分割訂單數間隔的偏離量（百分比） ",

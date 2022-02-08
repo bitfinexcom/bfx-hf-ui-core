@@ -6,6 +6,7 @@ function getInitialState() {
     executing: false,
     loading: false,
     options: {},
+    results: {},
   }
 }
 
@@ -15,6 +16,7 @@ function reducer(state = getInitialState(), action = {}) {
     case types.EXECUTION_START: {
       return {
         ...state,
+        results: {},
         executing: true,
       }
     }
@@ -45,6 +47,15 @@ function reducer(state = getInitialState(), action = {}) {
       return {
         ...state,
         options,
+      }
+    }
+
+    case types.SET_EXECUTION_RESULTS: {
+      const { results = {} } = payload
+
+      return {
+        ...state,
+        results,
       }
     }
 

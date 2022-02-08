@@ -7,7 +7,7 @@ import Button from '../../../ui/Button'
 import Dropdown from '../../../ui/Dropdown'
 import { getDefaultMarket } from '../../../util/market'
 
-const HistoricalForm = ({
+const LiveForm = ({
   updateExecutionType, executionTypes, executionType, disabled, markets,
 }) => {
   const [selectedMarket, setSelectedMarket] = useState(getDefaultMarket(markets))
@@ -55,7 +55,7 @@ const HistoricalForm = ({
   )
 }
 
-HistoricalForm.propTypes = {
+LiveForm.propTypes = {
   updateExecutionType: PropTypes.func.isRequired,
   disabled: PropTypes.bool,
   executionTypes: PropTypes.arrayOf(PropTypes.object),
@@ -63,11 +63,11 @@ HistoricalForm.propTypes = {
   executionType: PropTypes.string,
 }
 
-HistoricalForm.defaultProps = {
+LiveForm.defaultProps = {
   markets: [{}],
   disabled: false,
   executionType: '',
   executionTypes: [],
 }
 
-export default memo(HistoricalForm)
+export default memo(LiveForm)

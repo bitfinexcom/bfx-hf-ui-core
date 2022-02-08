@@ -435,6 +435,13 @@ export default (alias, store) => (e = {}) => {
         break
       }
 
+      case 'strategy.live_execution_results': {
+        const [, results] = payload
+        store.dispatch(WSActions.setExecutionResults(results))
+
+        break
+      }
+
       case 'refresh': {
         window.location.reload()
         break

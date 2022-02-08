@@ -38,6 +38,8 @@
       "title": "Iceberg",
       "help": "Iceberg te permite realizar una orden grande en el mercado y, al mismo tiempo, garantizar que solo una pequeña parte se llene a la vez.\n\nAl habilitar la opción 'Exceso como oculto', es posible ofrecer el resto como una orden oculta, lo que permite una interrupción mínima del mercado al ejecutar grandes operaciones."
     },
+    "visibleOnHit": "Visible al hit",
+    "visibleOnHitHelp": "El resto de la orden oculta será visible después del primer hit (ejecución parcial).",
     "saveParamsSettings": "Configuraciones \"Params\" del Algo",
     "intervalDistortion": "% de Intervalos de Distorsión",
     "intervalDistortionHelp": "Cantidad para distorsionar cada intervalo, en porcentaje",
