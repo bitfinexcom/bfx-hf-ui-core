@@ -4,42 +4,27 @@ import React, {
 import { Notifications, useInterval } from '@ufx-ui/core'
 import ClassNames from 'clsx'
 import PropTypes from 'prop-types'
-import _isEmpty from 'lodash/isEmpty'
-import _map from 'lodash/map'
 import _filter from 'lodash/filter'
 import { withTranslation } from 'react-i18next'
 
-import Panel from '../../ui/Panel'
-import Button from '../../ui/Button'
-import Scrollbars from '../../ui/Scrollbars'
+import SidebarContent from './SidebarContent'
 import './style.css'
 
 const REFRESH_NOTIFICATIONS_MS = 1000
 const LIVE_NOTIFICATIONS_MS = 5000
 
+const EMPTY_ARR = []
+
 const NotificationsSidebar = ({
   notifications, notificationsVisible, closeNotificationPanel, removeNotifications, clearNotifications, t,
 }) => {
-  const [newNotifications, setNewNotifications] = useState([])
+  const [newNotifications, setNewNotifications] = useState(EMPTY_ARR)
 
-  const onClose = useCallback(({ cid, group }) => {
-    let cids = []
-
-    if (!_isEmpty(group)) {
-      cids = _map(group, el => el.cid)
-    } else if (!_isEmpty(cid)) {
-      cids = [cid]
-    }
-
-    removeNotifications(cids)
-  },
-  [removeNotifications])
-
-  const onClearNotifications = () => {
+  const onClearNotifications = useCallback(() => {
     clearNotifications()
 
     setNewNotifications([])
-  }
+  }, [clearNotifications])
 
   const checkNotificationsTime = () => {
     const nextNotifications = _filter(notifications, n => n?.mts > new Date().getTime() - LIVE_NOTIFICATIONS_MS)
@@ -70,35 +55,15 @@ const NotificationsSidebar = ({
         hidden: !notificationsVisible,
       })}
       >
-        <Panel
-          label={t('notifications.title')}
-          hideIcons
-          closePanel={closeNotificationPanel}
-          preHeaderComponents={[
-            <Button
-              onClick={onClearNotifications}
-              key='clear-btn'
-              disabled={_isEmpty(notifications)}
-              className='hfui-notificationssidebar__header-btn'
-              label={[
-                <i key='icon' className='icon-clear' />,
-                <p key='text'>{t('notifications.clearAllBtn')}</p>,
-              ]}
-            />,
-          ]}
-        >
-          {_isEmpty(notifications) ? (
-            <p className='hfui-notificationssidebar__empty'>{t('notifications.noNotifications')}</p>
-          ) : (
-            <Scrollbars>
-              <Notifications
-                className='hfui-sidebar-notifications'
-                notifications={notifications}
-                onClose={onClose}
-              />
-            </Scrollbars>
-          )}
-        </Panel>
+        <SidebarContent
+          closeNotificationPanel={closeNotificationPanel}
+          notifications={notifications}
+          notificationsVisible={notificationsVisible}
+          removeNotifications={removeNotifications}
+          onClearNotifications={onClearNotifications}
+          t={t}
+        />
+
       </div>
       <Notifications className='hfui-notificationssidebar__external' notifications={newNotifications} />
     </>

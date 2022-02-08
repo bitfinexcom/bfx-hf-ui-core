@@ -1,17 +1,17 @@
 import React, { memo } from 'react'
-import { useSelector, useDispatch } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { push } from 'connected-react-router'
 import ClassNames from 'clsx'
 import PropTypes from 'prop-types'
 
 import './style.css'
 
-import { getLocation } from '../../redux/selectors/router'
+import { useLocation } from 'react-router'
 
 const NavbarButton = ({
   route, label, external,
 }) => {
-  const { pathname } = useSelector(getLocation)
+  const { pathname } = useLocation()
   const dispatch = useDispatch()
   const navigate = (path) => dispatch(push(path))
 

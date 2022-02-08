@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react'
+import React, { useState, useCallback } from 'react'
 import PropTypes from 'prop-types'
 import _isEqual from 'lodash/isEqual'
 import _isEmpty from 'lodash/isEmpty'
@@ -19,12 +19,8 @@ const ActiveAlgoOrdersModal = ({
   activeAlgoOrders,
   handleActiveOrders,
 }) => {
-  const [ordersList, setOrdersList] = useState([])
+  const { t } = useTranslation()
   const [selectedOrders, setSelectedOrders] = useState([])
-
-  useEffect(() => {
-    setOrdersList(activeAlgoOrders)
-  }, [activeAlgoOrders])
 
   const onOrderSelect = (e, gid, algoID) => {
     if (e) {
@@ -37,7 +33,7 @@ const ActiveAlgoOrdersModal = ({
   const onAllOrdersSelect = (e) => {
     let allOrders = []
     if (e) {
-      _forEach(ordersList, order => {
+      _forEach(activeAlgoOrders, order => {
         const { gid, algoID } = order
         allOrders.push({ gid, algoID })
       })
@@ -55,7 +51,7 @@ const ActiveAlgoOrdersModal = ({
 
   const isAllOrdersSelected = () => {
     const allOrders = []
-    _forEach(ordersList, order => {
+    _forEach(activeAlgoOrders, order => {
       const { gid, algoID } = order
       allOrders.push({ gid, algoID })
     })
@@ -72,8 +68,8 @@ const ActiveAlgoOrdersModal = ({
   }
 
   const onSubmit = useCallback((type) => {
-    const ordersLeft = _differenceBy(ordersList, selectedOrders, 'gid')
-    const allOrders = prepareOrders(ordersList)
+    const ordersLeft = _differenceBy(activeAlgoOrders, selectedOrders, 'gid')
+    const allOrders = prepareOrders(activeAlgoOrders)
     const unselectedOrders = prepareOrders(ordersLeft)
     handleActiveOrders({
       type,
@@ -81,7 +77,7 @@ const ActiveAlgoOrdersModal = ({
       selectedOrders,
       unselectedOrders,
     })
-  }, [handleActiveOrders, ordersList, selectedOrders])
+  }, [handleActiveOrders, activeAlgoOrders, selectedOrders])
 
   const onResumeButtonClickHandler = useCallback(() => {
     if (_isEmpty(selectedOrders)) {
@@ -93,8 +89,6 @@ const ActiveAlgoOrdersModal = ({
   const cancellOrders = useCallback(() => onSubmit('cancel_all'),
     [onSubmit])
 
-  const { t } = useTranslation()
-
   return (
     <Modal
       isOpen={isOpen}
@@ -105,7 +99,7 @@ const ActiveAlgoOrdersModal = ({
       width={800}
     >
       <AlgoOrdersTable
-        orders={ordersList}
+        orders={activeAlgoOrders}
         onOrderSelect={onOrderSelect}
         onAllOrdersSelect={onAllOrdersSelect}
         isOrderSelected={isOrderSelected}
