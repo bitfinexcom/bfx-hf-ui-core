@@ -6,9 +6,17 @@ const useTourGuide = (isGuideActive) => {
   // delay guide active status to avoid missing guide spotlight because of target not found error
   useEffect(() => {
     const delay = isGuideActive ? 500 : 0
+    let isMounted = true
+
     setTimeout(() => {
-      setIsGuideActiveLocal(isGuideActive)
+      if (isMounted) {
+        setIsGuideActiveLocal(isGuideActive)
+      }
     }, delay)
+
+    return () => {
+      isMounted = false
+    }
   }, [isGuideActive])
 
   return isGuideActiveLocal
