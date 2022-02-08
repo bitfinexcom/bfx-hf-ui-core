@@ -1,5 +1,7 @@
+import { COMPONENT_IDS } from '../../../components/GridLayout/GridLayout.helpers'
+
 export default {
-  1591873324466000: {
+  [COMPONENT_IDS.TRADING_ORDERBOOK]: {
     currentMarket: {
       contexts: [
         'e',

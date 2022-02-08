@@ -1,124 +1,131 @@
-import React, { memo, useEffect, useState } from 'react'
+import React, {
+  memo, useCallback, useEffect, useState,
+  useMemo,
+} from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import PropTypes from 'prop-types'
 import _map from 'lodash/map'
-import _get from 'lodash/get'
-import _last from 'lodash/last'
-import _find from 'lodash/find'
-import _entries from 'lodash/entries'
-import _filter from 'lodash/filter'
+import _forEach from 'lodash/forEach'
+import _keys from 'lodash/keys'
 import { Responsive as RGL, WidthProvider } from 'react-grid-layout'
+import { Spinner } from '@ufx-ui/core'
+
 import { getLocation } from '../../redux/selectors/router'
 import {
   removeComponent, changeLayout, setLayoutID, storeUnsavedLayout,
 } from '../../redux/actions/ui'
-import { renderLayoutElement, COMPONENT_DIMENSIONS } from './GridLayout.helpers'
+import { renderLayoutElement } from './GridLayout.helpers'
+import {
+  GRID_BREAKPOINTS,
+  GRID_COLUMNS,
+  GRID_CELL_SPACINGS,
+  GRID_CONTAINER_SPACINGS,
+  GRID_ROW_HEIGHT,
+} from './Grid.constants'
 
 import {
-  getLayouts,
   getLayoutID,
-  getCurrentUnsavedLayout,
+  getLayoutForRoute,
 } from '../../redux/selectors/ui'
 
-import { getLastUsedLayoutID } from '../../util/layout'
-import { isElectronApp } from '../../redux/config'
+import { generateLayout } from './Grid.layouts'
+import tradingTerminalLayout from './layouts/trading'
+import marketDataLayout from './layouts/marketData'
+import { marketData } from '../../constants/routes'
+
+import './style.scss'
 
 const ReactGridLayout = WidthProvider(RGL)
 
-const cols = isElectronApp ? {
-  lg: 100, md: 100, sm: 100, xs: 100, xxs: 100,
-} : {
-  lg: 100, md: 80, sm: 50, xs: 40, xxs: 20,
-}
+const getLayoutConfig = pathname => (pathname === marketData.path ? marketDataLayout : tradingTerminalLayout)
 
 const GridLayout = ({
   sharedProps, tradesProps, bookProps, chartProps, orderFormProps,
 }) => {
   const dispatch = useDispatch()
+  const [breakpoint, setBreakpoint] = useState(RGL.utils.getBreakpointFromWidth(GRID_BREAKPOINTS, document.body.clientWidth))
+
   const { pathname } = useSelector(getLocation)
-  const [mounted, setMounted] = useState(false)
-  const layouts = useSelector(getLayouts)
+  const layoutConfig = useMemo(() => getLayoutConfig(pathname), [pathname])
   const layoutID = useSelector(getLayoutID)
-  const currentSavedLayout = _get(layouts, layoutID, {})
-  const unsavedLayoutDef = useSelector(getCurrentUnsavedLayout)
-  const isValidUnsavedLayout = _get(unsavedLayoutDef, 'routePath', null) === pathname
-  const isValidSavedLayout = currentSavedLayout.routePath === pathname
-  const layoutsForCurrRoute = _filter(_entries(layouts), ([, layout]) => layout.routePath === pathname)
-  const lastUsedLayoutID = getLastUsedLayoutID(pathname)
 
-  const [lastLayoutID, lastLayoutDef] = _find(layoutsForCurrRoute, ([id]) => id === lastUsedLayoutID) || _last(layoutsForCurrRoute
-    .sort((a, b) => a[1].savedAt - b[1].savedAt)) || []
+  const layoutIsDirty = useSelector(state => state.ui.layoutIsDirty)
+  const [lastLayoutID, layoutDef, isMatchingUnsavedLayout, isMatchingSavedLayout] = useSelector(getLayoutForRoute)
 
-  // should use unsaved one first, then saved one (if selected) else last saved one
-  const layoutDef = isValidUnsavedLayout
-    ? unsavedLayoutDef
-    : isValidSavedLayout
-      ? currentSavedLayout
-      : lastLayoutDef
+  const onLoadLayout = useCallback(() => {
+    // generate default layout
+    const nextLayout = generateLayout(layoutConfig)
+    if (layoutDef?.layout && (layoutIsDirty || !layoutDef.isDefault)) {
+      _forEach(_keys(nextLayout), (bp) => {
+        nextLayout[bp] = [...layoutDef?.layout]
+      })
+    }
+
+    return nextLayout
+  }, [layoutConfig, layoutDef, layoutIsDirty])
+
+  const nextLayouts = useMemo(() => onLoadLayout(), [onLoadLayout])
 
   useEffect(() => {
     // set active layout id when there’s none selected (on initial load)
     // or when switching routes
-    if (!layoutID || !isValidSavedLayout) {
+    if (!layoutID || !isMatchingSavedLayout) {
       dispatch(setLayoutID(lastLayoutID))
     }
-  }, [pathname, layoutID, lastLayoutID, isValidSavedLayout, dispatch])
+  }, [pathname, layoutID, lastLayoutID, isMatchingSavedLayout, dispatch])
 
   useEffect(() => {
     // discard unsaved layout changes
-    if (!isValidUnsavedLayout) {
+    if (!isMatchingUnsavedLayout) {
       dispatch(storeUnsavedLayout(layoutDef))
     }
-  }, [dispatch, isValidUnsavedLayout, layoutDef])
+  }, [dispatch, isMatchingUnsavedLayout, layoutDef])
 
-  const componentProps = {
+  const componentProps = useMemo(() => ({
     orderForm: orderFormProps,
     trades: tradesProps,
     chart: chartProps,
     book: bookProps,
     dark: true,
     sharedProps,
-  }
+  }), [bookProps, chartProps, orderFormProps, sharedProps, tradesProps])
 
-  const currentLayouts = _map(_get(layoutDef, 'layout', []), (layout) => ({
-    ...layout,
-    minW: COMPONENT_DIMENSIONS[layout?.c].minW,
-    minH: COMPONENT_DIMENSIONS[layout?.c].minH,
-  }))
-  const onRemoveComponent = (i) => dispatch(removeComponent(i))
-
-  useEffect(() => {
-    setMounted(true)
-  }, [])
+  const onRemoveComponent = useCallback((i) => dispatch(removeComponent(i)), [dispatch])
 
   /* fix-start: initial grid rendering issue
   * when screen is loaded the grids are arranged in stack of items instead of in a linear manner.
   * https://github.com/react-grid-layout/react-grid-layout/issues/879
   */
   useEffect(() => {
-    if (mounted) {
-      setTimeout(() => { window.dispatchEvent(new Event('resize')) }, 200)
-    }
-  }, [mounted])
+    setTimeout(() => { window.dispatchEvent(new Event('resize')) }, 200)
+  }, [])
   /* fix-end: initial grid rendering issue */
+
+  const onLayoutChange = useCallback((layout) => {
+    dispatch(changeLayout(layout))
+  }, [dispatch])
+
+  const currentLayout = nextLayouts?.[breakpoint] || []
+
+  if (!layoutID) {
+    return <Spinner className='grid-spinner' />
+  }
 
   return (
     <div className='hfui-gridlayoutpage__wrapper'>
       <ReactGridLayout
         draggableHandle='.icon-move'
-        cols={cols}
-        rowHeight={32}
-        margin={[20, 20]}
-        containerPadding={[0, 0]}
-        layouts={{ lg: currentLayouts }}
-        breakpoints={{
-          lg: 1200, md: 996, sm: 768, xs: 480, xxs: 0,
-        }}
-        onLayoutChange={(_, { lg }) => dispatch(changeLayout(lg))}
+        cols={GRID_COLUMNS}
+        breakpoints={GRID_BREAKPOINTS}
+        margin={GRID_CELL_SPACINGS}
+        containerPadding={GRID_CONTAINER_SPACINGS}
+        rowHeight={GRID_ROW_HEIGHT}
+        layouts={nextLayouts}
+        onBreakpointChange={setBreakpoint}
+        onLayoutChange={onLayoutChange}
         measureBeforeMount={false}
-        useCSSTransforms={mounted}
       >
-        {_map(currentLayouts, def => (
+        {_map(currentLayout, def => (
           <div key={def.i}>
             {renderLayoutElement(layoutID, def, componentProps, onRemoveComponent)}
           </div>
