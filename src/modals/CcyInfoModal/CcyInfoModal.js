@@ -49,6 +49,7 @@ const CcyInfoModal = ({
       isOpen={isModalVisible}
       className='hfui-ccy-article-modal'
       width={1000}
+      isFocusTrapEnabled={false}
       scrollable
     >
       <div ref={containerRef}>
