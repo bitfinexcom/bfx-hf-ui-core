@@ -1,16 +1,6 @@
 @import "../../variables.scss";
 
 .hfui-orderform__wrapper {
-  .react-datepicker__tab-loop {
-    position: relative;
-  }
-
-  .react-datepicker-popper {
-    left: -2px;
-    transform: translate(0px, 5px) !important;
-    margin-top: 0px;
-    margin-left: 15px;
-  }
 
   input {
     background: var(--lighter-background-color);
@@ -335,23 +325,6 @@
   display: inline-block;
   vertical-align: middle;
   margin: 0 0 16px 0;
-
-  .hfui-datepicker {
-    border: 1px solid $black-color;
-
-    .react-datepicker__day--disabled {
-      color: $grey-color;
-    }
-    .react-datepicker__month-select,
-    .react-datepicker__year-select {
-      border: 1px solid $grey-color;
-      padding: 3px;
-      font-weight: 500;
-    }
-    .react-datepicker-time__header {
-      font-weight: 500;
-    }
-  }
 
   input[type="range"] {
     width: 100%;
