@@ -4,10 +4,10 @@ import _map from 'lodash/map'
 
 // eslint-disable-next-line import/no-extraneous-dependencies
 import BFXChart from 'bfx-hf-chart'
-
 import { THEMES } from '../../../redux/selectors/ui'
 import Results from '../Results'
 import StrategyTradesTable from '../../StrategyTradesTable'
+import { onTradeExportClick } from './HistoricalReport.helpers'
 
 const CHART_THEME = {
   [THEMES.LIGHT]: {
@@ -29,7 +29,7 @@ const CHART_THEME = {
 
 const HistoricalReport = (opts, results, backtestData, backtestOptions, t, settingsTheme) => {
   const chartColours = CHART_THEME[settingsTheme]
-  const { trades = [] } = results
+  const { trades = [], backtestOptions: { activeMarket } = {} } = results
   const { indicators, onAddIndicator, onDeleteIndicator } = opts
   const { candles = [] } = backtestData
   const { tf } = backtestOptions
@@ -79,6 +79,7 @@ const HistoricalReport = (opts, results, backtestData, backtestOptions, t, setti
         label={t('tradesTableModal.title')}
         trades={trades}
         onTradeClick={() => { }}
+        onTradeExportClick={() => onTradeExportClick(trades, activeMarket, t)}
       />
     </div>
   )
