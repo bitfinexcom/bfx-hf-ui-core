@@ -54,17 +54,16 @@ const Results = ({ results }) => {
 
       <div key='results-right' className='hfui-strategyeditor__results-section'>
         <ul>
-          <ResultRow label={t('strategyEditor.fees')} value={resultNumber(preparePrice(fees), '$')} />
+          <ResultRow label={t('strategyEditor.fees')} value={resultNumber(preparePrice(-fees), '$')} />
           <ResultRow label={t('strategyEditor.profitLoss')} value={resultNumber(preparePrice(pl), '$')} />
-          {hasTrades
-            && (
-              <>
-                <ResultRow label={t('strategyEditor.profitFactor')} value={resultNumber(pf, '', 2, false)} />
-                <ResultRow label={t('strategyEditor.volume')} value={resultNumber(vol, '$')} />
-                <ResultRow label={t('strategyEditor.largestGain')} value={resultNumber(preparePrice(maxPL), '$')} />
-                <ResultRow label={t('strategyEditor.largestLoss')} value={resultNumber(preparePrice(minPL), '$')} />
-              </>
-            )}
+          {hasTrades && (
+            <>
+              <ResultRow label={t('strategyEditor.profitFactor')} value={resultNumber(pf, '', 2, false)} />
+              <ResultRow label={t('strategyEditor.volume')} value={resultNumber(vol, '$')} />
+              <ResultRow label={t('strategyEditor.largestGain')} value={resultNumber(preparePrice(maxPL), '$')} />
+              <ResultRow label={t('strategyEditor.largestLoss')} value={resultNumber(preparePrice(minPL), '$')} />
+            </>
+          )}
         </ul>
       </div>
     </div>
