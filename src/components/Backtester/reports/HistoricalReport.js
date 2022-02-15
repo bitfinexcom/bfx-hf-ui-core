@@ -1,17 +1,13 @@
 import React from 'react'
 import { AutoSizer } from 'react-virtualized'
-import { ExportToCsv } from 'export-to-csv'
-import { formatNumber } from '@ufx-ui/utils'
 import _map from 'lodash/map'
-import _isEmpty from 'lodash/isEmpty'
-import _split from 'lodash/split'
 
 // eslint-disable-next-line import/no-extraneous-dependencies
 import BFXChart from 'bfx-hf-chart'
-import { AMOUNT_DECIMALS, PRICE_SIG_FIGS } from '../../../constants/precision'
 import { THEMES } from '../../../redux/selectors/ui'
 import Results from '../Results'
 import StrategyTradesTable from '../../StrategyTradesTable'
+import { onTradeExportClick } from './HistoricalReport.helpers'
 
 const CHART_THEME = {
   [THEMES.LIGHT]: {
@@ -31,19 +27,9 @@ const CHART_THEME = {
   },
 }
 
-const TRADE_CSV_OPTIONS = {
-  fieldSeparator: ',',
-  quoteStrings: '"',
-  decimalSeparator: '.',
-  showLabels: true,
-  showTitle: true,
-  useTextFile: false,
-  useBom: true,
-}
-
 const HistoricalReport = (opts, results, backtestData, backtestOptions, t, settingsTheme) => {
   const chartColours = CHART_THEME[settingsTheme]
-  const { trades = [] } = results
+  const { trades = [], backtestOptions: { activeMarket } = {} } = results
   const { indicators, onAddIndicator, onDeleteIndicator } = opts
   const { candles = [] } = backtestData
   const { tf } = backtestOptions
@@ -60,32 +46,6 @@ const HistoricalReport = (opts, results, backtestData, backtestOptions, t, setti
       c.volume,
     ]
   ))
-
-  const onTradeExportClick = () => {
-    if (_isEmpty(trades)) {
-      return
-    }
-
-    const { backtestOptions: { activeMarket } } = results
-    const csvExporter = new ExportToCsv({
-      ...TRADE_CSV_OPTIONS,
-      headers: [t('table.price'), t('table.amount'), t('table.pl'), t('table.label'), t('table.time')],
-      filename: `${activeMarket}-${_split(new Date().toISOString(), '.')[0]}`,
-      title: `Backtest ${activeMarket} trades report`,
-    })
-
-    const processedTrades = _map(trades, ({
-      price, amount, pl, label, mts,
-    }) => ({
-      price: formatNumber({ number: price, significantFigures: PRICE_SIG_FIGS, useGrouping: true }),
-      amount: formatNumber({ number: amount, decimals: AMOUNT_DECIMALS, useGrouping: true }),
-      pl: formatNumber({ number: pl, decimals: AMOUNT_DECIMALS, useGrouping: true }),
-      label,
-      mts: new Date(mts).toLocaleString(),
-    }))
-
-    csvExporter.generateCsv(processedTrades)
-  }
 
   return (
     <div className='hfui-backtester__candlechart'>
@@ -119,7 +79,7 @@ const HistoricalReport = (opts, results, backtestData, backtestOptions, t, setti
         label={t('tradesTableModal.title')}
         trades={trades}
         onTradeClick={() => { }}
-        onTradeExportClick={onTradeExportClick}
+        onTradeExportClick={() => onTradeExportClick(trades, activeMarket, t)}
       />
     </div>
   )
