@@ -17,7 +17,7 @@ const STYLES = {
   statusIcon: { width: '10px' },
 }
 
-export default (authToken, cancelOrder, gaCancelOrder, { width }, t, getMarketPair, editOrder, getIsDerivativePair, orders) => [{
+export default (authToken, cancelOrder, { width }, t, getMarketPair, editOrder, getIsDerivativePair, orders) => [{
   label: '',
   dataKey: '',
   width: 15,
@@ -128,10 +128,7 @@ export default (authToken, cancelOrder, gaCancelOrder, { width }, t, getMarketPa
         aria-label='Cancel order'
         tabIndex={0}
         className='icon-cancel'
-        onClick={() => {
-          cancelOrder(authToken, rowData)
-          gaCancelOrder()
-        }}
+        onClick={() => cancelOrder(authToken, rowData)}
       />
     </div>
   ),

@@ -11,15 +11,15 @@ import './style.css'
 
 const AtomicOrdersTable = ({
   atomicOrders, filteredAtomicOrders, renderedInTradingState,
-  cancelOrder, authToken, gaCancelOrder, getMarketPair, editOrder, getIsDerivativePair,
+  cancelOrder, authToken, getMarketPair, editOrder, getIsDerivativePair,
 }) => {
   const [ref, size] = useSize()
   const data = renderedInTradingState ? filteredAtomicOrders : atomicOrders
   const { t } = useTranslation()
   const orders = getAtomicOrders(t)
   const columns = useMemo(
-    () => AtomicOrdersTableColumns(authToken, cancelOrder, gaCancelOrder, size, t, getMarketPair, editOrder, getIsDerivativePair, orders),
-    [authToken, cancelOrder, gaCancelOrder, getMarketPair, size, t, editOrder, getIsDerivativePair, orders],
+    () => AtomicOrdersTableColumns(authToken, cancelOrder, size, t, getMarketPair, editOrder, getIsDerivativePair, orders),
+    [authToken, cancelOrder, getMarketPair, size, t, editOrder, getIsDerivativePair, orders],
   )
 
   return (
@@ -44,7 +44,6 @@ AtomicOrdersTable.propTypes = {
   filteredAtomicOrders: PropTypes.objectOf(PropTypes.object),
   getMarketPair: PropTypes.func.isRequired,
   cancelOrder: PropTypes.func.isRequired,
-  gaCancelOrder: PropTypes.func.isRequired,
   editOrder: PropTypes.func.isRequired,
   renderedInTradingState: PropTypes.bool,
   getIsDerivativePair: PropTypes.func.isRequired,

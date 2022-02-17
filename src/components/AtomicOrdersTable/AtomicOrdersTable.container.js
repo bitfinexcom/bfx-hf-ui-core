@@ -9,6 +9,7 @@ import GAActions from '../../redux/actions/google_analytics'
 import UIActions from '../../redux/actions/ui'
 
 import AtomicOrdersTable from './AtomicOrdersTable'
+import { cancelOrder } from './AtomicOrdersTable.helpers'
 
 const { getIsDerivativePair } = reduxSelectors
 
@@ -23,15 +24,7 @@ const mapStateToProps = (state = {}, { activeFilter }) => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-  cancelOrder: (authToken, order) => {
-    const { id, symbol } = order
-
-    debug('cancelling order %d [%s]', id, symbol)
-    dispatch(WSActions.send(['order.cancel', authToken, 'bitfinex', symbol, id]))
-  },
-  gaCancelOrder: () => {
-    dispatch(GAActions.cancelAtomicOrder())
-  },
+  cancelOrder: (authToken, order) => cancelOrder(authToken, order, dispatch),
   editOrder: (order) => {
     dispatch(UIActions.changeEditOrderModalState(true, order))
   },

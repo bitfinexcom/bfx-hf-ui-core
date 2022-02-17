@@ -20,14 +20,16 @@ const getChartOrdersBySymbol = createSelector(
     const matched = _filter(orders, o => o.symbol === wsID)
 
     return _map(matched, (o) => {
+      const [tooltip, shortType] = getTooltip(o, {
+        t,
+        getMarketBySymbol,
+        getCurrencySymbol,
+        isDerivativePair,
+      })
       return {
         ...o,
-        tooltip: getTooltip(o, {
-          t,
-          getMarketBySymbol,
-          getCurrencySymbol,
-          isDerivativePair,
-        }),
+        tooltip,
+        shortType,
       }
     })
   },

@@ -2,7 +2,7 @@ import _get from 'lodash/get'
 import _toLower from 'lodash/toLower'
 import _replace from 'lodash/replace'
 import _includes from 'lodash/includes'
-import { setSigFig } from '@ufx-ui/utils'
+import { setSigFig, precision } from '@ufx-ui/utils'
 
 import {
   isTrailingStop, isStopLimit, isLimit, isStop,
@@ -143,6 +143,48 @@ export const getTooltip = (order, args = {}) => {
 
   tooltipLines.push(t('chart.trading.order.tooltip.placed', {
     placedDate: new Date(order.created).toLocaleString(),
+  }))
+
+  const tooltip = tooltipLines.join('\n')
+  return [tooltip, orderText]
+}
+
+export const getPositionTooltip = (position, args) => {
+  const {
+    getMarketBySymbol,
+    getCurrencySymbol,
+    t,
+  } = args
+
+  const tooltipLines = []
+
+  const market = getMarketBySymbol(position.symbol)
+  const base = getCurrencySymbol(market?.base)
+  const quote = getCurrencySymbol(market?.quote)
+
+  tooltipLines.push(t('chart.trading.position.tooltip.amount', {
+    amount: setSigFig(position.amount),
+    ccy: base,
+  }))
+
+  tooltipLines.push(t('chart.trading.position.tooltip.basePrice', {
+    basePrice: setSigFig(position.basePrice),
+    ccy: quote,
+  }))
+
+  tooltipLines.push(t('chart.trading.position.tooltip.liqPrice', {
+    liquidationPrice: setSigFig(position.liquidationPrice),
+    ccy: quote,
+  }))
+
+  tooltipLines.push(t('chart.trading.position.tooltip.pl', {
+    pl: setSigFig(position.pl),
+    ccy: quote,
+  }))
+
+  tooltipLines.push(t('chart.trading.position.tooltip.plPercent', {
+    plPercent: precision(position.plPerc, 2),
+    ccy: quote,
   }))
 
   const tooltip = tooltipLines.join('\n')
