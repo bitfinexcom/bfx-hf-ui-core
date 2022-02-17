@@ -19,6 +19,7 @@ const NotificationsSidebar = ({
   notifications, notificationsVisible, closeNotificationPanel, removeNotifications, clearNotifications, t,
 }) => {
   const [newNotifications, setNewNotifications] = useState(EMPTY_ARR)
+  const [visible, setVisible] = useState(notificationsVisible)
 
   const onClearNotifications = useCallback(() => {
     clearNotifications()
@@ -31,6 +32,14 @@ const NotificationsSidebar = ({
 
     setNewNotifications(nextNotifications)
   }
+
+  useEffect(() => {
+    if (notificationsVisible) {
+      setVisible(true)
+    } else {
+      setTimeout(() => setVisible(false), 700)
+    }
+  }, [notificationsVisible])
 
   // set notification on component mount
   useEffect(() => {
@@ -58,7 +67,7 @@ const NotificationsSidebar = ({
         <SidebarContent
           closeNotificationPanel={closeNotificationPanel}
           notifications={notifications}
-          notificationsVisible={notificationsVisible}
+          notificationsVisible={visible}
           removeNotifications={removeNotifications}
           onClearNotifications={onClearNotifications}
           t={t}
