@@ -5,11 +5,11 @@ import _split from 'lodash/split'
 
 import { useDispatch, useSelector } from 'react-redux'
 import { useTranslation } from 'react-i18next'
-import { CHART_URL } from '../../redux/config'
 import { getChartOrdersBySymbol, getChartPositionBySymbol } from '../../redux/selectors/chart'
 import { getAtomicOrders, getAuthToken } from '../../redux/selectors/ws'
 import { cancelOrder as cancelOrderFn } from '../AtomicOrdersTable/AtomicOrdersTable.helpers'
 import { closePosition as closePositionFn } from '../PositionsTable/PositionsTable.helpers'
+import { sendMessageToIframe } from './helpers'
 
 import {
   EVENT_DATA_SEPARATOR,
@@ -44,9 +44,8 @@ const useChartIframe = (iframeID, wsID) => {
   useEffect(() => {
     const iframeChart = document.getElementById(iframeID)
     if (isIframeReady) {
-      iframeChart.contentWindow.postMessage(`${GET_ORDERS_EVENT}${EVENT_DATA_SEPARATOR}${JSON.stringify(orders)}`, CHART_URL)
-
-      iframeChart.contentWindow.postMessage(`${GET_POSITION_EVENT}${EVENT_DATA_SEPARATOR}${JSON.stringify(position || {})}`, CHART_URL)
+      sendMessageToIframe(iframeChart, GET_ORDERS_EVENT, orders)
+      sendMessageToIframe(iframeChart, GET_POSITION_EVENT, position || {})
     }
   }, [orders, iframeID, isIframeReady, position])
 
@@ -55,11 +54,9 @@ const useChartIframe = (iframeID, wsID) => {
     const marketPosition = getChartPosition(market?.wsID, t)?.[0]
     const iframeChart = document.getElementById(iframeID)
     if (isIframeReady) {
-      iframeChart.contentWindow.postMessage(`${CURRENT_MARKET_EVENT}${EVENT_DATA_SEPARATOR}${JSON.stringify(market)}`, CHART_URL)
-
-      iframeChart.contentWindow.postMessage(`${GET_ORDERS_EVENT}${EVENT_DATA_SEPARATOR}${JSON.stringify(marketOrders)}`, CHART_URL)
-
-      iframeChart.contentWindow.postMessage(`${GET_POSITION_EVENT}${EVENT_DATA_SEPARATOR}${JSON.stringify(marketPosition || {})}`, CHART_URL)
+      sendMessageToIframe(iframeChart, CURRENT_MARKET_EVENT, market)
+      sendMessageToIframe(iframeChart, GET_ORDERS_EVENT, marketOrders)
+      sendMessageToIframe(iframeChart, GET_POSITION_EVENT, marketPosition || {})
     }
   }, [getChartOrders, t, getChartPosition, iframeID, isIframeReady])
 
