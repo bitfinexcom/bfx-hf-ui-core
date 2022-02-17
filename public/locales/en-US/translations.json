@@ -645,5 +645,43 @@
   },
   "orderStatuses": {
     "ACTIVE": "ACTIVE"
+  },
+  "chart": {
+    "trading": {
+      "order": {
+        "context": {
+          "exchange": "Exchange",
+          "margin": "Margin",
+          "derivative": "Derivative"
+        },
+        "tooltip": {
+          "type": "Type: {{type}}",
+          "context": "Context: {{context}}",
+          "amount": "Amount: {{amount}} {{ccy}}",
+          "price": "Price: {{price}} {{ccy}}",
+          "distance": "Distance: {{distance}} {{ccy}}",
+          "stopPrice": "Stop price: {{stopPrice}} {{ccy}}",
+          "limitPrice": "Limit price: {{limitPrice}} {{ccy}}",
+          "leverage": "Leverage: {{leverage}}",
+          "collateral": "Collateral: {{collateral}} {{ccy}}",
+          "placed": "Placed: {{placedDate}}"
+        },
+        "modifyTooltip": "Modify order",
+        "cancelTooltip": "Cancel order"
+      },
+      "position": {
+        "label": "P/L: %{pl} ({{plPercent}}%)",
+        "tooltip": {
+          "amount": "Amount: {{amount}} {{ccy}}",
+          "basePrice": "Base price: {{basePrice}} {{ccy}}",
+          "liqPrice": "Liq. price: {{liquidationPrice}} {{ccy}}",
+          "pl": "P/L: {{pl}} {{ccy}}",
+          "plPercent": "P/L% {{plPercent}}%"
+        }
+      },
+      "liquidation": {
+        "label": "Liquidation"
+      }
+    }
   }
 }
