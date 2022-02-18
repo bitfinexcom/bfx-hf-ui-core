@@ -1,0 +1,7 @@
+export const EVENT_DATA_SEPARATOR = '?,'
+export const IFRAME_READY_EVENT = 'chart-iframe-ready'
+export const CURRENT_MARKET_EVENT = 'current-market'
+export const GET_ORDERS_EVENT = 'get-orders'
+export const CANCEL_ORDER_EVENT = 'cancel-order'
+export const GET_POSITION_EVENT = 'get-position'
+export const CLOSE_POSITION_EVENT = 'close-position'

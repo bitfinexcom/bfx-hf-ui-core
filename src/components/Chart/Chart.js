@@ -25,7 +25,7 @@ const Chart = ({ market, theme, layoutI }) => {
 
   const uiID = isPerp ? _uiID : getPairFromMarket(market, getCurrencySymbol)
   const iframeID = `hfui-chart-${layoutI}`
-  const sendMarketToChartIframe = useChartIframe(iframeID)
+  const sendMarketToChartIframe = useChartIframe(iframeID, wsID)
 
   const queryString = new URLSearchParams({
     env,
