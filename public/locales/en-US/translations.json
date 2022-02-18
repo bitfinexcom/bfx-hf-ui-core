@@ -25,6 +25,10 @@
     "resumeBtn": "Resume",
     "selectAllBtn": "Select All"
   },
+  "closePositionModal": {
+    "title": "Closing Position",
+    "body": "Are you sure you want to close {{pair}} position?"
+  },
   "algoOrderForm": {
     "accdist": {
       "title": "Accumulate/Distribute",
