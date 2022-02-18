@@ -40,6 +40,11 @@ const LiveStrategyExecutor = ({
     indicators, onAddIndicator, onDeleteIndicator,
   }
 
+  const execResults = {
+    ...results,
+    trades: results?.strategy?.trades,
+  }
+
   const toggleExecutionState = () => {
     if (!seedError) {
       if (isExecuting) {
@@ -149,7 +154,7 @@ const LiveStrategyExecutor = ({
         </p>
       )}
       {!_isEmpty(results) && (
-        renderReport(opts, results, results, options, t, theme)
+        renderReport(opts, execResults, execResults, options, t, theme)
       )}
     </div>
   )
@@ -174,9 +179,9 @@ LiveStrategyExecutor.propTypes = {
   markets: PropTypes.objectOf(PropTypes.object),
   isPaperTrading: PropTypes.bool.isRequired,
   theme: PropTypes.oneOf([THEMES.LIGHT, THEMES.DARK]),
-  results: PropTypes.objectOf([
+  results: PropTypes.objectOf(PropTypes.oneOfType([
     PropTypes.number, PropTypes.array, PropTypes.object,
-  ]),
+  ])),
   onAddIndicator: PropTypes.func,
   onDeleteIndicator: PropTypes.func,
 }

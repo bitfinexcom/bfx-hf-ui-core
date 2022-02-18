@@ -8,9 +8,10 @@ const EMPTY_OBJ = {}
 const getMarketBySymbol = createSelector(
   [
     getMarkets,
-    (_, symbol) => symbol,
   ],
-  (markets, symbol) => _get(markets, [symbol], EMPTY_OBJ),
+  (markets) => (symbol) => {
+    return _get(markets, [symbol], EMPTY_OBJ)
+  },
 )
 
 export default getMarketBySymbol
