@@ -9,7 +9,7 @@ const STYLES = {
   rightAlign: { justifyContent: 'flex-end' },
 }
 
-export default (authToken, closePosition, t, getMarketPair) => [{
+export default (setClosePositionModal, t, getMarketPair) => [{
   label: t('table.pair'),
   dataKey: 'symbol',
   width: 145,
@@ -113,7 +113,7 @@ export default (authToken, closePosition, t, getMarketPair) => [{
         aria-label='Remove position'
         tabIndex={0}
         className='icon-cancel'
-        onClick={() => closePosition(authToken, rowData)}
+        onClick={() => setClosePositionModal(true, rowData)}
       />
     </div>
   ),

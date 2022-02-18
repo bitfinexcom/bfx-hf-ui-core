@@ -75,6 +75,8 @@ function getInitialState() {
     isEditOrderModalVisible: false,
     orderToEdit: {},
     isBadInternetConnection: false,
+    isClosePositionModalVisible: false,
+    closePositionModalData: {},
     isOrderExecuting: false,
     content: {},
     unsavedLayout: null,
@@ -406,6 +408,15 @@ function reducer(state = getInitialState(), action = {}) {
       return {
         ...state,
         isBadInternetConnection: isVisible,
+      }
+    }
+    case types.CHANGE_CLOSE_POSITION_MODAL_STATE: {
+      const { isVisible, rowData } = payload
+
+      return {
+        ...state,
+        closePositionModalData: rowData,
+        isClosePositionModalVisible: isVisible,
       }
     }
     case types.SET_IS_ORDER_EXECUTING: {

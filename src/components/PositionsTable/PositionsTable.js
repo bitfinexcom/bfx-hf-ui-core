@@ -5,20 +5,14 @@ import _isEmpty from 'lodash/isEmpty'
 import { useTranslation } from 'react-i18next'
 import PositionsTableColumns from './PositionsTable.columns'
 
-const PositionsTable = (props) => {
-  const {
-    closePosition,
-    authToken,
-    filteredPositions,
-    positions,
-    renderedInTradingState,
-    getMarketPair,
-  } = props
-
+const PositionsTable = ({
+  setClosePositionModal, filteredPositions, positions, renderedInTradingState,
+  getMarketPair,
+}) => {
   const { t } = useTranslation()
   const columns = useMemo(
-    () => PositionsTableColumns(authToken, closePosition, t, getMarketPair),
-    [authToken, closePosition, getMarketPair, t],
+    () => PositionsTableColumns(setClosePositionModal, t, getMarketPair),
+    [setClosePositionModal, getMarketPair, t],
   )
   const data = renderedInTradingState ? filteredPositions : positions
 
@@ -37,8 +31,7 @@ const PositionsTable = (props) => {
 }
 
 PositionsTable.propTypes = {
-  closePosition: PropTypes.func.isRequired,
-  authToken: PropTypes.string.isRequired,
+  setClosePositionModal: PropTypes.func.isRequired,
   filteredPositions: PropTypes.objectOf(PropTypes.object),
   positions: PropTypes.objectOf(PropTypes.object),
   renderedInTradingState: PropTypes.bool,
