@@ -88,7 +88,7 @@
     "bfx-hf-algo": "git+https://github.com/bitfinexcom/bfx-hf-algo.git#v4.11.0",
     "bfx-hf-chart": "git+https://github.com/bitfinexcom/bfx-hf-chart.git#v1.0.10",
     "bfx-hf-indicators": "git+https://github.com/bitfinexcom/bfx-hf-indicators.git#v2.1.1",
-    "bfx-hf-strategy": "git+https://github.com/bitfinexcom/bfx-hf-strategy.git#v1.2.2",
+    "bfx-hf-strategy": "git+https://github.com/bitfinexcom/bfx-hf-strategy.git#v1.2.3",
     "bfx-hf-util": "git+https://github.com/bitfinexcom/bfx-hf-util.git#v1.0.12",
     "camelcase": "^6.3.0",
     "clsx": "^1.1.1",
