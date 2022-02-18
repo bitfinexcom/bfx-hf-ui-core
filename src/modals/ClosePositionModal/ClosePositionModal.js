@@ -23,7 +23,7 @@ const ClosePositionModal = ({
     } else {
       setPair(getMarketPair(rowData?.symbol))
     }
-  }, [rowData])
+  }, [rowData, getMarketPair])
 
   const onClose = () => {
     changeClosePositionModalState(false, {})
