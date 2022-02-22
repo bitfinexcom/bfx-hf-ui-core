@@ -12,6 +12,7 @@ const CRYPTO_MAX_DECIMALS = 8
 export const resultNumber = (value, ccy) => {
   const val = _toNumber(value)
   const isZero = val === 0
+  const isPositive = val > 0
 
   let maxDecimals = FIAT_MAX_DECIMALS
   const isCcyFiat = isFiat(ccy)
@@ -33,7 +34,9 @@ export const resultNumber = (value, ccy) => {
       ? decimalNumberString
       : isZero
         ? '0'
-        : '<0.01'
+        : isPositive
+          ? '<0.01'
+          : '>-0.01'
 
     return (
       <Tooltip content={decimalNumberWithoutRounded} placement='top'>
@@ -49,13 +52,13 @@ export const resultNumber = (value, ccy) => {
       ? `${quotePrefix}${decimalNumberString}`
       : isZero
         ? `${quotePrefix}0`
-        : `${quotePrefix}<0.01`
+        : isPositive ? `${quotePrefix}<0.01` : `${quotePrefix}>-0.01`
   } else {
     resultValueWithCcySign = Number(decimalNumberString)
       ? `${decimalNumberString} ${ccy}`
       : isZero
         ? `0 ${ccy}`
-        : `<0.00000001 ${ccy}`
+        : isPositive ? `<0.00000001 ${ccy}` : `>-0.00000001 ${ccy}`
   }
 
   if (roundedNumber <= 0) {
