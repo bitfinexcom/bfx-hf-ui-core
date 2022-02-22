@@ -49,6 +49,12 @@ const HistoricalReport = (opts, results, backtestData, backtestOptions, t, setti
 
   return (
     <div className='hfui-backtester__candlechart'>
+      <span
+        className='link-button'
+        onClick={() => { }}
+      >
+        Export backtest results to CSV
+      </span>
       <Results
         results={results}
         execRunning={false}
