@@ -30,6 +30,7 @@ const CHART_THEME = {
 const HistoricalReport = (opts, results, backtestData, backtestOptions, t, settingsTheme) => {
   const chartColours = CHART_THEME[settingsTheme]
   const { trades = [], backtestOptions: { activeMarket } = {} } = results
+  const { symbol } = backtestOptions
   const { indicators, onAddIndicator, onDeleteIndicator } = opts
   const { candles = [] } = backtestData
   const { tf } = backtestOptions
@@ -51,9 +52,9 @@ const HistoricalReport = (opts, results, backtestData, backtestOptions, t, setti
     <div className='hfui-backtester__candlechart'>
       <span
         className='link-button'
-        onClick={() => onTradeExportClick(trades, results, activeMarket, t)}
+        onClick={() => onTradeExportClick(trades, results, activeMarket || symbol, t)}
       >
-        Export results to CSV
+        {t('strategyEditor.exportCSV')}
       </span>
       <Results
         results={results}
