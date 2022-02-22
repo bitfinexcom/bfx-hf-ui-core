@@ -5,10 +5,10 @@ import _split from 'lodash/split'
 
 import { useDispatch, useSelector } from 'react-redux'
 import { useTranslation } from 'react-i18next'
+import UIActions from '../../redux/actions/ui'
 import { getChartOrdersBySymbol, getChartPositionBySymbol } from '../../redux/selectors/chart'
 import { getAtomicOrders, getAuthToken } from '../../redux/selectors/ws'
 import { cancelOrder as cancelOrderFn } from '../AtomicOrdersTable/AtomicOrdersTable.helpers'
-import { closePosition as closePositionFn } from '../PositionsTable/PositionsTable.helpers'
 import { sendMessageToIframe } from './helpers'
 
 import {
@@ -38,8 +38,8 @@ const useChartIframe = (iframeID, wsID) => {
   }, [allOrders, authToken, dispatch])
 
   const closePosition = useCallback((args) => {
-    closePositionFn(authToken, args, dispatch)
-  }, [authToken, dispatch])
+    dispatch(UIActions.changeClosePositionModalState(true, args))
+  }, [dispatch])
 
   useEffect(() => {
     const iframeChart = document.getElementById(iframeID)
