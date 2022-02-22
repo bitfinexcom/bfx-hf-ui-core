@@ -515,7 +515,8 @@
     "type": "Type",
     "price": "Price",
     "status": "Status",
-    "time": "Time"
+    "time": "Time",
+    "fee": "Fee"
   },
   "tickersPanel": {
     "title": "Ticker Panel"
