@@ -51,9 +51,9 @@ const HistoricalReport = (opts, results, backtestData, backtestOptions, t, setti
     <div className='hfui-backtester__candlechart'>
       <span
         className='link-button'
-        onClick={() => { }}
+        onClick={() => onTradeExportClick(trades, results, activeMarket, t)}
       >
-        Export backtest results to CSV
+        Export results to CSV
       </span>
       <Results
         results={results}
@@ -85,7 +85,6 @@ const HistoricalReport = (opts, results, backtestData, backtestOptions, t, setti
         label={t('tradesTableModal.title')}
         trades={trades}
         onTradeClick={() => { }}
-        onTradeExportClick={() => onTradeExportClick(trades, activeMarket, t)}
       />
     </div>
   )
