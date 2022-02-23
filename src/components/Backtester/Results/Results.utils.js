@@ -1,13 +1,23 @@
 import React from 'react'
 
-import { isFiat } from '@ufx-ui/utils'
 import _toNumber from 'lodash/toNumber'
+import { isFiat, formatNumber } from '@ufx-ui/utils'
 import { Tooltip } from '@ufx-ui/core'
-import numberExponentToLarge from '../../../util/numberExponentToLarge'
 import getQuotePrefix from '../../../util/quote_prefix'
+import numberExponentToLarge from '../../../util/numberExponentToLarge'
 
 const FIAT_MAX_DECIMALS = 2
 const CRYPTO_MAX_DECIMALS = 8
+
+const appendUnit = (value, unit, prefix) => {
+  if (prefix) {
+    return unit + value
+  }
+
+  return `${value} ${unit}`
+}
+
+const getSmallestUnit = (isFiatValue) => (isFiatValue ? 0.01 : 0.00000001)
 
 export const resultNumber = (value, ccy) => {
   const val = _toNumber(value)
@@ -16,71 +26,40 @@ export const resultNumber = (value, ccy) => {
 
   let maxDecimals = FIAT_MAX_DECIMALS
   const isCcyFiat = isFiat(ccy)
-
   if (ccy) {
     maxDecimals = isCcyFiat ? FIAT_MAX_DECIMALS : CRYPTO_MAX_DECIMALS
   }
-  let roundedNumber = Number(val.toFixed(maxDecimals))
 
-  if (Number.isNaN(roundedNumber)) {
-    roundedNumber = 0
-  }
-
-  const decimalNumberString = numberExponentToLarge(roundedNumber)
+  const decimalNumberString = formatNumber({
+    number: val, decimals: maxDecimals,
+  })
   const decimalNumberWithoutRounded = numberExponentToLarge(val)
 
-  if (!ccy) {
-    const nonCcyValue = Number(decimalNumberString)
-      ? decimalNumberString
-      : isZero
-        ? '0'
-        : isPositive
-          ? '<0.01'
-          : '>-0.01'
+  const quotePrefix = !ccy ? '' : getQuotePrefix(ccy) || ccy
 
-    return (
-      <Tooltip content={decimalNumberWithoutRounded} placement='top'>
-        <span>{nonCcyValue}</span>
-      </Tooltip>
-    )
-  }
-  let resultValueWithCcySign = isCcyFiat
+  const smallestUnit = getSmallestUnit(isCcyFiat || !ccy)
+  const resultValueWithCcySign = Number(decimalNumberString)
+    ? appendUnit(decimalNumberString, quotePrefix, isCcyFiat)
+    : isZero
+      ? appendUnit(0, quotePrefix, isCcyFiat)
+      : isPositive
+        ? appendUnit(
+          `<${smallestUnit}`,
+          quotePrefix,
+          isCcyFiat,
+        )
+        : appendUnit(`>-${smallestUnit}`, quotePrefix, isCcyFiat)
 
-  if (isCcyFiat) {
-    const quotePrefix = getQuotePrefix(ccy)
-    resultValueWithCcySign = Number(decimalNumberString)
-      ? `${quotePrefix}${decimalNumberString}`
-      : isZero
-        ? `${quotePrefix}0`
-        : isPositive ? `${quotePrefix}<0.01` : `${quotePrefix}>-0.01`
-  } else {
-    resultValueWithCcySign = Number(decimalNumberString)
-      ? `${decimalNumberString} ${ccy}`
-      : isZero
-        ? `0 ${ccy}`
-        : isPositive ? `<0.00000001 ${ccy}` : `>-0.00000001 ${ccy}`
-  }
+  const style = { color: isPositive ? 'green' : 'red' }
 
-  if (roundedNumber <= 0) {
-    return (
-      <Tooltip
-        content={
-          <span style={{ color: 'red' }}>{decimalNumberWithoutRounded}</span>
-        }
-        placement='top'
-      >
-        <span style={{ color: 'red' }}>{resultValueWithCcySign}</span>
-      </Tooltip>
-    )
-  }
   return (
     <Tooltip
       content={
-        <span style={{ color: 'green' }}>{decimalNumberWithoutRounded}</span>
-      }
+        <span style={style}>{decimalNumberWithoutRounded}</span>
+        }
       placement='top'
     >
-      <span style={{ color: 'green' }}>{resultValueWithCcySign}</span>
+      <span style={style}>{resultValueWithCcySign}</span>
     </Tooltip>
   )
 }

@@ -1,4 +1,4 @@
-@import '../../../variables.scss';
+@import "../../../variables.scss";
 
 body.hosted {
   @media screen and (max-width: 600px) {
@@ -36,6 +36,18 @@ body.hosted {
     text-align: center;
   }
 
+  .results-left {
+    p:first-child {
+      width: 70%;
+    }
+  }
+
+  .results-right {
+    p:first-child {
+      width: 50%;
+    }
+  }
+
   ul {
     font-size: 13px;
 
@@ -49,7 +61,6 @@ body.hosted {
       p:first-child {
         text-align: right;
         margin-right: 16px;
-        width: 50%;
       }
 
       > * {
@@ -65,8 +76,12 @@ body.hosted {
   padding: 6px;
 }
 
-.hfui-strategyeditor__results-section {
-  width: 50%;
+.hfui-strategyeditor__results-section.results-left {
+  width: 40%;
+  display: inline-block;
+}
+.hfui-strategyeditor__results-section.results-right {
+  width: 60%;
   display: inline-block;
 }
 
@@ -91,12 +106,12 @@ body.hosted {
 
   p {
     color: $grey-color;
-    font-size: 13px;
+    font-size: 12px;
     line-height: 16px;
     margin-bottom: 3px;
   }
 
   h4 {
-    font-size: 23px;
+    font-size: 19px;
   }
 }

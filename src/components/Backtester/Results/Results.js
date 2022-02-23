@@ -28,7 +28,7 @@ const Results = ({ results }) => {
         <ResultHeader label={t('strategyEditor.profitFactor')} value={resultNumber(pf)} />
         <ResultHeader label={t('strategyEditor.volatility')} value={resultNumber(stdDeviation)} />
       </div>
-      <div key='results-left' className='hfui-strategyeditor__results-section'>
+      <div key='results-left' className='hfui-strategyeditor__results-section results-left'>
         <ul>
           <ResultRow label={t('strategyEditor.backtestCandles')} value={nCandles} />
           <ResultRow label={t('strategyEditor.backtestTrades')} value={nTrades} />
@@ -44,7 +44,7 @@ const Results = ({ results }) => {
         </ul>
       </div>
 
-      <div key='results-right' className='hfui-strategyeditor__results-section'>
+      <div key='results-right' className='hfui-strategyeditor__results-section results-right'>
         <ul>
           <ResultRow label={t('strategyEditor.fees')} value={resultNumber(preparePrice(-fees), quoteCcy)} />
           <ResultRow label={t('strategyEditor.profitLoss')} value={resultNumber(preparePrice(pl), quoteCcy)} />
