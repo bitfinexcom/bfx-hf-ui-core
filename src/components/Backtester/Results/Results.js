@@ -2,6 +2,8 @@ import React, { memo } from 'react'
 import PropTypes from 'prop-types'
 import { getPairParts } from '@ufx-ui/utils'
 import { useTranslation } from 'react-i18next'
+import { useSelector } from 'react-redux'
+import { reduxSelectors } from '@ufx-ui/bfx-containers'
 
 import { preparePrice } from 'bfx-api-node-util'
 import ResultRow from './ResultRow'
@@ -10,6 +12,8 @@ import { resultNumber } from './Results.utils'
 
 import './style.css'
 
+const { getCurrencySymbolMemo } = reduxSelectors
+
 const Results = ({ results }) => {
   const {
     nCandles, nTrades, nGains, nLosses, nStrategyTrades, nOpens, pl, pf,
@@ -17,7 +21,9 @@ const Results = ({ results }) => {
   } = results
   const hasTrades = !!vol
 
-  const [, quoteCcy] = getPairParts(activeMarket)
+  const [, quote] = getPairParts(activeMarket)
+  const getCurrencySymbol = useSelector(getCurrencySymbolMemo)
+  const quoteCcy = getCurrencySymbol(quote)
   const { t } = useTranslation()
 
   return (
