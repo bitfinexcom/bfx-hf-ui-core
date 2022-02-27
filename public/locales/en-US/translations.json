@@ -572,6 +572,7 @@
     "backtestingLoadingMessage": "Loading candles and executing strategy...",
     "backtestingStartingMessage": "Press start to begin backtesting.",
     "historical": "Historical",
+    "live": "Live",
     "startDate": "Start Date",
     "endDate": "End Date",
     "useCandlesCheckbox": "Use candles",

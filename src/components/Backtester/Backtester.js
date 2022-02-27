@@ -18,11 +18,11 @@ const backtestMethods = [
     form: RenderHistoricalForm,
     renderReport: RenderHistoricalReport,
   },
-  // {
-  //   type: 'Live',
-  //   form: RenderLiveForm,
-  //   renderReport: RenderLiveReport,
-  // },
+  {
+    type: 'Live',
+    form: RenderHistoricalForm,
+    renderReport: RenderHistoricalReport,
+  },
   // {
   //   type: 'Import',
   //   form: RenderImportForm,
@@ -32,7 +32,7 @@ const backtestMethods = [
 
 const Backtester = ({
   backtestData, strategyContent, markets, backtestResults, backtestOptions, authToken, dsExecuteBacktest, setBacktestOptions,
-  indicators, onAddIndicator, onDeleteIndicator, settingsTheme,
+  indicators, onAddIndicator, onDeleteIndicator, settingsTheme, tickers,
 }) => {
   const [execError, setExecError] = useState(null)
   const [executionType, setExecutionType] = useState(backtestMethods[0])
@@ -70,6 +70,7 @@ const Backtester = ({
     onDeleteIndicator,
     updateError,
     markets,
+    tickers,
     formState,
     authToken,
     setFormState: (setStateFunc) => {

@@ -5,7 +5,7 @@ import WSActions from '../../redux/actions/ws'
 import {
   getBacktestState, getBacktestData, getBacktestResults, getAuthToken,
 } from '../../redux/selectors/ws'
-import { getMarkets } from '../../redux/selectors/meta'
+import { getMarkets, getTickersObject } from '../../redux/selectors/meta'
 import WSTypes from '../../redux/constants/ws'
 import { getThemeSetting } from '../../redux/selectors/ui'
 
@@ -15,6 +15,7 @@ const mapStateToProps = (state = {}) => ({
   backtest: getBacktestState(state),
   backtestData: getBacktestData(state),
   markets: getMarkets(state),
+  tickers: getTickersObject(state),
   backtestResults: getBacktestResults(state),
   strategyContent: state.ui.content,
   backtestOptions: state.ws.backtest.backtestOptions || {},

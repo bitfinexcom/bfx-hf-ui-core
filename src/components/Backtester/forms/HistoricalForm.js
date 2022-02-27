@@ -17,10 +17,21 @@ const ONE_HOUR = ONE_MIN * 60
 const ONE_DAY = ONE_HOUR * 24
 const MAX_DATE = new Date()
 
+const getBacktestOptions = (t) => [
+  {
+    label: t('strategyEditor.historical'),
+    value: 'Historical',
+  }, {
+    label: t('strategyEditor.live'),
+    value: 'Live',
+  },
+]
+
 const HistoricalForm = ({
-  formState, updateError, backtestStrategy, markets, setFormState, disabled, updateExecutionType,
+  formState, updateError, backtestStrategy, markets, setFormState, disabled, executionType, updateExecutionType, tickers,
 }) => {
   const { t } = useTranslation()
+  const isHistoricalMode = executionType === 'Historical'
 
   const defaultFormState = (state) => {
     return {
@@ -53,16 +64,17 @@ const HistoricalForm = ({
     if (!selectedTimeFrame) {
       return updateError('ERROR: Invalid timeFrame')
     }
-
-    if (endDate <= startDate) {
-      return updateError('ERROR: Invalid time period')
+    if (isHistoricalMode) {
+      if (endDate <= startDate) {
+        return updateError('ERROR: Invalid time period')
+      }
     }
 
     return backtestStrategy({
-      activeMarket: selectedMarket.wsID,
+      activeMarket: selectedMarket.uiID,
       tf: selectedTimeFrame,
-      startDate,
-      endDate,
+      startDate: isHistoricalMode ? startDate : null,
+      endDate: isHistoricalMode ? endDate : null,
       candles,
       trades,
     })
@@ -81,23 +93,19 @@ const HistoricalForm = ({
       <div className='hfui-backtester_row'>
         <div className='hfui-backtester__flex_start'>
           <Dropdown
-            value='Historical'
-            disabled
+            value={executionType}
             onChange={updateExecutionType}
-            options={[{
-              label: t('strategyEditor.historical'),
-              value: 'Historical',
-            }]}
+            options={getBacktestOptions(t)}
           />
         </div>
         <div className='hfui-backtester__flex_start hfui-backtester__market-select'>
           <MarketSelect
             value={selectedMarket}
             onChange={(selection) => {
-              const sel = _find(markets, m => m.uiID === selection.uiID)
+              const sel = _find(tickers, m => m.uiID === selection.uiID)
               setFormState(() => ({ selectedMarket: sel }))
             }}
-            markets={markets}
+            markets={tickers}
             renderWithFavorites
           />
         </div>
@@ -111,6 +119,9 @@ const HistoricalForm = ({
         </div>
       </div>
       <div className='hfui-backtester_row'>
+        {isHistoricalMode
+      && (
+      <>
         <div className='hfui-backtester_dateInput hfui-backtester__flex_start'>
           <DateInput
             onChange={val => setFormState(() => ({ startDate: val }))}
@@ -128,6 +139,8 @@ const HistoricalForm = ({
             minDate={startDate}
           />
         </div>
+      </>
+      )}
         <div>
           <Button
             onClick={executeBacktest}
