@@ -17,7 +17,7 @@ const { getCurrencySymbolMemo } = reduxSelectors
 const Results = ({ results }) => {
   const {
     nCandles, nTrades, nGains, nLosses, nStrategyTrades, nOpens, pl, pf,
-    maxPL, minPL, fees, vol, stdDeviation, avgPL, backtestOptions: { activeMarket },
+    maxPL, minPL, fees, vol, stdDeviation, avgPL, backtestOptions: { activeMarket } = {},
   } = results
   const hasTrades = !!vol
 
@@ -106,6 +106,9 @@ Results.defaultProps = {
     vol: 0,
     stdDeviation: 0,
     avgPL: 0,
+    backtestOptions: {
+      activeMarket: null,
+    },
   },
 }
 
