@@ -1,6 +1,6 @@
 import React, { memo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Checkbox } from '@ufx-ui/core'
+import { Checkbox, Tooltip } from '@ufx-ui/core'
 import PropTypes from 'prop-types'
 import _find from 'lodash/find'
 import _isEmpty from 'lodash/isEmpty'
@@ -106,19 +106,23 @@ const LiveStrategyExecutor = ({
       <div className='hfui-backtester_row'>
         {!isPaperTrading && _includes(symbol?.contexts, 'm') && (
           <div className='hfui-backtester__flex_start'>
-            <Checkbox
-              label={t('strategyEditor.useMarginCheckbox')}
-              checked={margin}
-              onChange={setMargin}
-            />
+            <Tooltip content={t('strategyEditor.useMarginTooltip')}>
+              <Checkbox
+                label={t('strategyEditor.useMarginCheckbox')}
+                checked={margin}
+                onChange={setMargin}
+              />
+            </Tooltip>
           </div>
         )}
         <div className='hfui-backtester__flex_start'>
-          <Checkbox
-            label={t('strategyEditor.useTradesCheckbox')}
-            checked={trades}
-            onChange={setTrades}
-          />
+          <Tooltip content={t('strategyEditor.useTradesTooltip')}>
+            <Checkbox
+              label={t('strategyEditor.useTradesCheckbox')}
+              checked={trades}
+              onChange={setTrades}
+            />
+          </Tooltip>
         </div>
       </div>
       <div className='hfui-backtester_row'>

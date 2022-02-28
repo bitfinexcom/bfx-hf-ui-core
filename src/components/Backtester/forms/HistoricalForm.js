@@ -1,6 +1,6 @@
 import React, { useEffect, memo } from 'react'
 import PropTypes from 'prop-types'
-import { Checkbox } from '@ufx-ui/core'
+import { Checkbox, Tooltip } from '@ufx-ui/core'
 import _find from 'lodash/find'
 import { useTranslation } from 'react-i18next'
 
@@ -141,18 +141,22 @@ const HistoricalForm = ({
       </div>
       <div className='hfui-backtester_row'>
         <div className='hfui-backtester_dateInput hfui-backtester__flex_start'>
-          <Checkbox
-            label={t('strategyEditor.useCandlesCheckbox')}
-            checked={candles}
-            onChange={toggleCandles}
-          />
+          <Tooltip content={t('strategyEditor.useCandlesTooltip')}>
+            <Checkbox
+              label={t('strategyEditor.useCandlesCheckbox')}
+              checked={candles}
+              onChange={toggleCandles}
+            />
+          </Tooltip>
         </div>
         <div className='hfui-backtester_dateInput hfui-backtester__flex_start'>
-          <Checkbox
-            label={t('strategyEditor.useTradesCheckbox')}
-            checked={trades}
-            onChange={toggleTrades}
-          />
+          <Tooltip content={t('strategyEditor.useTradesTooltip')}>
+            <Checkbox
+              label={t('strategyEditor.useTradesCheckbox')}
+              checked={trades}
+              onChange={toggleTrades}
+            />
+          </Tooltip>
         </div>
       </div>
       {emptyBtErr && (
