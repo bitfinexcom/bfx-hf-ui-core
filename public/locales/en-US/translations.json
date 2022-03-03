@@ -519,7 +519,8 @@
     "type": "Type",
     "price": "Price",
     "status": "Status",
-    "time": "Time"
+    "time": "Time",
+    "fee": "Fee"
   },
   "tickersPanel": {
     "title": "Ticker Panel"
@@ -575,6 +576,7 @@
     "backtestingCreateMessage": "Create a strategy to begin backtesting",
     "backtestingLoadingMessage": "Loading candles and executing strategy...",
     "backtestingStartingMessage": "Press start to begin backtesting.",
+    "exportCSV": "Export results to CSV",
     "historical": "Historical",
     "startDate": "Start Date",
     "endDate": "End Date",
