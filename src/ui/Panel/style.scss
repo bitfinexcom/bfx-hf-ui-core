@@ -81,6 +81,7 @@
   background: var(--background-color);
   justify-content: space-between;
   padding: spacing(0.5) spacing(0.5) spacing(0.5) spacing(1);
+  flex-wrap: wrap;
 
   &.has-secondary-header {
     border-bottom: none;

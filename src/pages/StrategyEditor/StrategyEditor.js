@@ -164,6 +164,9 @@ const StrategyEditorPage = (props) => {
                 <div tabtitle={t('strategyEditor.executeTab')}>
                   <LiveStrategyExecutor
                     strategyContent={strategyContent}
+                    indicators={indicators}
+                    onAddIndicator={onAddIndicator}
+                    onDeleteIndicator={onDeleteIndicator}
                   />
                 </div>
               )}

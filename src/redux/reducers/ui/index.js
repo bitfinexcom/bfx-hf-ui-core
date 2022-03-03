@@ -75,11 +75,14 @@ function getInitialState() {
     isEditOrderModalVisible: false,
     orderToEdit: {},
     isBadInternetConnection: false,
+    isClosePositionModalVisible: false,
+    closePositionModalData: {},
     isOrderExecuting: false,
     content: {},
     unsavedLayout: null,
     layoutID: null,
     tab: null,
+    tickersVolumeUnit: null,
   }
 
   if (!localStorage) {
@@ -134,7 +137,6 @@ function getInitialState() {
     }
 
     defaultState.layouts = nextFormatLayouts
-    defaultState.tickersVolumeUnit = isPaperTrading ? VOLUME_UNIT_PAPER.TESTUSD : VOLUME_UNIT.USD
   } catch (e) {
     debug('Loading layouts error, check localStorage: %s', LAYOUTS_KEY)
   }
@@ -247,6 +249,7 @@ function reducer(state = getInitialState(), action = {}) {
       return {
         ...state,
         layoutIsDirty: false,
+        unsavedLayout: null,
         layouts: {
           ...state.layouts,
           [id]: {
@@ -390,6 +393,7 @@ function reducer(state = getInitialState(), action = {}) {
         ...state,
         isPaperTrading,
         currentMode: mode,
+        tickersVolumeUnit: isPaperTrading ? VOLUME_UNIT_PAPER.TESTUSD : VOLUME_UNIT.USD,
       }
     }
     case types.CHANGE_TRADING_MODAL_STATE: {
@@ -404,6 +408,15 @@ function reducer(state = getInitialState(), action = {}) {
       return {
         ...state,
         isBadInternetConnection: isVisible,
+      }
+    }
+    case types.CHANGE_CLOSE_POSITION_MODAL_STATE: {
+      const { isVisible, rowData } = payload
+
+      return {
+        ...state,
+        closePositionModalData: rowData,
+        isClosePositionModalVisible: isVisible,
       }
     }
     case types.SET_IS_ORDER_EXECUTING: {
@@ -460,6 +473,8 @@ function reducer(state = getInitialState(), action = {}) {
       const x = _min(_map(layoutDef.layout, l => l.x)) || 0
       const y = _max(_map(layoutDef.layout, l => l.y)) || 0
 
+      const newY = y + layoutDef.layout[layoutDef?.layout?.length - 1]?.h
+
       return {
         ...state,
         layoutIsDirty: true,
@@ -471,7 +486,17 @@ function reducer(state = getInitialState(), action = {}) {
               i: `${nonce()}`,
               c: component,
               x,
-              y: y + 1,
+              y: newY,
+              // default props (undefined/false) are added to avoid re-renders, otherwise react-grid-layout calls onLayoutChange with default props and it triggers re-render
+              isBounded: undefined,
+              isDraggable: undefined,
+              isResizable: undefined,
+              maxH: undefined,
+              maxW: undefined,
+              minW: undefined,
+              resizeHandles: undefined,
+              moved: false,
+              static: false,
               ...COMPONENT_DIMENSIONS[component],
             },
           ],
@@ -506,13 +531,19 @@ function reducer(state = getInitialState(), action = {}) {
       const newLayout = layoutDefToGridLayout({ layout: incomingLayout })
       const setIsDirty = !_isEqual(currentLayout, newLayout)
 
+      const updated = gridLayoutToLayoutDef({
+        ...layoutDef,
+        layout: incomingLayout,
+      }, layoutDef)
+
+      if (_isEqual(state.unsavedLayout, updated)) {
+        return state
+      }
+
       return {
         ...state,
         ...setIsDirty && { layoutIsDirty: true },
-        unsavedLayout: gridLayoutToLayoutDef({
-          ...layoutDef,
-          layout: incomingLayout,
-        }, layoutDef),
+        unsavedLayout: updated,
       }
     }
     case types.SET_LAYOUT_ID: {
@@ -531,6 +562,7 @@ function reducer(state = getInitialState(), action = {}) {
       return {
         ...state,
         unsavedLayout: null,
+        layoutIsDirty: false,
         layoutID: id,
       }
     }

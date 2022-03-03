@@ -175,6 +175,11 @@ export const changeBadInternetConnectionState = (isVisible) => ({
   payload: { isVisible },
 })
 
+export const changeClosePositionModalState = (isVisible, rowData = {}) => ({
+  type: types.CHANGE_CLOSE_POSITION_MODAL_STATE,
+  payload: { isVisible, rowData },
+})
+
 export const setIsOrderExecuting = (executing) => ({
   type: types.SET_IS_ORDER_EXECUTING,
   payload: { executing },
@@ -256,4 +261,5 @@ export default {
   setStrategyTab,
   changeConfirmDMSModalState,
   changeEditOrderModalState,
+  changeClosePositionModalState,
 }

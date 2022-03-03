@@ -1,5 +1,7 @@
+import { COMPONENT_IDS } from '../../../components/GridLayout/GridLayout.helpers'
+
 export default {
-  1563115202169: {
+  [COMPONENT_IDS.MARKET_CHART1]: {
     marketDirty: false,
     currentMarket: {
       contexts: ['e', 'm'],
@@ -15,7 +17,7 @@ export default {
     indicatorIDs: [],
     indicatorArgs: [],
   },
-  1565595676626: {
+  [COMPONENT_IDS.MARKET_CHART2]: {
     marketDirty: true,
     currentMarket: {
       contexts: ['e', 'm'],
@@ -31,7 +33,7 @@ export default {
     indicatorIDs: [],
     indicatorArgs: [],
   },
-  1565595694304: {
+  [COMPONENT_IDS.MARKET_TRADES2]: {
     currentMarket: {
       contexts: ['e', 'm'],
       uiID: 'LEO/USD',

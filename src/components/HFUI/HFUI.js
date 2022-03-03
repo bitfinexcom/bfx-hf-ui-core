@@ -28,6 +28,7 @@ const BadConnectionModal = lazy(() => import('../../modals/BadConnectionModal'))
 const OldFormatModal = lazy(() => import('../../modals/OldFormatModal'))
 const AOPauseModal = lazy(() => import('../../modals/AOPauseModal'))
 const CcyInfoModal = lazy(() => import('../../modals/CcyInfoModal'))
+const ClosePositionModal = lazy(() => import('../../modals/ClosePositionModal'))
 const ConfirmDMSModal = lazy(() => import('../../modals/ConfirmDMSModal'))
 const EditOrderModal = lazy(() => import('../../modals/EditOrderModal'))
 
@@ -141,6 +142,7 @@ const HFUI = (props) => {
           <BadConnectionModal />
           <CcyInfoModal />
           <EditOrderModal />
+          <ClosePositionModal />
         </>
       ) : (
         <>

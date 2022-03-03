@@ -25,6 +25,10 @@
     "resumeBtn": "Resume",
     "selectAllBtn": "Select All"
   },
+  "closePositionModal": {
+    "title": "Closing Position",
+    "body": "Are you sure you want to close {{pair}} position?"
+  },
   "algoOrderForm": {
     "accdist": {
       "title": "Accumulate/Distribute",
@@ -38,6 +42,8 @@
       "title": "Iceberg",
       "help": "Iceberg allows you to place a large order on the market while ensuring only a small part of it is ever filled at once.\n\nBy enabling the 'Excess As Hidden' option, it is possible to offer up the remainder as a hidden order, allowing for minimal market disruption when executing large trades."
     },
+    "visibleOnHit": "Visible on hit",
+    "visibleOnHitHelp": "The rest part of the hidden order will be visible after first hit (partial execution).",
     "saveParamsSettings": "Algo Params settings",
     "intervalDistortion": "Interval Distortion %",
     "intervalDistortionHelp": "Amount to distort each slice interval, in percent",
@@ -513,7 +519,8 @@
     "type": "Type",
     "price": "Price",
     "status": "Status",
-    "time": "Time"
+    "time": "Time",
+    "fee": "Fee"
   },
   "tickersPanel": {
     "title": "Ticker Panel"
@@ -569,6 +576,7 @@
     "backtestingCreateMessage": "Create a strategy to begin backtesting",
     "backtestingLoadingMessage": "Loading candles and executing strategy...",
     "backtestingStartingMessage": "Press start to begin backtesting.",
+    "exportCSV": "Export results to CSV",
     "historical": "Historical",
     "startDate": "Start Date",
     "endDate": "End Date",
@@ -635,7 +643,51 @@
     "margin": "Margin",
     "funding": "Derivative"
   },
+  "balanceContexts": {
+    "exchange": "Exchange",
+    "margin": "Margin",
+    "funding": "Derivative",
+    "contribution": "Capital Raise"
+  },
   "orderStatuses": {
     "ACTIVE": "ACTIVE"
+  },
+  "chart": {
+    "trading": {
+      "order": {
+        "context": {
+          "exchange": "Exchange",
+          "margin": "Margin",
+          "derivative": "Derivative"
+        },
+        "tooltip": {
+          "type": "Type: {{type}}",
+          "context": "Context: {{context}}",
+          "amount": "Amount: {{amount}} {{ccy}}",
+          "price": "Price: {{price}} {{ccy}}",
+          "distance": "Distance: {{distance}} {{ccy}}",
+          "stopPrice": "Stop price: {{stopPrice}} {{ccy}}",
+          "limitPrice": "Limit price: {{limitPrice}} {{ccy}}",
+          "leverage": "Leverage: {{leverage}}",
+          "collateral": "Collateral: {{collateral}} {{ccy}}",
+          "placed": "Placed: {{placedDate}}"
+        },
+        "modifyTooltip": "Modify order",
+        "cancelTooltip": "Cancel order"
+      },
+      "position": {
+        "label": "P/L: %{pl} ({{plPercent}}%)",
+        "tooltip": {
+          "amount": "Amount: {{amount}} {{ccy}}",
+          "basePrice": "Base price: {{basePrice}} {{ccy}}",
+          "liqPrice": "Liq. price: {{liquidationPrice}} {{ccy}}",
+          "pl": "P/L: {{pl}} {{ccy}}",
+          "plPercent": "P/L% {{plPercent}}%"
+        }
+      },
+      "liquidation": {
+        "label": "Liquidation"
+      }
+    }
   }
 }

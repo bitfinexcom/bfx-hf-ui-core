@@ -8,10 +8,10 @@ export const getLocalDateFormat = (lang) => {
     case LANGUAGES.ru:
     case LANGUAGES.tr:
     case LANGUAGES.es:
-      return 'd MMMM yyyy, HH:MM'
+      return 'd MMMM yyyy, HH:mm'
     case LANGUAGES.cn:
     case LANGUAGES.tw:
-      return 'yyyy MMMM d, HH:MM'
+      return 'yyyy MMMM d, HH:mm'
 
     default:
       return 'MMMM d, yyyy h:mm aa'

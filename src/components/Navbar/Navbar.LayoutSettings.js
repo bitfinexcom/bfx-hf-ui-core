@@ -1,4 +1,6 @@
-import React, { useState, useRef, useEffect } from 'react'
+import React, {
+  useRef, useEffect, memo, useCallback,
+} from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import cx from 'clsx'
 import _entries from 'lodash/entries'
@@ -8,13 +10,14 @@ import _get from 'lodash/get'
 
 import OutsideClickHandler from 'react-outside-click-handler'
 import { useTranslation } from 'react-i18next'
+import { useLocation } from 'react-router'
 import { selectLayout, deleteLayout, saveLayout } from '../../redux/actions/ui'
 import { getLayouts, getLayoutID } from '../../redux/selectors/ui'
-import { getLocation } from '../../redux/selectors/router'
 
 import { ReactComponent as LayoutIcon } from './layout-icon.svg'
 import NavbarButton from './Navbar.Button'
 import Routes from '../../constants/routes'
+import useToggle from '../../hooks/useToggle'
 
 import AddLayoutComponentModal from '../../modals/Layout/AddLayoutComponentModal'
 import CreateNewLayoutModal from '../../modals/Layout/CreateNewLayoutModal'
@@ -42,31 +45,35 @@ const Item = ({
   </div>
 )
 
-export default function LayoutSettings() {
+const LayoutSettings = () => {
   const dispatch = useDispatch()
-  const [isOpen, setIsOpen] = useState(false)
-  const [isCreateNewLayoutModalOpen, setIsCreateNewLayoutModalOpen] = useState(false)
-  const [isAddLayoutComponentModalOpen, setIsAddLayoutComponentModalOpen] = useState(false)
+  const { t } = useTranslation()
+
+  // eslint-disable-next-line no-unused-vars
+  const [isLayoutMenuOpen, toggleLayoutMenu, _openLayoutMenu, closeLayoutMenu] = useToggle(false)
+  const [isCreateNewLayoutModalOpen, toggleCreateNewLayoutModal] = useToggle(false)
+  const [isAddComponentModalOpen, toggleAddComponentModal] = useToggle(false)
+
   const layouts = useSelector(getLayouts)
   const layoutID = useSelector(getLayoutID)
   const layoutIsDirty = useSelector(state => state.ui.layoutIsDirty)
   const layout = _get(layouts, layoutID, {})
-  const { pathname } = useSelector(getLocation)
+  const { pathname } = useLocation()
   const menuRef = useRef()
 
   // eslint-disable-next-line no-shadow
   const selectableLayouts = _filter(_entries(layouts), ([, layout]) => layout.routePath === pathname)
     .sort((a, b) => a[1].savedAt - b[1].savedAt)
 
-  const onSave = () => {
+  const onSave = useCallback(() => {
     if (!layout.isDefault && layoutIsDirty) {
       dispatch(saveLayout())
     }
-  }
+  }, [dispatch, layout.isDefault, layoutIsDirty])
 
   useEffect(() => {
     const menuEl = menuRef.current
-    if (isOpen && menuEl) {
+    if (isLayoutMenuOpen && menuEl) {
       requestAnimationFrame(() => {
         const { x, width } = menuEl.getBoundingClientRect()
 
@@ -82,9 +89,12 @@ export default function LayoutSettings() {
         }
       })
     }
-  }, [isOpen])
+  }, [isLayoutMenuOpen])
 
-  const { t } = useTranslation()
+  const handleLayoutIconClick = useCallback((e) => {
+    e.stopPropagation()
+    toggleLayoutMenu()
+  }, [toggleLayoutMenu])
 
   // eslint-disable-next-line lodash/prefer-lodash-method
   if (![Routes.tradingTerminal.path, Routes.marketData.path]
@@ -94,26 +104,26 @@ export default function LayoutSettings() {
 
   return (
     <div className='hfui-navbar__layout-settings'>
-      <NavbarButton
-        icon={LayoutIcon}
-        alt={t('layoutSettings.title')}
-        onClick={() => setIsOpen(true)}
-        className={isOpen ? 'is-open' : undefined}
-      />
-      {isOpen && (
-        <OutsideClickHandler onOutsideClick={() => setIsOpen(false)}>
+      <OutsideClickHandler onOutsideClick={closeLayoutMenu}>
+        <NavbarButton
+          icon={LayoutIcon}
+          alt={t('layoutSettings.title')}
+          onClick={handleLayoutIconClick}
+          className={isLayoutMenuOpen ? 'is-open' : undefined}
+        />
+        {isLayoutMenuOpen && (
           <div ref={menuRef} className='hfui-navbar__layout-settings__menu'>
             <div className='hfui-navbar__layout-settings__title'>
               {t('layoutSettings.title')}
             </div>
-            <div className='hfui-navbar__layout-settings__menu-buttons' onClick={() => setIsOpen(false)}>
-              <Item onClick={() => setIsAddLayoutComponentModalOpen(true)}>
+            <div className='hfui-navbar__layout-settings__menu-buttons' onClick={toggleLayoutMenu}>
+              <Item onClick={toggleAddComponentModal}>
                 {t('layoutSettings.addComponent')}
               </Item>
               <Item onClick={onSave} isDisabled={layout.isDefault || !layoutIsDirty}>
                 {t('ui.save')}
               </Item>
-              <Item onClick={() => setIsCreateNewLayoutModalOpen(true)}>
+              <Item onClick={toggleCreateNewLayoutModal}>
                 {t('ui.saveAs')}
               </Item>
               <div className='hfui-navbar__layout-settings__separator' />
@@ -126,24 +136,27 @@ export default function LayoutSettings() {
                 >
                   {makeShorterLongName(id, MAX_ID_LENGTH)}
                   {layoutDef.canDelete && (
-                    <div className='hfui-navbar__layout-settings__delete'>
-                      <i className='icon-clear' role='button' aria-label='Delete layout' tabIndex={0} onClick={() => dispatch(deleteLayout(id))} />
-                    </div>
+                  <div className='hfui-navbar__layout-settings__delete'>
+                    <i className='icon-clear' role='button' aria-label='Delete layout' tabIndex={0} onClick={() => dispatch(deleteLayout(id))} />
+                  </div>
                   )}
                 </Item>
               ))}
             </div>
           </div>
-        </OutsideClickHandler>
-      )}
+        )}
+      </OutsideClickHandler>
+
       <CreateNewLayoutModal
         isOpen={isCreateNewLayoutModalOpen}
-        onClose={() => setIsCreateNewLayoutModalOpen(false)}
+        onClose={toggleCreateNewLayoutModal}
       />
       <AddLayoutComponentModal
-        isOpen={isAddLayoutComponentModalOpen}
-        onClose={() => setIsAddLayoutComponentModalOpen(false)}
+        isOpen={isAddComponentModalOpen}
+        onClose={toggleAddComponentModal}
       />
     </div>
   )
 }
+
+export default memo(LayoutSettings)
