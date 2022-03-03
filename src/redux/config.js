@@ -19,6 +19,8 @@ const UFX_REDUCER_PATHS = {
 
 const isElectronApp = process.env.REACT_APP_IS_ELECTRON_APP === 'true'
 
+const showInDevelopmentModules = process.env.REACT_APP_SHOW_IN_DEVLOPMENT_MODULES === 'true'
+
 const env = isElectronApp ? 'electron' : process.env.REACT_APP_ENVIRONMENT
 
 const PUB_REST_API_URL = isElectronApp ? 'http://localhost:45001' : process.env.REACT_APP_UFX_PUBLIC_API_URL
@@ -38,4 +40,5 @@ export {
   env,
   CHART_URL,
   HONEY_AUTH_URL,
+  showInDevelopmentModules,
 }
