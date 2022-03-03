@@ -29,25 +29,15 @@ const BadConnectionModal = lazy(() => import('../../modals/BadConnectionModal'))
 const OldFormatModal = lazy(() => import('../../modals/OldFormatModal'))
 const AOPauseModal = lazy(() => import('../../modals/AOPauseModal'))
 const CcyInfoModal = lazy(() => import('../../modals/CcyInfoModal'))
+const ClosePositionModal = lazy(() => import('../../modals/ClosePositionModal'))
 const ConfirmDMSModal = lazy(() => import('../../modals/ConfirmDMSModal'))
 const EditOrderModal = lazy(() => import('../../modals/EditOrderModal'))
 
-const HFUI = (props) => {
-  const {
-    authToken,
-    getSettings,
-    getCoreSettings,
-    notificationsVisible,
-    getFavoritePairs,
-    currentMode,
-    GAPageview,
-    onUnload,
-    subscribeAllTickers,
-    shouldShowAOPauseModalState,
-    settingsShowAlgoPauseInfo,
-    settingsTheme,
-    isBfxConnected,
-  } = props
+const HFUI = ({
+  authToken, getSettings, getCoreSettings, notificationsVisible, getFavoritePairs, currentMode,
+  GAPageview, onUnload, subscribeAllTickers, shouldShowAOPauseModalState, settingsTheme,
+  settingsShowAlgoPauseInfo, isBfxConnected,
+}) => {
   useInjectBfxData()
 
   const unloadHandler = useCallback(() => {
@@ -142,6 +132,7 @@ const HFUI = (props) => {
           <BadConnectionModal />
           <CcyInfoModal />
           <EditOrderModal />
+          <ClosePositionModal />
         </>
       ) : (
         <>

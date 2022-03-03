@@ -1,0 +1,25 @@
+@import '../../variables.scss';
+
+.close_position-modal {
+  .modal__body {
+    text-align: center;
+
+    > span {
+      font-size: 50px;
+      color: var(--red);
+      margin-bottom: 10px;
+    }
+
+    > p {
+      font-size: 14px;
+      white-space: pre-line;
+    }
+
+    .modal__footer {
+      display: flex;
+      justify-content: flex-end;
+      align-items: baseline;
+      margin-left: 0;
+    }
+  }
+}
