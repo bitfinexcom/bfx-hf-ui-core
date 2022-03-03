@@ -6,7 +6,6 @@ import {
   Route, Switch, Redirect, useLocation,
 } from 'react-router'
 import PropTypes from 'prop-types'
-import _isFunction from 'lodash/isFunction'
 
 import { THEMES, SETTINGS } from '../../redux/selectors/ui'
 import useInjectBfxData from '../../hooks/useInjectBfxData'
@@ -33,11 +32,24 @@ const ClosePositionModal = lazy(() => import('../../modals/ClosePositionModal'))
 const ConfirmDMSModal = lazy(() => import('../../modals/ConfirmDMSModal'))
 const EditOrderModal = lazy(() => import('../../modals/EditOrderModal'))
 
-const HFUI = ({
-  authToken, getSettings, getCoreSettings, notificationsVisible, getFavoritePairs, currentMode,
-  GAPageview, onUnload, subscribeAllTickers, shouldShowAOPauseModalState, settingsTheme,
-  settingsShowAlgoPauseInfo, isBfxConnected,
-}) => {
+const ipcHelpers = window.electronService
+
+const HFUI = (props) => {
+  const {
+    authToken,
+    getSettings,
+    getCoreSettings,
+    notificationsVisible,
+    getFavoritePairs,
+    currentMode,
+    GAPageview,
+    onUnload,
+    subscribeAllTickers,
+    shouldShowAOPauseModalState,
+    settingsShowAlgoPauseInfo,
+    settingsTheme,
+    isBfxConnected,
+  } = props
   useInjectBfxData()
 
   const unloadHandler = useCallback(() => {
@@ -66,13 +78,11 @@ const HFUI = ({
 
   useEffect(() => {
     // if running in the electron environment
-    if (_isFunction(window.require) && isElectronApp) {
-      const electron = window.require('electron')
-      const { ipcRenderer } = electron
-      ipcRenderer.on('app-close', onElectronAppClose)
+    if (ipcHelpers && isElectronApp) {
+      ipcHelpers.addAppCloseEventListener(onElectronAppClose)
 
       return () => {
-        ipcRenderer.removeListener('app-close', onElectronAppClose)
+        ipcHelpers.removeAppCloseEventListener(onElectronAppClose)
       }
     }
   }, [authToken, onElectronAppClose, settingsShowAlgoPauseInfo])
