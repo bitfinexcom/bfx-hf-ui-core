@@ -3,7 +3,7 @@ import ClassNames from 'clsx'
 import PropTypes from 'prop-types'
 import { useTranslation } from 'react-i18next'
 
-import { isElectronApp, appVersion } from '../../redux/config'
+import { isElectronApp, appVersion, showInDevelopmentModules } from '../../redux/config'
 
 import NavbarButton from '../Navbar/Navbar.Link'
 import './style.css'
@@ -45,6 +45,7 @@ const StatusBar = ({
             v
             {appVersion}
           </p>
+          {showInDevelopmentModules && <p className='dev-mode'>DEVELOPMENT Mode</p>}
         </div>
       )}
 
