@@ -441,6 +441,7 @@
     "margin": "保证金交易",
     "derivatives": "衍生品交易",
     "fokTitle": "成交或取消",
+    "hidden": "隐藏单",
     "visibleOnHit": "部分成交后取消隐藏",
     "visibleOnHitHelp": "隐藏订单部分成交后，余下未成交部分将显示于订单簿中。",
     "fokHelp": "成交或取消单是限价单 ，用于完全执行订单否则直接取消。、",
@@ -471,7 +472,11 @@
     "laverage": "杠杆倍数",
     "stopPrice": "止损价",
     "limitPrice": "限价",
-    "distance": "距离"
+    "distance": "距离",
+    "greaterThan0Message": "必须大于0",
+    "invalidDateMessage": "无效日期",
+    "dateRequiredMessage": "“日期”栏位必填",
+    "mustBeNumberMessage": "必须为数字"
   },
   "orderHistoryModal": {
     "title": "订单历史记录",
@@ -626,5 +631,57 @@
     "text2_1": "请回报此问题于",
     "text2_2": "我们将尽快修复此问题！",
     "text3": "技术故障信息"
+  },
+  "orderContexts": {
+    "exchange": "现货交易",
+    "margin": "保证金交易",
+    "funding": "衍生品"
+  },
+  "balanceContexts": {
+    "exchange": "现货",
+    "margin": "保证金",
+    "funding": "衍生品",
+    "contribution": "筹募"
+  },
+  "orderStatuses": {
+    "ACTIVE": "待成交"
+  },
+  "chart": {
+    "trading": {
+      "order": {
+        "context": {
+          "exchange": "现货",
+          "margin": "保证金",
+          "derivative": "衍生品"
+        },
+        "tooltip": {
+          "type": "订单类型：{{type}}",
+          "context": "交易类型：{{context}}",
+          "amount": "数量：{{amount}}{{ccy}}",
+          "price": "价格：{{price}} {{ccy}}",
+          "distance": "间距: {{distance}}{{ccy}}",
+          "stopPrice": "止损价：{{stopPrice}}{{ccy}}",
+          "limitPrice": "限价: {{limitPrice}}{{ccy}}",
+          "leverage": "杠杆倍率：{{leverage}}",
+          "collateral": "保证金: {{collateral}}{{ccy}}",
+          "placed": "下单: {{placedDate}}"
+        },
+        "modifyTooltip": "修改订单",
+        "cancelTooltip": "取消订单"
+      },
+      "position": {
+        "label": "损益：%{pl} ({{plPercent}}%)",
+        "tooltip": {
+          "amount": "数量：{{amount}} {{ccy}}",
+          "basePrice": "基价: {{basePrice}}{{ccy}}",
+          "liqPrice": "清算价格：{{liquidationPrice}}{{ccy}}",
+          "pl": "损益：{{pl}}{{ccy}}",
+          "plPercent": "损益% {{plPercent}}%"
+        }
+      },
+      "liquidation": {
+        "label": "强制平仓"
+      }
+    }
   }
 }
