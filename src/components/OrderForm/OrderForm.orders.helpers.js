@@ -5,14 +5,18 @@ import memoizeOne from 'memoize-one'
 import _values from 'lodash/values'
 import _map from 'lodash/map'
 
-import { isElectronApp } from '../../redux/config'
+import { isElectronApp, showInDevelopmentModules } from '../../redux/config'
 import timeFrames from '../../util/time_frames'
 
 import rawOrders from '../../orders'
 
-const ALL_ALGO_ORDERS = [
+const DEV_ONLY_ALGO_ORDERS = [
   MACrossover,
   AccumulateDistribute,
+]
+
+const ALL_ALGO_ORDERS = [
+  ...(showInDevelopmentModules ? DEV_ONLY_ALGO_ORDERS : []),
   PingPong,
   Iceberg,
   TWAP,
