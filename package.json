@@ -3,7 +3,7 @@
   "version": "3.27.0",
   "description": "Web based Honey Framework UI - for live trading and executing algorithmic orders and strategies",
   "engines": {
-    "node": ">=6"
+    "node": ">=14"
   },
   "homepage": "./",
   "scripts": {
@@ -85,7 +85,7 @@
     "axios": "^0.25.0",
     "bfx-api-node-models": "^1.6.1",
     "bfx-api-node-util": "^1.0.11",
-    "bfx-hf-algo": "git+https://github.com/bitfinexcom/bfx-hf-algo.git#v4.12.0",
+    "bfx-hf-algo": "git+https://github.com/bitfinexcom/bfx-hf-algo.git#v4.13.0",
     "bfx-hf-chart": "git+https://github.com/bitfinexcom/bfx-hf-chart.git#v1.0.11",
     "bfx-hf-indicators": "git+https://github.com/bitfinexcom/bfx-hf-indicators.git#v2.1.1",
     "bfx-hf-strategy": "git+https://github.com/bitfinexcom/bfx-hf-strategy.git#v1.2.3",
@@ -94,14 +94,15 @@
     "clsx": "^1.1.1",
     "connected-react-router": "^6.9.2",
     "cross-env": "^7.0.3",
+    "csv-export": "^1.0.2",
     "dangerously-set-html-content": "^1.0.9",
     "date-fns": "^2.28.0",
     "debug": "^4.3.3",
     "dotenv": "^8.6.0",
     "dotenv-expand": "^5.1.0",
     "env-cmd": "^10.1.0",
-    "export-to-csv": "^0.2.1",
     "file-loader": "^6.2.0",
+    "file-saver": "^2.0.5",
     "fs-extra": "^10.0.0",
     "history": "^4.10.1",
     "html-webpack-plugin": "^4.5.2",
@@ -112,6 +113,7 @@
     "lodash": "^4.17.21",
     "memoize-one": "^6.0.0",
     "monaco-editor-webpack-plugin": "^4.1.2",
+    "original-fs": "^1.1.0",
     "pretty-checkbox": "^3.0.3",
     "prop-types": "^15.8.1",
     "randomcolor": "^0.6.2",

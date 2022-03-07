@@ -441,6 +441,7 @@
     "margin": "Margen",
     "derivatives": "Derivados",
     "fokTitle": "Todo o Nada",
+    "hidden": "Oculta",
     "visibleOnHit": "Visible al hit",
     "visibleOnHitHelp": "El resto de la orden oculta será visible después del primer hit (ejecución parcial).",
     "fokHelp": "Una orden Todo o Nada (FOK) es una orden límite que debe completarse por completo inmediatamente o se cancela (nada).",
@@ -471,7 +472,11 @@
     "laverage": "Apalancamiento",
     "stopPrice": "Precio Stop",
     "limitPrice": "Precio Límite",
-    "distance": "Distancia"
+    "distance": "Distancia",
+    "greaterThan0Message": "Debe ser mayor que 0",
+    "invalidDateMessage": "Fecha inválida",
+    "dateRequiredMessage": "La fecha es obligatoria",
+    "mustBeNumberMessage": "Debe ser un número"
   },
   "orderHistoryModal": {
     "title": "Historial de Órdenes",
@@ -626,5 +631,57 @@
     "text2_1": "Por favor, reporta este problema a",
     "text2_2": "¡para que podamos solucionarlo lo antes posible!",
     "text3": "Información técnica sobre accidentes"
+  },
+  "orderContexts": {
+    "exchange": "Exchange",
+    "margin": "Margen",
+    "funding": "Derivado"
+  },
+  "balanceContexts": {
+    "exchange": "Exchange",
+    "margin": "Margen",
+    "funding": "Derivados",
+    "contribution": "Recaudación de Capital"
+  },
+  "orderStatuses": {
+    "ACTIVE": "ACTIVO"
+  },
+  "chart": {
+    "trading": {
+      "order": {
+        "context": {
+          "exchange": "Exchange",
+          "margin": "Margen",
+          "derivative": "Derivado"
+        },
+        "tooltip": {
+          "type": "Tipo: {{type}}",
+          "context": "Contexto: {{context}}",
+          "amount": "Cantidad: {{amount}} {{ccy}}",
+          "price": "Precio: {{price}} {{ccy}}",
+          "distance": "Distancia: {{distance}} {{ccy}}",
+          "stopPrice": "Precio Stop: {{stopPrice}} {{ccy}}",
+          "limitPrice": "Precio límite: {{limitPrice}} {{ccy}}",
+          "leverage": "Apalancamiento: {{leverage}}",
+          "collateral": "Colateral: {{collateral}} {{ccy}}",
+          "placed": "Colocada: {{placedDate}}"
+        },
+        "modifyTooltip": "Modificar orden",
+        "cancelTooltip": "Cancelar orden"
+      },
+      "position": {
+        "label": "G/P: %{pl} ({{plPercent}}%)",
+        "tooltip": {
+          "amount": "Monto: {{amount}} {{ccy}}",
+          "basePrice": "Precio base: {{basePrice}} {{ccy}}",
+          "liqPrice": "Precio Liq.: {{liquidationPrice}} {{ccy}}",
+          "pl": "G/P: {{pl}} {{ccy}}",
+          "plPercent": "G/P% {{plPercent}}%"
+        }
+      },
+      "liquidation": {
+        "label": "Liquidación"
+      }
+    }
   }
 }

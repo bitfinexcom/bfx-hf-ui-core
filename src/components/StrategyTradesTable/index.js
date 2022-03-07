@@ -1,17 +1,15 @@
 import React, { memo } from 'react'
 import { VirtualTable } from '@ufx-ui/core'
-import { Icon } from 'react-fa'
 import _isEmpty from 'lodash/isEmpty'
 import PropTypes from 'prop-types'
 import { useTranslation } from 'react-i18next'
 
 import Panel from '../../ui/Panel'
-import Button from '../../ui/Button'
 import StrategyTradesTableColumns from './StrategyTradesTable.columns'
 import './style.css'
 
 const StrategyTradesTable = ({
-  label, trades, onTradeClick, onTradeExportClick, dark,
+  label, trades, onTradeClick, dark,
 }) => {
   const { t } = useTranslation()
 
@@ -19,19 +17,7 @@ const StrategyTradesTable = ({
     <Panel
       dark={dark}
       darkHeader={dark}
-      label={(
-        <>
-          {label}
-          <Button
-            className='export_csv_btn'
-            onClick={onTradeExportClick}
-            label={[
-              <Icon key='icon' name='upload' />,
-              <p key='text'>{t('ui.export')}</p>,
-            ]}
-          />
-        </>
-      )}
+      label={label}
       removeable={false}
       moveable={false}
       className='hfui-strategytradestable__wrapper'
@@ -59,7 +45,6 @@ const StrategyTradesTable = ({
 StrategyTradesTable.propTypes = {
   trades: PropTypes.arrayOf(PropTypes.object).isRequired,
   onTradeClick: PropTypes.func.isRequired,
-  onTradeExportClick: PropTypes.func.isRequired,
   label: PropTypes.string,
   dark: PropTypes.bool,
 }
