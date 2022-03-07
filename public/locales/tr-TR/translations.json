@@ -38,6 +38,8 @@
       "title": "Iceberg",
       "help": "Iceberg, piyasaya büyük bir sipariş vermenizi sağlarken aynı anda yalnızca küçük bir kısmının doldurulmasını sağlar.\n\n'Gizli Olarak Fazla' seçeneğini etkinleştirerek, kalanı gizli bir emir olarak sunmak ve büyük işlemler gerçekleştirirken minimum piyasa kesintisine izin vermek mümkündür."
     },
+    "visibleOnHit": "Visible on hit",
+    "visibleOnHitHelp": "The rest part of the hidden order will be visible after first hit (partial execution).",
     "saveParamsSettings": "Algo Parametreleri ayarları",
     "intervalDistortion": "Bozulma Aralığı %",
     "intervalDistortionHelp": "Yüzde olarak her dilim aralığını çarpıtacak miktar",
@@ -439,6 +441,7 @@
     "margin": "Marjin",
     "derivatives": "Türevler",
     "fokTitle": "Gerçekleşmezse İptal Et",
+    "hidden": "Hidden",
     "visibleOnHit": "Visible on hit",
     "visibleOnHitHelp": "The rest part of the hidden order will be visible after first hit (partial execution).",
     "fokHelp": "An FOK order is a limit order that must fully fill immediately or it is canceled (killed).",
@@ -469,7 +472,11 @@
     "laverage": "Kaldıraç",
     "stopPrice": "Stop Fiyatı",
     "limitPrice": "Limit Fiyatı",
-    "distance": "Aralık"
+    "distance": "Aralık",
+    "greaterThan0Message": "Must be greater than 0",
+    "invalidDateMessage": "Invalid date",
+    "dateRequiredMessage": "Date required",
+    "mustBeNumberMessage": "Must be a number"
   },
   "orderHistoryModal": {
     "title": "Emir Geçmişi",
@@ -624,5 +631,57 @@
     "text2_1": "Please, report this issue at",
     "text2_2": "so we would be able to fix it as soon as possible!",
     "text3": "Technical crash info"
+  },
+  "orderContexts": {
+    "exchange": "Exchange",
+    "margin": "Margin",
+    "funding": "Derivative"
+  },
+  "balanceContexts": {
+    "exchange": "Exchange",
+    "margin": "Margin",
+    "funding": "Derivative",
+    "contribution": "Capital Raise"
+  },
+  "orderStatuses": {
+    "ACTIVE": "ACTIVE"
+  },
+  "chart": {
+    "trading": {
+      "order": {
+        "context": {
+          "exchange": "Exchange",
+          "margin": "Margin",
+          "derivative": "Derivative"
+        },
+        "tooltip": {
+          "type": "Type: {{type}}",
+          "context": "Context: {{context}}",
+          "amount": "Amount: {{amount}} {{ccy}}",
+          "price": "Price: {{price}} {{ccy}}",
+          "distance": "Distance: {{distance}} {{ccy}}",
+          "stopPrice": "Stop price: {{stopPrice}} {{ccy}}",
+          "limitPrice": "Limit price: {{limitPrice}} {{ccy}}",
+          "leverage": "Leverage: {{leverage}}",
+          "collateral": "Collateral: {{collateral}} {{ccy}}",
+          "placed": "Placed: {{placedDate}}"
+        },
+        "modifyTooltip": "Modify order",
+        "cancelTooltip": "Cancel order"
+      },
+      "position": {
+        "label": "P/L: %{pl} ({{plPercent}}%)",
+        "tooltip": {
+          "amount": "Amount: {{amount}} {{ccy}}",
+          "basePrice": "Base price: {{basePrice}} {{ccy}}",
+          "liqPrice": "Liq. price: {{liquidationPrice}} {{ccy}}",
+          "pl": "P/L: {{pl}} {{ccy}}",
+          "plPercent": "P/L% {{plPercent}}%"
+        }
+      },
+      "liquidation": {
+        "label": "Liquidation"
+      }
+    }
   }
 }

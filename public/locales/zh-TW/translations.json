@@ -441,6 +441,7 @@
     "margin": "保證金",
     "derivatives": "衍生品",
     "fokTitle": "成交或取消單",
+    "hidden": "隱藏訂單",
     "visibleOnHit": "部分成交後取消隱藏",
     "visibleOnHitHelp": "隱藏訂單部分成交後，餘下未成交部分將顯示於掛單簿中。",
     "fokHelp": "成交或取消單（FOK）是須立即全部成交否則直接取消（終止）的限價單 。",
@@ -471,7 +472,11 @@
     "laverage": "槓桿倍率",
     "stopPrice": "止損價",
     "limitPrice": "限價",
-    "distance": "距離"
+    "distance": "距離",
+    "greaterThan0Message": "數值需大於0",
+    "invalidDateMessage": "無效日期",
+    "dateRequiredMessage": "「日期」欄位必填",
+    "mustBeNumberMessage": "須為數字"
   },
   "orderHistoryModal": {
     "title": "訂單歷史紀錄",
@@ -626,5 +631,57 @@
     "text2_1": "請回報問題至",
     "text2_2": "我們將會盡快修復此問題！",
     "text3": "技術崩潰資訊"
+  },
+  "orderContexts": {
+    "exchange": "兌換",
+    "margin": "保證金",
+    "funding": "衍生品"
+  },
+  "balanceContexts": {
+    "exchange": "兌換",
+    "margin": "保證金",
+    "funding": "衍生品",
+    "contribution": "集資"
+  },
+  "orderStatuses": {
+    "ACTIVE": "待成交"
+  },
+  "chart": {
+    "trading": {
+      "order": {
+        "context": {
+          "exchange": "兌換",
+          "margin": "保證金",
+          "derivative": "衍生品"
+        },
+        "tooltip": {
+          "type": "訂單類型：{{type}}",
+          "context": "交易類型：{{context}}",
+          "amount": "數量：{{amount}} {{ccy}}",
+          "price": "價格：{{price}} {{ccy}}",
+          "distance": "間距：{{distance}} {{ccy}}",
+          "stopPrice": "止損價：{{stopPrice}} {{ccy}}",
+          "limitPrice": "限價：{{limitPrice}} {{ccy}}",
+          "leverage": "槓桿倍率：{{leverage}}",
+          "collateral": "保證金：{{collateral}} {{ccy}}",
+          "placed": "下單：{{placedDate}}"
+        },
+        "modifyTooltip": "修改訂單",
+        "cancelTooltip": "取消訂單"
+      },
+      "position": {
+        "label": "損益：%{pl} ({{plPercent}}%)",
+        "tooltip": {
+          "amount": "數量：{{amount}} {{ccy}}",
+          "basePrice": "基價：{{basePrice}} {{ccy}}",
+          "liqPrice": "清算價格：{{liquidationPrice}} {{ccy}}",
+          "pl": "損益：{{pl}} {{ccy}}",
+          "plPercent": "損益率 {{plPercent}}%"
+        }
+      },
+      "liquidation": {
+        "label": "清算"
+      }
+    }
   }
 }

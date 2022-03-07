@@ -283,6 +283,12 @@ a:visited {
   text-align: center;
 }
 
+.link-button {
+  color: $green-color;
+  border-bottom: solid 1px $green-color;
+  cursor: pointer;
+}
+
 // OrderHistory & Atomic Orders table marker icon
 .row-marker {
   background: transparent;

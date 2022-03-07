@@ -43,6 +43,9 @@ const LiveStrategyExecutor = ({
   const execResults = {
     ...results,
     trades: results?.strategy?.trades,
+    backtestOptions: {
+      activeMarket: options.symbol,
+    },
   }
 
   const toggleExecutionState = () => {

@@ -20,6 +20,8 @@ import getTickersVolumeUnit from './get_tickers_volume_unit'
 import getIsCcyInfoModalVisible from './get_is_ccy_info_modal_visible'
 import getIsConfirmDMSModalVisible from './get_confirm_dms_modal_visible'
 import getIsEditOrderModalShown from './get_is_edit_order_modal_shown'
+import getIsClosePositionModalVisible from './get_close_position_modal_visible'
+import getClosePositionModalData from './get_close_position_modal_data'
 import getOrderToEdit from './get_order_to_edit'
 import getLayoutForRoute from './layouts/get_layout_for_route'
 
@@ -51,4 +53,6 @@ export {
   getOrderToEdit,
   getIsConfirmDMSModalVisible,
   getLayoutForRoute,
+  getIsClosePositionModalVisible,
+  getClosePositionModalData,
 }

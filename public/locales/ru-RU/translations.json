@@ -441,6 +441,7 @@
     "margin": "Маржинальный",
     "derivatives": "Деривативы",
     "fokTitle": "Исполнить или аннулировать",
+    "hidden": "Скрытый",
     "visibleOnHit": "Виден при исполнении",
     "visibleOnHitHelp": "Оставшаяся часть скрытого ордера будет видна после первоначального (частичного) исполнения.",
     "fokHelp": "Ордер Исполнить или аннулировать (FOK) представляет собой лимитный ордер, который должен быть исполнен мгновенно и полностью либо он должен быть отменен.",
@@ -471,7 +472,11 @@
     "laverage": "Кредитное плечо",
     "stopPrice": "Стоп-цена",
     "limitPrice": "Лимитная цена",
-    "distance": "Интервал"
+    "distance": "Интервал",
+    "greaterThan0Message": "Должно быть больше 0",
+    "invalidDateMessage": "Неправильная дата",
+    "dateRequiredMessage": "Дата является обязательным для заполнения полем",
+    "mustBeNumberMessage": "Должно быть числом"
   },
   "orderHistoryModal": {
     "title": "История ордеров",
@@ -626,5 +631,57 @@
     "text2_1": "Пожалуйста, сообщите о проблеме через",
     "text2_2": ", чтобы мы смогли ее исправить как можно скорее!",
     "text3": "Информация о технической неисправности"
+  },
+  "orderContexts": {
+    "exchange": "Обмен",
+    "margin": "Маржа",
+    "funding": "Деривативы"
+  },
+  "balanceContexts": {
+    "exchange": "Обменный",
+    "margin": "Маржинальный",
+    "funding": "Деривативы",
+    "contribution": "Привлечение капитала"
+  },
+  "orderStatuses": {
+    "ACTIVE": "АКТИВНЫЙ"
+  },
+  "chart": {
+    "trading": {
+      "order": {
+        "context": {
+          "exchange": "Обменный",
+          "margin": "Маржинальный",
+          "derivative": "Деривативы"
+        },
+        "tooltip": {
+          "type": "Тип: {{type}}",
+          "context": "Контекст: {{context}}",
+          "amount": "Сумма: {{amount}} {{ccy}}",
+          "price": "Цена: {{price}} {{ccy}}",
+          "distance": "Расстояние: {{distance}} {{ccy}}",
+          "stopPrice": "Стоп-цена: {{stopPrice}} {{ccy}}",
+          "limitPrice": "Лимитная цена: {{limitPrice}} {{ccy}}",
+          "leverage": "Кредитное плечо: {{leverage}}",
+          "collateral": "Залог: {{collateral}} {{ccy}}",
+          "placed": "Размещен: {{placedDate}}"
+        },
+        "modifyTooltip": "Изменить ордер",
+        "cancelTooltip": "Отменить ордер"
+      },
+      "position": {
+        "label": "P/L: %{pl} ({{plPercent}}%)",
+        "tooltip": {
+          "amount": "Сумма: {{amount}} {{ccy}}",
+          "basePrice": "Базовая цена: {{basePrice}} {{ccy}}",
+          "liqPrice": "Ликв. цена: {{liquidationPrice}} {{ccy}}",
+          "pl": "P/L: {{pl}} {{ccy}}",
+          "plPercent": "P/L% {{plPercent}}%"
+        }
+      },
+      "liquidation": {
+        "label": "Ликвидация"
+      }
+    }
   }
 }
