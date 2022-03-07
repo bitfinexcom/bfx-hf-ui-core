@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next'
 import React, { useEffect, useState, memo } from 'react'
 import PropTypes from 'prop-types'
 import _size from 'lodash/size'
@@ -9,7 +10,10 @@ import './style.css'
 const MAX_STRATEGY_LABEL_LENGTH = 35
 
 const RemoveExistingStrategyModal = ({
-  isOpen, onRemoveStrategy, onClose, strategy: { label },
+  isOpen,
+  onRemoveStrategy,
+  onClose,
+  strategy: { label },
 }) => {
   const [canDeleteStrategy, setCanDeleteStrategy] = useState(false)
   const [inputValue, setInputValue] = useState('')
@@ -33,45 +37,53 @@ const RemoveExistingStrategyModal = ({
     setCanDeleteStrategy(true)
   }, [canDeleteStrategy, inputValue, label])
 
+  const { t } = useTranslation()
+
   return (
     <Modal
       isOpen={isOpen}
       onClose={onClose}
       onSubmit={removeStrategy}
       className='hfui-removestrategymodal__wrapper'
-      label='Remove Strategy'
+      label={t('removeExistingStrategyModal.title')}
     >
       <div className='hfui-removestrategymodal__content'>
         <p>
-          Are you sure you want to delete&nbsp;
+          {t('removeExistingStrategyModal.text_1')}
+          &nbsp;
           <b>{label}</b>
-          &nbsp;strategy?
+          &nbsp;
+          {t('removeExistingStrategyModal.text_2')}
         </p>
         <p>
-          <b>WARNING:</b>
+          <b>
+            {t('removeExistingStrategyModal.warning_1')}
+            :
+          </b>
           &nbsp;
-          <i>This action can not be undone.</i>
+          <i>{t('removeExistingStrategyModal.warning_2')}</i>
         </p>
         <Input
           type='text'
           value={inputValue}
           onChange={setInputValue}
-          placeholder={`Type ${isLong ? 'the strategy name' : `"${label}"`} to delete it`}
+          placeholder={t('removeExistingStrategyModal.input_placeholder', {
+            label: isLong
+              ? t('removeExistingStrategyModal.strategyName')
+              : label,
+          })}
         />
       </div>
       <Modal.Footer>
-        <Modal.Button
-          secondary
-          onClick={onClose}
-        >
-          Cancel
+        <Modal.Button secondary onClick={onClose}>
+          {t('ui.cancel')}
         </Modal.Button>
         <Modal.Button
           primary
           disabled={!canDeleteStrategy}
           onClick={removeStrategy}
         >
-          Delete
+          {t('ui.deleteBtn')}
         </Modal.Button>
       </Modal.Footer>
     </Modal>
