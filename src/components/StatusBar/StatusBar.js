@@ -33,25 +33,23 @@ const StatusBar = ({
   return (
     <div className='hfui-statusbar__wrapper'>
       {isElectronApp && (
-        <div className='hfui-statusbar__left'>
-          <p>
-            {remoteVersion && remoteVersion !== appVersion && (
-              <NavbarButton
-                label={t('statusbar.updateToLast')}
-                external={RELEASE_URL}
-              />
-            )}
-            &nbsp;
-            v
-            {appVersion}
-          </p>
-          {showInDevelopmentModules && <p className='dev-mode'>DEVELOPMENT Mode</p>}
-        </div>
+        <div className='hfui-statusbar__left' />
       )}
 
       <div className='hfui-statusbar__right'>
         {isElectronApp && (
           <>
+            <p>
+              {remoteVersion && remoteVersion !== appVersion && (
+              <NavbarButton
+                label={t('statusbar.updateToLast')}
+                external={RELEASE_URL}
+              />
+              )}
+              &nbsp;
+              v
+              {appVersion}
+            </p>
             <span className={ClassNames('hfui-statusbar__statuscircle', {
               green: apiClientConnected,
               yellow: apiClientConnecting,
@@ -73,6 +71,7 @@ const StatusBar = ({
         })}
         />
         <p>{`WS ${(wsConnected && !wsConnInterrupted) ? t('statusbar.connected') : t('statusbar.disconnected')}`}</p>
+        {showInDevelopmentModules && <p className='dev-mode'>DEVELOPMENT Mode</p>}
       </div>
     </div>
   )

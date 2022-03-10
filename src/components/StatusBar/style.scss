@@ -50,12 +50,6 @@
       margin-right: 0;
     }
   }
-
-  .dev-mode {
-    color: $blue-color;
-    background-color: $white-color;
-    padding: 0 10px;
-  }
 }
 
 .hfui-statusbar__right {
@@ -78,6 +72,11 @@
 
   & > *:last-child {
     margin-right: 0;
+  }
+  .dev-mode {
+    color: $blue-color;
+    background-color: $white-color;
+    padding: 0 10px;
   }
 }
 
