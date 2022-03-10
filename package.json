@@ -1,6 +1,6 @@
 {
   "name": "bfx-hf-ui-core",
-  "version": "3.27.0",
+  "version": "3.28.0",
   "description": "Web based Honey Framework UI - for live trading and executing algorithmic orders and strategies",
   "engines": {
     "node": ">=14"
