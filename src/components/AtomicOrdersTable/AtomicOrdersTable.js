@@ -40,8 +40,12 @@ const AtomicOrdersTable = ({
 
 AtomicOrdersTable.propTypes = {
   authToken: PropTypes.string.isRequired,
-  atomicOrders: PropTypes.objectOf(PropTypes.object),
-  filteredAtomicOrders: PropTypes.objectOf(PropTypes.object),
+  atomicOrders: PropTypes.objectOf(PropTypes.objectOf([
+    PropTypes.string, PropTypes.number, PropTypes.instanceOf(Date),
+  ])),
+  filteredAtomicOrders: PropTypes.objectOf(PropTypes.objectOf([
+    PropTypes.string, PropTypes.number, PropTypes.instanceOf(Date),
+  ])),
   getMarketPair: PropTypes.func.isRequired,
   cancelOrder: PropTypes.func.isRequired,
   editOrder: PropTypes.func.isRequired,

@@ -62,7 +62,7 @@ const EmptyContent = ({
 }
 
 EmptyContent.propTypes = {
-  strategies: PropTypes.arrayOf(PropTypes.object).isRequired,
+  strategies: PropTypes.arrayOf(PropTypes.object).isRequired, // eslint-disable-line
   openCreateNewStrategyModal: PropTypes.func.isRequired,
   openSelectExistingStrategyModal: PropTypes.func.isRequired,
   onOpen: PropTypes.func.isRequired,

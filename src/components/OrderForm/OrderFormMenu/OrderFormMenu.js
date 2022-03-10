@@ -35,8 +35,12 @@ const OrderFormMenu = ({ atomicOrderTypes, algoOrderTypes, onSelect }) => {
 }
 
 OrderFormMenu.propTypes = {
-  atomicOrderTypes: PropTypes.arrayOf(PropTypes.object).isRequired,
-  algoOrderTypes: PropTypes.arrayOf(PropTypes.object).isRequired,
+  atomicOrderTypes: PropTypes.arrayOf(PropTypes.objectOf([
+    PropTypes.string,
+  ])).isRequired,
+  algoOrderTypes: PropTypes.arrayOf(PropTypes.objectOf([
+    PropTypes.string,
+  ])).isRequired,
   onSelect: PropTypes.func.isRequired,
 }
 
