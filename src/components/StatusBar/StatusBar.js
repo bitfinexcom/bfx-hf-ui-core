@@ -16,6 +16,7 @@ const StatusBar = ({
   apiClientConnecting: _apiClientConnecting,
   apiClientConnected,
   wsInterrupted, currentModeApiKeyState,
+  isPaperTrading,
 }) => {
   const [wsConnInterrupted, setWsConnInterrupted] = useState(false)
   const isWrongAPIKey = !currentModeApiKeyState.valid
@@ -32,9 +33,15 @@ const StatusBar = ({
 
   return (
     <div className='hfui-statusbar__wrapper'>
-      {isElectronApp && (
-        <div className='hfui-statusbar__left' />
-      )}
+      <div className='hfui-statusbar__left'>
+        {!isPaperTrading
+        && (
+        <div className='hfui-statusbar__desclaimer'>
+          <span className='hfui-statusbar__pulse' />
+          <span>{t('statusbar.liveModeDisclaimer')}</span>
+        </div>
+        )}
+      </div>
 
       <div className='hfui-statusbar__right'>
         {isElectronApp && (
@@ -87,6 +94,7 @@ StatusBar.propTypes = {
   currentModeApiKeyState: PropTypes.shape({
     valid: PropTypes.bool,
   }),
+  isPaperTrading: PropTypes.bool.isRequired,
 }
 
 StatusBar.defaultProps = {

@@ -561,6 +561,7 @@
     "balancesTab": "Balances"
   },
   "statusbar": {
+    "liveModeDisclaimer": "You are in LIVE mode. All orders placed in this mode are executed in the real market using real funds",
     "updateToLast": "Update to latest version",
     "connected": "Connected",
     "connecting": "Connecting",
