@@ -35,7 +35,7 @@ const TradingMode = () => {
     dispatch(GAActions.updateSettings())
     localStorage.setItem(SETTINGS.THEME, nextTheme)
   }
-  
+
   return (
     <div className='appsettings-modal__appearance_setting'>
       <div className='appsettings-modal__title'>
