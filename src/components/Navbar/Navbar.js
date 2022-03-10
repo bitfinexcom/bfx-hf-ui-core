@@ -74,15 +74,16 @@ const Navbar = () => {
             </>
           )}
         </div>
-        {isElectronApp && (
+        {isElectronApp ? (
           <div className='hfui-tradingpaper__control'>
             <div className='hfui-tradingpaper__control-toggle'>
               <p>{t('main.paper')}</p>
               <SwitchMode />
             </div>
           </div>
+        ) : (
+          <LanguageSettings />
         )}
-        <LanguageSettings />
       </div>
     </div>
   )

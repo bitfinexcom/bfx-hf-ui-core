@@ -108,6 +108,12 @@
     }
   }
 
+  &__appearance_setting {
+    .hfui-dropdown__wrapper p {
+      margin-bottom: 16px !important;
+    }
+  }
+
   &__input {
     margin-bottom: spacing(0.5);
 
