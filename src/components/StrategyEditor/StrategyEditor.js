@@ -358,8 +358,8 @@ StrategyEditor.propTypes = {
       PropTypes.oneOf([null]).isRequired,
     ]),
   ),
-  strategies: PropTypes.arrayOf(PropTypes.object).isRequired,
-  backtestResults: PropTypes.objectOf(PropTypes.any),
+  strategies: PropTypes.arrayOf(PropTypes.object).isRequired, // eslint-disable-line
+  backtestResults: PropTypes.objectOf(PropTypes.any), // eslint-disable-line
   settingsTheme: PropTypes.oneOf([THEMES.LIGHT, THEMES.DARK]),
 }
 

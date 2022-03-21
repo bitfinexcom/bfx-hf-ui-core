@@ -174,7 +174,7 @@ HistoricalForm.propTypes = {
     trades: PropTypes.bool,
     candles: PropTypes.bool,
   }),
-  markets: PropTypes.objectOf(PropTypes.object),
+  markets: PropTypes.objectOf(PropTypes.object), // eslint-disable-line
   updateError: PropTypes.func.isRequired,
   setFormState: PropTypes.func.isRequired,
   backtestStrategy: PropTypes.func.isRequired,

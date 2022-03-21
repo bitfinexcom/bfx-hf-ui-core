@@ -117,7 +117,7 @@ const Backtester = ({
 }
 
 Backtester.propTypes = {
-  indicators: PropTypes.arrayOf(PropTypes.array),
+  indicators: PropTypes.arrayOf(PropTypes.array), // eslint-disable-line
   backtest: PropTypes.shape({
     loading: PropTypes.bool.isRequired,
     executing: PropTypes.bool.isRequired,
@@ -132,9 +132,9 @@ Backtester.propTypes = {
       PropTypes.oneOf([null]).isRequired,
     ]),
   ),
-  markets: PropTypes.objectOf(PropTypes.object),
-  backtestResults: PropTypes.objectOf(PropTypes.any),
-  backtestOptions: PropTypes.objectOf(PropTypes.any),
+  markets: PropTypes.objectOf(PropTypes.object), // eslint-disable-line
+  backtestResults: PropTypes.objectOf(PropTypes.any), // eslint-disable-line
+  backtestOptions: PropTypes.objectOf(PropTypes.any), // eslint-disable-line
   authToken: PropTypes.string.isRequired,
   dsExecuteBacktest: PropTypes.func.isRequired,
   setBacktestOptions: PropTypes.func.isRequired,

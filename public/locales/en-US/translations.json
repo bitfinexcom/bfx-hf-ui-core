@@ -287,6 +287,8 @@
     "title": "Settings",
     "generalTab": "General",
     "tradingModeTab": "Trading Mode",
+    "appearanceTab": "Appearance",
+    "language": "Language",
     "aboutTab": "About",
     "appVersion": "Version {{version}}",
     "description": "Official free algorithmic trading app based on the <url>Bitfinex API</url>, created by the Bitfinex team.",
