@@ -25,6 +25,7 @@ import getClosePositionModalData from './get_close_position_modal_data'
 import getOrderToEdit from './get_order_to_edit'
 import getLayoutForRoute from './layouts/get_layout_for_route'
 import getIsBetaVersion from './get_is_beta_version'
+import getIsAppSettingsModalVisible from './get_is_app_settings_modal_visible'
 
 export * from './get_settings'
 export * from './get_core_settings'
@@ -57,4 +58,5 @@ export {
   getIsClosePositionModalVisible,
   getClosePositionModalData,
   getIsBetaVersion,
+  getIsAppSettingsModalVisible,
 }

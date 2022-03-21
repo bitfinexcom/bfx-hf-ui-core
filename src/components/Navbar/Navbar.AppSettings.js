@@ -1,11 +1,12 @@
-import React, { useState, memo } from 'react'
+import React, { memo } from 'react'
 
+import { useDispatch } from 'react-redux'
+import { changeAppSettingsModalState } from '../../redux/actions/ui'
 import NavbarButton from './Navbar.Button'
 
-import AppSettingsModal from '../../modals/AppSettingsModal'
-
 const AppSettings = () => {
-  const [isOpen, setIsOpen] = useState(false)
+  const dispatch = useDispatch()
+  const onOpenAppSettingsModal = () => dispatch(changeAppSettingsModalState(true))
 
   return (
     <div className='hfui-navbar__app-settings'>
@@ -13,11 +14,7 @@ const AppSettings = () => {
         alt='Application settings'
         icon='settings-icon'
         className='hfui-navbar__app-settings__icon'
-        onClick={() => setIsOpen(true)}
-      />
-      <AppSettingsModal
-        isOpen={isOpen}
-        onClose={() => setIsOpen(false)}
+        onClick={onOpenAppSettingsModal}
       />
     </div>
   )

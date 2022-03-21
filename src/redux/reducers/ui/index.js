@@ -75,6 +75,7 @@ function getInitialState() {
       isEditOrderModalVisible: false,
       isTradingModeModalVisible: false,
       isClosePositionModalVisible: false,
+      isAppSettingsModalVisible: false,
     },
     orderToEdit: {},
     isBadInternetConnection: false,
@@ -488,6 +489,17 @@ function reducer(state = getInitialState(), action = {}) {
         modals: {
           ...state.modals,
           isAOPauseModalVisible: isVisible,
+        },
+      }
+    }
+    case types.CHANGE_APP_SETTINGS_MODAL_STATE: {
+      const { isVisible } = payload
+
+      return {
+        ...state,
+        modals: {
+          ...state.modals,
+          isAppSettingsModalVisible: isVisible,
         },
       }
     }

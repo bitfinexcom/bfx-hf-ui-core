@@ -6,6 +6,7 @@ import _isFunction from 'lodash/isFunction'
 import cx from 'clsx'
 import { useTranslation } from 'react-i18next'
 
+import { useDispatch, useSelector } from 'react-redux'
 import { isElectronApp } from '../../redux/config'
 import Modal from '../../ui/Modal'
 import GeneralTab from './AppSettingsModal.General'
@@ -13,6 +14,8 @@ import ApiKeysTab from './AppSettingsModal.ApiKeys'
 import TradingModeTab from './AppSettingsModal.TradingMode'
 import AppearanceTab from './AppSettingsModal.Appearance'
 import AboutTab from './AppSettingsModal.About'
+import { getIsAppSettingsModalVisible } from '../../redux/selectors/ui'
+import { changeAppSettingsModalState } from '../../redux/actions/ui'
 
 import './style.css'
 
@@ -30,14 +33,15 @@ const webTabs = [
 
 const defaultTab = isElectronApp ? Tabs.General : Tabs.Appearance
 
-const AppSettingsModal = ({
-  isOpen,
-  onClose: onModalClose,
-}) => {
+const AppSettingsModal = () => {
+  const isOpen = useSelector(getIsAppSettingsModalVisible)
+
   const [activeTab, setActiveTab] = useState(defaultTab)
 
+  const dispatch = useDispatch()
+
   const onClose = (callback) => {
-    onModalClose()
+    dispatch(changeAppSettingsModalState(false))
 
     // reset to default tab, but wait for transition out
     setTimeout(() => {
