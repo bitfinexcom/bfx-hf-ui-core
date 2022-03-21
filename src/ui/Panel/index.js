@@ -14,11 +14,20 @@ import useSize from '../../hooks/useSize'
 import './style.css'
 
 const getTabTitle = (tab) => { // eslint-disable-line
-  const { htmlKey, tabtitle } = tab.props
+  const { htmlKey, tabtitle, sbtitle } = tab.props
+
+  if (typeof sbtitle === 'string') {
+    return sbtitle
+  }
+
   if (typeof tabtitle === 'string') {
     return tabtitle
   }
-  if (!htmlKey) console.trace('htmlKey missing')
+
+  if (!htmlKey) {
+    console.trace('htmlKey missing')
+  }
+
   return htmlKey
 }
 
@@ -39,15 +48,19 @@ const getForcedTab = (forcedTab, tabs) => { // eslint-disable-line
 }
 
 const Panel = ({
-  label, className, onRemove, hideIcons, children, headerComponents, extraIcons,
-  moveable, removeable, modal, footer, settingsOpen, onToggleSettings, darkHeader, dark, showChartMarket,
-  chartMarketSelect, secondaryHeaderComponents, closePanel, preHeaderComponents, dropdown, forcedTab, onTabChange,
+  label, className, onRemove, hideIcons, children, headerComponents, extraIcons, moveable, removeable, modal, footer,
+  settingsOpen, onToggleSettings, darkHeader, dark, showChartMarket, chartMarketSelect, secondaryHeaderComponents,
+  closePanel, preHeaderComponents, dropdown, forcedTab, onTabChange, sidebarComponents,
 }) => {
   const tabs = _filter(React.Children.toArray(children), c => c && c.props.tabtitle)
+  const sbTabs = _filter(React.Children.toArray(children), c => c && c.props.sbtitle)
   const initTab = getForcedTab(forcedTab, tabs)
   const [selectedTab, setSelectedTab] = useState(initTab)
+  const [selectedSBTab, setSelectedSBTab] = useState(0)
   const [panelRef, panelSize] = useSize()
   const [headerRef, headerSize] = useSize()
+
+  const innerContent = !_isEmpty(tabs) ? tabs[selectedTab] : !_isEmpty(sbTabs) ? sbTabs[selectedSBTab] : children
 
   const _setSelectedTab = useCallback((tab) => {
     onTabChange(tab)
@@ -146,8 +159,26 @@ const Panel = ({
       <div className='hfui-panel__content'>
         {modal}
         <Scrollbars style={{ height: panelSize.height - headerSize.height }}>
-          <div className='hfui-panel__inner'>
-            {tabs.length > 0 ? tabs[selectedTab] : children}
+          <div className='hfui-panel__content-outer'>
+            <ul className={ClassNames('hfui_panel__sidebar', {
+              'no-sidebar': _isEmpty(sbTabs),
+            })}>
+              {_map(sbTabs, (tab, index) => (
+                <li
+                  key={tab.props.htmlKey || tab.props.sbtitle}
+                  className={ClassNames({ active: getTabTitle(tab) === getTabTitle(sbTabs[selectedSBTab]) })}
+                  onClick={() => setSelectedSBTab(index)}
+                >
+                  <span className='sb-icon'>
+                    {tab.props.sbicon}
+                  </span>
+                  {tab.props.sbtitle}
+                </li>
+              ))}
+            </ul>
+            <div className='hfui-panel__inner'>
+              {innerContent}
+            </div>
           </div>
         </Scrollbars>
       </div>
@@ -164,6 +195,7 @@ Panel.propTypes = {
   label: PropTypes.oneOfType([PropTypes.node, PropTypes.string]),
   onRemove: PropTypes.func,
   headerComponents: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.node), PropTypes.node]),
+  sidebarComponents: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.node), PropTypes.node]),
   secondaryHeaderComponents: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.node), PropTypes.node]),
   hideIcons: PropTypes.bool,
   extraIcons: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.node), PropTypes.node]),
@@ -194,6 +226,7 @@ Panel.defaultProps = {
   label: '',
   onRemove: () => { },
   headerComponents: null,
+  sidebarComponents: null,
   secondaryHeaderComponents: null,
   hideIcons: false,
   extraIcons: null,

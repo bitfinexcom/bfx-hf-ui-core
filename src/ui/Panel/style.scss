@@ -293,11 +293,46 @@
 .hfui-panel__content {
   position: relative;
   flex-grow: 1;
+
+  .hfui-panel__content-outer {
+    display: flex;
+    height: 100%;
+    padding: 0 spacing();
+
+    .hfui_panel__sidebar {
+      width: 10%;
+    }
+  }
+}
+
+.hfui_panel__sidebar {
+  li {
+    padding: 10px 10px;
+    font-size: 16px;
+    cursor: pointer;
+
+    .sb-icon {
+      padding-right: 10px;
+    }
+
+    &:hover,
+    &:focus {
+      background: var(--lighter-background-color);
+      color: var(--shade-8);
+    }
+
+    &.active {
+      color: $green-color;
+    }
+  }
+
+  &.no-sidebar {
+    display: none;
+  }
 }
 
 .hfui-panel__inner {
-  height: 100%;
-  padding: 0 spacing();
+  width: 90%;
 }
 
 @keyframes hfui-panel-spinner-rotate {

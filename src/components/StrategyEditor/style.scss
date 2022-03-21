@@ -32,6 +32,10 @@ body.hosted {
 .hfui-strategyeditor__wrapper {
   display: flex;
   height: 100%;
+
+  .hfui-create-strategy__btn {
+    text-transform: uppercase;
+  }
 }
 
 .hfui-removestrategymodal__wrapper {
@@ -152,6 +156,12 @@ body.hosted {
   }
 }
 
+.hfui-strategy-button {
+  height: 32px;
+  padding: 0 spacing(0.75);
+  margin: 0 spacing(0.25);
+}
+
 .hfui-strategyeditor__content-wrapper {
   width: calc(
     100% - 182px
@@ -173,23 +183,10 @@ body.hosted {
     padding-bottom: 10px;
     font-weight: 700;
   }
-  .strategies-list {
-    padding: 10px;
-    list-style: disc;
-  }
-  .strategy-item {
-    margin-bottom: 8px;
-    cursor: pointer;
-    color: #05bc97;
-
-    &:last-child {
-      margin-bottom: 0;
-    }
-  }
 }
 
 .hfui-strategyeditor__without-strategies {
-  height: 100%;
+  height: 350px;
   display: flex;
   flex-direction: column;
   justify-content: center;

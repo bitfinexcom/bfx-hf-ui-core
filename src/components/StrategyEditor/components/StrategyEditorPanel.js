@@ -21,20 +21,17 @@ const StrategyEditorPanel = ({
   const { t } = useTranslation()
   const { id = strategyId, label: strategyName } = strategy || {}
   const strategyDisplayName = strategyDirty ? t('strategyEditor.unsavedStartegy') : strategyName
-  const strategyDisplayLabel = strategyDisplayName ? `- ${strategyDisplayName}` : ''
 
   return (
     <Panel
       label={(
         <>
-          {t('main.strategyEditor')}
-          &nbsp;
-          {_size(strategyDisplayLabel) > MAX_STRATEGY_LABEL_LENGTH ? (
+          {_size(strategyDisplayName) > MAX_STRATEGY_LABEL_LENGTH ? (
             <Tooltip className='__react-tooltip __react_component_tooltip wide' content={strategyDisplayName}>
-              {makeShorterLongName(strategyDisplayLabel, MAX_STRATEGY_LABEL_LENGTH)}
+              {makeShorterLongName(strategyDisplayName, MAX_STRATEGY_LABEL_LENGTH)}
             </Tooltip>
           ) : (
-            strategyDisplayLabel
+            strategyDisplayName
           )}
         </>
       )}
@@ -49,68 +46,68 @@ const StrategyEditorPanel = ({
           <Icon key='running' name='circle-o-notch' className='notch-icon' spin />
         ),
       ]}
-      headerComponents={(
-        <div className='hfui-strategyeditor__header'>
-          <div className='header__buttons-container'>
-            <Button
-              className='hfui-open-strategy__btn'
-              onClick={onOpenSelectModal}
-              disabled={strategyDirty || _isEmpty(strategies)}
-              label={[
-                <i key='icon' className='icon-open' />,
-                <p key='text'>{t('ui.openBtn')}</p>,
-              ]}
-            />
-            <Button
-              green
-              className='hfui-create-strategy__btn'
-              onClick={onOpenCreateModal}
-              label={[
-                <i key='icon' className='icon-strategy-editor-passive' />,
-                <p key='text'>{t('strategyEditor.newStrategy')}</p>,
-              ]}
-            />
-            {_isEmpty(strategy) ? (
-              <Button
-                className='hfui-remove-strategy__btn'
-                onClick={onImportStrategy}
-                label={[
-                  <Icon key='icon' name='download' />,
-                  <p key='text'>{t('ui.import')}</p>,
-                ]}
-              />
-            ) : (
-              <>
-                <Button
-                  onClick={onSaveStrategy}
-                  disabled={!strategyDirty}
-                  label={[
-                    <i key='icon' className='icon-save' />,
-                    <p key='text'>{t('ui.save')}</p>,
-                  ]}
-                />
-                <Button
-                  className='hfui-remove-strategy__btn'
-                  onClick={onOpenRemoveModal}
-                  disabled={!id}
-                  label={[
-                    <i key='icon' className='icon-delete1' />,
-                    <p key='text'>{t('ui.removeBtn')}</p>,
-                  ]}
-                />
-                <Button
-                  className='hfui-remove-strategy__btn'
-                  onClick={onExportStrategy}
-                  label={[
-                    <Icon key='icon' name='upload' />,
-                    <p key='text'>{t('ui.export')}</p>,
-                  ]}
-                />
-              </>
-            )}
-          </div>
-        </div>
-      )}
+      // headerComponents={(
+      //   <div className='hfui-strategyeditor__header'>
+      //     <div className='header__buttons-container'>
+      //       <Button
+      //         className='hfui-open-strategy__btn'
+      //         onClick={onOpenSelectModal}
+      //         disabled={strategyDirty || _isEmpty(strategies)}
+      //         label={[
+      //           <i key='icon' className='icon-open' />,
+      //           <p key='text'>{t('ui.openBtn')}</p>,
+      //         ]}
+      //       />
+      //       <Button
+      //         green
+      //         className='hfui-create-strategy__btn'
+      //         onClick={onOpenCreateModal}
+      //         label={[
+      //           <i key='icon' className='icon-strategy-editor-passive' />,
+      //           <p key='text'>{t('strategyEditor.newStrategy')}</p>,
+      //         ]}
+      //       />
+      //       {_isEmpty(strategy) ? (
+      //         <Button
+      //           className='hfui-remove-strategy__btn'
+      //           onClick={onImportStrategy}
+      //           label={[
+      //             <Icon key='icon' name='download' />,
+      //             <p key='text'>{t('ui.import')}</p>,
+      //           ]}
+      //         />
+      //       ) : (
+      //         <>
+      //           <Button
+      //             onClick={onSaveStrategy}
+      //             disabled={!strategyDirty}
+      //             label={[
+      //               <i key='icon' className='icon-save' />,
+      //               <p key='text'>{t('ui.save')}</p>,
+      //             ]}
+      //           />
+      //           <Button
+      //             className='hfui-remove-strategy__btn'
+      //             onClick={onOpenRemoveModal}
+      //             disabled={!id}
+      //             label={[
+      //               <i key='icon' className='icon-delete1' />,
+      //               <p key='text'>{t('ui.removeBtn')}</p>,
+      //             ]}
+      //           />
+      //           <Button
+      //             className='hfui-remove-strategy__btn'
+      //             onClick={onExportStrategy}
+      //             label={[
+      //               <Icon key='icon' name='upload' />,
+      //               <p key='text'>{t('ui.export')}</p>,
+      //             ]}
+      //           />
+      //         </>
+      //       )}
+      //     </div>
+      //   </div>
+      // )}
     >
       {children}
     </Panel>

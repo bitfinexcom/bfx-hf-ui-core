@@ -1,20 +1,17 @@
-import React, { memo, useState } from 'react'
+import React, { memo, useState, useEffect } from 'react'
 import Debug from 'debug'
 import ClassNames from 'clsx'
-import _ from 'lodash'
 import _isEmpty from 'lodash/isEmpty'
 import _keys from 'lodash/keys'
 import _values from 'lodash/values'
 import _forEach from 'lodash/forEach'
 import _size from 'lodash/size'
 import _find from 'lodash/find'
-import Indicators from 'bfx-hf-indicators'
-import { nonce } from 'bfx-api-node-util'
-import HFS from 'bfx-hf-strategy'
-import HFU from 'bfx-hf-util'
+import { Icon } from 'react-fa'
 import PropTypes from 'prop-types'
 
 import { saveAsJSON, readJSONFile } from '../../util/ui'
+import Markdown from '../../ui/Markdown'
 import { THEMES } from '../../redux/selectors/ui'
 import { MAX_STRATEGY_LABEL_LENGTH } from '../../constants/variables'
 import Templates from './templates'
@@ -25,6 +22,8 @@ import OpenExistingStrategyModal from '../../modals/Strategy/OpenExistingStrateg
 import MonacoEditor from './components/MonacoEditor'
 import EmptyContent from './components/StrategyEditorEmpty'
 import './style.css'
+
+const DocsPath = require('bfx-hf-strategy/docs/api.md')
 
 const debug = Debug('hfui-ui:c:strategy-editor')
 const STRATEGY_SECTIONS = [
@@ -43,18 +42,25 @@ const STRATEGY_SECTIONS = [
 ]
 
 const StrategyEditor = ({
-  moveable, removeable, strategyId, renderResults, onSave, onRemove, authToken, onStrategyChange, onStrategySelect,
-  gaCreateStrategy, onIndicatorsChange, clearBacktestOptions, strategyContent, strategies, backtestResults, liveExecuting,
-  liveLoading, settingsTheme,
+  moveable, removeable, strategyId, renderResults, onRemove, authToken, onStrategyChange, onStrategySelect,
+  gaCreateStrategy, onIndicatorsChange, clearBacktestOptions, strategyContent, backtestResults, liveExecuting, onSaveStrategy, onLoadStrategy,
+  liveLoading, settingsTheme, strategyDirty, setStrategyDirty, sectionErrors, setSectionErrors, onDefineIndicatorsChange, evalSectionContent, selectStrategy,
+  setStrategy, strategy,
 }) => {
-  const [strategy, setStrategy] = useState(strategyContent)
-  const [sectionErrors, setSectionErrors] = useState({})
-  const [strategyDirty, setStrategyDirty] = useState(false)
   const [isRemoveModalOpened, setIsRemoveModalOpened] = useState(false)
   const [activeContent, setActiveContent] = useState('defineIndicators')
   const [createNewStrategyModalOpen, setCreateNewStrategyModalOpen] = useState(false)
   const [openExistingStrategyModalOpen, setOpenExistingStrategyModalOpen] = useState(false)
   const [execError, setExecError] = useState('')
+  const [docsText, setDocsText] = useState('')
+
+  useEffect(() => {
+    // load readme docs (DocsPath is an object when running in electron window)
+    const docsPath = typeof DocsPath === 'object' ? DocsPath.default : DocsPath
+    fetch(docsPath)
+      .then(response => response.text())
+      .then(setDocsText)
+  }, [])
 
   const processStrategy = (updatedStrategy) => {
     const { id, label } = updatedStrategy
@@ -71,78 +77,6 @@ const StrategyEditor = ({
     }
 
     return updatedContent
-  }
-
-  const selectStrategy = (selected) => {
-    const content = processStrategy(selected)
-    onStrategySelect(content)
-    clearBacktestOptions()
-  }
-
-  const setSectionError = (section, error) => {
-    setSectionErrors({
-      ...sectionErrors,
-      [section]: error,
-    })
-  }
-
-  const clearSectionError = (section) => {
-    setSectionError(section, '')
-  }
-
-  const processSectionError = (section, e) => {
-    if (e.lineNumber && e.columnNumber) {
-      // currently it's a non-standard property supported by Firefox only :(
-      setSectionError(section, `Line ${e.lineNumber}:${e.columnNumber}: ${e.message}`)
-    } else {
-      setSectionError(section, e.message)
-    }
-  }
-
-  const evalSectionContent = (section, providedContent) => {
-    const content = providedContent || strategy[section] || ''
-
-    if (section.substring(0, 6) === 'define') {
-      try {
-        const func = eval(content) // eslint-disable-line
-        clearSectionError(section)
-        return func
-      } catch (e) {
-        processSectionError(section, e)
-        return null
-      }
-    } else if (section.substring(0, 2) === 'on') {
-      try {
-        const func = eval(content)({ HFS, HFU, _ }) // eslint-disable-line
-        clearSectionError(section)
-        return func
-      } catch (e) {
-        processSectionError(section, e)
-        return null
-      }
-    } else {
-      debug('unrecognised section handler prefix: %s', section)
-      return null
-    }
-  }
-
-  const onDefineIndicatorsChange = (content) => {
-    const indicatorFunc = evalSectionContent('defineIndicators', content)
-    let indicators = {}
-
-    if (indicatorFunc) {
-      try {
-        indicators = indicatorFunc(Indicators)
-      } catch (e) {
-        processSectionError('defineIndicators', e)
-      }
-    }
-
-    _forEach(_values(indicators), (i) => {
-      i.key = `${nonce()}` // eslint-disable-line
-    })
-
-    onIndicatorsChange(indicators)
   }
 
   const onCreateNewStrategy = (label, templateLabel, content = {}) => {
@@ -170,17 +104,6 @@ const StrategyEditor = ({
     }
   }
 
-  const onLoadStrategy = (newStrategy) => {
-    onSave(authToken, { ...newStrategy, savedTs: Date.now() })
-    setSectionErrors({})
-    setStrategyDirty(false)
-    selectStrategy(newStrategy)
-
-    if (newStrategy.defineIndicators) {
-      onDefineIndicatorsChange(newStrategy.defineIndicators)
-    }
-  }
-
   const onCloseModals = () => {
     setOpenExistingStrategyModalOpen(false)
     setCreateNewStrategyModalOpen(false)
@@ -190,12 +113,6 @@ const StrategyEditor = ({
   const onClearErrors = () => {
     setSectionErrors({})
     setExecError('')
-  }
-
-  const onSaveStrategy = () => {
-    onSave(authToken, { ...strategy, savedTs: Date.now() })
-    setStrategyDirty(false)
-    onCloseModals()
   }
 
   const onRemoveStrategy = () => {
@@ -243,84 +160,90 @@ const StrategyEditor = ({
   }
 
   return (
-    <StrategyEditorPanel
-      onRemove={onRemove}
-      moveable={moveable}
-      removeable={removeable}
-      execRunning={backtestResults.executing || backtestResults.loading || liveExecuting || liveLoading}
-      strategyDirty={strategyDirty}
-      strategy={strategy}
-      strategies={strategies}
-      strategyId={strategyId}
-      onOpenSelectModal={() => setOpenExistingStrategyModalOpen(true)}
-      onOpenCreateModal={() => setCreateNewStrategyModalOpen(true)}
-      onOpenRemoveModal={() => setIsRemoveModalOpened(true)}
-      onSaveStrategy={onSaveStrategy}
-      onRemoveStrategy={onRemoveStrategy}
-      onExportStrategy={onExportStrategy}
-      onImportStrategy={onImportStrategy}
-    >
+    <>
       {!strategy || _isEmpty(strategy)
         ? (
           <EmptyContent
-            strategies={strategies}
             openCreateNewStrategyModal={() => setCreateNewStrategyModalOpen(true)}
-            openSelectExistingStrategyModal={() => setOpenExistingStrategyModalOpen(true)}
-            onOpen={onLoadStrategy}
           />
         ) : (
-          <div className='hfui-strategyeditor__wrapper'>
-            <ul className='hfui-strategyeditor__func-select'>
-              {/* eslint-disable-next-line lodash/prefer-lodash-method */}
-              {STRATEGY_SECTIONS.map(section => (
-                <li
-                  key={section}
-                  onClick={() => setActiveContent(section)}
-                  className={ClassNames({
-                    active: activeContent === section,
-                    hasError: !!sectionErrors[section],
+          <StrategyEditorPanel
+            onRemove={onRemove}
+            moveable={moveable}
+            removeable={removeable}
+            execRunning={backtestResults.executing || backtestResults.loading || liveExecuting || liveLoading}
+            strategyDirty={strategyDirty}
+            strategy={strategy}
+            // strategies={strategies}
+            strategyId={strategyId}
+            onOpenSelectModal={() => setOpenExistingStrategyModalOpen(true)}
+            onOpenCreateModal={() => setCreateNewStrategyModalOpen(true)}
+            onOpenRemoveModal={() => setIsRemoveModalOpened(true)}
+            onSaveStrategy={onSaveStrategy}
+            onRemoveStrategy={onRemoveStrategy}
+            onExportStrategy={onExportStrategy}
+            onImportStrategy={onImportStrategy}
+          >
+            <div
+              sbtitle='Algorithm'
+              sbicon={<Icon name='file-code-o' />}
+              className='hfui-strategyeditor__wrapper'
+            >
+              <ul className='hfui-strategyeditor__func-select'>
+                {/* eslint-disable-next-line lodash/prefer-lodash-method */}
+                {STRATEGY_SECTIONS.map(section => (
+                  <li
+                    key={section}
+                    onClick={() => setActiveContent(section)}
+                    className={ClassNames({
+                      active: activeContent === section,
+                      hasError: !!sectionErrors[section],
+                    })}
+                  >
+                    <p>{section}</p>
+
+                    {_isEmpty(strategy[section])
+                      ? null
+                      : _isEmpty(sectionErrors[section])
+                        ? <p>~</p>
+                        : <p>*</p>}
+                  </li>
+                ))}
+              </ul>
+
+              <div className='hfui-strategyeditor__content-wrapper'>
+                <div
+                  className={ClassNames('hfui-strategyeditor__editor-wrapper', {
+                    noresults: !renderResults,
+                    'exec-error': execError || sectionErrors[activeContent],
                   })}
                 >
-                  <p>{section}</p>
-
-                  {_isEmpty(strategy[section])
-                    ? null
-                    : _isEmpty(sectionErrors[section])
-                      ? <p>~</p>
-                      : <p>*</p>}
-                </li>
-              ))}
-            </ul>
-
-            <div className='hfui-strategyeditor__content-wrapper'>
-              <div
-                className={ClassNames('hfui-strategyeditor__editor-wrapper', {
-                  noresults: !renderResults,
-                  'exec-error': execError || sectionErrors[activeContent],
-                })}
-              >
-                <MonacoEditor
-                  value={strategy[activeContent] || ''}
-                  onChange={onEditorContentChange}
-                  theme={settingsTheme}
-                />
-                {(execError || sectionErrors[activeContent]) && (
-                  <div className='hfui-strategyeditor__editor-error-output'>
-                    <p className='hfui-panel__close strategyeditor__close-icon' onClick={onClearErrors}>&#10005; </p>
-                    <pre>{execError || sectionErrors[activeContent]}</pre>
-                  </div>
-                )}
+                  <MonacoEditor
+                    value={strategy[activeContent] || ''}
+                    onChange={onEditorContentChange}
+                    theme={settingsTheme}
+                  />
+                  {(execError || sectionErrors[activeContent]) && (
+                    <div className='hfui-strategyeditor__editor-error-output'>
+                      <p className='hfui-panel__close strategyeditor__close-icon' onClick={onClearErrors}>&#10005; </p>
+                      <pre>{execError || sectionErrors[activeContent]}</pre>
+                    </div>
+                  )}
+                </div>
               </div>
+              <RemoveExistingStrategyModal
+                isOpen={isRemoveModalOpened}
+                onClose={onCloseModals}
+                onRemoveStrategy={onRemoveStrategy}
+                strategy={strategy}
+              />
             </div>
-
-            <RemoveExistingStrategyModal
-              isOpen={isRemoveModalOpened}
-              onClose={onCloseModals}
-              onRemoveStrategy={onRemoveStrategy}
-              strategy={strategy}
+            <Markdown
+              sbtitle='Help'
+              sbicon={<Icon name='question-circle-o' />}
+              text={docsText}
             />
-          </div>
-
+          </StrategyEditorPanel>
         )}
       <CreateNewStrategyModal
         isOpen={createNewStrategyModalOpen}
@@ -333,7 +256,7 @@ const StrategyEditor = ({
         onClose={onCloseModals}
         onOpen={onLoadStrategy}
       />
-    </StrategyEditorPanel>
+    </>
   )
 }
 
@@ -342,7 +265,6 @@ StrategyEditor.propTypes = {
   removeable: PropTypes.bool,
   strategyId: PropTypes.string,
   renderResults: PropTypes.bool,
-  onSave: PropTypes.func.isRequired,
   onRemove: PropTypes.func.isRequired,
   authToken: PropTypes.string.isRequired,
   onStrategyChange: PropTypes.func.isRequired,
@@ -358,7 +280,6 @@ StrategyEditor.propTypes = {
       PropTypes.oneOf([null]).isRequired,
     ]),
   ),
-  strategies: PropTypes.arrayOf(PropTypes.object).isRequired,
   backtestResults: PropTypes.objectOf(PropTypes.any),
   settingsTheme: PropTypes.oneOf([THEMES.LIGHT, THEMES.DARK]),
 }
