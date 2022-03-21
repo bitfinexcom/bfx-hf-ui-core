@@ -84,7 +84,7 @@ function getInitialState() {
     content: {},
     unsavedLayout: null,
     layoutID: null,
-    tab: null,
+    strategiesActiveTab: null,
     tickersVolumeUnit: null,
     isBetaVersion: true,
   }
@@ -625,7 +625,7 @@ function reducer(state = getInitialState(), action = {}) {
 
       return {
         ...state,
-        tab,
+        strategiesActiveTab: tab,
       }
     }
     default: {
