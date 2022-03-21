@@ -3,16 +3,19 @@ import ClassNames from 'clsx'
 import PropTypes from 'prop-types'
 import { useTranslation } from 'react-i18next'
 
+import { useDispatch } from 'react-redux'
 import {
   isElectronApp,
   appVersion,
   showInDevelopmentModules,
   RELEASE_URL,
 } from '../../redux/config'
+import { changeAppSettingsModalState, setSettingsTab } from '../../redux/actions/ui'
 
 import NavbarButton from '../Navbar/Navbar.Link'
 
 import './style.css'
+import { SETTINGS_TABS } from '../../modals/AppSettingsModal/AppSettingsModal.constants'
 
 const StatusBar = ({
   wsConnected,
@@ -32,8 +35,11 @@ const StatusBar = ({
 
   const { t } = useTranslation()
 
-  const onVersionTypeClickHandler = () => {
+  const dispatch = useDispatch()
 
+  const onVersionTypeClickHandler = () => {
+    dispatch(setSettingsTab(SETTINGS_TABS.About))
+    dispatch(changeAppSettingsModalState(true))
   }
 
   useEffect(() => {
