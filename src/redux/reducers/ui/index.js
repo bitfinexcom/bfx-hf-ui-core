@@ -66,16 +66,18 @@ function getInitialState() {
     firstLogin: false,
     isPaperTrading: false,
     TRADING_PAGE_IS_GUIDE_ACTIVE: true,
-    isTradingModeModalVisible: false,
-    isRefillBalanceModalVisible: false,
-    isOldFormatModalVisible: false,
-    isAOPauseModalVisible: false,
-    isCcyInfoModalVisible: false,
-    isConfirmDMSModalVisible: false,
-    isEditOrderModalVisible: false,
+    modals: {
+      isRefillBalanceModalVisible: false,
+      isOldFormatModalVisible: false,
+      isAOPauseModalVisible: false,
+      isCcyInfoModalVisible: false,
+      isConfirmDMSModalVisible: false,
+      isEditOrderModalVisible: false,
+      isTradingModeModalVisible: false,
+      isClosePositionModalVisible: false,
+    },
     orderToEdit: {},
     isBadInternetConnection: false,
-    isClosePositionModalVisible: false,
     closePositionModalData: {},
     isOrderExecuting: false,
     content: {},
@@ -133,7 +135,7 @@ function getInitialState() {
     // saving reformatted layouts into the local storage
     if ((!isNewFormat && !_isEmpty(storedLayouts)) || shownOldFormatModal) {
       shownOldFormatModal = true
-      defaultState.isOldFormatModalVisible = true
+      defaultState.modals.isOldFormatModalVisible = true
       localStorage.setItem(LAYOUTS_KEY, JSON.stringify(nextFormatLayouts))
     }
 
@@ -401,7 +403,10 @@ function reducer(state = getInitialState(), action = {}) {
       const { isVisible } = payload
       return {
         ...state,
-        isTradingModeModalVisible: isVisible,
+        modals: {
+          ...state.modals,
+          isTradingModeModalVisible: isVisible,
+        },
       }
     }
     case types.CHANGE_BAD_INTERNET_STATE: {
@@ -417,7 +422,10 @@ function reducer(state = getInitialState(), action = {}) {
       return {
         ...state,
         closePositionModalData: rowData,
-        isClosePositionModalVisible: isVisible,
+        modals: {
+          ...state.modals,
+          isClosePositionModalVisible: isVisible,
+        },
       }
     }
     case types.SET_IS_ORDER_EXECUTING: {
@@ -432,7 +440,10 @@ function reducer(state = getInitialState(), action = {}) {
 
       return {
         ...state,
-        isRefillBalanceModalVisible: isVisible,
+        modals: {
+          ...state.modals,
+          isRefillBalanceModalVisible: isVisible,
+        },
       }
     }
     case types.CHANGE_OLD_FORMAT_MODAL_STATE: {
@@ -440,7 +451,10 @@ function reducer(state = getInitialState(), action = {}) {
 
       return {
         ...state,
-        isOldFormatModalVisible: isVisible,
+        modals: {
+          ...state.modals,
+          isOldFormatModalVisible: isVisible,
+        },
       }
     }
     case types.CHANGE_CONFIRM_DMS_MODAL_VISIBLE: {
@@ -448,7 +462,10 @@ function reducer(state = getInitialState(), action = {}) {
 
       return {
         ...state,
-        isConfirmDMSModalVisible: isVisible,
+        modals: {
+          ...state.modals,
+          isConfirmDMSModalVisible: isVisible,
+        },
       }
     }
     case types.CHANGE_EDIT_ORDER_MODAL_STATE: {
@@ -457,7 +474,10 @@ function reducer(state = getInitialState(), action = {}) {
       return {
         ...state,
         orderToEdit: order,
-        isEditOrderModalVisible: isVisible,
+        modals: {
+          ...state.modals,
+          isEditOrderModalVisible: isVisible,
+        },
       }
     }
     case types.CHANGE_AO_PAUSE_MODAL_STATE: {
@@ -465,7 +485,10 @@ function reducer(state = getInitialState(), action = {}) {
 
       return {
         ...state,
-        isAOPauseModalVisible: isVisible,
+        modals: {
+          ...state.modals,
+          isAOPauseModalVisible: isVisible,
+        },
       }
     }
     case types.ADD_COMPONENT: {
@@ -579,7 +602,10 @@ function reducer(state = getInitialState(), action = {}) {
 
       return {
         ...state,
-        isCcyInfoModalVisible: isVisible,
+        modals: {
+          ...state.modals,
+          isCcyInfoModalVisible: isVisible,
+        },
       }
     }
     case types.SET_STRATEGY_TAB: {
