@@ -83,6 +83,7 @@ function getInitialState() {
     layoutID: null,
     tab: null,
     tickersVolumeUnit: null,
+    isBetaVersion: true,
   }
 
   if (!localStorage) {
