@@ -636,7 +636,8 @@
     "openBtn": "Open",
     "removeBtn": "Remove",
     "createBtn": "Create",
-    "startBtn": "Start"
+    "startBtn": "Start",
+    "deleteBtn": "Delete"
   },
   "crashHandler": {
     "text1": "An error occurred that caused the Honey Framework UI to halt. Please, restart the application to proceed working with it",
@@ -695,5 +696,14 @@
         "label": "Liquidation"
       }
     }
+  },
+  "removeExistingStrategyModal": {
+    "title": "Remove Strategy",
+    "text_1": "Are you sure you want to delete",
+    "text_2": "strategy?",
+    "warning_1": "WARNING",
+    "warning_2": "This action can not be undone!",
+    "strategyName": "the strategy name",
+    "input_placeholder": "Type {{label}} to delete it"
   }
 }
