@@ -12,6 +12,7 @@ import GeneralTab from './AppSettingsModal.General'
 import ApiKeysTab from './AppSettingsModal.ApiKeys'
 import TradingModeTab from './AppSettingsModal.TradingMode'
 import AppearanceTab from './AppSettingsModal.Appearance'
+import AboutTab from './AppSettingsModal.About'
 
 import './style.css'
 
@@ -20,10 +21,11 @@ const Tabs = {
   TradingMode: 'appSettings.tradingModeTab',
   Keys: 'appSettings.apiKeys',
   Appearance: 'appSettings.appearanceTab',
+  About: 'appSettings.aboutTab',
 }
 
 const webTabs = [
-  Tabs.Appearance,
+  Tabs.Appearance, Tabs.About,
 ]
 
 const defaultTab = isElectronApp ? Tabs.General : Tabs.Appearance
@@ -81,6 +83,7 @@ const AppSettingsModal = ({
           </>
         )}
         {activeTab === Tabs.Appearance && <AppearanceTab />}
+        {activeTab === Tabs.About && <AboutTab />}
       </div>
     </Modal>
   )

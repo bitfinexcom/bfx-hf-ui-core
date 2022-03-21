@@ -3,12 +3,12 @@ import ClassNames from 'clsx'
 import PropTypes from 'prop-types'
 import { useTranslation } from 'react-i18next'
 
-import { isElectronApp, appVersion, showInDevelopmentModules } from '../../redux/config'
+import {
+  isElectronApp, appVersion, showInDevelopmentModules, RELEASE_URL,
+} from '../../redux/config'
 
 import NavbarButton from '../Navbar/Navbar.Link'
 import './style.css'
-
-const RELEASE_URL = 'https://github.com/bitfinexcom/bfx-hf-ui/releases'
 
 const StatusBar = ({
   wsConnected, remoteVersion,
