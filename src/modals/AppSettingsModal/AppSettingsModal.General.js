@@ -14,7 +14,7 @@ import {
   updateAutoLoginState,
 } from '../../util/autologin'
 import {
-  SETTINGS, getDMSSetting, getGASetting, getShowAlgoPauseInfoSetting, getRebootSetting,
+  SETTINGS, getDMSSetting, getGASetting, getShowAlgoPauseInfoSetting, getRebootSetting, getIsBetaVersion,
 } from '../../redux/selectors/ui'
 import { DONT_SHOW_DMS_MODAL_KEY } from '../../constants/variables'
 
@@ -27,6 +27,7 @@ const General = () => {
   const settingsGa = useSelector(getGASetting)
   const settingsShowAlgoPauseInfo = useSelector(getShowAlgoPauseInfoSetting)
   const settingsRebootAutomatically = useSelector(getRebootSetting)
+  const isBetaVersion = useSelector(getIsBetaVersion)
 
   const [isAutoLoginChecked, setIsAutoLoginChecked] = useState(INITIAL_AUTO_LOGIN)
   const [isDmsChecked, setIsDmsChecked] = useState(settingsDms)
@@ -74,6 +75,10 @@ const General = () => {
     setIsRebootChecked(nextReboot)
     dispatch(WSActions.saveSettings(SETTINGS.REBOOT_AUTOMATICALLY, nextReboot))
     dispatch(GAActions.updateSettings())
+  }
+
+  const updateBetaProgram = () => {
+
   }
 
   return (
@@ -128,6 +133,17 @@ const General = () => {
         />
         <div className='appsettings-modal__description'>
           {t('appSettings.rebootText')}
+        </div>
+      </div>
+      <div className='appsettings-modal__setting'>
+        <Checkbox
+          onChange={updateBetaProgram}
+          label={t('appSettings.betaProgramCheckbox')}
+          checked={isBetaVersion}
+          className='appsettings-modal__checkbox'
+        />
+        <div className='appsettings-modal__description'>
+          {t('appSettings.betaProgramText')}
         </div>
       </div>
       {isDevEnv() && (

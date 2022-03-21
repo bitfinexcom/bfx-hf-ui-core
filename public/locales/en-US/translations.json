@@ -326,7 +326,9 @@
     "Light": "Light theme",
     "termsConditions": "Terms and Conditions",
     "privacyPolicy": "Privacy Policy",
-    "betaDesclaimer": " This is beta program disclaimer approved by Legal. Some text more and more, and more..."
+    "betaDesclaimer": " This is beta program disclaimer approved by Legal. Some text more and more, and more...",
+    "betaProgramCheckbox": "Join the Beta Program",
+    "betaProgramText": "Stay up-to-date with every new feature and be one of the first to try it as soon as it’s released."
   },
   "atomicOrdersTableModal": {
     "title": "Atomic Orders",
