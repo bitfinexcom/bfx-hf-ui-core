@@ -150,4 +150,14 @@
       margin-right: spacing(0.5);
     }
   }
+  &__links {
+    display: flex;
+    flex-direction: column;
+    & > * {
+      margin-bottom: spacing(0.5);
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+  }
 }
