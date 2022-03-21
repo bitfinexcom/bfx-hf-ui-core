@@ -27,6 +27,17 @@ const PUB_REST_API_URL = isElectronApp ? 'http://localhost:45001' : process.env.
 
 const appVersion = process.env.npm_package_version
 
+const RELEASE_URL = 'https://github.com/bitfinexcom/bfx-hf-ui/releases'
+
+const API_DOCS_URL = 'https://docs.bitfinex.com/docs/introduction'
+
+const SOURCE_CODE_URL = 'https://github.com/bitfinexcom/bfx-hf-ui'
+
+const LICENCE_URL = 'https://github.com/bitfinexcom/bfx-hf-ui/blob/master/LICENSE'
+
+// product description link
+const HF_DESC_URL = 'https://support.bitfinex.com/hc/en-us/articles/900000096823-Honey-Framework'
+
 const CHART_URL = isElectronApp ? 'https://bitfinexcom.github.io/bfx-hf-tradingview' : process.env.REACT_APP_CHART_URL
 
 const HONEY_AUTH_URL = `${process.env.REACT_APP_UFX_API_URL}/honey`
@@ -40,5 +51,10 @@ export {
   env,
   CHART_URL,
   HONEY_AUTH_URL,
+  RELEASE_URL,
+  API_DOCS_URL,
+  SOURCE_CODE_URL,
+  LICENCE_URL,
+  HF_DESC_URL,
   showInDevelopmentModules,
 }
