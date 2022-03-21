@@ -15,6 +15,7 @@ import AppUpdate from '../AppUpdate'
 import closeElectronApp from '../../redux/helpers/close_electron_app'
 import Routes from '../../constants/routes'
 import { isElectronApp } from '../../redux/config'
+import ModalsWrapper from '../../modals/ModalsWrapper/ModalsWrapper'
 
 import './style.css'
 
@@ -22,15 +23,6 @@ import './style.css'
 const TradingPage = lazy(() => import('../../pages/Trading'))
 const MarketDataPage = lazy(() => import('../../pages/MarketData'))
 const AuthenticationPage = lazy(() => import('../../pages/Authentication'))
-
-const TradingModeModal = lazy(() => import('../../modals/TradingModeModal'))
-const BadConnectionModal = lazy(() => import('../../modals/BadConnectionModal'))
-const OldFormatModal = lazy(() => import('../../modals/OldFormatModal'))
-const AOPauseModal = lazy(() => import('../../modals/AOPauseModal'))
-const CcyInfoModal = lazy(() => import('../../modals/CcyInfoModal'))
-const ClosePositionModal = lazy(() => import('../../modals/ClosePositionModal'))
-const ConfirmDMSModal = lazy(() => import('../../modals/ConfirmDMSModal'))
-const EditOrderModal = lazy(() => import('../../modals/EditOrderModal'))
 
 const ipcHelpers = window.electronService
 
@@ -131,18 +123,7 @@ const HFUI = (props) => {
             {isElectronApp && Routes.strategyEditor && <Route path={Routes.strategyEditor.path} render={() => <StrategyEditorPage />} />}
             <Route path={Routes.marketData.path} render={() => <MarketDataPage />} />
           </Switch>
-          {isElectronApp && (
-            <>
-              <TradingModeModal />
-              <OldFormatModal />
-              <ConfirmDMSModal />
-              <AOPauseModal />
-            </>
-          )}
-          <BadConnectionModal />
-          <CcyInfoModal />
-          <EditOrderModal />
-          <ClosePositionModal />
+          <ModalsWrapper isElectronApp={isElectronApp} />
         </>
       ) : (
         <>
