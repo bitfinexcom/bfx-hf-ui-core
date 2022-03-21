@@ -33,6 +33,7 @@ import {
 import { isElectronApp } from '../../config'
 
 import { storeLastUsedLayoutID } from '../../../util/layout'
+import { DEFAULT_TAB } from '../../../modals/AppSettingsModal/AppSettingsModal.constants'
 
 const debug = Debug('hfui:rx:r:ui')
 const LAYOUTS_KEY = 'HF_UI_LAYOUTS'
@@ -85,6 +86,7 @@ function getInitialState() {
     unsavedLayout: null,
     layoutID: null,
     strategiesActiveTab: null,
+    settingsActiveTab: DEFAULT_TAB,
     tickersVolumeUnit: null,
     isBetaVersion: true,
   }
@@ -620,12 +622,20 @@ function reducer(state = getInitialState(), action = {}) {
         },
       }
     }
-    case types.SET_STRATEGY_TAB: {
+    case types.SET_STRATEGIES_TAB: {
       const { tab } = payload
 
       return {
         ...state,
         strategiesActiveTab: tab,
+      }
+    }
+    case types.SET_SETTINGS_TAB: {
+      const { tab } = payload
+
+      return {
+        ...state,
+        settingsActiveTab: tab,
       }
     }
     default: {

@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import React, { useState, memo } from 'react'
+import React, { memo } from 'react'
 import _values from 'lodash/values'
 import _map from 'lodash/map'
 import _isFunction from 'lodash/isFunction'
@@ -14,38 +14,26 @@ import ApiKeysTab from './AppSettingsModal.ApiKeys'
 import TradingModeTab from './AppSettingsModal.TradingMode'
 import AppearanceTab from './AppSettingsModal.Appearance'
 import AboutTab from './AppSettingsModal.About'
-import { getIsAppSettingsModalVisible } from '../../redux/selectors/ui'
-import { changeAppSettingsModalState } from '../../redux/actions/ui'
+import { getIsAppSettingsModalVisible, getSettingsActiveTab } from '../../redux/selectors/ui'
+import { changeAppSettingsModalState, setSettingsTab } from '../../redux/actions/ui'
+import { DEFAULT_TAB, SETTINGS_TABS, WEB_SETTINGS_TABS } from './AppSettingsModal.constants'
 
 import './style.css'
 
-const Tabs = {
-  General: 'appSettings.generalTab',
-  TradingMode: 'appSettings.tradingModeTab',
-  Keys: 'appSettings.apiKeys',
-  Appearance: 'appSettings.appearanceTab',
-  About: 'appSettings.aboutTab',
-}
-
-const webTabs = [
-  Tabs.Appearance, Tabs.About,
-]
-
-const defaultTab = isElectronApp ? Tabs.General : Tabs.Appearance
-
 const AppSettingsModal = () => {
   const isOpen = useSelector(getIsAppSettingsModalVisible)
-
-  const [activeTab, setActiveTab] = useState(defaultTab)
+  const activeTab = useSelector(getSettingsActiveTab)
 
   const dispatch = useDispatch()
+
+  const setActiveTab = (tab) => dispatch(setSettingsTab(tab))
 
   const onClose = (callback) => {
     dispatch(changeAppSettingsModalState(false))
 
     // reset to default tab, but wait for transition out
     setTimeout(() => {
-      setActiveTab(defaultTab)
+      setActiveTab(DEFAULT_TAB)
 
       if (_isFunction(callback)) {
         callback()
@@ -54,7 +42,7 @@ const AppSettingsModal = () => {
   }
   const { t } = useTranslation()
 
-  const tabs = isElectronApp ? _values(Tabs) : webTabs
+  const tabs = isElectronApp ? _values(SETTINGS_TABS) : WEB_SETTINGS_TABS
 
   return (
     <Modal
@@ -81,13 +69,13 @@ const AppSettingsModal = () => {
       <div className='appsettings-modal__content'>
         {isElectronApp && (
           <>
-            {activeTab === Tabs.General && <GeneralTab />}
-            {activeTab === Tabs.Keys && <ApiKeysTab />}
-            {activeTab === Tabs.TradingMode && <TradingModeTab onClose={onClose} />}
+            {activeTab === SETTINGS_TABS.General && <GeneralTab />}
+            {activeTab === SETTINGS_TABS.Keys && <ApiKeysTab />}
+            {activeTab === SETTINGS_TABS.TradingMode && <TradingModeTab onClose={onClose} />}
           </>
         )}
-        {activeTab === Tabs.Appearance && <AppearanceTab />}
-        {activeTab === Tabs.About && <AboutTab />}
+        {activeTab === SETTINGS_TABS.Appearance && <AppearanceTab />}
+        {activeTab === SETTINGS_TABS.About && <AboutTab />}
       </div>
     </Modal>
   )

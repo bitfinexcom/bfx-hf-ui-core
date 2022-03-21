@@ -226,7 +226,12 @@ export const changeAppSettingsModalState = isVisible => ({
 })
 
 export const setStrategyTab = tab => ({
-  type: types.SET_STRATEGY_TAB,
+  type: types.SET_STRATEGIES_TAB,
+  payload: { tab },
+})
+
+export const setSettingsTab = (tab) => ({
+  type: types.SET_SETTINGS_TAB,
   payload: { tab },
 })
 
@@ -268,4 +273,5 @@ export default {
   changeEditOrderModalState,
   changeClosePositionModalState,
   changeAppSettingsModalState,
+  setSettingsTab,
 }
