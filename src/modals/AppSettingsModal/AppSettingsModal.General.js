@@ -1,8 +1,6 @@
-import React, {
-  memo, useState, useEffect,
-} from 'react'
+import React, { memo, useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { Checkbox } from '@ufx-ui/core'
+import { Button, Checkbox } from '@ufx-ui/core'
 import { useTranslation } from 'react-i18next'
 
 import WSActions from '../../redux/actions/ws'
@@ -14,13 +12,22 @@ import {
   updateAutoLoginState,
 } from '../../util/autologin'
 import {
-  SETTINGS, getDMSSetting, getGASetting, getShowAlgoPauseInfoSetting, getRebootSetting, getIsBetaVersion,
+  SETTINGS,
+  getDMSSetting,
+  getGASetting,
+  getShowAlgoPauseInfoSetting,
+  getRebootSetting,
+  getIsBetaVersion,
 } from '../../redux/selectors/ui'
 import { DONT_SHOW_DMS_MODAL_KEY } from '../../constants/variables'
+import InnerModal from '../../ui/InnerModal/InnerModal'
+import { isElectronApp } from '../../redux/config'
 
 const INITIAL_AUTO_LOGIN = getAutoLoginState()
 
 const General = () => {
+  const [isBetaModalOpen, setIsBetaModalOpen] = useState(false)
+
   const dispatch = useDispatch()
   const { t } = useTranslation()
   const settingsDms = useSelector(getDMSSetting)
@@ -67,7 +74,9 @@ const General = () => {
 
   const updateAOPause = (nextAOPause) => {
     setIsShowAlgoPauseInfoChecked(nextAOPause)
-    dispatch(WSActions.saveSettings(SETTINGS.SHOW_ALGO_PAUSE_INFO, nextAOPause))
+    dispatch(
+      WSActions.saveSettings(SETTINGS.SHOW_ALGO_PAUSE_INFO, nextAOPause),
+    )
     dispatch(GAActions.updateSettings())
   }
 
@@ -77,8 +86,10 @@ const General = () => {
     dispatch(GAActions.updateSettings())
   }
 
-  const updateBetaProgram = () => {
+  const closeBetaModal = () => setIsBetaModalOpen(false)
 
+  const updateBetaProgram = () => {
+    setIsBetaModalOpen(true)
   }
 
   return (
@@ -86,6 +97,40 @@ const General = () => {
       <div className='appsettings-modal__title'>
         {t('appSettings.generalTab')}
       </div>
+      {isElectronApp && (
+        <div className='appsettings-modal__setting appsettings-modal__setting--beta'>
+          <Checkbox
+            onChange={updateBetaProgram}
+            label={t('appSettings.betaProgramCheckbox')}
+            checked={isBetaVersion}
+            className='appsettings-modal__checkbox'
+          />
+          <div className='appsettings-modal__description'>
+            {t('appSettings.betaProgramText')}
+          </div>
+          {isBetaModalOpen && (
+            <InnerModal
+              title={(
+                <span className='beta-modal-title'>
+                  {t('appSettings.betaModalTitle')}
+                </span>
+              )}
+              onClose={closeBetaModal}
+            >
+              <div>
+                <p>{t('appSettings.betaDesclaimer')}</p>
+                <Button
+                  onClick={() => alert('clicked')}
+                  className='beta-button'
+                >
+                  {t('appSettings.betaProgramCheckbox')}
+                </Button>
+              </div>
+            </InnerModal>
+          )}
+        </div>
+      )}
+
       <div className='appsettings-modal__setting'>
         <Checkbox
           onChange={updateDms}
@@ -94,12 +139,8 @@ const General = () => {
           className='appsettings-modal__checkbox'
         />
         <div className='appsettings-modal__description'>
-          <p>
-            {t('appSettings.deadManText1')}
-          </p>
-          <p>
-            {t('appSettings.deadManText2')}
-          </p>
+          <p>{t('appSettings.deadManText1')}</p>
+          <p>{t('appSettings.deadManText2')}</p>
           <div className='appsettings-modal__warning'>
             {t('appSettings.deadManWarning')}
           </div>
@@ -133,17 +174,6 @@ const General = () => {
         />
         <div className='appsettings-modal__description'>
           {t('appSettings.rebootText')}
-        </div>
-      </div>
-      <div className='appsettings-modal__setting'>
-        <Checkbox
-          onChange={updateBetaProgram}
-          label={t('appSettings.betaProgramCheckbox')}
-          checked={isBetaVersion}
-          className='appsettings-modal__checkbox'
-        />
-        <div className='appsettings-modal__description'>
-          {t('appSettings.betaProgramText')}
         </div>
       </div>
       {isDevEnv() && (

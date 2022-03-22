@@ -72,6 +72,24 @@
   &__setting {
     margin-bottom: spacing(1.5);
 
+    &--beta {
+      padding-bottom: spacing(1.5);
+      border-bottom: 1px solid grey;
+      position: relative;
+      color: var(--primary-8);
+
+      .beta-button {
+        background-color: #f7d448;
+        color: var(--shade-0);
+        margin: 0 auto;
+        display: block;
+      }
+
+      .beta-modal-title {
+        color: var(--primary-8);
+      }
+    }
+
     &:last-child {
       margin-bottom: 0;
     }
@@ -159,5 +177,11 @@
         margin-bottom: 0;
       }
     }
+  }
+
+  &__beta-disclaimer {
+    transform: none !important;
+    top: 30px !important;
+    left: 30px !important;
   }
 }

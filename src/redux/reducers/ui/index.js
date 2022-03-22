@@ -88,7 +88,7 @@ function getInitialState() {
     strategiesActiveTab: null,
     settingsActiveTab: DEFAULT_TAB,
     tickersVolumeUnit: null,
-    isBetaVersion: true,
+    isBetaVersion: false,
   }
 
   if (!localStorage) {
