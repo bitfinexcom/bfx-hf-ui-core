@@ -13,9 +13,9 @@ import {
 import { changeAppSettingsModalState, setSettingsTab } from '../../redux/actions/ui'
 
 import NavbarButton from '../Navbar/Navbar.Link'
+import { SETTINGS_TABS } from '../../modals/AppSettingsModal/AppSettingsModal.constants'
 
 import './style.css'
-import { SETTINGS_TABS } from '../../modals/AppSettingsModal/AppSettingsModal.constants'
 
 const StatusBar = ({
   wsConnected,

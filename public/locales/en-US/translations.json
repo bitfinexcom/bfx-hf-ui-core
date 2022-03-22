@@ -326,7 +326,7 @@
     "Light": "Light theme",
     "termsConditions": "Terms and Conditions",
     "privacyPolicy": "Privacy Policy",
-    "betaDesclaimer": " This is beta program disclaimer approved by Legal. Some text more and more, and more...",
+    "betaDesclaimer": "Features included in 'beta release' mode are still in development, may have bugs or errors, may be incomplete, may materially change prior to a stable release, or may never be considered stable at all. Users of 'beta release' mode use this mode at their own risk. In no event shall Bitfinex be liable for any damages whatsover (including, without limitation, damages for loss of profit, business interruption, loss of information or otherwise) arising out of the use of, or inability to use, 'beta release' mode, even if Bitfinex has been advised of the possibility of such damages.",
     "betaProgramCheckbox": "Join the Beta Program",
     "betaProgramText": "Stay up-to-date with every new feature and be one of the first to try it as soon as it’s released."
   },
