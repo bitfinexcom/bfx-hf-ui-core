@@ -2,6 +2,7 @@ import React, {
   useState, useEffect, useCallback,
 } from 'react'
 import ClassNames from 'clsx'
+import { Icon } from 'react-fa'
 import PropTypes from 'prop-types'
 import _filter from 'lodash/filter'
 import _map from 'lodash/map'
@@ -50,11 +51,12 @@ const getForcedTab = (forcedTab, tabs) => { // eslint-disable-line
 const Panel = ({
   label, className, onRemove, hideIcons, children, headerComponents, extraIcons, moveable, removeable, modal, footer,
   settingsOpen, onToggleSettings, darkHeader, dark, showChartMarket, chartMarketSelect, secondaryHeaderComponents,
-  closePanel, preHeaderComponents, dropdown, forcedTab, onTabChange, sidebarComponents,
+  closePanel, preHeaderComponents, dropdown, forcedTab, onTabChange,
 }) => {
   const tabs = _filter(React.Children.toArray(children), c => c && c.props.tabtitle)
   const sbTabs = _filter(React.Children.toArray(children), c => c && c.props.sbtitle)
   const initTab = getForcedTab(forcedTab, tabs)
+  const [sidebarOpened, setSidebarOpened] = useState(true)
   const [selectedTab, setSelectedTab] = useState(initTab)
   const [selectedSBTab, setSelectedSBTab] = useState(0)
   const [panelRef, panelSize] = useSize()
@@ -159,23 +161,32 @@ const Panel = ({
       <div className='hfui-panel__content'>
         {modal}
         <Scrollbars style={{ height: panelSize.height - headerSize.height }}>
-          <div className='hfui-panel__content-outer'>
-            <ul className={ClassNames('hfui_panel__sidebar', {
+          <div className={ClassNames('hfui-panel__content-outer', {
+            'sidebar-opened': sidebarOpened,
+          })}>
+            <div className={ClassNames('hfui_panel__sidebar-container', {
               'no-sidebar': _isEmpty(sbTabs),
             })}>
-              {_map(sbTabs, (tab, index) => (
-                <li
-                  key={tab.props.htmlKey || tab.props.sbtitle}
-                  className={ClassNames({ active: getTabTitle(tab) === getTabTitle(sbTabs[selectedSBTab]) })}
-                  onClick={() => setSelectedSBTab(index)}
-                >
-                  <span className='sb-icon'>
-                    {tab.props.sbicon}
-                  </span>
-                  {tab.props.sbtitle}
-                </li>
-              ))}
-            </ul>
+              <Icon
+                className='hfui_panel__sidebar_switch'
+                name={sidebarOpened ? 'chevron-left' : 'chevron-right'}
+                onClick={() => setSidebarOpened(!sidebarOpened)}
+              />
+              <ul className='hfui_panel__sidebar'>
+                {_map(sbTabs, (tab, index) => (
+                  <li
+                    key={tab.props.htmlKey || tab.props.sbtitle}
+                    className={ClassNames({ active: getTabTitle(tab) === getTabTitle(sbTabs[selectedSBTab]) })}
+                    onClick={() => setSelectedSBTab(index)}
+                  >
+                    <span className='sb-icon'>
+                      {tab.props.sbicon}
+                    </span>
+                    {sidebarOpened && tab.props.sbtitle}
+                  </li>
+                ))}
+              </ul>
+            </div>
             <div className='hfui-panel__inner'>
               {innerContent}
             </div>
@@ -195,7 +206,6 @@ Panel.propTypes = {
   label: PropTypes.oneOfType([PropTypes.node, PropTypes.string]),
   onRemove: PropTypes.func,
   headerComponents: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.node), PropTypes.node]),
-  sidebarComponents: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.node), PropTypes.node]),
   secondaryHeaderComponents: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.node), PropTypes.node]),
   hideIcons: PropTypes.bool,
   extraIcons: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.node), PropTypes.node]),
@@ -226,7 +236,6 @@ Panel.defaultProps = {
   label: '',
   onRemove: () => { },
   headerComponents: null,
-  sidebarComponents: null,
   secondaryHeaderComponents: null,
   hideIcons: false,
   extraIcons: null,
