@@ -163,10 +163,9 @@ const Panel = ({
         <Scrollbars style={{ height: panelSize.height - headerSize.height }}>
           <div className={ClassNames('hfui-panel__content-outer', {
             'sidebar-opened': sidebarOpened,
+            'no-sidebar': _isEmpty(sbTabs),
           })}>
-            <div className={ClassNames('hfui_panel__sidebar-container', {
-              'no-sidebar': _isEmpty(sbTabs),
-            })}>
+            <div className='hfui_panel__sidebar-container'>
               <Icon
                 className='hfui_panel__sidebar_switch'
                 name={sidebarOpened ? 'chevron-left' : 'chevron-right'}

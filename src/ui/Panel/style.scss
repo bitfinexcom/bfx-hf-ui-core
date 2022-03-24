@@ -312,6 +312,16 @@
       }
     }
 
+    &.no-sidebar {
+      .hfui_panel__sidebar-container {
+        display: none;
+      }
+
+      .hfui-panel__inner {
+        width: 100% !important;
+      }
+    }
+
     .hfui_panel__sidebar-container {
       width: 3%;
       position: relative;
@@ -352,10 +362,6 @@
             color: $green-color;
           }
         }
-      }
-
-      &.no-sidebar {
-        display: none;
       }
     }
   }
