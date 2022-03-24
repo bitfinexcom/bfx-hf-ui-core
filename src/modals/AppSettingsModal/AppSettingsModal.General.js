@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next'
 
 import WSActions from '../../redux/actions/ws'
 import GAActions from '../../redux/actions/google_analytics'
-import UIActions from '../../redux/actions/ui'
+import UIActions, { setBetaState } from '../../redux/actions/ui'
 import {
   isDevEnv,
   getAutoLoginState,
@@ -88,8 +88,19 @@ const General = () => {
 
   const closeBetaModal = () => setIsBetaModalOpen(false)
 
+  const openBetaModal = () => setIsBetaModalOpen(true)
+
+  const onBetaCheckboxClickHandler = (isChecked) => {
+    if (isChecked) {
+      openBetaModal()
+      return
+    }
+    dispatch(setBetaState(false))
+  }
+
   const updateBetaProgram = () => {
-    setIsBetaModalOpen(true)
+    dispatch(setBetaState(true))
+    closeBetaModal()
   }
 
   return (
@@ -100,7 +111,7 @@ const General = () => {
       {isElectronApp && (
         <div className='appsettings-modal__setting appsettings-modal__setting--beta'>
           <Checkbox
-            onChange={updateBetaProgram}
+            onChange={onBetaCheckboxClickHandler}
             label={t('appSettings.betaProgramCheckbox')}
             checked={isBetaVersion}
             className='appsettings-modal__checkbox'
@@ -120,7 +131,7 @@ const General = () => {
               <div>
                 <p>{t('appSettings.betaDesclaimer')}</p>
                 <Button
-                  onClick={() => alert('clicked')}
+                  onClick={updateBetaProgram}
                   className='beta-button'
                 >
                   {t('appSettings.betaProgramCheckbox')}

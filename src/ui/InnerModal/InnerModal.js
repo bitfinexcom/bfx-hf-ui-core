@@ -13,7 +13,12 @@ const InnerModal = ({
 
   const handleOuterClick = () => onClose()
 
-  const handleInnerClick = (e) => e.stopPropagation()
+  const handleInnerClick = (e) => {
+    if (e.target.nodeName === 'BUTTON') {
+      return
+    }
+    e.stopPropagation()
+  }
 
   useModalFocus()
 

@@ -638,6 +638,14 @@ function reducer(state = getInitialState(), action = {}) {
         settingsActiveTab: tab,
       }
     }
+    case types.SET_BETA_STATE: {
+      const { isBetaVersion } = payload
+
+      return {
+        ...state,
+        isBetaVersion,
+      }
+    }
     default: {
       return state
     }
