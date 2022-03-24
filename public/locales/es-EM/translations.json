@@ -1,9 +1,9 @@
 {
   "main": {
-    "paper": "Trading de Simulación",
+    "sandbox": "Trading de Simulación",
     "production": "Producción",
-    "trading": "Terminal de Trading",
-    "market": "Estadísticas del Mercado",
+    "trading": "{{paperPrefix}} Terminal de Trading",
+    "market": " {{mode}} Estadísticas del Mercado",
     "strategyEditor": "Configurador de Estrategias",
     "startingUp": "Iniciando aplicación...",
     "craftedBy": "Elaborado por Bitfinex"

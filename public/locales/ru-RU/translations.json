@@ -1,9 +1,9 @@
 {
   "main": {
-    "paper": "Бумажная торговля",
+    "sandbox": "Бумажная торговля",
     "production": "Production",
-    "trading": "Торговый терминал",
-    "market": "Данные рынка",
+    "trading": "{{paperPrefix}} Торговый терминал",
+    "market": "{{paperPrefix}} Данные рынка",
     "strategyEditor": "Редактирование стратегии",
     "startingUp": "Загружаем приложение...",
     "craftedBy": "Создано Bitfinex"

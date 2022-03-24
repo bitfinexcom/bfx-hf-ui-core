@@ -1,9 +1,9 @@
 {
   "main": {
-    "paper": "Simülasyon Hesap",
+    "sandbox": "Simülasyon Hesap",
     "production": "Üretim",
-    "trading": "Alım Satım Terminali",
-    "market": "Piyasa Verileri",
+    "trading": "{{paperPrefix}} Alım Satım Terminali",
+    "market": "{{paperPrefix}} Piyasa Verileri",
     "strategyEditor": "Strateji Editörü",
     "startingUp": "Uygulama başlatılıyor...",
     "craftedBy": "Bitfinex tarafından hazırlandı"

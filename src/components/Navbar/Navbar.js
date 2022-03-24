@@ -16,7 +16,7 @@ import LayoutSettings from './Navbar.LayoutSettings'
 import AppSettings from './Navbar.AppSettings'
 import Routes from '../../constants/routes'
 import { isElectronApp } from '../../redux/config'
-import { getThemeSetting, THEMES } from '../../redux/selectors/ui'
+import { getThemeSetting, THEMES, getIsPaperTrading } from '../../redux/selectors/ui'
 
 import './style.css'
 
@@ -24,6 +24,7 @@ const Navbar = () => {
   const dispatch = useDispatch()
   const { t } = useTranslation()
   const settingsTheme = useSelector(getThemeSetting)
+  const isPaperTrading = useSelector(getIsPaperTrading)
 
   return (
     <div className='hfui-navbar__wrapper'>
@@ -33,7 +34,7 @@ const Navbar = () => {
           <li key={path}>
             <NavbarLink
               route={path}
-              label={t(label)}
+              label={t(label, { paperPrefix: isPaperTrading ? t('main.paperPrefix') : null })}
             />
           </li>
         ))}
@@ -54,7 +55,7 @@ const Navbar = () => {
         {isElectronApp && (
           <div className='hfui-tradingpaper__control'>
             <div className='hfui-tradingpaper__control-toggle'>
-              <p>{t('main.paper')}</p>
+              <p>{t('main.sandbox')}</p>
               <SwitchMode />
             </div>
           </div>
