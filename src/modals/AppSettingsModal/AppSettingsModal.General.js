@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next'
 
 import WSActions from '../../redux/actions/ws'
 import GAActions from '../../redux/actions/google_analytics'
-import UIActions, { setBetaState } from '../../redux/actions/ui'
+import UIActions from '../../redux/actions/ui'
 import {
   isDevEnv,
   getAutoLoginState,
@@ -95,11 +95,11 @@ const General = () => {
       openBetaModal()
       return
     }
-    dispatch(setBetaState(false))
+    dispatch(UIActions.setBetaState(false))
   }
 
   const updateBetaProgram = () => {
-    dispatch(setBetaState(true))
+    dispatch(UIActions.setBetaState(true))
     closeBetaModal()
   }
 
@@ -122,17 +122,18 @@ const General = () => {
           {isBetaModalOpen && (
             <InnerModal
               title={(
-                <span className='beta-modal-title'>
+                <span className='beta-modal__title'>
                   {t('appSettings.betaModalTitle')}
                 </span>
               )}
               onClose={closeBetaModal}
+              className='beta-modal'
             >
               <div>
                 <p>{t('appSettings.betaDesclaimer')}</p>
                 <Button
                   onClick={updateBetaProgram}
-                  className='beta-button'
+                  className='beta-modal__button'
                 >
                   {t('appSettings.betaProgramCheckbox')}
                 </Button>

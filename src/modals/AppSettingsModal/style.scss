@@ -77,17 +77,6 @@
       border-bottom: 1px solid grey;
       position: relative;
       color: var(--primary-8);
-
-      .beta-button {
-        background-color: #f7d448;
-        color: var(--shade-0);
-        margin: 0 auto;
-        display: block;
-      }
-
-      .beta-modal-title {
-        color: var(--primary-8);
-      }
     }
 
     &:last-child {
@@ -183,5 +172,22 @@
     transform: none !important;
     top: 30px !important;
     left: 30px !important;
+  }
+
+  .beta-modal {
+    top: 160px;
+    left: 350px;
+    transform: none;
+
+    &__title {
+      color: var(--primary-8);
+    }
+
+    &__button {
+      background-color: #f7d448;
+      color: var(--shade-0);
+      margin: 0 auto;
+      display: block;
+    }
   }
 }
