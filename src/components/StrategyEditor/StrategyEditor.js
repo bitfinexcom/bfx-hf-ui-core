@@ -185,8 +185,15 @@ const StrategyEditor = ({
             onImportStrategy={onImportStrategy}
           >
             <div
-              sbtitle='Algorithm'
+              sbtitle='Strategy'
               sbicon={<Icon name='file-code-o' />}
+              className='hfui-strategyeditor__wrapper'
+            >
+
+            </div>
+            <div
+              sbtitle='View in IDE'
+              sbicon={<Icon name='edit' />}
               className='hfui-strategyeditor__wrapper'
             >
               <ul className='hfui-strategyeditor__func-select'>
