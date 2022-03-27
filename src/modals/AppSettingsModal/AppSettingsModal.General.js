@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next'
 
 import WSActions from '../../redux/actions/ws'
 import GAActions from '../../redux/actions/google_analytics'
-import UIActions from '../../redux/actions/ui'
+import { setBetaState, changeConfirmDMSModalState } from '../../redux/actions/ui'
 import {
   isDevEnv,
   getAutoLoginState,
@@ -58,7 +58,7 @@ const General = () => {
     const dontShowDMSModal = localStorage.getItem(DONT_SHOW_DMS_MODAL_KEY)
 
     if (nextDms === true && dontShowDMSModal !== 'true') {
-      dispatch(UIActions.changeConfirmDMSModalState(true))
+      dispatch(changeConfirmDMSModalState(true))
     } else {
       setIsDmsChecked(nextDms)
       dispatch(WSActions.saveSettings(SETTINGS.DMS, nextDms))
@@ -95,11 +95,12 @@ const General = () => {
       openBetaModal()
       return
     }
-    dispatch(UIActions.setBetaState(false))
+    dispatch(setBetaState(false))
   }
 
-  const updateBetaProgram = () => {
-    dispatch(UIActions.setBetaState(true))
+  const updateBetaProgram = (e) => {
+    e.stopPropagation()
+    dispatch(setBetaState(true))
     closeBetaModal()
   }
 
