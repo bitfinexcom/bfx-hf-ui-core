@@ -1,10 +1,11 @@
 {
   "main": {
-    "paper": "Paper Trading",
-    "production": "Production",
-    "trading": "Trading Terminal",
-    "market": "Market Data",
-    "strategyEditor": "Strategy Editor",
+    "sandbox": "Sandbox Mode",
+    "production": "Live Mode",
+    "paperPrefix": "Paper",
+    "trading": "{{paperPrefix}} Trading Terminal",
+    "market": "{{paperPrefix}} Market Data",
+    "strategyEditor": "Strategies",
     "startingUp": "Starting up app...",
     "craftedBy": "Crafted by Bitfinex"
   },
@@ -296,8 +297,8 @@
     "sourceCode": "The source code is available on <url>Github</url>.",
     "moreInfo": "Visit the Honey Framework <url>FAQ page</url> for more information.",
     "apiKeys": "API keys",
-    "productionKey": "Production API Key",
-    "paperKey": "Paper Trading API Key",
+    "productionKey": "Live Mode API Key",
+    "paperKey": "Sandbox Mode API Key",
     "apiNotValid": "Invalid API Key entered",
     "apiNotConfigured": "Not Configured",
     "apiSubmit": "Submit",
@@ -318,7 +319,7 @@
     "learnMore": "Learn More",
     "validating": "Validating...",
     "configured": "Configured",
-    "productionTradingCheckbox": "Production Trading",
+    "productionTradingCheckbox": "Live Mode",
     "productionTradingText": "Live trading with real money.",
     "paperTradingText": "Practice trading without risking real money.",
     "Dark": "Dark theme",
@@ -561,6 +562,7 @@
     "balancesTab": "Balances"
   },
   "statusbar": {
+    "liveModeDisclaimer": "You are in LIVE mode. All orders placed in this mode are executed in the real market using real funds",
     "updateToLast": "Update to latest version",
     "connected": "Connected",
     "connecting": "Connecting",

@@ -34,7 +34,7 @@ const SubmitAPIKeysModal = ({
 
   return (
     <OrderFormModal
-      title={_toUpper(t('orderForm.submitKeys', { mode: isPaperTrading ? t('main.paper') : '' }))}
+      title={_toUpper(t('orderForm.submitKeys', { mode: isPaperTrading ? t('main.sandbox') : '' }))}
       icon='icon-api'
       isModal={isModal}
       apiClientConnecting={apiClientConnecting}

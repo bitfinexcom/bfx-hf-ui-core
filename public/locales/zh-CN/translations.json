@@ -1,9 +1,9 @@
 {
   "main": {
-    "paper": "模拟交易",
+    "sandbox": "模拟交易",
     "production": "真实交易",
-    "trading": "交易终端",
-    "market": "市场数据",
+    "trading": "{{paperPrefix}} 交易终端",
+    "market": "{{paperPrefix}} 市场数据",
     "strategyEditor": "交易策略编写",
     "startingUp": "启动app中……",
     "craftedBy": "由Bitfinex创建"

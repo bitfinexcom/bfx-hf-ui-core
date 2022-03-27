@@ -10,7 +10,8 @@ body.hosted {
       padding-bottom: 15px;
       padding-top: 10px;
 
-      .hfui-tradingpage__menu, .hfui-navbar__main-links {
+      .hfui-tradingpage__menu,
+      .hfui-navbar__main-links {
         justify-content: center;
       }
     }
@@ -35,10 +36,6 @@ body.hosted {
     height: 100%;
   }
 
-  .hfui-navbarbutton {
-    background-color: transparent !important;
-  }
-
   &,
   button {
     color: var(--text-color);
@@ -53,34 +50,37 @@ body.hosted {
     line-height: 34px;
   }
 
-  .hfui-navbar__main-links button {
-    display: flex;
-    align-items: center;
-    background: transparent;
-    border-top: 2px solid transparent;
-    border-bottom: 2px solid transparent;
-    border-radius: 0;
-    padding: 0;
-    margin: 0 spacing(0.5);
-    outline: none;
-    height: 52px;
-    font-size: 13px;
-    font-weight: 600;
-    transition: all 0.2s;
-    color: var(--shade-6);
+  .hfui-navbar__main-links {
+    .hfui-navbarbutton {
+      display: flex;
+      align-items: center;
+      background: transparent;
+      border-top: 2px solid transparent;
+      border-bottom: 2px solid transparent;
+      border-radius: 0;
+      padding-left: 10px;
+      padding-right: 10px;
+      outline: none;
+      height: 52px;
+      font-size: 13px;
+      font-weight: 600;
+      transition: all 0.2s;
+      color: var(--shade-6);
 
-    &:hover,
-    &.active {
-      border-bottom: 2px solid var(--primary-9);
-      color: var(--shade-9);
-    }
+      &:hover,
+      &.active {
+        // border-bottom: 2px solid var(--primary-9);
+        background-color: var(--primary-8);
+        color: var(--shade-9);
+      }
 
-    &.hover {
-      cursor: pointer;
-    }
+      &.hover {
+        cursor: pointer;
+      }
 
-    p {
-      line-height: inherit;
+      p {
+        line-height: inherit;
+      }
     }
   }
 
@@ -89,7 +89,6 @@ body.hosted {
   }
 
   li {
-    margin-right: 8px;
     flex-shrink: 0;
 
     &.full-width {
