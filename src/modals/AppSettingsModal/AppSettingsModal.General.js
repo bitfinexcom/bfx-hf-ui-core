@@ -131,7 +131,7 @@ const General = () => {
               className='beta-modal'
             >
               <div>
-                <p>{t('appSettings.betaDesclaimer')}</p>
+                <div className='beta-modal__content'>{t('appSettings.betaDesclaimer')}</div>
                 <Button
                   onClick={updateBetaProgram}
                   className='beta-modal__button'

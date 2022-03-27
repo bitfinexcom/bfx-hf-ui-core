@@ -182,10 +182,14 @@
       color: var(--primary-8);
     }
 
+    &__content {
+      margin-top: 20px;
+    }
+
     &__button {
       background-color: #f7d448;
       color: var(--shade-0);
-      margin: 0 auto;
+      margin: 20px auto;
       display: block;
     }
   }
