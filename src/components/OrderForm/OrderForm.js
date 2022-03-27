@@ -163,10 +163,10 @@ class OrderForm extends React.Component {
 
   onChangeActiveOrderLayout(orderLabel) {
     const {
-      resetActiveAOParamsID, getAlgoOrderParams, aoParams, t,
+      resetActiveAOParamsID, getAlgoOrderParams, aoParams, t, isBetaVersion,
     } = this.props
     const { currentMarket } = this.state
-    const algoOrders = getAOs(t)
+    const algoOrders = getAOs(t, isBetaVersion)
     const orders = getAtomicOrders(t)
     resetActiveAOParamsID()
 
@@ -578,6 +578,7 @@ OrderForm.propTypes = {
   isOrderExecuting: PropTypes.bool,
   moveable: PropTypes.bool,
   removeable: PropTypes.bool,
+  isBetaVersion: PropTypes.bool,
   t: PropTypes.func.isRequired,
   atomicOrdersCount: PropTypes.number.isRequired,
   atomicOrdersCountActiveMarket: PropTypes.number.isRequired,
@@ -592,6 +593,7 @@ OrderForm.defaultProps = {
   onRemove: () => { },
   authToken: null,
   layoutI: 'orderform',
+  isBetaVersion: false,
 }
 
 export default OrderForm

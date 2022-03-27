@@ -41,6 +41,7 @@ const HFUI = (props) => {
     settingsShowAlgoPauseInfo,
     settingsTheme,
     isBfxConnected,
+    isBetaVersion,
   } = props
   useInjectBfxData()
 
@@ -120,7 +121,7 @@ const HFUI = (props) => {
           <Switch>
             <Redirect from='/index.html' to='/' exact />
             <Route path={Routes.tradingTerminal.path} render={() => <TradingPage />} exact />
-            {isElectronApp && Routes.strategyEditor && <Route path={Routes.strategyEditor.path} render={() => <StrategyEditorPage />} />}
+            {isBetaVersion && Routes.strategyEditor && <Route path={Routes.strategyEditor.path} render={() => <StrategyEditorPage />} />}
             <Route path={Routes.marketData.path} render={() => <MarketDataPage />} />
           </Switch>
           <ModalsWrapper isElectronApp={isElectronApp} />
@@ -152,6 +153,7 @@ HFUI.propTypes = {
   settingsShowAlgoPauseInfo: PropTypes.bool,
   settingsTheme: PropTypes.oneOf([THEMES.LIGHT, THEMES.DARK]),
   isBfxConnected: PropTypes.bool,
+  isBetaVersion: PropTypes.bool,
 }
 
 HFUI.defaultProps = {
@@ -159,6 +161,7 @@ HFUI.defaultProps = {
   settingsShowAlgoPauseInfo: true,
   settingsTheme: THEMES.DARK,
   isBfxConnected: false,
+  isBetaVersion: false,
 }
 
 export default HFUI

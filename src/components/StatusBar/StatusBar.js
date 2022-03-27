@@ -7,7 +7,6 @@ import { useDispatch } from 'react-redux'
 import {
   isElectronApp,
   appVersion,
-  showInDevelopmentModules,
   RELEASE_URL,
 } from '../../redux/config'
 import { changeAppSettingsModalState, setSettingsTab } from '../../redux/actions/ui'
@@ -111,9 +110,6 @@ const StatusBar = ({
           }`}
 
         </p>
-        {showInDevelopmentModules && (
-          <p className='dev-mode'>DEVELOPMENT Mode</p>
-        )}
       </div>
     </div>
   )

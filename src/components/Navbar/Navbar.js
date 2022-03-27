@@ -14,9 +14,11 @@ import Logout from './Navbar.Logout'
 
 import LayoutSettings from './Navbar.LayoutSettings'
 import AppSettings from './Navbar.AppSettings'
-import Routes from '../../constants/routes'
+import Routes, { strategyEditor } from '../../constants/routes'
 import { isElectronApp } from '../../redux/config'
-import { getThemeSetting, THEMES, getIsPaperTrading } from '../../redux/selectors/ui'
+import {
+  getThemeSetting, THEMES, getIsPaperTrading, getIsBetaVersion,
+} from '../../redux/selectors/ui'
 
 import './style.css'
 
@@ -25,19 +27,24 @@ const Navbar = () => {
   const { t } = useTranslation()
   const settingsTheme = useSelector(getThemeSetting)
   const isPaperTrading = useSelector(getIsPaperTrading)
+  const isBetaVersion = useSelector(getIsBetaVersion)
 
   return (
     <div className='hfui-navbar__wrapper'>
       <HFIcon className='hfui-navbar__logo' fill={settingsTheme === THEMES.DARK ? 'white' : 'black'} />
       <ul className='hfui-navbar__main-links'>
-        {_map(_values(Routes), ({ path, label }) => (
-          <li key={path}>
-            <NavbarLink
-              route={path}
-              label={t(label, { paperPrefix: isPaperTrading ? t('main.paperPrefix') : null })}
-            />
-          </li>
-        ))}
+        {_map(_values(Routes), ({ path, label }) => {
+          return isBetaVersion || path !== strategyEditor.path
+            ? (
+              <li key={path}>
+                <NavbarLink
+                  route={path}
+                  label={t(label, { paperPrefix: isPaperTrading ? t('main.paperPrefix') : null })}
+                />
+              </li>
+            )
+            : null
+        })}
       </ul>
       <div className='hfui-tradingpage__menu'>
         <div className={cx('hfui-exchangeinfobar__buttons', { 'is-web': !isElectronApp })}>
