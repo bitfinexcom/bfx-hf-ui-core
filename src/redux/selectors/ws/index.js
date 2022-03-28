@@ -34,6 +34,9 @@ import getCurrentModeAPIKeyState from './get_current_mode_api_key_state'
 import getIsMainModeApiKeyUpdating from './get_is_main_mode_api_key_updating'
 import getIsPaperModeApiKeyUpdating from './get_is_paper_mode_api_key_updating'
 
+import getExecutionResults from './get_execution_results'
+import getExecutionOptions from './get_execution_options'
+
 export {
   getSockets,
   getSocket,
@@ -76,4 +79,7 @@ export {
   getCurrentModeAPIKeyState,
   getIsMainModeApiKeyUpdating,
   getIsPaperModeApiKeyUpdating,
+
+  getExecutionResults,
+  getExecutionOptions,
 }

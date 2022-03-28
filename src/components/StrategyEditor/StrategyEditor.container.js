@@ -2,10 +2,11 @@ import { connect } from 'react-redux'
 import WSActions from '../../redux/actions/ws'
 import UIActions from '../../redux/actions/ui'
 import GAActions from '../../redux/actions/google_analytics'
-import { getAuthToken, getBacktestResults } from '../../redux/selectors/ws'
+import { getAuthToken, getBacktestResults, getExecutionOptions } from '../../redux/selectors/ws'
 import { getStrategyId, getThemeSetting } from '../../redux/selectors/ui'
 
 import StrategyEditor from './StrategyEditor'
+import { getMarkets } from '../../redux/selectors/meta'
 
 const mapStateToProps = (state = {}) => ({
   authToken: getAuthToken(state),
@@ -14,6 +15,9 @@ const mapStateToProps = (state = {}) => ({
   liveExecuting: state.ws.execution.executing,
   liveLoading: state.ws.execution.loading,
   settingsTheme: getThemeSetting(state),
+  options: getExecutionOptions(state),
+  markets: getMarkets(state),
+
 })
 
 const mapDispatchToProps = dispatch => ({
@@ -27,6 +31,17 @@ const mapDispatchToProps = dispatch => ({
   },
   clearBacktestOptions: () => {
     dispatch(WSActions.resetBacktestData())
+  },
+  dsExecuteLiveStrategy: (authToken, name, symbol, tf, includeTrades, strategy, seedCandleCount, margin) => {
+    dispatch(WSActions.setExecutionOptions({
+      includeTrades, seedCandleCount, symbol, tf, margin,
+    }))
+    dispatch(WSActions.send(['strategy.execute_start', authToken, name, symbol, tf, includeTrades, strategy, seedCandleCount, margin]))
+    dispatch(WSActions.setExecutionLoading(true))
+  },
+  dsStopLiveStrategy: (authToken) => {
+    dispatch(WSActions.setExecutionLoading(true))
+    dispatch(WSActions.send(['strategy.execute_stop', authToken]))
   },
 })
 
