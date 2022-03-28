@@ -15,20 +15,42 @@ import '../style.css'
 const MAX_STRATEGY_LABEL_LENGTH = 35
 
 const StrategyEditorPanel = ({
-  dark, strategy, onRemove, moveable, children, strategyId, removeable, execRunning, strategyDirty,
-  onSaveStrategy, onOpenSelectModal, onOpenCreateModal, onOpenRemoveModal, strategies, onExportStrategy, onImportStrategy,
+  dark,
+  strategy,
+  onRemove,
+  moveable,
+  children,
+  strategyId,
+  removeable,
+  execRunning,
+  strategyDirty,
+  onSaveStrategy,
+  onOpenSelectModal,
+  onOpenCreateModal,
+  onOpenRemoveModal,
+  strategies,
+  onExportStrategy,
+  onImportStrategy,
 }) => {
   const { t } = useTranslation()
   const { id = strategyId, label: strategyName } = strategy || {}
-  const strategyDisplayName = strategyDirty ? t('strategyEditor.unsavedStartegy') : strategyName
+  const strategyDisplayName = strategyDirty
+    ? t('strategyEditor.unsavedStartegy')
+    : strategyName
 
   return (
     <Panel
       label={(
         <>
           {_size(strategyDisplayName) > MAX_STRATEGY_LABEL_LENGTH ? (
-            <Tooltip className='__react-tooltip __react_component_tooltip wide' content={strategyDisplayName}>
-              {makeShorterLongName(strategyDisplayName, MAX_STRATEGY_LABEL_LENGTH)}
+            <Tooltip
+              className='__react-tooltip __react_component_tooltip wide'
+              content={strategyDisplayName}
+            >
+              {makeShorterLongName(
+                strategyDisplayName,
+                MAX_STRATEGY_LABEL_LENGTH,
+              )}
             </Tooltip>
           ) : (
             strategyDisplayName
@@ -43,7 +65,12 @@ const StrategyEditorPanel = ({
       removeable={removeable}
       extraIcons={[
         execRunning && (
-          <Icon key='running' name='circle-o-notch' className='notch-icon' spin />
+          <Icon
+            key='running'
+            name='circle-o-notch'
+            className='notch-icon'
+            spin
+          />
         ),
       ]}
       // headerComponents={(

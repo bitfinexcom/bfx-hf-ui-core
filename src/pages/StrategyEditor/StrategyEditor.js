@@ -279,7 +279,7 @@ const StrategyEditorPage = ({
 }
 
 StrategyEditorPage.propTypes = {
-  dark: PropTypes.bool,
+  // dark: PropTypes.bool,
   firstLogin: PropTypes.bool,
   isGuideActive: PropTypes.bool,
   finishGuide: PropTypes.func.isRequired,
@@ -293,7 +293,7 @@ StrategyEditorPage.propTypes = {
 }
 
 StrategyEditorPage.defaultProps = {
-  dark: true,
+  // dark: true,
   firstLogin: false,
   isGuideActive: true,
   strategyContent: {},

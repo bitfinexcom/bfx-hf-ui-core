@@ -169,7 +169,8 @@ const Panel = ({
           <div className={ClassNames('hfui-panel__content-outer', {
             'sidebar-opened': sidebarOpened,
             'no-sidebar': _isEmpty(sbTabs),
-          })}>
+          })}
+          >
             <div className='hfui_panel__sidebar-container'>
               <Icon
                 className='hfui_panel__sidebar_switch'

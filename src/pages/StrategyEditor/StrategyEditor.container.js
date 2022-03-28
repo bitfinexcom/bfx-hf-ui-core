@@ -1,7 +1,7 @@
 import { connect } from 'react-redux'
 import { STRATEGY_PAGE } from '../../redux/constants/ui'
 import { getFirstLogin, getGuideStatusForPage } from '../../redux/selectors/ui'
-import { getSortedByTimeStrategies, getAuthToken} from '../../redux/selectors/ws'
+import { getSortedByTimeStrategies, getAuthToken } from '../../redux/selectors/ws'
 import UIActions from '../../redux/actions/ui'
 import WSActions from '../../redux/actions/ws'
 
