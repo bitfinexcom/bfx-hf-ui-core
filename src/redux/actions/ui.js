@@ -235,11 +235,6 @@ export const setSettingsTab = (tab) => ({
   payload: { tab },
 })
 
-export const setBetaState = (isBetaVersion) => ({
-  type: types.SET_BETA_STATE,
-  payload: { isBetaVersion },
-})
-
 export default {
   saveLayout,
   storeUnsavedLayout,

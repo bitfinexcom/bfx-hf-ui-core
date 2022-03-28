@@ -5,14 +5,14 @@ import { useTranslation } from 'react-i18next'
 
 import WSActions from '../../redux/actions/ws'
 import GAActions from '../../redux/actions/google_analytics'
-import { setBetaState, changeConfirmDMSModalState } from '../../redux/actions/ui'
+import { changeConfirmDMSModalState } from '../../redux/actions/ui'
 import {
   isDevEnv,
   getAutoLoginState,
   updateAutoLoginState,
 } from '../../util/autologin'
 import {
-  SETTINGS,
+  SETTINGS_KEYS,
   getDMSSetting,
   getGASetting,
   getShowAlgoPauseInfoSetting,
@@ -61,28 +61,28 @@ const General = () => {
       dispatch(changeConfirmDMSModalState(true))
     } else {
       setIsDmsChecked(nextDms)
-      dispatch(WSActions.saveSettings(SETTINGS.DMS, nextDms))
+      dispatch(WSActions.saveSettings(SETTINGS_KEYS.DMS, nextDms))
       dispatch(GAActions.updateSettings())
     }
   }
 
   const updateGa = (nextGa) => {
     setIsGaChecked(nextGa)
-    dispatch(WSActions.saveSettings(SETTINGS.GA, nextGa))
+    dispatch(WSActions.saveSettings(SETTINGS_KEYS.GA, nextGa))
     dispatch(GAActions.updateSettings())
   }
 
   const updateAOPause = (nextAOPause) => {
     setIsShowAlgoPauseInfoChecked(nextAOPause)
     dispatch(
-      WSActions.saveSettings(SETTINGS.SHOW_ALGO_PAUSE_INFO, nextAOPause),
+      WSActions.saveSettings(SETTINGS_KEYS.SHOW_ALGO_PAUSE_INFO, nextAOPause),
     )
     dispatch(GAActions.updateSettings())
   }
 
   const updateReboot = (nextReboot) => {
     setIsRebootChecked(nextReboot)
-    dispatch(WSActions.saveSettings(SETTINGS.REBOOT_AUTOMATICALLY, nextReboot))
+    dispatch(WSActions.saveSettings(SETTINGS_KEYS.REBOOT_AUTOMATICALLY, nextReboot))
     dispatch(GAActions.updateSettings())
   }
 
@@ -95,12 +95,14 @@ const General = () => {
       openBetaModal()
       return
     }
-    dispatch(setBetaState(false))
+    dispatch(WSActions.saveSettings(SETTINGS_KEYS.JOIN_BETA_PROGRAM, false))
+    dispatch(GAActions.updateSettings())
   }
 
   const updateBetaProgram = (e) => {
     e.stopPropagation()
-    dispatch(setBetaState(true))
+    dispatch(WSActions.saveSettings(SETTINGS_KEYS.JOIN_BETA_PROGRAM, true))
+    dispatch(GAActions.updateSettings())
     closeBetaModal()
   }
 

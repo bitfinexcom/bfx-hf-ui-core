@@ -1,8 +1,13 @@
 import { put, select } from 'redux-saga/effects'
 
 import WSActions from '../../actions/ws'
-import getSettings from '../../selectors/ui/get_settings'
+import getSettings, { SETTINGS_KEYS } from '../../selectors/ui/get_settings'
 import { getAuthToken } from '../../selectors/ws'
+
+const {
+  DMS, GA, SHOW_ALGO_PAUSE_INFO, SHOW_ONLY_FAVORITE_PAIRS,
+  REBOOT_AUTOMATICALLY, THEME, JOIN_BETA_PROGRAM,
+} = SETTINGS_KEYS
 
 export default function* onSaveSettings(action = {}) {
   const { payload = {} } = action
@@ -14,11 +19,12 @@ export default function* onSaveSettings(action = {}) {
   yield put(WSActions.send([
     'settings.update',
     authToken,
-    settings.dms,
-    settings.ga,
-    settings.showAlgoPauseInfo,
-    settings.showOnlyFavoritePairs,
-    settings.rebootAutomatically,
-    settings.theme,
+    settings[DMS],
+    settings[GA],
+    settings[SHOW_ALGO_PAUSE_INFO],
+    settings[SHOW_ONLY_FAVORITE_PAIRS],
+    settings[REBOOT_AUTOMATICALLY],
+    settings[THEME],
+    settings[JOIN_BETA_PROGRAM],
   ]))
 }

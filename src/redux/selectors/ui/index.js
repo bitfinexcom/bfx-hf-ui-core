@@ -24,7 +24,6 @@ import getIsClosePositionModalVisible from './get_close_position_modal_visible'
 import getClosePositionModalData from './get_close_position_modal_data'
 import getOrderToEdit from './get_order_to_edit'
 import getLayoutForRoute from './layouts/get_layout_for_route'
-import getIsBetaVersion from './get_is_beta_version'
 import getIsAppSettingsModalVisible from './get_is_app_settings_modal_visible'
 import getStrategiesActiveTab from './get_strategies_active_tab'
 import getSettingsActiveTab from './get_settings_active_tab'
@@ -59,7 +58,6 @@ export {
   getLayoutForRoute,
   getIsClosePositionModalVisible,
   getClosePositionModalData,
-  getIsBetaVersion,
   getIsAppSettingsModalVisible,
   getStrategiesActiveTab,
   getSettingsActiveTab,
