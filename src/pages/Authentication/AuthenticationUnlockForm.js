@@ -22,7 +22,7 @@ const initialAutoLoginSave = getAutoLoginState()
 
 const getModes = (t) => {
   const MAIN_MODE_OPTION = { value: MAIN_MODE, label: t('main.production') }
-  const PAPER_MODE_OPTION = { value: PAPER_MODE, label: t('main.paper') }
+  const PAPER_MODE_OPTION = { value: PAPER_MODE, label: t('main.sandbox') }
   return [MAIN_MODE_OPTION, PAPER_MODE_OPTION]
 }
 

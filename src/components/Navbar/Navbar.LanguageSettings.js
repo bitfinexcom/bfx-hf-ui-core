@@ -23,7 +23,6 @@ const LanguageSettings = () => {
       placeholder={LANGUAGE_NAMES[i18nMappedKey] || LANGUAGE_NAMES.en}
       onChange={changeLanguageHandler}
     />
-
   )
 }
 

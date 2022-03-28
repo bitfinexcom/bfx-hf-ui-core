@@ -79,7 +79,7 @@ const ApiKeys = () => {
       <div className='appsettings-modal__setting'>
         <p>
           {t('appSettings.productionKey')}
-          {' '}
+          <br />
           <a
             href='https://support.bitfinex.com/hc/en-us/articles/115002349625-API-Key-Setup-Login'
             target='_blank'

@@ -3,12 +3,12 @@ import ClassNames from 'clsx'
 import PropTypes from 'prop-types'
 import { useTranslation } from 'react-i18next'
 
-import { isElectronApp, appVersion, showInDevelopmentModules } from '../../redux/config'
+import {
+  isElectronApp, appVersion, showInDevelopmentModules, RELEASE_URL,
+} from '../../redux/config'
 
 import NavbarButton from '../Navbar/Navbar.Link'
 import './style.css'
-
-const RELEASE_URL = 'https://github.com/bitfinexcom/bfx-hf-ui/releases'
 
 const StatusBar = ({
   wsConnected, remoteVersion,
@@ -16,6 +16,7 @@ const StatusBar = ({
   apiClientConnecting: _apiClientConnecting,
   apiClientConnected,
   wsInterrupted, currentModeApiKeyState,
+  isPaperTrading,
 }) => {
   const [wsConnInterrupted, setWsConnInterrupted] = useState(false)
   const isWrongAPIKey = !currentModeApiKeyState.valid
@@ -32,26 +33,30 @@ const StatusBar = ({
 
   return (
     <div className='hfui-statusbar__wrapper'>
-      {isElectronApp && (
-        <div className='hfui-statusbar__left'>
-          <p>
-            {remoteVersion && remoteVersion !== appVersion && (
-              <NavbarButton
-                label={t('statusbar.updateToLast')}
-                external={RELEASE_URL}
-              />
-            )}
-            &nbsp;
-            v
-            {appVersion}
-          </p>
-          {showInDevelopmentModules && <p className='dev-mode'>DEVELOPMENT Mode</p>}
+      <div className='hfui-statusbar__left'>
+        {!isPaperTrading
+        && (
+        <div className='hfui-statusbar__desclaimer'>
+          <span className='hfui-statusbar__pulse' />
+          <span>{t('statusbar.liveModeDisclaimer')}</span>
         </div>
-      )}
+        )}
+      </div>
 
       <div className='hfui-statusbar__right'>
         {isElectronApp && (
           <>
+            <p>
+              {remoteVersion && remoteVersion !== appVersion && (
+              <NavbarButton
+                label={t('statusbar.updateToLast')}
+                external={RELEASE_URL}
+              />
+              )}
+              &nbsp;
+              v
+              {appVersion}
+            </p>
             <span className={ClassNames('hfui-statusbar__statuscircle', {
               green: apiClientConnected,
               yellow: apiClientConnecting,
@@ -73,6 +78,7 @@ const StatusBar = ({
         })}
         />
         <p>{`WS ${(wsConnected && !wsConnInterrupted) ? t('statusbar.connected') : t('statusbar.disconnected')}`}</p>
+        {showInDevelopmentModules && <p className='dev-mode'>DEVELOPMENT Mode</p>}
       </div>
     </div>
   )
@@ -88,6 +94,7 @@ StatusBar.propTypes = {
   currentModeApiKeyState: PropTypes.shape({
     valid: PropTypes.bool,
   }),
+  isPaperTrading: PropTypes.bool.isRequired,
 }
 
 StatusBar.defaultProps = {

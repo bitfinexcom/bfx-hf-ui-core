@@ -77,7 +77,7 @@ const OpenExistingStrategyModal = ({
 OpenExistingStrategyModal.propTypes = {
   onClose: PropTypes.func.isRequired,
   onOpen: PropTypes.func.isRequired,
-  strategies: PropTypes.arrayOf(PropTypes.object).isRequired,
+  strategies: PropTypes.arrayOf(PropTypes.object).isRequired, // eslint-disable-line
   isOpen: PropTypes.bool,
 }
 

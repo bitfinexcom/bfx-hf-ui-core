@@ -142,8 +142,10 @@ ExchangeInfoBar.propTypes = {
     changePerc: PropTypes.number,
     volumeConverted: PropTypes.number,
   }).isRequired,
-  markets: PropTypes.objectOf(PropTypes.object),
-  allTickersArray: PropTypes.arrayOf(PropTypes.object).isRequired,
+  markets: PropTypes.objectOf(PropTypes.object), // eslint-disable-line
+  allTickersArray: PropTypes.arrayOf(PropTypes.objectOf([
+    PropTypes.string, PropTypes.number,
+  ])).isRequired,
   favoritePairs: PropTypes.objectOf(PropTypes.bool).isRequired,
   updateFavorites: PropTypes.func.isRequired,
   authToken: PropTypes.string.isRequired,

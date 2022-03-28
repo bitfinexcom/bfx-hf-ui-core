@@ -40,7 +40,9 @@ AlgoOrdersTable.propTypes = {
   isOrderSelected: PropTypes.func,
   isAllOrdersSelected: PropTypes.func,
   onOrderSelect: PropTypes.func.isRequired,
-  orders: PropTypes.arrayOf(PropTypes.object),
+  orders: PropTypes.arrayOf(PropTypes.objectOf([
+    PropTypes.string, PropTypes.number, PropTypes.object,
+  ])),
   onAllOrdersSelect: PropTypes.func.isRequired,
 }
 

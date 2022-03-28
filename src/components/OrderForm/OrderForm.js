@@ -564,7 +564,7 @@ OrderForm.propTypes = {
   mode: PropTypes.string.isRequired,
   submitAPIKeys: PropTypes.func.isRequired,
   getAlgoOrderParams: PropTypes.func.isRequired,
-  aoParams: PropTypes.objectOf(PropTypes.object).isRequired,
+  aoParams: PropTypes.objectOf(PropTypes.object).isRequired, // eslint-disable-line
   resetActiveAOParamsID: PropTypes.func.isRequired,
   submitOrder: PropTypes.func.isRequired,
   gaSubmitOrder: PropTypes.func.isRequired,
