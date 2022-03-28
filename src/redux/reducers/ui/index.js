@@ -88,7 +88,6 @@ function getInitialState() {
     strategiesActiveTab: null,
     settingsActiveTab: DEFAULT_TAB,
     tickersVolumeUnit: null,
-    isBetaVersion: false,
   }
 
   if (!localStorage) {
@@ -638,6 +637,14 @@ function reducer(state = getInitialState(), action = {}) {
         settingsActiveTab: tab,
       }
     }
+
+    case types.SET_FEATURE_FLAGS: {
+      return {
+        ...state,
+        featureFlags: payload,
+      }
+    }
+
     default: {
       return state
     }

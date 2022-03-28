@@ -163,10 +163,10 @@ class OrderForm extends React.Component {
 
   onChangeActiveOrderLayout(orderLabel) {
     const {
-      resetActiveAOParamsID, getAlgoOrderParams, aoParams, t, isBetaVersion,
+      resetActiveAOParamsID, getAlgoOrderParams, aoParams, t, showAdvancedAlgos,
     } = this.props
     const { currentMarket } = this.state
-    const algoOrders = getAOs(t, isBetaVersion)
+    const algoOrders = getAOs(t, showAdvancedAlgos)
     const orders = getAtomicOrders(t)
     resetActiveAOParamsID()
 
@@ -375,7 +375,7 @@ class OrderForm extends React.Component {
 
   render() {
     const {
-      onRemove, apiClientState, apiCredentials, moveable, removeable, isPaperTrading, isOrderExecuting, activeMarket, t,
+      onRemove, apiClientState, apiCredentials, moveable, removeable, isPaperTrading, isOrderExecuting, activeMarket, t, showAdvancedAlgos,
     } = this.props
     const orders = getAtomicOrders(t)
 
@@ -384,7 +384,7 @@ class OrderForm extends React.Component {
       helpOpen, configureModalOpen, currentMarket,
     } = this.state
 
-    const algoOrders = getAOs(t)
+    const algoOrders = getAOs(t, showAdvancedAlgos)
 
     const apiClientConnected = apiClientState === 2
     const apiClientConnecting = apiClientState === 1
@@ -578,7 +578,7 @@ OrderForm.propTypes = {
   isOrderExecuting: PropTypes.bool,
   moveable: PropTypes.bool,
   removeable: PropTypes.bool,
-  isBetaVersion: PropTypes.bool,
+  showAdvancedAlgos: PropTypes.bool,
   t: PropTypes.func.isRequired,
   atomicOrdersCount: PropTypes.number.isRequired,
   atomicOrdersCountActiveMarket: PropTypes.number.isRequired,
@@ -593,7 +593,7 @@ OrderForm.defaultProps = {
   onRemove: () => { },
   authToken: null,
   layoutI: 'orderform',
-  isBetaVersion: false,
+  showAdvancedAlgos: false,
 }
 
 export default OrderForm

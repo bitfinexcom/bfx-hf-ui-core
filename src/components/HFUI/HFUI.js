@@ -31,6 +31,7 @@ const HFUI = (props) => {
     authToken,
     getSettings,
     getCoreSettings,
+    getFeatureFlags,
     notificationsVisible,
     getFavoritePairs,
     currentMode,
@@ -41,7 +42,7 @@ const HFUI = (props) => {
     settingsShowAlgoPauseInfo,
     settingsTheme,
     isBfxConnected,
-    isBetaVersion,
+    showStrategies,
   } = props
   useInjectBfxData()
 
@@ -102,10 +103,11 @@ const HFUI = (props) => {
   useEffect(() => {
     if (authToken) {
       getSettings(authToken)
+      getFeatureFlags(authToken)
       getFavoritePairs(authToken, currentMode)
       subscribeAllTickers()
     }
-  }, [authToken, currentMode, getCoreSettings, getFavoritePairs, getSettings, subscribeAllTickers])
+  }, [authToken, currentMode, getCoreSettings, getFavoritePairs, getFeatureFlags, getSettings, subscribeAllTickers])
 
   // fetch core-settings after bitfinex client is connected
   useEffect(() => {
@@ -121,7 +123,7 @@ const HFUI = (props) => {
           <Switch>
             <Redirect from='/index.html' to='/' exact />
             <Route path={Routes.tradingTerminal.path} render={() => <TradingPage />} exact />
-            {isBetaVersion && Routes.strategyEditor && <Route path={Routes.strategyEditor.path} render={() => <StrategyEditorPage />} />}
+            {showStrategies && Routes.strategyEditor && <Route path={Routes.strategyEditor.path} render={() => <StrategyEditorPage />} />}
             <Route path={Routes.marketData.path} render={() => <MarketDataPage />} />
           </Switch>
           <ModalsWrapper isElectronApp={isElectronApp} />
@@ -143,6 +145,7 @@ HFUI.propTypes = {
   authToken: PropTypes.string,
   currentMode: PropTypes.string.isRequired,
   getSettings: PropTypes.func.isRequired,
+  getFeatureFlags: PropTypes.func.isRequired,
   getCoreSettings: PropTypes.func.isRequired,
   getFavoritePairs: PropTypes.func.isRequired,
   onUnload: PropTypes.func.isRequired,
@@ -153,7 +156,7 @@ HFUI.propTypes = {
   settingsShowAlgoPauseInfo: PropTypes.bool,
   settingsTheme: PropTypes.oneOf([THEMES.LIGHT, THEMES.DARK]),
   isBfxConnected: PropTypes.bool,
-  isBetaVersion: PropTypes.bool,
+  showStrategies: PropTypes.bool,
 }
 
 HFUI.defaultProps = {
@@ -161,7 +164,7 @@ HFUI.defaultProps = {
   settingsShowAlgoPauseInfo: true,
   settingsTheme: THEMES.DARK,
   isBfxConnected: false,
-  isBetaVersion: false,
+  showStrategies: false,
 }
 
 export default HFUI

@@ -8,6 +8,7 @@ import _map from 'lodash/map'
 import _remove from 'lodash/remove'
 import { useTranslation } from 'react-i18next'
 
+import { useSelector } from 'react-redux'
 import {
   STEPS, ACTIONS, EVENTS, STATUS,
 } from '../../components/Joyride'
@@ -15,11 +16,11 @@ import Layout from '../../components/Layout'
 import Panel from '../../ui/Panel'
 import Markdown from '../../ui/Markdown'
 import Backtester from '../../components/Backtester'
-import { isElectronApp } from '../../redux/config'
 import LiveStrategyExecutor from '../../components/LiveStrategyExecutor'
 import useTourGuide from '../../hooks/useTourGuide'
 
 import './style.css'
+import { getIsBetaVersion, getStrategiesFeatureFlags } from '../../redux/selectors/ui'
 
 const DocsPath = require('bfx-hf-strategy/docs/api.md')
 
@@ -34,8 +35,10 @@ const StrategyEditorPage = (props) => {
   const [docsText, setDocsText] = useState('')
   const [forcedTab, setForcedTab] = useState(selectedTab)
   const [tourStep, setTourStep] = useState(0)
-
   const showGuide = useTourGuide(isGuideActive)
+
+  const flags = useSelector(getStrategiesFeatureFlags)
+  const isBetaVersion = useSelector(getIsBetaVersion)
 
   useEffect(() => {
     // load readme docs (DocsPath is an object when running in electron window)
@@ -148,19 +151,23 @@ const StrategyEditorPage = (props) => {
               onTabChange={setStrategyTab}
               darkHeader
             >
-              <Markdown
-                tabtitle={t('strategyEditor.docsTab')}
-                text={docsText}
-              />
-              <div tabtitle={t('strategyEditor.backtestTab')}>
-                <Backtester
-                  {...props}
-                  indicators={indicators}
-                  onAddIndicator={onAddIndicator}
-                  onDeleteIndicator={onDeleteIndicator}
+              {(isBetaVersion || flags?.docs) && (
+                <Markdown
+                  tabtitle={t('strategyEditor.docsTab')}
+                  text={docsText}
                 />
-              </div>
-              {isElectronApp && (
+              )}
+              {(isBetaVersion || flags?.backtest) && (
+                <div tabtitle={t('strategyEditor.backtestTab')}>
+                  <Backtester
+                    {...props}
+                    indicators={indicators}
+                    onAddIndicator={onAddIndicator}
+                    onDeleteIndicator={onDeleteIndicator}
+                  />
+                </div>
+              )}
+              {(isBetaVersion || flags?.live_execution) && (
                 <div tabtitle={t('strategyEditor.executeTab')}>
                   <LiveStrategyExecutor
                     strategyContent={strategyContent}

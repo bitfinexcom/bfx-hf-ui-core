@@ -15,7 +15,7 @@ import {
   getAPIClientState, getAuthToken, getCurrentModeAPIKeyState, getFilteredAtomicOrdersCount, getAtomicOrders,
 } from '../../redux/selectors/ws'
 import {
-  getComponentState, getActiveMarket, getCurrentMode, getIsPaperTrading, getIsOrderExecuting, getMaxOrderCounts, getIsBetaVersion,
+  getComponentState, getActiveMarket, getCurrentMode, getIsPaperTrading, getIsOrderExecuting, getMaxOrderCounts, getIsBetaVersion, getIsStrategiesLiveExecVisible,
 } from '../../redux/selectors/ui'
 import { getScope } from '../../util/scope'
 
@@ -42,6 +42,7 @@ const mapStateToProps = (state = {}, ownProps = {}) => {
     aoParams: getAOParams(state),
     maxOrderCounts: getMaxOrderCounts(state),
     isBetaVersion: getIsBetaVersion(state),
+    showAdvancedAlgos: getIsStrategiesLiveExecVisible(state) || getIsBetaVersion(state),
   }
 }
 

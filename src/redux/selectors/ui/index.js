@@ -30,6 +30,7 @@ import getSettingsActiveTab from './get_settings_active_tab'
 
 export * from './get_settings'
 export * from './get_core_settings'
+export * from './get_feature_flags'
 
 export {
   getRemoteVersion,

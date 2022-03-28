@@ -17,7 +17,7 @@ import AppSettings from './Navbar.AppSettings'
 import Routes, { strategyEditor } from '../../constants/routes'
 import { isElectronApp } from '../../redux/config'
 import {
-  getThemeSetting, THEMES, getIsPaperTrading, getIsBetaVersion,
+  getThemeSetting, THEMES, getIsPaperTrading, getIsBetaVersion, getIsStrategiesTabVisible,
 } from '../../redux/selectors/ui'
 
 import './style.css'
@@ -28,13 +28,15 @@ const Navbar = () => {
   const settingsTheme = useSelector(getThemeSetting)
   const isPaperTrading = useSelector(getIsPaperTrading)
   const isBetaVersion = useSelector(getIsBetaVersion)
+  const isStrategiesTabVisible = useSelector(getIsStrategiesTabVisible)
+  const showStrategies = isBetaVersion || isStrategiesTabVisible
 
   return (
     <div className='hfui-navbar__wrapper'>
       <HFIcon className='hfui-navbar__logo' fill={settingsTheme === THEMES.DARK ? 'white' : 'black'} />
       <ul className='hfui-navbar__main-links'>
         {_map(_values(Routes), ({ path, label }) => {
-          return isBetaVersion || path !== strategyEditor.path
+          return showStrategies || path !== strategyEditor.path
             ? (
               <li key={path}>
                 <NavbarLink

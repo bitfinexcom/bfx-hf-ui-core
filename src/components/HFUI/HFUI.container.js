@@ -4,7 +4,7 @@ import { reduxActions } from '@ufx-ui/bfx-containers'
 import WSActions from '../../redux/actions/ws'
 import GAActions from '../../redux/actions/google_analytics'
 import {
-  getCurrentMode, getShowAlgoPauseInfoSetting, getThemeSetting, getIsBetaVersion,
+  getCurrentMode, getShowAlgoPauseInfoSetting, getThemeSetting, getIsBetaVersion, getIsStrategiesTabVisible,
 } from '../../redux/selectors/ui'
 import { MAX_ORDER_COUNT_SETTING } from '../../redux/selectors/ui/get_core_settings'
 import { getAuthToken, getIsBitfinexConnected } from '../../redux/selectors/ws'
@@ -22,7 +22,7 @@ const mapStateToProps = (state = {}) => {
     settingsShowAlgoPauseInfo: getShowAlgoPauseInfoSetting(state),
     settingsTheme: getThemeSetting(state),
     isBfxConnected: getIsBitfinexConnected(state),
-    isBetaVersion: getIsBetaVersion(state),
+    showStrategies: getIsBetaVersion(state) || getIsStrategiesTabVisible(state),
   }
 }
 
@@ -51,6 +51,9 @@ const mapDispatchToProps = dispatch => ({
   },
   shouldShowAOPauseModalState: () => {
     dispatch(WSActions.send(['get.show_algo_pause_info']))
+  },
+  getFeatureFlags: (authToken) => {
+    dispatch(WSActions.send(['feature_flags.get', authToken]))
   },
 })
 
