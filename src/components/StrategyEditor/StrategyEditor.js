@@ -8,6 +8,7 @@ import _find from 'lodash/find'
 import { Icon } from 'react-fa'
 import PropTypes from 'prop-types'
 
+import { useDispatch } from 'react-redux'
 import { saveAsJSON, readJSONFile } from '../../util/ui'
 import Markdown from '../../ui/Markdown'
 import { THEMES } from '../../redux/selectors/ui'
@@ -20,12 +21,19 @@ import OpenExistingStrategyModal from '../../modals/Strategy/OpenExistingStrateg
 import EmptyContent from './components/StrategyEditorEmpty'
 import StrategyTab from './tabs/StrategyTab'
 import IDETab from './tabs/IDETab'
+import { getDefaultMarket } from '../../util/market'
+import WSActions from '../../redux/actions/ws'
 
 import './style.css'
 
 const DocsPath = require('bfx-hf-strategy/docs/api.md')
 
 const debug = Debug('hfui-ui:c:strategy-editor')
+
+const DEFAULT_TIMEFRAME = '1m'
+const DEFAULT_USE_TRADES = false
+const DEFAULT_USE_MARGIN = false
+const DEFAULT_SEED_COUNT = 150
 
 const StrategyEditor = (props) => {
   const [isRemoveModalOpened, setIsRemoveModalOpened] = useState(false)
@@ -54,7 +62,17 @@ const StrategyEditor = (props) => {
     strategy,
     onSaveStrategy,
     onLoadStrategy,
+    dsExecuteLiveStrategy,
+    dsStopLiveStrategy,
+    options,
+    markets,
   } = props
+
+  const [symbol, setSymbol] = useState(options.symbol ? _find(markets, m => m.wsID === options.symbol) : getDefaultMarket(markets))
+  const [timeframe, setTimeframe] = useState(options.tf || DEFAULT_TIMEFRAME)
+  const [trades, setTrades] = useState(options.includeTrades || DEFAULT_USE_TRADES)
+  const [candleSeed, setCandleSeed] = useState(options.seedCandleCount || DEFAULT_SEED_COUNT)
+  const [margin, setMargin] = useState(options.margin || DEFAULT_USE_MARGIN)
 
   useEffect(() => {
     // load readme docs (DocsPath is an object when running in electron window)
@@ -123,6 +141,15 @@ const StrategyEditor = (props) => {
     }
   }
 
+  const startExecution = () => {
+    onSaveStrategy()
+    dsExecuteLiveStrategy(authToken, strategy.label, symbol?.wsID, timeframe, trades, strategyContent, candleSeed, margin)
+  }
+
+  const stopExecution = () => {
+    dsStopLiveStrategy(authToken)
+  }
+
   return (
     <>
       {!strategy || _isEmpty(strategy) ? (
@@ -155,6 +182,8 @@ const StrategyEditor = (props) => {
           <StrategyTab
             sbtitle='Strategy'
             sbicon={<Icon name='file-code-o' />}
+            startExecution={startExecution}
+            {...props}
           />
           <IDETab
             sbtitle='View in IDE'
