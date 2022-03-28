@@ -51,7 +51,7 @@ const getForcedTab = (forcedTab, tabs) => { // eslint-disable-line
 const Panel = ({
   label, className, onRemove, hideIcons, children, headerComponents, extraIcons, moveable, removeable, modal, footer,
   settingsOpen, onToggleSettings, darkHeader, dark, showChartMarket, chartMarketSelect, secondaryHeaderComponents,
-  closePanel, preHeaderComponents, dropdown, forcedTab, onTabChange,
+  closePanel, preHeaderComponents, dropdown, forcedTab, onTabChange, onSideTabChange,
 }) => {
   const tabs = _filter(React.Children.toArray(children), c => c && c.props.tabtitle)
   const sbTabs = _filter(React.Children.toArray(children), c => c && c.props.sbtitle)
@@ -68,6 +68,11 @@ const Panel = ({
     onTabChange(tab)
     setSelectedTab(tab)
   }, [onTabChange])
+
+  const _setSelectedSBTab = useCallback((tab) => {
+    onSideTabChange(tab)
+    setSelectedSBTab(tab)
+  }, [onSideTabChange])
 
   useEffect(() => {
     _setSelectedTab(initTab)
@@ -176,7 +181,7 @@ const Panel = ({
                   <li
                     key={tab.props.htmlKey || tab.props.sbtitle}
                     className={ClassNames({ active: getTabTitle(tab) === getTabTitle(sbTabs[selectedSBTab]) })}
-                    onClick={() => setSelectedSBTab(index)}
+                    onClick={() => _setSelectedSBTab(index)}
                   >
                     <span className='sb-icon'>
                       {tab.props.sbicon}
@@ -223,6 +228,7 @@ Panel.propTypes = {
   preHeaderComponents: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.node), PropTypes.node]),
   forcedTab: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   onTabChange: PropTypes.func,
+  onSideTabChange: PropTypes.func,
   dropdown: PropTypes.node,
 }
 
@@ -249,6 +255,7 @@ Panel.defaultProps = {
   preHeaderComponents: null,
   forcedTab: '',
   onTabChange: () => { },
+  onSideTabChange: () => { },
   dropdown: null,
 }
 
