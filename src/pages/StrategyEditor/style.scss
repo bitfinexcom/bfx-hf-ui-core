@@ -30,6 +30,11 @@ body.hosted {
   }
 }
 
+.hfui-strategyeditorpage1 {
+  width: 100%;
+  flex-direction: column;
+}
+
 .hfui-strategyeditorpage__wrapper {
   .hfui-strategyeditorpage__content-wrapper {
     display: flex;

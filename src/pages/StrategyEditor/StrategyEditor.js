@@ -10,11 +10,13 @@ import _map from 'lodash/map'
 import _remove from 'lodash/remove'
 import _size from 'lodash/size'
 import _forEach from 'lodash/forEach'
+import _isEmpty from 'lodash/isEmpty'
 import Indicators from 'bfx-hf-indicators'
 import { nonce } from 'bfx-api-node-util'
 import HFS from 'bfx-hf-strategy'
 import HFU from 'bfx-hf-util'
 import { useTranslation } from 'react-i18next'
+import ClassNames from 'clsx'
 
 import {
   STEPS, ACTIONS, EVENTS, STATUS,
@@ -24,6 +26,7 @@ import Panel from '../../ui/Panel'
 import useTourGuide from '../../hooks/useTourGuide'
 
 import './style.css'
+import GridLayout from '../../components/GridLayout'
 
 const debug = Debug('hfui-ui:p:strategy-editor')
 
@@ -211,67 +214,69 @@ const StrategyEditorPage = ({
     })
   }, [strategies])
 
-  console.log(strategyContent, strategy)
+  // console.log(strategyContent, strategy)
 
   return (
     <Layout>
       <Layout.Header />
-      <Layout.Main className='hfui-strategyeditorpage__wrapper'>
-        <div className='hfui-strategyeditorpage__content-wrapper'>
-          <Suspense fallback={<></>}>
-            <StrategyEditor
-              dark
-              onStrategySelect={selectStrategyHandler}
-              selectStrategy={selectStrategy}
-              onStrategyChange={setContent}
-              key='editor'
-              onIndicatorsChange={onIndicatorsChange}
-              onLoadStrategy={onLoadStrategy}
-              onSaveStrategy={onSaveStrategy}
-              strategyDirty={strategyDirty}
-              setStrategyDirty={setStrategyDirty}
-              sectionErrors={sectionErrors}
-              strategyContent={strategyContent}
-              strategy={strategy}
-              setStrategy={setStrategy}
-              setSectionErrors={setSectionErrors}
-              onDefineIndicatorsChange={onDefineIndicatorsChange}
-              evalSectionContent={evalSectionContent}
-              moveable={false}
-              removeable={false}
-            />
-          </Suspense>
-          {firstLogin && (
-            <Suspense fallback={<></>}>
-              <Joyride
-                steps={STEPS.getStrategyEditorModes(t)}
-                callback={onTourUpdate}
-                run={showGuide}
-                stepIndex={tourStep}
-              />
-            </Suspense>
-          )}
-          <div
-            key='main'
-            className='hfui-strategiespage__right'
+      <Layout.Main flex className='hfui-strategyeditorpage1'>
+        <GridLayout sharedProps={{
+          onLoadStrategy,
+        }}
+        />
+        {/* <StrategyEditor
+            dark
+            onStrategySelect={selectStrategyHandler}
+            selectStrategy={selectStrategy}
+            onStrategyChange={setContent}
+            key='editor'
+            onIndicatorsChange={onIndicatorsChange}
+            onLoadStrategy={onLoadStrategy}
+            onSaveStrategy={onSaveStrategy}
+            strategyDirty={strategyDirty}
+            setStrategyDirty={setStrategyDirty}
+            sectionErrors={sectionErrors}
+            strategyContent={strategyContent}
+            strategy={strategy}
+            setStrategy={setStrategy}
+            setSectionErrors={setSectionErrors}
+            onDefineIndicatorsChange={onDefineIndicatorsChange}
+            evalSectionContent={evalSectionContent}
+            moveable={false}
+            removeable={false}
+            indicators={indicators}
+            onAddIndicator={onAddIndicator}
+            onDeleteIndicator={onDeleteIndicator}
+          /> */}
+        {firstLogin && (
+        <Suspense fallback={<></>}>
+          <Joyride
+            steps={STEPS.getStrategyEditorModes(t)}
+            callback={onTourUpdate}
+            run={showGuide}
+            stepIndex={tourStep}
+          />
+        </Suspense>
+        )}
+        {/* <div
+          key='main'
+          className={ClassNames('hfui-strategyeditorpage__list', { initial: _isEmpty(strategy) })}
+        >
+          <Panel
+            moveable={false}
+            removeable={false}
+            forcedTab={forcedTab}
+            onTabChange={setStrategyTab}
+            darkHeader
           >
-            <Panel
-              className='hfui-strategiespage__pannel-wrapper'
-              moveable={false}
-              removeable={false}
-              forcedTab={forcedTab}
-              onTabChange={setStrategyTab}
-              darkHeader
-            >
-              <div tabtitle={t('strategyEditor.activeStrategies', { amount: 0 })}>
-                {null}
-              </div>
-              <ul className='strategies-list' tabtitle={t('strategyEditor.pastStrategies', { amount: _size(strategyNodesArray) })}>
-                {strategyNodesArray}
-              </ul>
-            </Panel>
-          </div>
-        </div>
+            <div tabtitle={t('strategyEditor.activeStrategies', { amount: 0 })}>
+              {null}
+            </div>
+            <ul className='strategies-list' tabtitle={t('strategyEditor.pastStrategies', { amount: _size(strategyNodesArray) })}>
+              {strategyNodesArray}
+            </ul>
+          </Panel>
+        </div> */}
       </Layout.Main>
       <Layout.Footer />
     </Layout>
