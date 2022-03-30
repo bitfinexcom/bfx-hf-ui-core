@@ -51,7 +51,7 @@ body.hosted {
   width: 100%;
   display: flex;
   flex-direction: column;
-  height: calc(100% - 10px);
+  height: calc(100% - 25px);
   position: relative;
   z-index: 0;
 
@@ -87,6 +87,7 @@ body.hosted {
   flex-shrink: 0;
   font-size: 13px;
   margin-right: spacing(0.75);
+  overflow: auto;
 
   li {
     display: flex;
