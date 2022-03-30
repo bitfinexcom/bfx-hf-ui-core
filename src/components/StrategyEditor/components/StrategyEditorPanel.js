@@ -25,6 +25,7 @@ const StrategyEditorPanel = ({
   execRunning,
   strategyDirty,
   onSideTabChange,
+  preSidebarComponents,
   onSaveStrategy,
   onOpenSelectModal,
   onOpenCreateModal,
@@ -75,6 +76,7 @@ const StrategyEditorPanel = ({
           />
         ),
       ]}
+      preSidebarComponents={preSidebarComponents}
       // headerComponents={(
       //   <div className='hfui-strategyeditor__header'>
       //     <div className='header__buttons-container'>
@@ -162,6 +164,7 @@ StrategyEditorPanel.propTypes = {
   onExportStrategy: PropTypes.func.isRequired,
   onImportStrategy: PropTypes.func.isRequired,
   onSideTabChange: PropTypes.func.isRequired,
+  preSidebarComponents: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.node), PropTypes.node]),
   children: PropTypes.node.isRequired,
   strategies: PropTypes.arrayOf(PropTypes.object).isRequired, // eslint-disable-line
 }
@@ -176,6 +179,7 @@ StrategyEditorPanel.defaultProps = {
   moveable: true,
   removeable: true,
   execRunning: false,
+  preSidebarComponents: null,
   strategyDirty: false,
 }
 

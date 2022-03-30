@@ -47,6 +47,24 @@ body.hosted {
   }
 }
 
+.hfui-strategy-sidebar-status {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  margin-bottom: 10px;
+  font-size: 16px;
+
+  &.paused {
+    color: $green-color;
+  }
+
+  &.running {
+    color: $red-color;
+  }
+}
+
 .hfui-strategyeditor__editor-wrapper {
   width: 100%;
   display: flex;

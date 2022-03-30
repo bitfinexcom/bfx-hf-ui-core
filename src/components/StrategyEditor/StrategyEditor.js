@@ -7,6 +7,7 @@ import _size from 'lodash/size'
 import _find from 'lodash/find'
 import { Icon } from 'react-fa'
 import PropTypes from 'prop-types'
+import { useTranslation } from 'react-i18next'
 
 import { useDispatch } from 'react-redux'
 import { saveAsJSON, readJSONFile } from '../../util/ui'
@@ -42,7 +43,7 @@ const StrategyEditor = (props) => {
     liveExecuting, liveLoading, strategyDirty, setStrategyDirty, setSectionErrors, onDefineIndicatorsChange, selectStrategy,
     setStrategy, strategy, onSaveStrategy, onLoadStrategy, dsExecuteLiveStrategy, dsStopLiveStrategy, options, markets,
   } = props
-
+  const { t } = useTranslation()
   const [isRemoveModalOpened, setIsRemoveModalOpened] = useState(false)
   const [createNewStrategyModalOpen, setCreateNewStrategyModalOpen] = useState(false)
   const [openExistingStrategyModalOpen, setOpenExistingStrategyModalOpen] = useState(false)
@@ -136,6 +137,20 @@ const StrategyEditor = (props) => {
     }
   }
 
+  const preSidebar = liveExecuting ? (
+    <div className='hfui-strategy-sidebar-status running'>
+      <Icon name='circle' />
+      &nbsp;&nbsp;
+      {t('strategyEditor.running')}
+    </div>
+  ) : (
+    <div className='hfui-strategy-sidebar-status paused'>
+      <Icon name='pause' />
+      &nbsp;&nbsp;
+      {t('strategyEditor.paused')}
+    </div>
+  )
+
   return (
     <>
       {!strategy || _isEmpty(strategy) ? (
@@ -165,6 +180,7 @@ const StrategyEditor = (props) => {
           onExportStrategy={onExportStrategy}
           onImportStrategy={onImportStrategy}
           onSideTabChange={onSideTabChange}
+          preSidebarComponents={preSidebar}
         >
           <StrategyTab
             sbtitle={

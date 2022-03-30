@@ -51,7 +51,7 @@ const getForcedTab = (forcedTab, tabs) => { // eslint-disable-line
 const Panel = ({
   label, className, onRemove, hideIcons, children, headerComponents, extraIcons, moveable, removeable, modal, footer,
   settingsOpen, onToggleSettings, darkHeader, dark, showChartMarket, chartMarketSelect, secondaryHeaderComponents,
-  closePanel, preHeaderComponents, dropdown, forcedTab, onTabChange, onSideTabChange,
+  closePanel, preHeaderComponents, dropdown, forcedTab, onTabChange, onSideTabChange, preSidebarComponents,
 }) => {
   const tabs = _filter(React.Children.toArray(children), c => c && c.props.tabtitle)
   const sbTabs = _filter(React.Children.toArray(children), c => c && c.props.sbtitle)
@@ -177,6 +177,7 @@ const Panel = ({
                 name={sidebarOpened ? 'chevron-left' : 'chevron-right'}
                 onClick={() => setSidebarOpened(!sidebarOpened)}
               />
+              {sidebarOpened && preSidebarComponents}
               <ul className='hfui_panel__sidebar'>
                 {_map(sbTabs, (tab, index) => (
                   <li
@@ -227,6 +228,7 @@ Panel.propTypes = {
   chartMarketSelect: PropTypes.node,
   closePanel: PropTypes.func,
   preHeaderComponents: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.node), PropTypes.node]),
+  preSidebarComponents: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.node), PropTypes.node]),
   forcedTab: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   onTabChange: PropTypes.func,
   onSideTabChange: PropTypes.func,
@@ -254,6 +256,7 @@ Panel.defaultProps = {
   chartMarketSelect: null,
   closePanel: null,
   preHeaderComponents: null,
+  preSidebarComponents: null,
   forcedTab: '',
   onTabChange: () => { },
   onSideTabChange: () => { },
