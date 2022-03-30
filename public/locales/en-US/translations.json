@@ -583,6 +583,8 @@
     "newStrategyModalEmptyError": "Label is empty",
     "newStrategyModalLongError": "Strategy name is too long ({{labelSize}}/{{MAX_LABEL_LENGTH}} characters)",
     "openStrategyModalTitle": "Open Strategy",
+    "launchStrategy": "Launch Strategy",
+    "stopExec": "Stop Execution",
     "openStartegyModalNoSelectedError": "No strategy selected",
     "backtestingCreateMessage": "Create a strategy to begin backtesting",
     "backtestingLoadingMessage": "Loading candles and executing strategy...",
