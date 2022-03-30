@@ -183,7 +183,7 @@ const StrategyEditor = (props) => {
           preSidebarComponents={preSidebar}
         >
           <StrategyTab
-            sbtitle={
+            sbtitle={(
               <>
                 Strategy
                 <StrategyParams
@@ -193,7 +193,7 @@ const StrategyEditor = (props) => {
                   stopExecution={stopExecution}
                 />
               </>
-            }
+            )}
             sbicon={<Icon name='file-code-o' />}
             startExecution={startExecution}
             {...props}
