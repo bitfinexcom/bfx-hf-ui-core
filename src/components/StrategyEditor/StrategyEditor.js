@@ -41,7 +41,7 @@ const StrategyEditor = (props) => {
   const {
     moveable, removeable, strategyId, onRemove, authToken, onStrategyChange, gaCreateStrategy, strategyContent, backtestResults,
     liveExecuting, liveLoading, strategyDirty, setStrategyDirty, setSectionErrors, onDefineIndicatorsChange, selectStrategy,
-    setStrategy, strategy, onSaveStrategy, onLoadStrategy, dsExecuteLiveStrategy, dsStopLiveStrategy, options, markets,
+    setStrategy, strategy, onSaveStrategy, onLoadStrategy, dsExecuteLiveStrategy, dsStopLiveStrategy, options, markets, onStrategySelect,
   } = props
   const { t } = useTranslation()
   const [isRemoveModalOpened, setIsRemoveModalOpened] = useState(false)

@@ -39,7 +39,6 @@ const StrategyEditorPage = ({
   const [strategy, setStrategy] = useState(strategyContent)
   const [indicators, setIndicators] = useState([])
   const [strategyDirty, setStrategyDirty] = useState(false)
-  const [forcedTab, setForcedTab] = useState(selectedTab)
   const [tourStep, setTourStep] = useState(0)
   const [sectionErrors, setSectionErrors] = useState({})
 
@@ -159,14 +158,8 @@ const StrategyEditorPage = ({
     }
   }
 
-  const setContent = (content) => {
-    if (content?.id) {
-      // index of Backtest tab
-      setForcedTab(1)
-    } else {
-      // index of Docs tab
-      setForcedTab(0)
-    }
+  const selectStrategyHandler = (content) => {
+    selectStrategy()
     setStrategyContent(content)
   }
 
@@ -176,7 +169,7 @@ const StrategyEditorPage = ({
     setStrategy(updated)
     setSectionErrors({})
     setStrategyDirty(false)
-    selectStrategy(newStrategy)
+    selectStrategyHandler(newStrategy)
 
     if (newStrategy.defineIndicators) {
       onDefineIndicatorsChange(newStrategy.defineIndicators)
@@ -187,11 +180,6 @@ const StrategyEditorPage = ({
     onSave(authToken, { ...strategy, savedTs: Date.now() })
     setStrategyDirty(false)
     // onCloseModals()
-  }
-
-  const selectStrategyHandler = (content) => {
-    selectStrategy()
-    setContent(content)
   }
 
   const strategyNodesArray = useMemo(() => {
@@ -221,7 +209,7 @@ const StrategyEditorPage = ({
               dark
               onStrategySelect={selectStrategyHandler}
               selectStrategy={selectStrategy}
-              onStrategyChange={setContent}
+              onStrategyChange={setStrategyContent}
               key='editor'
               onIndicatorsChange={onIndicatorsChange}
               onLoadStrategy={onLoadStrategy}
@@ -257,7 +245,6 @@ const StrategyEditorPage = ({
               className='hfui-strategiespage__pannel-wrapper'
               moveable={false}
               removeable={false}
-              forcedTab={forcedTab}
               onTabChange={setStrategyTab}
               darkHeader
             >
