@@ -6,51 +6,49 @@ import { useTranslation } from 'react-i18next'
 
 import Panel from '../../ui/Panel'
 import StrategyTradesTableColumns from './StrategyTradesTable.columns'
+
 import './style.css'
 
-const StrategyTradesTable = ({
-  label, trades, onTradeClick, dark,
-}) => {
+const StrategyTradesTable = ({ results: { trades }, onTradeClick, dark }) => {
   const { t } = useTranslation()
 
   return (
     <Panel
       dark={dark}
       darkHeader={dark}
-      label={label}
+      label={t('tradesTableModal.title')}
       removeable={false}
-      moveable={false}
+      moveable
       className='hfui-strategytradestable__wrapper'
     >
-      {_isEmpty(trades)
-        ? (
-          <div className='no-trades__wrapper'>
-            <span className='no-trades__notification'>
-              {t('tradesTableModal.noTrades')}
-            </span>
-          </div>
-        ) : (
-          <VirtualTable
-            data={trades}
-            columns={StrategyTradesTableColumns(t)}
-            defaultSortBy='mts'
-            defaultSortDirection='DESC'
-            onRowClick={({ rowData }) => onTradeClick(rowData)}
-          />
-        )}
+      {_isEmpty(trades) ? (
+        <div className='no-trades__wrapper'>
+          <span className='no-trades__notification'>
+            {t('tradesTableModal.noTrades')}
+          </span>
+        </div>
+      ) : (
+        <VirtualTable
+          data={trades}
+          columns={StrategyTradesTableColumns(t)}
+          defaultSortBy='mts'
+          defaultSortDirection='DESC'
+          onRowClick={({ rowData }) => onTradeClick(rowData)}
+        />
+      )}
     </Panel>
   )
 }
 
 StrategyTradesTable.propTypes = {
-  trades: PropTypes.arrayOf(PropTypes.object).isRequired, // eslint-disable-line
+  results: PropTypes.shape({
+    trades: PropTypes.arrayOf(PropTypes.object).isRequired, // eslint-disable-line
+  }).isRequired,
   onTradeClick: PropTypes.func.isRequired,
-  label: PropTypes.string,
   dark: PropTypes.bool,
 }
 
 StrategyTradesTable.defaultProps = {
-  label: 'Strategy Trades',
   dark: true,
 }
 

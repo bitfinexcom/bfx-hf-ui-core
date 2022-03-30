@@ -8,10 +8,16 @@ import {
 } from '../Grid.constants'
 import strategiesListTable from '../items/strategies/strategies.listTable'
 import strategiesLiveChart from '../items/strategies/strategies.liveChart'
+import strategiesPerformanceMetrics from '../items/strategies/strategies.performanceMetrics'
+import strategiesSidebar from '../items/strategies/strategies.sidebar'
+import strategiesTradesTable from '../items/strategies/strategies.tradesTable'
 
 const available = [
   strategiesListTable,
-  // strategiesLiveChart,
+  strategiesSidebar,
+  strategiesLiveChart,
+  strategiesPerformanceMetrics,
+  strategiesTradesTable,
 ]
 
 const availableMap = _reduce(available,
@@ -23,13 +29,14 @@ const availableMap = _reduce(available,
 
 // default number of columns and their x starting point
 const columns = {
-  [GRID_LARGE]: [0, 53, 76],
-  [GRID_MEDIUM]: [0, 53, 76],
+  [GRID_LARGE]: [0, 10, 50, 80],
+  [GRID_MEDIUM]: [0, 5],
 }
 
 const grid = [
-  // [strategiesLiveChart],
-  [strategiesListTable],
+  [strategiesSidebar, strategiesTradesTable, strategiesListTable],
+  [strategiesLiveChart],
+  [strategiesPerformanceMetrics],
 ]
 
 export default {

@@ -2,11 +2,11 @@ import { COMPONENT_IDS, COMPONENT_TYPES_STRATEGIES } from '../../GridLayout.help
 
 export default {
   defaults: {
-    c: COMPONENT_TYPES_STRATEGIES.STRATEGIES_TABLE,
+    c: COMPONENT_TYPES_STRATEGIES.SIDEBAR,
     h: 10,
-    w: 100,
+    w: 11,
+    i: COMPONENT_IDS.STRATEGIES_SIDEBAR,
     moved: false,
     static: false,
-    i: COMPONENT_IDS.STRATEGIES_LIST_TABLE,
   },
 }
