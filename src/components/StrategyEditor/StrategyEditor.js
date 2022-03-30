@@ -23,7 +23,7 @@ import EmptyContent from './components/StrategyEditorEmpty'
 import StrategyTab from './tabs/StrategyTab'
 import IDETab from './tabs/IDETab'
 import { getDefaultMarket } from '../../util/market'
-import StrategyParams from './StrategyEditor.Params'
+import StrategyParams from '../StrategiesMenuSideBar/StrategiesMenuSideBar.Params'
 import WSActions from '../../redux/actions/ws'
 
 import './style.css'

@@ -1,8 +1,11 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Icon } from 'react-fa'
 import Panel from '../../ui/Panel'
+import StrategyParams from './StrategiesMenuSideBar.Params'
 
-const StrategiesMenuSideBar = () => {
+const StrategiesMenuSideBar = ({ startExecution, stopExecution }) => {
+  const [paramsOpen, setParamsOpen] = useState(true)
+
   return (
     <Panel
       moveable
@@ -12,7 +15,17 @@ const StrategiesMenuSideBar = () => {
       darkHeader
     >
       <div
-        sbtitle='Strategy'
+        sbtitle={(
+          <>
+            Strategy
+            <StrategyParams
+              paramsOpen={paramsOpen}
+              setParamsOpen={setParamsOpen}
+              startExecution={startExecution}
+              stopExecution={stopExecution}
+            />
+          </>
+            )}
         sbicon={<Icon name='file-code-o' />}
       />
       <div
