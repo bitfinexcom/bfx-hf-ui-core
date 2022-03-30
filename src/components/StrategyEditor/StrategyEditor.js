@@ -22,6 +22,7 @@ import EmptyContent from './components/StrategyEditorEmpty'
 import StrategyTab from './tabs/StrategyTab'
 import IDETab from './tabs/IDETab'
 import { getDefaultMarket } from '../../util/market'
+import StrategyParams from './StrategyEditor.Params'
 import WSActions from '../../redux/actions/ws'
 
 import './style.css'
@@ -36,43 +37,22 @@ const DEFAULT_USE_MARGIN = false
 const DEFAULT_SEED_COUNT = 150
 
 const StrategyEditor = (props) => {
+  const {
+    moveable, removeable, strategyId, onRemove, authToken, onStrategyChange, gaCreateStrategy, strategyContent, backtestResults,
+    liveExecuting, liveLoading, strategyDirty, setStrategyDirty, setSectionErrors, onDefineIndicatorsChange, selectStrategy,
+    setStrategy, strategy, onSaveStrategy, onLoadStrategy, dsExecuteLiveStrategy, dsStopLiveStrategy, options, markets,
+  } = props
+
   const [isRemoveModalOpened, setIsRemoveModalOpened] = useState(false)
   const [createNewStrategyModalOpen, setCreateNewStrategyModalOpen] = useState(false)
   const [openExistingStrategyModalOpen, setOpenExistingStrategyModalOpen] = useState(false)
   const [docsText, setDocsText] = useState('')
-
-  const {
-    moveable,
-    removeable,
-    strategyId,
-    onRemove,
-    authToken,
-    onStrategyChange,
-    gaCreateStrategy,
-    strategyContent,
-    backtestResults,
-    liveExecuting,
-    liveLoading,
-    strategyDirty,
-    setStrategyDirty,
-    setSectionErrors,
-    onDefineIndicatorsChange,
-    selectStrategy,
-    setStrategy,
-    strategy,
-    onSaveStrategy,
-    onLoadStrategy,
-    dsExecuteLiveStrategy,
-    dsStopLiveStrategy,
-    options,
-    markets,
-  } = props
-
   const [symbol, setSymbol] = useState(options.symbol ? _find(markets, m => m.wsID === options.symbol) : getDefaultMarket(markets))
   const [timeframe, setTimeframe] = useState(options.tf || DEFAULT_TIMEFRAME)
   const [trades, setTrades] = useState(options.includeTrades || DEFAULT_USE_TRADES)
   const [candleSeed, setCandleSeed] = useState(options.seedCandleCount || DEFAULT_SEED_COUNT)
   const [margin, setMargin] = useState(options.margin || DEFAULT_USE_MARGIN)
+  const [paramsOpen, setParamsOpen] = useState(false)
 
   useEffect(() => {
     // load readme docs (DocsPath is an object when running in electron window)
@@ -150,6 +130,12 @@ const StrategyEditor = (props) => {
     dsStopLiveStrategy(authToken)
   }
 
+  const onSideTabChange = (tab) => {
+    if (tab === 0) {
+      setParamsOpen(true)
+    }
+  }
+
   return (
     <>
       {!strategy || _isEmpty(strategy) ? (
@@ -178,9 +164,20 @@ const StrategyEditor = (props) => {
           onRemoveStrategy={onRemoveStrategy}
           onExportStrategy={onExportStrategy}
           onImportStrategy={onImportStrategy}
+          onSideTabChange={onSideTabChange}
         >
           <StrategyTab
-            sbtitle='Strategy'
+            sbtitle={
+              <>
+                Strategy
+                <StrategyParams
+                  paramsOpen={paramsOpen}
+                  setParamsOpen={setParamsOpen}
+                  startExecution={startExecution}
+                  stopExecution={stopExecution}
+                />
+              </>
+            }
             sbicon={<Icon name='file-code-o' />}
             startExecution={startExecution}
             {...props}

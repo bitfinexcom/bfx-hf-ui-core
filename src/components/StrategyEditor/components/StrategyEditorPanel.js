@@ -24,6 +24,7 @@ const StrategyEditorPanel = ({
   removeable,
   execRunning,
   strategyDirty,
+  onSideTabChange,
   onSaveStrategy,
   onOpenSelectModal,
   onOpenCreateModal,
@@ -63,6 +64,7 @@ const StrategyEditorPanel = ({
       onRemove={onRemove}
       moveable={moveable}
       removeable={removeable}
+      onSideTabChange={onSideTabChange}
       extraIcons={[
         execRunning && (
           <Icon
@@ -159,6 +161,7 @@ StrategyEditorPanel.propTypes = {
   onOpenRemoveModal: PropTypes.func.isRequired,
   onExportStrategy: PropTypes.func.isRequired,
   onImportStrategy: PropTypes.func.isRequired,
+  onSideTabChange: PropTypes.func.isRequired,
   children: PropTypes.node.isRequired,
   strategies: PropTypes.arrayOf(PropTypes.object).isRequired, // eslint-disable-line
 }

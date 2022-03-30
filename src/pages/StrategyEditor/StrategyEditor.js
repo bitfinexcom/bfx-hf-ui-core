@@ -211,8 +211,6 @@ const StrategyEditorPage = ({
     })
   }, [strategies])
 
-  console.log(strategyContent, strategy)
-
   return (
     <Layout>
       <Layout.Header />
