@@ -24,6 +24,8 @@ const StrategyEditorPanel = ({
   removeable,
   execRunning,
   strategyDirty,
+  onSideTabChange,
+  preSidebarComponents,
   onSaveStrategy,
   onOpenSelectModal,
   onOpenCreateModal,
@@ -63,6 +65,7 @@ const StrategyEditorPanel = ({
       onRemove={onRemove}
       moveable={moveable}
       removeable={removeable}
+      onSideTabChange={onSideTabChange}
       extraIcons={[
         execRunning && (
           <Icon
@@ -73,6 +76,7 @@ const StrategyEditorPanel = ({
           />
         ),
       ]}
+      preSidebarComponents={preSidebarComponents}
       // headerComponents={(
       //   <div className='hfui-strategyeditor__header'>
       //     <div className='header__buttons-container'>
@@ -159,6 +163,8 @@ StrategyEditorPanel.propTypes = {
   onOpenRemoveModal: PropTypes.func.isRequired,
   onExportStrategy: PropTypes.func.isRequired,
   onImportStrategy: PropTypes.func.isRequired,
+  onSideTabChange: PropTypes.func.isRequired,
+  preSidebarComponents: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.node), PropTypes.node]),
   children: PropTypes.node.isRequired,
   strategies: PropTypes.arrayOf(PropTypes.object).isRequired, // eslint-disable-line
 }
@@ -173,6 +179,7 @@ StrategyEditorPanel.defaultProps = {
   moveable: true,
   removeable: true,
   execRunning: false,
+  preSidebarComponents: null,
   strategyDirty: false,
 }
 

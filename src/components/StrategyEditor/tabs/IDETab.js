@@ -78,6 +78,7 @@ const IDETab = ({
     setSectionErrors({})
     setExecError('')
   }
+
   return (
     <div className='hfui-strategyeditor__wrapper'>
       <ul className='hfui-strategyeditor__func-select'>

@@ -42,7 +42,6 @@ const StrategyEditorPage = ({
   const [strategy, setStrategy] = useState(strategyContent)
   const [indicators, setIndicators] = useState([])
   const [strategyDirty, setStrategyDirty] = useState(false)
-  const [forcedTab, setForcedTab] = useState(selectedTab)
   const [tourStep, setTourStep] = useState(0)
   const [sectionErrors, setSectionErrors] = useState({})
 
@@ -162,14 +161,8 @@ const StrategyEditorPage = ({
     }
   }
 
-  const setContent = (content) => {
-    if (content?.id) {
-      // index of Backtest tab
-      setForcedTab(1)
-    } else {
-      // index of Docs tab
-      setForcedTab(0)
-    }
+  const selectStrategyHandler = (content) => {
+    selectStrategy()
     setStrategyContent(content)
   }
 
@@ -179,7 +172,7 @@ const StrategyEditorPage = ({
     setStrategy(updated)
     setSectionErrors({})
     setStrategyDirty(false)
-    selectStrategy(newStrategy)
+    selectStrategyHandler(newStrategy)
 
     if (newStrategy.defineIndicators) {
       onDefineIndicatorsChange(newStrategy.defineIndicators)
@@ -190,11 +183,6 @@ const StrategyEditorPage = ({
     onSave(authToken, { ...strategy, savedTs: Date.now() })
     setStrategyDirty(false)
     // onCloseModals()
-  }
-
-  const selectStrategyHandler = (content) => {
-    selectStrategy()
-    setContent(content)
   }
 
   const strategyNodesArray = useMemo(() => {
@@ -425,58 +413,59 @@ const StrategyEditorPage = ({
 
         }}
         />
-        {/* <StrategyEditor
-            dark
-            onStrategySelect={selectStrategyHandler}
-            selectStrategy={selectStrategy}
-            onStrategyChange={setContent}
-            key='editor'
-            onIndicatorsChange={onIndicatorsChange}
-            onLoadStrategy={onLoadStrategy}
-            onSaveStrategy={onSaveStrategy}
-            strategyDirty={strategyDirty}
-            setStrategyDirty={setStrategyDirty}
-            sectionErrors={sectionErrors}
-            strategyContent={strategyContent}
-            strategy={strategy}
-            setStrategy={setStrategy}
-            setSectionErrors={setSectionErrors}
-            onDefineIndicatorsChange={onDefineIndicatorsChange}
-            evalSectionContent={evalSectionContent}
-            moveable={false}
-            removeable={false}
-            indicators={indicators}
-            onAddIndicator={onAddIndicator}
-            onDeleteIndicator={onDeleteIndicator}
-          /> */}
-        {firstLogin && (
-        <Suspense fallback={<></>}>
-          <Joyride
-            steps={STEPS.getStrategyEditorModes(t)}
-            callback={onTourUpdate}
-            run={showGuide}
-            stepIndex={tourStep}
-          />
-        </Suspense>
-        )}
-        {/* <div
-          key='main'
-          className={ClassNames('hfui-strategyeditorpage__list', { initial: _isEmpty(strategy) })}
-        >
-          <Panel
-            moveable={false}
-            removeable={false}
-            forcedTab={forcedTab}
-            onTabChange={setStrategyTab}
-            darkHeader
+        {/* <div className='hfui-strategyeditorpage__content-wrapper'>
+          <Suspense fallback={<></>}>
+            <StrategyEditor
+              dark
+              onStrategySelect={selectStrategyHandler}
+              selectStrategy={selectStrategy}
+              onStrategyChange={setStrategyContent}
+              key='editor'
+              onIndicatorsChange={onIndicatorsChange}
+              onLoadStrategy={onLoadStrategy}
+              onSaveStrategy={onSaveStrategy}
+              strategyDirty={strategyDirty}
+              setStrategyDirty={setStrategyDirty}
+              sectionErrors={sectionErrors}
+              strategyContent={strategyContent}
+              strategy={strategy}
+              setStrategy={setStrategy}
+              setSectionErrors={setSectionErrors}
+              onDefineIndicatorsChange={onDefineIndicatorsChange}
+              evalSectionContent={evalSectionContent}
+              moveable={false}
+              removeable={false}
+            />
+          </Suspense>
+          {firstLogin && (
+          <Suspense fallback={<></>}>
+            <Joyride
+              steps={STEPS.getStrategyEditorModes(t)}
+              callback={onTourUpdate}
+              run={showGuide}
+              stepIndex={tourStep}
+            />
+          </Suspense>
+          )}
+          <div
+            key='main'
+            className='hfui-strategiespage__right'
           >
-            <div tabtitle={t('strategyEditor.activeStrategies', { amount: 0 })}>
-              {null}
-            </div>
-            <ul className='strategies-list' tabtitle={t('strategyEditor.pastStrategies', { amount: _size(strategyNodesArray) })}>
-              {strategyNodesArray}
-            </ul>
-          </Panel>
+            <Panel
+              className='hfui-strategiespage__pannel-wrapper'
+              moveable={false}
+              removeable={false}
+              onTabChange={setStrategyTab}
+              darkHeader
+            >
+              <div tabtitle={t('strategyEditor.activeStrategies', { amount: 0 })}>
+                {null}
+              </div>
+              <ul className='strategies-list' tabtitle={t('strategyEditor.pastStrategies', { amount: _size(strategyNodesArray) })}>
+                {strategyNodesArray}
+              </ul>
+            </Panel>
+          </div>
         </div> */}
       </Layout.Main>
       <Layout.Footer />
