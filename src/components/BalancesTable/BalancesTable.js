@@ -36,12 +36,8 @@ const BalancesTable = ({
 }
 
 BalancesTable.propTypes = {
-  balances: PropTypes.objectOf(PropTypes.objectOf([
-    PropTypes.string, PropTypes.number,
-  ])),
-  filteredBalances: PropTypes.objectOf(PropTypes.objectOf([
-    PropTypes.string, PropTypes.number,
-  ])),
+  balances: PropTypes.objectOf(PropTypes.object),
+  filteredBalances: PropTypes.objectOf(PropTypes.object),
   renderedInTradingState: PropTypes.bool,
   hideZeroBalances: PropTypes.bool,
 }

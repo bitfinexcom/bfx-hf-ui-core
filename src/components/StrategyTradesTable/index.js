@@ -43,7 +43,7 @@ const StrategyTradesTable = ({
 }
 
 StrategyTradesTable.propTypes = {
-  trades: PropTypes.arrayOf(PropTypes.object).isRequired, // eslint-disable-line
+  trades: PropTypes.arrayOf(PropTypes.object).isRequired,
   onTradeClick: PropTypes.func.isRequired,
   label: PropTypes.string,
   dark: PropTypes.bool,
