@@ -10,11 +10,13 @@ import _map from 'lodash/map'
 import _remove from 'lodash/remove'
 import _size from 'lodash/size'
 import _forEach from 'lodash/forEach'
+import _isEmpty from 'lodash/isEmpty'
 import Indicators from 'bfx-hf-indicators'
 import { nonce } from 'bfx-api-node-util'
 import HFS from 'bfx-hf-strategy'
 import HFU from 'bfx-hf-util'
 import { useTranslation } from 'react-i18next'
+import ClassNames from 'clsx'
 
 import {
   STEPS, ACTIONS, EVENTS, STATUS,
@@ -22,8 +24,10 @@ import {
 import Layout from '../../components/Layout'
 import Panel from '../../ui/Panel'
 import useTourGuide from '../../hooks/useTourGuide'
+import { results } from './mock_data'
 
 import './style.css'
+import GridLayout from '../../components/GridLayout'
 
 const debug = Debug('hfui-ui:p:strategy-editor')
 
@@ -199,11 +203,18 @@ const StrategyEditorPage = ({
     })
   }, [strategies])
 
+  // console.log(strategyContent, strategy)
+
   return (
     <Layout>
       <Layout.Header />
-      <Layout.Main className='hfui-strategyeditorpage__wrapper'>
-        <div className='hfui-strategyeditorpage__content-wrapper'>
+      <Layout.Main flex className='hfui-strategyeditorpage1'>
+        <GridLayout sharedProps={{
+          onLoadStrategy,
+          results,
+        }}
+        />
+        {/* <div className='hfui-strategyeditorpage__content-wrapper'>
           <Suspense fallback={<></>}>
             <StrategyEditor
               dark
@@ -228,14 +239,14 @@ const StrategyEditorPage = ({
             />
           </Suspense>
           {firstLogin && (
-            <Suspense fallback={<></>}>
-              <Joyride
-                steps={STEPS.getStrategyEditorModes(t)}
-                callback={onTourUpdate}
-                run={showGuide}
-                stepIndex={tourStep}
-              />
-            </Suspense>
+          <Suspense fallback={<></>}>
+            <Joyride
+              steps={STEPS.getStrategyEditorModes(t)}
+              callback={onTourUpdate}
+              run={showGuide}
+              stepIndex={tourStep}
+            />
+          </Suspense>
           )}
           <div
             key='main'
@@ -256,7 +267,7 @@ const StrategyEditorPage = ({
               </ul>
             </Panel>
           </div>
-        </div>
+        </div> */}
       </Layout.Main>
       <Layout.Footer />
     </Layout>

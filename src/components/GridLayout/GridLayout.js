@@ -31,13 +31,26 @@ import {
 import { generateLayout } from './Grid.layouts'
 import tradingTerminalLayout from './layouts/trading'
 import marketDataLayout from './layouts/marketData'
-import { marketData } from '../../constants/routes'
+import strategiesLayout from './layouts/strategies'
+import { marketData, strategyEditor, tradingTerminal } from '../../constants/routes'
 
 import './style.scss'
 
 const ReactGridLayout = WidthProvider(RGL)
 
-const getLayoutConfig = pathname => (pathname === marketData.path ? marketDataLayout : tradingTerminalLayout)
+const getLayoutConfig = pathname => {
+  switch (pathname) {
+    case marketData.path:
+      return marketDataLayout
+    case tradingTerminal.path:
+      return tradingTerminalLayout
+    case strategyEditor.path:
+      return strategiesLayout
+
+    default:
+      return null
+  }
+}
 
 const GridLayout = ({
   sharedProps, tradesProps, bookProps, chartProps, orderFormProps,
@@ -46,6 +59,8 @@ const GridLayout = ({
   const [breakpoint, setBreakpoint] = useState(RGL.utils.getBreakpointFromWidth(GRID_BREAKPOINTS, document.body.clientWidth))
 
   const { pathname } = useLocation()
+  const isAbleToSaveLayout = !pathname === strategyEditor.path
+
   const layoutConfig = useMemo(() => getLayoutConfig(pathname), [pathname])
   const layoutID = useSelector(getLayoutID)
 
@@ -107,7 +122,7 @@ const GridLayout = ({
 
   const currentLayout = nextLayouts?.[breakpoint] || []
 
-  if (!layoutID) {
+  if (isAbleToSaveLayout && !layoutID) {
     return <Spinner className='grid-spinner' />
   }
 

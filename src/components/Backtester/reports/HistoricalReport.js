@@ -83,7 +83,6 @@ const HistoricalReport = (opts, results, backtestData, backtestOptions, t, setti
         </AutoSizer>
       )}
       <StrategyTradesTable
-        label={t('tradesTableModal.title')}
         trades={trades}
         onTradeClick={() => { }}
       />

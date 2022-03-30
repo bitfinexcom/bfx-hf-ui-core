@@ -1,0 +1,12 @@
+.hfui-performance-metrics {
+  &__item {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    margin-bottom: 10px;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+}

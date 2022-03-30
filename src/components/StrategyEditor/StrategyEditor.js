@@ -23,7 +23,7 @@ import EmptyContent from './components/StrategyEditorEmpty'
 import StrategyTab from './tabs/StrategyTab'
 import IDETab from './tabs/IDETab'
 import { getDefaultMarket } from '../../util/market'
-import StrategyParams from './StrategyEditor.Params'
+import StrategyParams from '../StrategiesMenuSideBar/StrategiesMenuSideBar.Params'
 import WSActions from '../../redux/actions/ws'
 
 import './style.css'
@@ -183,7 +183,7 @@ const StrategyEditor = (props) => {
           preSidebarComponents={preSidebar}
         >
           <StrategyTab
-            sbtitle={
+            sbtitle={(
               <>
                 Strategy
                 <StrategyParams
@@ -193,7 +193,7 @@ const StrategyEditor = (props) => {
                   stopExecution={stopExecution}
                 />
               </>
-            }
+            )}
             sbicon={<Icon name='file-code-o' />}
             startExecution={startExecution}
             {...props}
