@@ -1,4 +1,4 @@
-@import '../../variables.scss';
+@import "../../variables.scss";
 
 body.hosted {
   @media screen and (max-width: 1230px) {
@@ -6,22 +6,22 @@ body.hosted {
       .hfui-strategyeditorpage__content-wrapper {
         flex-direction: column;
       }
-  
+
       .hfui-strategyeditor__panel {
         .scrollbar-container {
           min-height: 700px !important;
         }
       }
-  
+
       .hfui-strategiespage__right {
         width: 100%;
         margin-top: 20px;
-  
+
         .scrollbar-container {
           min-height: 700px !important;
         }
       }
-  
+
       .hfui-strategyeditor__panel {
         width: 100%;
         margin-right: 0;
@@ -32,59 +32,30 @@ body.hosted {
 
 .hfui-strategyeditorpage1 {
   width: 100%;
+  display: flex;
   flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
 }
 
-.hfui-strategyeditorpage__wrapper {
-  .hfui-strategyeditorpage__content-wrapper {
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-  }
+.hfui-strategyeditor__panel {
+  width: 100%;
+  margin-bottom: spacing(1.25);
+}
 
-  .hfui-strategyeditor__panel {
-    width: 100%;
-    margin-bottom: spacing(1.25);
-  }
+.hfui-strategytradestable__wrapper {
+  height: 300px;
+  width: auto;
+  margin: 0;
+}
 
-  .hfui-strategytradestable__wrapper {
-    height: 300px;
-    width: auto;
-    margin: 0;
-  }
+.hfui-strategiespage__right {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
 
-  .hfui-strategiespage__pannel-wrapper {
-    height: 400px;
-    background: var(--darker-background-color);
-    
-    .hfui-panel__header-tabs {
-      text-transform: uppercase;
-    }
-
-    .strategies-list {
-      padding: 10px;
-      list-style: disc;
-    }
-    .strategy-item {
-      margin-bottom: 8px;
-      cursor: pointer;
-      color: #05bc97;
-      font-size: 16px;
-
-      &:last-child {
-        margin-bottom: 0;
-      }
-    }
-  }
-
-  .hfui-strategiespage__right {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-
-    .hfui-panel {
-      flex-shrink: 0;
-    }
+  .hfui-panel {
+    flex-shrink: 0;
   }
 }
 
