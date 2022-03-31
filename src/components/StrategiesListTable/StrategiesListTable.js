@@ -1,20 +1,16 @@
 import React, { useMemo, useState } from 'react'
+import PropTypes from 'prop-types'
 import _map from 'lodash/map'
 import _size from 'lodash/size'
 import { useTranslation } from 'react-i18next'
-import { useDispatch, useSelector } from 'react-redux'
-import UIActions from '../../redux/actions/ui'
+import { useSelector } from 'react-redux'
 import Panel from '../../ui/Panel'
 import { getSortedByTimeStrategies } from '../../redux/selectors/ws'
 
+import './style.scss'
+
 const StrategiesListTable = ({ onLoadStrategy }) => {
-  const selectedTab = useSelector(state => state.ui.tab)
   const strategies = useSelector(getSortedByTimeStrategies)
-
-  const [forcedTab, setForcedTab] = useState(selectedTab)
-
-  const dispatch = useDispatch()
-  const setStrategyTab = (tab) => dispatch(UIActions.setStrategyTab(tab))
 
   const strategyNodesArray = useMemo(() => {
     return _map(strategies, (str, index) => {
@@ -39,8 +35,7 @@ const StrategiesListTable = ({ onLoadStrategy }) => {
     <Panel
       moveable
       removeable={false}
-      forcedTab={forcedTab}
-      onTabChange={setStrategyTab}
+      className='hfui-strategies-list'
       darkHeader
     >
       <div tabtitle={t('strategyEditor.activeStrategies', { amount: 0 })}>
@@ -51,6 +46,10 @@ const StrategiesListTable = ({ onLoadStrategy }) => {
       </ul>
     </Panel>
   )
+}
+
+StrategiesListTable.propTypes = {
+  onLoadStrategy: PropTypes.func.isRequired,
 }
 
 export default StrategiesListTable

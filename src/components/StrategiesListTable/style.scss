@@ -1,0 +1,23 @@
+.hfui-strategies-list {
+  height: 400px;
+  background: var(--darker-background-color);
+
+  .hfui-panel__header-tabs {
+    text-transform: uppercase;
+  }
+
+  .strategies-list {
+    padding: 10px;
+    list-style: disc;
+  }
+  .strategy-item {
+    margin-bottom: 8px;
+    cursor: pointer;
+    color: #05bc97;
+    font-size: 16px;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+}
