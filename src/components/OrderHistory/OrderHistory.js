@@ -40,9 +40,7 @@ const OrderHistory = ({
 }
 
 OrderHistory.propTypes = {
-  orders: PropTypes.arrayOf(PropTypes.objectOf([
-    PropTypes.string, PropTypes.number, PropTypes.instanceOf(Date),
-  ])),
+  orders: PropTypes.arrayOf(PropTypes.object),
   dark: PropTypes.bool,
   onRemove: PropTypes.func,
 }

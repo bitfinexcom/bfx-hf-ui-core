@@ -125,7 +125,7 @@ const MarketSelect = forwardRef(function MarketSelect(props, ref) {
 MarketSelect.propTypes = {
   value: PropTypes.instanceOf(Object).isRequired,
   onChange: PropTypes.func.isRequired,
-  markets: PropTypes.objectOf(PropTypes.object).isRequired, // eslint-disable-line
+  markets: PropTypes.objectOf(PropTypes.object).isRequired,
   renderLabel: PropTypes.bool,
   className: PropTypes.instanceOf(Object),
   currentMode: PropTypes.string,

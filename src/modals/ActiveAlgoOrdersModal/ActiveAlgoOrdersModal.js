@@ -128,9 +128,7 @@ const ActiveAlgoOrdersModal = ({
 
 ActiveAlgoOrdersModal.propTypes = {
   handleActiveOrders: PropTypes.func.isRequired,
-  activeAlgoOrders: PropTypes.arrayOf(PropTypes.objectOf([
-    PropTypes.string, PropTypes.number, PropTypes.object,
-  ])),
+  activeAlgoOrders: PropTypes.arrayOf(PropTypes.object),
   isOpen: PropTypes.bool.isRequired,
 }
 
