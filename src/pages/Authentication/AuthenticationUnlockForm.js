@@ -48,8 +48,10 @@ const AuthenticationUnlockForm = ({ isPaperTrading, onUnlock: _onUnlock, onReset
 
     if (isDevEnv && password.length) {
       console.log('helpers: ', helpers)
-      const check = helpers.isSafeStorageAvailable()
+      const check = helpers.persistKey('new-pass', password)
+      const final = helpers.getSavedKey('new-pass')
       console.log('check: ', check)
+      console.log('final: ', final)
       updateStoredPassword(password)
       updateAutoLoginState(autoLoginState)
     }
