@@ -7,7 +7,7 @@
 @media screen and (max-width: 940px) {
   .hfui-authenticationpage__inner {
     flex-direction: column !important;
-  
+
     > * {
       width: 100% !important;
     }
@@ -244,5 +244,17 @@
   padding-top: 25px;
   .hfui-input {
     margin-top: 0px;
+  }
+}
+
+.hfui-loading__mode {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: var(--primary-8);
+  font-size: 16px;
+
+  .content {
+    margin-top: 10px;
   }
 }

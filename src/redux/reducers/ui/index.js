@@ -83,6 +83,7 @@ function getInitialState() {
     layoutID: null,
     tab: null,
     tickersVolumeUnit: null,
+    isChangingAppMode: false,
   }
 
   if (!localStorage) {
@@ -162,6 +163,8 @@ function getInitialState() {
   }
 
   defaultState.isPaperTrading = isPaperTrading
+  defaultState.isChangingAppMode = localStorage.getItem('HF_IS_CHANGING_APP_MODE') === 'true'
+  console.log('defaultState: ', defaultState)
 
   return defaultState
 }
@@ -394,6 +397,14 @@ function reducer(state = getInitialState(), action = {}) {
         isPaperTrading,
         currentMode: mode,
         tickersVolumeUnit: isPaperTrading ? VOLUME_UNIT_PAPER.TESTUSD : VOLUME_UNIT.USD,
+      }
+    }
+    case types.SET_IS_CHANGING_APP_MODE: {
+      console.trace('payload: ', payload)
+      localStorage.setItem('HF_IS_CHANGING_APP_MODE', payload)
+      return {
+        ...state,
+        isChangingAppMode: payload,
       }
     }
     case types.CHANGE_TRADING_MODAL_STATE: {

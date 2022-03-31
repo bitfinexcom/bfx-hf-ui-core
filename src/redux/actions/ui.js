@@ -225,6 +225,11 @@ export const setStrategyTab = tab => ({
   payload: { tab },
 })
 
+export const setIsChangingAppMode = (flag) => ({
+  type: types.SET_IS_CHANGING_APP_MODE,
+  payload: flag,
+})
+
 export default {
   saveLayout,
   storeUnsavedLayout,
@@ -262,4 +267,5 @@ export default {
   changeConfirmDMSModalState,
   changeEditOrderModalState,
   changeClosePositionModalState,
+  setIsChangingAppMode,
 }

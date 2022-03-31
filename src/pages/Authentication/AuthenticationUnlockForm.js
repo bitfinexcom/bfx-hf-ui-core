@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import { Checkbox } from '@ufx-ui/core'
 import _isEmpty from 'lodash/isEmpty'
 import { useTranslation } from 'react-i18next'
+import { useSelector } from 'react-redux'
 
 import Input from '../../ui/Input'
 import Button from '../../ui/Button'
@@ -15,10 +16,14 @@ import {
   updateStoredPassword,
 } from '../../util/autologin'
 import { MAIN_MODE, PAPER_MODE } from '../../redux/reducers/ui'
+import LoadingMode from './LoadingMode'
+import { getIsChangingAppMode } from '../../redux/selectors/ui'
 
 const isDevEnv = devEnv()
 
 const initialAutoLoginSave = getAutoLoginState()
+
+const helpers = window.electronService
 
 const getModes = (t) => {
   const MAIN_MODE_OPTION = { value: MAIN_MODE, label: t('main.production') }
@@ -33,6 +38,8 @@ const AuthenticationUnlockForm = ({ isPaperTrading, onUnlock: _onUnlock, onReset
   const submitReady = !_isEmpty(password) && !_isEmpty(mode)
 
   const { t } = useTranslation()
+  const isChangingAppMode = useSelector(getIsChangingAppMode)
+  console.log('isChangingAppMode: ', isChangingAppMode)
 
   const OPTIONS = getModes(t)
 
@@ -40,6 +47,9 @@ const AuthenticationUnlockForm = ({ isPaperTrading, onUnlock: _onUnlock, onReset
     if (!submitReady) return
 
     if (isDevEnv && password.length) {
+      console.log('helpers: ', helpers)
+      const check = helpers.isSafeStorageAvailable()
+      console.log('check: ', check)
       updateStoredPassword(password)
       updateAutoLoginState(autoLoginState)
     }
@@ -64,6 +74,10 @@ const AuthenticationUnlockForm = ({ isPaperTrading, onUnlock: _onUnlock, onReset
       onUnlock()
     }
   }, [onUnlock, password])
+
+  if (isChangingAppMode) {
+    return <LoadingMode />
+  }
 
   return (
     <div className='hfui-authenticationpage__content'>
