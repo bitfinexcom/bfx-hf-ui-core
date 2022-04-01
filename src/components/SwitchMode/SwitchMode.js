@@ -20,7 +20,9 @@ const SwitchMode = ({
 }) => {
   const onChange = () => {
     changeAppMode(!isPaperTrading, authToken, currentMode)
-    window.location.reload()
+    // window.location.reload()
+    // eslint-disable-next-line lodash/prefer-lodash-method
+    window.location.replace('/index.html')
   }
 
   return (
