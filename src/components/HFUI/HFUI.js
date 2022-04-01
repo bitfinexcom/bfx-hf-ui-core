@@ -7,6 +7,7 @@ import {
 } from 'react-router'
 import PropTypes from 'prop-types'
 
+import { useDispatch } from 'react-redux'
 import { THEMES, SETTINGS } from '../../redux/selectors/ui'
 import useInjectBfxData from '../../hooks/useInjectBfxData'
 import StrategyEditorPage from '../../pages/StrategyEditor'
@@ -17,6 +18,7 @@ import Routes from '../../constants/routes'
 import { isElectronApp } from '../../redux/config'
 
 import './style.css'
+import { setIsChangingAppMode } from '../../redux/actions/ui'
 
 // const StrategyEditorPage = lazy(() => import('../../pages/StrategyEditor'))
 const TradingPage = lazy(() => import('../../pages/Trading'))
@@ -58,13 +60,16 @@ const HFUI = (props) => {
     }
   }, [authToken, currentMode, onUnload])
 
+  const dispatch = useDispatch()
+
   const onElectronAppClose = useCallback(() => {
+    dispatch(setIsChangingAppMode(false))
     if (!authToken || !settingsShowAlgoPauseInfo) {
       closeElectronApp()
     } else {
       shouldShowAOPauseModalState()
     }
-  }, [authToken, settingsShowAlgoPauseInfo, shouldShowAOPauseModalState])
+  }, [authToken, dispatch, settingsShowAlgoPauseInfo, shouldShowAOPauseModalState])
 
   useEffect(() => {
     if (isElectronApp) {

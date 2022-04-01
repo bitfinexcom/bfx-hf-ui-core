@@ -399,7 +399,7 @@ function reducer(state = getInitialState(), action = {}) {
       }
     }
     case types.SET_IS_CHANGING_APP_MODE: {
-      console.trace('payload: ', payload)
+      console.log('payload: ', payload)
       localStorage.setItem('HF_IS_CHANGING_APP_MODE', payload)
       return {
         ...state,
