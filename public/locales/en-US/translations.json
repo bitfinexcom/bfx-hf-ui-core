@@ -1,7 +1,8 @@
 {
   "main": {
-    "sandbox": "Sandbox Mode",
-    "production": "Live Mode",
+    "sandbox": "Sandbox",
+    "production": "Live",
+    "mode": "mode",
     "paperPrefix": "Paper",
     "trading": "{{paperPrefix}} Trading Terminal",
     "market": "{{paperPrefix}} Market Data",
@@ -709,5 +710,9 @@
     "warning_2": "This action can not be undone!",
     "strategyName": "the strategy name",
     "input_placeholder": "Type {{label}} to delete it"
+  },
+  "modeChange": {
+    "changingTo": "changing to",
+    "line_2": "Please wait a moment while establish a connection"
   }
 }

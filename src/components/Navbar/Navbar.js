@@ -2,6 +2,7 @@ import React, { memo } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import _values from 'lodash/values'
 import _map from 'lodash/map'
+import _startCase from 'lodash/startCase'
 import cx from 'clsx'
 
 import { useTranslation } from 'react-i18next'
@@ -55,7 +56,11 @@ const Navbar = () => {
         {isElectronApp && (
           <div className='hfui-tradingpaper__control'>
             <div className='hfui-tradingpaper__control-toggle'>
-              <p>{t('main.sandbox')}</p>
+              <p>
+                {t('main.sandbox')}
+                {' '}
+                {_startCase(t('main.mode'))}
+              </p>
               <SwitchMode />
             </div>
           </div>

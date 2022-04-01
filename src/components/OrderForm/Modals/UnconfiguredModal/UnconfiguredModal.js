@@ -17,7 +17,7 @@ const UnconfiguredModal = ({ onClick, isPaperTrading, keyExistButNotValid }) => 
         <a className='submit-keys'>
           {keyExistButNotValid ? t('ui.updateBtn') : t('ui.submitBtn')}
           &nbsp;
-          {isPaperTrading && t('main.sandbox')}
+          {isPaperTrading && `${t('main.sandbox')} ${t('main.mode')}`}
           &nbsp;
           {t('appSettings.apiKeys')}
         </a>

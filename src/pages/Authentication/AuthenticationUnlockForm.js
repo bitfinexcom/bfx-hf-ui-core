@@ -2,6 +2,7 @@ import React, { useCallback, useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
 import { Checkbox } from '@ufx-ui/core'
 import _isEmpty from 'lodash/isEmpty'
+import _startCase from 'lodash/startCase'
 import { useTranslation } from 'react-i18next'
 import { useSelector } from 'react-redux'
 
@@ -24,8 +25,8 @@ const isDevEnv = devEnv()
 const initialAutoLoginSave = getAutoLoginState()
 
 const getModes = (t) => {
-  const MAIN_MODE_OPTION = { value: MAIN_MODE, label: t('main.production') }
-  const PAPER_MODE_OPTION = { value: PAPER_MODE, label: t('main.sandbox') }
+  const MAIN_MODE_OPTION = { value: MAIN_MODE, label: `${t('main.production')} ${_startCase(t('main.mode'))}` }
+  const PAPER_MODE_OPTION = { value: PAPER_MODE, label: `${t('main.sandbox')} ${_startCase(t('main.mode'))}` }
   return [MAIN_MODE_OPTION, PAPER_MODE_OPTION]
 }
 

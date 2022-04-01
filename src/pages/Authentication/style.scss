@@ -251,10 +251,21 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  color: var(--primary-8);
-  font-size: 16px;
+  color: var(--primary-6);
 
   .content {
-    margin-top: 10px;
+    font-size: 18px;
+    margin-top: 16px;
+  }
+
+  .highlight {
+    text-transform: uppercase;
+    color: var(--primary-9);
+    font-weight: 600;
+  }
+
+  .line-2 {
+    margin-top: 16px;
+    font-size: 14px;
   }
 }

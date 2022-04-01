@@ -2,6 +2,7 @@ import React, { memo } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Checkbox, Button, Intent } from '@ufx-ui/core'
 import { useTranslation } from 'react-i18next'
+import _startCase from 'lodash/startCase'
 
 import UIActions from '../../redux/actions/ui'
 import { getIsPaperTrading } from '../../redux/selectors/ui'
@@ -41,7 +42,7 @@ const TradingMode = ({ onClose }) => {
       <div className='appsettings-modal__setting'>
         <Checkbox
           onChange={togglePaperTrading}
-          label={t('main.sandbox')}
+          label={`${t('main.sandbox')} ${_startCase(t('main.mode'))}`}
           checked={isPaperTrading}
           className='appsettings-modal__checkbox'
         />
