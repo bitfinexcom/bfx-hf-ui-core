@@ -16,7 +16,6 @@ import { nonce } from 'bfx-api-node-util'
 import HFS from 'bfx-hf-strategy'
 import HFU from 'bfx-hf-util'
 import { useTranslation } from 'react-i18next'
-import GridLayout, { WidthProvider } from 'react-grid-layout'
 import ClassNames from 'clsx'
 
 import {
@@ -25,15 +24,9 @@ import {
 import Layout from '../../components/Layout'
 import Panel from '../../ui/Panel'
 import useTourGuide from '../../hooks/useTourGuide'
-import { results } from './mock_data'
-import StrategiesMenuSideBar from '../../components/StrategiesMenuSideBar'
 
 import './style.css'
-import Chart from '../../components/Chart'
-import ChartPanel from '../../components/ChartPanel'
-import StrategyPerfomanceMetrics from '../../components/StrategyPerfomanceMetrics'
 import StrategiesListTable from '../../components/StrategiesListTable'
-import StrategyTradesTable from '../../components/StrategyTradesTable'
 
 const debug = Debug('hfui-ui:p:strategy-editor')
 
@@ -41,8 +34,6 @@ const StrategyEditor = lazy(() => import('../../components/StrategyEditor'))
 const Joyride = lazy(() => import('../../components/Joyride'))
 
 // todo: move 'export strategy' to the options tab
-
-const ReactGridLayout = WidthProvider(GridLayout)
 
 const StrategyEditorPage = ({
   selectStrategy, finishGuide, setStrategyContent, firstLogin, isGuideActive, strategyContent, setStrategyTab, selectedTab, strategies,
@@ -194,75 +185,10 @@ const StrategyEditorPage = ({
     // onCloseModals()
   }
 
-  const strategyNodesArray = useMemo(() => {
-    return _map(strategies, (str, index) => {
-      // if (index >= 6) {
-      //   return null
-      // }
-      return (
-        <li
-          key={str.id}
-          className='strategy-item'
-          onClick={() => onLoadStrategy(str)}
-        >
-          {str.label}
-        </li>
-      )
-    })
-  }, [strategies])
-
-  // console.log(strategyContent, strategy)
-
-  const layouts = [
-    {
-      i: 'a', x: 0, y: 0, w: 10, h: 12,
-    },
-    {
-      i: 'b', x: 10, y: 0, w: 60, h: 7,
-    },
-    {
-      i: 'c', x: 70, y: 0, w: 30, h: 7,
-    },
-    {
-      i: 'd', x: 10, y: 7, w: 90, h: 5,
-    },
-    {
-      i: 'e', x: 0, y: 10, w: 100, h: 5,
-    },
-  ]
-
   return (
     <Layout>
       <Layout.Header />
       <Layout.Main flex className='hfui-strategyeditorpage1'>
-        {/* <ReactGridLayout
-          cols={100}
-          rowHeight={30}
-          measureBeforeMount
-          layout={layouts}
-          margin={[10, 10]}
-        >
-          <div key='a'>
-            <StrategiesMenuSideBar />
-          </div>
-          <div key='b'>
-            <ChartPanel />
-          </div>
-          <div key='c'>
-            <StrategyPerfomanceMetrics results={results} />
-          </div>
-          <div key='d'>
-            <StrategyTradesTable results={results} />
-          </div>
-          <div key='e'>
-            <StrategiesListTable />
-          </div>
-        </ReactGridLayout> */}
-        {/* // <GridLayout sharedProps={{
-        //   onLoadStrategy,
-        //   results,
-        // }}
-        /> */}
         <Suspense fallback={<></>}>
           <StrategyEditor
             dark
