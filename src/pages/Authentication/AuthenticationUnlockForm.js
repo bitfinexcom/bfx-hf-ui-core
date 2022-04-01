@@ -24,6 +24,8 @@ const isDevEnv = devEnv()
 
 const initialAutoLoginSave = getAutoLoginState()
 
+const helpers = window.electronService
+
 const getModes = (t) => {
   const MAIN_MODE_OPTION = { value: MAIN_MODE, label: `${t('main.production')} ${_startCase(t('main.mode'))}` }
   const PAPER_MODE_OPTION = { value: PAPER_MODE, label: `${t('main.sandbox')} ${_startCase(t('main.mode'))}` }
@@ -56,12 +58,18 @@ const AuthenticationUnlockForm = ({ isPaperTrading, onUnlock: _onUnlock, onReset
     onUnlock()
   }
 
-  useEffect(() => {
-    const pass = getStoredPassword()
-    if (pass && ((isDevEnv && autoLoginState) || isChangingAppMode)) {
-      setPassword(pass)
+  const handleReceieveStoreData = useCallback((_event, value) => {
+    console.log('handleReceieveStoreData: ', value)
+    if (value && ((isDevEnv && autoLoginState) || isChangingAppMode)) {
+      console.log('if: handleReceieveStoreData: ')
+      setPassword(value)
     }
   }, [autoLoginState, isChangingAppMode])
+
+  useEffect(() => {
+    getStoredPassword()
+    helpers.addReceievedStoreDataListener(handleReceieveStoreData)
+  }, [autoLoginState, handleReceieveStoreData, isChangingAppMode])
 
   useEffect(() => {
     if (password && ((isDevEnv && initialAutoLoginSave) || isChangingAppMode)) {

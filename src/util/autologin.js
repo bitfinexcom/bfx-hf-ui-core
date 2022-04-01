@@ -24,9 +24,10 @@ export function updateStoredPassword(password) {
 export function removeStoredPassword() {
   if (isDevEnv()) {
     localStorage.removeItem(PASS)
-  } else {
-    window.electronService.deleteKeyFromEStore(PASS)
   }
+  // else {
+  //   window.electronService.deleteKeyFromEStore(PASS)
+  // }
 }
 
 export function getStoredPassword() {
@@ -37,7 +38,7 @@ export function getStoredPassword() {
   // const checkInstance = window.electronService.checkInstance()
   // console.log('checkInstance: ', checkInstance)
   console.log('final: ', final)
-  const ans = window.electronService.sendCheckSafeStorageAvl()
-  console.log('ans: 222: ', ans)
+  // const ans = window.electronService.sendCheckSafeStorageAvl()
+  // console.log('ans: 222: ', ans)
   return final
 }
