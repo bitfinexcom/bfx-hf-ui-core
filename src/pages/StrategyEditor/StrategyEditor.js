@@ -16,28 +16,34 @@ import { nonce } from 'bfx-api-node-util'
 import HFS from 'bfx-hf-strategy'
 import HFU from 'bfx-hf-util'
 import { useTranslation } from 'react-i18next'
-import ClassNames from 'clsx'
-
 import {
   STEPS, ACTIONS, EVENTS, STATUS,
 } from '../../components/Joyride'
 import Layout from '../../components/Layout'
-import Panel from '../../ui/Panel'
 import useTourGuide from '../../hooks/useTourGuide'
 
 import './style.css'
-import StrategiesListTable from '../../components/StrategiesListTable'
 
 const debug = Debug('hfui-ui:p:strategy-editor')
 
 const StrategyEditor = lazy(() => import('../../components/StrategyEditor'))
 const Joyride = lazy(() => import('../../components/Joyride'))
+const StrategiesListTable = lazy(() => import('../../components/StrategiesListTable'))
 
 // todo: move 'export strategy' to the options tab
 
 const StrategyEditorPage = ({
-  selectStrategy, finishGuide, setStrategyContent, firstLogin, isGuideActive, strategyContent, setStrategyTab, selectedTab, strategies,
-  onSave, authToken,
+  selectStrategy,
+  finishGuide,
+  setStrategyContent,
+  firstLogin,
+  isGuideActive,
+  strategyContent,
+  setStrategyTab,
+  selectedTab,
+  strategies,
+  onSave,
+  authToken,
 }) => {
   const [strategy, setStrategy] = useState(strategyContent)
   const [indicators, setIndicators] = useState([])
@@ -69,7 +75,7 @@ const StrategyEditorPage = ({
       if (ind.color) {
         colors[0] = ind.color
       } else if (ind.colors) {
-        colors = ind.colors // eslint-disable-line
+        colors = ind.colors; // eslint-disable-line
       }
 
       return [ind.constructor, ind._args, colors]
@@ -92,7 +98,10 @@ const StrategyEditorPage = ({
   const processSectionError = (section, e) => {
     if (e.lineNumber && e.columnNumber) {
       // currently it's a non-standard property supported by Firefox only :(
-      setSectionError(section, `Line ${e.lineNumber}:${e.columnNumber}: ${e.message}`)
+      setSectionError(
+        section,
+        `Line ${e.lineNumber}:${e.columnNumber}: ${e.message}`,
+      )
     } else {
       setSectionError(section, e.message)
     }
@@ -103,7 +112,7 @@ const StrategyEditorPage = ({
 
     if (section.substring(0, 6) === 'define') {
       try {
-        const func = eval(content) // eslint-disable-line
+        const func = eval(content); // eslint-disable-line
         clearSectionError(section)
         return func
       } catch (e) {
@@ -112,7 +121,7 @@ const StrategyEditorPage = ({
       }
     } else if (section.substring(0, 2) === 'on') {
       try {
-        const func = eval(content)({ HFS, HFU, _ }) // eslint-disable-line
+        const func = eval(content)({ HFS, HFU, _ }); // eslint-disable-line
         clearSectionError(section)
         return func
       } catch (e) {
@@ -138,7 +147,7 @@ const StrategyEditorPage = ({
     }
 
     _forEach(_values(strategyIndicators), (i) => {
-      i.key = `${nonce()}` // eslint-disable-line
+      i.key = `${nonce()}`; // eslint-disable-line
     })
 
     onIndicatorsChange(strategyIndicators)
@@ -155,7 +164,7 @@ const StrategyEditorPage = ({
     if ([EVENTS.STEP_AFTER, EVENTS.TARGET_NOT_FOUND].includes(type)) {
       // Update state to advance the tour
       setTourStep(index + (action === ACTIONS.PREV ? -1 : 1))
-    // eslint-disable-next-line lodash/prefer-lodash-method
+      // eslint-disable-next-line lodash/prefer-lodash-method
     } else if (finishedStatuses.includes(status) || action === CLOSE) {
       finishGuide()
     }
