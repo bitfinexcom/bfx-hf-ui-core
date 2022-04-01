@@ -47,12 +47,7 @@ const AuthenticationUnlockForm = ({ isPaperTrading, onUnlock: _onUnlock, onReset
     if (!submitReady) return
 
     if (isDevEnv && password.length) {
-      console.log('helpers: ', helpers)
-      const check = helpers.persistKey('new-pass', password)
-      const final = helpers.getSavedKey('new-pass')
-      console.log('check: ', check)
-      console.log('final: ', final)
-      updateStoredPassword(password)
+      // updateStoredPassword(password)
       updateAutoLoginState(autoLoginState)
     }
 
@@ -66,16 +61,23 @@ const AuthenticationUnlockForm = ({ isPaperTrading, onUnlock: _onUnlock, onReset
 
   useEffect(() => {
     const pass = getStoredPassword()
-    if (isDevEnv && pass && autoLoginState) {
+    console.log('pass: ', pass)
+    if (pass && ((isDevEnv && autoLoginState) || isChangingAppMode)) {
+      console.log('if: 1', pass)
       setPassword(pass)
     }
-  }, [autoLoginState])
+  }, [autoLoginState, isChangingAppMode])
 
   useEffect(() => {
-    if (password && isDevEnv && initialAutoLoginSave) {
+    console.log('isChangingAppMode: ', isChangingAppMode)
+    if (password && ((isDevEnv && initialAutoLoginSave) || isChangingAppMode)) {
       onUnlock()
     }
-  }, [onUnlock, password])
+  }, [isChangingAppMode, onUnlock, password])
+
+  useEffect(() => {
+    updateStoredPassword(password)
+  })
 
   if (isChangingAppMode) {
     return <LoadingMode />

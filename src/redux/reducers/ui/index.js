@@ -164,7 +164,6 @@ function getInitialState() {
 
   defaultState.isPaperTrading = isPaperTrading
   defaultState.isChangingAppMode = localStorage.getItem('HF_IS_CHANGING_APP_MODE') === 'true'
-  console.log('defaultState: ', defaultState)
 
   return defaultState
 }

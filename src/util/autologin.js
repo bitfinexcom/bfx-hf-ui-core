@@ -10,17 +10,31 @@ export function updateAutoLoginState(state) {
 }
 
 export function isDevEnv() {
-  return true // process.env?.NODE_ENV === 'development'
+  return process.env?.NODE_ENV === 'development'
 }
 
 export function updateStoredPassword(password) {
-  localStorage.setItem(PASS, password)
+  if (isDevEnv()) {
+    localStorage.setItem(PASS, password)
+  } else {
+    console.log('updateStoredPassword: else')
+    window.electronService.saveKeyToEStore(PASS, password)
+  }
 }
 
 export function removeStoredPassword() {
-  localStorage.removeItem(PASS)
+  if (isDevEnv()) {
+    localStorage.removeItem(PASS)
+  } else {
+    console.log('removeStoredPassword: else')
+    window.electronService.deleteKeyFromEStore(PASS)
+  }
 }
 
 export function getStoredPassword() {
-  return localStorage.getItem(PASS)
+  if (isDevEnv()) {
+    return localStorage.getItem(PASS)
+  }
+  console.log('getStoredPassword: else')
+  return window.electronService.getKeyFromEStore()
 }

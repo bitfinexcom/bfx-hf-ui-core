@@ -5,7 +5,7 @@ import UIActions from '../../redux/actions/ui'
 import { isSocketConnected, getAuthConfigured } from '../../redux/selectors/ws'
 import Authentication from './Authentication'
 import { PAPER_MODE, IS_PAPER_TRADING } from '../../redux/reducers/ui'
-import { removeStoredPassword, updateAutoLoginState } from '../../util/autologin'
+import { removeStoredPassword, updateAutoLoginState, updateStoredPassword } from '../../util/autologin'
 
 const mapStateToProps = (state = {}) => {
   const { isPaperTrading } = state.ui
@@ -19,8 +19,9 @@ const mapStateToProps = (state = {}) => {
 
 const mapDispatchToProps = dispatch => ({ // eslint-disable-line
   onInit: (password) => {
+    console.log('onInit: ')
     dispatch(UIActions.setTradingMode(false))
-    removeStoredPassword(password)
+    updateStoredPassword(password)
     updateAutoLoginState()
     dispatch(WSActions.initAuth(password))
     dispatch(UIActions.firstLogin())
@@ -34,6 +35,7 @@ const mapDispatchToProps = dispatch => ({ // eslint-disable-line
   },
 
   onReset: () => {
+    console.log('onReset: ')
     removeStoredPassword()
     updateAutoLoginState()
     dispatch(WSActions.resetAuth())
