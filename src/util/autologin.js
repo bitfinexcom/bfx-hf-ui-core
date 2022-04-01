@@ -24,10 +24,9 @@ export function updateStoredPassword(password) {
 export function removeStoredPassword() {
   if (isDevEnv()) {
     localStorage.removeItem(PASS)
+  } else {
+    window.electronService.deleteKeyFromEStore(PASS)
   }
-  // else {
-  //   window.electronService.deleteKeyFromEStore(PASS)
-  // }
 }
 
 export function getStoredPassword() {
