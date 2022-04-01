@@ -39,7 +39,6 @@ const AuthenticationUnlockForm = ({ isPaperTrading, onUnlock: _onUnlock, onReset
 
   const { t } = useTranslation()
   const isChangingAppMode = useSelector(getIsChangingAppMode)
-  console.log('isChangingAppMode: ', isChangingAppMode)
 
   const OPTIONS = getModes(t)
 
@@ -61,15 +60,12 @@ const AuthenticationUnlockForm = ({ isPaperTrading, onUnlock: _onUnlock, onReset
 
   useEffect(() => {
     const pass = getStoredPassword()
-    console.log('pass: ', pass)
     if (pass && ((isDevEnv && autoLoginState) || isChangingAppMode)) {
-      console.log('if: 1', pass)
       setPassword(pass)
     }
   }, [autoLoginState, isChangingAppMode])
 
   useEffect(() => {
-    console.log('isChangingAppMode: ', isChangingAppMode)
     if (password && ((isDevEnv && initialAutoLoginSave) || isChangingAppMode)) {
       onUnlock()
     }

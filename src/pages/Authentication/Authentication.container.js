@@ -19,7 +19,6 @@ const mapStateToProps = (state = {}) => {
 
 const mapDispatchToProps = dispatch => ({ // eslint-disable-line
   onInit: (password) => {
-    console.log('onInit: ')
     dispatch(UIActions.setTradingMode(false))
     updateStoredPassword(password)
     updateAutoLoginState()
@@ -35,7 +34,6 @@ const mapDispatchToProps = dispatch => ({ // eslint-disable-line
   },
 
   onReset: () => {
-    console.log('onReset: ')
     removeStoredPassword()
     updateAutoLoginState()
     dispatch(WSActions.resetAuth())

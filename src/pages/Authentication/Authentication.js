@@ -23,7 +23,6 @@ const Authentication = ({
   const { t } = useTranslation()
   const settingsTheme = useSelector(getThemeSetting)
   const isChangingAppMode = useSelector(getIsChangingAppMode)
-  console.log('isChangingAppMode: main', isChangingAppMode)
 
   return (
     <div className='hfui-authenticationpage__wrapper'>
