@@ -44,7 +44,6 @@ const AuthenticationUnlockForm = ({ isPaperTrading, onUnlock: _onUnlock, onReset
     if (!submitReady) return
 
     if (isDevEnv && password.length) {
-      // updateStoredPassword(password)
       updateAutoLoginState(autoLoginState)
     }
 
