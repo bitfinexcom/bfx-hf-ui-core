@@ -66,7 +66,6 @@ function getInitialState() {
     firstLogin: false,
     isPaperTrading: false,
     TRADING_PAGE_IS_GUIDE_ACTIVE: true,
-    isTradingModeModalVisible: false,
     isRefillBalanceModalVisible: false,
     isOldFormatModalVisible: false,
     isAOPauseModalVisible: false,
@@ -403,13 +402,6 @@ function reducer(state = getInitialState(), action = {}) {
       return {
         ...state,
         isChangingAppMode: payload,
-      }
-    }
-    case types.CHANGE_TRADING_MODAL_STATE: {
-      const { isVisible } = payload
-      return {
-        ...state,
-        isTradingModeModalVisible: isVisible,
       }
     }
     case types.CHANGE_BAD_INTERNET_STATE: {

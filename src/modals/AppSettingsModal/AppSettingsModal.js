@@ -32,13 +32,10 @@ const defaultTab = isElectronApp ? Tabs.General : Tabs.Appearance
 
 const AppSettingsModal = ({
   isOpen,
-  onClose: onModalClose,
 }) => {
   const [activeTab, setActiveTab] = useState(defaultTab)
 
   const onClose = (callback) => {
-    onModalClose()
-
     // reset to default tab, but wait for transition out
     setTimeout(() => {
       setActiveTab(defaultTab)

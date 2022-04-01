@@ -4,7 +4,7 @@ import UIActions from '../../redux/actions/ui'
 import WSActions from '../../redux/actions/ws'
 import {
   getCurrentMode,
-  getIsPaperTrading, getIsTradingModeModalVisible, getThemeSetting,
+  getIsPaperTrading, getThemeSetting,
 } from '../../redux/selectors/ui'
 import { getAuthToken } from '../../redux/selectors/ws'
 import SwitchMode from './SwitchMode'
@@ -13,7 +13,6 @@ const mapStateToProps = (state = {}) => ({
   isPaperTrading: getIsPaperTrading(state),
   authToken: getAuthToken(state),
   currentMode: getCurrentMode(state),
-  isTradingModeModalVisible: getIsTradingModeModalVisible(state),
   settingsTheme: getThemeSetting(state),
 })
 

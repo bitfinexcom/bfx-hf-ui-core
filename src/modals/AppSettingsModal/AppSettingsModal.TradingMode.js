@@ -5,22 +5,29 @@ import { useTranslation } from 'react-i18next'
 import _startCase from 'lodash/startCase'
 
 import UIActions from '../../redux/actions/ui'
-import { getIsPaperTrading } from '../../redux/selectors/ui'
+import WSActions from '../../redux/actions/ws'
+import { getCurrentMode, getIsPaperTrading } from '../../redux/selectors/ui'
 import useToggle from '../../hooks/useToggle'
+import { getAuthToken } from '../../redux/selectors/ws'
 
 // eslint-disable-next-line react/prop-types
-const TradingMode = ({ onClose }) => {
+const TradingMode = () => {
   const { t } = useTranslation()
   const dispatch = useDispatch()
 
   const isPaperTradingMode = useSelector(getIsPaperTrading)
+  const authToken = useSelector(getAuthToken)
+  const currentMode = useSelector(getCurrentMode)
   const [isPaperTrading, togglePaperTrading] = useToggle(isPaperTradingMode)
 
   const isChanged = isPaperTradingMode !== isPaperTrading
 
   const onSave = () => {
-    // open change trading mode modal after this modal closes
-    onClose(() => dispatch(UIActions.changeTradingModeModalState(true)))
+    dispatch(UIActions.setIsChangingAppMode(true))
+    dispatch(UIActions.setTradingMode(isPaperTrading))
+    dispatch(WSActions.send(['algo_order.pause', authToken, currentMode]))
+    // eslint-disable-next-line lodash/prefer-lodash-method
+    window.location.replace('/index.html')
   }
 
   return (

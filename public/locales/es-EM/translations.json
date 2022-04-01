@@ -403,10 +403,6 @@
     "decryptedCredentialsFor": "Credenciales descifradas para {{target}} ({{mode}})",
     "reboot_notify": "Se han observado varios problemas de conexión a Internet. Reiniciando la aplicación..."
   },
-  "tradingModeModal": {
-    "title": "Cambiar Modo de Trade",
-    "text": "La aplicación se reiniciará después de presionar Aceptar. Es necesario para cambiar el modo de trading. Las órdenes de algoritmo abiertas están en pausa."
-  },
   "confirmDMSModal": {
     "title": "Habilitar Interruptor de Dead Man",
     "text": "Ten en cuenta que cuando esta configuración está habilitada, cerrar la aplicación no solo cancelará todos las órdenes creadas por Honey Framework, sino que también cancelará todas las demás órdenes, incluidas las que se han abierto en el sitio web de Bitfinex o en otro lugar.\n\nEsta es una configuración recomendada, pero debes tener en cuenta las posibles consecuencias.",

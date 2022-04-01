@@ -25,7 +25,6 @@ const TradingPage = lazy(() => import('../../pages/Trading'))
 const MarketDataPage = lazy(() => import('../../pages/MarketData'))
 const AuthenticationPage = lazy(() => import('../../pages/Authentication'))
 
-const TradingModeModal = lazy(() => import('../../modals/TradingModeModal'))
 const BadConnectionModal = lazy(() => import('../../modals/BadConnectionModal'))
 const OldFormatModal = lazy(() => import('../../modals/OldFormatModal'))
 const AOPauseModal = lazy(() => import('../../modals/AOPauseModal'))
@@ -138,7 +137,6 @@ const HFUI = (props) => {
           </Switch>
           {isElectronApp && (
             <>
-              <TradingModeModal />
               <OldFormatModal />
               <ConfirmDMSModal />
               <AOPauseModal />
