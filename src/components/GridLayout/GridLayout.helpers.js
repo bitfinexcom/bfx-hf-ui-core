@@ -3,7 +3,6 @@ import _assign from 'lodash/assign'
 import _map from 'lodash/map'
 import _forEach from 'lodash/forEach'
 import _find from 'lodash/find'
-import StrategyTradesTable from '../StrategyTradesTable'
 
 const OrderForm = lazy(() => import('../OrderForm'))
 const OrderBookPanel = lazy(() => import('../OrderBookPanel'))
@@ -16,9 +15,6 @@ const PositionsTablePanel = lazy(() => import('../PositionsTablePanel'))
 const BalancesTablePanel = lazy(() => import('../BalancesTablePanel'))
 const TradingStatePanel = lazy(() => import('../TradingStatePanel'))
 const ExchangeInfoBar = lazy(() => import('../ExchangeInfoBar'))
-const StrategiesListTable = lazy(() => import('../StrategiesListTable'))
-const StrategiesMenuSideBar = lazy(() => import('../StrategiesMenuSideBar'))
-const StrategyPerfomanceMetrics = lazy(() => import('../StrategyPerfomanceMetrics'))
 
 export const COMPONENT_TYPES = {
   CHART: 'CHART',
@@ -64,14 +60,6 @@ export const COMPONENT_TYPES_MARKET_DATA = {
   ATOMIC_ORDERS_TABLE: 'ATOMIC_ORDERS_TABLE',
   ORDER_HISTORY_TABLE: 'ORDER_HISTORY_TABLE',
   TRADING_STATE_PANEL: 'TRADING_STATE_PANEL',
-}
-
-export const COMPONENT_TYPES_STRATEGIES = {
-  STRATEGIES_TABLE: 'STRATEGIES_TABLE',
-  LIVE_CHART: 'LIVE_CHART',
-  SIDEBAR: 'SIDEBAR',
-  TRADES_LIST_TABLE: 'TRADES_LIST_TABLE',
-  PERFOMANCE_METRICS: 'PERFOMANCE_METRICS',
 }
 
 export const COMPONENT_LABELS = {
@@ -162,18 +150,6 @@ const componentForType = (c) => {
 
     case COMPONENT_TYPES.EXCHANGE_INFO_BAR:
       return ExchangeInfoBar
-
-    case COMPONENT_TYPES_STRATEGIES.STRATEGIES_TABLE:
-      return StrategiesListTable
-
-    case COMPONENT_TYPES_STRATEGIES.SIDEBAR:
-      return StrategiesMenuSideBar
-
-    case COMPONENT_TYPES_STRATEGIES.PERFOMANCE_METRICS:
-      return StrategyPerfomanceMetrics
-
-    case COMPONENT_TYPES_STRATEGIES.TRADES_LIST_TABLE:
-      return StrategyTradesTable
 
     default:
       return null

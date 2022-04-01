@@ -31,7 +31,6 @@ import {
 import { generateLayout } from './Grid.layouts'
 import tradingTerminalLayout from './layouts/trading'
 import marketDataLayout from './layouts/marketData'
-import strategiesLayout from './layouts/strategies'
 import { marketData, strategyEditor, tradingTerminal } from '../../constants/routes'
 
 import './style.scss'
@@ -44,8 +43,6 @@ const getLayoutConfig = pathname => {
       return marketDataLayout
     case tradingTerminal.path:
       return tradingTerminalLayout
-    case strategyEditor.path:
-      return strategiesLayout
 
     default:
       return null
