@@ -1,49 +1,31 @@
-import React, { memo } from 'react'
-import GridLayout, { WidthProvider } from 'react-grid-layout'
-import ChartPanel from '../../ChartPanel'
+import React, { memo, useCallback } from 'react'
 import StrategyPerfomanceMetrics from '../../StrategyPerfomanceMetrics'
+import { results } from '../../../pages/Strategies/mock_data'
 import StrategyTradesTable from '../../StrategyTradesTable'
-import { results } from '../../../pages/StrategyEditor/mock_data'
+import StrategiesGridLayout from '../components/StrategiesGridLayout'
+import { COMPONENTS_KEYS, LAYOUT_CONFIG } from './StrategyTab.constants'
+import StrategyLiveChart from '../../StrategyLiveChart'
 
-const ReactGridLayout = WidthProvider(GridLayout)
+const StrategyTab = () => {
+  const renderGridComponents = useCallback((i) => {
+    switch (i) {
+      case COMPONENTS_KEYS.LIVE_CHART:
+        return <StrategyLiveChart />
 
-const StrategyTab = ({ onLoadStrategy }) => {
-  const layouts = [
-    {
-      i: 'a', x: 10, y: 0, w: 60, h: 7,
-    },
-    {
-      i: 'b', x: 70, y: 0, w: 30, h: 7,
-    },
-    {
-      i: 'c', x: 10, y: 7, w: 100, h: 5,
-    },
-  ]
+      case COMPONENTS_KEYS.STRATEGY_PERFOMANCE:
+        return <StrategyPerfomanceMetrics results={results} />
+
+      case COMPONENTS_KEYS.STRATEGY_TRADES:
+        return <StrategyTradesTable results={results} />
+
+      default:
+        return null
+    }
+  }, [])
 
   return (
     <div className='hfui-strategyeditor__wrapper'>
-      <ReactGridLayout
-        cols={100}
-        rowHeight={30}
-        measureBeforeMount
-        layout={layouts}
-        margin={[10, 10]}
-      >
-        <div key='a'>
-          <ChartPanel />
-        </div>
-        <div key='b'>
-          <StrategyPerfomanceMetrics results={results} />
-        </div>
-        <div key='c'>
-          <StrategyTradesTable results={results} />
-        </div>
-      </ReactGridLayout>
-      <GridLayout sharedProps={{
-        onLoadStrategy,
-        results,
-      }}
-      />
+      <StrategiesGridLayout layoutConfig={LAYOUT_CONFIG} renderGridComponents={renderGridComponents} />
     </div>
   )
 }

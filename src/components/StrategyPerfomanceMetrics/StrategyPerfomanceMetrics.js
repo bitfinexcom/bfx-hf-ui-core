@@ -14,8 +14,21 @@ const { getCurrencySymbolMemo } = reduxSelectors
 
 const StrategyPerfomanceMetrics = ({ results }) => {
   const {
-    nCandles, nTrades, nGains, nLosses, nStrategyTrades, nOpens, pl, pf,
-    maxPL, minPL, fees, vol, stdDeviation, avgPL, backtestOptions: { activeMarket } = {},
+    nCandles,
+    nTrades,
+    nGains,
+    nLosses,
+    nStrategyTrades,
+    nOpens,
+    pl,
+    pf,
+    maxPL,
+    minPL,
+    fees,
+    vol,
+    stdDeviation,
+    avgPL,
+    backtestOptions: { activeMarket } = {},
   } = results
   const hasTrades = !!vol
 
@@ -26,27 +39,44 @@ const StrategyPerfomanceMetrics = ({ results }) => {
 
   return (
     <Panel
-      moveable
+      moveable={false}
       removeable={false}
       darkHeader
       label='Perfomance metrics'
     >
       <ul>
-        <MetricRow label={t('strategyEditor.totalPL')} value={resultNumber(preparePrice(pl), quoteCcy)} />
-        <MetricRow label={t('strategyEditor.avgPL')} value={resultNumber(avgPL, quoteCcy)} />
-        <MetricRow label={t('strategyEditor.profitFactor')} value={resultNumber(pf)} />
-        <MetricRow label={t('strategyEditor.volatility')} value={resultNumber(stdDeviation)} />
-        <MetricRow label={t('strategyEditor.backtestCandles')} value={nCandles} />
+        <MetricRow
+          label={t('strategyEditor.totalPL')}
+          value={resultNumber(preparePrice(pl), quoteCcy)}
+        />
+        <MetricRow
+          label={t('strategyEditor.avgPL')}
+          value={resultNumber(avgPL, quoteCcy)}
+        />
+        <MetricRow
+          label={t('strategyEditor.profitFactor')}
+          value={resultNumber(pf)}
+        />
+        <MetricRow
+          label={t('strategyEditor.volatility')}
+          value={resultNumber(stdDeviation)}
+        />
+        <MetricRow
+          label={t('strategyEditor.backtestCandles')}
+          value={nCandles}
+        />
         <MetricRow label={t('strategyEditor.backtestTrades')} value={nTrades} />
-        {hasTrades
-          && (
-            <>
-              <MetricRow label={t('strategyEditor.trades')} value={nStrategyTrades} />
-              <MetricRow label={t('strategyEditor.positions')} value={nOpens} />
-              <MetricRow label={t('strategyEditor.gains')} value={nGains} />
-              <MetricRow label={t('strategyEditor.losses')} value={nLosses} />
-            </>
-          )}
+        {hasTrades && (
+          <>
+            <MetricRow
+              label={t('strategyEditor.trades')}
+              value={nStrategyTrades}
+            />
+            <MetricRow label={t('strategyEditor.positions')} value={nOpens} />
+            <MetricRow label={t('strategyEditor.gains')} value={nGains} />
+            <MetricRow label={t('strategyEditor.losses')} value={nLosses} />
+          </>
+        )}
       </ul>
     </Panel>
   )

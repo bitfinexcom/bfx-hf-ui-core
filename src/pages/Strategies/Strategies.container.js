@@ -5,7 +5,7 @@ import { getSortedByTimeStrategies, getAuthToken } from '../../redux/selectors/w
 import UIActions from '../../redux/actions/ui'
 import WSActions from '../../redux/actions/ws'
 
-import StrategyEditor from './StrategyEditor'
+import StrategiesPage from './Strategies'
 
 const mapStateToProps = state => ({
   authToken: getAuthToken(state),
@@ -35,4 +35,4 @@ const mapDispatchToProps = dispatch => ({
   },
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(StrategyEditor)
+export default connect(mapStateToProps, mapDispatchToProps)(StrategiesPage)

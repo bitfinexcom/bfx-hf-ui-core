@@ -9,10 +9,8 @@ import { Icon } from 'react-fa'
 import PropTypes from 'prop-types'
 import { useTranslation } from 'react-i18next'
 
-import { useDispatch } from 'react-redux'
 import { saveAsJSON, readJSONFile } from '../../util/ui'
 import Markdown from '../../ui/Markdown'
-import { THEMES } from '../../redux/selectors/ui'
 import { MAX_STRATEGY_LABEL_LENGTH } from '../../constants/variables'
 import Templates from './templates'
 import StrategyEditorPanel from './components/StrategyEditorPanel'
@@ -23,8 +21,7 @@ import EmptyContent from './components/StrategyEditorEmpty'
 import StrategyTab from './tabs/StrategyTab'
 import IDETab from './tabs/IDETab'
 import { getDefaultMarket } from '../../util/market'
-import StrategyParams from '../StrategiesMenuSideBar/StrategiesMenuSideBar.Params'
-import WSActions from '../../redux/actions/ws'
+import StrategiesMenuSideBarParams from './components/StrategiesMenuSideBarParams'
 
 import './style.css'
 
@@ -39,19 +36,51 @@ const DEFAULT_SEED_COUNT = 150
 
 const StrategyEditor = (props) => {
   const {
-    moveable, removeable, strategyId, onRemove, authToken, onStrategyChange, gaCreateStrategy, strategyContent, backtestResults,
-    liveExecuting, liveLoading, strategyDirty, setStrategyDirty, setSectionErrors, onDefineIndicatorsChange, selectStrategy,
-    setStrategy, strategy, onSaveStrategy, onLoadStrategy, dsExecuteLiveStrategy, dsStopLiveStrategy, options, markets, onStrategySelect,
+    moveable,
+    removeable,
+    strategyId,
+    onRemove,
+    authToken,
+    onStrategyChange,
+    gaCreateStrategy,
+    strategyContent,
+    backtestResults,
+    liveExecuting,
+    liveLoading,
+    strategyDirty,
+    setStrategyDirty,
+    setSectionErrors,
+    onDefineIndicatorsChange,
+    selectStrategy,
+    setStrategy,
+    strategy,
+    onSaveStrategy,
+    onLoadStrategy,
+    dsExecuteLiveStrategy,
+    dsStopLiveStrategy,
+    options,
+    markets,
+    onStrategySelect,
+    evalSectionContent,
+    sectionErrors,
   } = props
   const { t } = useTranslation()
   const [isRemoveModalOpened, setIsRemoveModalOpened] = useState(false)
   const [createNewStrategyModalOpen, setCreateNewStrategyModalOpen] = useState(false)
   const [openExistingStrategyModalOpen, setOpenExistingStrategyModalOpen] = useState(false)
   const [docsText, setDocsText] = useState('')
-  const [symbol, setSymbol] = useState(options.symbol ? _find(markets, m => m.wsID === options.symbol) : getDefaultMarket(markets))
+  const [symbol, setSymbol] = useState(
+    options.symbol
+      ? _find(markets, (m) => m.wsID === options.symbol)
+      : getDefaultMarket(markets),
+  )
   const [timeframe, setTimeframe] = useState(options.tf || DEFAULT_TIMEFRAME)
-  const [trades, setTrades] = useState(options.includeTrades || DEFAULT_USE_TRADES)
-  const [candleSeed, setCandleSeed] = useState(options.seedCandleCount || DEFAULT_SEED_COUNT)
+  const [trades, setTrades] = useState(
+    options.includeTrades || DEFAULT_USE_TRADES,
+  )
+  const [candleSeed, setCandleSeed] = useState(
+    options.seedCandleCount || DEFAULT_SEED_COUNT,
+  )
   const [margin, setMargin] = useState(options.margin || DEFAULT_USE_MARGIN)
   const [paramsOpen, setParamsOpen] = useState(false)
 
@@ -124,7 +153,16 @@ const StrategyEditor = (props) => {
 
   const startExecution = () => {
     onSaveStrategy()
-    dsExecuteLiveStrategy(authToken, strategy.label, symbol?.wsID, timeframe, trades, strategyContent, candleSeed, margin)
+    dsExecuteLiveStrategy(
+      authToken,
+      strategy.label,
+      symbol?.wsID,
+      timeframe,
+      trades,
+      strategyContent,
+      candleSeed,
+      margin,
+    )
   }
 
   const stopExecution = () => {
@@ -186,7 +224,7 @@ const StrategyEditor = (props) => {
             sbtitle={(
               <>
                 Strategy
-                <StrategyParams
+                <StrategiesMenuSideBarParams
                   paramsOpen={paramsOpen}
                   setParamsOpen={setParamsOpen}
                   startExecution={startExecution}
@@ -195,18 +233,15 @@ const StrategyEditor = (props) => {
               </>
             )}
             sbicon={<Icon name='file-code-o' />}
-            startExecution={startExecution}
             {...props}
           />
           <IDETab
             sbtitle='View in IDE'
             sbicon={<Icon name='edit' />}
-            {...props}
           />
           <Markdown
             sbtitle='Help'
             sbicon={<Icon name='question-circle-o' />}
-            text={docsText}
           />
         </StrategyEditorPanel>
       )}
@@ -235,14 +270,14 @@ StrategyEditor.propTypes = {
   moveable: PropTypes.bool,
   removeable: PropTypes.bool,
   strategyId: PropTypes.string,
-  renderResults: PropTypes.bool,
+  // renderResults: PropTypes.bool,
   onRemove: PropTypes.func.isRequired,
   authToken: PropTypes.string.isRequired,
   onStrategyChange: PropTypes.func.isRequired,
   onStrategySelect: PropTypes.func.isRequired,
   gaCreateStrategy: PropTypes.func.isRequired,
-  onIndicatorsChange: PropTypes.func.isRequired,
-  clearBacktestOptions: PropTypes.func.isRequired,
+  // onIndicatorsChange: PropTypes.func.isRequired,
+  // clearBacktestOptions: PropTypes.func.isRequired,
   liveExecuting: PropTypes.bool.isRequired,
   liveLoading: PropTypes.bool.isRequired,
   strategyContent: PropTypes.objectOf(
@@ -252,17 +287,17 @@ StrategyEditor.propTypes = {
     ]),
   ),
   backtestResults: PropTypes.objectOf(PropTypes.any),
-  settingsTheme: PropTypes.oneOf([THEMES.LIGHT, THEMES.DARK]),
+  // settingsTheme: PropTypes.oneOf([THEMES.LIGHT, THEMES.DARK]),
 }
 
 StrategyEditor.defaultProps = {
   strategyId: '',
   moveable: false,
   removeable: false,
-  renderResults: true,
+  // renderResults: true,
   strategyContent: {},
   backtestResults: {},
-  settingsTheme: THEMES.DARK,
+  // settingsTheme: THEMES.DARK,
 }
 
 export default memo(StrategyEditor)
