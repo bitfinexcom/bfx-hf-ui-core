@@ -28,7 +28,6 @@ const SwitchMode = ({
     <ToggleSwitch
       checked={isPaperTrading}
       onChange={onChange}
-    // disabled={isTradingModeModalVisible}
       onColor={SWITCH_THEME[settingsTheme].onColor}
       offColor={SWITCH_THEME[settingsTheme].offColor}
       className='toggle-switch'
@@ -38,6 +37,8 @@ const SwitchMode = ({
 }
 
 SwitchMode.propTypes = {
+  authToken: PropTypes.string.isRequired,
+  currentMode: PropTypes.string.isRequired,
   changeAppMode: PropTypes.func.isRequired,
   isPaperTrading: PropTypes.bool.isRequired,
   settingsTheme: PropTypes.oneOf([THEMES.LIGHT, THEMES.DARK]).isRequired,

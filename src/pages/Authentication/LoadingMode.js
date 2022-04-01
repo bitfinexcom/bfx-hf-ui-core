@@ -1,11 +1,10 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 import { useSelector } from 'react-redux'
 import { useTranslation } from 'react-i18next'
 import { Spinner } from '@ufx-ui/core'
-import { getCurrentMode, getIsPaperTrading } from '../../redux/selectors/ui'
+import { getIsPaperTrading } from '../../redux/selectors/ui'
 
-function LoadingMode(props) {
+function LoadingMode() {
   const isPaperTrading = useSelector(getIsPaperTrading)
   const { t } = useTranslation()
   return (

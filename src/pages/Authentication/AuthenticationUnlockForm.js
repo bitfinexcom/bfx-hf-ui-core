@@ -23,8 +23,6 @@ const isDevEnv = devEnv()
 
 const initialAutoLoginSave = getAutoLoginState()
 
-const helpers = window.electronService
-
 const getModes = (t) => {
   const MAIN_MODE_OPTION = { value: MAIN_MODE, label: t('main.production') }
   const PAPER_MODE_OPTION = { value: PAPER_MODE, label: t('main.sandbox') }
