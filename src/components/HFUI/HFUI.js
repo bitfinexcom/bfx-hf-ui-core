@@ -19,6 +19,7 @@ import { isElectronApp } from '../../redux/config'
 
 import './style.css'
 import { setIsChangingAppMode } from '../../redux/actions/ui'
+import { removeStoredPassword } from '../../util/autologin'
 
 // const StrategyEditorPage = lazy(() => import('../../pages/StrategyEditor'))
 const TradingPage = lazy(() => import('../../pages/Trading'))
@@ -62,6 +63,7 @@ const HFUI = (props) => {
   const dispatch = useDispatch()
 
   const onElectronAppClose = useCallback(() => {
+    removeStoredPassword()
     dispatch(setIsChangingAppMode(false))
     if (!authToken || !settingsShowAlgoPauseInfo) {
       closeElectronApp()
