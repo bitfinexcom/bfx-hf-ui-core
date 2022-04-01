@@ -22,7 +22,8 @@ const SwitchMode = ({
     changeAppMode(!isPaperTrading, authToken, currentMode)
     // window.location.reload()
     // eslint-disable-next-line lodash/prefer-lodash-method
-    window.location.replace('/index.html')
+    console.log('replacing to /index.html')
+    location.replace('/index.html') // eslint-disable-line
   }
 
   return (
