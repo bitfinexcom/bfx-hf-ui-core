@@ -18,7 +18,7 @@ const StrategyTradesTable = ({ results: { trades }, onTradeClick, dark }) => {
       darkHeader={dark}
       label={t('tradesTableModal.title')}
       removeable={false}
-      moveable
+      moveable={false}
       className='hfui-strategytradestable__wrapper'
     >
       {_isEmpty(trades) ? (

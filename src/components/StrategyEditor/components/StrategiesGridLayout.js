@@ -15,6 +15,8 @@ const StrategiesGridLayout = ({ renderGridComponents, layoutConfig }) => {
             width={width}
             layout={layoutConfig}
             margin={[10, 10]}
+            isResizable={false}
+            isDraggable={false}
           >
             {_map(layoutConfig, (c) => {
               const { i } = c

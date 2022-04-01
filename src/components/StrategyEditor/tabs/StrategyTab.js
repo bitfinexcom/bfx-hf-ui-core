@@ -1,16 +1,16 @@
 import React, { memo, useCallback } from 'react'
-import ChartPanel from '../../ChartPanel'
 import StrategyPerfomanceMetrics from '../../StrategyPerfomanceMetrics'
 import { results } from '../../../pages/StrategyEditor/mock_data'
 import StrategyTradesTable from '../../StrategyTradesTable'
 import StrategiesGridLayout from '../components/StrategiesGridLayout'
 import { COMPONENTS_KEYS, LAYOUT_CONFIG } from './StrategyTab.constants'
+import StrategyLiveChart from '../../StrategyLiveChart'
 
 const StrategyTab = () => {
   const renderGridComponents = useCallback((i) => {
     switch (i) {
       case COMPONENTS_KEYS.LIVE_CHART:
-        return <ChartPanel />
+        return <StrategyLiveChart />
 
       case COMPONENTS_KEYS.STRATEGY_PERFOMANCE:
         return <StrategyPerfomanceMetrics results={results} />
