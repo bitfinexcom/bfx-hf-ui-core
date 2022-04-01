@@ -238,6 +238,7 @@ const StrategyEditor = (props) => {
           <IDETab
             sbtitle='View in IDE'
             sbicon={<Icon name='edit' />}
+            {...props}
           />
           <Markdown
             sbtitle='Help'
