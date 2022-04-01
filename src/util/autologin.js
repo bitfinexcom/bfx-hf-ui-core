@@ -36,5 +36,5 @@ export function getStoredPassword() {
     return localStorage.getItem(PASS)
   }
   console.log('getStoredPassword: else')
-  return window.electronService.getKeyFromEStore()
+  return window.electronService.getKeyFromEStore(PASS)
 }
