@@ -59,9 +59,7 @@ const AuthenticationUnlockForm = ({ isPaperTrading, onUnlock: _onUnlock, onReset
   }
 
   const handleReceieveStoreData = useCallback((_event, value) => {
-    console.log('handleReceieveStoreData: ', value)
     if (value && ((isDevEnv && autoLoginState) || isChangingAppMode)) {
-      console.log('if: handleReceieveStoreData: ')
       setPassword(value)
     }
   }, [autoLoginState, isChangingAppMode])

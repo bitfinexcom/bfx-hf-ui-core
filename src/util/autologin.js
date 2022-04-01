@@ -34,11 +34,5 @@ export function getStoredPassword() {
   if (isDevEnv()) {
     return localStorage.getItem(PASS)
   }
-  const ans = window.electronService.sendCheckSafeStorageAvl()
-  console.log('ans: 222: ', ans)
-  const final = window.electronService.getKeyFromEStore(PASS)
-  // const checkInstance = window.electronService.checkInstance()
-  // console.log('checkInstance: ', checkInstance)
-  console.log('final: ', final)
-  return final
+  return window.electronService.getKeyFromEStore(PASS)
 }
