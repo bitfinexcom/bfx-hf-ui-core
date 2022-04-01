@@ -34,6 +34,10 @@ export function getStoredPassword() {
     return localStorage.getItem(PASS)
   }
   const final = window.electronService.getKeyFromEStore(PASS)
+  const checkInstance = window.electronService.checkInstance()
+  console.log('checkInstance: ', checkInstance)
   console.log('final: ', final)
+  const ans = window.electronService.isSafeStorageAvailable()
+  console.log('ans: ', ans)
   return final
 }
