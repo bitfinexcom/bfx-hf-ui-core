@@ -8,7 +8,7 @@ import AuthenticationInitForm from './AuthenticationInitForm'
 import AuthenticationUnlockForm from './AuthenticationUnlockForm'
 import AuthenticationConnectingForm from './AuthenticationConnectingForm'
 import { isElectronApp, appVersion } from '../../redux/config'
-import { getThemeSetting, THEMES } from '../../redux/selectors/ui'
+import { getIsChangingAppMode, getThemeSetting, THEMES } from '../../redux/selectors/ui'
 
 import './style.css'
 
@@ -22,6 +22,8 @@ const Authentication = ({
 }) => {
   const { t } = useTranslation()
   const settingsTheme = useSelector(getThemeSetting)
+  const isChangingAppMode = useSelector(getIsChangingAppMode)
+  console.log('isChangingAppMode: main', isChangingAppMode)
 
   return (
     <div className='hfui-authenticationpage__wrapper'>
@@ -41,9 +43,9 @@ const Authentication = ({
           </div>
         </div>
 
-        {!wsConnected ? (
+        {!wsConnected && !isChangingAppMode ? (
           <AuthenticationConnectingForm />
-        ) : configured ? (
+        ) : configured || isChangingAppMode ? (
           <AuthenticationUnlockForm
             onUnlock={onUnlock}
             onReset={onReset}
