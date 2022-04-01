@@ -1,6 +1,6 @@
 import React, { memo, useCallback } from 'react'
 import StrategyPerfomanceMetrics from '../../StrategyPerfomanceMetrics'
-import { results } from '../../../pages/StrategyEditor/mock_data'
+import { results } from '../../../pages/Strategies/mock_data'
 import StrategyTradesTable from '../../StrategyTradesTable'
 import StrategiesGridLayout from '../components/StrategiesGridLayout'
 import { COMPONENTS_KEYS, LAYOUT_CONFIG } from './StrategyTab.constants'

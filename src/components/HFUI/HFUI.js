@@ -9,7 +9,7 @@ import PropTypes from 'prop-types'
 
 import { THEMES, SETTINGS } from '../../redux/selectors/ui'
 import useInjectBfxData from '../../hooks/useInjectBfxData'
-import StrategyEditorPage from '../../pages/StrategyEditor'
+import StrategiesPage from '../../pages/Strategies'
 import NotificationsSidebar from '../NotificationsSidebar'
 import AppUpdate from '../AppUpdate'
 import closeElectronApp from '../../redux/helpers/close_electron_app'
@@ -128,7 +128,7 @@ const HFUI = (props) => {
           <Switch>
             <Redirect from='/index.html' to='/' exact />
             <Route path={Routes.tradingTerminal.path} render={() => <TradingPage />} exact />
-            {isElectronApp && Routes.strategyEditor && <Route path={Routes.strategyEditor.path} render={() => <StrategyEditorPage />} />}
+            {isElectronApp && Routes.strategyEditor && <Route path={Routes.strategyEditor.path} render={() => <StrategiesPage />} />}
             <Route path={Routes.marketData.path} render={() => <MarketDataPage />} />
           </Switch>
           {isElectronApp && (

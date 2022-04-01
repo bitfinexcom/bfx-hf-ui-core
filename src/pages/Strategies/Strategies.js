@@ -1,6 +1,4 @@
-import React, {
-  lazy, Suspense, useState, memo, useMemo,
-} from 'react'
+import React, { lazy, Suspense, useState } from 'react'
 import Debug from 'debug'
 import PropTypes from 'prop-types'
 import randomColor from 'randomcolor'
@@ -32,7 +30,7 @@ const StrategiesListTable = lazy(() => import('../../components/StrategiesListTa
 
 // todo: move 'export strategy' to the options tab
 
-const StrategyEditorPage = ({
+const StrategiesPage = ({
   selectStrategy,
   finishGuide,
   setStrategyContent,
@@ -238,7 +236,7 @@ const StrategyEditorPage = ({
   )
 }
 
-StrategyEditorPage.propTypes = {
+StrategiesPage.propTypes = {
   // dark: PropTypes.bool,
   firstLogin: PropTypes.bool,
   isGuideActive: PropTypes.bool,
@@ -252,7 +250,7 @@ StrategyEditorPage.propTypes = {
   onSave: PropTypes.func.isRequired,
 }
 
-StrategyEditorPage.defaultProps = {
+StrategiesPage.defaultProps = {
   // dark: true,
   firstLogin: false,
   isGuideActive: true,
@@ -260,4 +258,4 @@ StrategyEditorPage.defaultProps = {
   selectedTab: null,
 }
 
-export default memo(StrategyEditorPage)
+export default StrategiesPage
