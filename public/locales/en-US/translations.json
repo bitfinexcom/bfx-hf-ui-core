@@ -529,7 +529,15 @@
     "price": "Price",
     "status": "Status",
     "time": "Time",
-    "fee": "Fee"
+    "fee": "Fee",
+    "id": "Id",
+    "signal": "Signal",
+    "entryPrice": "Entry Price",
+    "closingPrice": "Closing Price",
+    "units": "Units",
+    "profit": "Profit",
+    "position": "Position",
+    "drawdown": "Drawdown"
   },
   "tickersPanel": {
     "title": "Ticker Panel"
