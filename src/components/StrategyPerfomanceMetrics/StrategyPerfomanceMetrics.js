@@ -2,6 +2,7 @@ import { reduxSelectors } from '@ufx-ui/bfx-containers'
 import { getPairParts } from '@ufx-ui/utils'
 import { preparePrice } from 'bfx-api-node-util'
 import React from 'react'
+import PropTypes from 'prop-types'
 import { useTranslation } from 'react-i18next'
 import { useSelector } from 'react-redux'
 import Panel from '../../ui/Panel'
@@ -80,6 +81,50 @@ const StrategyPerfomanceMetrics = ({ results }) => {
       </ul>
     </Panel>
   )
+}
+
+StrategyPerfomanceMetrics.propTypes = {
+  results: PropTypes.shape({
+    nCandles: PropTypes.number,
+    nTrades: PropTypes.number,
+    nGains: PropTypes.number,
+    nLosses: PropTypes.number,
+    nStrategyTrades: PropTypes.number,
+    nOpens: PropTypes.number,
+    pl: PropTypes.number,
+    pf: PropTypes.number,
+    maxPL: PropTypes.number,
+    minPL: PropTypes.number,
+    fees: PropTypes.number,
+    vol: PropTypes.number,
+    stdDeviation: PropTypes.number,
+    avgPL: PropTypes.number,
+    backtestOptions: PropTypes.shape({
+      activeMarket: PropTypes.string,
+    }).isRequired,
+  }),
+}
+
+StrategyPerfomanceMetrics.defaultProps = {
+  results: {
+    nCandles: 0,
+    nTrades: 0,
+    nGains: 0,
+    nLosses: 0,
+    nStrategyTrades: 0,
+    nOpens: 0,
+    pl: 0,
+    pf: 0,
+    maxPL: 0,
+    minPL: 0,
+    fees: 0,
+    vol: 0,
+    stdDeviation: 0,
+    avgPL: 0,
+    backtestOptions: {
+      activeMarket: null,
+    },
+  },
 }
 
 export default StrategyPerfomanceMetrics

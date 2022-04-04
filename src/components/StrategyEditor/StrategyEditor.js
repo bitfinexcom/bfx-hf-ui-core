@@ -21,9 +21,9 @@ import StrategyTab from './tabs/StrategyTab'
 import IDETab from './tabs/IDETab'
 import { getDefaultMarket } from '../../util/market'
 import StrategiesMenuSideBarParams from './components/StrategiesMenuSideBarParams'
+import HelpTab from './tabs/HelpTab'
 
 import './style.css'
-import HelpTab from './tabs/HelpTab'
 
 const debug = Debug('hfui-ui:c:strategy-editor')
 
