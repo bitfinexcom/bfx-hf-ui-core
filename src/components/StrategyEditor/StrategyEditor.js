@@ -22,6 +22,8 @@ import IDETab from './tabs/IDETab'
 import { getDefaultMarket } from '../../util/market'
 import StrategiesMenuSideBarParams from './components/StrategiesMenuSideBarParams'
 import HelpTab from './tabs/HelpTab'
+import StrategyPaused from './components/StrategyPaused'
+import StrategyRunned from './components/StrategyRunned'
 
 import './style.css'
 
@@ -165,17 +167,9 @@ const StrategyEditor = (props) => {
   }
 
   const preSidebar = liveExecuting ? (
-    <div className='hfui-strategy-sidebar-status running'>
-      <Icon name='circle' />
-      &nbsp;&nbsp;
-      {t('strategyEditor.running')}
-    </div>
+    <StrategyRunned />
   ) : (
-    <div className='hfui-strategy-sidebar-status paused'>
-      <Icon name='pause' />
-      &nbsp;&nbsp;
-      {t('strategyEditor.paused')}
-    </div>
+    <StrategyPaused />
   )
 
   return (
