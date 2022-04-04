@@ -10,7 +10,6 @@ import PropTypes from 'prop-types'
 import { useTranslation } from 'react-i18next'
 
 import { saveAsJSON, readJSONFile } from '../../util/ui'
-import Markdown from '../../ui/Markdown'
 import { MAX_STRATEGY_LABEL_LENGTH } from '../../constants/variables'
 import Templates from './templates'
 import StrategyEditorPanel from './components/StrategyEditorPanel'
@@ -24,8 +23,7 @@ import { getDefaultMarket } from '../../util/market'
 import StrategiesMenuSideBarParams from './components/StrategiesMenuSideBarParams'
 
 import './style.css'
-
-const DocsPath = require('bfx-hf-strategy/docs/api.md')
+import HelpTab from './tabs/HelpTab'
 
 const debug = Debug('hfui-ui:c:strategy-editor')
 
@@ -68,7 +66,6 @@ const StrategyEditor = (props) => {
   const [isRemoveModalOpened, setIsRemoveModalOpened] = useState(false)
   const [createNewStrategyModalOpen, setCreateNewStrategyModalOpen] = useState(false)
   const [openExistingStrategyModalOpen, setOpenExistingStrategyModalOpen] = useState(false)
-  const [docsText, setDocsText] = useState('')
   const [symbol, setSymbol] = useState(
     options.symbol
       ? _find(markets, (m) => m.wsID === options.symbol)
@@ -83,14 +80,6 @@ const StrategyEditor = (props) => {
   )
   const [margin, setMargin] = useState(options.margin || DEFAULT_USE_MARGIN)
   const [paramsOpen, setParamsOpen] = useState(false)
-
-  useEffect(() => {
-    // load readme docs (DocsPath is an object when running in electron window)
-    const docsPath = typeof DocsPath === 'object' ? DocsPath.default : DocsPath
-    fetch(docsPath)
-      .then((response) => response.text())
-      .then(setDocsText)
-  }, [])
 
   const onCreateNewStrategy = (label, templateLabel, content = {}) => {
     const newStrategy = { label, ...content }
@@ -240,7 +229,7 @@ const StrategyEditor = (props) => {
             sbicon={<Icon name='edit' />}
             {...props}
           />
-          <Markdown
+          <HelpTab
             sbtitle='Help'
             sbicon={<Icon name='question-circle-o' />}
           />
