@@ -26,6 +26,10 @@
   &__left-container {
     display: flex;
   }
+
+  .shadow {
+    box-shadow: 5px -4px 15px 0px #000000;
+  }
 }
 
 .hfui-panel__secondaryheader__wrapper,
@@ -348,17 +352,17 @@
           font-size: 16px;
           cursor: pointer;
           user-select: none;
-      
+
           .sb-icon {
             padding-right: 10px;
           }
-      
+
           &:hover,
           &:focus {
             background: var(--lighter-background-color);
             color: var(--shade-8);
           }
-      
+
           &.active {
             color: $green-color;
           }

@@ -12,6 +12,6 @@ export const LAYOUT_CONFIG = [
     i: COMPONENTS_KEYS.STRATEGY_PERFOMANCE, x: 60, y: 0, w: 40, h: 6,
   },
   {
-    i: COMPONENTS_KEYS.STRATEGY_TRADES, x: 0, y: 5, w: 100, h: 3,
+    i: COMPONENTS_KEYS.STRATEGY_TRADES, x: 0, y: 6, w: 100, h: 3,
   },
 ]

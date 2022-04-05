@@ -659,7 +659,9 @@
     "removeBtn": "Remove",
     "createBtn": "Create",
     "startBtn": "Start",
-    "deleteBtn": "Delete"
+    "deleteBtn": "Delete",
+    "expandPanel": "Expand Panel",
+    "compressPanel": "Compress Panel"
   },
   "crashHandler": {
     "text1": "An error occurred that caused the Honey Framework UI to halt. Please, restart the application to proceed working with it",

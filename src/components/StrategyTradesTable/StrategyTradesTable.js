@@ -1,25 +1,48 @@
-import React, { memo } from 'react'
+import React, { memo, useState } from 'react'
 import { Button, VirtualTable } from '@ufx-ui/core'
 import _isEmpty from 'lodash/isEmpty'
 import PropTypes from 'prop-types'
 import { useTranslation } from 'react-i18next'
 import { useSelector } from 'react-redux'
+import _findIndex from 'lodash/findIndex'
 
 import { Icon } from 'react-fa'
 import Panel from '../../ui/Panel'
 import StrategyTradesTableColumns from './StrategyTradesTable.columns'
+import { COMPONENTS_KEYS, LAYOUT_CONFIG } from '../StrategyEditor/tabs/StrategyTab.constants'
 
 import { onTradeExportClick } from './StrategyTradesTable.helpers'
 import { getActiveMarket } from '../../redux/selectors/ui'
-// import Button from '../../ui/Button'
 
 import './style.css'
 
-const StrategyTradesTable = ({ results, onTradeClick, dark }) => {
-  const { t } = useTranslation()
-
+const StrategyTradesTable = ({
+  results, onTradeClick, dark, setLayoutConfig, layoutConfig,
+}) => {
+  const [isExpanded, setIsExpanded] = useState(false)
   const activeMarket = useSelector(getActiveMarket)
   const { trades } = results
+
+  const onExpandClick = () => {
+    const currentElementIndex = _findIndex(layoutConfig, c => c.i === COMPONENTS_KEYS.STRATEGY_TRADES)
+    const currentElement = layoutConfig[currentElementIndex]
+    const newElementConfig = {
+      ...currentElement,
+      y: 2,
+      h: 7,
+    }
+    const newLayoutConfig = [...layoutConfig]
+    newLayoutConfig[currentElementIndex] = newElementConfig
+    setIsExpanded(true)
+    setLayoutConfig(newLayoutConfig)
+  }
+
+  const onCompressClick = () => {
+    setIsExpanded(false)
+    setLayoutConfig(LAYOUT_CONFIG)
+  }
+
+  const { t } = useTranslation()
 
   return (
     <Panel
@@ -30,6 +53,7 @@ const StrategyTradesTable = ({ results, onTradeClick, dark }) => {
       moveable={false}
       className='hfui-strategytradestable__wrapper'
       hideIcons
+      hasShadow={isExpanded}
       preHeaderComponents={(
         <>
           <Button
@@ -40,14 +64,26 @@ const StrategyTradesTable = ({ results, onTradeClick, dark }) => {
             &nbsp;&nbsp;
             {t('strategyEditor.exportCSV')}
           </Button>
-          <Button
-            className='panel-button'
-            onClick={() => {}}
-          >
-            <Icon name='compress' />
+          {isExpanded ? (
+            <Button
+              className='panel-button'
+              onClick={onCompressClick}
+            >
+              <Icon name='compress' />
             &nbsp;&nbsp;
-            <span>EXPAND PANEL</span>
-          </Button>
+              <span>{t('ui.compressPanel')}</span>
+            </Button>
+          ) : (
+            <Button
+              className='panel-button'
+              onClick={onExpandClick}
+            >
+              <Icon name='expand' />
+            &nbsp;&nbsp;
+              <span>{t('ui.expandPanel')}</span>
+            </Button>
+          )}
+
         </>
 )}
     >
@@ -76,6 +112,8 @@ StrategyTradesTable.propTypes = {
   }).isRequired,
   onTradeClick: PropTypes.func.isRequired,
   dark: PropTypes.bool,
+  layoutConfig: PropTypes.arrayOf(PropTypes.object).isRequired,
+  setLayoutConfig: PropTypes.func.isRequired,
 }
 
 StrategyTradesTable.defaultProps = {

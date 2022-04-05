@@ -31,8 +31,8 @@ const getTabTitle = (tab) => {
   return htmlKey
 }
 
+// eslint-disable-next-line consistent-return
 const getForcedTab = (forcedTab, tabs) => {
-  // eslint-disable-line
   if (_isNumber(forcedTab)) {
     return forcedTab
   }
@@ -74,6 +74,7 @@ const Panel = ({
   onTabChange,
   onSideTabChange,
   preSidebarComponents,
+  hasShadow,
 }) => {
   const tabs = _filter(
     React.Children.toArray(children),
@@ -121,6 +122,7 @@ const Panel = ({
       className={ClassNames('hfui-panel', className, {
         'dark-header': darkHeader,
         dark,
+        shadow: hasShadow,
       })}
       ref={panelRef}
     >
@@ -291,6 +293,7 @@ Panel.propTypes = {
   onTabChange: PropTypes.func,
   onSideTabChange: PropTypes.func,
   dropdown: PropTypes.node,
+  hasShadow: PropTypes.bool,
 }
 
 Panel.defaultProps = {
@@ -319,6 +322,7 @@ Panel.defaultProps = {
   onTabChange: () => {},
   onSideTabChange: () => {},
   dropdown: null,
+  hasShadow: false,
 }
 
 export default Panel
