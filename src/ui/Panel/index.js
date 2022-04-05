@@ -1,6 +1,4 @@
-import React, {
-  useState, useEffect, useCallback,
-} from 'react'
+import React, { useState, useEffect, useCallback } from 'react'
 import ClassNames from 'clsx'
 import { Icon } from 'react-fa'
 import PropTypes from 'prop-types'
@@ -14,7 +12,8 @@ import useSize from '../../hooks/useSize'
 
 import './style.css'
 
-const getTabTitle = (tab) => { // eslint-disable-line
+const getTabTitle = (tab) => {
+  // eslint-disable-line
   const { htmlKey, tabtitle, sbtitle } = tab.props
 
   if (typeof sbtitle === 'string') {
@@ -32,7 +31,8 @@ const getTabTitle = (tab) => { // eslint-disable-line
   return htmlKey
 }
 
-const getForcedTab = (forcedTab, tabs) => { // eslint-disable-line
+const getForcedTab = (forcedTab, tabs) => {
+  // eslint-disable-line
   if (_isNumber(forcedTab)) {
     return forcedTab
   }
@@ -49,12 +49,40 @@ const getForcedTab = (forcedTab, tabs) => { // eslint-disable-line
 }
 
 const Panel = ({
-  label, className, onRemove, hideIcons, children, headerComponents, extraIcons, moveable, removeable, modal, footer,
-  settingsOpen, onToggleSettings, darkHeader, dark, showChartMarket, chartMarketSelect, secondaryHeaderComponents,
-  closePanel, preHeaderComponents, dropdown, forcedTab, onTabChange, onSideTabChange, preSidebarComponents,
+  label,
+  className,
+  onRemove,
+  hideIcons,
+  children,
+  headerComponents,
+  extraIcons,
+  moveable,
+  removeable,
+  modal,
+  footer,
+  settingsOpen,
+  onToggleSettings,
+  darkHeader,
+  dark,
+  showChartMarket,
+  chartMarketSelect,
+  secondaryHeaderComponents,
+  closePanel,
+  preHeaderComponents,
+  dropdown,
+  forcedTab,
+  onTabChange,
+  onSideTabChange,
+  preSidebarComponents,
 }) => {
-  const tabs = _filter(React.Children.toArray(children), c => c && c.props.tabtitle)
-  const sbTabs = _filter(React.Children.toArray(children), c => c && c.props.sbtitle)
+  const tabs = _filter(
+    React.Children.toArray(children),
+    (c) => c && c.props.tabtitle,
+  )
+  const sbTabs = _filter(
+    React.Children.toArray(children),
+    (c) => c && c.props.sbtitle,
+  )
   const initTab = getForcedTab(forcedTab, tabs)
   const [sidebarOpened, setSidebarOpened] = useState(true)
   const [selectedTab, setSelectedTab] = useState(initTab)
@@ -62,17 +90,27 @@ const Panel = ({
   const [panelRef, panelSize] = useSize()
   const [headerRef, headerSize] = useSize()
 
-  const innerContent = !_isEmpty(tabs) ? tabs[selectedTab] : !_isEmpty(sbTabs) ? sbTabs[selectedSBTab] : children
+  const innerContent = !_isEmpty(tabs)
+    ? tabs[selectedTab]
+    : !_isEmpty(sbTabs)
+      ? sbTabs[selectedSBTab]
+      : children
 
-  const _setSelectedTab = useCallback((tab) => {
-    onTabChange(tab)
-    setSelectedTab(tab)
-  }, [onTabChange])
+  const _setSelectedTab = useCallback(
+    (tab) => {
+      onTabChange(tab)
+      setSelectedTab(tab)
+    },
+    [onTabChange],
+  )
 
-  const _setSelectedSBTab = useCallback((tab) => {
-    onSideTabChange(tab)
-    setSelectedSBTab(tab)
-  }, [onSideTabChange])
+  const _setSelectedSBTab = useCallback(
+    (tab) => {
+      onSideTabChange(tab)
+      setSelectedSBTab(tab)
+    },
+    [onSideTabChange],
+  )
 
   useEffect(() => {
     _setSelectedTab(initTab)
@@ -102,12 +140,12 @@ const Panel = ({
           </div>
           <div className='hfui-panel__buttons-section'>
             {preHeaderComponents && (
-              <div className='hfui-panel__preheader'>
-                {preHeaderComponents}
-              </div>
+              <div className='hfui-panel__preheader'>{preHeaderComponents}</div>
             )}
             {closePanel && (
-              <p className='hfui-panel__close' onClick={closePanel}>&#10005;</p>
+              <p className='hfui-panel__close' onClick={closePanel}>
+                &#10005;
+              </p>
             )}
           </div>
           {tabs.length > 0 && (
@@ -115,12 +153,12 @@ const Panel = ({
               {_map(tabs, (tab, index) => (
                 <li
                   key={tab.props.htmlKey || tab.props.tabtitle}
-                  className={ClassNames({ active: getTabTitle(tab) === getTabTitle(tabs[selectedTab]) })}
+                  className={ClassNames({
+                    active: getTabTitle(tab) === getTabTitle(tabs[selectedTab]),
+                  })}
                   onClick={() => _setSelectedTab(index)}
                 >
-                  <p className='hfui-panel__label'>
-                    {tab.props.tabtitle}
-                  </p>
+                  <p className='hfui-panel__label'>{tab.props.tabtitle}</p>
                 </li>
               ))}
             </ul>
@@ -128,9 +166,7 @@ const Panel = ({
 
           {!hideIcons && (
             <div className='hfui-panel__header-icons'>
-              {removeable && (
-                <i onClick={onRemove} className='icon-cancel' />
-              )}
+              {removeable && <i onClick={onRemove} className='icon-cancel' />}
 
               {moveable && <i className='icon-move' />}
 
@@ -166,10 +202,11 @@ const Panel = ({
       <div className='hfui-panel__content'>
         {modal}
         <Scrollbars style={{ height: panelSize.height - headerSize.height }}>
-          <div className={ClassNames('hfui-panel__content-outer', {
-            'sidebar-opened': sidebarOpened,
-            'no-sidebar': _isEmpty(sbTabs),
-          })}
+          <div
+            className={ClassNames('hfui-panel__content-outer', {
+              'sidebar-opened': sidebarOpened,
+              'no-sidebar': _isEmpty(sbTabs),
+            })}
           >
             <div className='hfui_panel__sidebar-container'>
               <Icon
@@ -182,27 +219,24 @@ const Panel = ({
                 {_map(sbTabs, (tab, index) => (
                   <li
                     key={tab.props.htmlKey || tab.props.sbtitle}
-                    className={ClassNames({ active: getTabTitle(tab) === getTabTitle(sbTabs[selectedSBTab]) })}
+                    className={ClassNames({
+                      active:
+                        getTabTitle(tab) === getTabTitle(sbTabs[selectedSBTab]),
+                    })}
                     onClick={() => _setSelectedSBTab(index)}
                   >
-                    <span className='sb-icon'>
-                      {tab.props.sbicon}
-                    </span>
+                    <span className='sb-icon'>{tab.props.sbicon}</span>
                     {sidebarOpened && tab.props.sbtitle}
                   </li>
                 ))}
               </ul>
             </div>
-            <div className='hfui-panel__inner'>
-              {innerContent}
-            </div>
+            <div className='hfui-panel__inner'>{innerContent}</div>
           </div>
         </Scrollbars>
       </div>
 
-      {footer && (
-        <div className='hfui-panel__footer'>{footer}</div>
-      )}
+      {footer && <div className='hfui-panel__footer'>{footer}</div>}
     </div>
   )
 }
@@ -211,24 +245,48 @@ Panel.propTypes = {
   className: PropTypes.string,
   label: PropTypes.oneOfType([PropTypes.node, PropTypes.string]),
   onRemove: PropTypes.func,
-  headerComponents: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.node), PropTypes.node]),
-  secondaryHeaderComponents: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.node), PropTypes.node]),
+  headerComponents: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.node),
+    PropTypes.node,
+  ]),
+  secondaryHeaderComponents: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.node),
+    PropTypes.node,
+  ]),
   hideIcons: PropTypes.bool,
-  extraIcons: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.node), PropTypes.node]),
+  extraIcons: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.node),
+    PropTypes.node,
+  ]),
   moveable: PropTypes.bool,
   removeable: PropTypes.bool,
-  modal: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.node), PropTypes.node]),
+  modal: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.node),
+    PropTypes.node,
+  ]),
   darkHeader: PropTypes.bool,
   dark: PropTypes.bool,
-  children: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.node), PropTypes.node]),
-  footer: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.node), PropTypes.node]),
+  children: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.node),
+    PropTypes.node,
+  ]),
+  footer: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.node),
+    PropTypes.node,
+  ]),
   settingsOpen: PropTypes.bool,
   onToggleSettings: PropTypes.func,
   showChartMarket: PropTypes.bool,
   chartMarketSelect: PropTypes.node,
   closePanel: PropTypes.func,
-  preHeaderComponents: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.node), PropTypes.node]),
-  preSidebarComponents: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.node), PropTypes.node]),
+  preHeaderComponents: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.node),
+    PropTypes.node,
+  ]),
+  preSidebarComponents: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.node),
+    PropTypes.node,
+  ]),
   forcedTab: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   onTabChange: PropTypes.func,
   onSideTabChange: PropTypes.func,
@@ -242,7 +300,7 @@ Panel.defaultProps = {
   dark: false,
   className: '',
   label: '',
-  onRemove: () => { },
+  onRemove: () => {},
   headerComponents: null,
   secondaryHeaderComponents: null,
   hideIcons: false,
@@ -258,8 +316,8 @@ Panel.defaultProps = {
   preHeaderComponents: null,
   preSidebarComponents: null,
   forcedTab: '',
-  onTabChange: () => { },
-  onSideTabChange: () => { },
+  onTabChange: () => {},
+  onSideTabChange: () => {},
   dropdown: null,
 }
 
