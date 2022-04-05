@@ -529,7 +529,18 @@
     "price": "Price",
     "status": "Status",
     "time": "Time",
-    "fee": "Fee"
+    "fee": "Fee",
+    "id": "Id",
+    "signal": "Signal",
+    "entryPrice": "Entry Price",
+    "closingPrice": "Closing Price",
+    "units": "Units",
+    "profit": "Profit",
+    "position": "Position",
+    "drawdown": "Drawdown",
+    "runningSince": "Running since",
+    "leverage": "Leverage",
+    "sharpeRatio": "Sharpe Ratio"
   },
   "tickersPanel": {
     "title": "Ticker Panel"
@@ -574,7 +585,7 @@
     "executeTab": "Execute",
     "unsavedStartegy": "Unsaved strategy",
     "newStrategy": "Create a new strategy",
-    "runnung": "Running",
+    "running": "Running",
     "paused": "Paused",
     "recent": "Recent",
     "activeStrategies": "Active strategies ({{amount}})",
@@ -621,7 +632,8 @@
       "realBalancesWarning": "NOTE: By pressing start, you will be executing your strategy on your live account with real balances.",
       "createStrategy": "Create a strategy to begin executing."
     },
-    "candleSeedCount": "Candle seed count"
+    "candleSeedCount": "Candle seed count",
+    "noActiveStrategies": "There are not active strategies"
   },
   "ui": {
     "ok": "Okay",
