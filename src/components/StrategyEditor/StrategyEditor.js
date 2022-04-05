@@ -83,6 +83,12 @@ const StrategyEditor = (props) => {
   const [margin, setMargin] = useState(options.margin || DEFAULT_USE_MARGIN)
   const [paramsOpen, setParamsOpen] = useState(false)
 
+  const onCloseModals = () => {
+    setOpenExistingStrategyModalOpen(false)
+    setCreateNewStrategyModalOpen(false)
+    setIsRemoveModalOpened(false)
+  }
+
   const onCreateNewStrategy = (label, templateLabel, content = {}) => {
     const newStrategy = { label, ...content }
     const template = _find(Templates, (_t) => _t.label === templateLabel)
@@ -106,12 +112,8 @@ const StrategyEditor = (props) => {
     if (newStrategy.defineIndicators) {
       onDefineIndicatorsChange(newStrategy.defineIndicators)
     }
-  }
 
-  const onCloseModals = () => {
-    setOpenExistingStrategyModalOpen(false)
-    setCreateNewStrategyModalOpen(false)
-    setIsRemoveModalOpened(false)
+    onCloseModals()
   }
 
   const onRemoveStrategy = () => {
@@ -237,6 +239,7 @@ const StrategyEditor = (props) => {
         gaCreateStrategy={gaCreateStrategy}
         onClose={onCloseModals}
         onSubmit={onCreateNewStrategy}
+        onImportStrategy={onImportStrategy}
       />
       <OpenExistingStrategyModal
         isOpen={openExistingStrategyModalOpen}

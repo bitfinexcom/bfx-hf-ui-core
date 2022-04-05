@@ -16,7 +16,7 @@ import Dropdown from '../../../ui/Dropdown'
 import './style.css'
 
 const CreateNewStrategyModal = ({
-  onSubmit, onClose, gaCreateStrategy, isOpen,
+  onSubmit, onClose, gaCreateStrategy, isOpen, onImportStrategy,
 }) => {
   const [label, setLabel] = useState('')
   const [error, setError] = useState('')
@@ -51,7 +51,6 @@ const CreateNewStrategyModal = ({
       className='hfui-createnewstrategymodal__wrapper'
       label={t('strategyEditor.newStrategyModalTitle')}
     >
-
       <Input
         type='text'
         placeholder='Label'
@@ -72,7 +71,10 @@ const CreateNewStrategyModal = ({
         <p className='error'>{error}</p>
       )}
 
-      <Modal.Footer>
+      <Modal.Footer className='hfui-createnewstrategymodal__footer'>
+        <span onClick={onImportStrategy}>
+          {t('strategyEditor.orImport')}
+        </span>
         <Modal.Button primary onClick={onSubmitHandler}>
           {t('ui.createBtn')}
         </Modal.Button>
@@ -84,6 +86,7 @@ const CreateNewStrategyModal = ({
 CreateNewStrategyModal.propTypes = {
   onSubmit: PropTypes.func.isRequired,
   onClose: PropTypes.func.isRequired,
+  onImportStrategy: PropTypes.func.isRequired,
   gaCreateStrategy: PropTypes.func,
   isOpen: PropTypes.bool,
 }

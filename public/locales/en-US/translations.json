@@ -591,6 +591,7 @@
     "activeStrategies": "Active strategies ({{amount}})",
     "pastStrategies": "Past strategies ({{amount}})",
     "more": "More",
+    "orImport": "or import one",
     "orSelectOne": "or select one from the list below",
     "newStrategyModalTitle": "Create a New Strategy",
     "newStrategyModalEmptyError": "Label is empty",
