@@ -168,7 +168,7 @@ StrategyEditorPanel.propTypes = {
   onSideTabChange: PropTypes.func.isRequired,
   preSidebarComponents: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.node), PropTypes.node]),
   children: PropTypes.node.isRequired,
-  strategies: PropTypes.arrayOf(PropTypes.object).isRequired, // eslint-disable-line
+  strategies: PropTypes.arrayOf(PropTypes.object).isRequired,
 }
 
 StrategyEditorPanel.defaultProps = {

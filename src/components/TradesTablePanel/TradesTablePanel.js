@@ -144,12 +144,12 @@ TradesTablePanel.propTypes = {
     }),
   }),
   canChangeMarket: PropTypes.bool,
-  allMarketTrades: PropTypes.arrayOf(PropTypes.object), // eslint-disable-line
+  allMarketTrades: PropTypes.arrayOf(PropTypes.object),
   onRemove: PropTypes.func.isRequired,
   layoutI: PropTypes.string.isRequired,
   layoutID: PropTypes.string,
   updateState: PropTypes.func.isRequired,
-  markets: PropTypes.objectOf(PropTypes.object).isRequired, // eslint-disable-line
+  markets: PropTypes.objectOf(PropTypes.object).isRequired,
   activeMarket: PropTypes.shape({
     uiID: PropTypes.string,
   }).isRequired,

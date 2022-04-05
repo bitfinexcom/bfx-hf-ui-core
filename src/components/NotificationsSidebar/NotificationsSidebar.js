@@ -80,9 +80,7 @@ const NotificationsSidebar = ({
 }
 
 NotificationsSidebar.propTypes = {
-  notifications: PropTypes.arrayOf(PropTypes.objectOf([
-    PropTypes.string, PropTypes.number,
-  ])),
+  notifications: PropTypes.arrayOf(PropTypes.object).isRequired,
   removeNotifications: PropTypes.func.isRequired,
   clearNotifications: PropTypes.func.isRequired,
   closeNotificationPanel: PropTypes.func.isRequired,
@@ -92,7 +90,6 @@ NotificationsSidebar.propTypes = {
 
 NotificationsSidebar.defaultProps = {
   notificationsVisible: false,
-  notifications: [],
 }
 
 export default withTranslation()(memo(NotificationsSidebar))

@@ -60,7 +60,7 @@ const TickerBar = (props) => {
 TickerBar.propTypes = {
   onFieldChange: PropTypes.func.isRequired,
   layout: PropTypes.shape({
-    fields: PropTypes.objectOf(PropTypes.object), // eslint-disable-line
+    fields: PropTypes.objectOf(PropTypes.object),
   }).isRequired,
 }
 

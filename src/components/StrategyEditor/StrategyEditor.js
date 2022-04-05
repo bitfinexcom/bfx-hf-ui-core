@@ -276,7 +276,6 @@ StrategyEditor.propTypes = {
       PropTypes.oneOf([null]).isRequired,
     ]),
   ),
-  backtestResults: PropTypes.objectOf(PropTypes.any),
   // settingsTheme: PropTypes.oneOf([THEMES.LIGHT, THEMES.DARK]),
 }
 
