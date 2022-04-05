@@ -20,7 +20,7 @@ const Item = ({
 )
 
 const StrategyParams = ({
-  paramsOpen, setParamsOpen, startExecution, stopExecution, onLoadStrategy,
+  paramsOpen, setParamsOpen, startExecution, stopExecution, onLoadStrategy, onExportStrategy, onSaveStrategy,
 }) => {
   const { t } = useTranslation()
 
@@ -46,6 +46,12 @@ const StrategyParams = ({
               </Item>
               <div className='hfui-navbar__layout-settings__separator' />
               <Item onClick={onClose}>
+                {t('ui.save')}
+              </Item>
+              <Item onClick={onExportStrategy}>
+                {t('ui.saveAs')}
+              </Item>
+              <Item onClick={onClose}>
                 {t('ui.closeBtn')}
               </Item>
             </div>
@@ -62,6 +68,8 @@ StrategyParams.propTypes = {
   startExecution: PropTypes.func.isRequired,
   stopExecution: PropTypes.func.isRequired,
   onLoadStrategy: PropTypes.func.isRequired,
+  onExportStrategy: PropTypes.func.isRequired,
+  onSaveStrategy: PropTypes.func.isRequired,
 }
 
 export default memo(StrategyParams)

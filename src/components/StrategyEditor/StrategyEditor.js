@@ -213,6 +213,8 @@ const StrategyEditor = (props) => {
                   startExecution={startExecution}
                   stopExecution={stopExecution}
                   onLoadStrategy={onLoadStrategy}
+                  onExportStrategy={onExportStrategy}
+                  onSaveStrategy={onSaveStrategy}
                 />
               </>
             )}
