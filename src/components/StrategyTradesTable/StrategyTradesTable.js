@@ -1,16 +1,25 @@
 import React, { memo } from 'react'
-import { VirtualTable } from '@ufx-ui/core'
+import { Button, VirtualTable } from '@ufx-ui/core'
 import _isEmpty from 'lodash/isEmpty'
 import PropTypes from 'prop-types'
 import { useTranslation } from 'react-i18next'
+import { useSelector } from 'react-redux'
 
+import { Icon } from 'react-fa'
 import Panel from '../../ui/Panel'
 import StrategyTradesTableColumns from './StrategyTradesTable.columns'
 
+import { onTradeExportClick } from './StrategyTradesTable.helpers'
+import { getActiveMarket } from '../../redux/selectors/ui'
+// import Button from '../../ui/Button'
+
 import './style.css'
 
-const StrategyTradesTable = ({ results: { trades }, onTradeClick, dark }) => {
+const StrategyTradesTable = ({ results, onTradeClick, dark }) => {
   const { t } = useTranslation()
+
+  const activeMarket = useSelector(getActiveMarket)
+  const { trades } = results
 
   return (
     <Panel
@@ -20,6 +29,27 @@ const StrategyTradesTable = ({ results: { trades }, onTradeClick, dark }) => {
       removeable={false}
       moveable={false}
       className='hfui-strategytradestable__wrapper'
+      hideIcons
+      preHeaderComponents={(
+        <>
+          <Button
+            className='panel-button'
+            onClick={() => onTradeExportClick(trades, results, activeMarket, t)}
+          >
+            <Icon name='file' />
+            &nbsp;&nbsp;
+            {t('strategyEditor.exportCSV')}
+          </Button>
+          <Button
+            className='panel-button'
+            onClick={() => {}}
+          >
+            <Icon name='compress' />
+            &nbsp;&nbsp;
+            <span>EXPAND PANEL</span>
+          </Button>
+        </>
+)}
     >
       {_isEmpty(trades) ? (
         <div className='no-trades__wrapper'>
