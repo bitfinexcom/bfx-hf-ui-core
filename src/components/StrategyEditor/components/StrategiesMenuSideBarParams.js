@@ -20,9 +20,13 @@ const Item = ({
 )
 
 const StrategyParams = ({
-  paramsOpen, setParamsOpen, startExecution, stopExecution,
+  paramsOpen, setParamsOpen, startExecution, stopExecution, onLoadStrategy,
 }) => {
   const { t } = useTranslation()
+
+  const onClose = () => {
+    onLoadStrategy({})
+  }
 
   return (
     <div className='hfui-orderform__ao-settings'>
@@ -41,7 +45,7 @@ const StrategyParams = ({
                 {t('strategyEditor.stopExec')}
               </Item>
               <div className='hfui-navbar__layout-settings__separator' />
-              <Item onClick={() => {}}>
+              <Item onClick={onClose}>
                 {t('ui.closeBtn')}
               </Item>
             </div>
@@ -57,6 +61,7 @@ StrategyParams.propTypes = {
   setParamsOpen: PropTypes.func.isRequired,
   startExecution: PropTypes.func.isRequired,
   stopExecution: PropTypes.func.isRequired,
+  onLoadStrategy: PropTypes.func.isRequired,
 }
 
 export default memo(StrategyParams)

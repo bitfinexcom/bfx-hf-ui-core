@@ -212,6 +212,7 @@ const StrategyEditor = (props) => {
                   setParamsOpen={setParamsOpen}
                   startExecution={startExecution}
                   stopExecution={stopExecution}
+                  onLoadStrategy={onLoadStrategy}
                 />
               </>
             )}

@@ -174,9 +174,9 @@ const StrategiesPage = ({
   }
 
   const onLoadStrategy = (newStrategy) => {
-    const updated = { ...newStrategy, savedTs: Date.now() }
-    onSave(authToken, updated)
-    setStrategy(updated)
+    // const updated = { ...newStrategy, savedTs: Date.now() }
+    // onSave(authToken, updated)
+    setStrategy(newStrategy)
     setSectionErrors({})
     setStrategyDirty(false)
     selectStrategyHandler(newStrategy)
