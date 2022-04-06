@@ -14,7 +14,9 @@ import './style.css'
 
 const { getCurrencySymbolMemo } = reduxSelectors
 
-const Chart = ({ market, theme, layoutI }) => {
+const Chart = ({
+  market, theme, layoutI, indicators, interval = '30', // 30 minutes,
+}) => {
   const {
     wsID, base, quote, isPerp, uiID: _uiID,
   } = market
@@ -25,13 +27,14 @@ const Chart = ({ market, theme, layoutI }) => {
 
   const uiID = isPerp ? _uiID : getPairFromMarket(market, getCurrencySymbol)
   const iframeID = `hfui-chart-${layoutI}`
-  const sendMarketToChartIframe = useChartIframe(iframeID, wsID)
+  const sendMarketToChartIframe = useChartIframe(iframeID, wsID, indicators)
 
   const queryString = new URLSearchParams({
     env,
     theme: theme === THEMES.DARK ? 'honeyframework-theme:dark-mode' : 'default-theme:light-mode',
     locale: LANGUAGES_CHART_TABLE[i18nMappedKey] || LANGUAGES_CHART_TABLE.en,
     iframeID,
+    // interval,
   }).toString()
 
   useEffect(() => {
