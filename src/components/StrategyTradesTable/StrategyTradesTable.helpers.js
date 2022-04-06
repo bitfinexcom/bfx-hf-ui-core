@@ -12,8 +12,20 @@ const getExportFilename = (activeMarket) => {
 
 const onTradeExportClick = (rawTrades, results, activeMarket, t) => {
   const {
-    nCandles, nTrades, nGains, nLosses, nStrategyTrades, nOpens, pl, pf,
-    maxPL, minPL, fees, vol, stdDeviation, avgPL,
+    nCandles,
+    nTrades,
+    nGains,
+    nLosses,
+    nStrategyTrades,
+    nOpens,
+    pl,
+    pf,
+    maxPL,
+    minPL,
+    fees,
+    vol,
+    stdDeviation,
+    avgPL,
   } = results
 
   const tHeaders = {
