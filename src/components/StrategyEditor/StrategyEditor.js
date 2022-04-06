@@ -206,6 +206,7 @@ const StrategyEditor = (props) => {
           preSidebarComponents={preSidebar}
         >
           <StrategyTab
+            htmlKey='strategy'
             sbtitle={(
               <>
                 Strategy
@@ -224,11 +225,13 @@ const StrategyEditor = (props) => {
             {...props}
           />
           <IDETab
+            htmlKey='view_in_ide'
             sbtitle='View in IDE'
             sbicon={<Icon name='edit' />}
             {...props}
           />
           <HelpTab
+            htmlKey='help'
             sbtitle='Help'
             sbicon={<Icon name='question-circle-o' />}
           />
