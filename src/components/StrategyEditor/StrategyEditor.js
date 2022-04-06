@@ -285,7 +285,6 @@ StrategyEditor.defaultProps = {
   removeable: false,
   // renderResults: true,
   strategyContent: {},
-  backtestResults: {},
   // settingsTheme: THEMES.DARK,
 }
 

@@ -603,7 +603,7 @@
     "backtestingCreateMessage": "Create a strategy to begin backtesting",
     "backtestingLoadingMessage": "Loading candles and executing strategy...",
     "backtestingStartingMessage": "Press start to begin backtesting.",
-    "exportCSV": "Export results to CSV",
+    "exportCSV": "Export as CSV",
     "historical": "Historical",
     "startDate": "Start Date",
     "endDate": "End Date",
@@ -659,7 +659,9 @@
     "removeBtn": "Remove",
     "createBtn": "Create",
     "startBtn": "Start",
-    "deleteBtn": "Delete"
+    "deleteBtn": "Delete",
+    "expandPanel": "Expand Panel",
+    "compressPanel": "Compress Panel"
   },
   "crashHandler": {
     "text1": "An error occurred that caused the Honey Framework UI to halt. Please, restart the application to proceed working with it",
