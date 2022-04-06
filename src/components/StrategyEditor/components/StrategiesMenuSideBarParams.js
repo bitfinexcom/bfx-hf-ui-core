@@ -6,13 +6,14 @@ import { useTranslation } from 'react-i18next'
 import { Icon } from 'react-fa'
 
 const Item = ({
-  isSelected, isDisabled, children, ...props // eslint-disable-line
+  isSelected, isDisabled, children, onClick, ...props // eslint-disable-line
 }) => (
   <div
     className={cx('hfui-orderform__ao-settings__item is-layout', {
       'is-selected': isSelected,
       'is-disabled': isDisabled,
     })}
+    onClick={isDisabled ? () => {} : onClick}
     {...props}
   >
     {children}
