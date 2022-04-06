@@ -82,6 +82,7 @@ const StrategyEditor = (props) => {
   )
   const [margin, setMargin] = useState(options.margin || DEFAULT_USE_MARGIN)
   const [paramsOpen, setParamsOpen] = useState(false)
+  const execRunning = backtestResults.executing || backtestResults.loading || liveExecuting || liveLoading
 
   const onCloseModals = () => {
     setOpenExistingStrategyModalOpen(false)
@@ -185,12 +186,7 @@ const StrategyEditor = (props) => {
           onRemove={onRemove}
           moveable={moveable}
           removeable={removeable}
-          execRunning={
-            backtestResults.executing
-            || backtestResults.loading
-            || liveExecuting
-            || liveLoading
-          }
+          execRunning={execRunning}
           strategyDirty={strategyDirty}
           strategy={strategy}
           // strategies={strategies}
@@ -218,6 +214,7 @@ const StrategyEditor = (props) => {
                   onLoadStrategy={onLoadStrategy}
                   onExportStrategy={onExportStrategy}
                   onSaveStrategy={onSaveStrategy}
+                  execRunning={execRunning}
                 />
               </>
             )}

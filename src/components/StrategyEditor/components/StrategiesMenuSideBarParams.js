@@ -20,7 +20,7 @@ const Item = ({
 )
 
 const StrategyParams = ({
-  paramsOpen, setParamsOpen, startExecution, stopExecution, onLoadStrategy, onExportStrategy, onSaveStrategy,
+  paramsOpen, setParamsOpen, startExecution, stopExecution, onLoadStrategy, onExportStrategy, onSaveStrategy, execRunning,
 }) => {
   const { t } = useTranslation()
 
@@ -34,18 +34,18 @@ const StrategyParams = ({
         <OutsideClickHandler onOutsideClick={() => setParamsOpen(false)}>
           <div className='hfui-orderform__ao-settings__menu hfui-strategy__options-panel'>
             <div className='hfui-orderform__ao-settings__menu-buttons' onClick={() => setParamsOpen(false)}>
-              <Item onClick={startExecution}>
+              <Item onClick={startExecution} isDisabled={execRunning}>
                 <Icon name='play' />
                 &nbsp;&nbsp;
                 {t('strategyEditor.launchStrategy')}
               </Item>
-              <Item onClick={stopExecution}>
+              <Item onClick={stopExecution} isDisabled={!execRunning}>
                 <Icon name='stop' />
                 &nbsp;&nbsp;
                 {t('strategyEditor.stopExec')}
               </Item>
               <div className='hfui-navbar__layout-settings__separator' />
-              <Item onClick={onClose}>
+              <Item onClick={onSaveStrategy}>
                 {t('ui.save')}
               </Item>
               <Item onClick={onExportStrategy}>
@@ -70,6 +70,7 @@ StrategyParams.propTypes = {
   onLoadStrategy: PropTypes.func.isRequired,
   onExportStrategy: PropTypes.func.isRequired,
   onSaveStrategy: PropTypes.func.isRequired,
+  execRunning: PropTypes.bool.isRequired,
 }
 
 export default memo(StrategyParams)
