@@ -62,12 +62,10 @@ const StrategyEditorPanel = ({
       className='hfui-strategyeditor__panel'
       dark={dark}
       darkHeader={dark}
-      headerComponents={null}
       onRemove={onRemove}
       moveable={moveable}
       removeable={removeable}
       onSideTabChange={onSideTabChange}
-      footer={null}
       extraIcons={[
         execRunning && (
           <Icon

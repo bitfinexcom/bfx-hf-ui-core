@@ -41,6 +41,8 @@ body.hosted {
 .hfui-strategyeditor__panel {
   width: 100%;
   margin-bottom: spacing(1.25);
+  flex: 3;
+  border-bottom: 16px solid var(--darker-background-color);
 }
 
 .hfui-strategytradestable__wrapper {

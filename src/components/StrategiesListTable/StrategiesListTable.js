@@ -38,7 +38,7 @@ const StrategiesListTable = ({ onLoadStrategy }) => {
 
   return (
     <Panel
-      moveable
+      moveable={false}
       removeable={false}
       className='hfui-strategies-list'
       darkHeader

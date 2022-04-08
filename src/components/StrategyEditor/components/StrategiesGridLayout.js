@@ -11,7 +11,7 @@ const StrategiesGridLayout = ({ renderGridComponents, layoutConfig }) => {
         return (
           <ReactGridLayout
             cols={100}
-            rowHeight={height / 10}
+            rowHeight={height / 11}
             width={width}
             layout={layoutConfig}
             margin={[10, 10]}
