@@ -22,7 +22,9 @@ const Item = ({
 
 const StrategyParams = ({
   paramsOpen, setParamsOpen, startExecution, stopExecution, onLoadStrategy, onExportStrategy, onSaveStrategy, execRunning,
+  onOpenRemoveModal, strategy, strategyId,
 }) => {
+  const { id = strategyId } = strategy || {}
   const { t } = useTranslation()
 
   const onClose = () => {
@@ -52,6 +54,9 @@ const StrategyParams = ({
               <Item onClick={onExportStrategy}>
                 {t('ui.saveAs')}
               </Item>
+              <Item onClick={onOpenRemoveModal} isDisabled={!id}>
+                {t('ui.removeBtn')}
+              </Item>
               <Item onClick={onClose}>
                 {t('ui.closeBtn')}
               </Item>
@@ -72,6 +77,18 @@ StrategyParams.propTypes = {
   onExportStrategy: PropTypes.func.isRequired,
   onSaveStrategy: PropTypes.func.isRequired,
   execRunning: PropTypes.bool.isRequired,
+  onOpenRemoveModal: PropTypes.func.isRequired,
+  strategy: PropTypes.shape({
+    id: PropTypes.string,
+  }),
+  strategyId: PropTypes.string,
+}
+
+StrategyParams.defaultProps = {
+  strategyId: '',
+  strategy: {
+    id: null,
+  },
 }
 
 export default memo(StrategyParams)
