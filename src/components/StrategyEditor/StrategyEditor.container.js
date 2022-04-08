@@ -17,7 +17,6 @@ const mapStateToProps = (state = {}) => ({
   settingsTheme: getThemeSetting(state),
   options: getExecutionOptions(state),
   markets: getMarkets(state),
-
 })
 
 const mapDispatchToProps = dispatch => ({

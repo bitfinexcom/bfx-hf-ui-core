@@ -183,21 +183,12 @@ const StrategyEditor = (props) => {
         />
       ) : (
         <StrategyEditorPanel
-          onRemove={onRemove}
           moveable={moveable}
           removeable={removeable}
           execRunning={execRunning}
           strategyDirty={strategyDirty}
           strategy={strategy}
-          // strategies={strategies}
-          strategyId={strategyId}
-          onOpenSelectModal={() => setOpenExistingStrategyModalOpen(true)}
-          onOpenCreateModal={() => setCreateNewStrategyModalOpen(true)}
-          onOpenRemoveModal={() => setIsRemoveModalOpened(true)}
-          onSaveStrategy={onSaveStrategy}
           onRemoveStrategy={onRemoveStrategy}
-          onExportStrategy={onExportStrategy}
-          onImportStrategy={onImportStrategy}
           onSideTabChange={onSideTabChange}
           preSidebarComponents={preSidebar}
         >
@@ -215,6 +206,9 @@ const StrategyEditor = (props) => {
                   onExportStrategy={onExportStrategy}
                   onSaveStrategy={onSaveStrategy}
                   execRunning={execRunning}
+                  onOpenRemoveModal={() => setIsRemoveModalOpened(true)}
+                  strategy={strategy}
+                  strategyId={strategyId}
                 />
               </>
             )}
