@@ -48,12 +48,10 @@ const StrategyEditorPage = (props) => {
   const { t } = useTranslation()
 
   const onAddIndicator = (indicator) => {
-    console.log('indicator: ', indicator)
     setIndicators([...indicators, indicator])
   }
 
   const onDeleteIndicator = (index) => {
-    console.log('index: ', index)
     setIndicators(_remove(indicators, (_, id) => id !== index))
   }
 

@@ -1,78 +1,58 @@
-import React from 'react'
+// eslint-disable
+import React, { useMemo } from 'react'
 import { AutoSizer } from 'react-virtualized'
-import _map from 'lodash/map'
 import _find from 'lodash/find'
-import _replace from 'lodash/replace'
 
 // eslint-disable-next-line import/no-extraneous-dependencies
-import BFXChart from 'bfx-hf-chart'
-import { THEMES } from '../../../redux/selectors/ui'
+// import BFXChart from 'bfx-hf-chart'
 import Results from '../Results'
 import StrategyTradesTable from '../../StrategyTradesTable'
-import { onTradeExportClick } from './HistoricalReport.helpers'
+import { onTradeExportClick, prepareTVIndicators } from './HistoricalReport.helpers'
 import Chart from '../../Chart'
+import Panel from '../../../ui/Panel'
+import { TIMEFRAME_INTERVAL_MAPPING } from '../../../util/time_frames'
 
-const CHART_THEME = {
-  [THEMES.LIGHT]: {
-    bgColor: '#efefef',
-    AXIS_COLOR: '#444',
-    AXIS_TICK_COLOR: '#00000000',
-    AXIS_LABEL_COLOR: '#000e1a',
-    OHLC_LABEL_COLOR: '#000e1a',
-    OHLC_LABEL_VALUE_COLOR: '#414f5a',
-    RISING_VOL_FILL: 'rgba(9, 220, 34, 0.05)',
-    FALLING_VOL_FILL: 'rgba(94, 32, 35, 0.05)',
-  },
-  [THEMES.DARK]: {
-    bgColor: '#102331',
-    AXIS_COLOR: '#444',
-    AXIS_TICK_COLOR: '#00000000',
-  },
+const FULL_SCREEN_STYLES = {
+  position: 'fixed',
+  top: 0,
+  left: 0,
+  bottom: 0,
+  right: 0,
+  width: '100%',
+  height: '100%',
+  border: 'none',
+  margin: 0,
+  padding: 0,
+  overflow: 'hidden',
+  zIndex: 999999,
 }
 
-const HistoricalReport = (opts, results, backtestData, backtestOptions, t, settingsTheme) => {
-  const chartColours = CHART_THEME[settingsTheme]
+const HistoricalReport = (opts, results, backtestData, backtestOptions, t, settingsTheme, full, setFull) => {
   const { trades = [], backtestOptions: { activeMarket } = {} } = results
   const { markets, formState } = opts
-  console.log('formState: ', formState)
+
   const activeMarketObject = _find(markets, (market) => market.wsID === activeMarket, null)
-  // console.log('trades: ', trades)
   const { symbol } = backtestOptions
-  const { indicators, onAddIndicator, onDeleteIndicator } = opts
-  console.log('indicators: ', indicators)
+  const { indicators } = opts
   const { candles = [] } = backtestData
-  // console.log('candles: ', candles)
-  const { tf } = backtestOptions
   const hasCandles = candles.length !== 0
-  // console.log('HistoricalReport hasCandles: ', hasCandles)
 
   // convert candles to array for the chart
-  const candleArr = _map(candles, c => (
-    [
-      c.mts,
-      c.open,
-      c.close,
-      c.high,
-      c.low,
-      c.volume,
-    ]
-  ))
+  // const candleArr = _map(candles, c => (
+  //   [
+  //     c.mts,
+  //     c.open,
+  //     c.close,
+  //     c.high,
+  //     c.low,
+  //     c.volume,
+  //   ]
+  // ))
 
-  const chartIndicators = _map(indicators, (i) => {
-    const transformed = [
-      ...i,
-    ]
-    const instance = new i[0]()
-    console.log('i[0](): ', instance)
-    const name = instance?.label === 'EMA' ? 'Moving Average Exponential' : instance?.label === 'ROC' ? 'Rate Of Change' : instance?.label
-    console.log('name: ', name)
-    transformed[0] = name
-    return transformed
-  })
+  const chartIndicators = useMemo(() => prepareTVIndicators(indicators), [indicators])
 
-  const first = trades
-  // console.log('candleArr: ', candleArr)
-  const interval = _replace(formState?.selectedTimeFrame, 'm', '') || '15'
+  const interval = TIMEFRAME_INTERVAL_MAPPING[formState?.selectedTimeFrame] || '15'
+
   return (
     <div className='hfui-backtester__candlechart'>
       <span
@@ -86,45 +66,67 @@ const HistoricalReport = (opts, results, backtestData, backtestOptions, t, setti
         execRunning={false}
       />
       {hasCandles && (
-      // activeMarketObject && (
-      //   <AutoSizer disableHeight style={{ height: 400 }}>
-      //     {({ width, height = 400 }) => (
-      //       <div style={{ width, height }} className='hfui-backtester__chart'>
-      //         <Chart
-      //           market={activeMarketObject}
-      //           theme={settingsTheme}
-      //           layoutI='strategy-editor'
-      //           indicators={chartIndicators}
-      //           interval={interval}
-      //         />
-      //       </div>
-      //     )}
-      //   </AutoSizer>
-      // )
-      <AutoSizer disableHeight style={{ height: 400 }}>
-        {({ width, height = 400 }) => (
-          <BFXChart
-            indicators={indicators}
-            candles={candleArr}
-            trades={first}
-            width={width}
-            height={height}
-            onAddIndicator={onAddIndicator}
-            onDeleteIndicator={onDeleteIndicator}
-            isSyncing={false}
-            candleLoadingThreshold={3} // we always get 1 candle when sub'ing
-            bgColor={chartColours.bgColor}
-            config={chartColours}
-            candleWidth={tf}
-            disableToolbar
-            showMarketLabel={false}
-          />
-        )}
-      </AutoSizer>
+        activeMarketObject && (
+        <AutoSizer disableHeight style={{ height: 400 }}>
+          {({ width, height = 400 }) => (
+            <div
+              style={full
+                ? FULL_SCREEN_STYLES
+                : { width, height }}
+              className='hfui-backtester__chart'
+            >
+              <Panel
+                label=''
+                removeable={false}
+                moveable={false}
+                extraIcons={[
+                  <span
+                    key='toggle-fullscreen'
+                    type='button'
+                    className='icon-move toggle-fullscreen'
+                    onClick={() => setFull(!full)}
+                    title='Toggle Fullscreen'
+                  />,
+                ]}
+              >
+                <Chart
+                  market={activeMarketObject}
+                  theme={settingsTheme}
+                  layoutI='strategy-editor'
+                  indicators={chartIndicators}
+                  interval={interval}
+                  trades={trades}
+                  hideResolutions
+                />
+              </Panel>
+            </div>
+          )}
+        </AutoSizer>
+        )
+      // <AutoSizer disableHeight style={{ height: 400 }}>
+      //   {({ width, height = 400 }) => (
+      //     <BFXChart
+      //       indicators={indicators}
+      //       candles={candleArr}
+      //       trades={trades}
+      //       width={width}
+      //       height={height}
+      //       // onAddIndicator={onAddIndicator}
+      //       // onDeleteIndicator={onDeleteIndicator}
+      //       isSyncing={false}
+      //       candleLoadingThreshold={3} // we always get 1 candle when sub'ing
+      //       // bgColor={chartColours.bgColor}
+      //       // config={chartColours}
+      //       // candleWidth={tf}
+      //       disableToolbar
+      //       showMarketLabel={false}
+      //     />
+      //   )}
+      // </AutoSizer>
       )}
       <StrategyTradesTable
         label={t('tradesTableModal.title')}
-        trades={first}
+        trades={trades}
         onTradeClick={() => { }}
       />
     </div>
