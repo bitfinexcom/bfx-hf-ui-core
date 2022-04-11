@@ -24,6 +24,7 @@ import StrategiesMenuSideBarParams from './components/StrategiesMenuSideBarParam
 import HelpTab from './tabs/HelpTab'
 import StrategyPaused from './components/StrategyPaused'
 import StrategyRunned from './components/StrategyRunned'
+import OptionsTab from './tabs/OptionsTab'
 
 import './style.css'
 
@@ -221,6 +222,22 @@ const StrategyEditor = (props) => {
             sbicon={<Icon name='edit' />}
             {...props}
           />
+          <OptionsTab
+            htmlKey='options'
+            sbtitle='Options'
+            sbicon={<Icon name='cog' />}
+            symbol={symbol}
+            setSymbol={setSymbol}
+            timeframe={timeframe}
+            setTimeframe={setTimeframe}
+            trades={trades}
+            setTrades={setTrades}
+            candleSeed={candleSeed}
+            setCandleSeed={setCandleSeed}
+            margin={margin}
+            setMargin={setMargin}
+            {...props}
+          />
           <HelpTab
             htmlKey='help'
             sbtitle='Help'
@@ -270,6 +287,7 @@ StrategyEditor.propTypes = {
       PropTypes.oneOf([null]).isRequired,
     ]),
   ),
+  isPaperTrading: PropTypes.bool.isRequired,
   // settingsTheme: PropTypes.oneOf([THEMES.LIGHT, THEMES.DARK]),
 }
 

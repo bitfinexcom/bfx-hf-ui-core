@@ -66,6 +66,22 @@ body.hosted {
   }
 }
 
+.hfui-exec_config {
+  .hfui-panel__inner {
+    display: flex;
+    justify-content: space-between;
+
+    &-item {
+      width: 19%;
+    }
+  }
+
+  .number-input input {
+    padding: 8 16px;
+    background-color: var(--lighter-background-color);
+  }
+}
+
 .hfui-strategyeditor__editor-wrapper {
   width: 100%;
   display: flex;

@@ -3,7 +3,7 @@ import WSActions from '../../redux/actions/ws'
 import UIActions from '../../redux/actions/ui'
 import GAActions from '../../redux/actions/google_analytics'
 import { getAuthToken, getBacktestResults, getExecutionOptions } from '../../redux/selectors/ws'
-import { getStrategyId, getThemeSetting } from '../../redux/selectors/ui'
+import { getStrategyId, getThemeSetting, getIsPaperTrading } from '../../redux/selectors/ui'
 
 import StrategyEditor from './StrategyEditor'
 import { getMarkets } from '../../redux/selectors/meta'
@@ -17,6 +17,7 @@ const mapStateToProps = (state = {}) => ({
   settingsTheme: getThemeSetting(state),
   options: getExecutionOptions(state),
   markets: getMarkets(state),
+  isPaperTrading: getIsPaperTrading(state),
 })
 
 const mapDispatchToProps = dispatch => ({
