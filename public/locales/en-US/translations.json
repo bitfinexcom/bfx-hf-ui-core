@@ -580,14 +580,15 @@
     "disconnected": "Disconnected"
   },
   "strategyEditor": {
-    "docsTab": "Docs",
-    "backtestTab": "Backtest",
-    "executeTab": "Execute",
     "unsavedStartegy": "Unsaved strategy",
     "newStrategy": "Create a new strategy",
     "running": "Running",
     "paused": "Paused",
     "recent": "Recent",
+    "strategyTab": "Strategy",
+    "viewInIDETab": "View in IDE",
+    "optionsTab": "Options",
+    "helpTab": "Help",
     "activeStrategies": "Active strategies ({{amount}})",
     "pastStrategies": "Past strategies ({{amount}})",
     "more": "More",

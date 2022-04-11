@@ -197,7 +197,7 @@ const StrategyEditor = (props) => {
             htmlKey='strategy'
             sbtitle={(
               <>
-                Strategy
+                {t('strategyEditor.strategyTab')}
                 <StrategiesMenuSideBarParams
                   paramsOpen={paramsOpen}
                   setParamsOpen={setParamsOpen}
@@ -218,13 +218,13 @@ const StrategyEditor = (props) => {
           />
           <IDETab
             htmlKey='view_in_ide'
-            sbtitle='View in IDE'
+            sbtitle={t('strategyEditor.viewInIDETab')}
             sbicon={<Icon name='edit' />}
             {...props}
           />
           <OptionsTab
             htmlKey='options'
-            sbtitle='Options'
+            sbtitle={t('strategyEditor.optionsTab')}
             sbicon={<Icon name='cog' />}
             symbol={symbol}
             setSymbol={setSymbol}
@@ -240,7 +240,7 @@ const StrategyEditor = (props) => {
           />
           <HelpTab
             htmlKey='help'
-            sbtitle='Help'
+            sbtitle={t('strategyEditor.helpTab')}
             sbicon={<Icon name='question-circle-o' />}
           />
         </StrategyEditorPanel>
