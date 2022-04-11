@@ -1,5 +1,5 @@
 // eslint-disable
-import React, { useMemo } from 'react'
+import React from 'react'
 import { AutoSizer } from 'react-virtualized'
 import _find from 'lodash/find'
 
@@ -49,7 +49,7 @@ const HistoricalReport = (opts, results, backtestData, backtestOptions, t, setti
   //   ]
   // ))
 
-  const chartIndicators = useMemo(() => prepareTVIndicators(indicators), [indicators])
+  const chartIndicators = prepareTVIndicators(indicators)
 
   const interval = TIMEFRAME_INTERVAL_MAPPING[formState?.selectedTimeFrame] || '15'
 
