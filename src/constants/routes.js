@@ -18,7 +18,7 @@ export const strategyEditor = {
 const routes = {
   tradingTerminal,
   marketData,
-  ...(isElectronApp && !showInDevelopmentModules ? { strategyEditor } : {}),
+  ...(isElectronApp && showInDevelopmentModules ? { strategyEditor } : {}),
 }
 
 export default routes
