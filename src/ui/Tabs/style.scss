@@ -1,0 +1,22 @@
+.hfui-tabs {
+  display: flex;
+  justify-content: space-evenly;
+  &__button {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+
+    &.transparent {
+      background-color: transparent;
+      
+      &:hover {
+        background-color: var(--primary-8);
+      }
+    }
+
+    .icon {
+      margin-bottom: 3px;
+      font-size: 15px;
+    }
+  }
+}
