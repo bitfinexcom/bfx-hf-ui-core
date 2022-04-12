@@ -1,12 +1,12 @@
 import React, { memo } from 'react'
-import _isEmpty from 'lodash/isEmpty'
-import _map from 'lodash/map'
 import PropTypes from 'prop-types'
 import { useTranslation } from 'react-i18next'
+import { Icon } from 'react-fa'
 import Button from '../../../ui/Button'
 
 const EmptyContent = ({
   openCreateNewStrategyModal,
+  openCreateNewStrategyFromModal,
 }) => {
   const { t } = useTranslation()
 
@@ -22,6 +22,15 @@ const EmptyContent = ({
             <p key='text'>{t('strategyEditor.newStrategy')}</p>,
           ]}
         />
+        <Button
+          green
+          className='hfui-strategy-button'
+          onClick={openCreateNewStrategyFromModal}
+          label={[
+            <Icon name='folder' key='icon' />,
+            <p key='text'>{t('strategyEditor.newStrategyFrom')}</p>,
+          ]}
+        />
         <br />
         <p>{t('strategyEditor.orSelectOne')}</p>
       </div>
@@ -31,6 +40,7 @@ const EmptyContent = ({
 
 EmptyContent.propTypes = {
   openCreateNewStrategyModal: PropTypes.func.isRequired,
+  openCreateNewStrategyFromModal: PropTypes.func.isRequired,
 }
 
 export default memo(EmptyContent)

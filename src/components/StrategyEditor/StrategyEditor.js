@@ -11,7 +11,6 @@ import { useTranslation } from 'react-i18next'
 
 import { saveAsJSON, readJSONFile } from '../../util/ui'
 import { MAX_STRATEGY_LABEL_LENGTH } from '../../constants/variables'
-import Templates from './templates'
 import StrategyEditorPanel from './components/StrategyEditorPanel'
 import CreateNewStrategyModal from '../../modals/Strategy/CreateNewStrategyModal'
 import RemoveExistingStrategyModal from '../../modals/Strategy/RemoveExistingStrategyModal'
@@ -25,6 +24,7 @@ import HelpTab from './tabs/HelpTab'
 import StrategyPaused from './components/StrategyPaused'
 import StrategyRunned from './components/StrategyRunned'
 import OptionsTab from './tabs/OptionsTab'
+import CreateNewStrategyFromModalOpen from '../../modals/Strategy/CreateNewStrategyFromModal'
 
 import './style.css'
 
@@ -68,6 +68,7 @@ const StrategyEditor = (props) => {
   const { t } = useTranslation()
   const [isRemoveModalOpened, setIsRemoveModalOpened] = useState(false)
   const [createNewStrategyModalOpen, setCreateNewStrategyModalOpen] = useState(false)
+  const [createNewStrategyFromModalOpen, setCreateNewStrategyFromModalOpen] = useState(false)
   const [openExistingStrategyModalOpen, setOpenExistingStrategyModalOpen] = useState(false)
   const [symbol, setSymbol] = useState(
     options.symbol
@@ -89,27 +90,15 @@ const StrategyEditor = (props) => {
     setOpenExistingStrategyModalOpen(false)
     setCreateNewStrategyModalOpen(false)
     setIsRemoveModalOpened(false)
+    setCreateNewStrategyFromModalOpen(false)
   }
 
-  const onCreateNewStrategy = (label, templateLabel, content = {}) => {
+  const onCreateNewStrategy = (label, content = {}) => {
     const newStrategy = { label, ...content }
-    const template = _find(Templates, (_t) => _t.label === templateLabel)
-
-    if (!template) {
-      debug('unknown template: %s', templateLabel)
-    }
-
-    const templateSections = _keys(template)
-
-    _forEach(templateSections, (s) => {
-      if (s === 'label') return
-
-      newStrategy[s] = template[s]
-    })
 
     setSectionErrors({})
     setStrategyDirty(true)
-    selectStrategy(newStrategy)
+    onStrategySelect(newStrategy)
 
     if (newStrategy.defineIndicators) {
       onDefineIndicatorsChange(newStrategy.defineIndicators)
@@ -139,7 +128,7 @@ const StrategyEditor = (props) => {
         && _size(newStrategy.label) < MAX_STRATEGY_LABEL_LENGTH
       ) {
         delete newStrategy.id
-        onCreateNewStrategy(newStrategy.label, null, newStrategy)
+        onCreateNewStrategy(newStrategy.label, newStrategy)
       }
     } catch (e) {
       debug('Error while importing strategy: %s', e)
@@ -181,6 +170,8 @@ const StrategyEditor = (props) => {
       {!strategy || _isEmpty(strategy) ? (
         <EmptyContent
           openCreateNewStrategyModal={() => setCreateNewStrategyModalOpen(true)}
+          openCreateNewStrategyFromModal={() => setCreateNewStrategyFromModalOpen(true)}
+
         />
       ) : (
         <StrategyEditorPanel
@@ -208,6 +199,9 @@ const StrategyEditor = (props) => {
                   onSaveStrategy={onSaveStrategy}
                   execRunning={execRunning}
                   onOpenRemoveModal={() => setIsRemoveModalOpened(true)}
+                  onOpenCreateStrategyModal={() => setCreateNewStrategyModalOpen(true)}
+                  onOpenCreateStrategyFromModal={() => setCreateNewStrategyFromModalOpen(true)}
+                  onImportStrategy={onImportStrategy}
                   strategy={strategy}
                   strategyId={strategyId}
                 />
@@ -245,6 +239,12 @@ const StrategyEditor = (props) => {
           />
         </StrategyEditorPanel>
       )}
+      <CreateNewStrategyFromModalOpen
+        isOpen={createNewStrategyFromModalOpen}
+        gaCreateStrategy={gaCreateStrategy}
+        onClose={onCloseModals}
+        onSubmit={onCreateNewStrategy}
+      />
       <CreateNewStrategyModal
         isOpen={createNewStrategyModalOpen}
         gaCreateStrategy={gaCreateStrategy}

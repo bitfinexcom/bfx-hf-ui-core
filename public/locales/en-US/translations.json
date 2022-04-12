@@ -582,6 +582,7 @@
   "strategyEditor": {
     "unsavedStartegy": "Unsaved strategy",
     "newStrategy": "Create a new strategy",
+    "newStrategyFrom": "Create a new strategy from...",
     "running": "Running",
     "paused": "Paused",
     "recent": "Recent",
@@ -592,9 +593,10 @@
     "activeStrategies": "Active strategies ({{amount}})",
     "pastStrategies": "Past strategies ({{amount}})",
     "more": "More",
-    "orImport": "or import one",
+    "importStrategy": "Import strategy from CSV...",
     "orSelectOne": "or select one from the list below",
     "newStrategyModalTitle": "Create a New Strategy",
+    "newStrategyFromModalTitle": "Create a New Strategy from...",
     "newStrategyModalEmptyError": "Label is empty",
     "newStrategyModalLongError": "Strategy name is too long ({{labelSize}}/{{MAX_LABEL_LENGTH}} characters)",
     "openStrategyModalTitle": "Open Strategy",
@@ -662,7 +664,8 @@
     "startBtn": "Start",
     "deleteBtn": "Delete",
     "expandPanel": "Expand Panel",
-    "compressPanel": "Compress Panel"
+    "compressPanel": "Compress Panel",
+    "name": "Name"
   },
   "crashHandler": {
     "text1": "An error occurred that caused the Honey Framework UI to halt. Please, restart the application to proceed working with it",
