@@ -2,6 +2,7 @@
 import React from 'react'
 import { AutoSizer } from 'react-virtualized'
 import _find from 'lodash/find'
+// import _map from 'lodash/map'
 
 // eslint-disable-next-line import/no-extraneous-dependencies
 // import BFXChart from 'bfx-hf-chart'
@@ -11,6 +12,7 @@ import { onTradeExportClick, prepareTVIndicators } from './HistoricalReport.help
 import Chart from '../../Chart'
 import Panel from '../../../ui/Panel'
 import { TIMEFRAME_INTERVAL_MAPPING } from '../../../util/time_frames'
+// import { THEMES } from '../../../redux/selectors/ui'
 
 const FULL_SCREEN_STYLES = {
   position: 'fixed',
@@ -27,7 +29,25 @@ const FULL_SCREEN_STYLES = {
   zIndex: 999999,
 }
 
-const HistoricalReport = (opts, results, backtestData, backtestOptions, t, settingsTheme, full, setFull) => {
+// const CHART_THEME = {
+//   [THEMES.LIGHT]: {
+//     bgColor: '#efefef',
+//     AXIS_COLOR: '#444',
+//     AXIS_TICK_COLOR: '#00000000',
+//     AXIS_LABEL_COLOR: '#000e1a',
+//     OHLC_LABEL_COLOR: '#000e1a',
+//     OHLC_LABEL_VALUE_COLOR: '#414f5a',
+//     RISING_VOL_FILL: 'rgba(9, 220, 34, 0.05)',
+//     FALLING_VOL_FILL: 'rgba(94, 32, 35, 0.05)',
+//   },
+//   [THEMES.DARK]: {
+//     bgColor: '#102331',
+//     AXIS_COLOR: '#444',
+//     AXIS_TICK_COLOR: '#00000000',
+//   },
+// }
+
+const HistoricalReport = (opts, results, backtestData, backtestOptions, t, settingsTheme, full, setFullScreenChart) => {
   const { trades = [], backtestOptions: { activeMarket } = {} } = results
   const { markets, formState } = opts
 
@@ -52,7 +72,8 @@ const HistoricalReport = (opts, results, backtestData, backtestOptions, t, setti
   const chartIndicators = prepareTVIndicators(indicators)
 
   const interval = TIMEFRAME_INTERVAL_MAPPING[formState?.selectedTimeFrame] || '15'
-
+  // const chartColours = CHART_THEME[settingsTheme]
+  // const { tf } = backtestOptions
   return (
     <div className='hfui-backtester__candlechart'>
       <span
@@ -84,7 +105,7 @@ const HistoricalReport = (opts, results, backtestData, backtestOptions, t, setti
                     key='toggle-fullscreen'
                     type='button'
                     className='icon-move toggle-fullscreen'
-                    onClick={() => setFull(!full)}
+                    onClick={() => setFullScreenChart(!full)}
                     title='Toggle Fullscreen'
                   />,
                 ]}
@@ -115,9 +136,9 @@ const HistoricalReport = (opts, results, backtestData, backtestOptions, t, setti
       //       // onDeleteIndicator={onDeleteIndicator}
       //       isSyncing={false}
       //       candleLoadingThreshold={3} // we always get 1 candle when sub'ing
-      //       // bgColor={chartColours.bgColor}
-      //       // config={chartColours}
-      //       // candleWidth={tf}
+      //       bgColor={chartColours.bgColor}
+      //       config={chartColours}
+      //       candleWidth={tf}
       //       disableToolbar
       //       showMarketLabel={false}
       //     />
