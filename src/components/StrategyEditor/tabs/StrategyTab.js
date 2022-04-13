@@ -30,7 +30,7 @@ const StrategyTab = () => {
       default:
         return null
     }
-  }, [])
+  }, [layoutConfig])
 
   return (
     <div className='hfui-strategyeditor__wrapper'>

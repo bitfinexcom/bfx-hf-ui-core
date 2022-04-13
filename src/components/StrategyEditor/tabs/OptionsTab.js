@@ -3,13 +3,13 @@ import { useTranslation } from 'react-i18next'
 import { Checkbox } from '@ufx-ui/core'
 import PropTypes from 'prop-types'
 import _find from 'lodash/find'
-import _isEmpty from 'lodash/isEmpty'
 import _includes from 'lodash/includes'
 
 import Panel from '../../../ui/Panel'
 import AmountInput from '../../OrderForm/FieldComponents/input.amount'
 import MarketSelect from '../../MarketSelect'
 import TimeFrameDropdown from '../../TimeFrameDropdown'
+import timeFrames from '../../../util/time_frames'
 import '../style.css'
 
 const OptionsTab = ({
@@ -79,13 +79,21 @@ const OptionsTab = ({
   )
 }
 
-// todo
 OptionsTab.propTypes = {
-
-}
-
-OptionsTab.defaultProps = {
-
+  markets: PropTypes.objectOf(PropTypes.object).isRequired,
+  isPaperTrading: PropTypes.bool.isRequired,
+  timeframe: PropTypes.oneOf(timeFrames).isRequired,
+  setTimeframe: PropTypes.func.isRequired,
+  symbol: PropTypes.objectOf(PropTypes.oneOfType([
+    PropTypes.string, PropTypes.arrayOf(PropTypes.string), PropTypes.bool, PropTypes.number,
+  ])).isRequired,
+  setSymbol: PropTypes.func.isRequired,
+  trades: PropTypes.bool.isRequired,
+  setTrades: PropTypes.func.isRequired,
+  margin: PropTypes.bool.isRequired,
+  setMargin: PropTypes.func.isRequired,
+  candleSeed: PropTypes.number.isRequired,
+  setCandleSeed: PropTypes.func.isRequired,
 }
 
 export default memo(OptionsTab)

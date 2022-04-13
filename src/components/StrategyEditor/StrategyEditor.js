@@ -1,8 +1,6 @@
-import React, { memo, useState, useEffect } from 'react'
+import React, { memo, useState } from 'react'
 import Debug from 'debug'
 import _isEmpty from 'lodash/isEmpty'
-import _keys from 'lodash/keys'
-import _forEach from 'lodash/forEach'
 import _size from 'lodash/size'
 import _find from 'lodash/find'
 import { Icon } from 'react-fa'
@@ -53,7 +51,6 @@ const StrategyEditor = (props) => {
     setStrategyDirty,
     setSectionErrors,
     onDefineIndicatorsChange,
-    selectStrategy,
     setStrategy,
     strategy,
     onLoadStrategy,
@@ -62,8 +59,6 @@ const StrategyEditor = (props) => {
     options,
     markets,
     onStrategySelect,
-    evalSectionContent,
-    sectionErrors,
     onSave,
   } = props
   const { t } = useTranslation()
@@ -292,14 +287,28 @@ StrategyEditor.propTypes = {
   moveable: PropTypes.bool,
   removeable: PropTypes.bool,
   strategyId: PropTypes.string,
-  // renderResults: PropTypes.bool,
   onRemove: PropTypes.func.isRequired,
   authToken: PropTypes.string.isRequired,
   onStrategyChange: PropTypes.func.isRequired,
+  markets: PropTypes.objectOf(PropTypes.object).isRequired,
+  setStrategy: PropTypes.func,
+  backtestResults: PropTypes.objectOf(PropTypes.any).isRequired,
+  options: PropTypes.objectOf(PropTypes.oneOfType([
+    PropTypes.string, PropTypes.number, PropTypes.bool,
+  ])).isRequired,
+  strategy: PropTypes.shape({
+    id: PropTypes.string,
+    label: PropTypes.string,
+  }),
+  dsStopLiveStrategy: PropTypes.func.isRequired,
+  dsExecuteLiveStrategy: PropTypes.func.isRequired,
+  onLoadStrategy: PropTypes.func.isRequired,
+  onDefineIndicatorsChange: PropTypes.func.isRequired,
+  strategyDirty: PropTypes.bool.isRequired,
+  setStrategyDirty: PropTypes.func.isRequired,
+  setSectionErrors: PropTypes.func.isRequired,
   onStrategySelect: PropTypes.func.isRequired,
   gaCreateStrategy: PropTypes.func.isRequired,
-  // onIndicatorsChange: PropTypes.func.isRequired,
-  // clearBacktestOptions: PropTypes.func.isRequired,
   liveExecuting: PropTypes.bool.isRequired,
   liveLoading: PropTypes.bool.isRequired,
   strategyContent: PropTypes.objectOf(
@@ -309,18 +318,19 @@ StrategyEditor.propTypes = {
       PropTypes.oneOf([null]).isRequired,
     ]),
   ),
-  isPaperTrading: PropTypes.bool.isRequired,
   onSave: PropTypes.func.isRequired,
-  // settingsTheme: PropTypes.oneOf([THEMES.LIGHT, THEMES.DARK]),
 }
 
 StrategyEditor.defaultProps = {
   strategyId: '',
   moveable: false,
   removeable: false,
-  // renderResults: true,
   strategyContent: {},
-  // settingsTheme: THEMES.DARK,
+  setStrategy: () => {},
+  strategy: {
+    id: null,
+    label: null,
+  },
 }
 
 export default memo(StrategyEditor)

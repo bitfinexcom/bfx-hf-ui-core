@@ -1,20 +1,14 @@
 import { connect } from 'react-redux'
 import { STRATEGY_PAGE } from '../../redux/constants/ui'
 import { getFirstLogin, getGuideStatusForPage } from '../../redux/selectors/ui'
-import { getSortedByTimeStrategies, getAuthToken } from '../../redux/selectors/ws'
 import UIActions from '../../redux/actions/ui'
-import WSActions from '../../redux/actions/ws'
 
 import StrategiesPage from './Strategies'
 
 const mapStateToProps = state => ({
-  authToken: getAuthToken(state),
   firstLogin: getFirstLogin(state),
   isGuideActive: getGuideStatusForPage(state, STRATEGY_PAGE),
-  strategyId: state.ui.id,
   strategyContent: state.ui.content,
-  selectedTab: state.ui.tab,
-  strategies: getSortedByTimeStrategies(state),
 })
 
 const mapDispatchToProps = dispatch => ({
@@ -26,9 +20,6 @@ const mapDispatchToProps = dispatch => ({
   },
   selectStrategy() {
     dispatch(UIActions.strategySelect())
-  },
-  setStrategyTab(tab) {
-    dispatch(UIActions.setStrategyTab(tab))
   },
 })
 

@@ -18,7 +18,7 @@ const StrategiesListTable = ({ onLoadStrategy }) => {
   }
 
   const strategyNodesArray = useMemo(() => {
-    return _map(strategies, (str, index) => {
+    return _map(strategies, (str) => {
       // if (index >= 6) {
       //   return null
       // }
@@ -32,7 +32,7 @@ const StrategiesListTable = ({ onLoadStrategy }) => {
         </li>
       )
     })
-  }, [strategies])
+  }, [strategies]) // eslint-disable-line react-hooks/exhaustive-deps
 
   const { t } = useTranslation()
 

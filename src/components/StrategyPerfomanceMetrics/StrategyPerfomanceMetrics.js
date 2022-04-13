@@ -23,13 +23,13 @@ const StrategyPerfomanceMetrics = ({ results }) => {
     nOpens,
     pl,
     pf,
-    maxPL,
-    minPL,
-    fees,
     vol,
     stdDeviation,
     avgPL,
     backtestOptions: { activeMarket } = {},
+    // maxPL,
+    // minPL,
+    // fees,
   } = results
   const hasTrades = !!vol
 

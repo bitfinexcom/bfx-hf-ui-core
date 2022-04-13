@@ -6,9 +6,7 @@ import _ from 'lodash'
 import _values from 'lodash/values'
 import _map from 'lodash/map'
 import _remove from 'lodash/remove'
-import _size from 'lodash/size'
 import _forEach from 'lodash/forEach'
-import _isEmpty from 'lodash/isEmpty'
 import Indicators from 'bfx-hf-indicators'
 import { nonce } from 'bfx-api-node-util'
 import HFS from 'bfx-hf-strategy'
@@ -28,8 +26,6 @@ const StrategyEditor = lazy(() => import('../../components/StrategyEditor'))
 const Joyride = lazy(() => import('../../components/Joyride'))
 const StrategiesListTable = lazy(() => import('../../components/StrategiesListTable'))
 
-// todo: move 'export strategy' to the options tab
-
 const StrategiesPage = ({
   selectStrategy,
   finishGuide,
@@ -37,11 +33,6 @@ const StrategiesPage = ({
   firstLogin,
   isGuideActive,
   strategyContent,
-  setStrategyTab,
-  selectedTab,
-  strategies,
-  onSave,
-  authToken,
 }) => {
   const [strategy, setStrategy] = useState(strategyContent)
   const [indicators, setIndicators] = useState([])
@@ -176,7 +167,6 @@ const StrategiesPage = ({
 
   const onLoadStrategy = (newStrategy) => {
     // const updated = { ...newStrategy, savedTs: Date.now() }
-    // onSave(authToken, updated)
     setSectionErrors({})
     setStrategyDirty(false)
     selectStrategyHandler(newStrategy)
@@ -230,24 +220,18 @@ const StrategiesPage = ({
 }
 
 StrategiesPage.propTypes = {
-  // dark: PropTypes.bool,
   firstLogin: PropTypes.bool,
   isGuideActive: PropTypes.bool,
   finishGuide: PropTypes.func.isRequired,
   selectStrategy: PropTypes.func.isRequired,
   setStrategyContent: PropTypes.func.isRequired,
-  setStrategyTab: PropTypes.func.isRequired,
-  selectedTab: PropTypes.number,
   strategyContent: PropTypes.objectOf(Object),
-  strategies: PropTypes.arrayOf(PropTypes.object).isRequired,
 }
 
 StrategiesPage.defaultProps = {
-  // dark: true,
   firstLogin: false,
   isGuideActive: true,
   strategyContent: {},
-  selectedTab: null,
 }
 
 export default StrategiesPage
