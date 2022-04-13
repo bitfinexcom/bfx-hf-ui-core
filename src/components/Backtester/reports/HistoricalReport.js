@@ -1,4 +1,3 @@
-// eslint-disable
 import React from 'react'
 import { AutoSizer } from 'react-virtualized'
 import _find from 'lodash/find'
