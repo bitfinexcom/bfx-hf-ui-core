@@ -642,8 +642,9 @@
     },
     "candleSeedCount": "Candle seed count",
     "noActiveStrategies": "There are not active strategies",
-    "selectSavedStrategy": "Select saved strategy",
-    "saveWithDifferentName": "Save with different name"
+    "saveWithDifferentName": "Save with different name",
+    "templatesTab": "Templates",
+    "savedStrategiesTab": "From saved"
   },
   "ui": {
     "ok": "Okay",

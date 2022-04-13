@@ -22,14 +22,26 @@ const CreateNewStrategyFromModalOpen = ({
   gaCreateStrategy,
   isOpen,
 }) => {
+  const savedStrategies = useSelector(getSortedByTimeStrategies)
+
+  const { t } = useTranslation()
+
   const tabs = useMemo(() => {
     return [
-      { label: 'Template', value: 'templ', Icon: <Icon name='file' /> },
-      { label: 'From saved', value: 'saved', Icon: <Icon name='file-code-o' /> },
+      {
+        label: t('strategyEditor.templatesTab'),
+        value: 'templates',
+        Icon: <Icon name='file' />,
+        disabled: false,
+      },
+      {
+        label: t('strategyEditor.savedStrategiesTab'),
+        value: 'saved',
+        Icon: <Icon name='file-code-o' />,
+        disabled: _isEmpty(savedStrategies),
+      },
     ]
-  }, [])
-
-  const savedStrategies = useSelector(getSortedByTimeStrategies)
+  }, [t, savedStrategies])
 
   const [label, setLabel] = useState('')
   const [activeTab, setActiveTab] = useState(tabs[0].value)
@@ -39,8 +51,6 @@ const CreateNewStrategyFromModalOpen = ({
   const [selectedStrategyLabel, setSelectedStrategyLabel] = useState(null)
 
   const isTemplatesTabSelected = tabs[0].value === activeTab
-
-  const { t } = useTranslation()
 
   const onSubmitHandler = () => {
     const labelSize = _size(label)
@@ -124,7 +134,6 @@ const CreateNewStrategyFromModalOpen = ({
             value={selectedStrategyLabel}
             onChange={setSelectedStrategyLabel}
             options={savedStrategiesOptions}
-            placeholder={t('strategyEditor.selectSavedStrategy')}
           />
         )}
 

@@ -10,7 +10,7 @@ const Tabs = ({ tabs, onTabClick, activeTab }) => {
   return (
     <ul className='hfui-tabs'>
       {_map(tabs, ({
-        label, value, Icon,
+        label, value, Icon, disabled,
       }) => (
         <Button
           outline={activeTab !== value}
@@ -18,6 +18,7 @@ const Tabs = ({ tabs, onTabClick, activeTab }) => {
           onClick={() => onTabClick(value)}
           className={Classname('hfui-tabs__button', { transparent: activeTab !== value })}
           small
+          disabled={disabled}
           key={label}
         >
           {Icon && <span className='icon'>{Icon}</span>}
@@ -33,6 +34,7 @@ Tabs.propTypes = {
     label: PropTypes.string.isRequired,
     Icon: PropTypes.node,
     value: PropTypes.string.isRequired,
+    disabled: PropTypes.bool,
   })).isRequired,
   onTabClick: PropTypes.func.isRequired,
   activeTab: PropTypes.string.isRequired,
