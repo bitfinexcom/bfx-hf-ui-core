@@ -17,7 +17,7 @@ const ActiveStrategiesList = ({ onRowClick }) => {
       {_isEmpty(strategies) ? (
         <div className='no-trades__wrapper'>
           <span className='no-trades__notification'>
-            {t('tradesTableModal.noActiveStrategies')}
+            {t('strategyEditor.noActiveStrategies')}
           </span>
         </div>
       ) : (

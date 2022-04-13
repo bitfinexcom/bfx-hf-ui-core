@@ -641,7 +641,7 @@
       "createStrategy": "Create a strategy to begin executing."
     },
     "candleSeedCount": "Candle seed count",
-    "noActiveStrategies": "There are not active strategies",
+    "noActiveStrategies": "There are no active strategies",
     "saveWithDifferentName": "Save with different name",
     "templatesTab": "Templates",
     "savedStrategiesTab": "From saved"
