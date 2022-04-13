@@ -61,10 +61,10 @@ const StrategyParams = ({
               </Item>
               <div className='hfui-navbar__layout-settings__separator' />
               <Item onClick={onOpenCreateStrategyModal}>
-                {t('strategyEditor.newStrategy')}
+                {t('strategyEditor.newStrategy2')}
               </Item>
               <Item onClick={onOpenCreateStrategyFromModal}>
-                {t('strategyEditor.newStrategyFrom')}
+                {t('strategyEditor.newStrategyFrom2')}
               </Item>
               <Item onClick={onImportStrategy}>
                 {t('strategyEditor.importStrategy')}
