@@ -12,7 +12,11 @@ const MetricRow = ({ label, value }) => {
 
 MetricRow.propTypes = {
   label: PropTypes.string.isRequired,
-  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+  value: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.number,
+    PropTypes.node,
+  ]).isRequired,
 }
 
 export default memo(MetricRow)

@@ -305,6 +305,7 @@ StrategyEditor.propTypes = {
   strategyContent: PropTypes.objectOf(
     PropTypes.oneOfType([
       PropTypes.string.isRequired,
+      PropTypes.number,
       PropTypes.oneOf([null]).isRequired,
     ]),
   ),
