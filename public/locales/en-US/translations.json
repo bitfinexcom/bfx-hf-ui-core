@@ -598,6 +598,7 @@
     "importStrategy": "Import strategy from JSON...",
     "orSelectOne": "or select one from the list below",
     "newStrategyModalTitle": "Create a New Strategy",
+    "saveStrategyAsModalTitle": "Save strategy as...",
     "newStrategyFromModalTitle": "Create a New Strategy from...",
     "newStrategyModalEmptyError": "Label is empty",
     "newStrategyModalLongError": "Strategy name is too long ({{labelSize}}/{{MAX_LABEL_LENGTH}} characters)",
@@ -641,7 +642,8 @@
     },
     "candleSeedCount": "Candle seed count",
     "noActiveStrategies": "There are not active strategies",
-    "selectSavedStrategy": "Select saved strategy"
+    "selectSavedStrategy": "Select saved strategy",
+    "saveWithDifferentName": "Save with different name"
   },
   "ui": {
     "ok": "Okay",

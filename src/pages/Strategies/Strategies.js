@@ -186,12 +186,6 @@ const StrategiesPage = ({
     }
   }
 
-  const onSaveStrategy = () => {
-    onSave(authToken, { ...strategy, savedTs: Date.now() })
-    setStrategyDirty(false)
-    // onCloseModals()
-  }
-
   return (
     <Layout>
       <Layout.Header />
@@ -205,7 +199,6 @@ const StrategiesPage = ({
             key='editor'
             onIndicatorsChange={onIndicatorsChange}
             onLoadStrategy={onLoadStrategy}
-            onSaveStrategy={onSaveStrategy}
             strategyDirty={strategyDirty}
             setStrategyDirty={setStrategyDirty}
             sectionErrors={sectionErrors}
@@ -247,7 +240,6 @@ StrategiesPage.propTypes = {
   selectedTab: PropTypes.number,
   strategyContent: PropTypes.objectOf(Object),
   strategies: PropTypes.arrayOf(PropTypes.object).isRequired,
-  onSave: PropTypes.func.isRequired,
 }
 
 StrategiesPage.defaultProps = {

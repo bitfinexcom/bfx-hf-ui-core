@@ -34,6 +34,7 @@ const StrategyParams = ({
   strategyId,
   onOpenCreateStrategyModal,
   onOpenCreateStrategyFromModal,
+  onOpenSaveStrategyAsModal,
   onImportStrategy,
 }) => {
   const { id = strategyId } = strategy || {}
@@ -72,7 +73,7 @@ const StrategyParams = ({
               <Item onClick={onSaveStrategy}>
                 {t('ui.save')}
               </Item>
-              <Item onClick={onExportStrategy}>
+              <Item onClick={onOpenSaveStrategyAsModal}>
                 {t('ui.saveAs')}
               </Item>
               <Item onClick={onExportStrategy}>
@@ -105,6 +106,7 @@ StrategyParams.propTypes = {
   onImportStrategy: PropTypes.func.isRequired,
   onOpenCreateStrategyModal: PropTypes.func.isRequired,
   onOpenCreateStrategyFromModal: PropTypes.func.isRequired,
+  onOpenSaveStrategyAsModal: PropTypes.func.isRequired,
   strategy: PropTypes.shape({
     id: PropTypes.string,
   }),

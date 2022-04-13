@@ -25,6 +25,7 @@ import StrategyPaused from './components/StrategyPaused'
 import StrategyRunned from './components/StrategyRunned'
 import OptionsTab from './tabs/OptionsTab'
 import CreateNewStrategyFromModalOpen from '../../modals/Strategy/CreateNewStrategyFromModal'
+import SaveStrategyAsModal from '../../modals/Strategy/SaveStrategyAsModal/SaveStrategyAsModal'
 
 import './style.css'
 
@@ -55,7 +56,6 @@ const StrategyEditor = (props) => {
     selectStrategy,
     setStrategy,
     strategy,
-    onSaveStrategy,
     onLoadStrategy,
     dsExecuteLiveStrategy,
     dsStopLiveStrategy,
@@ -64,12 +64,14 @@ const StrategyEditor = (props) => {
     onStrategySelect,
     evalSectionContent,
     sectionErrors,
+    onSave,
   } = props
   const { t } = useTranslation()
   const [isRemoveModalOpened, setIsRemoveModalOpened] = useState(false)
   const [createNewStrategyModalOpen, setCreateNewStrategyModalOpen] = useState(false)
   const [createNewStrategyFromModalOpen, setCreateNewStrategyFromModalOpen] = useState(false)
   const [openExistingStrategyModalOpen, setOpenExistingStrategyModalOpen] = useState(false)
+  const [isSaveStrategyAsModalOpen, setIsSaveStrategyModalOpen] = useState(false)
   const [symbol, setSymbol] = useState(
     options.symbol
       ? _find(markets, (m) => m.wsID === options.symbol)
@@ -91,6 +93,7 @@ const StrategyEditor = (props) => {
     setCreateNewStrategyModalOpen(false)
     setIsRemoveModalOpened(false)
     setCreateNewStrategyFromModalOpen(false)
+    setIsSaveStrategyModalOpen(false)
   }
 
   const onCreateNewStrategy = (label, content = {}) => {
@@ -133,6 +136,17 @@ const StrategyEditor = (props) => {
     } catch (e) {
       debug('Error while importing strategy: %s', e)
     }
+  }
+
+  const onSaveStrategy = () => {
+    onSave(authToken, { ...strategy, savedTs: Date.now() })
+    setStrategyDirty(false)
+  }
+
+  const onSaveAsStrategy = (newStrategy) => {
+    setStrategy(newStrategy)
+    onSave(authToken, { ...newStrategy, savedTs: Date.now() })
+    setStrategyDirty(false)
   }
 
   const startExecution = () => {
@@ -201,6 +215,7 @@ const StrategyEditor = (props) => {
                   onOpenRemoveModal={() => setIsRemoveModalOpened(true)}
                   onOpenCreateStrategyModal={() => setCreateNewStrategyModalOpen(true)}
                   onOpenCreateStrategyFromModal={() => setCreateNewStrategyFromModalOpen(true)}
+                  onOpenSaveStrategyAsModal={() => setIsSaveStrategyModalOpen(true)}
                   onImportStrategy={onImportStrategy}
                   strategy={strategy}
                   strategyId={strategyId}
@@ -263,6 +278,12 @@ const StrategyEditor = (props) => {
         onRemoveStrategy={onRemoveStrategy}
         strategy={strategy}
       />
+      <SaveStrategyAsModal
+        isOpen={isSaveStrategyAsModalOpen}
+        onClose={onCloseModals}
+        strategy={strategy}
+        onSubmit={onSaveAsStrategy}
+      />
     </>
   )
 }
@@ -288,6 +309,7 @@ StrategyEditor.propTypes = {
     ]),
   ),
   isPaperTrading: PropTypes.bool.isRequired,
+  onSave: PropTypes.func.isRequired,
   // settingsTheme: PropTypes.oneOf([THEMES.LIGHT, THEMES.DARK]),
 }
 
