@@ -171,12 +171,12 @@ const StrategiesPage = ({
   const selectStrategyHandler = (content) => {
     selectStrategy()
     setStrategyContent(content)
+    setStrategy(content)
   }
 
   const onLoadStrategy = (newStrategy) => {
     // const updated = { ...newStrategy, savedTs: Date.now() }
     // onSave(authToken, updated)
-    setStrategy(newStrategy)
     setSectionErrors({})
     setStrategyDirty(false)
     selectStrategyHandler(newStrategy)

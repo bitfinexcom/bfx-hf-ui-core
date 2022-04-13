@@ -21,8 +21,20 @@ const Item = ({
 )
 
 const StrategyParams = ({
-  paramsOpen, setParamsOpen, startExecution, stopExecution, onLoadStrategy, onExportStrategy, onSaveStrategy, execRunning,
-  onOpenRemoveModal, strategy, strategyId,
+  paramsOpen,
+  setParamsOpen,
+  startExecution,
+  stopExecution,
+  onLoadStrategy,
+  onExportStrategy,
+  onSaveStrategy,
+  execRunning,
+  onOpenRemoveModal,
+  strategy,
+  strategyId,
+  onOpenCreateStrategyModal,
+  onOpenCreateStrategyFromModal,
+  onImportStrategy,
 }) => {
   const { id = strategyId } = strategy || {}
   const { t } = useTranslation()
@@ -48,6 +60,15 @@ const StrategyParams = ({
                 {t('strategyEditor.stopExec')}
               </Item>
               <div className='hfui-navbar__layout-settings__separator' />
+              <Item onClick={onOpenCreateStrategyModal}>
+                {t('strategyEditor.newStrategy')}
+              </Item>
+              <Item onClick={onOpenCreateStrategyFromModal}>
+                {t('strategyEditor.newStrategyFrom')}
+              </Item>
+              <Item onClick={onImportStrategy}>
+                {t('strategyEditor.importStrategy')}
+              </Item>
               <Item onClick={onSaveStrategy}>
                 {t('ui.save')}
               </Item>
@@ -78,6 +99,9 @@ StrategyParams.propTypes = {
   onSaveStrategy: PropTypes.func.isRequired,
   execRunning: PropTypes.bool.isRequired,
   onOpenRemoveModal: PropTypes.func.isRequired,
+  onImportStrategy: PropTypes.func.isRequired,
+  onOpenCreateStrategyModal: PropTypes.func.isRequired,
+  onOpenCreateStrategyFromModal: PropTypes.func.isRequired,
   strategy: PropTypes.shape({
     id: PropTypes.string,
   }),
