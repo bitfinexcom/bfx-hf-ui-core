@@ -60,6 +60,7 @@ const StrategyEditor = (props) => {
     markets,
     onStrategySelect,
     onSave,
+    isPaperTrading,
   } = props
   const { t } = useTranslation()
   const [isRemoveModalOpened, setIsRemoveModalOpened] = useState(false)
@@ -240,6 +241,7 @@ const StrategyEditor = (props) => {
             setCandleSeed={setCandleSeed}
             margin={margin}
             setMargin={setMargin}
+            isPaperTrading={isPaperTrading}
             {...props}
           />
           <HelpTab
@@ -319,6 +321,7 @@ StrategyEditor.propTypes = {
     ]),
   ),
   onSave: PropTypes.func.isRequired,
+  isPaperTrading: PropTypes.bool.isRequired,
 }
 
 StrategyEditor.defaultProps = {
