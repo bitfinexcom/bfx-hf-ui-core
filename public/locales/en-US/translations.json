@@ -30,6 +30,10 @@
     "title": "Closing Position",
     "body": "Are you sure you want to close {{pair}} position?"
   },
+  "launchStrategyModal": {
+    "title": "Launch Strategy",
+    "body": "This action will launch this strategy in LIVE mode, acting automatically on your behalf trough the Bitfinex API and using real funds from your Exchange wallet. The current active strategy will stop and this one will take its place."
+  },
   "algoOrderForm": {
     "accdist": {
       "title": "Accumulate/Distribute",

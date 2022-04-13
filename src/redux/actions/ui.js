@@ -180,6 +180,18 @@ export const changeClosePositionModalState = (isVisible, rowData = {}) => ({
   payload: { isVisible, rowData },
 })
 
+/**
+ * options: {
+ *   authToken, name, symbol, tf, includeTrades, strategy, seedCandleCount, margin,
+ * }
+ */
+export const changeLaunchStrategyModalState = (isVisible, options) => ({
+  type: types.CHANGE_LAUNCH_STRATEGY_MODAL_STATE,
+  payload: {
+    isVisible, options,
+  },
+})
+
 export const setIsOrderExecuting = (executing) => ({
   type: types.SET_IS_ORDER_EXECUTING,
   payload: { executing },
@@ -262,4 +274,5 @@ export default {
   changeConfirmDMSModalState,
   changeEditOrderModalState,
   changeClosePositionModalState,
+  changeLaunchStrategyModalState,
 }

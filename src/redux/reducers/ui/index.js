@@ -76,6 +76,8 @@ function getInitialState() {
     orderToEdit: {},
     isBadInternetConnection: false,
     isClosePositionModalVisible: false,
+    isLaunchStrategyModalVisible: false,
+    launchStrategyOptions: {},
     closePositionModalData: {},
     isOrderExecuting: false,
     content: {},
@@ -417,6 +419,15 @@ function reducer(state = getInitialState(), action = {}) {
         ...state,
         closePositionModalData: rowData,
         isClosePositionModalVisible: isVisible,
+      }
+    }
+    case types.CHANGE_LAUNCH_STRATEGY_MODAL_STATE: {
+      const { isVisible, options } = payload
+
+      return {
+        ...state,
+        launchStrategyOptions: options,
+        isLaunchStrategyModalVisible: isVisible,
       }
     }
     case types.SET_IS_ORDER_EXECUTING: {

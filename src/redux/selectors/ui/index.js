@@ -24,6 +24,8 @@ import getIsClosePositionModalVisible from './get_close_position_modal_visible'
 import getClosePositionModalData from './get_close_position_modal_data'
 import getOrderToEdit from './get_order_to_edit'
 import getLayoutForRoute from './layouts/get_layout_for_route'
+import getLaunchStrategyModalVisible from './get_launch_strategy_modal_visible'
+import getLaunchStrategyOptions from './get_launch_strategy_options'
 
 export * from './get_settings'
 export * from './get_core_settings'
@@ -55,4 +57,6 @@ export {
   getLayoutForRoute,
   getIsClosePositionModalVisible,
   getClosePositionModalData,
+  getLaunchStrategyModalVisible,
+  getLaunchStrategyOptions,
 }

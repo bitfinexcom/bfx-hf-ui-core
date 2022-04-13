@@ -156,6 +156,7 @@ const StrategyEditor = (props) => {
       strategyContent,
       candleSeed,
       margin,
+      isPaperTrading,
     )
   }
 

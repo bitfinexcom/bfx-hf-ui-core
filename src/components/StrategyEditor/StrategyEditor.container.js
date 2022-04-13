@@ -32,12 +32,20 @@ const mapDispatchToProps = dispatch => ({
   clearBacktestOptions: () => {
     dispatch(WSActions.resetBacktestData())
   },
-  dsExecuteLiveStrategy: (authToken, name, symbol, tf, includeTrades, strategy, seedCandleCount, margin) => {
-    dispatch(WSActions.setExecutionOptions({
-      includeTrades, seedCandleCount, symbol, tf, margin,
-    }))
-    dispatch(WSActions.send(['strategy.execute_start', authToken, name, symbol, tf, includeTrades, strategy, seedCandleCount, margin]))
-    dispatch(WSActions.setExecutionLoading(true))
+  dsExecuteLiveStrategy: (authToken, name, symbol, tf, includeTrades, strategy, seedCandleCount, margin, isPaperTrading) => {
+    const executionOptions = {
+      authToken, name, symbol, tf, includeTrades, strategy, seedCandleCount, margin,
+    }
+
+    if (isPaperTrading) {
+      dispatch(WSActions.setExecutionOptions({
+        includeTrades, seedCandleCount, symbol, tf, margin,
+      }))
+      dispatch(WSActions.send(['strategy.execute_start', authToken, name, symbol, tf, includeTrades, strategy, seedCandleCount, margin]))
+      dispatch(WSActions.setExecutionLoading(true))
+    } else {
+      dispatch(UIActions.changeLaunchStrategyModalState(true, executionOptions))
+    }
   },
   dsStopLiveStrategy: (authToken) => {
     dispatch(WSActions.setExecutionLoading(true))

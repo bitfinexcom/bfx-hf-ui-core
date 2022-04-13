@@ -31,6 +31,7 @@ const CcyInfoModal = lazy(() => import('../../modals/CcyInfoModal'))
 const ClosePositionModal = lazy(() => import('../../modals/ClosePositionModal'))
 const ConfirmDMSModal = lazy(() => import('../../modals/ConfirmDMSModal'))
 const EditOrderModal = lazy(() => import('../../modals/EditOrderModal'))
+const LaunchStrategyModal = lazy(() => import('../../modals/LaunchStrategyModal'))
 
 const ipcHelpers = window.electronService
 
@@ -137,6 +138,8 @@ const HFUI = (props) => {
               <OldFormatModal />
               <ConfirmDMSModal />
               <AOPauseModal />
+              {/* Putting this modal for electron mode only until strategies will be supported by the hosted version too */}
+              <LaunchStrategyModal />
             </>
           )}
           <BadConnectionModal />
