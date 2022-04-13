@@ -12,7 +12,7 @@ export default (t) => [
   {
     label: t('table.name'),
     dataKey: 'name',
-    style: { ...STYLES.flexStart, fontWeight: 700 },
+    style: { ...STYLES.flexStart, fontWeight: '700' },
     width: 300,
     flexGrow: 1.5,
     cellRenderer: ({ rowData = {} }) => (defaultCellRenderer(rowData.label)),

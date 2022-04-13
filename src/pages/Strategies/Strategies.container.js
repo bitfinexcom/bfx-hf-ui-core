@@ -30,9 +30,6 @@ const mapDispatchToProps = dispatch => ({
   setStrategyTab(tab) {
     dispatch(UIActions.setStrategyTab(tab))
   },
-  onSave: (authToken, strategy = {}) => {
-    dispatch(WSActions.send(['strategy.save', authToken, strategy]))
-  },
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(StrategiesPage)

@@ -583,6 +583,8 @@
     "unsavedStartegy": "Unsaved strategy",
     "newStrategy": "Create a new strategy",
     "newStrategyFrom": "Create a new strategy from...",
+    "newStrategy2": "New strategy",
+    "newStrategyFrom2": "New strategy from...",
     "running": "Running",
     "paused": "Paused",
     "recent": "Recent",
@@ -593,9 +595,10 @@
     "activeStrategies": "Active strategies ({{amount}})",
     "pastStrategies": "Past strategies ({{amount}})",
     "more": "More",
-    "importStrategy": "Import strategy from CSV...",
+    "importStrategy": "Import strategy from JSON...",
     "orSelectOne": "or select one from the list below",
     "newStrategyModalTitle": "Create a New Strategy",
+    "saveStrategyAsModalTitle": "Save strategy as...",
     "newStrategyFromModalTitle": "Create a New Strategy from...",
     "newStrategyModalEmptyError": "Label is empty",
     "newStrategyModalLongError": "Strategy name is too long ({{labelSize}}/{{MAX_LABEL_LENGTH}} characters)",
@@ -607,6 +610,7 @@
     "backtestingLoadingMessage": "Loading candles and executing strategy...",
     "backtestingStartingMessage": "Press start to begin backtesting.",
     "exportCSV": "Export as CSV",
+    "exportStrategy": "Export strategy to JSON",
     "historical": "Historical",
     "startDate": "Start Date",
     "endDate": "End Date",
@@ -637,7 +641,10 @@
       "createStrategy": "Create a strategy to begin executing."
     },
     "candleSeedCount": "Candle seed count",
-    "noActiveStrategies": "There are not active strategies"
+    "noActiveStrategies": "There are not active strategies",
+    "saveWithDifferentName": "Save with different name",
+    "templatesTab": "Templates",
+    "savedStrategiesTab": "From saved"
   },
   "ui": {
     "ok": "Okay",

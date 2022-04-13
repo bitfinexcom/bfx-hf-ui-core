@@ -43,6 +43,9 @@ const mapDispatchToProps = dispatch => ({
     dispatch(WSActions.setExecutionLoading(true))
     dispatch(WSActions.send(['strategy.execute_stop', authToken]))
   },
+  onSave: (authToken, strategy = {}) => {
+    dispatch(WSActions.send(['strategy.save', authToken, strategy]))
+  },
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(StrategyEditor)

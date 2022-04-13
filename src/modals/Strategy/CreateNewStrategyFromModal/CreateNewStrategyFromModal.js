@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import PropTypes from 'prop-types'
 import _isEmpty from 'lodash/isEmpty'
 import _size from 'lodash/size'
@@ -22,25 +22,35 @@ const CreateNewStrategyFromModalOpen = ({
   gaCreateStrategy,
   isOpen,
 }) => {
+  const savedStrategies = useSelector(getSortedByTimeStrategies)
+
+  const { t } = useTranslation()
+
   const tabs = useMemo(() => {
     return [
-      { label: 'Template', value: 'templ', Icon: <Icon name='file' /> },
-      { label: 'From saved', value: 'saved', Icon: <Icon name='file-code-o' /> },
+      {
+        label: t('strategyEditor.templatesTab'),
+        value: 'templates',
+        Icon: <Icon name='file' />,
+        disabled: false,
+      },
+      {
+        label: t('strategyEditor.savedStrategiesTab'),
+        value: 'saved',
+        Icon: <Icon name='file-code-o' />,
+        disabled: _isEmpty(savedStrategies),
+      },
     ]
-  }, [])
-
-  const savedStrategies = useSelector(getSortedByTimeStrategies)
+  }, [t, savedStrategies])
 
   const [label, setLabel] = useState('')
   const [activeTab, setActiveTab] = useState(tabs[0].value)
 
   const [error, setError] = useState('')
   const [template, setTemplate] = useState(MACD.label)
-  const [selectedStrategyLabel, setSelectedStrategyLabel] = useState(savedStrategies[0].label)
+  const [selectedStrategyLabel, setSelectedStrategyLabel] = useState(null)
 
   const isTemplatesTabSelected = tabs[0].value === activeTab
-
-  const { t } = useTranslation()
 
   const onSubmitHandler = () => {
     const labelSize = _size(label)
@@ -68,6 +78,7 @@ const CreateNewStrategyFromModalOpen = ({
       newStrategy = _find(Templates, _t => _t.label === template)
     } else {
       newStrategy = _find(savedStrategies, _s => _s.label === selectedStrategyLabel)
+      delete newStrategy.id
     }
 
     onSubmit(label, newStrategy)
@@ -84,6 +95,13 @@ const CreateNewStrategyFromModalOpen = ({
     label: s.label,
     value: s.label,
   })), [savedStrategies])
+
+  useEffect(() => {
+    if (_isEmpty(savedStrategies)) {
+      return
+    }
+    setSelectedStrategyLabel(savedStrategies[0].label)
+  }, [savedStrategies])
 
   return (
     <Modal

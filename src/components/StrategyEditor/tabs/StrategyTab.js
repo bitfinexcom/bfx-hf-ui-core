@@ -23,6 +23,7 @@ const StrategyTab = () => {
             results={results}
             setLayoutConfig={setLayoutConfig}
             layoutConfig={layoutConfig}
+            onTradeClick={() => {}}
           />
         )
 

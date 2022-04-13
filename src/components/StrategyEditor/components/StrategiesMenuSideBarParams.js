@@ -34,6 +34,7 @@ const StrategyParams = ({
   strategyId,
   onOpenCreateStrategyModal,
   onOpenCreateStrategyFromModal,
+  onOpenSaveStrategyAsModal,
   onImportStrategy,
 }) => {
   const { id = strategyId } = strategy || {}
@@ -61,10 +62,10 @@ const StrategyParams = ({
               </Item>
               <div className='hfui-navbar__layout-settings__separator' />
               <Item onClick={onOpenCreateStrategyModal}>
-                {t('strategyEditor.newStrategy')}
+                {t('strategyEditor.newStrategy2')}
               </Item>
               <Item onClick={onOpenCreateStrategyFromModal}>
-                {t('strategyEditor.newStrategyFrom')}
+                {t('strategyEditor.newStrategyFrom2')}
               </Item>
               <Item onClick={onImportStrategy}>
                 {t('strategyEditor.importStrategy')}
@@ -72,8 +73,11 @@ const StrategyParams = ({
               <Item onClick={onSaveStrategy}>
                 {t('ui.save')}
               </Item>
-              <Item onClick={onExportStrategy}>
+              <Item onClick={onOpenSaveStrategyAsModal}>
                 {t('ui.saveAs')}
+              </Item>
+              <Item onClick={onExportStrategy}>
+                {t('strategyEditor.exportStrategy')}
               </Item>
               <Item onClick={onOpenRemoveModal} isDisabled={!id}>
                 {t('ui.removeBtn')}
@@ -102,6 +106,7 @@ StrategyParams.propTypes = {
   onImportStrategy: PropTypes.func.isRequired,
   onOpenCreateStrategyModal: PropTypes.func.isRequired,
   onOpenCreateStrategyFromModal: PropTypes.func.isRequired,
+  onOpenSaveStrategyAsModal: PropTypes.func.isRequired,
   strategy: PropTypes.shape({
     id: PropTypes.string,
   }),

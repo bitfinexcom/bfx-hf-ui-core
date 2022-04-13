@@ -31,7 +31,6 @@ const IDETab = ({
   evalSectionContent,
   setSectionErrors,
   sectionErrors,
-  renderResults,
 }) => {
   const [activeContent, setActiveContent] = useState('defineIndicators')
   const [execError, setExecError] = useState('')
@@ -108,7 +107,6 @@ const IDETab = ({
       <div className='hfui-strategyeditor__content-wrapper'>
         <div
           className={ClassNames('hfui-strategyeditor__editor-wrapper', {
-            noresults: !renderResults,
             'exec-error': execError || sectionErrors[activeContent],
           })}
         >
@@ -146,7 +144,6 @@ IDETab.propTypes = {
   evalSectionContent: PropTypes.func.isRequired,
   setSectionErrors: PropTypes.func.isRequired,
   sectionErrors: PropTypes.objectOf(PropTypes.string),
-  renderResults: PropTypes.bool.isRequired,
 }
 
 IDETab.defaultProps = {
