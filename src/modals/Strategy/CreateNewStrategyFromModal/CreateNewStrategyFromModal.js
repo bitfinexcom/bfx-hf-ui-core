@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import PropTypes from 'prop-types'
 import _isEmpty from 'lodash/isEmpty'
 import _size from 'lodash/size'
@@ -36,7 +36,7 @@ const CreateNewStrategyFromModalOpen = ({
 
   const [error, setError] = useState('')
   const [template, setTemplate] = useState(MACD.label)
-  const [selectedStrategyLabel, setSelectedStrategyLabel] = useState(savedStrategies[0].label)
+  const [selectedStrategyLabel, setSelectedStrategyLabel] = useState(null)
 
   const isTemplatesTabSelected = tabs[0].value === activeTab
 
@@ -68,6 +68,7 @@ const CreateNewStrategyFromModalOpen = ({
       newStrategy = _find(Templates, _t => _t.label === template)
     } else {
       newStrategy = _find(savedStrategies, _s => _s.label === selectedStrategyLabel)
+      delete newStrategy.id
     }
 
     onSubmit(label, newStrategy)
@@ -84,6 +85,13 @@ const CreateNewStrategyFromModalOpen = ({
     label: s.label,
     value: s.label,
   })), [savedStrategies])
+
+  useEffect(() => {
+    if (_isEmpty(savedStrategies)) {
+      return
+    }
+    setSelectedStrategyLabel(savedStrategies[0].label)
+  }, [savedStrategies])
 
   return (
     <Modal
@@ -116,6 +124,7 @@ const CreateNewStrategyFromModalOpen = ({
             value={selectedStrategyLabel}
             onChange={setSelectedStrategyLabel}
             options={savedStrategiesOptions}
+            placeholder={t('strategyEditor.selectSavedStrategy')}
           />
         )}
 

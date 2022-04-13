@@ -75,6 +75,9 @@ const StrategyParams = ({
               <Item onClick={onExportStrategy}>
                 {t('ui.saveAs')}
               </Item>
+              <Item onClick={onExportStrategy}>
+                {t('strategyEditor.exportStrategy')}
+              </Item>
               <Item onClick={onOpenRemoveModal} isDisabled={!id}>
                 {t('ui.removeBtn')}
               </Item>

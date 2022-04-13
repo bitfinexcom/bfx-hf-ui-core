@@ -609,6 +609,7 @@
     "backtestingLoadingMessage": "Loading candles and executing strategy...",
     "backtestingStartingMessage": "Press start to begin backtesting.",
     "exportCSV": "Export as CSV",
+    "exportStrategy": "Export strategy to JSON",
     "historical": "Historical",
     "startDate": "Start Date",
     "endDate": "End Date",
@@ -639,7 +640,8 @@
       "createStrategy": "Create a strategy to begin executing."
     },
     "candleSeedCount": "Candle seed count",
-    "noActiveStrategies": "There are not active strategies"
+    "noActiveStrategies": "There are not active strategies",
+    "selectSavedStrategy": "Select saved strategy"
   },
   "ui": {
     "ok": "Okay",

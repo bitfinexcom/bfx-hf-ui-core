@@ -94,7 +94,7 @@ const StrategyEditor = (props) => {
   }
 
   const onCreateNewStrategy = (label, content = {}) => {
-    const newStrategy = { label, ...content }
+    const newStrategy = { ...content, label }
 
     setSectionErrors({})
     setStrategyDirty(true)
