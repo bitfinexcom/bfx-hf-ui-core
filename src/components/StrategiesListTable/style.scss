@@ -7,6 +7,13 @@
     text-transform: uppercase;
   }
 
+  .ReactVirtualized__Table__row {
+    &:hover {
+      background-color: var(--background-color);
+      cursor: pointer;
+    }
+  }
+
   .strategies-list {
     padding: 10px;
     list-style: disc;
