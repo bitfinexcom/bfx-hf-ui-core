@@ -2,6 +2,7 @@ import {
   useState, useEffect, useCallback,
 } from 'react'
 import _split from 'lodash/split'
+import _isEmpty from 'lodash/isEmpty'
 
 import { useDispatch, useSelector } from 'react-redux'
 import { useTranslation } from 'react-i18next'
@@ -19,9 +20,12 @@ import {
   CANCEL_ORDER_EVENT,
   GET_POSITION_EVENT,
   CLOSE_POSITION_EVENT,
+  GET_TRADES_EVENT,
+  GET_INDICATORS_EVENT,
+  GET_INTERVAL_EVENT,
 } from './events'
 
-const useChartIframe = (iframeID, wsID) => {
+const useChartIframe = (iframeID, wsID, customIndicators, trades, interval) => {
   const [isIframeReady, setIsIframeReady] = useState(false)
   const { t } = useTranslation()
   const dispatch = useDispatch()
@@ -46,8 +50,13 @@ const useChartIframe = (iframeID, wsID) => {
     if (isIframeReady) {
       sendMessageToIframe(iframeChart, GET_ORDERS_EVENT, orders)
       sendMessageToIframe(iframeChart, GET_POSITION_EVENT, position || {})
+      sendMessageToIframe(iframeChart, GET_TRADES_EVENT, trades || [])
+      sendMessageToIframe(iframeChart, GET_INTERVAL_EVENT, interval || '')
+      if (!_isEmpty(customIndicators)) {
+        sendMessageToIframe(iframeChart, GET_INDICATORS_EVENT, customIndicators || [])
+      }
     }
-  }, [orders, iframeID, isIframeReady, position])
+  }, [orders, iframeID, isIframeReady, position, customIndicators, trades, interval])
 
   const sendMarketToChartIframe = useCallback((market) => {
     const marketOrders = getChartOrders(market?.wsID, t)
