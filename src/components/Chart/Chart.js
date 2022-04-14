@@ -14,7 +14,15 @@ import './style.css'
 
 const { getCurrencySymbolMemo } = reduxSelectors
 
-const Chart = ({ market, theme, layoutI }) => {
+const Chart = ({
+  market,
+  theme,
+  layoutI,
+  indicators,
+  trades,
+  interval,
+  hideResolutions,
+}) => {
   const {
     wsID, base, quote, isPerp, uiID: _uiID,
   } = market
@@ -25,13 +33,14 @@ const Chart = ({ market, theme, layoutI }) => {
 
   const uiID = isPerp ? _uiID : getPairFromMarket(market, getCurrencySymbol)
   const iframeID = `hfui-chart-${layoutI}`
-  const sendMarketToChartIframe = useChartIframe(iframeID, wsID)
+  const sendMarketToChartIframe = useChartIframe(iframeID, wsID, indicators, trades, interval)
 
   const queryString = new URLSearchParams({
     env,
     theme: theme === THEMES.DARK ? 'honeyframework-theme:dark-mode' : 'default-theme:light-mode',
     locale: LANGUAGES_CHART_TABLE[i18nMappedKey] || LANGUAGES_CHART_TABLE.en,
     iframeID,
+    hideResolutions,
   }).toString()
 
   useEffect(() => {
@@ -61,6 +70,10 @@ Chart.propTypes = {
   }),
   theme: PropTypes.oneOf([THEMES.LIGHT, THEMES.DARK]).isRequired,
   layoutI: PropTypes.string.isRequired,
+  indicators: PropTypes.array, // eslint-disable-line react/forbid-prop-types
+  trades: PropTypes.array, // eslint-disable-line react/forbid-prop-types
+  interval: PropTypes.string,
+  hideResolutions: PropTypes.bool,
 }
 
 Chart.defaultProps = {
@@ -70,6 +83,10 @@ Chart.defaultProps = {
     wsID: 'tBTCUSD',
     uiID: 'BTC/USD',
   },
+  indicators: [],
+  trades: [],
+  interval: '30',
+  hideResolutions: false,
 }
 
 export default memo(Chart)

@@ -37,6 +37,8 @@ const Backtester = ({
   const [execError, setExecError] = useState(null)
   const [executionType, setExecutionType] = useState(backtestMethods[0])
   const [formState, setFormState] = useState({})
+  const [fullScreenChart, setFullScreenChart] = useState(false)
+  const { t } = useTranslation()
 
   const backtestStrategy = (options) => {
     const {
@@ -80,8 +82,6 @@ const Backtester = ({
     },
   }
 
-  const { t } = useTranslation()
-
   if (!strategyContent || _isEmpty(_omitBy(strategyContent, _isNil))) {
     return (
       <div className='hfui-backtester__wrapper'>
@@ -103,7 +103,7 @@ const Backtester = ({
     return (
       <div className='hfui-backtester__wrapper'>
         <executionType.form {...opts} />
-        {executionType.renderReport({ ...opts }, backtestResults, backtestData, backtestOptions, t, settingsTheme)}
+        {executionType.renderReport({ ...opts }, backtestResults, backtestData, backtestOptions, t, settingsTheme, fullScreenChart, setFullScreenChart)}
       </div>
     )
   }
