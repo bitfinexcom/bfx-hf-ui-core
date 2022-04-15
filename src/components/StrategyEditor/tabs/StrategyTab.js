@@ -12,7 +12,7 @@ const StrategyTab = () => {
   const renderGridComponents = useCallback((i) => {
     switch (i) {
       case COMPONENTS_KEYS.LIVE_CHART:
-        return <StrategyLiveChart />
+        return <StrategyLiveChart results={results} />
 
       case COMPONENTS_KEYS.STRATEGY_PERFOMANCE:
         return <StrategyPerfomanceMetrics results={results} />
