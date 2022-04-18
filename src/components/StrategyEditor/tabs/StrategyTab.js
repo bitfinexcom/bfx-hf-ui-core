@@ -8,15 +8,19 @@ import StrategyTradesTable from '../../StrategyTradesTable'
 import StrategiesGridLayout from '../components/StrategiesGridLayout'
 import { COMPONENTS_KEYS, LAYOUT_CONFIG } from './StrategyTab.constants'
 import StrategyLiveChart from '../../StrategyLiveChart'
+import StrategyOptionsPanel from '../../StrategyOptionsPanel'
 
-const StrategyTab = ({ indicators, markets, timeframe }) => {
+const StrategyTab = (props) => {
   const [layoutConfig, setLayoutConfig] = useState(LAYOUT_CONFIG)
 
   const renderGridComponents = useCallback((i) => {
     console.log('grid callback')
     switch (i) {
+      case COMPONENTS_KEYS.OPTIONS:
+        return <StrategyOptionsPanel />
+
       case COMPONENTS_KEYS.LIVE_CHART:
-        return <StrategyLiveChart results={results} indicators={indicators} markets={markets} timeframe={timeframe} />
+        return <StrategyLiveChart {...props} />
 
       case COMPONENTS_KEYS.STRATEGY_PERFOMANCE:
         return <StrategyPerfomanceMetrics results={results} />
@@ -34,7 +38,7 @@ const StrategyTab = ({ indicators, markets, timeframe }) => {
       default:
         return null
     }
-  }, [layoutConfig, indicators, markets, timeframe])
+  }, [layoutConfig, props])
 
   return (
     <div className='hfui-strategyeditor__wrapper'>
@@ -44,16 +48,6 @@ const StrategyTab = ({ indicators, markets, timeframe }) => {
       />
     </div>
   )
-}
-
-StrategyTab.propTypes = {
-  markets: PropTypes.objectOf(PropTypes.object).isRequired,
-  timeframe: PropTypes.oneOf(timeFrames).isRequired,
-  indicators: PropTypes.arrayOf(PropTypes.object),
-}
-
-StrategyTab.defaultProps = {
-  indicators: [],
 }
 
 export default memo(StrategyTab)
