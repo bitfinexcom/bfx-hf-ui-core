@@ -1,44 +1,64 @@
-import React, { useCallback, useState, memo } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
-
 import StrategyPerfomanceMetrics from '../../StrategyPerfomanceMetrics'
 import { results } from '../../../pages/Strategies/mock_data'
-import timeFrames from '../../../util/time_frames'
 import StrategyTradesTable from '../../StrategyTradesTable'
 import StrategiesGridLayout from '../components/StrategiesGridLayout'
-import { COMPONENTS_KEYS, LAYOUT_CONFIG } from './StrategyTab.constants'
+import {
+  COMPONENTS_KEYS,
+  LAYOUT_CONFIG,
+  LAYOUT_CONFIG_WITHOUT_TRADES,
+} from './StrategyTab.constants'
 import StrategyLiveChart from '../../StrategyLiveChart'
 import StrategyOptionsPanel from '../../StrategyOptionsPanel'
 
 const StrategyTab = (props) => {
-  const [layoutConfig, setLayoutConfig] = useState(LAYOUT_CONFIG)
+  const { trades } = props
+  const [layoutConfig, setLayoutConfig] = useState()
 
-  const renderGridComponents = useCallback((i) => {
-    console.log('grid callback')
-    switch (i) {
-      case COMPONENTS_KEYS.OPTIONS:
-        return <StrategyOptionsPanel />
+  const optionsCollapse = () => {
+    setLayoutConfig(LAYOUT_CONFIG)
+  }
 
-      case COMPONENTS_KEYS.LIVE_CHART:
-        return <StrategyLiveChart {...props} />
-
-      case COMPONENTS_KEYS.STRATEGY_PERFOMANCE:
-        return <StrategyPerfomanceMetrics results={results} />
-
-      case COMPONENTS_KEYS.STRATEGY_TRADES:
-        return (
-          <StrategyTradesTable
-            results={results}
-            setLayoutConfig={setLayoutConfig}
-            layoutConfig={layoutConfig}
-            onTradeClick={() => {}}
-          />
-        )
-
-      default:
-        return null
+  useEffect(() => {
+    if (!trades) {
+      setLayoutConfig(LAYOUT_CONFIG_WITHOUT_TRADES)
+    } else {
+      setLayoutConfig(LAYOUT_CONFIG)
     }
-  }, [layoutConfig, props])
+  }, [trades])
+
+  const renderGridComponents = useCallback(
+    (i) => {
+      console.log('grid callback')
+      switch (i) {
+        case COMPONENTS_KEYS.OPTIONS:
+          return (
+            <StrategyOptionsPanel {...props} onСollapse={optionsCollapse} />
+          )
+
+        case COMPONENTS_KEYS.LIVE_CHART:
+          return <StrategyLiveChart {...props} />
+
+        case COMPONENTS_KEYS.STRATEGY_PERFOMANCE:
+          return <StrategyPerfomanceMetrics results={results} />
+
+        case COMPONENTS_KEYS.STRATEGY_TRADES:
+          return (
+            <StrategyTradesTable
+              results={results}
+              setLayoutConfig={setLayoutConfig}
+              layoutConfig={layoutConfig}
+              onTradeClick={() => {}}
+            />
+          )
+
+        default:
+          return null
+      }
+    },
+    [layoutConfig, props],
+  )
 
   return (
     <div className='hfui-strategyeditor__wrapper'>
@@ -50,4 +70,8 @@ const StrategyTab = (props) => {
   )
 }
 
-export default memo(StrategyTab)
+StrategyTab.propTypes = {
+  trades: PropTypes.bool.isRequired,
+}
+
+export default StrategyTab

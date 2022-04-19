@@ -221,6 +221,17 @@ const StrategyEditor = (props) => {
             )}
             sbicon={<Icon name='file-code-o' />}
             timeframe={timeframe}
+            onOpenSaveStrategyAsModal={() => setIsSaveStrategyModalOpen(true)}
+            symbol={symbol}
+            setSymbol={setSymbol}
+            setTimeframe={setTimeframe}
+            trades={trades}
+            setTrades={setTrades}
+            candleSeed={candleSeed}
+            setCandleSeed={setCandleSeed}
+            margin={margin}
+            setMargin={setMargin}
+            isPaperTrading={isPaperTrading}
             {...props}
           />
           <IDETab
