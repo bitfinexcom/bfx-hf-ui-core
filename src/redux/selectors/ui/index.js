@@ -24,6 +24,7 @@ import getIsClosePositionModalVisible from './get_close_position_modal_visible'
 import getClosePositionModalData from './get_close_position_modal_data'
 import getOrderToEdit from './get_order_to_edit'
 import getLayoutForRoute from './layouts/get_layout_for_route'
+import getIsLoadingOrderHistData from './get_is_loading_order_hist_data'
 
 export * from './get_settings'
 export * from './get_core_settings'
@@ -55,4 +56,5 @@ export {
   getLayoutForRoute,
   getIsClosePositionModalVisible,
   getClosePositionModalData,
+  getIsLoadingOrderHistData,
 }

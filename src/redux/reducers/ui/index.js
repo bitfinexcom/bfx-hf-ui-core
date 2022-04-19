@@ -426,6 +426,12 @@ function reducer(state = getInitialState(), action = {}) {
         isOrderExecuting: executing,
       }
     }
+    case types.SET_IS_LOADING_ORDER_HIST_DATA: {
+      return {
+        ...state,
+        isLoadingOrderHistData: payload,
+      }
+    }
     case types.CHANGE_REFILL_BALANCE_MODAL_STATE: {
       const { isVisible } = payload
 

@@ -1,9 +1,22 @@
 import { connect } from 'react-redux'
-import { getOrderHistory } from '../../redux/selectors/ws'
+
+import WSActions from '../../redux/actions/ws'
+import UIActions from '../../redux/actions/ui'
+import { getAuthToken, getOrderHistory } from '../../redux/selectors/ws'
+import { getIsLoadingOrderHistData } from '../../redux/selectors/ui'
 import OrderHistory from './OrderHistory'
 
 const mapStateToProps = (state) => ({
   orders: getOrderHistory(state),
+  authToken: getAuthToken(state),
+  isLoadingOrderHistData: getIsLoadingOrderHistData(state),
 })
 
-export default connect(mapStateToProps)(OrderHistory)
+const mapDispatchToProps = dispatch => ({
+  fetchOrderHistory: (authToken, endTime = null) => {
+    dispatch(WSActions.send(['get.order_history', authToken, null, endTime, 100]))
+  },
+  setIsLoadingOrderHistFlag: () => dispatch(UIActions.setIsLoadingOrderHistData(true)),
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(OrderHistory)

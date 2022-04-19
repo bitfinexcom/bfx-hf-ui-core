@@ -315,6 +315,13 @@ export default (alias, store) => (e = {}) => {
         break
       }
 
+      case 'data.order_history': {
+        const [, orderHist] = payload
+        store.dispatch(UIActions.setIsLoadingOrderHistData(false))
+        store.dispatch(WSActions.recvOrderHist({ orderHist }))
+        break
+      }
+
       case 'data.aos': {
         const [, , aos] = payload
         const adapted = _map(aos, ao => (_isArray(ao) ? AOAdapter(ao) : ao))
