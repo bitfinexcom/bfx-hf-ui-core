@@ -1,4 +1,4 @@
-import React, { useState, memo } from 'react'
+import React, { memo } from 'react'
 import { useSelector } from 'react-redux'
 import _find from 'lodash/find'
 import PropTypes from 'prop-types'
@@ -14,7 +14,6 @@ const StrategyLiveChart = ({
 }) => {
   const { trades = [], backtestOptions: { activeMarket } = {} } = results
   const settingsTheme = useSelector(getThemeSetting)
-  const [fullScreenChart, setFullScreenChart] = useState(false)
   const chartIndicators = prepareTVIndicators(indicators)
   const interval = TIMEFRAME_INTERVAL_MAPPING[timeframe] || '15'
 
@@ -26,18 +25,11 @@ const StrategyLiveChart = ({
 
   return (
     <Panel
-      label=''
       removeable={false}
       moveable={false}
-      extraIcons={[
-        <span
-          key='toggle-fullscreen'
-          type='button'
-          className='icon-move toggle-fullscreen'
-          onClick={() => setFullScreenChart(!fullScreenChart)}
-          title='Toggle Fullscreen'
-        />,
-      ]}
+      hideIcons
+      dark
+      darkHeader
     >
       {activeMarketObject && (
         <Chart
