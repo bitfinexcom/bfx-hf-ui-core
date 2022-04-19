@@ -43,7 +43,7 @@ const StrategyPerfomanceMetrics = ({ results }) => {
       moveable={false}
       removeable={false}
       darkHeader
-      label='Perfomance metrics'
+      label={t('strategyEditor.perfomanceMetrics')}
     >
       <ul>
         <MetricRow

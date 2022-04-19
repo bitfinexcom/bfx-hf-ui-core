@@ -87,11 +87,11 @@ const StrategyOptionsPanel = ({
           markets={markets}
           renderWithFavorites
         />
-        <p className='hfui-orderform__input-label'>Select market</p>
+        <p className='hfui-orderform__input-label'>{t('strategyEditor.selectMarketDescription')}</p>
       </div>
       <div className='hfui-strategy-options__input item'>
         <TimeFrameDropdown tf={timeframe} onChange={setTimeframe} />
-        <p className='hfui-orderform__input-label'>Select candle duration</p>
+        <p className='hfui-orderform__input-label'>{t('strategyEditor.selectCandleDurationDescription')}</p>
       </div>
       <AmountInput
         className='hfui-strategy-options__amount-input item'
@@ -107,7 +107,7 @@ const StrategyOptionsPanel = ({
             checked={margin}
             onChange={setMargin}
           />
-          <p className='hfui-orderform__input-label'>For sandbox</p>
+          <p className='hfui-orderform__input-label'>{t('strategyEditor.useMarginCheckboxDescription')}</p>
         </div>
       )}
       <div className='hfui-strategy-options__amount-input item'>
@@ -118,13 +118,13 @@ const StrategyOptionsPanel = ({
         />
         <p className='hfui-orderform__input-label'>
           <Truncate>
-            Match against real trade history. Much slower, More Accurate
+            {t('strategyEditor.useTradesCheckboxDescription')}
           </Truncate>
         </p>
       </div>
       <Button
         className='hfui-strategy-options__fullscreen-btn item'
-        label='Fullscreen Chart'
+        label={t('strategyEditor.fullscreenChartBtn')}
         onClick={() => {}}
         green
       />
