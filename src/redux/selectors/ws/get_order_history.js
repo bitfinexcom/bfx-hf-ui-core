@@ -14,7 +14,6 @@ const getSortedOrderHistory = createSelector(
   (orders) => {
     const ordersArr = _values(orders)
     ordersArr.sort((a, b) => b.mtsUpdate - a.mtsUpdate)
-    console.log('ordersArr: ', ordersArr)
     return ordersArr
   },
 )
