@@ -1,31 +1,28 @@
-import React, { useState } from 'react'
+import React, { useState, memo } from 'react'
 import { useSelector } from 'react-redux'
 import _find from 'lodash/find'
+import PropTypes from 'prop-types'
 
-import { getActiveMarket, getThemeSetting } from '../../redux/selectors/ui'
+import { getThemeSetting } from '../../redux/selectors/ui'
 import Panel from '../../ui/Panel'
 import Chart from '../Chart'
 import { prepareTVIndicators } from './StrategyLiveChart.helpers'
-import { TIMEFRAME_INTERVAL_MAPPING } from '../../util/time_frames'
+import timeFrames, { TIMEFRAME_INTERVAL_MAPPING } from '../../util/time_frames'
 
-const StrategyLiveChart = ({ opts, results }) => {
-  const currentMarket = useSelector(getActiveMarket)
+const StrategyLiveChart = ({
+  results, indicators, markets, timeframe,
+}) => {
+  const { trades = [], backtestOptions: { activeMarket } = {} } = results
   const settingsTheme = useSelector(getThemeSetting)
+  const [fullScreenChart, setFullScreenChart] = useState(false)
+  const chartIndicators = prepareTVIndicators(indicators)
+  const interval = TIMEFRAME_INTERVAL_MAPPING[timeframe] || '15'
 
-  // const { markets, formState, indicators } = opts
-  // const { trades = [], backtestOptions: { activeMarket } = {} } = results
-
-  // const [fullScreenChart, setFullScreenChart] = useState(false)
-
-  // const chartIndicators = prepareTVIndicators(indicators)
-  // const interval = TIMEFRAME_INTERVAL_MAPPING[formState?.selectedTimeFrame] || '15'
-
-  // const settingsTheme = useSelector(getThemeSetting)
-  // const activeMarketObject = _find(
-  //   markets,
-  //   (market) => market.wsID === activeMarket,
-  //   null,
-  // )
+  const activeMarketObject = _find(
+    markets,
+    (market) => market.wsID === activeMarket,
+    null,
+  )
 
   return (
     <Panel
@@ -37,12 +34,12 @@ const StrategyLiveChart = ({ opts, results }) => {
           key='toggle-fullscreen'
           type='button'
           className='icon-move toggle-fullscreen'
-          // onClick={() => setFullScreenChart(!fullScreenChart)}
+          onClick={() => setFullScreenChart(!fullScreenChart)}
           title='Toggle Fullscreen'
         />,
       ]}
     >
-      {/* {activeMarketObject && (
+      {activeMarketObject && (
         <Chart
           market={activeMarketObject}
           theme={settingsTheme}
@@ -52,10 +49,23 @@ const StrategyLiveChart = ({ opts, results }) => {
           trades={trades}
           hideResolutions
         />
-      )} */}
-      <Chart market={currentMarket} theme={settingsTheme} />
+      )}
     </Panel>
   )
 }
 
-export default StrategyLiveChart
+StrategyLiveChart.propTypes = {
+  markets: PropTypes.objectOf(PropTypes.object).isRequired,
+  timeframe: PropTypes.oneOf(timeFrames).isRequired,
+  indicators: PropTypes.arrayOf(PropTypes.object),
+  results: PropTypes.objectOf(PropTypes.oneOfType([
+    PropTypes.array, PropTypes.bool, PropTypes.object, PropTypes.number, PropTypes.string,
+  ])),
+}
+
+StrategyLiveChart.defaultProps = {
+  indicators: [],
+  results: {},
+}
+
+export default memo(StrategyLiveChart)

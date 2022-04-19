@@ -199,6 +199,7 @@ const StrategiesPage = ({
             onDefineIndicatorsChange={onDefineIndicatorsChange}
             evalSectionContent={evalSectionContent}
             moveable={false}
+            indicators={indicators}
             removeable={false}
           />
         </Suspense>

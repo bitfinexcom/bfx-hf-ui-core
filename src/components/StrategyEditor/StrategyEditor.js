@@ -220,6 +220,7 @@ const StrategyEditor = (props) => {
               </>
             )}
             sbicon={<Icon name='file-code-o' />}
+            timeframe={timeframe}
             {...props}
           />
           <IDETab
@@ -307,6 +308,7 @@ StrategyEditor.propTypes = {
   dsExecuteLiveStrategy: PropTypes.func.isRequired,
   onLoadStrategy: PropTypes.func.isRequired,
   onDefineIndicatorsChange: PropTypes.func.isRequired,
+  indicators: PropTypes.arrayOf(PropTypes.object),
   strategyDirty: PropTypes.bool.isRequired,
   setStrategyDirty: PropTypes.func.isRequired,
   setSectionErrors: PropTypes.func.isRequired,
@@ -335,6 +337,7 @@ StrategyEditor.defaultProps = {
     id: null,
     label: null,
   },
+  indicators: [],
 }
 
 export default memo(StrategyEditor)
