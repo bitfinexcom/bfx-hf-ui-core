@@ -116,11 +116,11 @@ const StrategyOptionsPanel = ({
           checked={trades}
           onChange={setTrades}
         />
-        <p className='hfui-orderform__input-label'>
+        <div className='hfui-orderform__input-label'>
           <Truncate>
             {t('strategyEditor.useTradesCheckboxDescription')}
           </Truncate>
-        </p>
+        </div>
       </div>
       <Button
         className='hfui-strategy-options__fullscreen-btn item'
