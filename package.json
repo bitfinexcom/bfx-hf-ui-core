@@ -14,6 +14,7 @@
     "start": "node scripts/per-env.js",
     "start:staging": "env-cmd -e staging,development node scripts/start.js",
     "start:production": "env-cmd -e production,development node scripts/start.js",
+    "start:electron": "env-cmd -e electron,development node scripts/start.js",
     "build": "node scripts/per-env.js",
     "build:staging": "GENERATE_SOURCEMAP=false cross-env npm run build-css && env-cmd -e staging node scripts/build.js",
     "build:production": "GENERATE_SOURCEMAP=false cross-env npm run build-css && env-cmd -e production node scripts/build.js",
