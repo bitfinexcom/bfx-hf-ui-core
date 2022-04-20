@@ -34,6 +34,7 @@ const StrategyOptionsPanel = ({
   margin,
   candleSeed,
   setCandleSeed,
+  setFullScreenChart,
 }) => {
   const [seedError, setSeedError] = useState(null)
 
@@ -125,7 +126,7 @@ const StrategyOptionsPanel = ({
       <Button
         className='hfui-strategy-options__fullscreen-btn item'
         label={t('strategyEditor.fullscreenChartBtn')}
-        onClick={() => {}}
+        onClick={setFullScreenChart}
         green
       />
     </div>
@@ -157,6 +158,7 @@ StrategyOptionsPanel.propTypes = {
   strategy: PropTypes.shape({
     label: PropTypes.string,
   }).isRequired,
+  setFullScreenChart: PropTypes.func.isRequired,
 }
 
 export default StrategyOptionsPanel

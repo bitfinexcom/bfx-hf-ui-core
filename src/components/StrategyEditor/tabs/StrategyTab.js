@@ -15,6 +15,7 @@ import StrategyOptionsPanel from '../../StrategyOptionsPanel'
 const StrategyTab = (props) => {
   const { trades } = props
   const [layoutConfig, setLayoutConfig] = useState()
+  const [fullscreenChart, setFullScreenChart] = useState(false)
 
   const optionsCollapse = () => {
     setLayoutConfig(LAYOUT_CONFIG)
@@ -33,11 +34,11 @@ const StrategyTab = (props) => {
       switch (i) {
         case COMPONENTS_KEYS.OPTIONS:
           return (
-            <StrategyOptionsPanel {...props} onСollapse={optionsCollapse} />
+            <StrategyOptionsPanel {...props} onСollapse={optionsCollapse} setFullScreenChart={() => setFullScreenChart(true)} />
           )
 
         case COMPONENTS_KEYS.LIVE_CHART:
-          return <StrategyLiveChart {...props} />
+          return <StrategyLiveChart {...props} fullscreenChart={fullscreenChart} exitFullscreenChart={() => setFullScreenChart(false)} />
 
         case COMPONENTS_KEYS.STRATEGY_PERFOMANCE:
           return <StrategyPerfomanceMetrics results={results} />
@@ -56,7 +57,7 @@ const StrategyTab = (props) => {
           return null
       }
     },
-    [layoutConfig, props],
+    [layoutConfig, props, fullscreenChart],
   )
 
   return (

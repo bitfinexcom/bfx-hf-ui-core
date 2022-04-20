@@ -1,4 +1,4 @@
-import React, { memo } from 'react'
+import React, { memo, useEffect, useRef } from 'react'
 import { useSelector } from 'react-redux'
 import _find from 'lodash/find'
 import PropTypes from 'prop-types'
@@ -10,7 +10,7 @@ import { prepareTVIndicators } from './StrategyLiveChart.helpers'
 import timeFrames, { TIMEFRAME_INTERVAL_MAPPING } from '../../util/time_frames'
 
 const StrategyLiveChart = ({
-  results, indicators, markets, timeframe, symbol,
+  results, indicators, markets, timeframe, symbol, fullscreenChart, exitFullscreenChart,
 }) => {
   const { trades = [], backtestOptions: { activeMarket } = {} } = results
   const settingsTheme = useSelector(getThemeSetting)
@@ -30,6 +30,19 @@ const StrategyLiveChart = ({
       hideIcons
       dark
       darkHeader
+      extraIcons={[
+        fullscreenChart && (
+          <span
+            key='exit-fullscreen'
+            type='button'
+            className='icon-move toggle-fullscreen'
+            onClick={exitFullscreenChart}
+            title='Exit fullscreen'
+          />
+        ),
+      ]}
+      fullscreen={fullscreenChart}
+      onExitFullscreen={exitFullscreenChart}
     >
       {activeMarketObject && (
         <Chart
@@ -61,6 +74,8 @@ StrategyLiveChart.propTypes = {
   results: PropTypes.objectOf(PropTypes.oneOfType([
     PropTypes.array, PropTypes.bool, PropTypes.object, PropTypes.number, PropTypes.string,
   ])),
+  fullscreenChart: PropTypes.bool.isRequired,
+  exitFullscreenChart: PropTypes.func.isRequired,
 }
 
 StrategyLiveChart.defaultProps = {
