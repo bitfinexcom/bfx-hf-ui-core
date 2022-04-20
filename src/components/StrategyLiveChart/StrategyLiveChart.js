@@ -10,7 +10,7 @@ import { prepareTVIndicators } from './StrategyLiveChart.helpers'
 import timeFrames, { TIMEFRAME_INTERVAL_MAPPING } from '../../util/time_frames'
 
 const StrategyLiveChart = ({
-  results, indicators, markets, timeframe,
+  results, indicators, markets, timeframe, symbol,
 }) => {
   const { trades = [], backtestOptions: { activeMarket } = {} } = results
   const settingsTheme = useSelector(getThemeSetting)
@@ -21,7 +21,7 @@ const StrategyLiveChart = ({
     markets,
     (market) => market.wsID === activeMarket,
     null,
-  )
+  ) || symbol
 
   return (
     <Panel
@@ -48,6 +48,14 @@ const StrategyLiveChart = ({
 
 StrategyLiveChart.propTypes = {
   markets: PropTypes.objectOf(PropTypes.object).isRequired,
+  symbol: PropTypes.objectOf(
+    PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.arrayOf(PropTypes.string),
+      PropTypes.bool,
+      PropTypes.number,
+    ]),
+  ).isRequired,
   timeframe: PropTypes.oneOf(timeFrames).isRequired,
   indicators: PropTypes.arrayOf(PropTypes.object),
   results: PropTypes.objectOf(PropTypes.oneOfType([
