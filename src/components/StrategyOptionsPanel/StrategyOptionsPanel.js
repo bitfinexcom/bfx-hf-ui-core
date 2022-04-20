@@ -15,7 +15,7 @@ import MarketSelect from '../MarketSelect'
 import Button from '../../ui/Button'
 import { makeShorterLongName } from '../../util/ui'
 
-import './style.scss'
+import './style.css'
 
 const MAX_STRATEGY_LABEL_LENGTH = 25
 const MAX_DATE = new Date()

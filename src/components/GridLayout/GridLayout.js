@@ -33,7 +33,7 @@ import tradingTerminalLayout from './layouts/trading'
 import marketDataLayout from './layouts/marketData'
 import { marketData, strategyEditor, tradingTerminal } from '../../constants/routes'
 
-import './style.scss'
+import './style.css'
 
 const ReactGridLayout = WidthProvider(RGL)
 
@@ -124,26 +124,24 @@ const GridLayout = ({
   }
 
   return (
-    <div className='hfui-gridlayoutpage__wrapper'>
-      <ReactGridLayout
-        draggableHandle='.icon-move'
-        cols={GRID_COLUMNS}
-        breakpoints={GRID_BREAKPOINTS}
-        margin={GRID_CELL_SPACINGS}
-        containerPadding={GRID_CONTAINER_SPACINGS}
-        rowHeight={GRID_ROW_HEIGHT}
-        layouts={nextLayouts}
-        onBreakpointChange={setBreakpoint}
-        onLayoutChange={onLayoutChange}
-        measureBeforeMount={false}
-      >
-        {_map(currentLayout, def => (
-          <div key={def.i}>
-            {renderLayoutElement(layoutID, def, componentProps, onRemoveComponent)}
-          </div>
-        ))}
-      </ReactGridLayout>
-    </div>
+    <ReactGridLayout
+      draggableHandle='.icon-move'
+      cols={GRID_COLUMNS}
+      breakpoints={GRID_BREAKPOINTS}
+      margin={GRID_CELL_SPACINGS}
+      containerPadding={GRID_CONTAINER_SPACINGS}
+      rowHeight={GRID_ROW_HEIGHT}
+      layouts={nextLayouts}
+      onBreakpointChange={setBreakpoint}
+      onLayoutChange={onLayoutChange}
+      measureBeforeMount={false}
+    >
+      {_map(currentLayout, def => (
+        <div key={def.i}>
+          {renderLayoutElement(layoutID, def, componentProps, onRemoveComponent)}
+        </div>
+      ))}
+    </ReactGridLayout>
   )
 }
 

@@ -4,7 +4,7 @@ import { Button } from '@ufx-ui/core'
 import _map from 'lodash/map'
 import Classname from 'clsx'
 
-import './style.scss'
+import './style.css'
 
 const Tabs = ({ tabs, onTabClick, activeTab }) => {
   return (

@@ -8,7 +8,7 @@ import Panel from '../../ui/Panel'
 import { getSortedByTimeStrategies } from '../../redux/selectors/ws'
 import ActiveStrategiesList from './ActiveStrategiesList'
 
-import './style.scss'
+import './style.css'
 
 const StrategiesListTable = ({ onLoadStrategy }) => {
   const strategies = useSelector(getSortedByTimeStrategies)
