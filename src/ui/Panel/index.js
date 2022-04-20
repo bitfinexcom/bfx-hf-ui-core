@@ -138,9 +138,27 @@ const Panel = ({
       })
   }
 
+  const exitPanelFullscreen = () => {
+    if (panelRef.current === null) return
+
+    if (document.fullscreenElement && document[getBrowserFullscreenProp()] !== null) {
+      onEnterFullscreen()
+      document
+        .exitFullscreen()
+        .then(() => {
+          onExitFullscreen()
+        })
+        .catch((e) => {
+          console.error(`[ERROR][exitPanelFullscreen]: ${e}`)
+        })
+    }
+  }
+
   useEffect(() => {
     if (fullscreen) {
       setPanelFullscreen()
+    } else {
+      exitPanelFullscreen()
     }
   }, [fullscreen, onExitFullscreen, onEnterFullscreen])
 

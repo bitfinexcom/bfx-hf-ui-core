@@ -1,4 +1,4 @@
-import React, { memo, useEffect, useRef } from 'react'
+import React, { memo } from 'react'
 import { useSelector } from 'react-redux'
 import _find from 'lodash/find'
 import PropTypes from 'prop-types'
@@ -8,6 +8,8 @@ import Panel from '../../ui/Panel'
 import Chart from '../Chart'
 import { prepareTVIndicators } from './StrategyLiveChart.helpers'
 import timeFrames, { TIMEFRAME_INTERVAL_MAPPING } from '../../util/time_frames'
+
+import './style.css'
 
 const StrategyLiveChart = ({
   results, indicators, markets, timeframe, symbol, fullscreenChart, exitFullscreenChart,
@@ -27,19 +29,17 @@ const StrategyLiveChart = ({
     <Panel
       removeable={false}
       moveable={false}
-      hideIcons
+      hideIcons={!fullscreenChart}
       dark
       darkHeader
       extraIcons={[
-        fullscreenChart && (
-          <span
-            key='exit-fullscreen'
-            type='button'
-            className='icon-move toggle-fullscreen'
-            onClick={exitFullscreenChart}
-            title='Exit fullscreen'
-          />
-        ),
+        <span
+          key='exit-fullscreen'
+          type='button'
+          className='icon-move toggle-fullscreen'
+          onClick={exitFullscreenChart}
+          title='Exit fullscreen'
+        />,
       ]}
       fullscreen={fullscreenChart}
       onExitFullscreen={exitFullscreenChart}
