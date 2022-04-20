@@ -2,6 +2,7 @@ import React, { memo } from 'react'
 import { useSelector } from 'react-redux'
 import _find from 'lodash/find'
 import PropTypes from 'prop-types'
+import { useTranslation } from 'react-i18next'
 
 import { getThemeSetting } from '../../redux/selectors/ui'
 import Panel from '../../ui/Panel'
@@ -14,6 +15,7 @@ import './style.css'
 const StrategyLiveChart = ({
   results, indicators, markets, timeframe, symbol, fullscreenChart, exitFullscreenChart,
 }) => {
+  const { t } = useTranslation()
   const { trades = [], backtestOptions: { activeMarket } = {} } = results
   const settingsTheme = useSelector(getThemeSetting)
   const chartIndicators = prepareTVIndicators(indicators)
@@ -38,7 +40,7 @@ const StrategyLiveChart = ({
           type='button'
           className='icon-move toggle-fullscreen'
           onClick={exitFullscreenChart}
-          title='Exit fullscreen'
+          title={t('strategyEditor.exitFullscreenChartBtn')}
         />,
       ]}
       fullscreen={fullscreenChart}
