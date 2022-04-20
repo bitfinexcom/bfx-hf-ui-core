@@ -653,6 +653,7 @@
     "selectMarketDescription": "Select market",
     "selectCandleDurationDescription": "Select candle duration",
     "fullscreenChartBtn": "Fullscreen Chart",
+    "exitFullscreenChartBtn": "Exit fullscreen",
     "perfomanceMetrics": "Perfomance metrics"
   },
   "ui": {
