@@ -1,7 +1,6 @@
 @import "../../variables.scss";
 
 .hfui-orderform__wrapper {
-
   input {
     background: var(--lighter-background-color);
   }
@@ -361,22 +360,6 @@
     }
   }
 
-  .hfui-orderform__input-label {
-    color: var(--shade-4);
-    font-size: 12px;
-    font-weight: 600;
-    line-height: 16px;
-    margin-top: 2px;
-    display: flex;
-    flex-shrink: 0;
-    justify-content: space-between;
-  }
-
-  .hfui-orderform__input-error-label {
-    font-size: 13px;
-    margin-bottom: 8px;
-  }
-
   &.text p:first-child {
     color: var(--shade-7);
     font-size: 13px;
@@ -412,6 +395,22 @@
   .hfui-dropdown__wrapper {
     width: 100%;
   }
+}
+
+.hfui-orderform__input-label {
+  color: var(--shade-4);
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 16px;
+  margin-top: 2px;
+  display: flex;
+  flex-shrink: 0;
+  justify-content: space-between;
+}
+
+.hfui-orderform__input-error-label {
+  font-size: 13px;
+  margin-bottom: 8px;
 }
 
 .hfui-orderform__overlay-wrapper {

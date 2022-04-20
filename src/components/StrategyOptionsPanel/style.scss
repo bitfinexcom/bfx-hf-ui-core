@@ -1,0 +1,39 @@
+.hfui-strategy-options {
+  display: flex;
+  justify-content: space-between;
+
+  .item {
+    margin-right: 10px;
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+
+  &__strategy-name {
+    padding-top: 7px;
+    font-size: 20px;
+    font-weight: 700;
+    cursor: pointer;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  &__input {
+    display: flex;
+    flex-direction: column;
+    max-width: 185px;
+    margin-bottom: 0;
+  }
+
+  &__amount-input {
+    @extend .hfui-strategy-options__input;
+    padding: 8 16px;
+  }
+
+  &__fullscreen-btn {
+    height: 30px;
+    align-self: center;
+  }
+}

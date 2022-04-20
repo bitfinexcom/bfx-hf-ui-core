@@ -22,23 +22,23 @@ const StrategyEditorPanel = ({
 
   return (
     <Panel
-      label={(
-        <>
-          {_size(strategyDisplayName) > MAX_STRATEGY_LABEL_LENGTH ? (
-            <Tooltip
-              className='__react-tooltip __react_component_tooltip wide'
-              content={strategyDisplayName}
-            >
-              {makeShorterLongName(
-                strategyDisplayName,
-                MAX_STRATEGY_LABEL_LENGTH,
-              )}
-            </Tooltip>
-          ) : (
-            strategyDisplayName
-          )}
-        </>
-      )}
+      // label={(
+      //   <>
+      //     {_size(strategyDisplayName) > MAX_STRATEGY_LABEL_LENGTH ? (
+      //       <Tooltip
+      //         className='__react-tooltip __react_component_tooltip wide'
+      //         content={strategyDisplayName}
+      //       >
+      //         {makeShorterLongName(
+      //           strategyDisplayName,
+      //           MAX_STRATEGY_LABEL_LENGTH,
+      //         )}
+      //       </Tooltip>
+      //     ) : (
+      //       strategyDisplayName
+      //     )}
+      //   </>
+      // )}
       className='hfui-strategyeditor__panel'
       dark={dark}
       darkHeader={dark}

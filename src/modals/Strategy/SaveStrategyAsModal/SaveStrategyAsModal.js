@@ -1,4 +1,4 @@
-import React, { useState, memo } from 'react'
+import React, { useState, memo, useEffect } from 'react'
 import _isEmpty from 'lodash/isEmpty'
 import _size from 'lodash/size'
 import PropTypes from 'prop-types'
@@ -12,7 +12,7 @@ import Modal from '../../../ui/Modal'
 const SaveStrategyAsModal = ({
   onSubmit, onClose, isOpen, strategy,
 }) => {
-  const [label, setLabel] = useState('')
+  const [label, setLabel] = useState()
   const [error, setError] = useState('')
 
   const { t } = useTranslation()
@@ -33,6 +33,12 @@ const SaveStrategyAsModal = ({
     onSubmit({ ...strategy, label })
     onClose()
   }
+
+  useEffect(() => {
+    if (_isEmpty(label) && strategy?.label) {
+      setLabel(strategy.label)
+    }
+  }, [strategy, label])
 
   return (
     <Modal

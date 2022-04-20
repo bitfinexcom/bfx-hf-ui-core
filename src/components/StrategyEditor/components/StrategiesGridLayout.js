@@ -4,14 +4,17 @@ import _map from 'lodash/map'
 import { AutoSizer } from 'react-virtualized'
 import ReactGridLayout from 'react-grid-layout'
 
+const GRID_LAYOUT_MIN_HEIGHT = 530
+
 const StrategiesGridLayout = ({ renderGridComponents, layoutConfig }) => {
   return (
     <AutoSizer>
       {({ width, height }) => {
+        const _height = height > GRID_LAYOUT_MIN_HEIGHT ? height : GRID_LAYOUT_MIN_HEIGHT
         return (
           <ReactGridLayout
             cols={100}
-            rowHeight={height / 11}
+            rowHeight={_height / 11}
             width={width}
             layout={layoutConfig}
             margin={[10, 10]}

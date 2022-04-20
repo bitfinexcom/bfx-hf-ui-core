@@ -594,7 +594,6 @@
     "recent": "Recent",
     "strategyTab": "Strategy",
     "viewInIDETab": "View in IDE",
-    "optionsTab": "Options",
     "helpTab": "Help",
     "activeStrategies": "Active strategies ({{amount}})",
     "pastStrategies": "Past strategies ({{amount}})",
@@ -620,7 +619,9 @@
     "endDate": "End Date",
     "useCandlesCheckbox": "Use candles",
     "useTradesCheckbox": "Use trades",
+    "useTradesCheckboxDescription": "Match against real trade history. Much slower, More Accurate",
     "useMarginCheckbox": "Use margin trading",
+    "useMarginCheckboxDescription": "PLUG",
     "checkboxWarningMessage": "At least one checkbox should be selected",
     "totalPL": "Total P/L",
     "avgPL": "Avg PL",
@@ -648,7 +649,11 @@
     "noActiveStrategies": "There are no active strategies",
     "saveWithDifferentName": "Save with different name",
     "templatesTab": "Templates",
-    "savedStrategiesTab": "From saved"
+    "savedStrategiesTab": "From saved",
+    "selectMarketDescription": "Select market",
+    "selectCandleDurationDescription": "Select candle duration",
+    "fullscreenChartBtn": "Fullscreen Chart",
+    "perfomanceMetrics": "Perfomance metrics"
   },
   "ui": {
     "ok": "Okay",

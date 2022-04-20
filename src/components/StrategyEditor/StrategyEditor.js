@@ -21,7 +21,6 @@ import StrategiesMenuSideBarParams from './components/StrategiesMenuSideBarParam
 import HelpTab from './tabs/HelpTab'
 import StrategyPaused from './components/StrategyPaused'
 import StrategyRunned from './components/StrategyRunned'
-import OptionsTab from './tabs/OptionsTab'
 import CreateNewStrategyFromModalOpen from '../../modals/Strategy/CreateNewStrategyFromModal'
 import SaveStrategyAsModal from '../../modals/Strategy/SaveStrategyAsModal/SaveStrategyAsModal'
 
@@ -221,21 +220,9 @@ const StrategyEditor = (props) => {
             )}
             sbicon={<Icon name='file-code-o' />}
             timeframe={timeframe}
-            {...props}
-          />
-          <IDETab
-            htmlKey='view_in_ide'
-            sbtitle={t('strategyEditor.viewInIDETab')}
-            sbicon={<Icon name='edit' />}
-            {...props}
-          />
-          <OptionsTab
-            htmlKey='options'
-            sbtitle={t('strategyEditor.optionsTab')}
-            sbicon={<Icon name='cog' />}
+            onOpenSaveStrategyAsModal={() => setIsSaveStrategyModalOpen(true)}
             symbol={symbol}
             setSymbol={setSymbol}
-            timeframe={timeframe}
             setTimeframe={setTimeframe}
             trades={trades}
             setTrades={setTrades}
@@ -244,6 +231,12 @@ const StrategyEditor = (props) => {
             margin={margin}
             setMargin={setMargin}
             isPaperTrading={isPaperTrading}
+            {...props}
+          />
+          <IDETab
+            htmlKey='view_in_ide'
+            sbtitle={t('strategyEditor.viewInIDETab')}
+            sbicon={<Icon name='edit' />}
             {...props}
           />
           <HelpTab
