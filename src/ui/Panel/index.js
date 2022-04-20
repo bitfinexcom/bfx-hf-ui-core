@@ -1,4 +1,6 @@
-import React, { useState, useEffect, useCallback } from 'react'
+import React, {
+  useState, useEffect, useCallback, useLayoutEffect,
+} from 'react'
 import ClassNames from 'clsx'
 import { Icon } from 'react-fa'
 import PropTypes from 'prop-types'
@@ -9,6 +11,7 @@ import _isEmpty from 'lodash/isEmpty'
 
 import Scrollbars from '../Scrollbars'
 import useSize from '../../hooks/useSize'
+import { getBrowserFullscreenProp } from '../../util/fullscreen'
 
 import './style.css'
 
@@ -75,6 +78,9 @@ const Panel = ({
   onSideTabChange,
   preSidebarComponents,
   hasShadow,
+  fullscreen,
+  onEnterFullscreen,
+  onExitFullscreen,
 }) => {
   const tabs = _filter(
     React.Children.toArray(children),
@@ -116,6 +122,38 @@ const Panel = ({
   useEffect(() => {
     _setSelectedTab(initTab)
   }, [_setSelectedTab, initTab])
+
+  const setPanelFullscreen = () => {
+    if (panelRef.current === null) return
+
+    panelRef.current
+      .requestFullscreen()
+      .then(() => {
+        if (document[getBrowserFullscreenProp()] !== null) {
+          onEnterFullscreen()
+        }
+      })
+      .catch((e) => {
+        console.error(`[ERROR][setPanelFullscreen]: ${e}`)
+      })
+  }
+
+  useEffect(() => {
+    if (fullscreen) {
+      setPanelFullscreen()
+    }
+  }, [fullscreen, onExitFullscreen, onEnterFullscreen])
+
+  useLayoutEffect(() => {
+    document.onfullscreenchange = () => {
+      if (document[getBrowserFullscreenProp()] === null) {
+        onExitFullscreen()
+      }
+    }
+
+    // eslint-disable-next-line no-return-assign
+    return () => (document.onfullscreenchange = undefined)
+  }, [onExitFullscreen])
 
   return (
     <div
@@ -294,6 +332,9 @@ Panel.propTypes = {
   onSideTabChange: PropTypes.func,
   dropdown: PropTypes.node,
   hasShadow: PropTypes.bool,
+  fullscreen: PropTypes.bool,
+  onEnterFullscreen: PropTypes.func,
+  onExitFullscreen: PropTypes.func,
 }
 
 Panel.defaultProps = {
@@ -323,6 +364,9 @@ Panel.defaultProps = {
   onSideTabChange: () => {},
   dropdown: null,
   hasShadow: false,
+  fullscreen: false,
+  onEnterFullscreen: () => {},
+  onExitFullscreen: () => {},
 }
 
 export default Panel
