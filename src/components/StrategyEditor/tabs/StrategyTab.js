@@ -30,7 +30,6 @@ const StrategyTab = (props) => {
 
   const renderGridComponents = useCallback(
     (i) => {
-      console.log('grid callback')
       switch (i) {
         case COMPONENTS_KEYS.OPTIONS:
           return (
