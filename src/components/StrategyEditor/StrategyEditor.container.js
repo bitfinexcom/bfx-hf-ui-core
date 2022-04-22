@@ -1,10 +1,12 @@
 import { connect } from 'react-redux'
+import _omitBy from 'lodash/omitBy'
+import _isEmpty from 'lodash/isEmpty'
+
 import WSActions from '../../redux/actions/ws'
 import UIActions from '../../redux/actions/ui'
 import GAActions from '../../redux/actions/google_analytics'
 import { getAuthToken, getBacktestResults, getExecutionOptions } from '../../redux/selectors/ws'
 import { getStrategyId, getThemeSetting, getIsPaperTrading } from '../../redux/selectors/ui'
-
 import StrategyEditor from './StrategyEditor'
 import { getMarkets } from '../../redux/selectors/meta'
 
@@ -33,15 +35,16 @@ const mapDispatchToProps = dispatch => ({
     dispatch(WSActions.resetBacktestData())
   },
   dsExecuteLiveStrategy: (authToken, name, symbol, tf, includeTrades, strategy, seedCandleCount, margin, isPaperTrading) => {
+    const processedStrategy = _omitBy(strategy, _isEmpty)
     const executionOptions = {
-      authToken, name, symbol, tf, includeTrades, strategy, seedCandleCount, margin,
+      authToken, name, symbol, tf, includeTrades, strategy: processedStrategy, seedCandleCount, margin,
     }
 
     if (isPaperTrading) {
       dispatch(WSActions.setExecutionOptions({
         includeTrades, seedCandleCount, symbol, tf, margin,
       }))
-      dispatch(WSActions.send(['strategy.execute_start', authToken, name, symbol, tf, includeTrades, strategy, seedCandleCount, margin]))
+      dispatch(WSActions.send(['strategy.execute_start', authToken, name, symbol, tf, includeTrades, processedStrategy, seedCandleCount, margin]))
       dispatch(WSActions.setExecutionLoading(true))
     } else {
       dispatch(UIActions.changeLaunchStrategyModalState(true, executionOptions))
