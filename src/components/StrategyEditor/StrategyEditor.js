@@ -187,7 +187,6 @@ const StrategyEditor = (props) => {
         <StrategyEditorPanel
           moveable={moveable}
           removeable={removeable}
-          execRunning={execRunning}
           onRemoveStrategy={onRemoveStrategy}
           onSideTabChange={onSideTabChange}
           preSidebarComponents={preSidebar}
