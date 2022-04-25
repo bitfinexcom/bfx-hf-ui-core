@@ -225,6 +225,11 @@ export const setStrategyTab = tab => ({
   payload: { tab },
 })
 
+export const setIsLoadingOrderHistData = flag => ({
+  type: types.SET_IS_LOADING_ORDER_HIST_DATA,
+  payload: flag,
+})
+
 export default {
   saveLayout,
   storeUnsavedLayout,
@@ -262,4 +267,5 @@ export default {
   changeConfirmDMSModalState,
   changeEditOrderModalState,
   changeClosePositionModalState,
+  setIsLoadingOrderHistData,
 }

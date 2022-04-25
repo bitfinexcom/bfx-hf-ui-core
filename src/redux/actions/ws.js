@@ -162,6 +162,16 @@ export default {
     payload: { order },
   }),
 
+  recvOrderHist: ({ orderHist }) => ({
+    type: t.DATA_ORDER_HIST,
+    payload: { orderHist },
+  }),
+
+  setOrderHist: (orderHist) => ({
+    type: t.SET_ORDER_HIST,
+    payload: { orderHist },
+  }),
+
   recvDataAlgoOrder: ({ ao }) => ({
     type: t.DATA_ALGO_ORDER,
     payload: { ao },
