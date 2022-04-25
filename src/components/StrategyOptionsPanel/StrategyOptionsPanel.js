@@ -155,19 +155,23 @@ const StrategyOptionsPanel = ({
         </div>
       </div>
       {isBacktest ? (
-        <Button
-          className='hfui-strategy-options__fullscreen-btn item'
-          label={t('ui.startBtn')}
-          onClick={onBacktestStart}
-          green
-        />
+        <div className='hfui-strategy-options__amount-input item'>
+          <Button
+            className='hfui-strategy-options__fullscreen-btn'
+            label={t('ui.startBtn')}
+            onClick={onBacktestStart}
+            green
+          />
+        </div>
       ) : (
-        <Button
-          className='hfui-strategy-options__fullscreen-btn item'
-          label={t('strategyEditor.fullscreenChartBtn')}
-          onClick={setFullScreenChart}
-          green
-        />
+        <div className='hfui-strategy-options__amount-input item'>
+          <Button
+            className='hfui-strategy-options__fullscreen-btn'
+            label={t('strategyEditor.fullscreenChartBtn')}
+            onClick={setFullScreenChart}
+            green
+          />
+        </div>
       )}
     </div>
   )
