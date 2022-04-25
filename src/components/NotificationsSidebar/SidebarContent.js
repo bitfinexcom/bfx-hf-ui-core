@@ -8,10 +8,16 @@ import Panel from '../../ui/Panel'
 import Button from '../../ui/Button'
 import Scrollbars from '../../ui/Scrollbars'
 
-function SidebarContent({
-  closeNotificationPanel, notifications, notificationsVisible, removeNotifications,
-  onClearNotifications, t,
-}) {
+function SidebarContent(props) {
+  const {
+    closeNotificationPanel,
+    notifications,
+    notificationsVisible,
+    removeNotifications,
+    onClearNotifications,
+    t,
+  } = props
+
   const onClose = useCallback(({ cid, group }) => {
     let cids = []
 
@@ -66,9 +72,7 @@ function SidebarContent({
 }
 
 SidebarContent.propTypes = {
-  notifications: PropTypes.arrayOf(PropTypes.objectOf([
-    PropTypes.string, PropTypes.number,
-  ])),
+  notifications: PropTypes.arrayOf(PropTypes.object).isRequired,
   removeNotifications: PropTypes.func.isRequired,
   closeNotificationPanel: PropTypes.func.isRequired,
   onClearNotifications: PropTypes.func.isRequired,
@@ -78,7 +82,6 @@ SidebarContent.propTypes = {
 
 SidebarContent.defaultProps = {
   notificationsVisible: false,
-  notifications: [],
 }
 
 export default memo(SidebarContent)

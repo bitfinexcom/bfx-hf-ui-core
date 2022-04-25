@@ -71,4 +71,7 @@ export default {
   ALIAS_DATA_SERVER: 'bfx-hf-data-server',
 
   UPDATING_API_KEY: 'WS_UPDATING_API_KEY',
+
+  DATA_ORDER_HIST: 'WS_DATA_ORDER_HIST',
+  SET_ORDER_HIST: 'WS_SET_ORDER_HIST',
 }

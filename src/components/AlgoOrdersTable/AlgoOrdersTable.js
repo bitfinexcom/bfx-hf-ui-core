@@ -31,12 +31,8 @@ const AlgoOrdersTable = ({
 }
 
 AlgoOrdersTable.propTypes = {
-  algoOrders: PropTypes.objectOf(PropTypes.objectOf([
-    PropTypes.string, PropTypes.number, PropTypes.object,
-  ])),
-  filteredAlgoOrders: PropTypes.objectOf(PropTypes.objectOf([
-    PropTypes.string, PropTypes.number, PropTypes.object,
-  ])),
+  algoOrders: PropTypes.objectOf(PropTypes.object),
+  filteredAlgoOrders: PropTypes.objectOf(PropTypes.object),
   cancelOrder: PropTypes.func.isRequired,
   gaCancelOrder: PropTypes.func.isRequired,
   authToken: PropTypes.string.isRequired,

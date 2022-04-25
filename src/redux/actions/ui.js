@@ -235,6 +235,11 @@ export const setSettingsTab = (tab) => ({
   payload: { tab },
 })
 
+export const setIsLoadingOrderHistData = flag => ({
+  type: types.SET_IS_LOADING_ORDER_HIST_DATA,
+  payload: flag,
+})
+
 export default {
   saveLayout,
   storeUnsavedLayout,
@@ -274,4 +279,5 @@ export default {
   changeClosePositionModalState,
   changeAppSettingsModalState,
   setSettingsTab,
+  setIsLoadingOrderHistData,
 }

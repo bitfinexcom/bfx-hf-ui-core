@@ -37,6 +37,8 @@ const Backtester = ({
   const [execError, setExecError] = useState(null)
   const [executionType, setExecutionType] = useState(backtestMethods[0])
   const [formState, setFormState] = useState({})
+  const [fullScreenChart, setFullScreenChart] = useState(false)
+  const { t } = useTranslation()
 
   const backtestStrategy = (options) => {
     const {
@@ -80,8 +82,6 @@ const Backtester = ({
     },
   }
 
-  const { t } = useTranslation()
-
   if (!strategyContent || _isEmpty(_omitBy(strategyContent, _isNil))) {
     return (
       <div className='hfui-backtester__wrapper'>
@@ -103,7 +103,7 @@ const Backtester = ({
     return (
       <div className='hfui-backtester__wrapper'>
         <executionType.form {...opts} />
-        {executionType.renderReport({ ...opts }, backtestResults, backtestData, backtestOptions, t, settingsTheme)}
+        {executionType.renderReport({ ...opts }, backtestResults, backtestData, backtestOptions, t, settingsTheme, fullScreenChart, setFullScreenChart)}
       </div>
     )
   }
@@ -117,7 +117,7 @@ const Backtester = ({
 }
 
 Backtester.propTypes = {
-  indicators: PropTypes.arrayOf(PropTypes.array), // eslint-disable-line
+  indicators: PropTypes.arrayOf(PropTypes.array),
   backtest: PropTypes.shape({
     loading: PropTypes.bool.isRequired,
     executing: PropTypes.bool.isRequired,
@@ -132,9 +132,9 @@ Backtester.propTypes = {
       PropTypes.oneOf([null]).isRequired,
     ]),
   ),
-  markets: PropTypes.objectOf(PropTypes.object), // eslint-disable-line
-  backtestResults: PropTypes.objectOf(PropTypes.any), // eslint-disable-line
-  backtestOptions: PropTypes.objectOf(PropTypes.any), // eslint-disable-line
+  markets: PropTypes.objectOf(PropTypes.object),
+  backtestResults: PropTypes.objectOf(PropTypes.any),
+  backtestOptions: PropTypes.objectOf(PropTypes.any),
   authToken: PropTypes.string.isRequired,
   dsExecuteBacktest: PropTypes.func.isRequired,
   setBacktestOptions: PropTypes.func.isRequired,

@@ -19,6 +19,7 @@ const orderAdapter = (data = [], getMarketPair = () => {}) => ({
   cid: data[2],
   symbol: data[3],
   created: data[4],
+  mtsUpdate: data[4],
   amount: data[5],
   originalAmount: data[6],
   type: data[7],

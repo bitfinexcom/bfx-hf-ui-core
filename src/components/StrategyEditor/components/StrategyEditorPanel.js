@@ -136,7 +136,7 @@ StrategyEditorPanel.propTypes = {
   onExportStrategy: PropTypes.func.isRequired,
   onImportStrategy: PropTypes.func.isRequired,
   children: PropTypes.node.isRequired,
-  strategies: PropTypes.arrayOf(PropTypes.object).isRequired, // eslint-disable-line
+  strategies: PropTypes.arrayOf(PropTypes.object).isRequired,
 }
 
 StrategyEditorPanel.defaultProps = {

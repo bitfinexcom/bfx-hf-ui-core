@@ -69,9 +69,11 @@ body.hosted {
 
       &:hover,
       &.active {
-        // border-bottom: 2px solid var(--primary-9);
-        background-color: var(--primary-8);
-        color: var(--shade-9);
+        border-bottom: 2px solid var(--primary-9);
+      }
+
+      &.active {
+        color: var(--primary-8);
       }
 
       &.hover {

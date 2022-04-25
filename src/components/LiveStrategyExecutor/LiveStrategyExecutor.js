@@ -164,7 +164,7 @@ const LiveStrategyExecutor = ({
 }
 
 LiveStrategyExecutor.propTypes = {
-  indicators: PropTypes.arrayOf(PropTypes.array), // eslint-disable-line
+  indicators: PropTypes.arrayOf(PropTypes.array),
   dsExecuteLiveStrategy: PropTypes.func.isRequired,
   dsStopLiveStrategy: PropTypes.func.isRequired,
   authToken: PropTypes.string.isRequired,
@@ -179,7 +179,7 @@ LiveStrategyExecutor.propTypes = {
       PropTypes.oneOf([null]).isRequired,
     ]),
   ),
-  markets: PropTypes.objectOf(PropTypes.object), // eslint-disable-line
+  markets: PropTypes.objectOf(PropTypes.object),
   isPaperTrading: PropTypes.bool.isRequired,
   theme: PropTypes.oneOf([THEMES.LIGHT, THEMES.DARK]),
   results: PropTypes.objectOf(PropTypes.oneOfType([
