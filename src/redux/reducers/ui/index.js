@@ -33,6 +33,7 @@ import {
 import { isElectronApp } from '../../config'
 
 import { storeLastUsedLayoutID } from '../../../util/layout'
+import { DEFAULT_TAB } from '../../../modals/AppSettingsModal/AppSettingsModal.constants'
 
 const debug = Debug('hfui:rx:r:ui')
 const LAYOUTS_KEY = 'HF_UI_LAYOUTS'
@@ -66,22 +67,26 @@ function getInitialState() {
     firstLogin: false,
     isPaperTrading: false,
     TRADING_PAGE_IS_GUIDE_ACTIVE: true,
-    isTradingModeModalVisible: false,
-    isRefillBalanceModalVisible: false,
-    isOldFormatModalVisible: false,
-    isAOPauseModalVisible: false,
-    isCcyInfoModalVisible: false,
-    isConfirmDMSModalVisible: false,
-    isEditOrderModalVisible: false,
+    modals: {
+      isRefillBalanceModalVisible: false,
+      isOldFormatModalVisible: false,
+      isAOPauseModalVisible: false,
+      isCcyInfoModalVisible: false,
+      isConfirmDMSModalVisible: false,
+      isEditOrderModalVisible: false,
+      isTradingModeModalVisible: false,
+      isClosePositionModalVisible: false,
+      isAppSettingsModalVisible: false,
+    },
     orderToEdit: {},
     isBadInternetConnection: false,
-    isClosePositionModalVisible: false,
     closePositionModalData: {},
     isOrderExecuting: false,
     content: {},
     unsavedLayout: null,
     layoutID: null,
-    tab: null,
+    strategiesActiveTab: null,
+    settingsActiveTab: DEFAULT_TAB,
     tickersVolumeUnit: null,
   }
 
@@ -132,7 +137,7 @@ function getInitialState() {
     // saving reformatted layouts into the local storage
     if ((!isNewFormat && !_isEmpty(storedLayouts)) || shownOldFormatModal) {
       shownOldFormatModal = true
-      defaultState.isOldFormatModalVisible = true
+      defaultState.modals.isOldFormatModalVisible = true
       localStorage.setItem(LAYOUTS_KEY, JSON.stringify(nextFormatLayouts))
     }
 
@@ -400,7 +405,10 @@ function reducer(state = getInitialState(), action = {}) {
       const { isVisible } = payload
       return {
         ...state,
-        isTradingModeModalVisible: isVisible,
+        modals: {
+          ...state.modals,
+          isTradingModeModalVisible: isVisible,
+        },
       }
     }
     case types.CHANGE_BAD_INTERNET_STATE: {
@@ -416,7 +424,10 @@ function reducer(state = getInitialState(), action = {}) {
       return {
         ...state,
         closePositionModalData: rowData,
-        isClosePositionModalVisible: isVisible,
+        modals: {
+          ...state.modals,
+          isClosePositionModalVisible: isVisible,
+        },
       }
     }
     case types.SET_IS_ORDER_EXECUTING: {
@@ -437,7 +448,10 @@ function reducer(state = getInitialState(), action = {}) {
 
       return {
         ...state,
-        isRefillBalanceModalVisible: isVisible,
+        modals: {
+          ...state.modals,
+          isRefillBalanceModalVisible: isVisible,
+        },
       }
     }
     case types.CHANGE_OLD_FORMAT_MODAL_STATE: {
@@ -445,7 +459,10 @@ function reducer(state = getInitialState(), action = {}) {
 
       return {
         ...state,
-        isOldFormatModalVisible: isVisible,
+        modals: {
+          ...state.modals,
+          isOldFormatModalVisible: isVisible,
+        },
       }
     }
     case types.CHANGE_CONFIRM_DMS_MODAL_VISIBLE: {
@@ -453,7 +470,10 @@ function reducer(state = getInitialState(), action = {}) {
 
       return {
         ...state,
-        isConfirmDMSModalVisible: isVisible,
+        modals: {
+          ...state.modals,
+          isConfirmDMSModalVisible: isVisible,
+        },
       }
     }
     case types.CHANGE_EDIT_ORDER_MODAL_STATE: {
@@ -462,7 +482,10 @@ function reducer(state = getInitialState(), action = {}) {
       return {
         ...state,
         orderToEdit: order,
-        isEditOrderModalVisible: isVisible,
+        modals: {
+          ...state.modals,
+          isEditOrderModalVisible: isVisible,
+        },
       }
     }
     case types.CHANGE_AO_PAUSE_MODAL_STATE: {
@@ -470,7 +493,21 @@ function reducer(state = getInitialState(), action = {}) {
 
       return {
         ...state,
-        isAOPauseModalVisible: isVisible,
+        modals: {
+          ...state.modals,
+          isAOPauseModalVisible: isVisible,
+        },
+      }
+    }
+    case types.CHANGE_APP_SETTINGS_MODAL_STATE: {
+      const { isVisible } = payload
+
+      return {
+        ...state,
+        modals: {
+          ...state.modals,
+          isAppSettingsModalVisible: isVisible,
+        },
       }
     }
     case types.ADD_COMPONENT: {
@@ -584,17 +621,36 @@ function reducer(state = getInitialState(), action = {}) {
 
       return {
         ...state,
-        isCcyInfoModalVisible: isVisible,
+        modals: {
+          ...state.modals,
+          isCcyInfoModalVisible: isVisible,
+        },
       }
     }
-    case types.SET_STRATEGY_TAB: {
+    case types.SET_STRATEGIES_TAB: {
       const { tab } = payload
 
       return {
         ...state,
-        tab,
+        strategiesActiveTab: tab,
       }
     }
+    case types.SET_SETTINGS_TAB: {
+      const { tab } = payload
+
+      return {
+        ...state,
+        settingsActiveTab: tab,
+      }
+    }
+
+    case types.SET_FEATURE_FLAGS: {
+      return {
+        ...state,
+        featureFlags: payload,
+      }
+    }
+
     default: {
       return state
     }

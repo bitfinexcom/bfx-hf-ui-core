@@ -229,6 +229,12 @@ export default (alias, store) => (e = {}) => {
         break
       }
 
+      case 'data.feature_flags': {
+        const [, featureFlags] = payload
+        store.dispatch(WSActions.setFeatureFlags(featureFlags))
+        break
+      }
+
       /* settings format
         [{
             key: 'te_limit_order_*',

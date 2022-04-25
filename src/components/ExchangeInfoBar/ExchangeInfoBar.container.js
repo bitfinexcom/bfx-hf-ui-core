@@ -7,7 +7,7 @@ import UIActions from '../../redux/actions/ui'
 import {
   getActiveMarket, getCurrentMode, getTickersVolumeUnit, getShowOnlyFavoritePairsSetting,
 } from '../../redux/selectors/ui'
-import { SETTINGS } from '../../redux/selectors/ui/get_settings'
+import { SETTINGS_KEYS } from '../../redux/selectors/ui/get_settings'
 import {
   getAuthToken, getFavoritePairsObject,
 } from '../../redux/selectors/ws'
@@ -54,7 +54,7 @@ const mapDispatchToProps = (dispatch) => ({
     ]))
   },
   setVolumeUnit: (key) => dispatch(UIActions.changeTickersVolumeUnit(key)),
-  updateShowOnlyFavoritePairs: (showOnlyFavoritePairs) => dispatch(WSActions.saveSettings(SETTINGS.SHOW_ONLY_FAVORITE_PAIRS, showOnlyFavoritePairs)),
+  updateShowOnlyFavoritePairs: (showOnlyFavoritePairs) => dispatch(WSActions.saveSettings(SETTINGS_KEYS.SHOW_ONLY_FAVORITE_PAIRS, showOnlyFavoritePairs)),
   showCcyIconModal: () => dispatch(UIActions.changeCcyInfoModalState(true)),
 })
 

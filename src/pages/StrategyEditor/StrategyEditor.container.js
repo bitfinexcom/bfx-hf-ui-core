@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 import { STRATEGY_PAGE } from '../../redux/constants/ui'
-import { getFirstLogin, getGuideStatusForPage } from '../../redux/selectors/ui'
+import { getFirstLogin, getGuideStatusForPage, getStrategiesActiveTab } from '../../redux/selectors/ui'
 import UIActions from '../../redux/actions/ui'
 
 import StrategyEditor from './StrategyEditor'
@@ -10,7 +10,7 @@ const mapStateToProps = state => ({
   isGuideActive: getGuideStatusForPage(state, STRATEGY_PAGE),
   strategyId: state.ui.id,
   strategyContent: state.ui.content,
-  selectedTab: state.ui.tab,
+  selectedTab: getStrategiesActiveTab(state),
 })
 
 const mapDispatchToProps = dispatch => ({

@@ -5,7 +5,7 @@ import memoizeOne from 'memoize-one'
 import _values from 'lodash/values'
 import _map from 'lodash/map'
 
-import { isElectronApp, showInDevelopmentModules } from '../../redux/config'
+import { isElectronApp } from '../../redux/config'
 import timeFrames from '../../util/time_frames'
 
 import rawOrders from '../../orders'
@@ -15,8 +15,8 @@ const DEV_ONLY_ALGO_ORDERS = [
   AccumulateDistribute,
 ]
 
-const ALL_ALGO_ORDERS = [
-  ...(showInDevelopmentModules ? DEV_ONLY_ALGO_ORDERS : []),
+const getAlgoOrdersForStandalone = (isBeta) => [
+  ...(isBeta ? DEV_ONLY_ALGO_ORDERS : []),
   PingPong,
   Iceberg,
   TWAP,
@@ -25,9 +25,9 @@ const ALL_ALGO_ORDERS = [
 
 const HOSTED_ALGO_ORDERS = [Iceberg, TWAP]
 
-const algoOrders = isElectronApp ? ALL_ALGO_ORDERS : HOSTED_ALGO_ORDERS
+const getAlgoOrders = (isBeta) => (isElectronApp ? getAlgoOrdersForStandalone(isBeta) : HOSTED_ALGO_ORDERS)
 
-export const getAOs = memoizeOne((t) => _map(algoOrders, ao => ao.meta.getUIDef({
+export const getAOs = memoizeOne((t, isBeta) => _map(getAlgoOrders(isBeta), ao => ao.meta.getUIDef({
   timeframes: timeFrames,
   i18n: { t, prefix: 'algoOrderForm.' },
 })))

@@ -40,6 +40,11 @@ export default {
     payload: settings,
   }),
 
+  setFeatureFlags: flags => ({
+    type: ui.SET_FEATURE_FLAGS,
+    payload: flags,
+  }),
+
   saveSettings: (key, value) => ({
     type: ui.SAVE_SETTINGS,
     payload: {
