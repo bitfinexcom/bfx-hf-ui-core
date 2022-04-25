@@ -95,6 +95,10 @@ const StrategyEditor = (props) => {
   const [paramsOpen, setParamsOpen] = useState(false)
   const execRunning = backtestResults.executing || backtestResults.loading || liveExecuting || liveLoading
 
+  const optionsProps = {
+    timeframe, symbol, setSymbol, setTimeframe, trades, setTrades, candleSeed, setCandleSeed, margin, setMargin, startDate, setStartDate, endDate, setEndDate,
+  }
+
   const onCloseModals = () => {
     setOpenExistingStrategyModalOpen(false)
     setCreateNewStrategyModalOpen(false)
@@ -156,6 +160,15 @@ const StrategyEditor = (props) => {
     setStrategyDirty(false)
   }
 
+  const onBacktestStart = () => {
+    // todo: check for errors
+    const startNum = new Date(startDate).getTime()
+    const endNum = new Date(endDate).getTime()
+
+    dsExecuteBacktest(startNum, endNum, symbol?.wsID, timeframe, true, false, strategy)
+    // setBacktestOptions(optionsProps)
+  }
+
   const startExecution = () => {
     onSaveStrategy()
     dsExecuteLiveStrategy(
@@ -186,10 +199,6 @@ const StrategyEditor = (props) => {
   ) : (
     <StrategyPaused />
   )
-
-  const optionsProps = {
-    timeframe, symbol, setSymbol, setTimeframe, trades, setTrades, candleSeed, setCandleSeed, margin, setMargin, startDate, setStartDate, endDate, setEndDate,
-  }
 
   return (
     <>
@@ -244,7 +253,7 @@ const StrategyEditor = (props) => {
               onOpenSaveStrategyAsModal={() => setIsSaveStrategyModalOpen(true)}
               results={backtestResults}
               // todo: add useCandles / useTrades params
-              onBacktestStart={() => dsExecuteBacktest(startDate, endDate, symbol?.wsID, timeframe, true, false, strategy)}
+              onBacktestStart={onBacktestStart}
               isPaperTrading
               isBacktest
               {...optionsProps}

@@ -53,10 +53,12 @@ const mapDispatchToProps = dispatch => ({
     }
   },
   dsExecuteBacktest: (from, to, symbol, tf, candles, trades, strategy) => {
+    const processedStrategy = _omitBy(strategy, _isEmpty)
+
     dispatch(WSActions.purgeBacktestData())
     dispatch(WSActions.send({
       alias: WSTypes.ALIAS_DATA_SERVER,
-      data: ['exec.str', ['bitfinex', from, to, symbol, tf, candles, trades, true, strategy, uuidv4()]],
+      data: ['exec.str', ['bitfinex', from, to, symbol, tf, candles, trades, true, processedStrategy, uuidv4()]],
     }))
     dispatch(WSActions.setBacktestLoading())
   },
