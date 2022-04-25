@@ -43,6 +43,7 @@ const StrategyOptionsPanel = ({
   endDate,
   setStartDate,
   setEndDate,
+  isBacktestLoading,
 }) => {
   const [seedError, setSeedError] = useState(null)
 
@@ -92,7 +93,6 @@ const StrategyOptionsPanel = ({
               value={startDate}
               maxDate={endDate}
             />
-            <p className='hfui-orderform__input-label'>{t('strategyEditor.startDate')}</p>
           </div>
           <div className='hfui-strategy-options__input item'>
             <DateInput
@@ -102,7 +102,6 @@ const StrategyOptionsPanel = ({
               maxDate={MAX_DATE}
               minDate={startDate}
             />
-            <p className='hfui-orderform__input-label'>{t('strategyEditor.endDate')}</p>
           </div>
         </>
       )}
@@ -160,6 +159,7 @@ const StrategyOptionsPanel = ({
             className='hfui-strategy-options__fullscreen-btn'
             label={t('ui.startBtn')}
             onClick={onBacktestStart}
+            disabled={isBacktestLoading}
             green
           />
         </div>
@@ -205,10 +205,12 @@ StrategyOptionsPanel.propTypes = {
   setFullScreenChart: PropTypes.func.isRequired,
   isBacktest: PropTypes.bool,
   onBacktestStart: PropTypes.func,
+  isBacktestLoading: PropTypes.bool,
 }
 
 StrategyOptionsPanel.defaultProps = {
   isBacktest: false,
+  isBacktestLoading: false,
   onBacktestStart: () => { },
 }
 

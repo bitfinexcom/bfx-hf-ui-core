@@ -37,7 +37,7 @@ const BacktestTab = (props) => {
       switch (i) {
         case COMPONENTS_KEYS.OPTIONS:
           return (
-            <StrategyOptionsPanel {...props} onСollapse={optionsCollapse} setFullScreenChart={() => setFullScreenChart(true)} isBacktest />
+            <StrategyOptionsPanel {...props} onСollapse={optionsCollapse} setFullScreenChart={() => setFullScreenChart(true)} isBacktestLoading={results.loading} isBacktest />
           )
 
         case COMPONENTS_KEYS.LIVE_CHART:
