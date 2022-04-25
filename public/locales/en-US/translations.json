@@ -593,6 +593,7 @@
     "paused": "Paused",
     "recent": "Recent",
     "strategyTab": "Strategy",
+    "backtestTab": "Backtest",
     "viewInIDETab": "View in IDE",
     "helpTab": "Help",
     "activeStrategies": "Active strategies ({{amount}})",
