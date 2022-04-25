@@ -15,6 +15,7 @@ import RemoveExistingStrategyModal from '../../modals/Strategy/RemoveExistingStr
 import OpenExistingStrategyModal from '../../modals/Strategy/OpenExistingStrategyModal'
 import EmptyContent from './components/StrategyEditorEmpty'
 import StrategyTab from './tabs/StrategyTab'
+import BacktestTab from './tabs/BacktestTab'
 import IDETab from './tabs/IDETab'
 import { getDefaultMarket } from '../../util/market'
 import StrategiesMenuSideBarParams from './components/StrategiesMenuSideBarParams'
@@ -27,6 +28,9 @@ import SaveStrategyAsModal from '../../modals/Strategy/SaveStrategyAsModal/SaveS
 import './style.css'
 
 const debug = Debug('hfui-ui:c:strategy-editor')
+const ONE_MIN = 1000 * 60
+const ONE_HOUR = ONE_MIN * 60
+const ONE_DAY = ONE_HOUR * 24
 
 const DEFAULT_TIMEFRAME = '1m'
 const DEFAULT_USE_TRADES = false
@@ -60,6 +64,8 @@ const StrategyEditor = (props) => {
     onStrategySelect,
     onSave,
     isPaperTrading,
+    dsExecuteBacktest,
+    setBacktestOptions,
   } = props
   const { t } = useTranslation()
   const [isRemoveModalOpened, setIsRemoveModalOpened] = useState(false)
@@ -78,6 +84,12 @@ const StrategyEditor = (props) => {
   )
   const [candleSeed, setCandleSeed] = useState(
     options.seedCandleCount || DEFAULT_SEED_COUNT,
+  )
+  const [startDate, setStartDate] = useState(
+    new Date(Date.now() - ONE_DAY),
+  )
+  const [endDate, setEndDate] = useState(
+    new Date(Date.now() - (ONE_MIN * 15)),
   )
   const [margin, setMargin] = useState(options.margin || DEFAULT_USE_MARGIN)
   const [paramsOpen, setParamsOpen] = useState(false)
@@ -175,13 +187,16 @@ const StrategyEditor = (props) => {
     <StrategyPaused />
   )
 
+  const optionsProps = {
+    timeframe, symbol, setSymbol, setTimeframe, trades, setTrades, candleSeed, setCandleSeed, margin, setMargin, startDate, setStartDate, endDate, setEndDate,
+  }
+
   return (
     <>
       {!strategy || _isEmpty(strategy) ? (
         <EmptyContent
           openCreateNewStrategyModal={() => setCreateNewStrategyModalOpen(true)}
           openCreateNewStrategyFromModal={() => setCreateNewStrategyFromModalOpen(true)}
-
         />
       ) : (
         <StrategyEditorPanel
@@ -216,20 +231,26 @@ const StrategyEditor = (props) => {
               </>
             )}
             sbicon={<Icon name='file-code-o' />}
-            timeframe={timeframe}
             onOpenSaveStrategyAsModal={() => setIsSaveStrategyModalOpen(true)}
-            symbol={symbol}
-            setSymbol={setSymbol}
-            setTimeframe={setTimeframe}
-            trades={trades}
-            setTrades={setTrades}
-            candleSeed={candleSeed}
-            setCandleSeed={setCandleSeed}
-            margin={margin}
-            setMargin={setMargin}
             isPaperTrading={isPaperTrading}
+            {...optionsProps}
             {...props}
           />
+          {isPaperTrading && (
+            <BacktestTab
+              htmlKey='backtest'
+              sbtitle={t('strategyEditor.backtestTab')}
+              sbicon={<Icon name='repeat' />}
+              onOpenSaveStrategyAsModal={() => setIsSaveStrategyModalOpen(true)}
+              results={backtestResults}
+              // todo: add useCandles / useTrades params
+              onBacktestStart={() => dsExecuteBacktest(startDate, endDate, symbol?.wsID, timeframe, true, false, strategy)}
+              isPaperTrading
+              isBacktest
+              {...optionsProps}
+              {...props}
+            />
+          )}
           <IDETab
             htmlKey='view_in_ide'
             sbtitle={t('strategyEditor.viewInIDETab')}
@@ -315,6 +336,8 @@ StrategyEditor.propTypes = {
   ),
   onSave: PropTypes.func.isRequired,
   isPaperTrading: PropTypes.bool.isRequired,
+  setBacktestOptions: PropTypes.func.isRequired,
+  dsExecuteBacktest: PropTypes.func.isRequired,
 }
 
 StrategyEditor.defaultProps = {

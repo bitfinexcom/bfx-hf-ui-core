@@ -1,10 +1,12 @@
 import { connect } from 'react-redux'
+import { v4 as uuidv4 } from 'uuid'
 import _omitBy from 'lodash/omitBy'
 import _isEmpty from 'lodash/isEmpty'
 
 import WSActions from '../../redux/actions/ws'
 import UIActions from '../../redux/actions/ui'
 import GAActions from '../../redux/actions/google_analytics'
+import WSTypes from '../../redux/constants/ws'
 import { getAuthToken, getBacktestResults, getExecutionOptions } from '../../redux/selectors/ws'
 import { getStrategyId, getThemeSetting, getIsPaperTrading } from '../../redux/selectors/ui'
 import StrategyEditor from './StrategyEditor'
@@ -49,6 +51,17 @@ const mapDispatchToProps = dispatch => ({
     } else {
       dispatch(UIActions.changeLaunchStrategyModalState(true, executionOptions))
     }
+  },
+  dsExecuteBacktest: (from, to, symbol, tf, candles, trades, strategy) => {
+    dispatch(WSActions.purgeBacktestData())
+    dispatch(WSActions.send({
+      alias: WSTypes.ALIAS_DATA_SERVER,
+      data: ['exec.str', ['bitfinex', from, to, symbol, tf, candles, trades, true, strategy, uuidv4()]],
+    }))
+    dispatch(WSActions.setBacktestLoading())
+  },
+  setBacktestOptions: options => {
+    dispatch(WSActions.setBacktestOptions(options))
   },
   dsStopLiveStrategy: (authToken) => {
     dispatch(WSActions.setExecutionLoading(true))

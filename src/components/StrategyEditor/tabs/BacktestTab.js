@@ -1,21 +1,22 @@
 import React, { useCallback, useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
+import { useTranslation } from 'react-i18next'
 import StrategyPerfomanceMetrics from '../../StrategyPerfomanceMetrics'
-import { results as mockResults } from '../../../pages/Strategies/mock_data'
 import StrategyTradesTable from '../../StrategyTradesTable'
 import StrategiesGridLayout from '../components/StrategiesGridLayout'
 import {
   COMPONENTS_KEYS,
   LAYOUT_CONFIG,
-  LAYOUT_CONFIG_WITHOUT_TRADES,
-} from './StrategyTab.constants'
+  LAYOUT_CONFIG_NO_DATA,
+} from './BacktestTab.constants'
 import StrategyLiveChart from '../../StrategyLiveChart'
 import StrategyOptionsPanel from '../../StrategyOptionsPanel'
 
-const StrategyTab = (props) => {
+const BacktestTab = (props) => {
   const {
-    trades, results = mockResults,
+    results,
   } = props
+  const { t } = useTranslation()
   const [layoutConfig, setLayoutConfig] = useState()
   const [fullscreenChart, setFullScreenChart] = useState(false)
 
@@ -24,19 +25,19 @@ const StrategyTab = (props) => {
   }
 
   useEffect(() => {
-    if (!trades) {
-      setLayoutConfig(LAYOUT_CONFIG_WITHOUT_TRADES)
+    if (!results.finished) {
+      setLayoutConfig(LAYOUT_CONFIG_NO_DATA)
     } else {
       setLayoutConfig(LAYOUT_CONFIG)
     }
-  }, [trades])
+  }, [results])
 
   const renderGridComponents = useCallback(
     (i) => {
       switch (i) {
         case COMPONENTS_KEYS.OPTIONS:
           return (
-            <StrategyOptionsPanel {...props} onСollapse={optionsCollapse} setFullScreenChart={() => setFullScreenChart(true)} />
+            <StrategyOptionsPanel {...props} onСollapse={optionsCollapse} setFullScreenChart={() => setFullScreenChart(true)} isBacktest />
           )
 
         case COMPONENTS_KEYS.LIVE_CHART:
@@ -55,11 +56,18 @@ const StrategyTab = (props) => {
             />
           )
 
+        case COMPONENTS_KEYS.DESCRIPTION:
+          return (
+            <div className='hfui-strategyeditor__wrapper'>
+              {results.loading ? t('strategyEditor.backtestingLoadingMessage') : t('strategyEditor.backtestingStartingMessage')}
+            </div>
+          )
+
         default:
           return null
       }
     },
-    [layoutConfig, props, fullscreenChart],
+    [layoutConfig, props, fullscreenChart, results],
   )
 
   return (
@@ -72,8 +80,8 @@ const StrategyTab = (props) => {
   )
 }
 
-StrategyTab.propTypes = {
+BacktestTab.propTypes = {
   trades: PropTypes.bool.isRequired,
 }
 
-export default StrategyTab
+export default BacktestTab

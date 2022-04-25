@@ -7,6 +7,7 @@ import { Tooltip, Checkbox, Truncate } from '@ufx-ui/core'
 import _includes from 'lodash/includes'
 import { useTranslation } from 'react-i18next'
 import timeFrames from '../../util/time_frames'
+import DateInput from '../OrderForm/FieldComponents/input.date'
 
 import TimeFrameDropdown from '../TimeFrameDropdown'
 import AmountInput from '../OrderForm/FieldComponents/input.amount'
@@ -17,6 +18,7 @@ import { makeShorterLongName } from '../../util/ui'
 import './style.scss'
 
 const MAX_STRATEGY_LABEL_LENGTH = 25
+const MAX_DATE = new Date()
 
 const StrategyOptionsPanel = ({
   strategy,
@@ -35,6 +37,12 @@ const StrategyOptionsPanel = ({
   candleSeed,
   setCandleSeed,
   setFullScreenChart,
+  isBacktest,
+  onBacktestStart,
+  startDate,
+  endDate,
+  setStartDate,
+  setEndDate,
 }) => {
   const [seedError, setSeedError] = useState(null)
 
@@ -75,6 +83,29 @@ const StrategyOptionsPanel = ({
           )}
         </>
       </p>
+      {isBacktest && (
+        <>
+          <div className='hfui-strategy-options__input item'>
+            <DateInput
+              onChange={setStartDate}
+              def={{ label: t('strategyEditor.startDate') }}
+              value={startDate}
+              maxDate={endDate}
+            />
+            <p className='hfui-orderform__input-label'>{t('strategyEditor.startDate')}</p>
+          </div>
+          <div className='hfui-strategy-options__input item'>
+            <DateInput
+              onChange={setEndDate}
+              def={{ label: t('strategyEditor.endDate') }}
+              value={endDate}
+              maxDate={MAX_DATE}
+              minDate={startDate}
+            />
+            <p className='hfui-orderform__input-label'>{t('strategyEditor.endDate')}</p>
+          </div>
+        </>
+      )}
       <div className='hfui-strategy-options__input item'>
         <MarketSelect
           value={symbol}
@@ -123,12 +154,21 @@ const StrategyOptionsPanel = ({
           </Truncate>
         </div>
       </div>
-      <Button
-        className='hfui-strategy-options__fullscreen-btn item'
-        label={t('strategyEditor.fullscreenChartBtn')}
-        onClick={setFullScreenChart}
-        green
-      />
+      {isBacktest ? (
+        <Button
+          className='hfui-strategy-options__fullscreen-btn item'
+          label={t('ui.startBtn')}
+          onClick={onBacktestStart}
+          green
+        />
+      ) : (
+        <Button
+          className='hfui-strategy-options__fullscreen-btn item'
+          label={t('strategyEditor.fullscreenChartBtn')}
+          onClick={setFullScreenChart}
+          green
+        />
+      )}
     </div>
   )
 }
@@ -159,6 +199,13 @@ StrategyOptionsPanel.propTypes = {
     label: PropTypes.string,
   }).isRequired,
   setFullScreenChart: PropTypes.func.isRequired,
+  isBacktest: PropTypes.bool,
+  onBacktestStart: PropTypes.func,
+}
+
+StrategyOptionsPanel.defaultProps = {
+  isBacktest: false,
+  onBacktestStart: () => { },
 }
 
 export default StrategyOptionsPanel
