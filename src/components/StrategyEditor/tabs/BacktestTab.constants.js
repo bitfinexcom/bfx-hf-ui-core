@@ -38,7 +38,21 @@ export const LAYOUT_CONFIG = [
   },
 ]
 
-export const LAYOUT_CONFIG_NO_DATA = [
+export const LAYOUT_CONFIG_WITHOUT_TRADES = [
+  {
+    i: COMPONENTS_KEYS.LIVE_CHART,
+    x: 0,
+    y: 1,
+    w: 60,
+    h: 8,
+  },
+  {
+    i: COMPONENTS_KEYS.STRATEGY_PERFOMANCE,
+    x: 60,
+    y: 1,
+    w: 40,
+    h: 8,
+  },
   {
     i: COMPONENTS_KEYS.OPTIONS,
     x: 0,
@@ -46,10 +60,20 @@ export const LAYOUT_CONFIG_NO_DATA = [
     w: 100,
     h: 1,
   },
+]
+
+export const LAYOUT_CONFIG_NO_DATA = [
   {
     i: COMPONENTS_KEYS.DESCRIPTION,
     x: 0,
     y: 1,
+    w: 100,
+    h: 1,
+  },
+  {
+    i: COMPONENTS_KEYS.OPTIONS,
+    x: 0,
+    y: 0,
     w: 100,
     h: 1,
   },
