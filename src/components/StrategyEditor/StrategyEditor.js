@@ -254,8 +254,6 @@ const StrategyEditor = (props) => {
               results={backtestResults}
               // todo: add useCandles / useTrades params
               onBacktestStart={onBacktestStart}
-              isPaperTrading
-              isBacktest
               {...optionsProps}
               {...props}
             />

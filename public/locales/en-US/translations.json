@@ -655,7 +655,14 @@
     "selectCandleDurationDescription": "Select candle duration",
     "fullscreenChartBtn": "Fullscreen Chart",
     "exitFullscreenChartBtn": "Exit fullscreen",
-    "perfomanceMetrics": "Perfomance metrics"
+    "perfomanceMetrics": "Perfomance metrics",
+    "strategyTypeDescription": "Select strategy type",
+    "strategyTypes": {
+      "momentum": "Momentum",
+      "meanReverting": "Mean-Reverting",
+      "trendFollowing": "Trend Following",
+      "technicalAnalysis": "Technical Analysis"
+    }
   },
   "ui": {
     "ok": "Okay",

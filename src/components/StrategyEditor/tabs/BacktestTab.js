@@ -11,11 +11,10 @@ import {
 } from './BacktestTab.constants'
 import StrategyLiveChart from '../../StrategyLiveChart'
 import StrategyOptionsPanel from '../../StrategyOptionsPanel'
+import BacktestOptionsPanel from '../../BacktestOptionsPanel'
 
 const BacktestTab = (props) => {
-  const {
-    results,
-  } = props
+  const { results } = props
   const { t } = useTranslation()
   const [layoutConfig, setLayoutConfig] = useState()
   const [fullscreenChart, setFullScreenChart] = useState(false)
@@ -24,24 +23,38 @@ const BacktestTab = (props) => {
     setLayoutConfig(LAYOUT_CONFIG)
   }
 
+  const { finished, loading } = results
+
   useEffect(() => {
-    if (!results.finished) {
+    if (!finished) {
       setLayoutConfig(LAYOUT_CONFIG_NO_DATA)
     } else {
       setLayoutConfig(LAYOUT_CONFIG)
     }
-  }, [results])
+  }, [finished])
 
   const renderGridComponents = useCallback(
     (i) => {
       switch (i) {
         case COMPONENTS_KEYS.OPTIONS:
           return (
-            <StrategyOptionsPanel {...props} onСollapse={optionsCollapse} setFullScreenChart={() => setFullScreenChart(true)} isBacktestLoading={results.loading} isBacktest />
+            <BacktestOptionsPanel
+              {...props}
+              onСollapse={optionsCollapse}
+              setFullScreenChart={() => setFullScreenChart(true)}
+              isBacktestLoading={loading}
+              isFinished={finished}
+            />
           )
 
         case COMPONENTS_KEYS.LIVE_CHART:
-          return <StrategyLiveChart {...props} fullscreenChart={fullscreenChart} exitFullscreenChart={() => setFullScreenChart(false)} />
+          return (
+            <StrategyLiveChart
+              {...props}
+              fullscreenChart={fullscreenChart}
+              exitFullscreenChart={() => setFullScreenChart(false)}
+            />
+          )
 
         case COMPONENTS_KEYS.STRATEGY_PERFOMANCE:
           return <StrategyPerfomanceMetrics results={results} />
@@ -59,7 +72,9 @@ const BacktestTab = (props) => {
         case COMPONENTS_KEYS.DESCRIPTION:
           return (
             <div className='hfui-strategyeditor__wrapper'>
-              {results.loading ? t('strategyEditor.backtestingLoadingMessage') : t('strategyEditor.backtestingStartingMessage')}
+              {loading
+                ? t('strategyEditor.backtestingLoadingMessage')
+                : t('strategyEditor.backtestingStartingMessage')}
             </div>
           )
 
@@ -67,7 +82,7 @@ const BacktestTab = (props) => {
           return null
       }
     },
-    [layoutConfig, props, fullscreenChart, results],
+    [layoutConfig, props, fullscreenChart, finished, loading, results],
   )
 
   return (
@@ -82,6 +97,10 @@ const BacktestTab = (props) => {
 
 BacktestTab.propTypes = {
   trades: PropTypes.bool.isRequired,
+  results: PropTypes.shape({
+    finished: PropTypes.bool,
+    loading: PropTypes.bool,
+  }).isRequired,
 }
 
 export default BacktestTab
