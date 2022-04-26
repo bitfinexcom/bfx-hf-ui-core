@@ -46,7 +46,7 @@ body button:focus {
   .react-datepicker-year-header {
     display: none;
   }
-  .react-datepicker__time-list-item{
+  .react-datepicker__time-list-item {
     margin-bottom: 0;
     display: block;
   }
@@ -287,6 +287,10 @@ a:visited {
   color: $green-color;
   border-bottom: solid 1px $green-color;
   cursor: pointer;
+}
+
+.blur {
+  filter: blur(5px);
 }
 
 // OrderHistory & Atomic Orders table marker icon

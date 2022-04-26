@@ -570,7 +570,7 @@
     "openStartegyModalNoSelectedError": "Стратегия не выбрана",
     "backtestingCreateMessage": "Создать стратегию, чтобы начать backtesting тестирование",
     "backtestingLoadingMessage": "Загружаем свечи и запускаем стратегию...",
-    "backtestingStartingMessage": "Нажмите \"старт\", чтобы начать backtesting тестирование.",
+    "backtestingStartingMessage": "Нажмите \"старт\", чтобы начать backtesting тестирование",
     "historical": "Исторический",
     "startDate": "Начальная дата",
     "endDate": "Конечная дата",

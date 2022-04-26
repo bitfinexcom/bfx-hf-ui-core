@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
+import _isEmpty from 'lodash/isEmpty'
 import { useTranslation } from 'react-i18next'
 import StrategyPerfomanceMetrics from '../../StrategyPerfomanceMetrics'
 import StrategyTradesTable from '../../StrategyTradesTable'
@@ -8,9 +9,9 @@ import {
   COMPONENTS_KEYS,
   LAYOUT_CONFIG,
   LAYOUT_CONFIG_NO_DATA,
+  LAYOUT_CONFIG_WITHOUT_TRADES,
 } from './BacktestTab.constants'
 import StrategyLiveChart from '../../StrategyLiveChart'
-import StrategyOptionsPanel from '../../StrategyOptionsPanel'
 import BacktestOptionsPanel from '../../BacktestOptionsPanel'
 
 const BacktestTab = (props) => {
@@ -23,15 +24,19 @@ const BacktestTab = (props) => {
     setLayoutConfig(LAYOUT_CONFIG)
   }
 
-  const { finished, loading } = results
+  const { finished, loading, trades } = results
 
   useEffect(() => {
     if (!finished) {
       setLayoutConfig(LAYOUT_CONFIG_NO_DATA)
-    } else {
-      setLayoutConfig(LAYOUT_CONFIG)
+      return
     }
-  }, [finished])
+    if (_isEmpty(trades)) {
+      setLayoutConfig(LAYOUT_CONFIG_WITHOUT_TRADES)
+      return
+    }
+    setLayoutConfig(LAYOUT_CONFIG)
+  }, [finished, trades])
 
   const renderGridComponents = useCallback(
     (i) => {
@@ -53,11 +58,12 @@ const BacktestTab = (props) => {
               {...props}
               fullscreenChart={fullscreenChart}
               exitFullscreenChart={() => setFullScreenChart(false)}
+              isLoading={loading}
             />
           )
 
         case COMPONENTS_KEYS.STRATEGY_PERFOMANCE:
-          return <StrategyPerfomanceMetrics results={results} />
+          return <StrategyPerfomanceMetrics results={results} isLoading={loading} />
 
         case COMPONENTS_KEYS.STRATEGY_TRADES:
           return (
@@ -66,16 +72,8 @@ const BacktestTab = (props) => {
               setLayoutConfig={setLayoutConfig}
               layoutConfig={layoutConfig}
               onTradeClick={() => {}}
+              isLoading={loading}
             />
-          )
-
-        case COMPONENTS_KEYS.DESCRIPTION:
-          return (
-            <div className='hfui-strategyeditor__wrapper'>
-              {loading
-                ? t('strategyEditor.backtestingLoadingMessage')
-                : t('strategyEditor.backtestingStartingMessage')}
-            </div>
           )
 
         default:
@@ -90,7 +88,13 @@ const BacktestTab = (props) => {
       <StrategiesGridLayout
         layoutConfig={layoutConfig}
         renderGridComponents={renderGridComponents}
+        isLoading={loading}
       />
+      {!finished && !loading && (
+        <p className='hfui-strategyeditor__initial-message'>
+          {t('strategyEditor.backtestingStartingMessage')}
+        </p>
+      )}
     </div>
   )
 }
@@ -100,6 +104,7 @@ BacktestTab.propTypes = {
   results: PropTypes.shape({
     finished: PropTypes.bool,
     loading: PropTypes.bool,
+    trades: PropTypes.arrayOf(PropTypes.object),
   }).isRequired,
 }
 

@@ -1,6 +1,5 @@
 export const COMPONENTS_KEYS = {
-  OPTIONS: '999',
-  DESCRIPTION: '1000',
+  OPTIONS: '1000',
   LIVE_CHART: '1001',
   STRATEGY_PERFOMANCE: '1002',
   STRATEGY_TRADES: '1003',
@@ -63,13 +62,6 @@ export const LAYOUT_CONFIG_WITHOUT_TRADES = [
 ]
 
 export const LAYOUT_CONFIG_NO_DATA = [
-  {
-    i: COMPONENTS_KEYS.DESCRIPTION,
-    x: 0,
-    y: 1,
-    w: 100,
-    h: 1,
-  },
   {
     i: COMPONENTS_KEYS.OPTIONS,
     x: 0,

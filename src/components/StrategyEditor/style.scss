@@ -33,9 +33,18 @@ body.hosted {
   display: flex;
   height: 100%;
   background-color: var(--background-color);
+  position: relative;
 
   .hfui-create-strategy__btn {
     text-transform: uppercase;
+  }
+
+  .spinner {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    margin-top: 0;
   }
 }
 
@@ -242,4 +251,14 @@ body.hosted {
   min-width: 180px !important;
   left: 160% !important;
   top: -27px !important;
+}
+
+.hfui-strategyeditor__initial-message {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 20px;
+  font-weight: 700;
+  text-align: center;
 }

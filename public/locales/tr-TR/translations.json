@@ -570,7 +570,7 @@
     "openStartegyModalNoSelectedError": "No strategy selected",
     "backtestingCreateMessage": "Create a strategy to begin backtesting",
     "backtestingLoadingMessage": "Loading candles and executing strategy...",
-    "backtestingStartingMessage": "Press start to begin backtesting.",
+    "backtestingStartingMessage": "Press start to begin backtesting",
     "historical": "Historical",
     "startDate": "Start Date",
     "endDate": "End Date",

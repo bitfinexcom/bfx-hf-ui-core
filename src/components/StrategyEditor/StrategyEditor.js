@@ -82,6 +82,7 @@ const StrategyEditor = (props) => {
   const [trades, setTrades] = useState(
     options.includeTrades || DEFAULT_USE_TRADES,
   )
+  const [candles, setCandles] = useState(false)
   const [candleSeed, setCandleSeed] = useState(
     options.seedCandleCount || DEFAULT_SEED_COUNT,
   )
@@ -96,7 +97,7 @@ const StrategyEditor = (props) => {
   const execRunning = backtestResults.executing || backtestResults.loading || liveExecuting || liveLoading
 
   const optionsProps = {
-    timeframe, symbol, setSymbol, setTimeframe, trades, setTrades, candleSeed, setCandleSeed, margin, setMargin, startDate, setStartDate, endDate, setEndDate,
+    timeframe, candles, setCandles, symbol, setSymbol, setTimeframe, trades, setTrades, candleSeed, setCandleSeed, margin, setMargin, startDate, setStartDate, endDate, setEndDate,
   }
 
   const onCloseModals = () => {
