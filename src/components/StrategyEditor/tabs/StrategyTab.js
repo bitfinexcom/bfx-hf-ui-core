@@ -7,7 +7,6 @@ import StrategiesGridLayout from '../components/StrategiesGridLayout'
 import {
   COMPONENTS_KEYS,
   LAYOUT_CONFIG,
-  LAYOUT_CONFIG_WITHOUT_TRADES,
 } from './StrategyTab.constants'
 import StrategyLiveChart from '../../StrategyLiveChart'
 import StrategyOptionsPanel from '../../StrategyOptionsPanel'
@@ -16,20 +15,12 @@ const StrategyTab = (props) => {
   const {
     trades, results = mockResults,
   } = props
-  const [layoutConfig, setLayoutConfig] = useState()
+  const [layoutConfig, setLayoutConfig] = useState(LAYOUT_CONFIG)
   const [fullscreenChart, setFullScreenChart] = useState(false)
 
   const optionsCollapse = () => {
     setLayoutConfig(LAYOUT_CONFIG)
   }
-
-  useEffect(() => {
-    if (!trades) {
-      setLayoutConfig(LAYOUT_CONFIG_WITHOUT_TRADES)
-    } else {
-      setLayoutConfig(LAYOUT_CONFIG)
-    }
-  }, [trades])
 
   const renderGridComponents = useCallback(
     (i) => {

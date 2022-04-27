@@ -2,9 +2,9 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Button } from '@ufx-ui/core'
 import _map from 'lodash/map'
-import Classname from 'clsx'
+import ClassNames from 'clsx'
 
-import './style.scss'
+import './style.css'
 
 const Tabs = ({ tabs, onTabClick, activeTab }) => {
   return (
@@ -16,7 +16,7 @@ const Tabs = ({ tabs, onTabClick, activeTab }) => {
           outline={activeTab !== value}
           intent='primary'
           onClick={() => onTabClick(value)}
-          className={Classname('hfui-tabs__button', { transparent: activeTab !== value })}
+          className={ClassNames('hfui-tabs__button', { transparent: activeTab !== value })}
           small
           disabled={disabled}
           key={label}

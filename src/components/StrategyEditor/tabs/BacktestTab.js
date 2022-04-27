@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
+import _isEmpty from 'lodash/isEmpty'
 import { useTranslation } from 'react-i18next'
 import StrategyPerfomanceMetrics from '../../StrategyPerfomanceMetrics'
 import StrategyTradesTable from '../../StrategyTradesTable'
@@ -8,14 +9,13 @@ import {
   COMPONENTS_KEYS,
   LAYOUT_CONFIG,
   LAYOUT_CONFIG_NO_DATA,
+  LAYOUT_CONFIG_WITHOUT_TRADES,
 } from './BacktestTab.constants'
 import StrategyLiveChart from '../../StrategyLiveChart'
-import StrategyOptionsPanel from '../../StrategyOptionsPanel'
+import BacktestOptionsPanel from '../../BacktestOptionsPanel'
 
 const BacktestTab = (props) => {
-  const {
-    results,
-  } = props
+  const { results } = props
   const { t } = useTranslation()
   const [layoutConfig, setLayoutConfig] = useState()
   const [fullscreenChart, setFullScreenChart] = useState(false)
@@ -24,27 +24,46 @@ const BacktestTab = (props) => {
     setLayoutConfig(LAYOUT_CONFIG)
   }
 
+  const { finished, loading, trades } = results
+
   useEffect(() => {
-    if (!results.finished) {
+    if (!finished) {
       setLayoutConfig(LAYOUT_CONFIG_NO_DATA)
-    } else {
-      setLayoutConfig(LAYOUT_CONFIG)
+      return
     }
-  }, [results])
+    if (_isEmpty(trades)) {
+      setLayoutConfig(LAYOUT_CONFIG_WITHOUT_TRADES)
+      return
+    }
+    setLayoutConfig(LAYOUT_CONFIG)
+  }, [finished, trades])
 
   const renderGridComponents = useCallback(
     (i) => {
       switch (i) {
         case COMPONENTS_KEYS.OPTIONS:
           return (
-            <StrategyOptionsPanel {...props} onСollapse={optionsCollapse} setFullScreenChart={() => setFullScreenChart(true)} isBacktestLoading={results.loading} isBacktest />
+            <BacktestOptionsPanel
+              {...props}
+              onСollapse={optionsCollapse}
+              setFullScreenChart={() => setFullScreenChart(true)}
+              isBacktestLoading={loading}
+              isFinished={finished}
+            />
           )
 
         case COMPONENTS_KEYS.LIVE_CHART:
-          return <StrategyLiveChart {...props} fullscreenChart={fullscreenChart} exitFullscreenChart={() => setFullScreenChart(false)} />
+          return (
+            <StrategyLiveChart
+              {...props}
+              fullscreenChart={fullscreenChart}
+              exitFullscreenChart={() => setFullScreenChart(false)}
+              isLoading={loading}
+            />
+          )
 
         case COMPONENTS_KEYS.STRATEGY_PERFOMANCE:
-          return <StrategyPerfomanceMetrics results={results} />
+          return <StrategyPerfomanceMetrics results={results} isLoading={loading} />
 
         case COMPONENTS_KEYS.STRATEGY_TRADES:
           return (
@@ -53,21 +72,15 @@ const BacktestTab = (props) => {
               setLayoutConfig={setLayoutConfig}
               layoutConfig={layoutConfig}
               onTradeClick={() => {}}
+              isLoading={loading}
             />
-          )
-
-        case COMPONENTS_KEYS.DESCRIPTION:
-          return (
-            <div className='hfui-strategyeditor__wrapper'>
-              {results.loading ? t('strategyEditor.backtestingLoadingMessage') : t('strategyEditor.backtestingStartingMessage')}
-            </div>
           )
 
         default:
           return null
       }
     },
-    [layoutConfig, props, fullscreenChart, results],
+    [layoutConfig, props, fullscreenChart, finished, loading, results],
   )
 
   return (
@@ -75,13 +88,24 @@ const BacktestTab = (props) => {
       <StrategiesGridLayout
         layoutConfig={layoutConfig}
         renderGridComponents={renderGridComponents}
+        isLoading={loading}
       />
+      {!finished && !loading && (
+        <p className='hfui-strategyeditor__initial-message'>
+          {t('strategyEditor.backtestingStartingMessage')}
+        </p>
+      )}
     </div>
   )
 }
 
 BacktestTab.propTypes = {
   trades: PropTypes.bool.isRequired,
+  results: PropTypes.shape({
+    finished: PropTypes.bool,
+    loading: PropTypes.bool,
+    trades: PropTypes.arrayOf(PropTypes.object),
+  }).isRequired,
 }
 
 export default BacktestTab

@@ -1,6 +1,9 @@
 @import "../../variables.scss";
 
 .hfui-strategytradestable__wrapper {
+  width: auto;
+  margin: 0;
+  
   .ReactVirtualized__Table__headerRow {
     .ReactVirtualized__Table__headerColumn:first-of-type,
     .ReactVirtualized__Table__rowColumn:first-of-type {

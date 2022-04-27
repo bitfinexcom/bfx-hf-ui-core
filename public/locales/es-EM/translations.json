@@ -570,7 +570,7 @@
     "openStartegyModalNoSelectedError": "No se seleccionó ninguna estrategia",
     "backtestingCreateMessage": "Crea una estrategia para comenzar a hacer backtesting",
     "backtestingLoadingMessage": "Cargando velas y ejecutando estrategia...",
-    "backtestingStartingMessage": "Presiona empezar para comenzar a hacer backtesting.",
+    "backtestingStartingMessage": "Presiona empezar para comenzar a hacer backtesting",
     "historical": "Histórico",
     "startDate": "Fecha de Inicio",
     "endDate": "Fecha Final",

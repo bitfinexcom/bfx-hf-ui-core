@@ -612,13 +612,14 @@
     "openStartegyModalNoSelectedError": "No strategy selected",
     "backtestingCreateMessage": "Create a strategy to begin backtesting",
     "backtestingLoadingMessage": "Loading candles and executing strategy...",
-    "backtestingStartingMessage": "Press start to begin backtesting.",
+    "backtestingStartingMessage": "Press start to begin backtesting",
     "exportCSV": "Export as CSV",
     "exportStrategy": "Export strategy to JSON",
     "historical": "Historical",
     "startDate": "Start Date",
     "endDate": "End Date",
     "useCandlesCheckbox": "Use candles",
+    "useCandlesCheckboxDescription": "Much Faster, Less Accurate",
     "useTradesCheckbox": "Use trades",
     "useTradesCheckboxDescription": "Match against real trade history. Much slower, More Accurate",
     "useMarginCheckbox": "Use margin trading",
@@ -655,7 +656,14 @@
     "selectCandleDurationDescription": "Select candle duration",
     "fullscreenChartBtn": "Fullscreen Chart",
     "exitFullscreenChartBtn": "Exit fullscreen",
-    "perfomanceMetrics": "Perfomance metrics"
+    "perfomanceMetrics": "Perfomance metrics",
+    "strategyTypeDescription": "Select strategy type",
+    "strategyTypes": {
+      "momentum": "Momentum",
+      "meanReverting": "Mean-Reverting",
+      "trendFollowing": "Trend Following",
+      "technicalAnalysis": "Technical Analysis"
+    }
   },
   "ui": {
     "ok": "Okay",

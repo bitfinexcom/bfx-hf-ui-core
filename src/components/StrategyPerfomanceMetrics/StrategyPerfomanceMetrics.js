@@ -9,7 +9,7 @@ import Panel from '../../ui/Panel'
 import { resultNumber } from '../Backtester/Results/Results.utils'
 import MetricRow from './MetricRow'
 
-import './style.scss'
+import './style.css'
 
 const { getCurrencySymbolMemo } = reduxSelectors
 

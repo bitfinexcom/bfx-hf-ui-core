@@ -10,7 +10,7 @@ import Input from '../../../ui/Input'
 import Modal from '../../../ui/Modal'
 import blankTemplate from '../../../components/StrategyEditor/templates/blank'
 
-import './style.scss'
+import './style.css'
 
 const CreateNewStrategyModal = ({
   onSubmit, onClose, gaCreateStrategy, isOpen,
