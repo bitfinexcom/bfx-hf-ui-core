@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useCallback, useState } from 'react'
 import PropTypes from 'prop-types'
 import StrategyPerfomanceMetrics from '../../StrategyPerfomanceMetrics'
 import { results as mockResults } from '../../../pages/Strategies/mock_data'
@@ -7,7 +7,7 @@ import StrategiesGridLayout from '../components/StrategiesGridLayout'
 import {
   COMPONENTS_KEYS,
   LAYOUT_CONFIG,
-} from './StrategyTab.constants'
+} from '../components/StrategiesGridLayout.constants'
 import StrategyLiveChart from '../../StrategyLiveChart'
 import StrategyOptionsPanel from '../../StrategyOptionsPanel'
 
