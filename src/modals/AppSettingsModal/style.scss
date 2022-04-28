@@ -72,6 +72,13 @@
   &__setting {
     margin-bottom: spacing(1.5);
 
+    &--beta {
+      padding-bottom: spacing(1.5);
+      border-bottom: 1px solid grey;
+      position: relative;
+      color: var(--primary-8);
+    }
+
     &:last-child {
       margin-bottom: 0;
     }
@@ -148,6 +155,42 @@
       width: 16px;
       height: 16px;
       margin-right: spacing(0.5);
+    }
+  }
+  &__links {
+    display: flex;
+    flex-direction: column;
+    & > * {
+      margin-bottom: spacing(0.5);
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+  }
+
+  &__beta-disclaimer {
+    transform: none !important;
+    top: 30px !important;
+    left: 30px !important;
+  }
+
+  .beta-modal {
+    top: 160px;
+    transform: none;
+
+    &__title {
+      color: var(--primary-8);
+    }
+
+    &__content {
+      margin-top: 20px;
+    }
+
+    &__button {
+      background-color: #f7d448;
+      color: var(--shade-0);
+      margin: 20px auto;
+      display: block;
     }
   }
 }

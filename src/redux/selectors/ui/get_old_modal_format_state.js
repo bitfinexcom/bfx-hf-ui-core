@@ -3,4 +3,4 @@ import { REDUCER_PATHS } from '../../config'
 
 const path = REDUCER_PATHS.UI
 
-export default (state) => _get(state, `${path}.isOldFormatModalVisible`)
+export default (state) => _get(state, `${path}.modals.isOldFormatModalVisible`)

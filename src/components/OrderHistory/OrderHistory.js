@@ -1,21 +1,36 @@
-import React from 'react'
+import React, { useEffect, useCallback } from 'react'
 import PropTypes from 'prop-types'
 
 import _isEmpty from 'lodash/isEmpty'
 import {
-  OrderHistory as UfxOrderHistory,
+  OrderHistory as UfxOrderHistory, Spinner,
 } from '@ufx-ui/core'
 import { useTranslation } from 'react-i18next'
 import Panel from '../../ui/Panel'
 import useSize from '../../hooks/useSize'
 import { rowMapping } from './OrderHistory.colunms'
+import { getNextEndDate } from './OrderHistory.helpers'
 import './style.css'
 
 const OrderHistory = ({
-  onRemove, dark, orders,
+  onRemove, dark, orders, fetchOrderHistory, authToken, setIsLoadingOrderHistFlag,
+  isLoadingOrderHistData,
 }) => {
   const [ref, { width }] = useSize()
   const { t } = useTranslation()
+
+  const fetchMoreItems = useCallback(() => {
+    fetchOrderHistory(authToken, getNextEndDate(orders))
+  }, [authToken, fetchOrderHistory, orders])
+
+  const handleLoadMoreRows = () => {
+    setIsLoadingOrderHistFlag(true)
+    fetchMoreItems({ fetchMoreItems: true })
+  }
+
+  useEffect(() => {
+    fetchOrderHistory(authToken)
+  }, [authToken, fetchOrderHistory])
 
   return (
     <Panel
@@ -23,6 +38,8 @@ const OrderHistory = ({
       onRemove={onRemove}
       dark={dark}
       darkHeader={dark}
+      extraIcons={isLoadingOrderHistData && <Spinner />}
+      className='orderhistroy__panel'
     >
       <div ref={ref} className='orderhistroy__wrapper'>
         {_isEmpty(orders) ? (
@@ -32,6 +49,7 @@ const OrderHistory = ({
             orders={orders}
             rowMapping={rowMapping}
             isMobileLayout={width < 700}
+            loadMoreRows={handleLoadMoreRows}
           />
         )}
       </div>
@@ -43,12 +61,18 @@ OrderHistory.propTypes = {
   orders: PropTypes.arrayOf(PropTypes.object),
   dark: PropTypes.bool,
   onRemove: PropTypes.func,
+  fetchOrderHistory: PropTypes.func.isRequired,
+  setIsLoadingOrderHistFlag: PropTypes.func.isRequired,
+  authToken: PropTypes.string,
+  isLoadingOrderHistData: PropTypes.bool,
 }
 
 OrderHistory.defaultProps = {
   onRemove: () => { },
   dark: true,
   orders: [],
+  authToken: '',
+  isLoadingOrderHistData: false,
 }
 
 export default OrderHistory

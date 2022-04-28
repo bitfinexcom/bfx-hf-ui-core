@@ -26,9 +26,13 @@ import getOrderToEdit from './get_order_to_edit'
 import getLayoutForRoute from './layouts/get_layout_for_route'
 import getLaunchStrategyModalVisible from './get_launch_strategy_modal_visible'
 import getLaunchStrategyOptions from './get_launch_strategy_options'
+import getIsAppSettingsModalVisible from './get_is_app_settings_modal_visible'
+import getSettingsActiveTab from './get_settings_active_tab'
+import getIsLoadingOrderHistData from './get_is_loading_order_hist_data'
 
 export * from './get_settings'
 export * from './get_core_settings'
+export * from './get_feature_flags'
 
 export {
   getRemoteVersion,
@@ -59,4 +63,7 @@ export {
   getClosePositionModalData,
   getLaunchStrategyModalVisible,
   getLaunchStrategyOptions,
+  getIsAppSettingsModalVisible,
+  getSettingsActiveTab,
+  getIsLoadingOrderHistData,
 }

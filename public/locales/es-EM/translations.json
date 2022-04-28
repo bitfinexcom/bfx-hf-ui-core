@@ -3,7 +3,7 @@
     "sandbox": "Trading de Simulación",
     "production": "Producción",
     "trading": "{{paperPrefix}} Terminal de Trading",
-    "market": " {{mode}} Estadísticas del Mercado",
+    "market": " {{paperPrefix}} Estadísticas del Mercado",
     "strategyEditor": "Configurador de Estrategias",
     "startingUp": "Iniciando aplicación...",
     "craftedBy": "Elaborado por Bitfinex"

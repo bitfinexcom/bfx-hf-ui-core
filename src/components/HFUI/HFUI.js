@@ -7,14 +7,14 @@ import {
 } from 'react-router'
 import PropTypes from 'prop-types'
 
-import { THEMES, SETTINGS } from '../../redux/selectors/ui'
+import { THEMES, SETTINGS_KEYS } from '../../redux/selectors/ui'
 import useInjectBfxData from '../../hooks/useInjectBfxData'
-import StrategiesPage from '../../pages/Strategies'
 import NotificationsSidebar from '../NotificationsSidebar'
 import AppUpdate from '../AppUpdate'
 import closeElectronApp from '../../redux/helpers/close_electron_app'
 import Routes from '../../constants/routes'
 import { isElectronApp } from '../../redux/config'
+import ModalsWrapper from '../../modals/ModalsWrapper/ModalsWrapper'
 
 import './style.css'
 
@@ -22,16 +22,7 @@ import './style.css'
 const TradingPage = lazy(() => import('../../pages/Trading'))
 const MarketDataPage = lazy(() => import('../../pages/MarketData'))
 const AuthenticationPage = lazy(() => import('../../pages/Authentication'))
-
-const TradingModeModal = lazy(() => import('../../modals/TradingModeModal'))
-const BadConnectionModal = lazy(() => import('../../modals/BadConnectionModal'))
-const OldFormatModal = lazy(() => import('../../modals/OldFormatModal'))
-const AOPauseModal = lazy(() => import('../../modals/AOPauseModal'))
-const CcyInfoModal = lazy(() => import('../../modals/CcyInfoModal'))
-const ClosePositionModal = lazy(() => import('../../modals/ClosePositionModal'))
-const ConfirmDMSModal = lazy(() => import('../../modals/ConfirmDMSModal'))
-const EditOrderModal = lazy(() => import('../../modals/EditOrderModal'))
-const LaunchStrategyModal = lazy(() => import('../../modals/LaunchStrategyModal'))
+const StrategiesPage = lazy(() => import('../../pages/Strategies'))
 
 const ipcHelpers = window.electronService
 
@@ -40,6 +31,7 @@ const HFUI = (props) => {
     authToken,
     getSettings,
     getCoreSettings,
+    getFeatureFlags,
     notificationsVisible,
     getFavoritePairs,
     currentMode,
@@ -50,6 +42,7 @@ const HFUI = (props) => {
     settingsShowAlgoPauseInfo,
     settingsTheme,
     isBfxConnected,
+    showStrategies,
   } = props
   useInjectBfxData()
 
@@ -90,10 +83,10 @@ const HFUI = (props) => {
 
   useEffect(() => {
     const { body } = document
-    const lsTheme = localStorage.getItem(SETTINGS.THEME)
+    const lsTheme = localStorage.getItem(SETTINGS_KEYS.THEME)
 
     if (authToken && lsTheme !== settingsTheme) {
-      localStorage.setItem(SETTINGS.THEME, settingsTheme)
+      localStorage.setItem(SETTINGS_KEYS.THEME, settingsTheme)
     }
 
     body.classList.remove(THEMES.DARK)
@@ -110,10 +103,11 @@ const HFUI = (props) => {
   useEffect(() => {
     if (authToken) {
       getSettings(authToken)
+      getFeatureFlags(authToken)
       getFavoritePairs(authToken, currentMode)
       subscribeAllTickers()
     }
-  }, [authToken, currentMode, getCoreSettings, getFavoritePairs, getSettings, subscribeAllTickers])
+  }, [authToken, currentMode, getCoreSettings, getFavoritePairs, getFeatureFlags, getSettings, subscribeAllTickers])
 
   // fetch core-settings after bitfinex client is connected
   useEffect(() => {
@@ -129,23 +123,10 @@ const HFUI = (props) => {
           <Switch>
             <Redirect from='/index.html' to='/' exact />
             <Route path={Routes.tradingTerminal.path} render={() => <TradingPage />} exact />
-            {isElectronApp && Routes.strategyEditor && <Route path={Routes.strategyEditor.path} render={() => <StrategiesPage />} />}
+            {showStrategies && Routes.strategyEditor && <Route path={Routes.strategyEditor.path} render={() => <StrategiesPage />} />}
             <Route path={Routes.marketData.path} render={() => <MarketDataPage />} />
           </Switch>
-          {isElectronApp && (
-            <>
-              <TradingModeModal />
-              <OldFormatModal />
-              <ConfirmDMSModal />
-              <AOPauseModal />
-              {/* Putting this modal for electron mode only until strategies will be supported by the hosted version too */}
-              <LaunchStrategyModal />
-            </>
-          )}
-          <BadConnectionModal />
-          <CcyInfoModal />
-          <EditOrderModal />
-          <ClosePositionModal />
+          <ModalsWrapper isElectronApp={isElectronApp} />
         </>
       ) : (
         <>
@@ -164,6 +145,7 @@ HFUI.propTypes = {
   authToken: PropTypes.string,
   currentMode: PropTypes.string.isRequired,
   getSettings: PropTypes.func.isRequired,
+  getFeatureFlags: PropTypes.func.isRequired,
   getCoreSettings: PropTypes.func.isRequired,
   getFavoritePairs: PropTypes.func.isRequired,
   onUnload: PropTypes.func.isRequired,
@@ -174,6 +156,7 @@ HFUI.propTypes = {
   settingsShowAlgoPauseInfo: PropTypes.bool,
   settingsTheme: PropTypes.oneOf([THEMES.LIGHT, THEMES.DARK]),
   isBfxConnected: PropTypes.bool,
+  showStrategies: PropTypes.bool,
 }
 
 HFUI.defaultProps = {
@@ -181,6 +164,7 @@ HFUI.defaultProps = {
   settingsShowAlgoPauseInfo: true,
   settingsTheme: THEMES.DARK,
   isBfxConnected: false,
+  showStrategies: false,
 }
 
 export default HFUI

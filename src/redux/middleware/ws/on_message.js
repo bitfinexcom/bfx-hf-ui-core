@@ -229,6 +229,12 @@ export default (alias, store) => (e = {}) => {
         break
       }
 
+      case 'data.feature_flags': {
+        const [, featureFlags] = payload
+        store.dispatch(WSActions.setFeatureFlags(featureFlags))
+        break
+      }
+
       /* settings format
         [{
             key: 'te_limit_order_*',
@@ -312,6 +318,13 @@ export default (alias, store) => (e = {}) => {
       case 'data.order.close': {
         const [, , order] = payload
         store.dispatch(WSActions.recvOrderClose({ order }))
+        break
+      }
+
+      case 'data.order_history': {
+        const [, orderHist] = payload
+        store.dispatch(UIActions.setIsLoadingOrderHistData(false))
+        store.dispatch(WSActions.recvOrderHist({ orderHist }))
         break
       }
 

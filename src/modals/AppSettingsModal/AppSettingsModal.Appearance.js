@@ -11,7 +11,7 @@ import GAActions from '../../redux/actions/google_analytics'
 import LanguageSettings from '../../components/Navbar/Navbar.LanguageSettings'
 import Dropdown from '../../ui/Dropdown'
 import {
-  SETTINGS, getThemeSetting, THEMES,
+  SETTINGS_KEYS, getThemeSetting, THEMES,
 } from '../../redux/selectors/ui'
 
 const TradingMode = () => {
@@ -31,9 +31,9 @@ const TradingMode = () => {
 
   const updateTheme = (nextTheme) => {
     setCurrentTheme(nextTheme)
-    dispatch(WSActions.saveSettings(SETTINGS.THEME, nextTheme))
+    dispatch(WSActions.saveSettings(SETTINGS_KEYS.THEME, nextTheme))
     dispatch(GAActions.updateSettings())
-    localStorage.setItem(SETTINGS.THEME, nextTheme)
+    localStorage.setItem(SETTINGS_KEYS.THEME, nextTheme)
   }
 
   return (

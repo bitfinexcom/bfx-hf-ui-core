@@ -40,6 +40,11 @@ export default {
     payload: settings,
   }),
 
+  setFeatureFlags: flags => ({
+    type: ui.SET_FEATURE_FLAGS,
+    payload: flags,
+  }),
+
   saveSettings: (key, value) => ({
     type: ui.SAVE_SETTINGS,
     payload: {
@@ -160,6 +165,16 @@ export default {
   setOrderClose: ({ order }) => ({
     type: t.DATA_ORDER_CLOSE,
     payload: { order },
+  }),
+
+  recvOrderHist: ({ orderHist }) => ({
+    type: t.DATA_ORDER_HIST,
+    payload: { orderHist },
+  }),
+
+  setOrderHist: (orderHist) => ({
+    type: t.SET_ORDER_HIST,
+    payload: { orderHist },
   }),
 
   recvDataAlgoOrder: ({ ao }) => ({
