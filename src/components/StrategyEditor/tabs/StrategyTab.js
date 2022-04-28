@@ -77,8 +77,9 @@ const StrategyTab = (props) => {
       <StrategiesGridLayout
         layoutConfig={layoutConfig}
         renderGridComponents={renderGridComponents}
+        isLoading={loading}
       />
-      {_isEmpty(results) && !executing && (
+      {_isEmpty(results) && !executing && !loading && (
         <p className='hfui-strategyeditor__initial-message'>
           {t('strategyEditor.liveExecution.initialMessage')}
         </p>
