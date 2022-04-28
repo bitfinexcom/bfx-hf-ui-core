@@ -1,33 +1,52 @@
 import React, { useCallback, useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
+import _isEmpty from 'lodash/isEmpty'
+import { useTranslation } from 'react-i18next'
 import StrategyPerfomanceMetrics from '../../StrategyPerfomanceMetrics'
-import { results as mockResults } from '../../../pages/Strategies/mock_data'
 import StrategyTradesTable from '../../StrategyTradesTable'
 import StrategiesGridLayout from '../components/StrategiesGridLayout'
 import {
   COMPONENTS_KEYS,
   LAYOUT_CONFIG,
-} from './StrategyTab.constants'
+  LAYOUT_CONFIG_NO_DATA,
+  LAYOUT_CONFIG_WITHOUT_TRADES,
+} from '../components/StrategiesGridLayout.constants'
 import StrategyLiveChart from '../../StrategyLiveChart'
 import StrategyOptionsPanel from '../../StrategyOptionsPanel'
 
 const StrategyTab = (props) => {
   const {
-    trades, results = mockResults,
+    executionResults,
   } = props
-  const [layoutConfig, setLayoutConfig] = useState(LAYOUT_CONFIG)
+  const [layoutConfig, setLayoutConfig] = useState()
   const [fullscreenChart, setFullScreenChart] = useState(false)
 
-  const optionsCollapse = () => {
+  const { t } = useTranslation()
+
+  const { loading, executing, results } = executionResults
+
+  useEffect(() => {
+    if (!executing && _isEmpty(results)) {
+      setLayoutConfig(LAYOUT_CONFIG_NO_DATA)
+      return
+    }
+    if (_isEmpty(results.trades)) {
+      setLayoutConfig(LAYOUT_CONFIG_WITHOUT_TRADES)
+      return
+    }
     setLayoutConfig(LAYOUT_CONFIG)
-  }
+  }, [results, executing])
 
   const renderGridComponents = useCallback(
     (i) => {
       switch (i) {
         case COMPONENTS_KEYS.OPTIONS:
           return (
-            <StrategyOptionsPanel {...props} onСollapse={optionsCollapse} setFullScreenChart={() => setFullScreenChart(true)} />
+            <StrategyOptionsPanel
+              {...props}
+              setFullScreenChart={() => setFullScreenChart(true)}
+              isExecuting={executing}
+            />
           )
 
         case COMPONENTS_KEYS.LIVE_CHART:
@@ -50,7 +69,7 @@ const StrategyTab = (props) => {
           return null
       }
     },
-    [layoutConfig, props, fullscreenChart],
+    [layoutConfig, props, fullscreenChart, executing, results],
   )
 
   return (
@@ -59,12 +78,22 @@ const StrategyTab = (props) => {
         layoutConfig={layoutConfig}
         renderGridComponents={renderGridComponents}
       />
+      {_isEmpty(results) && !executing && (
+        <p className='hfui-strategyeditor__initial-message'>
+          {t('strategyEditor.liveExecution.initialMessage')}
+        </p>
+      )}
     </div>
   )
 }
 
 StrategyTab.propTypes = {
-  trades: PropTypes.bool.isRequired,
+  executionResults: PropTypes.shape({
+    loading: PropTypes.bool,
+    executing: PropTypes.bool,
+    // eslint-disable-next-line react/forbid-prop-types
+    results: PropTypes.object,
+  }).isRequired,
 }
 
 export default StrategyTab

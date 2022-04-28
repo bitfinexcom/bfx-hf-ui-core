@@ -2,9 +2,7 @@ import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 
 import { useTranslation } from 'react-i18next'
-import {
-  Checkbox, Truncate, Spinner,
-} from '@ufx-ui/core'
+import { Checkbox, Truncate } from '@ufx-ui/core'
 import timeFrames from '../../util/time_frames'
 import AmountInput from '../OrderForm/FieldComponents/input.amount'
 import DateInput from '../OrderForm/FieldComponents/input.date'
@@ -27,7 +25,6 @@ const BacktestOptionsPanel = ({
   endDate,
   setStartDate,
   setEndDate,
-  isBacktestLoading,
   isFinished,
   candles,
   setCandles,
@@ -117,7 +114,7 @@ const BacktestOptionsPanel = ({
       {isFinished && (
       <div className='hfui-strategy-options__amount-input item'>
         <Button
-          className='hfui-strategy-options__fullscreen-btn'
+          className='hfui-strategy-options__option-btn'
           label={t('strategyEditor.fullscreenChartBtn')}
           onClick={setFullScreenChart}
           green
@@ -126,10 +123,9 @@ const BacktestOptionsPanel = ({
       )}
       <div className='hfui-strategy-options__amount-input item'>
         <Button
-          className='hfui-strategy-options__fullscreen-btn'
+          className='hfui-strategy-options__option-btn'
           label={t('ui.startBtn')}
           onClick={onBacktestStart}
-          disabled={isBacktestLoading}
           green
         />
       </div>
@@ -151,14 +147,12 @@ BacktestOptionsPanel.propTypes = {
   }).isRequired,
   setFullScreenChart: PropTypes.func.isRequired,
   onBacktestStart: PropTypes.func,
-  isBacktestLoading: PropTypes.bool,
   isFinished: PropTypes.bool.isRequired,
   candles: PropTypes.bool.isRequired,
   setCandles: PropTypes.func.isRequired,
 }
 
 BacktestOptionsPanel.defaultProps = {
-  isBacktestLoading: false,
   onBacktestStart: () => {},
 }
 

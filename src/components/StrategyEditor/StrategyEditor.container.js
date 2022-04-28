@@ -7,9 +7,18 @@ import WSActions from '../../redux/actions/ws'
 import UIActions from '../../redux/actions/ui'
 import GAActions from '../../redux/actions/google_analytics'
 import WSTypes from '../../redux/constants/ws'
-import { getAuthToken, getBacktestResults, getExecutionOptions } from '../../redux/selectors/ws'
 import {
-  getStrategyId, getThemeSetting, getIsPaperTrading, getStrategiesFeatureFlags, getIsBetaVersion,
+  getAuthToken,
+  getBacktestResults,
+  getExecutionOptions,
+  getExecutionResults,
+} from '../../redux/selectors/ws'
+import {
+  getStrategyId,
+  getThemeSetting,
+  getIsPaperTrading,
+  getStrategiesFeatureFlags,
+  getIsBetaVersion,
 } from '../../redux/selectors/ui'
 import StrategyEditor from './StrategyEditor'
 import { getMarkets } from '../../redux/selectors/meta'
@@ -18,8 +27,7 @@ const mapStateToProps = (state = {}) => ({
   authToken: getAuthToken(state),
   strategyId: getStrategyId(state),
   backtestResults: getBacktestResults(state),
-  liveExecuting: state.ws.execution.executing,
-  liveLoading: state.ws.execution.loading,
+  executionResults: getExecutionResults(state),
   settingsTheme: getThemeSetting(state),
   options: getExecutionOptions(state),
   markets: getMarkets(state),
@@ -28,7 +36,7 @@ const mapStateToProps = (state = {}) => ({
   isBetaVersion: getIsBetaVersion(state),
 })
 
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch) => ({
   onRemove: (authToken, id) => {
     dispatch(WSActions.send(['strategy.remove', authToken, id]))
     dispatch(WSActions.resetBacktestData())
@@ -40,33 +48,86 @@ const mapDispatchToProps = dispatch => ({
   clearBacktestOptions: () => {
     dispatch(WSActions.resetBacktestData())
   },
-  dsExecuteLiveStrategy: (authToken, name, symbol, tf, includeTrades, strategy, seedCandleCount, margin, isPaperTrading) => {
+  dsExecuteLiveStrategy: (
+    authToken,
+    name,
+    symbol,
+    tf,
+    includeTrades,
+    strategy,
+    seedCandleCount,
+    margin,
+    isPaperTrading,
+  ) => {
     const processedStrategy = _omitBy(strategy, _isEmpty)
     const executionOptions = {
-      authToken, name, symbol, tf, includeTrades, strategy: processedStrategy, seedCandleCount, margin,
+      authToken,
+      name,
+      symbol,
+      tf,
+      includeTrades,
+      strategy: processedStrategy,
+      seedCandleCount,
+      margin,
     }
 
     if (isPaperTrading) {
-      dispatch(WSActions.setExecutionOptions({
-        includeTrades, seedCandleCount, symbol, tf, margin,
-      }))
-      dispatch(WSActions.send(['strategy.execute_start', authToken, name, symbol, tf, includeTrades, processedStrategy, seedCandleCount, margin]))
+      dispatch(
+        WSActions.setExecutionOptions({
+          includeTrades,
+          seedCandleCount,
+          symbol,
+          tf,
+          margin,
+        }),
+      )
+      dispatch(
+        WSActions.send([
+          'strategy.execute_start',
+          authToken,
+          name,
+          symbol,
+          tf,
+          includeTrades,
+          processedStrategy,
+          seedCandleCount,
+          margin,
+        ]),
+      )
       dispatch(WSActions.setExecutionLoading(true))
     } else {
-      dispatch(UIActions.changeLaunchStrategyModalState(true, executionOptions))
+      dispatch(
+        UIActions.changeLaunchStrategyModalState(true, executionOptions),
+      )
     }
   },
   dsExecuteBacktest: (from, to, symbol, tf, candles, trades, strategy) => {
     const processedStrategy = _omitBy(strategy, _isEmpty)
 
     dispatch(WSActions.purgeBacktestData())
-    dispatch(WSActions.send({
-      alias: WSTypes.ALIAS_DATA_SERVER,
-      data: ['exec.str', ['bitfinex', from, to, symbol, tf, candles, trades, true, processedStrategy, uuidv4()]],
-    }))
+    dispatch(
+      WSActions.send({
+        alias: WSTypes.ALIAS_DATA_SERVER,
+        data: [
+          'exec.str',
+          [
+            'bitfinex',
+            from,
+            to,
+            symbol,
+            tf,
+            candles,
+            trades,
+            true,
+            processedStrategy,
+            uuidv4(),
+          ],
+        ],
+      }),
+    )
     dispatch(WSActions.setBacktestLoading())
   },
-  setBacktestOptions: options => {
+  setBacktestOptions: (options) => {
     dispatch(WSActions.setBacktestOptions(options))
   },
   dsStopLiveStrategy: (authToken) => {

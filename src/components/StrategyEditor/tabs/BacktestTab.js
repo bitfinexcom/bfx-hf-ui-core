@@ -10,7 +10,7 @@ import {
   LAYOUT_CONFIG,
   LAYOUT_CONFIG_NO_DATA,
   LAYOUT_CONFIG_WITHOUT_TRADES,
-} from './BacktestTab.constants'
+} from '../components/StrategiesGridLayout.constants'
 import StrategyLiveChart from '../../StrategyLiveChart'
 import BacktestOptionsPanel from '../../BacktestOptionsPanel'
 
@@ -19,10 +19,6 @@ const BacktestTab = (props) => {
   const { t } = useTranslation()
   const [layoutConfig, setLayoutConfig] = useState()
   const [fullscreenChart, setFullScreenChart] = useState(false)
-
-  const optionsCollapse = () => {
-    setLayoutConfig(LAYOUT_CONFIG)
-  }
 
   const { finished, loading, trades } = results
 
@@ -45,9 +41,7 @@ const BacktestTab = (props) => {
           return (
             <BacktestOptionsPanel
               {...props}
-              onСollapse={optionsCollapse}
               setFullScreenChart={() => setFullScreenChart(true)}
-              isBacktestLoading={loading}
               isFinished={finished}
             />
           )
@@ -58,7 +52,6 @@ const BacktestTab = (props) => {
               {...props}
               fullscreenChart={fullscreenChart}
               exitFullscreenChart={() => setFullScreenChart(false)}
-              isLoading={loading}
             />
           )
 
@@ -72,7 +65,6 @@ const BacktestTab = (props) => {
               setLayoutConfig={setLayoutConfig}
               layoutConfig={layoutConfig}
               onTradeClick={() => {}}
-              isLoading={loading}
             />
           )
 

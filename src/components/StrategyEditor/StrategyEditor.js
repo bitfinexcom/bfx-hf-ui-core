@@ -48,8 +48,6 @@ const StrategyEditor = (props) => {
     gaCreateStrategy,
     strategyContent,
     backtestResults,
-    liveExecuting,
-    liveLoading,
     strategyDirty,
     setStrategyDirty,
     setSectionErrors,
@@ -68,6 +66,7 @@ const StrategyEditor = (props) => {
     setBacktestOptions,
     flags,
     isBetaVersion,
+    executionResults,
   } = props
   const { t } = useTranslation()
   const [isRemoveModalOpened, setIsRemoveModalOpened] = useState(false)
@@ -92,6 +91,12 @@ const StrategyEditor = (props) => {
   const [endDate, setEndDate] = useState(new Date(Date.now() - ONE_MIN * 15))
   const [margin, setMargin] = useState(options.margin || DEFAULT_USE_MARGIN)
   const [paramsOpen, setParamsOpen] = useState(false)
+
+  const {
+    executing: liveExecuting,
+    loading: liveLoading,
+  } = executionResults
+
   const execRunning = backtestResults.executing
     || backtestResults.loading
     || liveExecuting
@@ -237,36 +242,38 @@ const StrategyEditor = (props) => {
           preSidebarComponents={preSidebar}
         >
           {(isBetaVersion || flags?.live_execution) && (
-            <StrategyTab
-              htmlKey='strategy'
-              sbtitle={(
-                <>
-                  {t('strategyEditor.strategyTab')}
-                  <StrategiesMenuSideBarParams
-                    paramsOpen={paramsOpen}
-                    setParamsOpen={setParamsOpen}
-                    startExecution={startExecution}
-                    stopExecution={stopExecution}
-                    onLoadStrategy={onLoadStrategy}
-                    onExportStrategy={onExportStrategy}
-                    onSaveStrategy={onSaveStrategy}
-                    execRunning={execRunning}
-                    onOpenRemoveModal={() => setIsRemoveModalOpened(true)}
-                    onOpenCreateStrategyModal={() => setCreateNewStrategyModalOpen(true)}
-                    onOpenCreateStrategyFromModal={() => setCreateNewStrategyFromModalOpen(true)}
-                    onOpenSaveStrategyAsModal={() => setIsSaveStrategyModalOpen(true)}
-                    onImportStrategy={onImportStrategy}
-                    strategy={strategy}
-                    strategyId={strategyId}
-                  />
-                </>
-              )}
-              sbicon={<Icon name='file-code-o' />}
-              onOpenSaveStrategyAsModal={() => setIsSaveStrategyModalOpen(true)}
-              isPaperTrading={isPaperTrading}
-              {...optionsProps}
-              {...props}
-            />
+          <StrategyTab
+            htmlKey='strategy'
+            sbtitle={(
+              <>
+                {t('strategyEditor.strategyTab')}
+                <StrategiesMenuSideBarParams
+                  paramsOpen={paramsOpen}
+                  setParamsOpen={setParamsOpen}
+                  startExecution={startExecution}
+                  stopExecution={stopExecution}
+                  onLoadStrategy={onLoadStrategy}
+                  onExportStrategy={onExportStrategy}
+                  onSaveStrategy={onSaveStrategy}
+                  execRunning={execRunning}
+                  onOpenRemoveModal={() => setIsRemoveModalOpened(true)}
+                  onOpenCreateStrategyModal={() => setCreateNewStrategyModalOpen(true)}
+                  onOpenCreateStrategyFromModal={() => setCreateNewStrategyFromModalOpen(true)}
+                  onOpenSaveStrategyAsModal={() => setIsSaveStrategyModalOpen(true)}
+                  onImportStrategy={onImportStrategy}
+                  strategy={strategy}
+                  strategyId={strategyId}
+                />
+              </>
+            )}
+            sbicon={<Icon name='file-code-o' />}
+            onOpenSaveStrategyAsModal={() => setIsSaveStrategyModalOpen(true)}
+            isPaperTrading={isPaperTrading}
+            startExecution={startExecution}
+            executionResults={executionResults}
+            {...optionsProps}
+            {...props}
+          />
           )}
 
           {isPaperTrading && (isBetaVersion || flags?.backtest) && (

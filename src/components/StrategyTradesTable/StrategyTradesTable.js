@@ -9,7 +9,7 @@ import _findIndex from 'lodash/findIndex'
 import { Icon } from 'react-fa'
 import Panel from '../../ui/Panel'
 import StrategyTradesTableColumns from './StrategyTradesTable.columns'
-import { COMPONENTS_KEYS, LAYOUT_CONFIG } from '../StrategyEditor/tabs/StrategyTab.constants'
+import { COMPONENTS_KEYS, LAYOUT_CONFIG } from '../StrategyEditor/components/StrategiesGridLayout.constants'
 
 import { onTradeExportClick } from './StrategyTradesTable.helpers'
 import { getActiveMarket } from '../../redux/selectors/ui'
