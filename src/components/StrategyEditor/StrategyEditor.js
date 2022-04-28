@@ -66,6 +66,8 @@ const StrategyEditor = (props) => {
     isPaperTrading,
     dsExecuteBacktest,
     setBacktestOptions,
+    flags,
+    isBetaVersion,
   } = props
   const { t } = useTranslation()
   const [isRemoveModalOpened, setIsRemoveModalOpened] = useState(false)
@@ -86,18 +88,32 @@ const StrategyEditor = (props) => {
   const [candleSeed, setCandleSeed] = useState(
     options.seedCandleCount || DEFAULT_SEED_COUNT,
   )
-  const [startDate, setStartDate] = useState(
-    new Date(Date.now() - ONE_DAY),
-  )
-  const [endDate, setEndDate] = useState(
-    new Date(Date.now() - (ONE_MIN * 15)),
-  )
+  const [startDate, setStartDate] = useState(new Date(Date.now() - ONE_DAY))
+  const [endDate, setEndDate] = useState(new Date(Date.now() - ONE_MIN * 15))
   const [margin, setMargin] = useState(options.margin || DEFAULT_USE_MARGIN)
   const [paramsOpen, setParamsOpen] = useState(false)
-  const execRunning = backtestResults.executing || backtestResults.loading || liveExecuting || liveLoading
+  const execRunning = backtestResults.executing
+    || backtestResults.loading
+    || liveExecuting
+    || liveLoading
 
   const optionsProps = {
-    timeframe, candles, setCandles, symbol, setSymbol, setTimeframe, trades, setTrades, candleSeed, setCandleSeed, margin, setMargin, startDate, setStartDate, endDate, setEndDate,
+    timeframe,
+    candles,
+    setCandles,
+    symbol,
+    setSymbol,
+    setTimeframe,
+    trades,
+    setTrades,
+    candleSeed,
+    setCandleSeed,
+    margin,
+    setMargin,
+    startDate,
+    setStartDate,
+    endDate,
+    setEndDate,
   }
 
   const onCloseModals = () => {
@@ -166,7 +182,15 @@ const StrategyEditor = (props) => {
     const startNum = new Date(startDate).getTime()
     const endNum = new Date(endDate).getTime()
 
-    dsExecuteBacktest(startNum, endNum, symbol?.wsID, timeframe, true, false, strategy)
+    dsExecuteBacktest(
+      startNum,
+      endNum,
+      symbol?.wsID,
+      timeframe,
+      true,
+      false,
+      strategy,
+    )
     // setBacktestOptions(optionsProps)
   }
 
@@ -195,11 +219,7 @@ const StrategyEditor = (props) => {
     }
   }
 
-  const preSidebar = liveExecuting ? (
-    <StrategyRunned />
-  ) : (
-    <StrategyPaused />
-  )
+  const preSidebar = liveExecuting ? <StrategyRunned /> : <StrategyPaused />
 
   return (
     <>
@@ -216,37 +236,40 @@ const StrategyEditor = (props) => {
           onSideTabChange={onSideTabChange}
           preSidebarComponents={preSidebar}
         >
-          <StrategyTab
-            htmlKey='strategy'
-            sbtitle={(
-              <>
-                {t('strategyEditor.strategyTab')}
-                <StrategiesMenuSideBarParams
-                  paramsOpen={paramsOpen}
-                  setParamsOpen={setParamsOpen}
-                  startExecution={startExecution}
-                  stopExecution={stopExecution}
-                  onLoadStrategy={onLoadStrategy}
-                  onExportStrategy={onExportStrategy}
-                  onSaveStrategy={onSaveStrategy}
-                  execRunning={execRunning}
-                  onOpenRemoveModal={() => setIsRemoveModalOpened(true)}
-                  onOpenCreateStrategyModal={() => setCreateNewStrategyModalOpen(true)}
-                  onOpenCreateStrategyFromModal={() => setCreateNewStrategyFromModalOpen(true)}
-                  onOpenSaveStrategyAsModal={() => setIsSaveStrategyModalOpen(true)}
-                  onImportStrategy={onImportStrategy}
-                  strategy={strategy}
-                  strategyId={strategyId}
-                />
-              </>
-            )}
-            sbicon={<Icon name='file-code-o' />}
-            onOpenSaveStrategyAsModal={() => setIsSaveStrategyModalOpen(true)}
-            isPaperTrading={isPaperTrading}
-            {...optionsProps}
-            {...props}
-          />
-          {isPaperTrading && (
+          {(isBetaVersion || flags?.live_execution) && (
+            <StrategyTab
+              htmlKey='strategy'
+              sbtitle={(
+                <>
+                  {t('strategyEditor.strategyTab')}
+                  <StrategiesMenuSideBarParams
+                    paramsOpen={paramsOpen}
+                    setParamsOpen={setParamsOpen}
+                    startExecution={startExecution}
+                    stopExecution={stopExecution}
+                    onLoadStrategy={onLoadStrategy}
+                    onExportStrategy={onExportStrategy}
+                    onSaveStrategy={onSaveStrategy}
+                    execRunning={execRunning}
+                    onOpenRemoveModal={() => setIsRemoveModalOpened(true)}
+                    onOpenCreateStrategyModal={() => setCreateNewStrategyModalOpen(true)}
+                    onOpenCreateStrategyFromModal={() => setCreateNewStrategyFromModalOpen(true)}
+                    onOpenSaveStrategyAsModal={() => setIsSaveStrategyModalOpen(true)}
+                    onImportStrategy={onImportStrategy}
+                    strategy={strategy}
+                    strategyId={strategyId}
+                  />
+                </>
+              )}
+              sbicon={<Icon name='file-code-o' />}
+              onOpenSaveStrategyAsModal={() => setIsSaveStrategyModalOpen(true)}
+              isPaperTrading={isPaperTrading}
+              {...optionsProps}
+              {...props}
+            />
+          )}
+
+          {isPaperTrading && (isBetaVersion || flags?.backtest) && (
             <BacktestTab
               htmlKey='backtest'
               sbtitle={t('strategyEditor.backtestTab')}
@@ -259,17 +282,22 @@ const StrategyEditor = (props) => {
               {...props}
             />
           )}
-          <IDETab
-            htmlKey='view_in_ide'
-            sbtitle={t('strategyEditor.viewInIDETab')}
-            sbicon={<Icon name='edit' />}
-            {...props}
-          />
-          <HelpTab
-            htmlKey='help'
-            sbtitle={t('strategyEditor.helpTab')}
-            sbicon={<Icon name='question-circle-o' />}
-          />
+          {/* React.Fragment is not supported for tabs */}
+          {(isBetaVersion || flags?.docs) && [
+            <IDETab
+              htmlKey='view_in_ide'
+              key='view_in_ide'
+              sbtitle={t('strategyEditor.viewInIDETab')}
+              sbicon={<Icon name='edit' />}
+              {...props}
+            />,
+            <HelpTab
+              htmlKey='help'
+              key='help'
+              sbtitle={t('strategyEditor.helpTab')}
+              sbicon={<Icon name='question-circle-o' />}
+            />,
+          ]}
         </StrategyEditorPanel>
       )}
       <CreateNewStrategyFromModalOpen
@@ -316,9 +344,9 @@ StrategyEditor.propTypes = {
   markets: PropTypes.objectOf(PropTypes.object).isRequired,
   setStrategy: PropTypes.func,
   backtestResults: PropTypes.objectOf(PropTypes.any).isRequired,
-  options: PropTypes.objectOf(PropTypes.oneOfType([
-    PropTypes.string, PropTypes.number, PropTypes.bool,
-  ])).isRequired,
+  options: PropTypes.objectOf(
+    PropTypes.oneOfType([PropTypes.string, PropTypes.number, PropTypes.bool]),
+  ).isRequired,
   strategy: PropTypes.shape({
     id: PropTypes.string,
     label: PropTypes.string,
@@ -346,6 +374,12 @@ StrategyEditor.propTypes = {
   isPaperTrading: PropTypes.bool.isRequired,
   setBacktestOptions: PropTypes.func.isRequired,
   dsExecuteBacktest: PropTypes.func.isRequired,
+  isBetaVersion: PropTypes.bool.isRequired,
+  flags: PropTypes.shape({
+    docs: PropTypes.bool,
+    live_execution: PropTypes.bool,
+    backtest: PropTypes.bool,
+  }).isRequired,
 }
 
 StrategyEditor.defaultProps = {
