@@ -25,6 +25,8 @@ const StrategyOptionsPanel = ({
   setMargin,
   setSymbol,
   setFullScreenChart,
+  startExecution,
+  isExecuting,
 }) => {
   const { t } = useTranslation()
 
@@ -84,6 +86,7 @@ const StrategyOptionsPanel = ({
             setSymbol(sel)
           }}
           markets={markets}
+          disabled={isExecuting}
           renderWithFavorites
         />
         <p className='hfui-orderform__input-label'>
@@ -91,19 +94,42 @@ const StrategyOptionsPanel = ({
         </p>
       </div>
       <div className='hfui-strategy-options__input item'>
-        <Dropdown options={strategyTypesOptions} />
+        <Dropdown
+          options={strategyTypesOptions}
+          onChange={() => {}}
+          disabled={isExecuting}
+        />
         <p className='hfui-orderform__input-label'>
           {t('strategyEditor.strategyTypeDescription')}
         </p>
       </div>
-
+      {isExecuting && (
       <div className='hfui-strategy-options__amount-input item'>
         <Button
-          className='hfui-strategy-options__fullscreen-btn'
+          className='hfui-strategy-options__option-btn'
           label={t('strategyEditor.fullscreenChartBtn')}
           onClick={setFullScreenChart}
           green
         />
+      </div>
+      )}
+      <div className='hfui-strategy-options__amount-input item'>
+        {isExecuting ? (
+          <Button
+            className='hfui-strategy-options__option-btn'
+            label={t('ui.stopBtn')}
+            onClick={() => {}}
+            red
+          />
+        ) : (
+          <Button
+            className='hfui-strategy-options__option-btn'
+            label={t('ui.startBtn')}
+            onClick={startExecution}
+            green
+          />
+        )}
+
       </div>
     </div>
   )

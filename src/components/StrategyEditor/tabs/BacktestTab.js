@@ -20,10 +20,6 @@ const BacktestTab = (props) => {
   const [layoutConfig, setLayoutConfig] = useState()
   const [fullscreenChart, setFullScreenChart] = useState(false)
 
-  const optionsCollapse = () => {
-    setLayoutConfig(LAYOUT_CONFIG)
-  }
-
   const { finished, loading, trades } = results
 
   useEffect(() => {
@@ -45,9 +41,7 @@ const BacktestTab = (props) => {
           return (
             <BacktestOptionsPanel
               {...props}
-              onСollapse={optionsCollapse}
               setFullScreenChart={() => setFullScreenChart(true)}
-              isBacktestLoading={loading}
               isFinished={finished}
             />
           )

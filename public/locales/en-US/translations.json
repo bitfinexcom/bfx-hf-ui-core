@@ -647,6 +647,7 @@
     "largestGain": "Largest Gain",
     "largestLoss": "Largest Loss",
     "liveExecution": {
+      "initialMessage": "Press start to begin execution",
       "executing": "Your strategy is being executed on your live account with real balances.",
       "stopping": "Stopping strategy execution...",
       "preparing": "Processing and preparing the strategy before execution...",
@@ -694,6 +695,7 @@
     "removeBtn": "Remove",
     "createBtn": "Create",
     "startBtn": "Start",
+    "stopBtn": "Stop",
     "deleteBtn": "Delete",
     "expandPanel": "Expand Panel",
     "compressPanel": "Compress Panel",
