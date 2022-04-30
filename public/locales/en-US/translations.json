@@ -631,6 +631,8 @@
     "useMarginCheckbox": "Use margin trading",
     "useMarginCheckboxDescription": "PLUG",
     "checkboxWarningMessage": "At least one checkbox should be selected",
+    "invalidTF": "Invalid timeframe selected",
+    "invalidPeriod": "End date has to be after the start date",
     "totalPL": "Total P/L",
     "avgPL": "Avg PL",
     "profitFactor": "Profit Factor",
