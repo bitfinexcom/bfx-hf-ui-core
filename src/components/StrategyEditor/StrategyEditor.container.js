@@ -137,6 +137,14 @@ const mapDispatchToProps = (dispatch) => ({
   onSave: (authToken, strategy = {}) => {
     dispatch(WSActions.send(['strategy.save', authToken, strategy]))
   },
+  showError: (text) => {
+    dispatch(UIActions.recvNotification({
+      mts: Date.now(),
+      status: 'error',
+      text,
+      cid: uuidv4(),
+    }))
+  },
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(StrategyEditor)

@@ -64,6 +64,7 @@ const StrategyEditor = (props) => {
     isPaperTrading,
     dsExecuteBacktest,
     setBacktestOptions,
+    showError,
     flags,
     isBetaVersion,
     executionResults,
@@ -183,17 +184,31 @@ const StrategyEditor = (props) => {
   }
 
   const onBacktestStart = () => {
-    // todo: check for errors
     const startNum = new Date(startDate).getTime()
     const endNum = new Date(endDate).getTime()
+
+    if (!trades && !candles) {
+      showError(t('strategyEditor.checkboxWarningMessage'))
+      return
+    }
+
+    if (!timeframe) {
+      showError(t('strategyEditor.invalidTF'))
+      return
+    }
+
+    if (endNum <= startNum) {
+      showError(t('strategyEditor.invalidPeriod'))
+      return
+    }
 
     dsExecuteBacktest(
       startNum,
       endNum,
       symbol?.wsID,
       timeframe,
-      true,
-      false,
+      candles,
+      trades,
       strategy,
     )
     // setBacktestOptions(optionsProps)
@@ -283,7 +298,6 @@ const StrategyEditor = (props) => {
               sbicon={<Icon name='repeat' />}
               onOpenSaveStrategyAsModal={() => setIsSaveStrategyModalOpen(true)}
               results={backtestResults}
-              // todo: add useCandles / useTrades params
               onBacktestStart={onBacktestStart}
               {...optionsProps}
               {...props}
@@ -387,6 +401,7 @@ StrategyEditor.propTypes = {
     live_execution: PropTypes.bool,
     backtest: PropTypes.bool,
   }).isRequired,
+  showError: PropTypes.func.isRequired,
 }
 
 StrategyEditor.defaultProps = {
