@@ -45,12 +45,13 @@ const StrategiesGridLayout = ({ renderGridComponents, layoutConfig, isLoading })
 
 StrategiesGridLayout.propTypes = {
   renderGridComponents: PropTypes.func.isRequired,
-  layoutConfig: PropTypes.arrayOf(PropTypes.object).isRequired,
+  layoutConfig: PropTypes.arrayOf(PropTypes.object),
   isLoading: PropTypes.bool,
 }
 
 StrategiesGridLayout.defaultProps = {
   isLoading: false,
+  layoutConfig: [],
 }
 
 export default StrategiesGridLayout

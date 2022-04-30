@@ -25,8 +25,10 @@ const StrategyTab = (props) => {
 
   const { loading, executing, results } = executionResults
 
+  const hasResults = !_isEmpty(results)
+
   useEffect(() => {
-    if (!executing && _isEmpty(results)) {
+    if (!executing && !hasResults) {
       setLayoutConfig(LAYOUT_CONFIG_NO_DATA)
       return
     }
@@ -35,7 +37,7 @@ const StrategyTab = (props) => {
       return
     }
     setLayoutConfig(LAYOUT_CONFIG)
-  }, [results, executing])
+  }, [hasResults, results, executing])
 
   const renderGridComponents = useCallback(
     (i) => {
@@ -46,6 +48,7 @@ const StrategyTab = (props) => {
               {...props}
               setFullScreenChart={() => setFullScreenChart(true)}
               isExecuting={executing}
+              hasResults={hasResults}
             />
           )
 
