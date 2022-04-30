@@ -7,10 +7,10 @@ const StrategyStopped = ({ onClick }) => {
   const { t } = useTranslation()
 
   return (
-    <div className='hfui-strategy-sidebar-status paused' onClick={onClick}>
-      <Icon name='pause' />
+    <div className='hfui-strategy-sidebar-status stopped' onClick={onClick}>
+      <Icon name='stop' />
       &nbsp;&nbsp;
-      {t('strategyEditor.paused')}
+      {t('strategyEditor.stopped')}
     </div>
   )
 }

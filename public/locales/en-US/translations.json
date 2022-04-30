@@ -597,6 +597,7 @@
     "newStrategyFrom2": "New strategy from...",
     "running": "Running",
     "paused": "Paused",
+    "stopped": "Stopped",
     "recent": "Recent",
     "strategyTab": "Strategy",
     "backtestTab": "Backtest",
