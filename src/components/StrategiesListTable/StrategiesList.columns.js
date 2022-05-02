@@ -1,7 +1,7 @@
 import { defaultCellRenderer } from '../../util/ui'
 import { resultNumber } from '../Backtester/Results/Results.utils'
 import StrategyRunned from '../StrategyEditor/components/StrategyRunned'
-import StrategyPaused from '../StrategyEditor/components/StrategyPaused'
+import StrategyStopped from '../StrategyEditor/components/StrategyStopped'
 
 const STYLES = {
   flexStart: { justifyContent: 'flex-start' },
@@ -24,7 +24,7 @@ export default (t) => [
   //   style: STYLES.center,
   //   cellRenderer: ({ rowData = {} }) => {
   //     const isRunned = true
-  //     return isRunned ? <StrategyRunned /> : <StrategyPaused />
+  //     return isRunned ? <StrategyRunned /> : <StrategyStopped />
   //   },
   // },
   {
