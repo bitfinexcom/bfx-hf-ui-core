@@ -7,7 +7,7 @@ const StrategyRunned = ({ onClick }) => {
   const { t } = useTranslation()
 
   return (
-    <div className='hfui-strategy-sidebar-status running' onClick={onClick}>
+    <div className='hfui-strategy-sidebar-status running blinking-animation' onClick={onClick}>
       <Icon name='circle' />
       &nbsp;&nbsp;
       {t('strategyEditor.running')}

@@ -294,6 +294,10 @@ a:visited {
   pointer-events: none;
 }
 
+.blinking-animation {
+  animation: blinking 2s linear infinite;
+}
+
 // OrderHistory & Atomic Orders table marker icon
 .row-marker {
   background: transparent;
@@ -365,4 +369,10 @@ a:visited {
 
 .ReactVirtualized__Table__Grid {
   font-feature-settings: "tnum";
+}
+
+@keyframes blinking {
+  50% {
+    opacity: 0;
+  }
 }

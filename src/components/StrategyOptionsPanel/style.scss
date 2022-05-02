@@ -9,8 +9,12 @@
     }
   }
 
-  &__strategy-name {
+  &__option {
     padding-top: 7px;
+  }
+
+  &__strategy-name {
+    @extend .hfui-strategy-options__option;
     font-size: 20px;
     font-weight: 700;
     cursor: pointer;

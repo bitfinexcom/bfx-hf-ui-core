@@ -18,12 +18,13 @@ import StrategyTab from './tabs/StrategyTab'
 import BacktestTab from './tabs/BacktestTab'
 import IDETab from './tabs/IDETab'
 import { getDefaultMarket } from '../../util/market'
-import StrategiesMenuSideBarParams from './components/StrategiesMenuSideBarParams'
 import HelpTab from './tabs/HelpTab'
-import StrategyPaused from './components/StrategyPaused'
-import StrategyRunned from './components/StrategyRunned'
 import CreateNewStrategyFromModalOpen from '../../modals/Strategy/CreateNewStrategyFromModal'
 import SaveStrategyAsModal from '../../modals/Strategy/SaveStrategyAsModal/SaveStrategyAsModal'
+import StrategyTabTitle from './tabs/StrategyTab.Title'
+import BacktestTabTitle from './tabs/BacktestTab.Title'
+import HelpTabTItle from './tabs/HelpTab.TItle'
+import IDETabTitle from './tabs/IDETab.Title'
 
 import './style.css'
 
@@ -68,6 +69,7 @@ const StrategyEditor = (props) => {
     flags,
     isBetaVersion,
     executionResults,
+    sectionErrors,
   } = props
   const { t } = useTranslation()
   const [isRemoveModalOpened, setIsRemoveModalOpened] = useState(false)
@@ -91,17 +93,6 @@ const StrategyEditor = (props) => {
   const [startDate, setStartDate] = useState(new Date(Date.now() - ONE_DAY))
   const [endDate, setEndDate] = useState(new Date(Date.now() - ONE_MIN * 15))
   const [margin, setMargin] = useState(options.margin || DEFAULT_USE_MARGIN)
-  const [paramsOpen, setParamsOpen] = useState(false)
-
-  const {
-    executing: liveExecuting,
-    loading: liveLoading,
-  } = executionResults
-
-  const execRunning = backtestResults.executing
-    || backtestResults.loading
-    || liveExecuting
-    || liveLoading
 
   const optionsProps = {
     timeframe,
@@ -233,14 +224,6 @@ const StrategyEditor = (props) => {
     dsStopLiveStrategy(authToken)
   }
 
-  const onSideTabChange = (tab) => {
-    if (tab === 0) {
-      setParamsOpen(true)
-    }
-  }
-
-  const preSidebar = liveExecuting ? <StrategyRunned /> : <StrategyPaused />
-
   return (
     <>
       {!strategy || _isEmpty(strategy) ? (
@@ -253,24 +236,17 @@ const StrategyEditor = (props) => {
           moveable={moveable}
           removeable={removeable}
           onRemoveStrategy={onRemoveStrategy}
-          onSideTabChange={onSideTabChange}
-          preSidebarComponents={preSidebar}
         >
           {(isBetaVersion || flags?.live_execution) && (
-          <StrategyTab
-            htmlKey='strategy'
-            sbtitle={(
-              <>
-                {t('strategyEditor.strategyTab')}
-                <StrategiesMenuSideBarParams
-                  paramsOpen={paramsOpen}
-                  setParamsOpen={setParamsOpen}
+            <StrategyTab
+              htmlKey='strategy'
+              sbtitle={({ selectedTab, sidebarOpened }) => (
+                <StrategyTabTitle
                   startExecution={startExecution}
                   stopExecution={stopExecution}
                   onLoadStrategy={onLoadStrategy}
                   onExportStrategy={onExportStrategy}
                   onSaveStrategy={onSaveStrategy}
-                  execRunning={execRunning}
                   onOpenRemoveModal={() => setIsRemoveModalOpened(true)}
                   onOpenCreateStrategyModal={() => setCreateNewStrategyModalOpen(true)}
                   onOpenCreateStrategyFromModal={() => setCreateNewStrategyFromModalOpen(true)}
@@ -278,24 +254,29 @@ const StrategyEditor = (props) => {
                   onImportStrategy={onImportStrategy}
                   strategy={strategy}
                   strategyId={strategyId}
+                  executionResults={executionResults}
+                  selectedTab={selectedTab}
+                  sidebarOpened={sidebarOpened}
                 />
-              </>
-            )}
-            sbicon={<Icon name='file-code-o' />}
-            onOpenSaveStrategyAsModal={() => setIsSaveStrategyModalOpen(true)}
-            isPaperTrading={isPaperTrading}
-            startExecution={startExecution}
-            executionResults={executionResults}
-            {...optionsProps}
-            {...props}
-          />
+              )}
+              onOpenSaveStrategyAsModal={() => setIsSaveStrategyModalOpen(true)}
+              isPaperTrading={isPaperTrading}
+              startExecution={startExecution}
+              executionResults={executionResults}
+              {...optionsProps}
+              {...props}
+            />
           )}
 
           {isPaperTrading && (isBetaVersion || flags?.backtest) && (
             <BacktestTab
               htmlKey='backtest'
-              sbtitle={t('strategyEditor.backtestTab')}
-              sbicon={<Icon name='repeat' />}
+              sbtitle={({ sidebarOpened }) => (
+                <BacktestTabTitle
+                  results={backtestResults}
+                  sidebarOpened={sidebarOpened}
+                />
+              )}
               onOpenSaveStrategyAsModal={() => setIsSaveStrategyModalOpen(true)}
               results={backtestResults}
               onBacktestStart={onBacktestStart}
@@ -308,15 +289,19 @@ const StrategyEditor = (props) => {
             <IDETab
               htmlKey='view_in_ide'
               key='view_in_ide'
-              sbtitle={t('strategyEditor.viewInIDETab')}
-              sbicon={<Icon name='edit' />}
+              sbtitle={({ sidebarOpened }) => (
+                <IDETabTitle
+                  sectionErrors={sectionErrors}
+                  strategyDirty={strategyDirty}
+                  sidebarOpened={sidebarOpened}
+                />
+              )}
               {...props}
             />,
             <HelpTab
               htmlKey='help'
               key='help'
-              sbtitle={t('strategyEditor.helpTab')}
-              sbicon={<Icon name='question-circle-o' />}
+              sbtitle={({ sidebarOpened }) => <HelpTabTItle sidebarOpened={sidebarOpened} />}
             />,
           ]}
         </StrategyEditorPanel>
@@ -382,8 +367,10 @@ StrategyEditor.propTypes = {
   setSectionErrors: PropTypes.func.isRequired,
   onStrategySelect: PropTypes.func.isRequired,
   gaCreateStrategy: PropTypes.func.isRequired,
-  liveExecuting: PropTypes.bool.isRequired,
-  liveLoading: PropTypes.bool.isRequired,
+  executionResults: PropTypes.shape({
+    executing: PropTypes.bool,
+    loading: PropTypes.bool,
+  }).isRequired,
   strategyContent: PropTypes.objectOf(
     PropTypes.oneOfType([
       PropTypes.string.isRequired,

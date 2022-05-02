@@ -61,12 +61,11 @@ body.hosted {
   display: flex;
   justify-content: center;
   align-items: center;
-  padding-top: 5px;
-  padding-bottom: 5px;
-  margin-bottom: 10px;
-  font-size: 16px;
+  font-size: 14px;
+  text-transform: uppercase;
+  font-weight: 700;
 
-  &.paused {
+  &.stopped {
     color: $green-color;
   }
 
@@ -261,4 +260,13 @@ body.hosted {
   font-size: 20px;
   font-weight: 700;
   text-align: center;
+}
+
+.hfui-strategyeditor__sidebar-title {
+  .title-icon {
+    margin-right: 5px;
+  }
+  .title-label--indicator {
+    margin-right: 10px;
+  }
 }
