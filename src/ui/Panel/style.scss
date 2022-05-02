@@ -309,10 +309,7 @@
 
     &.sidebar-opened {
       .hfui_panel__sidebar-container {
-        width: 10%;
-      }
-      .hfui-panel__inner {
-        width: 90%;
+        width: 150px;
       }
     }
 
@@ -327,9 +324,9 @@
     }
 
     .hfui_panel__sidebar-container {
-      width: 3%;
-      flex: 1;
+      width: 50px;
       position: relative;
+      margin-right: 10px;
 
       .hfui_panel__sidebar_switch {
         position: absolute;

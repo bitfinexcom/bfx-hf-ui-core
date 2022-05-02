@@ -13,7 +13,7 @@ const BacktestTabTitle = ({ results, sidebarOpened }) => {
     <div className='hfui-strategyeditor__sidebar-title'>
       <Icon name='repeat' className='title-icon' />
       {sidebarOpened && (
-        <span className={(loading || finished) && 'title-label--indicator'}>
+        <span className='title-label'>
           {t('strategyEditor.backtestTab')}
         </span>
       )}

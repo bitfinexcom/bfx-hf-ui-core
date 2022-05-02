@@ -30,7 +30,7 @@ const IDETabTitle = ({ sidebarOpened, strategyDirty, sectionErrors }) => {
   return (
     <div className='hfui-strategyeditor__sidebar-title'>
       <Icon name='edit' className='title-icon' />
-      {sidebarOpened && <span>{t('strategyEditor.viewInIDETab')}</span>}
+      {sidebarOpened && <span className='title-label'>{t('strategyEditor.viewInIDETab')}</span>}
       {getIndicator()}
     </div>
   )

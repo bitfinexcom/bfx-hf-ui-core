@@ -265,8 +265,14 @@ body.hosted {
 .hfui-strategyeditor__sidebar-title {
   .title-icon {
     margin-right: 5px;
+    &:last-child {
+      margin-right: 0;
+    }
   }
-  .title-label--indicator {
+  .title-label {
     margin-right: 10px;
+    &:last-child {
+      margin-right: 0;
+    }
   }
 }
