@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import _isEmpty from 'lodash/isEmpty'
 import { useTranslation } from 'react-i18next'
 import OutsideClickHandler from 'react-outside-click-handler'
+import { Icon } from 'react-fa'
 import StrategiesMenuSideBarParams from '../components/StrategiesMenuSideBarParams'
 import Indicator from '../../../ui/Indicator'
 
@@ -11,11 +12,10 @@ const titleWithIndicatorStyles = {
 }
 
 const StrategyTabTitle = (props) => {
-  const { executionResults, selectedTab } = props
+  const { executionResults, selectedTab, sidebarOpened } = props
+  const { results, executing, loading } = executionResults
 
   const [paramsOpen, setParamsOpen] = useState(false)
-
-  const { results, executing, loading } = executionResults
 
   const { t } = useTranslation()
   const title = t('strategyEditor.strategyTab')
@@ -24,7 +24,10 @@ const StrategyTabTitle = (props) => {
     if (loading) {
       return (
         <>
-          <span style={titleWithIndicatorStyles}>{title}</span>
+          <Icon name='file-code-o' />
+          {sidebarOpened && (
+            <span style={titleWithIndicatorStyles}>{title}</span>
+          )}
           <Indicator white blinking />
         </>
       )
@@ -32,20 +35,31 @@ const StrategyTabTitle = (props) => {
     if (executing) {
       return (
         <>
-          <span style={titleWithIndicatorStyles}>{title}</span>
-          <Indicator red blinking={false} />
+          <Icon name='file-code-o' />
+          {sidebarOpened && (
+            <span style={titleWithIndicatorStyles}>{title}</span>
+          )}
+          <Indicator red blinking={!sidebarOpened} />
         </>
       )
     }
     if (!_isEmpty(results)) {
       return (
         <>
-          <span style={titleWithIndicatorStyles}>{title}</span>
+          <Icon name='file-code-o' />
+          {sidebarOpened && (
+            <span style={titleWithIndicatorStyles}>{title}</span>
+          )}
           <Indicator green />
         </>
       )
     }
-    return <span>{title}</span>
+    return (
+      <>
+        <Icon name='file-code-o' />
+        {sidebarOpened && <span>{title}</span>}
+      </>
+    )
   }
 
   const closeParams = () => setParamsOpen(false)
@@ -80,6 +94,7 @@ StrategyTabTitle.propTypes = {
     loading: PropTypes.bool,
   }).isRequired,
   selectedTab: PropTypes.number.isRequired,
+  sidebarOpened: PropTypes.bool.isRequired,
 }
 
 export default StrategyTabTitle

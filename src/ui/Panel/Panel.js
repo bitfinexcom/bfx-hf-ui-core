@@ -1,55 +1,23 @@
 import React, {
-  useState, useEffect, useCallback, useLayoutEffect,
+  useState,
+  useEffect,
+  useCallback,
+  useLayoutEffect,
 } from 'react'
 import ClassNames from 'clsx'
-import { Icon } from 'react-fa'
 import PropTypes from 'prop-types'
-import _filter from 'lodash/filter'
-import _map from 'lodash/map'
-import _isNumber from 'lodash/isNumber'
 import _isEmpty from 'lodash/isEmpty'
+import _filter from 'lodash/filter'
 
-import Scrollbars from '../Scrollbars'
+import { Icon } from 'react-fa'
 import useSize from '../../hooks/useSize'
 import { getBrowserFullscreenProp } from '../../util/fullscreen'
+import PanelSidebarTabs from './Panel.SidebarTabs'
+import PanelTabs from './Panel.Tabs'
+import { getForcedTab } from './Panel.helpers'
+import Scrollbars from '../Scrollbars'
 
 import './style.css'
-
-const getTabTitle = (tab) => {
-  // eslint-disable-line
-  const { htmlKey, tabtitle, sbtitle } = tab.props
-
-  if (typeof sbtitle === 'string') {
-    return sbtitle
-  }
-
-  if (typeof tabtitle === 'string') {
-    return tabtitle
-  }
-
-  if (!htmlKey) {
-    console.trace('htmlKey missing')
-  }
-
-  return htmlKey
-}
-
-// eslint-disable-next-line consistent-return
-const getForcedTab = (forcedTab, tabs) => {
-  if (_isNumber(forcedTab)) {
-    return forcedTab
-  }
-
-  if (_isEmpty(forcedTab)) {
-    return 0
-  }
-
-  for (let i = 0; i < tabs.length; i++) {
-    if (tabs[i].props.tabtitle === forcedTab) {
-      return i
-    }
-  }
-}
 
 const Panel = ({
   label,
@@ -133,7 +101,10 @@ const Panel = ({
   const exitPanelFullscreen = () => {
     if (panelRef.current === null) return
 
-    if (document.fullscreenElement && document[getBrowserFullscreenProp()] !== null) {
+    if (
+      document.fullscreenElement
+      && document[getBrowserFullscreenProp()] !== null
+    ) {
       onEnterFullscreen()
       document
         .exitFullscreen()
@@ -199,19 +170,11 @@ const Panel = ({
             )}
           </div>
           {tabs.length > 0 && (
-            <ul className='hfui-panel__header-tabs'>
-              {_map(tabs, (tab, index) => (
-                <li
-                  key={tab.props.htmlKey || tab.props.tabtitle}
-                  className={ClassNames({
-                    active: getTabTitle(tab) === getTabTitle(tabs[selectedTab]),
-                  })}
-                  onClick={() => _setSelectedTab(index)}
-                >
-                  <p className='hfui-panel__label'>{tab.props.tabtitle}</p>
-                </li>
-              ))}
-            </ul>
+            <PanelTabs
+              tabs={tabs}
+              setSelectedTab={_setSelectedTab}
+              selectedTab={selectedTab}
+            />
           )}
 
           {!hideIcons && (
@@ -264,21 +227,14 @@ const Panel = ({
                 name={sidebarOpened ? 'chevron-left' : 'chevron-right'}
                 onClick={() => setSidebarOpened(!sidebarOpened)}
               />
-              <ul className='hfui_panel__sidebar'>
-                {_map(sbTabs, (tab, index) => (
-                  <li
-                    key={tab.props.htmlKey || tab.props.sbtitle}
-                    className={ClassNames({
-                      active:
-                        getTabTitle(tab) === getTabTitle(sbTabs[selectedSBTab]),
-                    })}
-                    onClick={() => _setSelectedSBTab(index)}
-                  >
-                    <span className='sb-icon'>{tab.props.sbicon}</span>
-                    {sidebarOpened && tab.props.sbtitle({ selectedTab: selectedSBTab, sidebarOpened })}
-                  </li>
-                ))}
-              </ul>
+              {_isEmpty(tabs) && (
+                <PanelSidebarTabs
+                  selectedSBTab={selectedSBTab}
+                  setSelectedSBTab={_setSelectedSBTab}
+                  sbTabs={sbTabs}
+                  sidebarOpened={sidebarOpened}
+                />
+              )}
             </div>
             <div className='hfui-panel__inner'>{innerContent}</div>
           </div>
