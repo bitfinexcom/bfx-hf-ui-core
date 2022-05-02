@@ -20,9 +20,7 @@ const SidebarTabs = ({
           })}
           onClick={() => setSelectedSBTab(index)}
         >
-          <span className='sb-icon'>{tab.props.sbicon}</span>
-          {sidebarOpened
-            && tab.props.sbtitle({ selectedTab: selectedSBTab, sidebarOpened })}
+          {tab.props.sbtitle({ selectedTab: selectedSBTab, sidebarOpened })}
         </li>
       ))}
     </ul>

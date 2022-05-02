@@ -7,10 +7,6 @@ import { Icon } from 'react-fa'
 import StrategiesMenuSideBarParams from '../components/StrategiesMenuSideBarParams'
 import Indicator from '../../../ui/Indicator'
 
-const titleWithIndicatorStyles = {
-  marginRight: '10px',
-}
-
 const StrategyTabTitle = (props) => {
   const { executionResults, selectedTab, sidebarOpened } = props
   const { results, executing, loading } = executionResults
@@ -20,13 +16,14 @@ const StrategyTabTitle = (props) => {
   const { t } = useTranslation()
   const title = t('strategyEditor.strategyTab')
 
+  const isStrategyTabSelected = selectedTab === 0
+
   const getTabTitle = () => {
     if (loading) {
       return (
         <>
-          <Icon name='file-code-o' />
           {sidebarOpened && (
-            <span style={titleWithIndicatorStyles}>{title}</span>
+            <span className='title-label--indicator'>{title}</span>
           )}
           <Indicator white blinking />
         </>
@@ -35,20 +32,18 @@ const StrategyTabTitle = (props) => {
     if (executing) {
       return (
         <>
-          <Icon name='file-code-o' />
           {sidebarOpened && (
-            <span style={titleWithIndicatorStyles}>{title}</span>
+            <span className='title-label--indicator'>{title}</span>
           )}
-          <Indicator red blinking={!sidebarOpened} />
+          <Indicator red blinking={!isStrategyTabSelected} />
         </>
       )
     }
     if (!_isEmpty(results)) {
       return (
         <>
-          <Icon name='file-code-o' />
           {sidebarOpened && (
-            <span style={titleWithIndicatorStyles}>{title}</span>
+            <span className='title-label--indicator'>{title}</span>
           )}
           <Indicator green />
         </>
@@ -56,7 +51,6 @@ const StrategyTabTitle = (props) => {
     }
     return (
       <>
-        <Icon name='file-code-o' />
         {sidebarOpened && <span>{title}</span>}
       </>
     )
@@ -71,7 +65,8 @@ const StrategyTabTitle = (props) => {
   }, [selectedTab])
 
   return (
-    <>
+    <div className='hfui-strategyeditor__sidebar-title'>
+      <Icon name='file-code-o' className='title-icon' />
       {getTabTitle()}
       {paramsOpen && (
         <OutsideClickHandler onOutsideClick={closeParams}>
@@ -82,7 +77,7 @@ const StrategyTabTitle = (props) => {
           />
         </OutsideClickHandler>
       )}
-    </>
+    </div>
   )
 }
 

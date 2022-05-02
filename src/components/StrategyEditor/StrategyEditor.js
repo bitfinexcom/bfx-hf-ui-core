@@ -22,6 +22,9 @@ import HelpTab from './tabs/HelpTab'
 import CreateNewStrategyFromModalOpen from '../../modals/Strategy/CreateNewStrategyFromModal'
 import SaveStrategyAsModal from '../../modals/Strategy/SaveStrategyAsModal/SaveStrategyAsModal'
 import StrategyTabTitle from './tabs/StrategyTab.Title'
+import BacktestTabTitle from './tabs/BacktestTab.Title'
+import HelpTabTItle from './tabs/HelpTab.TItle'
+import IDETabTitle from './tabs/IDETab.Title'
 
 import './style.css'
 
@@ -65,6 +68,7 @@ const StrategyEditor = (props) => {
     flags,
     isBetaVersion,
     executionResults,
+    sectionErrors,
   } = props
   const { t } = useTranslation()
   const [isRemoveModalOpened, setIsRemoveModalOpened] = useState(false)
@@ -240,7 +244,6 @@ const StrategyEditor = (props) => {
                   sidebarOpened={sidebarOpened}
                 />
               )}
-              sbicon={<Icon name='file-code-o' />}
               onOpenSaveStrategyAsModal={() => setIsSaveStrategyModalOpen(true)}
               isPaperTrading={isPaperTrading}
               startExecution={startExecution}
@@ -253,8 +256,12 @@ const StrategyEditor = (props) => {
           {isPaperTrading && (isBetaVersion || flags?.backtest) && (
             <BacktestTab
               htmlKey='backtest'
-              sbtitle={() => <span>{t('strategyEditor.backtestTab')}</span>}
-              sbicon={<Icon name='repeat' />}
+              sbtitle={({ sidebarOpened }) => (
+                <BacktestTabTitle
+                  results={backtestResults}
+                  sidebarOpened={sidebarOpened}
+                />
+              )}
               onOpenSaveStrategyAsModal={() => setIsSaveStrategyModalOpen(true)}
               results={backtestResults}
               // todo: add useCandles / useTrades params
@@ -268,15 +275,19 @@ const StrategyEditor = (props) => {
             <IDETab
               htmlKey='view_in_ide'
               key='view_in_ide'
-              sbtitle={() => <span>{t('strategyEditor.viewInIDETab')}</span>}
-              sbicon={<Icon name='edit' />}
+              sbtitle={({ sidebarOpened }) => (
+                <IDETabTitle
+                  sectionErrors={sectionErrors}
+                  strategyDirty={strategyDirty}
+                  sidebarOpened={sidebarOpened}
+                />
+              )}
               {...props}
             />,
             <HelpTab
               htmlKey='help'
               key='help'
-              sbtitle={() => <span>{t('strategyEditor.helpTab')}</span>}
-              sbicon={<Icon name='question-circle-o' />}
+              sbtitle={({ sidebarOpened }) => <HelpTabTItle sidebarOpened={sidebarOpened} />}
             />,
           ]}
         </StrategyEditorPanel>
