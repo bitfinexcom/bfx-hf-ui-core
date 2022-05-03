@@ -6,6 +6,7 @@ import getAuthToken from './get_auth_token'
 import getIsBitfinexConnected from './get_is_bitfinex_connected'
 import getAuthConfigured from './get_auth_configured'
 import getSortedByTimeStrategies from './get_sorted_by_time_strategies'
+import getSortedByTimeActiveStrategies from './get_sorted_by_time_active_strategies'
 import getAllPositions from './get_all_positions'
 import getFilteredPositions from './get_filtered_positions'
 import getFilteredPositionsCount from './get_filtered_positions_count'
@@ -47,6 +48,7 @@ export {
   getAuthConfigured,
   getOrderHistory,
 
+  getSortedByTimeActiveStrategies,
   getSortedByTimeStrategies,
 
   getBacktestState,

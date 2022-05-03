@@ -5,12 +5,16 @@ import _size from 'lodash/size'
 import { useTranslation } from 'react-i18next'
 import { useSelector } from 'react-redux'
 import Panel from '../../ui/Panel'
-import { getSortedByTimeStrategies } from '../../redux/selectors/ws'
+import {
+  getSortedByTimeStrategies, getSortedByTimeActiveStrategies,
+} from '../../redux/selectors/ws'
+import PastStrategiesList from './PastStrategiesList'
 import ActiveStrategiesList from './ActiveStrategiesList'
 
 import './style.css'
 
 const StrategiesListTable = ({ onLoadStrategy }) => {
+  const activeStrategies = useSelector(getSortedByTimeActiveStrategies)
   const strategies = useSelector(getSortedByTimeStrategies)
 
   const onRowClick = ({ rowData }) => {
@@ -34,6 +38,20 @@ const StrategiesListTable = ({ onLoadStrategy }) => {
     })
   }, [strategies]) // eslint-disable-line react-hooks/exhaustive-deps
 
+  const activeStrategiesNodesArray = useMemo(() => {
+    return _map(activeStrategies, (str) => {
+      return (
+        <li
+          key={str.id}
+          className='strategy-item'
+          onClick={() => onLoadStrategy(str)}
+        >
+          {str.label}
+        </li>
+      )
+    })
+  }, [activeStrategies]) // eslint-disable-line react-hooks/exhaustive-deps
+
   const { t } = useTranslation()
 
   return (
@@ -43,10 +61,12 @@ const StrategiesListTable = ({ onLoadStrategy }) => {
       className='hfui-strategies-list'
       darkHeader
     >
-      <div tabtitle={t('strategyEditor.activeStrategies', { amount: 0 })}>
-        {null}
-      </div>
       <ActiveStrategiesList
+        onRowClick={onRowClick}
+        strategies={activeStrategies}
+        tabtitle={t('strategyEditor.activeStrategies', { amount: _size(activeStrategiesNodesArray) })}
+      />
+      <PastStrategiesList
         onRowClick={onRowClick}
         tabtitle={t('strategyEditor.pastStrategies', { amount: _size(strategyNodesArray) })}
       />
