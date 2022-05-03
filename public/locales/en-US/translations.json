@@ -675,7 +675,8 @@
       "meanReverting": "Mean-Reverting",
       "trendFollowing": "Trend Following",
       "technicalAnalysis": "Technical Analysis"
-    }
+    },
+    "closeStrategy": "Close strategy"
   },
   "ui": {
     "ok": "Okay",

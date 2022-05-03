@@ -79,7 +79,7 @@ const StrategyParams = ({
             {t('ui.removeBtn')}
           </Item>
           <Item onClick={onClose}>
-            {t('ui.closeBtn')}
+            {t('strategyEditor.closeStrategy')}
           </Item>
         </div>
       </div>
