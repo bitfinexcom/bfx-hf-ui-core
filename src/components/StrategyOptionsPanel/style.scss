@@ -40,4 +40,16 @@
     height: 30px;
     min-width: 70px;
   }
+
+  &__right-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+
+    .message {
+      text-transform: uppercase;
+      margin-bottom: 3px;
+      font-weight: 700;
+    }
+  }
 }

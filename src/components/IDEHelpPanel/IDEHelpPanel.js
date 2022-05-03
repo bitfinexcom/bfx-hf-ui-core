@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react'
-import Markdown from '../../../ui/Markdown'
+import Markdown from '../../ui/Markdown'
+import Panel from '../../ui/Panel'
 
 const DocsPath = require('bfx-hf-strategy/docs/api.md')
 
-const HelpTab = () => {
+const IDEHelpPanel = () => {
   const [docsText, setDocsText] = useState('')
 
   useEffect(() => {
@@ -14,7 +15,11 @@ const HelpTab = () => {
       .then(setDocsText)
   }, [])
 
-  return <Markdown text={docsText} />
+  return (
+    <Panel moveable={false} removeable={false} darkHeader>
+      <Markdown text={docsText} />
+    </Panel>
+  )
 }
 
-export default HelpTab
+export default IDEHelpPanel

@@ -9,7 +9,10 @@ import _findIndex from 'lodash/findIndex'
 import { Icon } from 'react-fa'
 import Panel from '../../ui/Panel'
 import StrategyTradesTableColumns from './StrategyTradesTable.columns'
-import { COMPONENTS_KEYS, LAYOUT_CONFIG } from '../StrategyEditor/components/StrategiesGridLayout.constants'
+import {
+  COMPONENTS_KEYS,
+  LAYOUT_CONFIG,
+} from '../StrategyEditor/components/StrategiesGridLayout.constants'
 
 import { onTradeExportClick } from './StrategyTradesTable.helpers'
 import { getActiveMarket } from '../../redux/selectors/ui'
@@ -17,14 +20,21 @@ import { getActiveMarket } from '../../redux/selectors/ui'
 import './style.css'
 
 const StrategyTradesTable = ({
-  results, onTradeClick, dark, setLayoutConfig, layoutConfig,
+  results,
+  onTradeClick,
+  dark,
+  setLayoutConfig,
+  layoutConfig,
 }) => {
   const [isExpanded, setIsExpanded] = useState(false)
   const activeMarket = useSelector(getActiveMarket)
   const { trades } = results
 
   const onExpandClick = () => {
-    const currentElementIndex = _findIndex(layoutConfig, c => c.i === COMPONENTS_KEYS.STRATEGY_TRADES)
+    const currentElementIndex = _findIndex(
+      layoutConfig,
+      (c) => c.i === COMPONENTS_KEYS.STRATEGY_TRADES,
+    )
     const currentElement = layoutConfig[currentElementIndex]
     const newElementConfig = {
       ...currentElement,
@@ -65,27 +75,20 @@ const StrategyTradesTable = ({
             {t('strategyEditor.exportCSV')}
           </Button>
           {isExpanded ? (
-            <Button
-              className='panel-button'
-              onClick={onCompressClick}
-            >
+            <Button className='panel-button' onClick={onCompressClick}>
               <Icon name='compress' />
-            &nbsp;&nbsp;
+              &nbsp;&nbsp;
               <span>{t('ui.compressPanel')}</span>
             </Button>
           ) : (
-            <Button
-              className='panel-button'
-              onClick={onExpandClick}
-            >
+            <Button className='panel-button' onClick={onExpandClick}>
               <Icon name='expand' />
-            &nbsp;&nbsp;
+              &nbsp;&nbsp;
               <span>{t('ui.expandPanel')}</span>
             </Button>
           )}
-
         </>
-)}
+      )}
     >
       {_isEmpty(trades) ? (
         <div className='no-trades__wrapper'>
