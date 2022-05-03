@@ -20,7 +20,7 @@ const BacktestTab = (props) => {
   const [layoutConfig, setLayoutConfig] = useState()
   const [fullscreenChart, setFullScreenChart] = useState(false)
 
-  const { finished, loading, trades } = results
+  const { finished = false, loading, trades } = results
 
   useEffect(() => {
     if (!finished) {

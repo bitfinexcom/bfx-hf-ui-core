@@ -34,6 +34,7 @@ const StrategyTabTitle = (props) => {
   }
 
   const closeParams = () => setParamsOpen(false)
+  const openParams = () => setParamsOpen(true)
 
   useEffect(() => {
     if (selectedTab === 0) {
@@ -42,7 +43,7 @@ const StrategyTabTitle = (props) => {
   }, [selectedTab])
 
   return (
-    <div className='hfui-strategyeditor__sidebar-title'>
+    <div className='hfui-strategyeditor__sidebar-title' onClick={openParams}>
       <Icon name='file-code-o' className='title-icon' />
       {sidebarOpened && <span className='title-label'>{title}</span>}
       {getIndicator()}

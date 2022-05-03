@@ -48,12 +48,10 @@ const IDEOptionsPanel = ({
         <Button
           green
           className='hfui-strategy-options__option-btn'
-          label={(
-            <>
-              <Icon name='floppy-o' />
-              <span>{t('ui.save')}</span>
-            </>
-          )}
+          label={[
+            <Icon key='icon' name='floppy-o' />,
+            <span key='text'>{t('ui.save')}</span>,
+          ]}
           onClick={onSaveStrategy}
           disabled={hasErrors || !strategyDirty}
         />
