@@ -324,7 +324,7 @@
     }
 
     .hfui_panel__sidebar-container {
-      width: 50px;
+      width: 35px;
       position: relative;
       margin-right: 10px;
 
@@ -336,11 +336,11 @@
         border-radius: 100%;
         background: var(--lighter-background-color);
         cursor: pointer;
-        right: 0;
+        right: -22px;
         top: 50%;
         width: 28px;
         height: 28px;
-        margin-right: 10px;
+        z-index: 1;
       }
 
       .hfui_panel__sidebar {

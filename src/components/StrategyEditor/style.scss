@@ -29,6 +29,10 @@ body.hosted {
   }
 }
 
+.hfui-strategyeditor__ide {
+  border-bottom: 16px solid var(--darker-background-color);
+}
+
 .hfui-strategyeditor__wrapper {
   display: flex;
   height: 100%;
@@ -248,7 +252,7 @@ body.hosted {
 
 .hfui-strategy__options-panel {
   min-width: 180px !important;
-  left: 160% !important;
+  left: 150px !important;
   top: -27px !important;
 }
 
@@ -263,6 +267,13 @@ body.hosted {
 }
 
 .hfui-strategyeditor__sidebar-title {
+  position: relative;
+
+  .indicator-near-icon {
+    position: absolute;
+    top: -3px;
+    right: -5px;
+  }
   .title-icon {
     margin-right: 5px;
     &:last-child {

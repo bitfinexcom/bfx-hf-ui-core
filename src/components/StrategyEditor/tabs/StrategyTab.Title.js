@@ -18,15 +18,17 @@ const StrategyTabTitle = (props) => {
 
   const isStrategyTabSelected = selectedTab === 0
 
+  const indicatorClassName = !sidebarOpened && 'indicator-near-icon'
+
   const getIndicator = () => {
     if (loading) {
-      return <Indicator white blinking />
+      return <Indicator white blinking className={indicatorClassName} />
     }
     if (executing) {
-      return <Indicator red blinking={!isStrategyTabSelected} />
+      return <Indicator red blinking={!isStrategyTabSelected} className={indicatorClassName} />
     }
     if (!_isEmpty(results)) {
-      return <Indicator green />
+      return <Indicator green className={indicatorClassName} />
     }
     return null
   }

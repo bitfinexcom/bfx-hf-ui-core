@@ -22,7 +22,6 @@ import './style.css'
 const StrategyTradesTable = ({
   results,
   onTradeClick,
-  dark,
   setLayoutConfig,
   layoutConfig,
 }) => {
@@ -56,8 +55,8 @@ const StrategyTradesTable = ({
 
   return (
     <Panel
-      dark={dark}
-      darkHeader={dark}
+      dark
+      darkHeader
       label={t('tradesTableModal.title')}
       removeable={false}
       moveable={false}
@@ -114,13 +113,8 @@ StrategyTradesTable.propTypes = {
     trades: PropTypes.arrayOf(PropTypes.object).isRequired, // eslint-disable-line
   }).isRequired,
   onTradeClick: PropTypes.func.isRequired,
-  dark: PropTypes.bool,
   layoutConfig: PropTypes.arrayOf(PropTypes.object).isRequired,
   setLayoutConfig: PropTypes.func.isRequired,
-}
-
-StrategyTradesTable.defaultProps = {
-  dark: true,
 }
 
 export default memo(StrategyTradesTable)

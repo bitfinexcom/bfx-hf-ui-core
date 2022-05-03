@@ -9,12 +9,14 @@ const IDETabTitle = ({
 }) => {
   const { t } = useTranslation()
 
+  const indicatorClassName = !sidebarOpened && 'indicator-near-icon'
+
   const getIndicator = () => {
     if (hasErrors) {
-      return <Indicator red />
+      return <Indicator red className={indicatorClassName} />
     }
     if (strategyDirty) {
-      return <Indicator white />
+      return <Indicator white className={indicatorClassName} />
     }
     return null
   }

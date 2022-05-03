@@ -81,9 +81,12 @@ const IDEPanel = ({
 
   return (
     <Panel
+      dark
+      darkHeader
       moveable={false}
       removeable={false}
-      darkHeader
+      hideIcons
+      className='hfui-strategyeditor__ide'
     >
       <div className='hfui-strategyeditor__wrapper'>
         <ul className='hfui-strategyeditor__func-select'>

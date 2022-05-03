@@ -9,6 +9,8 @@ const BacktestTabTitle = ({ results, sidebarOpened }) => {
 
   const { loading, finished } = results
 
+  const indicatorClassName = !sidebarOpened && 'indicator-near-icon'
+
   return (
     <div className='hfui-strategyeditor__sidebar-title'>
       <Icon name='repeat' className='title-icon' />
@@ -17,8 +19,8 @@ const BacktestTabTitle = ({ results, sidebarOpened }) => {
           {t('strategyEditor.backtestTab')}
         </span>
       )}
-      {loading && <Indicator white blinking />}
-      {finished && <Indicator green />}
+      {loading && <Indicator white blinking className={indicatorClassName} />}
+      {finished && !loading && <Indicator green className={indicatorClassName} />}
     </div>
   )
 }
