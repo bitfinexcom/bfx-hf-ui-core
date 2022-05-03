@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
 import _map from 'lodash/map'
 import _size from 'lodash/size'
@@ -14,45 +14,13 @@ import ActiveStrategiesList from './ActiveStrategiesList'
 import './style.css'
 
 const StrategiesListTable = ({ onLoadStrategy }) => {
+  const { t } = useTranslation()
   const activeStrategies = useSelector(getSortedByTimeActiveStrategies)
   const strategies = useSelector(getSortedByTimeStrategies)
 
   const onRowClick = ({ rowData }) => {
     onLoadStrategy(rowData)
   }
-
-  const strategyNodesArray = useMemo(() => {
-    return _map(strategies, (str) => {
-      // if (index >= 6) {
-      //   return null
-      // }
-      return (
-        <li
-          key={str.id}
-          className='strategy-item'
-          onClick={() => onLoadStrategy(str)}
-        >
-          {str.label}
-        </li>
-      )
-    })
-  }, [strategies]) // eslint-disable-line react-hooks/exhaustive-deps
-
-  const activeStrategiesNodesArray = useMemo(() => {
-    return _map(activeStrategies, (str) => {
-      return (
-        <li
-          key={str.id}
-          className='strategy-item'
-          onClick={() => onLoadStrategy(str)}
-        >
-          {str.label}
-        </li>
-      )
-    })
-  }, [activeStrategies]) // eslint-disable-line react-hooks/exhaustive-deps
-
-  const { t } = useTranslation()
 
   return (
     <Panel
@@ -64,11 +32,12 @@ const StrategiesListTable = ({ onLoadStrategy }) => {
       <ActiveStrategiesList
         onRowClick={onRowClick}
         strategies={activeStrategies}
-        tabtitle={t('strategyEditor.activeStrategies', { amount: _size(activeStrategiesNodesArray) })}
+        tabtitle={t('strategyEditor.activeStrategies', { amount: _size(activeStrategies) })}
       />
       <PastStrategiesList
         onRowClick={onRowClick}
-        tabtitle={t('strategyEditor.pastStrategies', { amount: _size(strategyNodesArray) })}
+        strategies={strategies}
+        tabtitle={t('strategyEditor.pastStrategies', { amount: _size(strategies) })}
       />
     </Panel>
   )
