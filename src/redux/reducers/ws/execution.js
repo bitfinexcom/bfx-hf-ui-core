@@ -1,4 +1,5 @@
 import _size from 'lodash/size'
+import _filter from 'lodash/filter'
 import types from '../../constants/ws'
 
 function getInitialState() {
@@ -6,7 +7,15 @@ function getInitialState() {
     executing: false,
     loading: false,
     options: {},
-    results: {},
+    results: {
+      // 'unique-strategy-id': { /* results */ }
+    },
+    activeStrategies: {
+      // 'unique-strategy-id': { /* ...strategy, startedOn */ }
+    },
+    runningStrategiesMapping: {
+      // 'strategy-id': 'unique-strategy-id'
+    },
   }
 }
 
@@ -34,6 +43,50 @@ function reducer(state = getInitialState(), action = {}) {
       return {
         ...state,
         loading,
+      }
+    }
+
+    case types.SET_PRICE_UPDATE: {
+      const { strategyMapKey, executionResultsObj } = payload
+
+      return {
+        ...state,
+        results: {
+          ...state.results,
+          [strategyMapKey]: executionResultsObj,
+        },
+      }
+    }
+
+    case types.SET_STARTED_LIVE_STRATEGY: {
+      const { strategyMapKey, executionResultsObj } = payload
+      const { id } = executionResultsObj
+
+      return {
+        ...state,
+        activeStrategies: {
+          ...state.activeStrategies,
+          [strategyMapKey]: executionResultsObj,
+        },
+        runningStrategiesMapping: {
+          [id]: strategyMapKey,
+        },
+      }
+    }
+
+    case types.SET_STOPPED_LIVE_STRATEGY: {
+      const { strategyMapKey, executionResultsObj } = payload
+      const { id } = executionResultsObj
+
+      return {
+        ...state,
+        activeStrategies: {
+          ...state.activeStrategies,
+          [strategyMapKey]: undefined,
+        },
+        runningStrategiesMapping: {
+          [id]: undefined,
+        },
       }
     }
 

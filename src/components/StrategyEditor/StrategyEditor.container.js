@@ -34,6 +34,9 @@ const mapStateToProps = (state = {}) => ({
   isPaperTrading: getIsPaperTrading(state),
   flags: getStrategiesFeatureFlags(state),
   isBetaVersion: getIsBetaVersion(state),
+  liveResults: state.ws.execution.results,
+  activeStrategies: state.ws.execution.activeStrategies,
+  runningStrategiesMapping: state.ws.execution.runningStrategiesMapping,
 })
 
 const mapDispatchToProps = (dispatch) => ({

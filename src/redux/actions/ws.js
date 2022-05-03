@@ -268,6 +268,27 @@ export default {
     payload: { options },
   }),
 
+  setLivePriceUpdate: (strategyMapKey, executionResultsObj) => ({
+    type: t.SET_PRICE_UPDATE,
+    payload: {
+      strategyMapKey, executionResultsObj,
+    },
+  }),
+
+  setStartedLiveStrategy: (strategyMapKey, executionResultsObj) => ({
+    type: t.SET_STARTED_LIVE_STRATEGY,
+    payload: {
+      strategyMapKey, executionResultsObj,
+    },
+  }),
+
+  setStoppedLiveStrategy: (strategyMapKey, executionResultsObj) => ({
+    type: t.SET_STOPPED_LIVE_STRATEGY,
+    payload: {
+      strategyMapKey, executionResultsObj,
+    },
+  }),
+
   resetExecutionData: () => ({
     type: t.RESET_DATA_EXECUTION,
   }),

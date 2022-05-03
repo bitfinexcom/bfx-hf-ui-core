@@ -70,6 +70,9 @@ const StrategyEditor = (props) => {
     isBetaVersion,
     executionResults,
     sectionErrors,
+    liveResults,
+    activeStrategies,
+    runningStrategiesMapping,
   } = props
   const { t } = useTranslation()
   const [isRemoveModalOpened, setIsRemoveModalOpened] = useState(false)
@@ -94,6 +97,9 @@ const StrategyEditor = (props) => {
   const [endDate, setEndDate] = useState(new Date(Date.now() - ONE_MIN * 15))
   const [margin, setMargin] = useState(options.margin || DEFAULT_USE_MARGIN)
 
+  const runningStrategyID = runningStrategiesMapping[strategyId]
+  const currentStrategyResults = liveResults?.[runningStrategyID] || {}
+
   const optionsProps = {
     timeframe,
     candles,
@@ -111,6 +117,11 @@ const StrategyEditor = (props) => {
     setStartDate,
     endDate,
     setEndDate,
+  }
+
+  const execResults = {
+    ...executionResults,
+    results: currentStrategyResults,
   }
 
   const onCloseModals = () => {
@@ -254,7 +265,7 @@ const StrategyEditor = (props) => {
                   onImportStrategy={onImportStrategy}
                   strategy={strategy}
                   strategyId={strategyId}
-                  executionResults={executionResults}
+                  executionResults={execResults}
                   selectedTab={selectedTab}
                   sidebarOpened={sidebarOpened}
                 />
@@ -262,7 +273,7 @@ const StrategyEditor = (props) => {
               onOpenSaveStrategyAsModal={() => setIsSaveStrategyModalOpen(true)}
               isPaperTrading={isPaperTrading}
               startExecution={startExecution}
-              executionResults={executionResults}
+              executionResults={execResults}
               {...optionsProps}
               {...props}
             />
@@ -389,6 +400,9 @@ StrategyEditor.propTypes = {
     backtest: PropTypes.bool,
   }).isRequired,
   showError: PropTypes.func.isRequired,
+  liveResults: PropTypes.objectOf(PropTypes.object),
+  activeStrategies: PropTypes.objectOf(PropTypes.object),
+  runningStrategiesMapping: PropTypes.objectOf(PropTypes.string),
 }
 
 StrategyEditor.defaultProps = {
@@ -402,6 +416,9 @@ StrategyEditor.defaultProps = {
     label: null,
   },
   indicators: [],
+  liveResults: {},
+  activeStrategies: {},
+  runningStrategiesMapping: {},
 }
 
 export default memo(StrategyEditor)

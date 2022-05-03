@@ -448,6 +448,44 @@ export default (alias, store) => (e = {}) => {
         break
       }
 
+      // emitted when the strategy execution is started
+      case 'strategy.live_execution_started': {
+        const [, strategyMapKey, executionResultsObj] = payload
+        store.dispatch(WSActions.setStartedLiveStrategy(strategyMapKey, executionResultsObj))
+
+        break
+      }
+
+      // emitted when the strategy execution is stopped
+      case 'strategy.live_execution_stopped': {
+        const [, strategyMapKey, executionResultsObj] = payload
+        store.dispatch(WSActions.setStoppedLiveStrategy(strategyMapKey, executionResultsObj))
+
+        break
+      }
+
+      // emitted on each price update
+      case 'strategy.rt_execution_results': {
+        const [, strategyMapKey, executionResultsObj] = payload
+        store.dispatch(WSActions.setLivePriceUpdate(strategyMapKey, executionResultsObj))
+
+        break
+      }
+
+      // emitted when a position is opened
+      case 'strategy.opened_position_data': {
+        const [, strategyMapKey, openedPositionDetails] = payload
+
+        break
+      }
+
+      // emitted when a position is closed
+      case 'strategy.closed_position_data': {
+        const [, strategyMapKey, closedPositionDetails] = payload
+
+        break
+      }
+
       case 'strategy.live_execution_results': {
         const [, results] = payload
         store.dispatch(WSActions.setExecutionResults(results))
