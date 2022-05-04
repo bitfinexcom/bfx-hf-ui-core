@@ -7,17 +7,25 @@ import { getTabTitle } from './Panel.helpers'
 const Tabs = ({ tabs, setSelectedTab, selectedTab }) => {
   return (
     <ul className='hfui-panel__header-tabs'>
-      {_map(tabs, (tab, index) => (
-        <li
-          key={tab.props.htmlKey || tab.props.tabtitle}
-          className={ClassNames({
-            active: getTabTitle(tab) === getTabTitle(tabs[selectedTab]),
-          })}
-          onClick={() => setSelectedTab(index)}
-        >
-          <p className='hfui-panel__label'>{tab.props.tabtitle}</p>
-        </li>
-      ))}
+      {_map(tabs, (tab, index) => {
+        const { htmlKey, tabtitle, count } = tab.props
+        return (
+          <li
+            key={htmlKey || tabtitle}
+            className={ClassNames({
+              active: getTabTitle(tab) === getTabTitle(tabs[selectedTab]),
+            })}
+            onClick={() => setSelectedTab(index)}
+          >
+            <p className='hfui-panel__label'>
+              {tabtitle}
+              {!!count && count > 0 && (
+                <span className='hfui-panel__counter'>{count}</span>
+              )}
+            </p>
+          </li>
+        )
+      })}
     </ul>
   )
 }

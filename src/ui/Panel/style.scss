@@ -267,6 +267,14 @@
   user-select: none;
 }
 
+.hfui-panel__counter {
+  padding: 1px 6px;
+  margin-left: 4px;
+  border-radius: 100px;
+  color: $green-color;
+  border: 1px solid $green-color;
+}
+
 .hfui-panel__close {
   text-align: center;
   font-weight: 500;
