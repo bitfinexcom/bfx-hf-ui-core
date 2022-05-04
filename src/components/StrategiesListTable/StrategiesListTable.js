@@ -56,18 +56,21 @@ const StrategiesListTable = ({ onLoadStrategy }) => {
         onRowClick={onRowClick}
         getMarketPair={_getMarketPair}
         strategies={activeStrategies}
-        tabtitle={t('strategyEditor.activeStrategies', { amount: _size(activeStrategies) })}
+        tabtitle={t('strategyEditor.activeStrategies')}
+        count={_size(activeStrategies)}
       />
       <PastStrategiesList
         onRowClick={onRowClick}
         strategies={pastStrategies}
         getMarketPair={_getMarketPair}
-        tabtitle={t('strategyEditor.pastStrategies', { amount: _size(pastStrategies) })}
+        tabtitle={t('strategyEditor.pastStrategies')}
+        count={_size(pastStrategies)}
       />
       <SavedStrategiesList
         onRowClick={onRowClick}
         strategies={savedStrategies}
-        tabtitle={t('strategyEditor.savedStrategies', { amount: _size(savedStrategies) })}
+        tabtitle={t('strategyEditor.savedStrategies')}
+        count={_size(savedStrategies)}
       />
     </Panel>
   )

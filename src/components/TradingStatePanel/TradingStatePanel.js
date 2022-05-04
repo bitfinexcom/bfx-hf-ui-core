@@ -12,7 +12,7 @@ import AtomicOrdersTable from '../AtomicOrdersTable'
 import AlgoOrdersTable from '../AlgoOrdersTable'
 import BalancesTable from '../BalancesTable'
 import MarketSelect from '../MarketSelect'
-import TabTitle from './TabTitle'
+
 import './style.css'
 
 const TradingStatePanel = ({
@@ -101,19 +101,22 @@ const TradingStatePanel = ({
         <PositionsTable
           renderedInTradingState
           htmlKey='Positions'
-          tabtitle={<TabTitle heading={t('tradingStatePanel.positionsTab')} count={positionsCount} />}
+          tabtitle={t('tradingStatePanel.positionsTab')}
+          count={positionsCount}
           activeFilter={activeFilter}
         />
         <AtomicOrdersTable
           renderedInTradingState
           htmlKey='Atomics'
-          tabtitle={<TabTitle heading={t('tradingStatePanel.atomicsTab')} count={atomicOrdersCount} />}
+          tabtitle={t('tradingStatePanel.atomicsTab')}
+          count={atomicOrdersCount}
           activeFilter={activeFilter}
         />
         <AlgoOrdersTable
           renderedInTradingState
           htmlKey='Algos'
-          tabtitle={<TabTitle heading={t('tradingStatePanel.algosTab')} count={algoOrdersCount} />}
+          tabtitle={t('tradingStatePanel.algosTab')}
+          count={algoOrdersCount}
           activeFilter={activeFilter}
         />
         <BalancesTable
