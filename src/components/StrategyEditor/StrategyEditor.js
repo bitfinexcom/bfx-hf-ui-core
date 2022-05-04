@@ -8,6 +8,7 @@ import _find from 'lodash/find'
 import PropTypes from 'prop-types'
 import { useTranslation } from 'react-i18next'
 
+import { v4 } from 'uuid'
 import { saveAsJSON, readJSONFile } from '../../util/ui'
 import { MAX_STRATEGY_LABEL_LENGTH } from '../../constants/variables'
 import StrategyEditorPanel from './components/StrategyEditorPanel'
@@ -44,13 +45,11 @@ const StrategyEditor = (props) => {
     strategyId,
     onRemove,
     authToken,
-    onStrategyChange,
     gaCreateStrategy,
     strategyContent,
     backtestResults,
     strategyDirty,
     setStrategyDirty,
-    setSectionErrors,
     onDefineIndicatorsChange,
     setStrategy,
     strategy,
@@ -59,8 +58,7 @@ const StrategyEditor = (props) => {
     dsStopLiveStrategy,
     options,
     markets,
-    onStrategySelect,
-    onSave,
+    saveStrategy,
     isPaperTrading,
     dsExecuteBacktest,
     setBacktestOptions,
@@ -79,6 +77,7 @@ const StrategyEditor = (props) => {
   const [createNewStrategyFromModalOpen, setCreateNewStrategyFromModalOpen] = useState(false)
   const [openExistingStrategyModalOpen, setOpenExistingStrategyModalOpen] = useState(false)
   const [isSaveStrategyAsModalOpen, setIsSaveStrategyModalOpen] = useState(false)
+
   const [symbol, setSymbol] = useState(
     options.symbol
       ? _find(markets, (m) => m.wsID === options.symbol)
@@ -132,15 +131,9 @@ const StrategyEditor = (props) => {
   }
 
   const onCreateNewStrategy = (label, content = {}) => {
-    const newStrategy = { ...content, label }
-
-    setSectionErrors({})
-    setStrategyDirty(true)
-    onStrategySelect(newStrategy)
-
-    if (newStrategy.defineIndicators) {
-      onDefineIndicatorsChange(newStrategy.defineIndicators)
-    }
+    const newStrategy = { ...content, label, id: v4() }
+    saveStrategy(newStrategy)
+    onLoadStrategy(newStrategy)
 
     onCloseModals()
   }
@@ -149,8 +142,7 @@ const StrategyEditor = (props) => {
     const { id = strategyId } = strategy
     onCloseModals()
     onRemove(authToken, id)
-    setStrategy(null)
-    onStrategyChange(null)
+    onLoadStrategy({}, true)
   }
 
   const onExportStrategy = () => {
@@ -174,13 +166,13 @@ const StrategyEditor = (props) => {
   }
 
   const onSaveStrategy = () => {
-    onSave(authToken, { ...strategy, savedTs: Date.now() })
+    saveStrategy(strategy)
     setStrategyDirty(false)
   }
 
   const onSaveAsStrategy = (newStrategy) => {
     setStrategy(newStrategy)
-    onSave(authToken, { ...newStrategy, savedTs: Date.now() })
+    saveStrategy(strategy)
     setStrategyDirty(false)
   }
 
@@ -239,12 +231,28 @@ const StrategyEditor = (props) => {
     [sectionErrors],
   )
 
+  const openCreateNewStrategyModal = () => {
+    setCreateNewStrategyModalOpen(true)
+  }
+
+  const openCreateNewStrategyFromModal = () => {
+    setCreateNewStrategyFromModalOpen(true)
+  }
+
+  const openRemoveModal = () => {
+    setIsRemoveModalOpened(true)
+  }
+
+  const openSaveStrategyAsModal = () => {
+    setIsSaveStrategyModalOpen(true)
+  }
+
   return (
     <>
       {!strategy || _isEmpty(strategy) ? (
         <EmptyContent
-          openCreateNewStrategyModal={() => setCreateNewStrategyModalOpen(true)}
-          openCreateNewStrategyFromModal={() => setCreateNewStrategyFromModalOpen(true)}
+          openCreateNewStrategyModal={openCreateNewStrategyModal}
+          openCreateNewStrategyFromModal={openCreateNewStrategyFromModal}
         />
       ) : (
         <StrategyEditorPanel
@@ -262,19 +270,20 @@ const StrategyEditor = (props) => {
                   onLoadStrategy={onLoadStrategy}
                   onExportStrategy={onExportStrategy}
                   onSaveStrategy={onSaveStrategy}
-                  onOpenRemoveModal={() => setIsRemoveModalOpened(true)}
-                  onOpenCreateStrategyModal={() => setCreateNewStrategyModalOpen(true)}
-                  onOpenCreateStrategyFromModal={() => setCreateNewStrategyFromModalOpen(true)}
-                  onOpenSaveStrategyAsModal={() => setIsSaveStrategyModalOpen(true)}
+                  onOpenRemoveModal={openRemoveModal}
+                  onOpenCreateStrategyModal={openCreateNewStrategyModal}
+                  onOpenCreateStrategyFromModal={openCreateNewStrategyFromModal}
+                  onOpenSaveStrategyAsModal={openSaveStrategyAsModal}
                   onImportStrategy={onImportStrategy}
                   strategy={strategy}
                   strategyId={strategyId}
                   executionResults={execResults}
                   selectedTab={selectedTab}
                   sidebarOpened={sidebarOpened}
+                  strategyDirty={strategyDirty}
                 />
               )}
-              onOpenSaveStrategyAsModal={() => setIsSaveStrategyModalOpen(true)}
+              onOpenSaveStrategyAsModal={openSaveStrategyAsModal}
               isPaperTrading={isPaperTrading}
               startExecution={startExecution}
               executionResults={execResults}
@@ -292,7 +301,6 @@ const StrategyEditor = (props) => {
                   sidebarOpened={sidebarOpened}
                 />
               )}
-              onOpenSaveStrategyAsModal={() => setIsSaveStrategyModalOpen(true)}
               results={backtestResults}
               onBacktestStart={onBacktestStart}
               {...optionsProps}
@@ -305,7 +313,7 @@ const StrategyEditor = (props) => {
               key='view_in_ide'
               hasErrors={hasErrorsInIDE}
               onSaveStrategy={onSaveStrategy}
-              onOpenSaveStrategyAsModal={() => setIsSaveStrategyModalOpen(true)}
+              onOpenSaveStrategyAsModal={openSaveStrategyAsModal}
               sbtitle={({ sidebarOpened }) => (
                 <IDETabTitle
                   hasErrors={hasErrorsInIDE}
@@ -376,8 +384,6 @@ StrategyEditor.propTypes = {
   indicators: PropTypes.arrayOf(PropTypes.object),
   strategyDirty: PropTypes.bool.isRequired,
   setStrategyDirty: PropTypes.func.isRequired,
-  setSectionErrors: PropTypes.func.isRequired,
-  onStrategySelect: PropTypes.func.isRequired,
   gaCreateStrategy: PropTypes.func.isRequired,
   executionResults: PropTypes.shape({
     executing: PropTypes.bool,
@@ -390,7 +396,7 @@ StrategyEditor.propTypes = {
       PropTypes.oneOf([null]).isRequired,
     ]),
   ),
-  onSave: PropTypes.func.isRequired,
+  saveStrategy: PropTypes.func.isRequired,
   isPaperTrading: PropTypes.bool.isRequired,
   setBacktestOptions: PropTypes.func.isRequired,
   dsExecuteBacktest: PropTypes.func.isRequired,
@@ -404,6 +410,7 @@ StrategyEditor.propTypes = {
   liveResults: PropTypes.objectOf(PropTypes.object),
   activeStrategies: PropTypes.objectOf(PropTypes.object),
   runningStrategiesMapping: PropTypes.objectOf(PropTypes.string),
+  sectionErrors: PropTypes.objectOf(PropTypes.string).isRequired,
 }
 
 StrategyEditor.defaultProps = {

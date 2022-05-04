@@ -34,6 +34,7 @@ const StrategyParams = ({
   onOpenSaveStrategyAsModal,
   onImportStrategy,
   closeParams,
+  strategyDirty,
 }) => {
   const { id = strategyId } = strategy || {}
   const { t } = useTranslation()
@@ -66,7 +67,7 @@ const StrategyParams = ({
           <Item onClick={onImportStrategy}>
             {t('strategyEditor.importStrategy')}
           </Item>
-          <Item onClick={onSaveStrategy}>
+          <Item onClick={onSaveStrategy} isDisabled={!strategyDirty}>
             {t('ui.save')}
           </Item>
           <Item onClick={onOpenSaveStrategyAsModal}>
@@ -104,6 +105,7 @@ StrategyParams.propTypes = {
   }),
   strategyId: PropTypes.string,
   closeParams: PropTypes.func.isRequired,
+  strategyDirty: PropTypes.bool.isRequired,
 }
 
 StrategyParams.defaultProps = {

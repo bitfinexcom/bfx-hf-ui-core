@@ -1,4 +1,6 @@
-import React, { lazy, Suspense, useState } from 'react'
+import React, {
+  lazy, Suspense, useState,
+} from 'react'
 import Debug from 'debug'
 import PropTypes from 'prop-types'
 import randomColor from 'randomcolor'
@@ -17,6 +19,7 @@ import {
 } from '../../components/Joyride'
 import Layout from '../../components/Layout'
 import useTourGuide from '../../hooks/useTourGuide'
+import SaveUnsavedChangesModal from '../../modals/Strategy/SaveUnsavedChangesModal'
 
 import './style.css'
 
@@ -33,12 +36,16 @@ const StrategiesPage = ({
   firstLogin,
   isGuideActive,
   strategyContent,
+  authToken,
+  onSave,
 }) => {
   const [strategy, setStrategy] = useState(strategyContent)
   const [indicators, setIndicators] = useState([])
   const [strategyDirty, setStrategyDirty] = useState(false)
   const [tourStep, setTourStep] = useState(0)
   const [sectionErrors, setSectionErrors] = useState({})
+  const [isUnsavedStrategyModalOpen, setIsUnsavedStrategyModalOpen] = useState(false)
+  const [nextStrategyToOpen, setNextStrategyToOpen] = useState(null)
 
   const showGuide = useTourGuide(isGuideActive)
 
@@ -165,15 +172,24 @@ const StrategiesPage = ({
     setStrategy(content)
   }
 
-  const onLoadStrategy = (newStrategy) => {
+  const onLoadStrategy = (newStrategy, forcedLoad = false) => {
     // const updated = { ...newStrategy, savedTs: Date.now() }
+    if (strategyDirty && !forcedLoad) {
+      setNextStrategyToOpen(newStrategy)
+      setIsUnsavedStrategyModalOpen(true)
+      return
+    }
+    selectStrategyHandler(newStrategy, forcedLoad)
     setSectionErrors({})
     setStrategyDirty(false)
-    selectStrategyHandler(newStrategy)
 
     if (newStrategy.defineIndicators) {
       onDefineIndicatorsChange(newStrategy.defineIndicators)
     }
+  }
+
+  const saveStrategy = (content) => {
+    onSave(authToken, { ...content, savedTs: Date.now() })
   }
 
   return (
@@ -198,6 +214,7 @@ const StrategiesPage = ({
             setSectionErrors={setSectionErrors}
             onDefineIndicatorsChange={onDefineIndicatorsChange}
             evalSectionContent={evalSectionContent}
+            saveStrategy={saveStrategy}
             moveable={false}
             indicators={indicators}
             removeable={false}
@@ -214,6 +231,14 @@ const StrategiesPage = ({
           </Suspense>
         )}
         <StrategiesListTable onLoadStrategy={onLoadStrategy} />
+        <SaveUnsavedChangesModal
+          isOpen={isUnsavedStrategyModalOpen}
+          onClose={() => setIsUnsavedStrategyModalOpen(false)}
+          strategy={strategy}
+          nextStrategy={nextStrategyToOpen}
+          onLoadStrategy={onLoadStrategy}
+          saveStrategy={saveStrategy}
+        />
       </Layout.Main>
       <Layout.Footer />
     </Layout>
@@ -227,6 +252,8 @@ StrategiesPage.propTypes = {
   selectStrategy: PropTypes.func.isRequired,
   setStrategyContent: PropTypes.func.isRequired,
   strategyContent: PropTypes.objectOf(Object),
+  authToken: PropTypes.string.isRequired,
+  onSave: PropTypes.func.isRequired,
 }
 
 StrategiesPage.defaultProps = {

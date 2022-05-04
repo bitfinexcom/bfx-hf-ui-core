@@ -4,12 +4,10 @@ import { useTranslation } from 'react-i18next'
 import { Icon } from 'react-fa'
 import Indicator from '../../../ui/Indicator'
 
-const IDETabTitle = ({
-  sidebarOpened, strategyDirty, hasErrors,
-}) => {
+const IDETabTitle = ({ sidebarOpened, strategyDirty, hasErrors }) => {
   const { t } = useTranslation()
 
-  const indicatorClassName = !sidebarOpened && 'indicator-near-icon'
+  const indicatorClassName = !sidebarOpened ? 'indicator-near-icon' : null
 
   const getIndicator = () => {
     if (hasErrors) {
@@ -24,7 +22,9 @@ const IDETabTitle = ({
   return (
     <div className='hfui-strategyeditor__sidebar-title'>
       <Icon name='edit' className='title-icon' />
-      {sidebarOpened && <span className='title-label'>{t('strategyEditor.viewInIDETab')}</span>}
+      {sidebarOpened && (
+        <span className='title-label'>{t('strategyEditor.viewInIDETab')}</span>
+      )}
       {getIndicator()}
     </div>
   )
