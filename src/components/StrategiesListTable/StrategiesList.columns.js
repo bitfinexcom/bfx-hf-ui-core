@@ -93,8 +93,7 @@ const pastStrategiesColumns = (t, getMarketPair) => [
     cellRenderer: ({ rowData = {} }) => defaultCellRenderer(getMarketPair(rowData.symbol)),
   },
   {
-    // label: t('table.runningSince'),
-    label: 'Started on',
+    label: t('table.startedOn'),
     dataKey: 'startedOn',
     style: STYLES.flexStart,
     headerStyle: STYLES.flexStart,
@@ -103,8 +102,7 @@ const pastStrategiesColumns = (t, getMarketPair) => [
     cellRenderer: ({ rowData = {} }) => defaultCellRenderer(new Date(rowData.startedOn).toLocaleString()),
   },
   {
-    // label: t('table.runningSince'),
-    label: 'Stopped on',
+    label: t('table.stoppedOn'),
     dataKey: 'stoppedOn',
     style: STYLES.flexStart,
     headerStyle: STYLES.flexStart,
