@@ -494,8 +494,8 @@ export default (alias, store) => (e = {}) => {
       }
 
       case 'strategy.live_execution_results': {
-        const [, results] = payload
-        store.dispatch(WSActions.setExecutionResults(results))
+        const [, strategyId, results] = payload
+        store.dispatch(WSActions.setExecutionResults(strategyId, results))
 
         break
       }

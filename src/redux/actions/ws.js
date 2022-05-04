@@ -313,9 +313,9 @@ export default {
     payload: { loading },
   }),
 
-  setExecutionResults: (results) => ({
+  setExecutionResults: (strategyId, results) => ({
     type: t.SET_EXECUTION_RESULTS,
-    payload: { results },
+    payload: { strategyId, results },
   }),
 
   purgeBacktestData: () => ({

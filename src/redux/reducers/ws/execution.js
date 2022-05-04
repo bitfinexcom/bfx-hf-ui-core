@@ -97,6 +97,7 @@ function reducer(state = getInitialState(), action = {}) {
         runningStrategiesMapping: {
           [id]: undefined,
         },
+        loading: false,
       }
     }
 
@@ -114,11 +115,13 @@ function reducer(state = getInitialState(), action = {}) {
     }
 
     case types.SET_EXECUTION_RESULTS: {
-      const { results = {} } = payload
+      const { strategyId, results = {} } = payload
 
       return {
         ...state,
-        results,
+        results: {
+          [strategyId]: results,
+        },
       }
     }
 

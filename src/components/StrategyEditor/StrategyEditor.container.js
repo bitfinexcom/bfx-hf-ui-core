@@ -136,9 +136,9 @@ const mapDispatchToProps = (dispatch) => ({
   setBacktestOptions: (options) => {
     dispatch(WSActions.setBacktestOptions(options))
   },
-  dsStopLiveStrategy: (authToken) => {
+  dsStopLiveStrategy: (authToken, runningStrategyID) => {
     dispatch(WSActions.setExecutionLoading(true))
-    dispatch(WSActions.send(['strategy.execute_stop', authToken]))
+    dispatch(WSActions.send(['strategy.execute_stop', authToken, runningStrategyID]))
   },
   showError: (text) => {
     dispatch(

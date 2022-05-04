@@ -2,6 +2,8 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import _map from 'lodash/map'
 import _size from 'lodash/size'
+import _isEmpty from 'lodash/isEmpty'
+import _filter from 'lodash/filter'
 import { useTranslation } from 'react-i18next'
 import { useSelector } from 'react-redux'
 import Panel from '../../ui/Panel'
@@ -25,7 +27,11 @@ const StrategiesListTable = ({ onLoadStrategy }) => {
   const pastStrategies = useSelector(sortedByTimePastStrategies)
   const savedStrategies = useSelector(getSortedByTimeStrategies)
 
-  activeStrategies = _map(activeStrategies, (activeStrategy) => {
+  activeStrategies = _filter(_map(activeStrategies, (activeStrategy) => {
+    if (_isEmpty(activeStrategy)) {
+      return {}
+    }
+
     const execID = runningStrategiesMapping[activeStrategy.id]
     const results = liveExecutionResults?.[execID] || {}
 
@@ -33,7 +39,7 @@ const StrategiesListTable = ({ onLoadStrategy }) => {
       ...activeStrategy,
       results,
     }
-  })
+  }), strategy => !_isEmpty(strategy))
 
   const onRowClick = ({ rowData }) => {
     onLoadStrategy(rowData)

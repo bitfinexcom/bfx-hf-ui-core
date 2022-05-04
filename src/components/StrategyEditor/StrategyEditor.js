@@ -223,7 +223,7 @@ const StrategyEditor = (props) => {
   }
 
   const stopExecution = () => {
-    dsStopLiveStrategy(authToken)
+    dsStopLiveStrategy(authToken, runningStrategyID)
   }
 
   const hasErrorsInIDE = useMemo(
