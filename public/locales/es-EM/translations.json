@@ -268,8 +268,8 @@
   },
   "AOPauseModal": {
     "title": "Pausa de Órdenes de Algoritmo",
-    "text1": "Cerrar la aplicación mientras las órdenes de algoritmo están activas requerirá que reanudes/canceles las órdenes de algoritmo cuando vuelvas a iniciar la aplicación Honey Framework.",
-    "text2": "Cuando reinicies la aplicación Honey Framework, se te pedirá que selecciones entre las órdenes de algoritmo actualmente activas a las que se pueden aplicar dos de las opciones dadas:",
+    "text1": "Cerrar la aplicación mientras las órdenes de algoritmo están activas requerirá que reanudes/canceles las órdenes de algoritmo cuando vuelvas a iniciar la aplicación HoneyFramework.",
+    "text2": "Cuando reinicies la aplicación HoneyFramework, se te pedirá que selecciones entre las órdenes de algoritmo actualmente activas a las que se pueden aplicar dos de las opciones dadas:",
     "text3": "1. Reanudar: Los órdenes atómicas realizadas por las órdenes de algoritmo seleccionadas (si están activas) se cancelarán y las órdenes de algoritmo reanudarán la realización de órdenes por las cantidades restantes. Las órdenes de algoritmo no seleccionadas no se reanudarán y se perderán a perpetuidad.",
     "text4": "2. Cancelar todo: Todos las órdenes atómicos realizadas por las órdenes de algoritmo (si están activas) se cancelarán y no se reanudarán las órdenes de algoritmo.",
     "text5": "Nota: Las órdenes atómicas permanecerán activas si la opción DMS está desactivada."
@@ -320,7 +320,7 @@
     "title": "Error de conexión",
     "text1": "Hemos notado varios problemas de conexión a internet. Es necesario {{action}} la aplicación para continuar con el funcionamiento normal.",
     "text2": "Asegúrate de tener una conexión a internet estable y buena.",
-    "text3": "Honey Framework hará {{action}} después de presionar 'Aceptar'.",
+    "text3": "HoneyFramework hará {{action}} después de presionar 'Aceptar'.",
     "text4": "La aplicación hará {{action}} automáticamente en {{countdown}} segundos.",
     "checkbox": "{{action}} automáticamente",
     "reboot": "reiniciar",
@@ -409,7 +409,7 @@
   },
   "confirmDMSModal": {
     "title": "Habilitar Interruptor de Dead Man",
-    "text": "Ten en cuenta que cuando esta configuración está habilitada, cerrar la aplicación no solo cancelará todos las órdenes creadas por Honey Framework, sino que también cancelará todas las demás órdenes, incluidas las que se han abierto en el sitio web de Bitfinex o en otro lugar.\n\nEsta es una configuración recomendada, pero debes tener en cuenta las posibles consecuencias.",
+    "text": "Ten en cuenta que cuando esta configuración está habilitada, cerrar la aplicación no solo cancelará todos las órdenes creadas por HoneyFramework, sino que también cancelará todas las demás órdenes, incluidas las que se han abierto en el sitio web de Bitfinex o en otro lugar.\n\nEsta es una configuración recomendada, pero debes tener en cuenta las posibles consecuencias.",
     "dontShowAgain": "No volver a mostrar"
   },
   "editOrderModal": {
@@ -627,7 +627,7 @@
     "startBtn": "Comenzar"
   },
   "crashHandler": {
-    "text1": "Se produjo un error que hizo que se detuviera la interfaz de usuario de Honey Framework. Por favor, reinicia la aplicación para continuar trabajando con ella",
+    "text1": "Se produjo un error que hizo que se detuviera la interfaz de usuario de HoneyFramework. Por favor, reinicia la aplicación para continuar trabajando con ella",
     "text2_1": "Por favor, reporta este problema a",
     "text2_2": "¡para que podamos solucionarlo lo antes posible!",
     "text3": "Información técnica sobre accidentes"
