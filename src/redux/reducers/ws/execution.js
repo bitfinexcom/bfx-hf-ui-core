@@ -16,6 +16,7 @@ function getInitialState() {
     runningStrategiesMapping: {
       // 'strategy-id': 'unique-strategy-id'
     },
+    pastStrategies: [],
   }
 }
 
@@ -55,6 +56,15 @@ function reducer(state = getInitialState(), action = {}) {
           ...state.results,
           [strategyMapKey]: executionResultsObj,
         },
+      }
+    }
+
+    case types.SET_PAST_STRATEGIES: {
+      const { pastStrategies } = payload
+
+      return {
+        ...state,
+        pastStrategies,
       }
     }
 
