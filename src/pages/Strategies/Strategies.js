@@ -181,6 +181,7 @@ const StrategiesPage = ({
     }
     selectStrategyHandler(newStrategy, forcedLoad)
     setSectionErrors({})
+    setNextStrategyToOpen(null)
     setStrategyDirty(false)
 
     if (newStrategy.defineIndicators) {
