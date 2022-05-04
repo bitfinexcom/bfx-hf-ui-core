@@ -75,9 +75,12 @@ const CreateNewStrategyFromModalOpen = ({
     let newStrategy
 
     if (isTemplatesTabSelected) {
-      newStrategy = _find(Templates, _t => _t.label === template)
+      newStrategy = _find(Templates, (_t) => _t.label === template)
     } else {
-      newStrategy = _find(savedStrategies, _s => _s.label === selectedStrategyLabel)
+      newStrategy = _find(
+        savedStrategies,
+        (_s) => _s.label === selectedStrategyLabel,
+      )
       delete newStrategy.id
     }
 
@@ -86,15 +89,21 @@ const CreateNewStrategyFromModalOpen = ({
     onClose()
   }
 
-  const templatesOptions = useMemo(() => _map(Templates, _t => ({
-    label: _t.label,
-    value: _t.label,
-  })), [])
+  const templatesOptions = useMemo(
+    () => _map(Templates, (_t) => ({
+      label: _t.label,
+      value: _t.label,
+    })),
+    [],
+  )
 
-  const savedStrategiesOptions = useMemo(() => _map(savedStrategies, s => ({
-    label: s.label,
-    value: s.label,
-  })), [savedStrategies])
+  const savedStrategiesOptions = useMemo(
+    () => _map(savedStrategies, (s) => ({
+      label: s.label,
+      value: s.label,
+    })),
+    [savedStrategies],
+  )
 
   useEffect(() => {
     if (_isEmpty(savedStrategies)) {
@@ -112,11 +121,7 @@ const CreateNewStrategyFromModalOpen = ({
       label={t('strategyEditor.newStrategyFromModalTitle')}
     >
       <div className='hfui-createnewstrategymodal__content'>
-        <Tabs
-          tabs={tabs}
-          onTabClick={setActiveTab}
-          activeTab={activeTab}
-        />
+        <Tabs tabs={tabs} onTabClick={setActiveTab} activeTab={activeTab} />
         <Input
           type='text'
           placeholder={t('ui.name')}
@@ -137,10 +142,7 @@ const CreateNewStrategyFromModalOpen = ({
           />
         )}
 
-        {!_isEmpty(error) && (
-        <p className='error'>{error}</p>
-        )}
-
+        {!_isEmpty(error) && <p className='error'>{error}</p>}
       </div>
 
       <Modal.Footer className='hfui-createnewstrategymodal__footer'>
@@ -160,7 +162,7 @@ CreateNewStrategyFromModalOpen.propTypes = {
 }
 
 CreateNewStrategyFromModalOpen.defaultProps = {
-  gaCreateStrategy: () => { },
+  gaCreateStrategy: () => {},
   isOpen: true,
 }
 

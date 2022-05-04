@@ -20,7 +20,6 @@ const MAX_STRATEGY_LABEL_LENGTH = 25
 
 const StrategyOptionsPanel = ({
   strategy,
-  strategyDirty,
   onOpenSaveStrategyAsModal,
   symbol,
   markets,
@@ -33,10 +32,7 @@ const StrategyOptionsPanel = ({
 }) => {
   const { t } = useTranslation()
 
-  const { label: strategyName } = strategy || {}
-  const strategyDisplayName = strategyDirty
-    ? t('strategyEditor.unsavedStartegy')
-    : strategyName
+  const { label } = strategy || {}
 
   const strategyTypesOptions = useMemo(() => {
     return [
@@ -63,18 +59,18 @@ const StrategyOptionsPanel = ({
         onClick={onOpenSaveStrategyAsModal}
       >
         <>
-          {_size(strategyDisplayName) > MAX_STRATEGY_LABEL_LENGTH ? (
+          {_size(label) > MAX_STRATEGY_LABEL_LENGTH ? (
             <Tooltip
               className='__react-tooltip __react_component_tooltip wide'
-              content={strategyDisplayName}
+              content={label}
             >
               {makeShorterLongName(
-                strategyDisplayName,
+                label,
                 MAX_STRATEGY_LABEL_LENGTH,
               )}
             </Tooltip>
           ) : (
-            strategyDisplayName
+            label
           )}
         </>
       </p>
@@ -156,7 +152,6 @@ StrategyOptionsPanel.propTypes = {
   setSymbol: PropTypes.func.isRequired,
   setMargin: PropTypes.func.isRequired,
   onOpenSaveStrategyAsModal: PropTypes.func.isRequired,
-  strategyDirty: PropTypes.bool.isRequired,
   strategy: PropTypes.shape({
     label: PropTypes.string,
   }).isRequired,

@@ -590,8 +590,9 @@
     "disconnected": "Disconnected"
   },
   "strategyEditor": {
-    "unsavedStartegy": "Unsaved strategy",
     "unsavedChanges": "You have unsaved changes",
+    "unsavedChangesModalTitle": "Do you need to save changes in the strategy before closing?",
+    "unsavedChangesModalText": "You have unsaved changes in \"{{strategyName}}\". If you don`t save them, they will be permanently deleted",
     "saved": "Saved",
     "errorsInIDE": "Resolve code errors and save",
     "newStrategy": "Create a new strategy",
@@ -687,6 +688,7 @@
     "export": "Export",
     "import": "Import",
     "closeBtn": "Close",
+    "closeWithoutSaving": "Close without saving",
     "lastBtn": "Finish",
     "nextBtn": "Next",
     "openDlgBtn": "Open the dialog",

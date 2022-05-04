@@ -137,16 +137,15 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch(WSActions.setExecutionLoading(true))
     dispatch(WSActions.send(['strategy.execute_stop', authToken]))
   },
-  onSave: (authToken, strategy = {}) => {
-    dispatch(WSActions.send(['strategy.save', authToken, strategy]))
-  },
   showError: (text) => {
-    dispatch(UIActions.recvNotification({
-      mts: Date.now(),
-      status: 'error',
-      text,
-      cid: uuidv4(),
-    }))
+    dispatch(
+      UIActions.recvNotification({
+        mts: Date.now(),
+        status: 'error',
+        text,
+        cid: uuidv4(),
+      }),
+    )
   },
 })
 
