@@ -591,6 +591,9 @@
   },
   "strategyEditor": {
     "unsavedStartegy": "Unsaved strategy",
+    "unsavedChanges": "You have unsaved changes",
+    "saved": "Saved",
+    "errorsInIDE": "Resolve code errors and save",
     "newStrategy": "Create a new strategy",
     "newStrategyFrom": "Create a new strategy from...",
     "newStrategy2": "New strategy",
@@ -602,7 +605,6 @@
     "strategyTab": "Strategy",
     "backtestTab": "Backtest",
     "viewInIDETab": "View in IDE",
-    "helpTab": "Help",
     "activeStrategies": "Active strategies ({{amount}})",
     "pastStrategies": "Past strategies ({{amount}})",
     "more": "More",
@@ -673,7 +675,8 @@
       "meanReverting": "Mean-Reverting",
       "trendFollowing": "Trend Following",
       "technicalAnalysis": "Technical Analysis"
-    }
+    },
+    "closeStrategy": "Close strategy"
   },
   "ui": {
     "ok": "Okay",

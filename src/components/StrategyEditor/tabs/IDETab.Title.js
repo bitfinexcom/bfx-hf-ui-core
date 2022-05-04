@@ -1,28 +1,22 @@
-import React, { memo, useMemo } from 'react'
+import React, { memo } from 'react'
 import PropTypes from 'prop-types'
-import _values from 'lodash/values'
-import _some from 'lodash/some'
 import { useTranslation } from 'react-i18next'
 import { Icon } from 'react-fa'
 import Indicator from '../../../ui/Indicator'
 
-const IDETabTitle = ({ sidebarOpened, strategyDirty, sectionErrors }) => {
+const IDETabTitle = ({
+  sidebarOpened, strategyDirty, hasErrors,
+}) => {
   const { t } = useTranslation()
 
-  const hasErrors = useMemo(() => {
-    if (!sectionErrors) {
-      return false
-    }
-    const errors = _values(sectionErrors)
-    return _some(errors, (error) => error)
-  }, [sectionErrors])
+  const indicatorClassName = !sidebarOpened && 'indicator-near-icon'
 
   const getIndicator = () => {
     if (hasErrors) {
-      return <Indicator red />
+      return <Indicator red className={indicatorClassName} />
     }
     if (strategyDirty) {
-      return <Indicator white />
+      return <Indicator white className={indicatorClassName} />
     }
     return null
   }
@@ -30,7 +24,7 @@ const IDETabTitle = ({ sidebarOpened, strategyDirty, sectionErrors }) => {
   return (
     <div className='hfui-strategyeditor__sidebar-title'>
       <Icon name='edit' className='title-icon' />
-      {sidebarOpened && <span>{t('strategyEditor.viewInIDETab')}</span>}
+      {sidebarOpened && <span className='title-label'>{t('strategyEditor.viewInIDETab')}</span>}
       {getIndicator()}
     </div>
   )
@@ -39,11 +33,7 @@ const IDETabTitle = ({ sidebarOpened, strategyDirty, sectionErrors }) => {
 IDETabTitle.propTypes = {
   sidebarOpened: PropTypes.bool.isRequired,
   strategyDirty: PropTypes.bool.isRequired,
-  sectionErrors: PropTypes.objectOf(PropTypes.string),
-}
-
-IDETabTitle.defaultProps = {
-  sectionErrors: null,
+  hasErrors: PropTypes.bool.isRequired,
 }
 
 export default memo(IDETabTitle)

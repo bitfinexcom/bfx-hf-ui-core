@@ -5,13 +5,13 @@ import Panel from '../../../ui/Panel'
 import '../style.css'
 
 const StrategyEditorPanel = ({
-  dark, moveable, children, removeable,
+  moveable, children, removeable,
 }) => {
   return (
     <Panel
       className='hfui-strategyeditor__panel'
-      dark={dark}
-      darkHeader={dark}
+      dark
+      darkHeader
       moveable={moveable}
       removeable={removeable}
     >
@@ -21,14 +21,12 @@ const StrategyEditorPanel = ({
 }
 
 StrategyEditorPanel.propTypes = {
-  dark: PropTypes.bool,
   moveable: PropTypes.bool,
   removeable: PropTypes.bool,
   children: PropTypes.node.isRequired,
 }
 
 StrategyEditorPanel.defaultProps = {
-  dark: true,
   moveable: true,
   removeable: true,
 }

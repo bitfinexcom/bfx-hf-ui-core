@@ -18,45 +18,23 @@ const StrategyTabTitle = (props) => {
 
   const isStrategyTabSelected = selectedTab === 0
 
-  const getTabTitle = () => {
+  const indicatorClassName = !sidebarOpened && 'indicator-near-icon'
+
+  const getIndicator = () => {
     if (loading) {
-      return (
-        <>
-          {sidebarOpened && (
-            <span className='title-label--indicator'>{title}</span>
-          )}
-          <Indicator white blinking />
-        </>
-      )
+      return <Indicator white blinking className={indicatorClassName} />
     }
     if (executing) {
-      return (
-        <>
-          {sidebarOpened && (
-            <span className='title-label--indicator'>{title}</span>
-          )}
-          <Indicator red blinking={!isStrategyTabSelected} />
-        </>
-      )
+      return <Indicator red blinking={!isStrategyTabSelected} className={indicatorClassName} />
     }
     if (!_isEmpty(results)) {
-      return (
-        <>
-          {sidebarOpened && (
-            <span className='title-label--indicator'>{title}</span>
-          )}
-          <Indicator green />
-        </>
-      )
+      return <Indicator green className={indicatorClassName} />
     }
-    return (
-      <>
-        {sidebarOpened && <span>{title}</span>}
-      </>
-    )
+    return null
   }
 
   const closeParams = () => setParamsOpen(false)
+  const openParams = () => setParamsOpen(true)
 
   useEffect(() => {
     if (selectedTab === 0) {
@@ -65,9 +43,10 @@ const StrategyTabTitle = (props) => {
   }, [selectedTab])
 
   return (
-    <div className='hfui-strategyeditor__sidebar-title'>
+    <div className='hfui-strategyeditor__sidebar-title' onClick={openParams}>
       <Icon name='file-code-o' className='title-icon' />
-      {getTabTitle()}
+      {sidebarOpened && <span className='title-label'>{title}</span>}
+      {getIndicator()}
       {paramsOpen && (
         <OutsideClickHandler onOutsideClick={closeParams}>
           <StrategiesMenuSideBarParams

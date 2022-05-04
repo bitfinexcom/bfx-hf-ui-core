@@ -1,9 +1,10 @@
-import React, { memo, useState } from 'react'
+import React, { memo, useMemo, useState } from 'react'
 import Debug from 'debug'
 import _isEmpty from 'lodash/isEmpty'
 import _size from 'lodash/size'
+import _some from 'lodash/some'
+import _values from 'lodash/values'
 import _find from 'lodash/find'
-import { Icon } from 'react-fa'
 import PropTypes from 'prop-types'
 import { useTranslation } from 'react-i18next'
 
@@ -18,12 +19,10 @@ import StrategyTab from './tabs/StrategyTab'
 import BacktestTab from './tabs/BacktestTab'
 import IDETab from './tabs/IDETab'
 import { getDefaultMarket } from '../../util/market'
-import HelpTab from './tabs/HelpTab'
 import CreateNewStrategyFromModalOpen from '../../modals/Strategy/CreateNewStrategyFromModal'
 import SaveStrategyAsModal from '../../modals/Strategy/SaveStrategyAsModal/SaveStrategyAsModal'
 import StrategyTabTitle from './tabs/StrategyTab.Title'
 import BacktestTabTitle from './tabs/BacktestTab.Title'
-import HelpTabTItle from './tabs/HelpTab.TItle'
 import IDETabTitle from './tabs/IDETab.Title'
 
 import './style.css'
@@ -235,6 +234,11 @@ const StrategyEditor = (props) => {
     dsStopLiveStrategy(authToken)
   }
 
+  const hasErrorsInIDE = useMemo(
+    () => _some(_values(sectionErrors), (e) => !!e),
+    [sectionErrors],
+  )
+
   return (
     <>
       {!strategy || _isEmpty(strategy) ? (
@@ -295,26 +299,23 @@ const StrategyEditor = (props) => {
               {...props}
             />
           )}
-          {/* React.Fragment is not supported for tabs */}
-          {(isBetaVersion || flags?.docs) && [
+          {(isBetaVersion || flags?.docs) && (
             <IDETab
               htmlKey='view_in_ide'
               key='view_in_ide'
+              hasErrors={hasErrorsInIDE}
+              onSaveStrategy={onSaveStrategy}
+              onOpenSaveStrategyAsModal={() => setIsSaveStrategyModalOpen(true)}
               sbtitle={({ sidebarOpened }) => (
                 <IDETabTitle
-                  sectionErrors={sectionErrors}
+                  hasErrors={hasErrorsInIDE}
                   strategyDirty={strategyDirty}
                   sidebarOpened={sidebarOpened}
                 />
               )}
               {...props}
-            />,
-            <HelpTab
-              htmlKey='help'
-              key='help'
-              sbtitle={({ sidebarOpened }) => <HelpTabTItle sidebarOpened={sidebarOpened} />}
-            />,
-          ]}
+            />
+          )}
         </StrategyEditorPanel>
       )}
       <CreateNewStrategyFromModalOpen
