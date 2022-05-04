@@ -286,6 +286,7 @@ const StrategyEditor = (props) => {
               onOpenSaveStrategyAsModal={openSaveStrategyAsModal}
               isPaperTrading={isPaperTrading}
               startExecution={startExecution}
+              stopExecution={stopExecution}
               executionResults={execResults}
               {...optionsProps}
               {...props}

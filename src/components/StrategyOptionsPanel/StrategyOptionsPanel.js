@@ -29,6 +29,7 @@ const StrategyOptionsPanel = ({
   startExecution,
   isExecuting,
   hasResults,
+  stopExecution,
 }) => {
   const { t } = useTranslation()
 
@@ -123,7 +124,7 @@ const StrategyOptionsPanel = ({
           <Button
             className='hfui-strategy-options__option-btn item'
             label={t('ui.stopBtn')}
-            onClick={() => {}}
+            onClick={stopExecution}
             red
           />
         </>
