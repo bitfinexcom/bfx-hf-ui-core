@@ -12,6 +12,9 @@ import {
   getBacktestResults,
   getExecutionOptions,
   getExecutionResults,
+  getSortedByTimeActiveStrategies,
+  getRunningStrategiesMapping,
+  getLiveExecutionResults,
 } from '../../redux/selectors/ws'
 import {
   getStrategyId,
@@ -34,9 +37,9 @@ const mapStateToProps = (state = {}) => ({
   isPaperTrading: getIsPaperTrading(state),
   flags: getStrategiesFeatureFlags(state),
   isBetaVersion: getIsBetaVersion(state),
-  liveResults: state.ws.execution.results,
-  activeStrategies: state.ws.execution.activeStrategies,
-  runningStrategiesMapping: state.ws.execution.runningStrategiesMapping,
+  liveResults: getLiveExecutionResults(state),
+  activeStrategies: getSortedByTimeActiveStrategies(state),
+  runningStrategiesMapping: getRunningStrategiesMapping(state),
 })
 
 const mapDispatchToProps = (dispatch) => ({

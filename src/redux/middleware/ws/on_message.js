@@ -486,6 +486,13 @@ export default (alias, store) => (e = {}) => {
         break
       }
 
+      case 'data.past_strategies': {
+        const [, pastStrategies] = payload
+        store.dispatch(WSActions.setPastStrategies(pastStrategies))
+
+        break
+      }
+
       case 'strategy.live_execution_results': {
         const [, results] = payload
         store.dispatch(WSActions.setExecutionResults(results))

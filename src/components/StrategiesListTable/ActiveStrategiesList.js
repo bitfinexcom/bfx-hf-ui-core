@@ -3,9 +3,9 @@ import PropTypes from 'prop-types'
 import _isEmpty from 'lodash/isEmpty'
 import { VirtualTable } from '@ufx-ui/core'
 import { useTranslation } from 'react-i18next'
-import StrategiesListColumns from './StrategiesList.columns'
+import { activeStrategiesColumns } from './StrategiesList.columns'
 
-const ActiveStrategiesList = ({ onRowClick, strategies }) => {
+const ActiveStrategiesList = ({ onRowClick, strategies, getMarketPair }) => {
   const { t } = useTranslation()
 
   return (
@@ -19,7 +19,7 @@ const ActiveStrategiesList = ({ onRowClick, strategies }) => {
       ) : (
         <VirtualTable
           data={strategies}
-          columns={StrategiesListColumns(t)}
+          columns={activeStrategiesColumns(t, getMarketPair)}
           defaultSortBy='mts'
           defaultSortDirection='DESC'
           onRowClick={onRowClick}
@@ -32,6 +32,7 @@ const ActiveStrategiesList = ({ onRowClick, strategies }) => {
 ActiveStrategiesList.propTypes = {
   onRowClick: PropTypes.func.isRequired,
   strategies: PropTypes.arrayOf(PropTypes.object).isRequired,
+  getMarketPair: PropTypes.func.isRequired,
 }
 
 export default ActiveStrategiesList

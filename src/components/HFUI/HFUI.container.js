@@ -30,6 +30,9 @@ const mapDispatchToProps = dispatch => ({
   getSettings: (authToken) => {
     dispatch(WSActions.send(['get.settings', authToken]))
   },
+  getPastStrategies: (authToken) => {
+    dispatch(WSActions.send(['get.past_strategies', authToken]))
+  },
   getCoreSettings: (authToken) => {
     dispatch(WSActions.send(['get.core_settings', authToken, [MAX_ORDER_COUNT_SETTING]]))
   },

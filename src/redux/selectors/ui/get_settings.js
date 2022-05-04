@@ -66,7 +66,7 @@ export const getRebootSetting = createSelector(
 
 export const getIsBetaVersion = createSelector(
   getSettings,
-  (settings) => _get(settings, SETTINGS_KEYS.JOIN_BETA_PROGRAM, true),
+  (settings) => _get(settings, SETTINGS_KEYS.JOIN_BETA_PROGRAM, false),
 )
 
 export default getSettings

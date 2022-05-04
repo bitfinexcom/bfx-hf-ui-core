@@ -43,6 +43,7 @@ const HFUI = (props) => {
     settingsTheme,
     isBfxConnected,
     showStrategies,
+    getPastStrategies,
   } = props
   useInjectBfxData()
 
@@ -105,9 +106,10 @@ const HFUI = (props) => {
       getSettings(authToken)
       getFeatureFlags(authToken)
       getFavoritePairs(authToken, currentMode)
+      getPastStrategies(authToken)
       subscribeAllTickers()
     }
-  }, [authToken, currentMode, getCoreSettings, getFavoritePairs, getFeatureFlags, getSettings, subscribeAllTickers])
+  }, [authToken, currentMode, getCoreSettings, getFavoritePairs, getFeatureFlags, getSettings, subscribeAllTickers, getPastStrategies])
 
   // fetch core-settings after bitfinex client is connected
   useEffect(() => {
@@ -148,6 +150,7 @@ HFUI.propTypes = {
   getFeatureFlags: PropTypes.func.isRequired,
   getCoreSettings: PropTypes.func.isRequired,
   getFavoritePairs: PropTypes.func.isRequired,
+  getPastStrategies: PropTypes.func.isRequired,
   onUnload: PropTypes.func.isRequired,
   notificationsVisible: PropTypes.bool.isRequired,
   GAPageview: PropTypes.func.isRequired,

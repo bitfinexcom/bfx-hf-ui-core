@@ -5,7 +5,9 @@ import { getMarkets } from '../../redux/selectors/meta'
 import {
   getIsPaperTrading, getThemeSetting,
 } from '../../redux/selectors/ui'
-import { getAuthToken, getExecutionOptions } from '../../redux/selectors/ws'
+import {
+  getAuthToken, getExecutionOptions, getLiveExecutionResults,
+} from '../../redux/selectors/ws'
 
 import LiveStrategyExecutor from './LiveStrategyExecutor'
 
@@ -17,7 +19,7 @@ const mapStateToProps = (state = {}) => ({
   options: getExecutionOptions(state),
   authToken: getAuthToken(state),
   isPaperTrading: getIsPaperTrading(state),
-  results: state.ws.execution.results,
+  results: getLiveExecutionResults(state),
   theme: getThemeSetting(state),
 })
 
