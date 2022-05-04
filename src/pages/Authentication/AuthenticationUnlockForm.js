@@ -67,7 +67,7 @@ const AuthenticationUnlockForm = ({ isPaperTrading, onUnlock: _onUnlock, onReset
 
   return (
     <div className='hfui-authenticationpage__content'>
-      <h2>Honey Framework UI</h2>
+      <h2>HoneyFramework UI</h2>
 
       <form className='hfui-authenticationpage__inner-form' onSubmit={onFormSubmit}>
         <p>{t('auth.enterPsw')}</p>
