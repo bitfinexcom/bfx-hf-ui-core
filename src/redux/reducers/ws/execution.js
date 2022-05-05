@@ -1,5 +1,4 @@
 import _size from 'lodash/size'
-import _filter from 'lodash/filter'
 import types from '../../constants/ws'
 
 function getInitialState() {

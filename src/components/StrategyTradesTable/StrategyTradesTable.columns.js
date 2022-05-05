@@ -68,7 +68,7 @@ export default (t) => [
     cellRenderer: ({ rowData = {} }) => defaultCellRenderer(rowData.closing_price
       ? (
         <PrettyValue
-          value={rowData.price}
+          value={rowData.closing_price}
           sigFig={PRICE_SIG_FIGS}
           fadeTrailingZeros
         />

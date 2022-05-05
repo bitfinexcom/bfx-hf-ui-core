@@ -160,6 +160,7 @@ StrategyOptionsPanel.propTypes = {
   startExecution: PropTypes.func.isRequired,
   isExecuting: PropTypes.bool.isRequired,
   hasResults: PropTypes.bool.isRequired,
+  stopExecution: PropTypes.bool.isRequired,
 }
 
 export default StrategyOptionsPanel

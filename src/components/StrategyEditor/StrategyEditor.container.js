@@ -12,7 +12,7 @@ import {
   getBacktestResults,
   getExecutionOptions,
   getExecutionResults,
-  getSortedByTimeActiveStrategies,
+  // getSortedByTimeActiveStrategies,
   getRunningStrategiesMapping,
   getLiveExecutionResults,
 } from '../../redux/selectors/ws'
@@ -38,7 +38,7 @@ const mapStateToProps = (state = {}) => ({
   flags: getStrategiesFeatureFlags(state),
   isBetaVersion: getIsBetaVersion(state),
   liveResults: getLiveExecutionResults(state),
-  activeStrategies: getSortedByTimeActiveStrategies(state),
+  // activeStrategies: getSortedByTimeActiveStrategies(state),
   runningStrategiesMapping: getRunningStrategiesMapping(state),
 })
 

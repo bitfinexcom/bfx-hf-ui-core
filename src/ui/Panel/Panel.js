@@ -123,7 +123,7 @@ const Panel = ({
     } else {
       exitPanelFullscreen()
     }
-  }, [fullscreen, onExitFullscreen, onEnterFullscreen])
+  }, [fullscreen, onExitFullscreen, onEnterFullscreen]) // eslint-disable-line react-hooks/exhaustive-deps
 
   useLayoutEffect(() => {
     document.onfullscreenchange = () => {

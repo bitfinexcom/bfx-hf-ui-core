@@ -16,7 +16,7 @@ const BacktestOptionsPanel = ({
   setTimeframe,
   trades,
   setTrades,
-  margin,
+  // margin,
   candleSeed,
   setCandleSeed,
   setFullScreenChart,
@@ -139,7 +139,7 @@ BacktestOptionsPanel.propTypes = {
   setTimeframe: PropTypes.func.isRequired,
   trades: PropTypes.bool.isRequired,
   setTrades: PropTypes.func.isRequired,
-  margin: PropTypes.bool.isRequired,
+  // margin: PropTypes.bool.isRequired,
   candleSeed: PropTypes.number.isRequired,
   setCandleSeed: PropTypes.func.isRequired,
   strategy: PropTypes.shape({
@@ -150,6 +150,10 @@ BacktestOptionsPanel.propTypes = {
   isFinished: PropTypes.bool.isRequired,
   candles: PropTypes.bool.isRequired,
   setCandles: PropTypes.func.isRequired,
+  startDate: PropTypes.instanceOf(Date).isRequired,
+  endDate: PropTypes.instanceOf(Date).isRequired,
+  setStartDate: PropTypes.func.isRequired,
+  setEndDate: PropTypes.func.isRequired,
 }
 
 BacktestOptionsPanel.defaultProps = {

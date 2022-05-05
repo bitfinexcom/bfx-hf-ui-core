@@ -50,7 +50,6 @@ const StrategyEditor = (props) => {
     backtestResults,
     strategyDirty,
     setStrategyDirty,
-    onDefineIndicatorsChange,
     setStrategy,
     strategy,
     onLoadStrategy,
@@ -61,14 +60,13 @@ const StrategyEditor = (props) => {
     saveStrategy,
     isPaperTrading,
     dsExecuteBacktest,
-    setBacktestOptions,
+    // setBacktestOptions,
     showError,
     flags,
     isBetaVersion,
     allExecutionResults,
     sectionErrors,
     liveResults,
-    activeStrategies,
     runningStrategiesMapping,
   } = props
   const { t } = useTranslation()
@@ -381,7 +379,6 @@ StrategyEditor.propTypes = {
   dsStopLiveStrategy: PropTypes.func.isRequired,
   dsExecuteLiveStrategy: PropTypes.func.isRequired,
   onLoadStrategy: PropTypes.func.isRequired,
-  onDefineIndicatorsChange: PropTypes.func.isRequired,
   indicators: PropTypes.arrayOf(PropTypes.object),
   strategyDirty: PropTypes.bool.isRequired,
   setStrategyDirty: PropTypes.func.isRequired,
@@ -399,7 +396,7 @@ StrategyEditor.propTypes = {
   ),
   saveStrategy: PropTypes.func.isRequired,
   isPaperTrading: PropTypes.bool.isRequired,
-  setBacktestOptions: PropTypes.func.isRequired,
+  // setBacktestOptions: PropTypes.func.isRequired,
   dsExecuteBacktest: PropTypes.func.isRequired,
   isBetaVersion: PropTypes.bool.isRequired,
   flags: PropTypes.shape({
@@ -409,7 +406,6 @@ StrategyEditor.propTypes = {
   }).isRequired,
   showError: PropTypes.func.isRequired,
   liveResults: PropTypes.objectOf(PropTypes.object),
-  activeStrategies: PropTypes.objectOf(PropTypes.object),
   runningStrategiesMapping: PropTypes.objectOf(PropTypes.string),
   sectionErrors: PropTypes.objectOf(PropTypes.string).isRequired,
 }
@@ -426,7 +422,6 @@ StrategyEditor.defaultProps = {
   },
   indicators: [],
   liveResults: {},
-  activeStrategies: {},
   runningStrategiesMapping: {},
 }
 

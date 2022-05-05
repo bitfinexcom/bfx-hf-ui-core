@@ -72,7 +72,7 @@ const StrategyTab = (props) => {
           return null
       }
     },
-    [layoutConfig, props, fullscreenChart, executing, results],
+    [layoutConfig, props, fullscreenChart, executing, results, hasResults],
   )
 
   return (
