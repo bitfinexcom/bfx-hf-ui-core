@@ -7,7 +7,7 @@ import randomColor from 'randomcolor'
 import _ from 'lodash'
 import _values from 'lodash/values'
 import _map from 'lodash/map'
-import _remove from 'lodash/remove'
+// import _remove from 'lodash/remove'
 import _forEach from 'lodash/forEach'
 import Indicators from 'bfx-hf-indicators'
 import { nonce } from 'bfx-api-node-util'
@@ -51,13 +51,13 @@ const StrategiesPage = ({
 
   const { t } = useTranslation()
 
-  const onAddIndicator = (indicator) => {
-    setIndicators([...indicators, indicator])
-  }
+  // const onAddIndicator = (indicator) => {
+  //   setIndicators([...indicators, indicator])
+  // }
 
-  const onDeleteIndicator = (index) => {
-    setIndicators(_remove(indicators, (el, id) => id !== index))
-  }
+  // const onDeleteIndicator = (index) => {
+  //   setIndicators(_remove(indicators, (el, id) => id !== index))
+  // }
 
   const onIndicatorsChange = (updatedIndicators) => {
     const newIndicators = _map(_values(updatedIndicators), (ind) => {

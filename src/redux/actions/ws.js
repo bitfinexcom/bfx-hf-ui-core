@@ -275,6 +275,13 @@ export default {
     },
   }),
 
+  setLiveExecutionTrades: (strategyMapKey, trades) => ({
+    type: t.SET_LIVE_EXECUTION_TRADES,
+    payload: {
+      strategyMapKey, trades,
+    },
+  }),
+
   setPastStrategies: (pastStrategies) => ({
     type: t.SET_PAST_STRATEGIES,
     payload: {

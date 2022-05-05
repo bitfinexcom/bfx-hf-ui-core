@@ -475,6 +475,9 @@ export default (alias, store) => (e = {}) => {
       // emitted when a position is opened
       case 'strategy.opened_position_data': {
         const [, strategyMapKey, openedPositionDetails] = payload
+        const { trades } = openedPositionDetails
+
+        store.dispatch(WSActions.setLiveExecutionTrades(strategyMapKey, trades))
 
         break
       }
@@ -482,6 +485,9 @@ export default (alias, store) => (e = {}) => {
       // emitted when a position is closed
       case 'strategy.closed_position_data': {
         const [, strategyMapKey, closedPositionDetails] = payload
+        const { trades } = closedPositionDetails
+
+        store.dispatch(WSActions.setLiveExecutionTrades(strategyMapKey, trades))
 
         break
       }

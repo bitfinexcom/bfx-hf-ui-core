@@ -113,6 +113,23 @@ function reducer(state = getInitialState(), action = {}) {
       }
     }
 
+    case types.SET_LIVE_EXECUTION_TRADES: {
+      const { strategyMapKey, trades } = payload
+
+      return {
+        ...state,
+        results: {
+          ...state.results,
+          [strategyMapKey]: {
+            ...(state.results[strategyMapKey] || {}),
+            strategy: {
+              trades,
+            },
+          },
+        },
+      }
+    }
+
     case types.SET_EXECUTION_RESULTS: {
       const { strategyId, results = {} } = payload
 

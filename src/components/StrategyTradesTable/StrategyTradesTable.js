@@ -27,7 +27,8 @@ const StrategyTradesTable = ({
 }) => {
   const [isExpanded, setIsExpanded] = useState(false)
   const activeMarket = useSelector(getActiveMarket)
-  const { trades } = results
+  const strategyTrades = results.strategy?.trades
+  const { trades = strategyTrades } = results
 
   const onExpandClick = () => {
     const currentElementIndex = _findIndex(
@@ -110,6 +111,7 @@ const StrategyTradesTable = ({
 
 StrategyTradesTable.propTypes = {
   results: PropTypes.shape({
+    strategy: PropTypes.objectOf(PropTypes.object).isRequired, // eslint-disable-line
     trades: PropTypes.arrayOf(PropTypes.object).isRequired, // eslint-disable-line
   }).isRequired,
   onTradeClick: PropTypes.func.isRequired,

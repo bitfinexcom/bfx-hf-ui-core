@@ -32,7 +32,7 @@ const StrategyTab = (props) => {
       setLayoutConfig(LAYOUT_CONFIG_NO_DATA)
       return
     }
-    if (_isEmpty(results.trades)) {
+    if (_isEmpty(results.strategy?.trades)) {
       setLayoutConfig(LAYOUT_CONFIG_WITHOUT_TRADES)
       return
     }
