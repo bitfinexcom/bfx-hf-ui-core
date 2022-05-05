@@ -30,7 +30,7 @@ const mapStateToProps = (state = {}) => ({
   authToken: getAuthToken(state),
   strategyId: getStrategyId(state),
   backtestResults: getBacktestResults(state),
-  executionResults: getExecutionResults(state),
+  allExecutionResults: getExecutionResults(state),
   settingsTheme: getThemeSetting(state),
   options: getExecutionOptions(state),
   markets: getMarkets(state),

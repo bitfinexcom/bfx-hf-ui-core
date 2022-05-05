@@ -65,7 +65,7 @@ const StrategyEditor = (props) => {
     showError,
     flags,
     isBetaVersion,
-    executionResults,
+    allExecutionResults,
     sectionErrors,
     liveResults,
     activeStrategies,
@@ -118,7 +118,7 @@ const StrategyEditor = (props) => {
   }
 
   const execResults = {
-    ...executionResults,
+    ...allExecutionResults,
     results: currentStrategyResults,
   }
 
@@ -386,7 +386,7 @@ StrategyEditor.propTypes = {
   strategyDirty: PropTypes.bool.isRequired,
   setStrategyDirty: PropTypes.func.isRequired,
   gaCreateStrategy: PropTypes.func.isRequired,
-  executionResults: PropTypes.shape({
+  allExecutionResults: PropTypes.shape({
     executing: PropTypes.bool,
     loading: PropTypes.bool,
   }).isRequired,
