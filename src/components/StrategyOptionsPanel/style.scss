@@ -1,6 +1,7 @@
 .hfui-strategy-options {
   display: flex;
   justify-content: space-between;
+  align-items: baseline;
 
   .item {
     margin-right: 10px;
@@ -27,7 +28,7 @@
   &__input {
     display: flex;
     flex-direction: column;
-    max-width: 185px;
+    max-width: 200px;
     margin-bottom: 0;
   }
 
@@ -36,9 +37,34 @@
     padding: 8 16px;
   }
 
+  &__strategy-type-input {
+    @extend .hfui-strategy-options__input;
+    flex-direction: row;
+  }
+
+  &__type-selection {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+
+    .hfui-strategy-options__input:not(:last-child) {
+      margin-right: 10px;
+    }
+  }
+
   &__option-btn {
     height: 30px;
     min-width: 70px;
+  }
+
+  &__ok-btn {
+    min-width: 36px;
+    height: 36px;
+  }
+
+  &__search-btn {
+    width: 15px;
+    height: 15px;
   }
 
   &__right-container {

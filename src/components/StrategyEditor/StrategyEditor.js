@@ -170,7 +170,7 @@ const StrategyEditor = (props) => {
 
   const onSaveAsStrategy = (newStrategy) => {
     setStrategy(newStrategy)
-    saveStrategy(strategy)
+    saveStrategy(newStrategy)
     setStrategyDirty(false)
   }
 
@@ -286,6 +286,7 @@ const StrategyEditor = (props) => {
               startExecution={startExecution}
               stopExecution={stopExecution}
               executionResults={execResults}
+              onSaveAsStrategy={onSaveAsStrategy}
               {...optionsProps}
               {...props}
             />
@@ -392,6 +393,7 @@ StrategyEditor.propTypes = {
       PropTypes.string.isRequired,
       PropTypes.number,
       PropTypes.oneOf([null]).isRequired,
+      PropTypes.object,
     ]),
   ),
   saveStrategy: PropTypes.func.isRequired,
