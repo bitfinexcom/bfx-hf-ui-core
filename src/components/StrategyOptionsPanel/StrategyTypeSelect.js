@@ -119,7 +119,7 @@ const StrategyTypeSelect = ({ strategy, onSaveAsStrategy, isExecuting }) => {
           options={strategyTypesOptionsMemo}
           onChange={onSelectStrategyType}
           disabled={isExecuting || showCustomStrategyTypeInput}
-          placeholder={isExecuting && t('ui.notSelected')}
+          placeholder={isExecuting ? t('ui.notSelected') : ''}
         />
         <p className='hfui-orderform__input-label'>
           {isExecuting
