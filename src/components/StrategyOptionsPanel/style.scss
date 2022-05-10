@@ -3,6 +3,10 @@
   justify-content: space-between;
   align-items: baseline;
 
+  &--ide {
+    align-items: flex-start;
+  }
+
   .item {
     margin-right: 10px;
     &:last-child {
