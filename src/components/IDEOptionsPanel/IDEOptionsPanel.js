@@ -39,7 +39,7 @@ const IDEOptionsPanel = ({
           )}
         </>
       </p>
-      <div className='hfui-strategy-options__right-container'>
+      <div className='hfui-strategy-options__save-container'>
         <p className='message'>
           {hasErrors && t('strategyEditor.errorsInIDE')}
           {strategyDirty && !hasErrors && t('strategyEditor.unsavedChanges')}

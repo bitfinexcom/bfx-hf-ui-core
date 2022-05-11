@@ -684,7 +684,13 @@
       "technicalAnalysis": "Technical Analysis",
       "other": "Other..."
     },
-    "closeStrategy": "Close strategy"
+    "closeStrategy": "Close strategy",
+    "executionOptionsModal": {
+      "title": "Select execution parameters before launch",
+      "capitalAllocationLabel": "Capital Allocation",
+      "stopLoss": "Stop-Loss",
+      "maxDrawdown": "Maximum Drawdown"
+    }
   },
   "ui": {
     "ok": "Okay",
@@ -715,7 +721,8 @@
     "expandPanel": "Expand Panel",
     "compressPanel": "Compress Panel",
     "name": "Name",
-    "notSelected": "Not selected"
+    "notSelected": "Not selected",
+    "e.g.": "e.g. {{value}}"
   },
   "crashHandler": {
     "text1": "An error occurred that caused the Honey Framework UI to halt. Please, restart the application to proceed working with it",

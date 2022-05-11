@@ -12,6 +12,7 @@ import { makeShorterLongName } from '../../util/ui'
 import StrategyRunned from '../StrategyEditor/components/StrategyRunned'
 import StrategyStopped from '../StrategyEditor/components/StrategyStopped'
 import StrategyTypeSelect from './StrategyTypeSelect'
+import NavbarButton from '../Navbar/Navbar.Button'
 
 import './style.css'
 
@@ -30,6 +31,7 @@ const StrategyOptionsPanel = ({
   hasResults,
   stopExecution,
   onSaveAsStrategy,
+  openExecutionOptionsModal,
 }) => {
   const { label } = strategy || {}
   const { t } = useTranslation()
@@ -90,29 +92,38 @@ const StrategyOptionsPanel = ({
         strategy={strategy}
         isExecuting={isExecuting}
       />
-      {isExecuting ? (
-        <>
+      <div className='hfui-strategy-options__buttons-container item'>
+        <NavbarButton
+          alt='Application settings'
+          icon='settings-icon'
+          className='hfui-navbar__app-settings__icon item'
+          onClick={openExecutionOptionsModal}
+        />
+        {isExecuting ? (
+          <>
+            <Button
+              className='hfui-strategy-options__option-btn item'
+              label={t('strategyEditor.fullscreenChartBtn')}
+              onClick={setFullScreenChart}
+              green
+            />
+            <Button
+              className='hfui-strategy-options__option-btn item'
+              label={t('ui.stopBtn')}
+              onClick={stopExecution}
+              red
+            />
+          </>
+        ) : (
           <Button
             className='hfui-strategy-options__option-btn item'
-            label={t('strategyEditor.fullscreenChartBtn')}
-            onClick={setFullScreenChart}
+            label={t('ui.startBtn')}
+            onClick={startExecution}
             green
           />
-          <Button
-            className='hfui-strategy-options__option-btn item'
-            label={t('ui.stopBtn')}
-            onClick={stopExecution}
-            red
-          />
-        </>
-      ) : (
-        <Button
-          className='hfui-strategy-options__option-btn item'
-          label={t('ui.startBtn')}
-          onClick={startExecution}
-          green
-        />
-      )}
+        )}
+      </div>
+
     </div>
   )
 }
@@ -139,6 +150,7 @@ StrategyOptionsPanel.propTypes = {
   hasResults: PropTypes.bool.isRequired,
   stopExecution: PropTypes.func.isRequired,
   onSaveAsStrategy: PropTypes.func.isRequired,
+  openExecutionOptionsModal: PropTypes.func.isRequired,
 }
 
 export default StrategyOptionsPanel

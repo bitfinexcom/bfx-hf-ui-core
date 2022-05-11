@@ -38,11 +38,14 @@ const BacktestOptionsPanel = ({
     const processed = AmountInput.processValue(v)
 
     setSeedError(error)
+    if (error) {
+      return
+    }
     setCandleSeed(processed)
   }
 
   return (
-    <div className='hfui-strategy-options'>
+    <div className='hfui-strategy-options hfui-strategy-options'>
       <div className='hfui-strategy-options__amount-input item'>
         <Checkbox
           label={t('strategyEditor.useCandlesCheckbox')}
@@ -111,19 +114,17 @@ const BacktestOptionsPanel = ({
           minDate={startDate}
         />
       </div>
-      {isFinished && (
-      <div className='hfui-strategy-options__amount-input item'>
+      <div className='hfui-strategy-options__buttons-container item'>
+        {isFinished && (
+          <Button
+            className='hfui-strategy-options__option-btn item'
+            label={t('strategyEditor.fullscreenChartBtn')}
+            onClick={setFullScreenChart}
+            green
+          />
+        )}
         <Button
-          className='hfui-strategy-options__option-btn'
-          label={t('strategyEditor.fullscreenChartBtn')}
-          onClick={setFullScreenChart}
-          green
-        />
-      </div>
-      )}
-      <div className='hfui-strategy-options__amount-input item'>
-        <Button
-          className='hfui-strategy-options__option-btn'
+          className='hfui-strategy-options__option-btn item'
           label={t('ui.startBtn')}
           onClick={onBacktestStart}
           green

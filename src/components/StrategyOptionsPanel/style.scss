@@ -1,17 +1,16 @@
 .hfui-strategy-options {
   display: flex;
   justify-content: space-between;
-  align-items: baseline;
-
-  &--ide {
-    align-items: flex-start;
-  }
 
   .item {
     margin-right: 10px;
     &:last-child {
       margin-right: 0;
     }
+  }
+
+  &__buttons-container {
+    display: flex;
   }
 
   &__option {
@@ -57,7 +56,7 @@
   }
 
   &__option-btn {
-    height: 30px;
+    height: 34px;
     min-width: 70px;
   }
 
@@ -71,7 +70,7 @@
     height: 15px;
   }
 
-  &__right-container {
+  &__save-container {
     display: flex;
     flex-direction: column;
     align-items: flex-end;
