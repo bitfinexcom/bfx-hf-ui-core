@@ -1,20 +1,20 @@
-import React, { useMemo } from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
 import _find from 'lodash/find'
 import _size from 'lodash/size'
 import { Tooltip } from '@ufx-ui/core'
-
 import _includes from 'lodash/includes'
 import { useTranslation } from 'react-i18next'
 
 import MarketSelect from '../MarketSelect'
 import Button from '../../ui/Button'
 import { makeShorterLongName } from '../../util/ui'
-import Dropdown from '../../ui/Dropdown'
 import StrategyRunned from '../StrategyEditor/components/StrategyRunned'
+import StrategyStopped from '../StrategyEditor/components/StrategyStopped'
+import StrategyTypeSelect from './StrategyTypeSelect'
+import NavbarButton from '../Navbar/Navbar.Button'
 
 import './style.css'
-import StrategyStopped from '../StrategyEditor/components/StrategyStopped'
 
 const MAX_STRATEGY_LABEL_LENGTH = 25
 
@@ -30,28 +30,19 @@ const StrategyOptionsPanel = ({
   isExecuting,
   hasResults,
   stopExecution,
+  onSaveAsStrategy,
+  openExecutionOptionsModal,
 }) => {
+  const { label } = strategy || {}
   const { t } = useTranslation()
 
-  const { label } = strategy || {}
-
-  const strategyTypesOptions = useMemo(() => {
-    return [
-      { value: 'momentum', label: t('strategyEditor.strategyTypes.momentum') },
-      {
-        value: 'meanReverting',
-        label: t('strategyEditor.strategyTypes.meanReverting'),
-      },
-      {
-        value: 'trendFollowing',
-        label: t('strategyEditor.strategyTypes.trendFollowing'),
-      },
-      {
-        value: 'technicalAnalysis',
-        label: t('strategyEditor.strategyTypes.technicalAnalysis'),
-      },
-    ]
-  }, [t])
+  const onMarketSelectChange = (selection) => {
+    const sel = _find(markets, (m) => m.wsID === selection.wsID)
+    if (!_includes(sel?.contexts, 'm')) {
+      setMargin(false)
+    }
+    setSymbol(sel)
+  }
 
   return (
     <div className='hfui-strategy-options'>
@@ -65,10 +56,7 @@ const StrategyOptionsPanel = ({
               className='__react-tooltip __react_component_tooltip wide'
               content={label}
             >
-              {makeShorterLongName(
-                label,
-                MAX_STRATEGY_LABEL_LENGTH,
-              )}
+              {makeShorterLongName(label, MAX_STRATEGY_LABEL_LENGTH)}
             </Tooltip>
           ) : (
             label
@@ -81,61 +69,61 @@ const StrategyOptionsPanel = ({
         </div>
       )}
       {!isExecuting && hasResults && (
-      <div className='hfui-strategy-options__option item'>
-        <StrategyStopped />
-      </div>
+        <div className='hfui-strategy-options__option item'>
+          <StrategyStopped />
+        </div>
       )}
       <div className='hfui-strategy-options__input item'>
         <MarketSelect
           value={symbol}
-          onChange={(selection) => {
-            const sel = _find(markets, (m) => m.wsID === selection.wsID)
-            if (!_includes(sel?.contexts, 'm')) {
-              setMargin(false)
-            }
-            setSymbol(sel)
-          }}
+          onChange={onMarketSelectChange}
           markets={markets}
           disabled={isExecuting}
           renderWithFavorites
         />
         <p className='hfui-orderform__input-label'>
-          {t('strategyEditor.selectMarketDescription')}
+          {isExecuting
+            ? t('strategyEditor.selectMarketDescriptionDisabled')
+            : t('strategyEditor.selectMarketDescription')}
         </p>
       </div>
-      <div className='hfui-strategy-options__input item'>
-        <Dropdown
-          options={strategyTypesOptions}
-          onChange={() => {}}
-          disabled={isExecuting}
+      <StrategyTypeSelect
+        onSaveAsStrategy={onSaveAsStrategy}
+        strategy={strategy}
+        isExecuting={isExecuting}
+      />
+      <div className='hfui-strategy-options__buttons-container item'>
+        <NavbarButton
+          alt='Application settings'
+          icon='settings-icon'
+          className='hfui-navbar__app-settings__icon item'
+          onClick={openExecutionOptionsModal}
         />
-        <p className='hfui-orderform__input-label'>
-          {t('strategyEditor.strategyTypeDescription')}
-        </p>
-      </div>
-      {isExecuting ? (
-        <>
+        {isExecuting ? (
+          <>
+            <Button
+              className='hfui-strategy-options__option-btn item'
+              label={t('strategyEditor.fullscreenChartBtn')}
+              onClick={setFullScreenChart}
+              green
+            />
+            <Button
+              className='hfui-strategy-options__option-btn item'
+              label={t('ui.stopBtn')}
+              onClick={stopExecution}
+              red
+            />
+          </>
+        ) : (
           <Button
             className='hfui-strategy-options__option-btn item'
-            label={t('strategyEditor.fullscreenChartBtn')}
-            onClick={setFullScreenChart}
+            label={t('ui.startBtn')}
+            onClick={startExecution}
             green
           />
-          <Button
-            className='hfui-strategy-options__option-btn item'
-            label={t('ui.stopBtn')}
-            onClick={stopExecution}
-            red
-          />
-        </>
-      ) : (
-        <Button
-          className='hfui-strategy-options__option-btn item'
-          label={t('ui.startBtn')}
-          onClick={startExecution}
-          green
-        />
-      )}
+        )}
+      </div>
+
     </div>
   )
 }
@@ -160,7 +148,9 @@ StrategyOptionsPanel.propTypes = {
   startExecution: PropTypes.func.isRequired,
   isExecuting: PropTypes.bool.isRequired,
   hasResults: PropTypes.bool.isRequired,
-  stopExecution: PropTypes.bool.isRequired,
+  stopExecution: PropTypes.func.isRequired,
+  onSaveAsStrategy: PropTypes.func.isRequired,
+  openExecutionOptionsModal: PropTypes.func.isRequired,
 }
 
 export default StrategyOptionsPanel

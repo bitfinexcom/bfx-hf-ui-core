@@ -1,0 +1,15 @@
+.hfui-execution-options-modal {
+  &__option {
+    max-width: 200px;
+
+    &:not(:last-child) {
+      margin-bottom: 10px;
+    }
+    .title {
+      color: var(--primary-8);
+      font-weight: 700;
+      margin-bottom: 5px;
+      font-size: 15px;
+    }
+  }
+}

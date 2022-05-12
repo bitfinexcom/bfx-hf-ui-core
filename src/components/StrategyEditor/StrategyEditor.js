@@ -25,6 +25,7 @@ import SaveStrategyAsModal from '../../modals/Strategy/SaveStrategyAsModal/SaveS
 import StrategyTabTitle from './tabs/StrategyTab.Title'
 import BacktestTabTitle from './tabs/BacktestTab.Title'
 import IDETabTitle from './tabs/IDETab.Title'
+import ExecutionOptionsModal from '../../modals/Strategy/ExecutionOptionsModal'
 
 import './style.css'
 
@@ -75,6 +76,7 @@ const StrategyEditor = (props) => {
   const [createNewStrategyFromModalOpen, setCreateNewStrategyFromModalOpen] = useState(false)
   const [openExistingStrategyModalOpen, setOpenExistingStrategyModalOpen] = useState(false)
   const [isSaveStrategyAsModalOpen, setIsSaveStrategyModalOpen] = useState(false)
+  const [isExecutionOptionsModalOpen, setIsExecutionOptionsModalOpen] = useState(false)
 
   const [symbol, setSymbol] = useState(
     options.symbol
@@ -92,6 +94,9 @@ const StrategyEditor = (props) => {
   const [startDate, setStartDate] = useState(new Date(Date.now() - ONE_DAY))
   const [endDate, setEndDate] = useState(new Date(Date.now() - ONE_MIN * 15))
   const [margin, setMargin] = useState(options.margin || DEFAULT_USE_MARGIN)
+  const [capitalAllocation, setCapitalAllocation] = useState('')
+  const [stopLossPerc, setStopLossPerc] = useState('')
+  const [maxDrawdownPerc, setMaxDrawdownPerc] = useState('')
 
   const runningStrategyID = runningStrategiesMapping[strategyId]
   const currentStrategyResults = liveResults?.[runningStrategyID] || {}
@@ -126,6 +131,7 @@ const StrategyEditor = (props) => {
     setIsRemoveModalOpened(false)
     setCreateNewStrategyFromModalOpen(false)
     setIsSaveStrategyModalOpen(false)
+    setIsExecutionOptionsModalOpen(false)
   }
 
   const onCreateNewStrategy = (label, content = {}) => {
@@ -170,7 +176,7 @@ const StrategyEditor = (props) => {
 
   const onSaveAsStrategy = (newStrategy) => {
     setStrategy(newStrategy)
-    saveStrategy(strategy)
+    saveStrategy(newStrategy)
     setStrategyDirty(false)
   }
 
@@ -206,6 +212,12 @@ const StrategyEditor = (props) => {
   }
 
   const startExecution = () => {
+    const isFullFilled = capitalAllocation && stopLossPerc && maxDrawdownPerc
+
+    if (!isFullFilled) {
+      setIsExecutionOptionsModalOpen(true)
+      return
+    }
     onSaveStrategy()
     dsExecuteLiveStrategy(
       authToken,
@@ -243,6 +255,10 @@ const StrategyEditor = (props) => {
 
   const openSaveStrategyAsModal = () => {
     setIsSaveStrategyModalOpen(true)
+  }
+
+  const openExecutionOptionsModal = () => {
+    setIsExecutionOptionsModalOpen(true)
   }
 
   return (
@@ -286,6 +302,8 @@ const StrategyEditor = (props) => {
               startExecution={startExecution}
               stopExecution={stopExecution}
               executionResults={execResults}
+              onSaveAsStrategy={onSaveAsStrategy}
+              openExecutionOptionsModal={openExecutionOptionsModal}
               {...optionsProps}
               {...props}
             />
@@ -355,6 +373,17 @@ const StrategyEditor = (props) => {
         strategy={strategy}
         onSubmit={onSaveAsStrategy}
       />
+      <ExecutionOptionsModal
+        isOpen={isExecutionOptionsModalOpen}
+        onClose={onCloseModals}
+        capitalAllocation={capitalAllocation}
+        setCapitalAllocation={setCapitalAllocation}
+        stopLossPerc={stopLossPerc}
+        setStopLossPerc={setStopLossPerc}
+        maxDrawdownPerc={maxDrawdownPerc}
+        setMaxDrawdownPerc={setMaxDrawdownPerc}
+        startExecution={startExecution}
+      />
     </>
   )
 }
@@ -392,6 +421,7 @@ StrategyEditor.propTypes = {
       PropTypes.string.isRequired,
       PropTypes.number,
       PropTypes.oneOf([null]).isRequired,
+      PropTypes.object,
     ]),
   ),
   saveStrategy: PropTypes.func.isRequired,

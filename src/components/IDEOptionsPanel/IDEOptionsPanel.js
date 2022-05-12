@@ -21,7 +21,7 @@ const IDEOptionsPanel = ({
   const { t } = useTranslation()
 
   return (
-    <div className='hfui-strategy-options'>
+    <div className='hfui-strategy-options hfui-strategy-options--ide'>
       <p
         className='hfui-strategy-options__strategy-name item'
         onClick={onOpenSaveStrategyAsModal}
@@ -39,7 +39,7 @@ const IDEOptionsPanel = ({
           )}
         </>
       </p>
-      <div className='hfui-strategy-options__right-container'>
+      <div className='hfui-strategy-options__save-container'>
         <p className='message'>
           {hasErrors && t('strategyEditor.errorsInIDE')}
           {strategyDirty && !hasErrors && t('strategyEditor.unsavedChanges')}

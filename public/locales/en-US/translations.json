@@ -669,18 +669,28 @@
     "templatesTab": "Templates",
     "savedStrategiesTab": "From saved",
     "selectMarketDescription": "Select market",
+    "selectMarketDescriptionDisabled": "Selected Market",
     "selectCandleDurationDescription": "Select candle duration",
     "fullscreenChartBtn": "Fullscreen Chart",
     "exitFullscreenChartBtn": "Exit fullscreen",
     "perfomanceMetrics": "Perfomance metrics",
     "strategyTypeDescription": "Select strategy type",
+    "strategyTypeDescriptionDisabled": "Selected strategy type",
+    "customStrategyTypeInputPlaceholder": "Enter your own type...",
     "strategyTypes": {
       "momentum": "Momentum",
       "meanReverting": "Mean-Reverting",
       "trendFollowing": "Trend Following",
-      "technicalAnalysis": "Technical Analysis"
+      "technicalAnalysis": "Technical Analysis",
+      "other": "Other..."
     },
-    "closeStrategy": "Close strategy"
+    "closeStrategy": "Close strategy",
+    "executionOptionsModal": {
+      "title": "Select execution parameters before launch",
+      "capitalAllocationLabel": "Capital Allocation",
+      "stopLoss": "Stop-Loss",
+      "maxDrawdown": "Maximum Drawdown"
+    }
   },
   "ui": {
     "ok": "Okay",
@@ -710,7 +720,9 @@
     "deleteBtn": "Delete",
     "expandPanel": "Expand Panel",
     "compressPanel": "Compress Panel",
-    "name": "Name"
+    "name": "Name",
+    "notSelected": "Not selected",
+    "e.g.": "e.g. {{value}}"
   },
   "crashHandler": {
     "text1": "An error occurred that caused the Honey Framework UI to halt. Please, restart the application to proceed working with it",
