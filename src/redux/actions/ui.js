@@ -185,10 +185,10 @@ export const changeClosePositionModalState = (isVisible, rowData = {}) => ({
  *   authToken, name, symbol, tf, includeTrades, strategy, seedCandleCount, margin,
  * }
  */
-export const changeLaunchStrategyModalState = (isVisible, options) => ({
+export const changeLaunchStrategyModalState = (isVisible, strategyId, options) => ({
   type: types.CHANGE_LAUNCH_STRATEGY_MODAL_STATE,
   payload: {
-    isVisible, options,
+    isVisible, options, strategyId,
   },
 })
 

@@ -6,8 +6,8 @@ const path = REDUCER_PATHS.WS
 
 const EMPTY_OBJ = {}
 
-const getExecutionOptions = (state) => {
-  return _get(state, `${path}.execution.options`, EMPTY_OBJ)
+const getExecutionOptions = (state) => (strategyId) => {
+  return _get(state, `${path}.execution.options.${strategyId}`, EMPTY_OBJ)
 }
 
 export default getExecutionOptions

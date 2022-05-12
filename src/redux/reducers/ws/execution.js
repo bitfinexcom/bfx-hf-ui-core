@@ -5,15 +5,17 @@ function getInitialState() {
   return {
     executing: false,
     loading: false,
-    options: {},
+    options: {
+      // 'strategy-id': { /* options */ }
+    },
     results: {
-      // 'unique-strategy-id': { /* results */ }
+      // 'strategy-map-key': { /* results */ }
     },
     activeStrategies: {
-      // 'unique-strategy-id': { /* ...strategy, startedOn */ }
+      // 'strategy-map-key': { /* ...strategy, startedOn */ }
     },
     runningStrategiesMapping: {
-      // 'strategy-id': 'unique-strategy-id'
+      // 'strategy-id': 'strategy-map-key'
     },
     pastStrategies: [],
   }
@@ -100,13 +102,21 @@ function reducer(state = getInitialState(), action = {}) {
       }
     }
 
+    case types.SET_EXECUTION_OPTION: {
+      const { strategyId, options = {} } = payload
+
+      return {
+        ...state,
+        options: {
+          ...state,
+          [strategyId]: options,
+        },
+      }
+    }
+
     case types.SET_EXECUTION_OPTIONS: {
       const { options = {} } = payload
-      if (!_size(options)) {
-        return {
-          ...state,
-        }
-      }
+
       return {
         ...state,
         options,

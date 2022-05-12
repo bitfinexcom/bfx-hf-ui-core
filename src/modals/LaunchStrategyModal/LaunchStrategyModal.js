@@ -7,7 +7,7 @@ import Modal from '../../ui/Modal'
 import './style.css'
 
 const LaunchStrategyModal = ({
-  options, changeLaunchStrategyModalState, visible, dsExecuteLiveStrategy,
+  options, changeLaunchStrategyModalState, visible, dsExecuteLiveStrategy, strategyId,
 }) => {
   const { t } = useTranslation()
 
@@ -16,7 +16,7 @@ const LaunchStrategyModal = ({
   }
 
   const onSubmit = () => {
-    dsExecuteLiveStrategy(options)
+    dsExecuteLiveStrategy(strategyId, options)
     onClose()
   }
 
@@ -48,6 +48,7 @@ LaunchStrategyModal.propTypes = {
   options: PropTypes.objectOf(PropTypes.oneOfType([
     PropTypes.number, PropTypes.object, PropTypes.string, PropTypes.bool,
   ])),
+  strategyId: PropTypes.string.isRequired,
 }
 
 LaunchStrategyModal.defaultProps = {

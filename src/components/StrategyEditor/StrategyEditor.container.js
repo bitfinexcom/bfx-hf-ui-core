@@ -26,21 +26,25 @@ import {
 import StrategyEditor from './StrategyEditor'
 import { getMarkets } from '../../redux/selectors/meta'
 
-const mapStateToProps = (state = {}) => ({
-  authToken: getAuthToken(state),
-  strategyId: getStrategyId(state),
-  backtestResults: getBacktestResults(state),
-  allExecutionResults: getExecutionResults(state),
-  settingsTheme: getThemeSetting(state),
-  options: getExecutionOptions(state),
-  markets: getMarkets(state),
-  isPaperTrading: getIsPaperTrading(state),
-  flags: getStrategiesFeatureFlags(state),
-  isBetaVersion: getIsBetaVersion(state),
-  liveResults: getLiveExecutionResults(state),
-  // activeStrategies: getSortedByTimeActiveStrategies(state),
-  runningStrategiesMapping: getRunningStrategiesMapping(state),
-})
+const mapStateToProps = (state = {}) => {
+  const strategyId = getStrategyId(state)
+
+  return {
+    authToken: getAuthToken(state),
+    strategyId,
+    backtestResults: getBacktestResults(state),
+    allExecutionResults: getExecutionResults(state),
+    settingsTheme: getThemeSetting(state),
+    options: getExecutionOptions(state)(strategyId),
+    markets: getMarkets(state),
+    isPaperTrading: getIsPaperTrading(state),
+    flags: getStrategiesFeatureFlags(state),
+    isBetaVersion: getIsBetaVersion(state),
+    liveResults: getLiveExecutionResults(state),
+    // activeStrategies: getSortedByTimeActiveStrategies(state),
+    runningStrategiesMapping: getRunningStrategiesMapping(state),
+  }
+}
 
 const mapDispatchToProps = (dispatch) => ({
   onRemove: (authToken, id) => {
@@ -56,6 +60,7 @@ const mapDispatchToProps = (dispatch) => ({
   },
   dsExecuteLiveStrategy: (
     authToken,
+    strategyId,
     name,
     symbol,
     tf,
@@ -79,7 +84,7 @@ const mapDispatchToProps = (dispatch) => ({
 
     if (isPaperTrading) {
       dispatch(
-        WSActions.setExecutionOptions({
+        WSActions.setExecutionOption(strategyId, {
           includeTrades,
           seedCandleCount,
           symbol,

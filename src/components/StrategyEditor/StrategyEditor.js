@@ -221,6 +221,7 @@ const StrategyEditor = (props) => {
     onSaveStrategy()
     dsExecuteLiveStrategy(
       authToken,
+      strategyId,
       strategy.label,
       symbol?.wsID,
       timeframe,

@@ -4,6 +4,7 @@ import _isNumber from 'lodash/isNumber'
 import _isEmpty from 'lodash/isEmpty'
 import _reduce from 'lodash/reduce'
 import _map from 'lodash/map'
+import _values from 'lodash/values'
 import Debug from 'debug'
 import { v4 } from 'uuid'
 import i18nLib from '../../../locales/i18n'
@@ -440,7 +441,14 @@ export default (alias, store) => (e = {}) => {
         }
 
         if (!_isEmpty(options)) {
-          store.dispatch(WSActions.setExecutionOptions(options))
+          const mappedOptions = {}
+
+          _map(options, (option) => {
+            const { id } = option
+            mappedOptions[id] = option
+          })
+
+          store.dispatch(WSActions.setExecutionOptions(mappedOptions))
         }
 
         store.dispatch(WSActions.setExecutionLoading(false))

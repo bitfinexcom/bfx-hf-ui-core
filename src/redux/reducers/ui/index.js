@@ -82,6 +82,7 @@ function getInitialState() {
     orderToEdit: {},
     isBadInternetConnection: false,
     launchStrategyOptions: {},
+    launchStrategyIdModal: '',
     closePositionModalData: {},
     isOrderExecuting: false,
     content: {},
@@ -432,11 +433,12 @@ function reducer(state = getInitialState(), action = {}) {
       }
     }
     case types.CHANGE_LAUNCH_STRATEGY_MODAL_STATE: {
-      const { isVisible, options } = payload
+      const { isVisible, options, strategyId } = payload
 
       return {
         ...state,
         launchStrategyOptions: options,
+        launchStrategyIdModal: strategyId || '',
         modals: {
           ...state.modals,
           isLaunchStrategyModalVisible: isVisible,
