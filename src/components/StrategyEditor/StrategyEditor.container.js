@@ -15,6 +15,7 @@ import {
   // getSortedByTimeActiveStrategies,
   getRunningStrategiesMapping,
   getLiveExecutionResults,
+  getIsStrategyExecuting,
 } from '../../redux/selectors/ws'
 import {
   getStrategyId,
@@ -36,6 +37,7 @@ const mapStateToProps = (state = {}) => {
     allExecutionResults: getExecutionResults(state),
     settingsTheme: getThemeSetting(state),
     options: getExecutionOptions(state)(strategyId),
+    executing: getIsStrategyExecuting(state)(strategyId),
     markets: getMarkets(state),
     isPaperTrading: getIsPaperTrading(state),
     flags: getStrategiesFeatureFlags(state),

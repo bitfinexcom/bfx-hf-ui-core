@@ -1,9 +1,10 @@
-import _size from 'lodash/size'
 import types from '../../constants/ws'
 
 function getInitialState() {
   return {
-    executing: false,
+    executing: [
+      // ['strategy-id', 'strategy-id', ...]
+    ],
     loading: false,
     options: {
       // 'strategy-id': { /* options */ }
@@ -24,18 +25,12 @@ function getInitialState() {
 function reducer(state = getInitialState(), action = {}) {
   const { type, payload = {} } = action
   switch (type) {
-    case types.EXECUTION_START: {
-      return {
-        ...state,
-        results: {},
-        executing: true,
-      }
-    }
+    case types.SET_EXECUTING_STRATEGIES: {
+      const { executing } = payload
 
-    case types.EXECUTION_STOP: {
       return {
         ...state,
-        executing: false,
+        executing,
       }
     }
 
@@ -81,6 +76,10 @@ function reducer(state = getInitialState(), action = {}) {
         },
         runningStrategiesMapping: {
           [id]: strategyMapKey,
+        },
+        results: {
+          ...state.results,
+          [strategyMapKey]: executionResultsObj,
         },
       }
     }

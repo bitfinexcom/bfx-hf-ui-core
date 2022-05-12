@@ -23,6 +23,7 @@ import getFilteredAlgoOrdersCount from './get_filtered_algo_orders_count'
 import getAlgoOrders from './get_algo_orders'
 import getNotifications from './get_notifications'
 import getOrderHistory from './get_order_history'
+import getIsStrategyExecuting from './get_is_strategy_executing'
 
 import getBacktestState from './get_backtest_state'
 import getBacktestData from './get_backtest_data'
@@ -90,4 +91,5 @@ export {
 
   getExecutionResults,
   getExecutionOptions,
+  getIsStrategyExecuting,
 }

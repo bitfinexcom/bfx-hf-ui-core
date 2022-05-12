@@ -66,6 +66,7 @@ const StrategyEditor = (props) => {
     flags,
     isBetaVersion,
     allExecutionResults,
+    executing,
     sectionErrors,
     liveResults,
     runningStrategiesMapping,
@@ -122,6 +123,7 @@ const StrategyEditor = (props) => {
 
   const execResults = {
     ...allExecutionResults,
+    executing,
     results: currentStrategyResults,
   }
 
@@ -439,6 +441,7 @@ StrategyEditor.propTypes = {
   liveResults: PropTypes.objectOf(PropTypes.object),
   runningStrategiesMapping: PropTypes.objectOf(PropTypes.string),
   sectionErrors: PropTypes.objectOf(PropTypes.string).isRequired,
+  executing: PropTypes.bool.isRequired,
 }
 
 StrategyEditor.defaultProps = {

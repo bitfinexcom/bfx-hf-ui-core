@@ -4,7 +4,6 @@ import _isNumber from 'lodash/isNumber'
 import _isEmpty from 'lodash/isEmpty'
 import _reduce from 'lodash/reduce'
 import _map from 'lodash/map'
-import _values from 'lodash/values'
 import Debug from 'debug'
 import { v4 } from 'uuid'
 import i18nLib from '../../../locales/i18n'
@@ -405,50 +404,23 @@ export default (alias, store) => (e = {}) => {
         break
       }
 
-      case 'strategy.start_live_execution_submit_status': {
-        const [, status] = payload
-
-        if (status) {
-          store.dispatch(WSActions.startLiveExecution())
-        } else {
-          store.dispatch(WSActions.stopLiveExecution())
-        }
-        store.dispatch(WSActions.setExecutionLoading(false))
-
-        break
-      }
-
-      case 'strategy.stop_live_execution_submit_status': {
-        const [, status] = payload
-
-        if (status) {
-          store.dispatch(WSActions.stopLiveExecution())
-        } else {
-          store.dispatch(WSActions.startLiveExecution())
-        }
-        store.dispatch(WSActions.setExecutionLoading(false))
-
-        break
-      }
-
       case 'strategy.live_execution_status': {
-        const [, status, options] = payload
+        const [,, options] = payload
 
-        if (status) {
-          store.dispatch(WSActions.startLiveExecution())
+        if (_isEmpty(options)) {
+          store.dispatch(WSActions.setExecutingStrategies([]))
         } else {
-          store.dispatch(WSActions.stopLiveExecution())
-        }
-
-        if (!_isEmpty(options)) {
           const mappedOptions = {}
+          const mappedStrategies = []
 
           _map(options, (option) => {
             const { id } = option
             mappedOptions[id] = option
+            mappedStrategies.push(id)
           })
 
           store.dispatch(WSActions.setExecutionOptions(mappedOptions))
+          store.dispatch(WSActions.setExecutingStrategies(mappedStrategies))
         }
 
         store.dispatch(WSActions.setExecutionLoading(false))

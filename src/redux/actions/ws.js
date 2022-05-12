@@ -312,12 +312,9 @@ export default {
     type: t.RESET_DATA_EXECUTION,
   }),
 
-  startLiveExecution: () => ({
-    type: t.EXECUTION_START,
-  }),
-
-  stopLiveExecution: () => ({
-    type: t.EXECUTION_STOP,
+  setExecutingStrategies: (executing) => ({
+    type: t.SET_EXECUTING_STRATEGIES,
+    payload: { executing },
   }),
 
   setExecutionLoading: (loading) => ({
