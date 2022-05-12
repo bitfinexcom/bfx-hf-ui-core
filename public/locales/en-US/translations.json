@@ -673,7 +673,6 @@
     "selectCandleDurationDescription": "Select candle duration",
     "fullscreenChartBtn": "Fullscreen Chart",
     "exitFullscreenChartBtn": "Exit fullscreen",
-    "perfomanceMetrics": "Perfomance metrics",
     "strategyTypeDescription": "Select strategy type",
     "strategyTypeDescriptionDisabled": "Selected strategy type",
     "customStrategyTypeInputPlaceholder": "Enter your own type...",
@@ -690,6 +689,10 @@
       "capitalAllocationLabel": "Capital Allocation",
       "stopLoss": "Stop-Loss",
       "maxDrawdown": "Maximum Drawdown"
+    },
+    "perfomanceMetrics": {
+      "title": "Perfomance metrics",
+      "runTime": "Strategy Run Time"
     }
   },
   "ui": {

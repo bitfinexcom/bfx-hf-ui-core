@@ -1,19 +1,20 @@
+import React from 'react'
 import { reduxSelectors } from '@ufx-ui/bfx-containers'
 import { getPairParts } from '@ufx-ui/utils'
 import { preparePrice } from 'bfx-api-node-util'
-import React from 'react'
 import PropTypes from 'prop-types'
 import { useTranslation } from 'react-i18next'
 import { useSelector } from 'react-redux'
 import Panel from '../../ui/Panel'
 import { resultNumber } from '../Backtester/Results/Results.utils'
 import MetricRow from './MetricRow'
+import ExecutionTimer from './ExecutionTimer'
 
 import './style.css'
 
 const { getCurrencySymbolMemo } = reduxSelectors
 
-const StrategyPerfomanceMetrics = ({ results }) => {
+const StrategyPerfomanceMetrics = ({ results, startedOn, isExecuting }) => {
   const {
     nCandles,
     nTrades,
@@ -43,9 +44,10 @@ const StrategyPerfomanceMetrics = ({ results }) => {
       moveable={false}
       removeable={false}
       darkHeader
-      label={t('strategyEditor.perfomanceMetrics')}
+      label={t('strategyEditor.perfomanceMetrics.title')}
     >
       <ul>
+        <ExecutionTimer isExecuting={isExecuting} startedOn={startedOn} />
         <MetricRow
           label={t('strategyEditor.totalPL')}
           value={resultNumber(preparePrice(pl), quoteCcy)}
@@ -103,6 +105,8 @@ StrategyPerfomanceMetrics.propTypes = {
       activeMarket: PropTypes.string,
     }).isRequired,
   }),
+  isExecuting: PropTypes.bool.isRequired,
+  startedOn: PropTypes.number,
 }
 
 StrategyPerfomanceMetrics.defaultProps = {
@@ -125,6 +129,7 @@ StrategyPerfomanceMetrics.defaultProps = {
       activeMarket: null,
     },
   },
+  startedOn: 0,
 }
 
 export default StrategyPerfomanceMetrics

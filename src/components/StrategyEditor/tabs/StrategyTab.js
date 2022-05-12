@@ -15,9 +15,7 @@ import StrategyLiveChart from '../../StrategyLiveChart'
 import StrategyOptionsPanel from '../../StrategyOptionsPanel'
 
 const StrategyTab = (props) => {
-  const {
-    executionResults,
-  } = props
+  const { executionResults, options } = props
   const [layoutConfig, setLayoutConfig] = useState()
   const [fullscreenChart, setFullScreenChart] = useState(false)
 
@@ -53,10 +51,22 @@ const StrategyTab = (props) => {
           )
 
         case COMPONENTS_KEYS.LIVE_CHART:
-          return <StrategyLiveChart {...props} fullscreenChart={fullscreenChart} exitFullscreenChart={() => setFullScreenChart(false)} />
+          return (
+            <StrategyLiveChart
+              {...props}
+              fullscreenChart={fullscreenChart}
+              exitFullscreenChart={() => setFullScreenChart(false)}
+            />
+          )
 
         case COMPONENTS_KEYS.STRATEGY_PERFOMANCE:
-          return <StrategyPerfomanceMetrics results={results} />
+          return (
+            <StrategyPerfomanceMetrics
+              results={results}
+              startedOn={options.startedOn}
+              isExecuting={executing}
+            />
+          )
 
         case COMPONENTS_KEYS.STRATEGY_TRADES:
           return (
@@ -72,7 +82,15 @@ const StrategyTab = (props) => {
           return null
       }
     },
-    [layoutConfig, props, fullscreenChart, executing, results, hasResults],
+    [
+      layoutConfig,
+      props,
+      fullscreenChart,
+      executing,
+      results,
+      hasResults,
+      options,
+    ],
   )
 
   return (
@@ -97,6 +115,9 @@ StrategyTab.propTypes = {
     executing: PropTypes.bool,
     // eslint-disable-next-line react/forbid-prop-types
     results: PropTypes.object,
+  }).isRequired,
+  options: PropTypes.shape({
+    startedOn: PropTypes.number,
   }).isRequired,
 }
 
