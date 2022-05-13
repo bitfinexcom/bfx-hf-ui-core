@@ -12,6 +12,7 @@ import _values from 'lodash/values'
 import _some from 'lodash/some'
 import _isUndefined from 'lodash/isUndefined'
 import _findIndex from 'lodash/findIndex'
+import _includes from 'lodash/includes'
 import { nonce } from 'bfx-api-node-util'
 import { VOLUME_UNIT, VOLUME_UNIT_PAPER } from '@ufx-ui/bfx-containers'
 
@@ -53,6 +54,8 @@ const DEFAULT_MARKET = {
   quote: 'USD',
   uiID: 'BTC/USD',
 }
+
+const ALLOWED_PAPER_PAIRS = ['tTESTBTC:TESTUSD']
 
 const getActiveLayoutDef = state => (!_isEmpty(state.unsavedLayout)
   ? state.unsavedLayout
@@ -336,7 +339,8 @@ function reducer(state = getInitialState(), action = {}) {
       const { isPaperTrading } = payload
       const mode = isPaperTrading ? PAPER_MODE : MAIN_MODE
       const activeMarketJSON = localStorage.getItem(isPaperTrading ? ACTIVE_MARKET_PAPER_KEY : ACTIVE_MARKET_KEY)
-      const activeMarket = JSON.parse(activeMarketJSON) || DEFAULT_ACTIVE_MARKET_STATE[mode].activeMarket
+      const savedMarket = JSON.parse(activeMarketJSON)
+      const activeMarket = (!isPaperTrading || _includes(ALLOWED_PAPER_PAIRS, savedMarket?.wsID)) && !!savedMarket ? savedMarket : DEFAULT_ACTIVE_MARKET_STATE[mode].activeMarket
 
       return {
         ...state,
