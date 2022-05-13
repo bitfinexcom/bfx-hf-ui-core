@@ -12,7 +12,7 @@ export const getTradingModes = (t) => [
     content: t('joyride.trading3'),
   },
   {
-    target: '.hfui-statusbar__left',
+    target: '.hfui-statusbar__version',
     content: t('joyride.trading4'),
   },
 ]

@@ -61,7 +61,7 @@ const StatusBar = ({
       <div className='hfui-statusbar__right'>
         {isElectronApp && (
           <>
-            <p>
+            <p className='hfui-statusbar__version'>
               {remoteVersion && remoteVersion !== appVersion && (
                 <NavbarButton
                   label={t('statusbar.updateToLast')}
