@@ -20,6 +20,7 @@ export const LANGUAGES = {
   tr: 'tr-TR',
   cn: 'zh-CN',
   tw: 'zh-TW',
+  pt: 'pt-BR',
 }
 
 export const LANGUAGE_NAMES = {
@@ -29,6 +30,7 @@ export const LANGUAGE_NAMES = {
   // tr: 'Türk',
   cn: '中文 (简化)',
   tw: '中文 (繁體)',
+  pt: 'Português',
 }
 
 export const LANGUAGES_CHART_TABLE = {
@@ -38,6 +40,7 @@ export const LANGUAGES_CHART_TABLE = {
   tr: 'tr',
   cn: 'zh',
   tw: 'zh_TW',
+  pt: 'pt',
 }
 
 registerLocale(LANGUAGES.en, enUS)

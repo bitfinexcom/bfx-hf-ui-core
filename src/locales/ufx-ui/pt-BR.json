@@ -1,0 +1,103 @@
+{
+  "http_errors": {
+    "rate_limit": "Número de solicitações excedidas, tente novamente em alguns instantes"
+  },
+  "common": {
+    "no_data_available": "Nenhum dado disponível",
+    "websocket_offiline": "Conexão com Websocket off-line",
+    "websocket_connected": "Websocket conectado",
+    "websocket_disconnected": "Websocket desconectado",
+    "cancel": "Cancelar",
+    "filter": "Filtro",
+    "search": "Buscar",
+    "no_results_found": "Nenhum resultado encontrado",
+    "created": "Criado",
+    "modified": "Modificado",
+    "at": " em ",
+    "yes": "Sim",
+    "copy": "Copiar",
+    "copied": "Copiado",
+    "copy_to_clipboard": "Copiar para área de transferência",
+    "no": "Não"
+  },
+  "ui": {
+    "typeToSearch": "Digite para procurar..",
+    "selectOption": "Selecionar uma opção"
+  },
+  "error": {
+    "not_enough_balance": "Não há saldo suficiente, o saldo disponível é {{amount}}",
+    "must_be_number": "Deve ser um número",
+    "must_be_positive": "Deve ser um número positivo",
+    "required": "{{fieldLabel}} é obrigatório",
+    "max_length": "{{fieldLabel}} não pode ter mais do que {{maxLength}} caracteres",
+    "no_decimals": "{{fieldLabel}} não pode ter nenhuma casa decimal",
+    "max_decimals": "Máximo de {{allowedDecimals}} casas decimais",
+    "invalid_date": "Data inválida",
+    "must_be_date": "A data precisa ser válida",
+    "date_must_be_within_interval": "Os dados devem ficar entre 1 a 7 dias de hoje",
+    "must_be_before_max_date": "Data após a data máxima",
+    "must_be_after_min_date": "Data antes da data mínima"
+  },
+  "ticker": {
+    "volume": "Volume",
+    "high": "Alto",
+    "low": "Baixo"
+  },
+  "tickerlist": {
+    "pair": "Par",
+    "last_price": "Último preço",
+    "last": "Último",
+    "24h_change": "24h",
+    "volume": "Vól.",
+    "favorites": "Favoritos",
+    "empty": "Nenhum elemento a exibir",
+    "fav_tooltip": "Exibir apenas tickers favoritos",
+    "volume_tooltip": "Visualização de volume de 24h em termos de {{volumeUnit}} equivalente. Clique para alternar",
+    "volume_tooltip_self": "Visualização de volume de 24h em termos de cada moeda. Clique para alternar"
+  },
+  "trades": {
+    "time": "Hora",
+    "amount": "Quantidade",
+    "price": "Preço",
+    "market": "Mercado",
+    "user": "Usuário",
+    "change_to_market": "Modificar para mercado",
+    "change_to_user": "Modificar para usuário"
+  },
+  "orderhistory": {
+    "pair": "Par",
+    "type": "Tipo",
+    "amount": "Quantidade",
+    "ccy": "Ccy",
+    "price": "Preço",
+    "average_price": "Preço médio",
+    "status": "Status",
+    "placed": "Efetuada",
+    "no_orders": "Sem ordens históricas",
+    "sell_order_title": "Ordem de venda (id: {{id}})",
+    "buy_order_title": "Ordem de compra (id: {{id}})"
+  },
+  "orders": {
+    "pair": "Par",
+    "type": "Tipo",
+    "amount": "Quantidade",
+    "ccy": "Ccy",
+    "price": "Preço",
+    "status": "Status",
+    "placed": "Efetuada",
+    "no_orders": "Sem ordens ativas",
+    "sell_order_title": "Ordem de venda (id: {{id}})",
+    "buy_order_title": "Ordem de compra (id: {{id}})"
+  },
+  "book": {
+    "cancel_order": "Cancelar ordem",
+    "count": "Contagem",
+    "amount": "Quantidade",
+    "total": "Total",
+    "price": "Preço",
+    "decrease_precision": "Diminuir precisão",
+    "increase_precision": "Aumentar precisão",
+    "decrease_zoom": "Diminuir zoom",
+    "increase_zoom": "Aumentar zoom"
+  }
+}
