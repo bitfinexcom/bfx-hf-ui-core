@@ -4,9 +4,9 @@ import _isEmpty from 'lodash/isEmpty'
 import { useTranslation } from 'react-i18next'
 import _toUpper from 'lodash/toUpper'
 
-import Input from '../../../../ui/Input'
-import Button from '../../../../ui/Button'
-import OrderFormModal from '../../OrderFormModal'
+import Input from '../../../ui/Input'
+import Button from '../../../ui/Button'
+import APIKeysConfigurateForm from '../APIKeysConfigurateForm'
 
 const SubmitAPIKeysModal = ({
   onClose,
@@ -33,8 +33,12 @@ const SubmitAPIKeysModal = ({
   }
 
   return (
-    <OrderFormModal
-      title={_toUpper(t('orderForm.submitKeys', { mode: isPaperTrading ? t('main.sandbox') : '' }))}
+    <APIKeysConfigurateForm
+      title={_toUpper(
+        t('orderForm.submitKeys', {
+          mode: isPaperTrading ? t('main.sandbox') : '',
+        }),
+      )}
       icon='icon-api'
       isModal={isModal}
       apiClientConnecting={apiClientConnecting}

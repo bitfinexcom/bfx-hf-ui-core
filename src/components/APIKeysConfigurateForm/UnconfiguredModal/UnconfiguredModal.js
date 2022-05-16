@@ -3,12 +3,12 @@ import PropTypes from 'prop-types'
 import { useTranslation } from 'react-i18next'
 import _toUpper from 'lodash/toUpper'
 
-import OrderFormModal from '../../OrderFormModal'
+import APIKeysConfigurateForm from '../APIKeysConfigurateForm'
 
 const UnconfiguredModal = ({ onClick, isPaperTrading, keyExistButNotValid }) => {
   const { t } = useTranslation()
   return (
-    <OrderFormModal
+    <APIKeysConfigurateForm
       title={_toUpper(keyExistButNotValid ? t('appSettings.apiNotValid') : t('appSettings.apiNotConfigured'))}
       icon='icon-api'
       onClick={onClick}
