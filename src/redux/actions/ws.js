@@ -25,6 +25,11 @@ export default {
   disconnected: (alias) => ({ type: t.DISCONNECTED, payload: { alias } }),
   disconnect: (alias) => ({ type: t.DISCONNECT, payload: { alias } }),
 
+  onAuthResponse: (token) => ({
+    type: t.ON_AUTH_RESPONSE,
+    payload: { token },
+  }),
+
   setBacktestLoading: () => ({
     type: t.SET_BACKTEST_LOADING,
     payload: {},
@@ -206,9 +211,9 @@ export default {
     payload: { configured },
   }),
 
-  recvAuthToken: token => ({
+  recvAuthToken: payload => ({
     type: t.DATA_AUTH_TOKEN,
-    payload: { token },
+    payload,
   }),
 
   recvBacktestStart: opts => ({
