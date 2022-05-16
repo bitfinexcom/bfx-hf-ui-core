@@ -1,25 +1,27 @@
 import React, { memo } from 'react'
 import PropTypes from 'prop-types'
-import ClassNames from 'clsx'
 import { useTranslation } from 'react-i18next'
 import Scrollbars from '../../ui/Scrollbars'
 
-const OrderFormModal = ({
-  content, className, icon, title, form, buttons, onClick, titleColor, apiClientConnecting, isModal,
+import './style.scss'
+
+const APIKeysConfigurateForm = ({
+  content, icon, title, form, buttons, onClick, titleColor, apiClientConnecting,
 }) => {
   const { t } = useTranslation()
 
   return (
-    <div className={ClassNames([{ 'hfui-orderform__modal-wrapper': isModal, 'hfui-orderform__wrapper-nomodal': !isModal }, className])}>
-      <Scrollbars>
-        <div
-          role='button'
-          tabIndex={0}
-          className='hfui-orderform__modal-inner fullheight'
-          onClick={onClick}
-        >
-          {icon && (<i className={icon} />)}
-          {title && (
+    <div className='hfui-apikeys-configurate-form__wrapper'>
+      <div className='hfui-apikeys-configurate-form'>
+        <Scrollbars>
+          <div
+            role='button'
+            tabIndex={0}
+            className='inner-container'
+            onClick={onClick}
+          >
+            {icon && (<i className={icon} />)}
+            {title && (
             <p
               style={!titleColor ? {} : {
                 color: titleColor,
@@ -27,38 +29,38 @@ const OrderFormModal = ({
             >
               {title}
             </p>
-          )}
+            )}
 
-          {content && (content)}
+            {content && (content)}
 
-          {form && (
-            <div className='hfui-orderform__modal-form'>
+            {form && (
+            <div className='hfui-apikeys-configurate-form__modal-form'>
               {form}
             </div>
-          )}
+            )}
 
-          {buttons && (
-            <div className='hfui-orderform__modal-buttons'>
+            {buttons && (
+            <div className='hfui-apikeys-configurate-form__modal-buttons'>
               {buttons}
             </div>
-          )}
+            )}
 
-          {apiClientConnecting && (
+            {apiClientConnecting && (
             <span>
               {t('orderForm.exchangeConnectings')}
             </span>
-          )}
-        </div>
-      </Scrollbars>
+            )}
+          </div>
+        </Scrollbars>
+      </div>
     </div>
   )
 }
 
-OrderFormModal.propTypes = {
+APIKeysConfigurateForm.propTypes = {
   content: PropTypes.oneOfType([
     PropTypes.node, PropTypes.arrayOf(PropTypes.node), PropTypes.string,
   ]),
-  className: PropTypes.string,
   icon: PropTypes.string,
   title: PropTypes.string,
   form: PropTypes.oneOfType([
@@ -68,22 +70,19 @@ OrderFormModal.propTypes = {
     PropTypes.node, PropTypes.arrayOf(PropTypes.node),
   ]),
   onClick: PropTypes.func,
-  isModal: PropTypes.bool,
   apiClientConnecting: PropTypes.bool,
   titleColor: PropTypes.string,
 }
 
-OrderFormModal.defaultProps = {
-  isModal: true,
+APIKeysConfigurateForm.defaultProps = {
   apiClientConnecting: false,
   titleColor: '',
   onClick: () => { },
   title: '',
   icon: '',
-  className: '',
   content: null,
   form: null,
   buttons: null,
 }
 
-export default memo(OrderFormModal)
+export default memo(APIKeysConfigurateForm)

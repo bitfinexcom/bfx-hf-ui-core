@@ -305,6 +305,7 @@
     "paperKey": "Sandbox Mode API Key",
     "apiNotValid": "Invalid API Key entered",
     "apiNotConfigured": "Not Configured",
+    "apiConnecting": "Please wait while connecting to the API server...",
     "apiSubmit": "Submit",
     "autologin": "Auto-login in development mode",
     "apiKey": "API Key",

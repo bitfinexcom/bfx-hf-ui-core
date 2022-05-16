@@ -13,6 +13,7 @@ import {
 } from '../components/StrategiesGridLayout.constants'
 import StrategyLiveChart from '../../StrategyLiveChart'
 import StrategyOptionsPanel from '../../StrategyOptionsPanel'
+import StrategyTabWrapper from '../components/StrategyTabWrapper'
 
 const StrategyTab = (props) => {
   const { executionResults, options } = props
@@ -94,7 +95,7 @@ const StrategyTab = (props) => {
   )
 
   return (
-    <div className='hfui-strategyeditor__wrapper'>
+    <StrategyTabWrapper>
       <StrategiesGridLayout
         layoutConfig={layoutConfig}
         renderGridComponents={renderGridComponents}
@@ -105,7 +106,7 @@ const StrategyTab = (props) => {
           {t('strategyEditor.liveExecution.initialMessage')}
         </p>
       )}
-    </div>
+    </StrategyTabWrapper>
   )
 }
 
