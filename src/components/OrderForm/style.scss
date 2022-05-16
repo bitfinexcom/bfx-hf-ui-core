@@ -7,27 +7,6 @@
     background: var(--lighter-background-color);
   }
 
-  .hfui-dropdown__button {
-    margin-left: 0;
-    background: var(--background-color);
-    position: relative;
-    width: 165;
-    padding-left: 8px;
-
-    p {
-      width: calc(100% - 32px);
-      text-overflow: ellipsis;
-      white-space: nowrap;
-      overflow: hidden;
-    }
-
-    i {
-      position: absolute;
-      right: 10px;
-      color: var(--shade-7);
-    }
-  }
-
   .hfui-dropdown__wrapper {
     width: 100%;
 
