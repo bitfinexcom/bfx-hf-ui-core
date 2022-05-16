@@ -9,7 +9,7 @@ const ConnectingModal = () => {
     <APIKeysConfigurateForm
       title='CONNECTING'
       icon='icon-api'
-      content={<span>{t('appSettings.apiConnecting')}</span>}
+      content={<p>{t('appSettings.apiConnecting')}</p>}
     />
   )
 }
