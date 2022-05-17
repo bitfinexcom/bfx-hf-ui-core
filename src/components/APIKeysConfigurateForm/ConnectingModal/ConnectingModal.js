@@ -7,9 +7,9 @@ const ConnectingModal = () => {
   const { t } = useTranslation()
   return (
     <APIKeysConfigurateForm
-      title='CONNECTING'
+      title={t('appSettings.apiConnectingTitle')}
       icon='icon-api'
-      content={<span>{t('appSettings.apiConnecting')}</span>}
+      content={<p>{t('appSettings.apiConnecting')}</p>}
     />
   )
 }
