@@ -10,11 +10,11 @@ const STYLES = {
 const activeStrategiesColumns = (t, getMarketPair) => [
   {
     label: t('table.name'),
-    dataKey: 'name',
+    dataKey: 'label',
     style: { ...STYLES.flexStart, fontWeight: '700' },
     width: 300,
     flexGrow: 1.5,
-    cellRenderer: ({ rowData = {} }) => (defaultCellRenderer(rowData.name)),
+    cellRenderer: ({ rowData = {} }) => (defaultCellRenderer(rowData.label)),
     headerStyle: STYLES.flexStart,
   },
   {
@@ -76,11 +76,11 @@ const activeStrategiesColumns = (t, getMarketPair) => [
 const pastStrategiesColumns = (t, getMarketPair) => [
   {
     label: t('table.name'),
-    dataKey: 'name',
+    dataKey: 'label',
     style: { ...STYLES.flexStart, fontWeight: '700' },
     width: 300,
     flexGrow: 1.5,
-    cellRenderer: ({ rowData = {} }) => (defaultCellRenderer(rowData.name)),
+    cellRenderer: ({ rowData = {} }) => (defaultCellRenderer(rowData.label)),
     headerStyle: STYLES.flexStart,
   },
   {
