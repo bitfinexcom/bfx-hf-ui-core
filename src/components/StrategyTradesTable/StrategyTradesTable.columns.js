@@ -35,7 +35,7 @@ export default (t) => [
     width: 150,
     style: STYLES.center,
     headerStyle: STYLES.center,
-    cellRenderer: ({ rowData = {} }) => defaultCellRenderer('signal_plug'),
+    cellRenderer: () => defaultCellRenderer('signal_plug'),
   },
   {
     label: t('table.time'),
@@ -80,12 +80,13 @@ export default (t) => [
     width: 150,
     style: STYLES.center,
     headerStyle: STYLES.center,
-    cellRenderer: ({ rowData = {} }) => defaultCellRenderer(
-      <PrettyValue
-        value={0.0012}
-        sigFig={PRICE_SIG_FIGS}
-        fadeTrailingZeros
-      />,
+    cellRenderer: () => defaultCellRenderer(
+      // <PrettyValue
+      //   value={0.0012}
+      //   sigFig={PRICE_SIG_FIGS}
+      //   fadeTrailingZeros
+      // />,
+      'plug',
     ),
   },
   {
@@ -102,7 +103,7 @@ export default (t) => [
     width: 150,
     style: STYLES.center,
     headerStyle: STYLES.center,
-    cellRenderer: ({ rowData = {} }) => resultNumber(15.565),
+    cellRenderer: () => resultNumber('plug'),
   },
   {
     label: t('table.drawdown'),
@@ -110,6 +111,6 @@ export default (t) => [
     width: 150,
     style: STYLES.center,
     headerStyle: STYLES.center,
-    cellRenderer: ({ rowData = {} }) => resultNumber(15.565),
+    cellRenderer: () => resultNumber('plug'),
   },
 ]
