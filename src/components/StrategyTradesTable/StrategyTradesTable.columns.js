@@ -81,11 +81,12 @@ export default (t) => [
     style: STYLES.center,
     headerStyle: STYLES.center,
     cellRenderer: () => defaultCellRenderer(
-      <PrettyValue
-        value={0.0012}
-        sigFig={PRICE_SIG_FIGS}
-        fadeTrailingZeros
-      />,
+      // <PrettyValue
+      //   value={0.0012}
+      //   sigFig={PRICE_SIG_FIGS}
+      //   fadeTrailingZeros
+      // />,
+      'plug',
     ),
   },
   {
@@ -102,7 +103,7 @@ export default (t) => [
     width: 150,
     style: STYLES.center,
     headerStyle: STYLES.center,
-    cellRenderer: () => resultNumber(15.565),
+    cellRenderer: () => resultNumber('plug'),
   },
   {
     label: t('table.drawdown'),
@@ -110,6 +111,6 @@ export default (t) => [
     width: 150,
     style: STYLES.center,
     headerStyle: STYLES.center,
-    cellRenderer: () => resultNumber(15.565),
+    cellRenderer: () => resultNumber('plug'),
   },
 ]
