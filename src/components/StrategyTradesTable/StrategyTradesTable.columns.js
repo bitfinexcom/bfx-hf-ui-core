@@ -35,7 +35,7 @@ export default (t) => [
     width: 150,
     style: STYLES.center,
     headerStyle: STYLES.center,
-    cellRenderer: ({ rowData = {} }) => defaultCellRenderer('signal_plug'),
+    cellRenderer: () => defaultCellRenderer('signal_plug'),
   },
   {
     label: t('table.time'),
@@ -80,7 +80,7 @@ export default (t) => [
     width: 150,
     style: STYLES.center,
     headerStyle: STYLES.center,
-    cellRenderer: ({ rowData = {} }) => defaultCellRenderer(
+    cellRenderer: () => defaultCellRenderer(
       <PrettyValue
         value={0.0012}
         sigFig={PRICE_SIG_FIGS}
@@ -102,7 +102,7 @@ export default (t) => [
     width: 150,
     style: STYLES.center,
     headerStyle: STYLES.center,
-    cellRenderer: ({ rowData = {} }) => resultNumber(15.565),
+    cellRenderer: () => resultNumber(15.565),
   },
   {
     label: t('table.drawdown'),
@@ -110,6 +110,6 @@ export default (t) => [
     width: 150,
     style: STYLES.center,
     headerStyle: STYLES.center,
-    cellRenderer: ({ rowData = {} }) => resultNumber(15.565),
+    cellRenderer: () => resultNumber(15.565),
   },
 ]
