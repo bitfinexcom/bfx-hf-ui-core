@@ -56,7 +56,13 @@ const BacktestTab = (props) => {
           )
 
         case COMPONENTS_KEYS.STRATEGY_PERFOMANCE:
-          return <StrategyPerfomanceMetrics results={results} isLoading={loading} />
+          return (
+            <StrategyPerfomanceMetrics
+              results={results}
+              isLoading={loading}
+              isBacktest
+            />
+          )
 
         case COMPONENTS_KEYS.STRATEGY_TRADES:
           return (
