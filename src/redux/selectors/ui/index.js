@@ -24,10 +24,12 @@ import getIsClosePositionModalVisible from './get_close_position_modal_visible'
 import getClosePositionModalData from './get_close_position_modal_data'
 import getOrderToEdit from './get_order_to_edit'
 import getLayoutForRoute from './layouts/get_layout_for_route'
+import getLaunchStrategyModalVisible from './get_launch_strategy_modal_visible'
+import getLaunchStrategyOptions from './get_launch_strategy_options'
 import getIsAppSettingsModalVisible from './get_is_app_settings_modal_visible'
-import getStrategiesActiveTab from './get_strategies_active_tab'
 import getSettingsActiveTab from './get_settings_active_tab'
 import getIsLoadingOrderHistData from './get_is_loading_order_hist_data'
+import getLaunchStrategyIdModal from './get_launch_strategy_id_modal'
 
 export * from './get_settings'
 export * from './get_core_settings'
@@ -60,8 +62,10 @@ export {
   getLayoutForRoute,
   getIsClosePositionModalVisible,
   getClosePositionModalData,
+  getLaunchStrategyModalVisible,
+  getLaunchStrategyOptions,
   getIsAppSettingsModalVisible,
-  getStrategiesActiveTab,
   getSettingsActiveTab,
   getIsLoadingOrderHistData,
+  getLaunchStrategyIdModal,
 }

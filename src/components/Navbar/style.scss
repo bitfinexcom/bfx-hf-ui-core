@@ -67,6 +67,12 @@ body.hosted {
       transition: all 0.2s;
       color: var(--shade-6);
 
+      .hfui-indicator {
+        position: relative;
+        top: -5px;
+        margin-left: 3px;
+      }
+
       &:hover,
       &.active {
         border-bottom: 2px solid var(--primary-9);

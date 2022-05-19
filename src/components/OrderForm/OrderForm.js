@@ -17,9 +17,9 @@ import Panel from '../../ui/Panel'
 import { getIsAnyModalOpen } from '../../util/document'
 
 import AOParamSettings from './Orderform.AlgoParams'
-import ConnectingModal from './Modals/ConnectingModal'
-import UnconfiguredModal from './Modals/UnconfiguredModal'
-import SubmitAPIKeysModal from './Modals/SubmitAPIKeysModal'
+import ConnectingModal from '../APIKeysConfigurateForm/ConnectingModal'
+import UnconfiguredModal from '../APIKeysConfigurateForm/UnconfiguredModal'
+import SubmitAPIKeysModal from '../APIKeysConfigurateForm/SubmitAPIKeysModal'
 import OrderFormMenu from './OrderFormMenu'
 import { getAOs, getAtomicOrders } from './OrderForm.orders.helpers'
 import {

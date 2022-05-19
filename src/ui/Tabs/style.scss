@@ -1,0 +1,14 @@
+.hfui-tabs {
+  display: flex;
+  justify-content: space-evenly;
+  &__button {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+
+    .icon {
+      margin-bottom: 3px;
+      font-size: 15px;
+    }
+  }
+}

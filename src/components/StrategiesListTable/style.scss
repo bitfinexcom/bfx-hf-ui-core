@@ -1,0 +1,31 @@
+.hfui-strategies-list {
+  max-height: 400px;
+  background: var(--darker-background-color);
+  flex: 1;
+
+  .hfui-panel__header-tabs {
+    text-transform: uppercase;
+  }
+
+  .ReactVirtualized__Table__row {
+    &:hover {
+      background-color: var(--background-color);
+      cursor: pointer;
+    }
+  }
+
+  .strategies-list {
+    padding: 10px;
+    list-style: disc;
+  }
+  .strategy-item {
+    margin-bottom: 8px;
+    cursor: pointer;
+    color: #05bc97;
+    font-size: 16px;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+}

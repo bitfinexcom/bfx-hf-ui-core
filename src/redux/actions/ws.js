@@ -263,21 +263,58 @@ export default {
     payload: { options },
   }),
 
-  setExecutionOptions: options => ({
+  setExecutionOption: (strategyId, options) => ({
+    type: t.SET_EXECUTION_OPTION,
+    payload: { strategyId, options },
+  }),
+
+  setExecutionOptions: (options) => ({
     type: t.SET_EXECUTION_OPTIONS,
     payload: { options },
+  }),
+
+  setLivePriceUpdate: (strategyMapKey, executionResultsObj) => ({
+    type: t.SET_PRICE_UPDATE,
+    payload: {
+      strategyMapKey, executionResultsObj,
+    },
+  }),
+
+  setLiveExecutionTrades: (strategyMapKey, trades) => ({
+    type: t.SET_LIVE_EXECUTION_TRADES,
+    payload: {
+      strategyMapKey, trades,
+    },
+  }),
+
+  setPastStrategies: (pastStrategies) => ({
+    type: t.SET_PAST_STRATEGIES,
+    payload: {
+      pastStrategies,
+    },
+  }),
+
+  setStartedLiveStrategy: (strategyMapKey, executionResultsObj) => ({
+    type: t.SET_STARTED_LIVE_STRATEGY,
+    payload: {
+      strategyMapKey, executionResultsObj,
+    },
+  }),
+
+  setStoppedLiveStrategy: (strategyMapKey, executionResultsObj) => ({
+    type: t.SET_STOPPED_LIVE_STRATEGY,
+    payload: {
+      strategyMapKey, executionResultsObj,
+    },
   }),
 
   resetExecutionData: () => ({
     type: t.RESET_DATA_EXECUTION,
   }),
 
-  startLiveExecution: () => ({
-    type: t.EXECUTION_START,
-  }),
-
-  stopLiveExecution: () => ({
-    type: t.EXECUTION_STOP,
+  setExecutingStrategies: (executing) => ({
+    type: t.SET_EXECUTING_STRATEGIES,
+    payload: { executing },
   }),
 
   setExecutionLoading: (loading) => ({
@@ -285,9 +322,9 @@ export default {
     payload: { loading },
   }),
 
-  setExecutionResults: (results) => ({
+  setExecutionResults: (strategyId, results) => ({
     type: t.SET_EXECUTION_RESULTS,
-    payload: { results },
+    payload: { strategyId, results },
   }),
 
   purgeBacktestData: () => ({

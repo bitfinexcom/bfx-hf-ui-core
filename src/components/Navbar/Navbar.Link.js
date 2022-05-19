@@ -1,12 +1,15 @@
 import React, { memo } from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import _isEmpty from 'lodash/isEmpty'
 import { push } from 'connected-react-router'
 import ClassNames from 'clsx'
 import PropTypes from 'prop-types'
+import { useLocation } from 'react-router'
+import { getBacktestResults, getExecutionResults } from '../../redux/selectors/ws'
+import { strategyEditor } from '../../constants/routes'
+import Indicator from '../../ui/Indicator'
 
 import './style.css'
-
-import { useLocation } from 'react-router'
 
 const NavbarButton = ({
   route, label, external,
@@ -14,6 +17,24 @@ const NavbarButton = ({
   const { pathname } = useLocation()
   const dispatch = useDispatch()
   const navigate = (path) => dispatch(push(path))
+  const { executing, loading, results } = useSelector(getExecutionResults)
+  const { loading: btLoading, finished } = useSelector(getBacktestResults)
+
+  const getIndicator = () => {
+    if (route !== strategyEditor.path || pathname === strategyEditor.path) {
+      return null
+    }
+    if (loading || btLoading) {
+      return <Indicator white blinking />
+    }
+    if (!_isEmpty(executing)) {
+      return <Indicator red blinking />
+    }
+    if (finished || !_isEmpty(results)) {
+      return <Indicator green />
+    }
+    return null
+  }
 
   if (external) {
     return (
@@ -30,6 +51,7 @@ const NavbarButton = ({
       onClick={route === pathname ? undefined : () => navigate(route)}
     >
       {label}
+      {getIndicator()}
     </button>
   )
 }

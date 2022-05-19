@@ -180,6 +180,18 @@ export const changeClosePositionModalState = (isVisible, rowData = {}) => ({
   payload: { isVisible, rowData },
 })
 
+/**
+ * options: {
+ *   authToken, name, symbol, tf, includeTrades, strategy, seedCandleCount, margin,
+ * }
+ */
+export const changeLaunchStrategyModalState = (isVisible, strategyId, options) => ({
+  type: types.CHANGE_LAUNCH_STRATEGY_MODAL_STATE,
+  payload: {
+    isVisible, options, strategyId,
+  },
+})
+
 export const setIsOrderExecuting = (executing) => ({
   type: types.SET_IS_ORDER_EXECUTING,
   payload: { executing },
@@ -225,11 +237,6 @@ export const changeAppSettingsModalState = isVisible => ({
   payload: { isVisible },
 })
 
-export const setStrategyTab = tab => ({
-  type: types.SET_STRATEGIES_TAB,
-  payload: { tab },
-})
-
 export const setSettingsTab = (tab) => ({
   type: types.SET_SETTINGS_TAB,
   payload: { tab },
@@ -273,10 +280,10 @@ export default {
   changeOldFormatModalState,
   changeAOPauseModalState,
   changeCcyInfoModalState,
-  setStrategyTab,
   changeConfirmDMSModalState,
   changeEditOrderModalState,
   changeClosePositionModalState,
+  changeLaunchStrategyModalState,
   changeAppSettingsModalState,
   setSettingsTab,
   setIsLoadingOrderHistData,

@@ -1,0 +1,20 @@
+.hfui-performance-metrics {
+  &__item {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    margin-bottom: 10px;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  &__runnedFor {
+    @extend .hfui-performance-metrics__item;
+
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--shade-9);
+  }
+}

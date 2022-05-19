@@ -80,15 +80,17 @@ function getInitialState() {
       isTradingModeModalVisible: false,
       isClosePositionModalVisible: false,
       isAppSettingsModalVisible: false,
+      isLaunchStrategyModalVisible: false,
     },
     orderToEdit: {},
     isBadInternetConnection: false,
+    launchStrategyOptions: {},
+    launchStrategyIdModal: '',
     closePositionModalData: {},
     isOrderExecuting: false,
     content: {},
     unsavedLayout: null,
     layoutID: null,
-    strategiesActiveTab: null,
     settingsActiveTab: DEFAULT_TAB,
     tickersVolumeUnit: null,
   }
@@ -434,6 +436,19 @@ function reducer(state = getInitialState(), action = {}) {
         },
       }
     }
+    case types.CHANGE_LAUNCH_STRATEGY_MODAL_STATE: {
+      const { isVisible, options, strategyId } = payload
+
+      return {
+        ...state,
+        launchStrategyOptions: options,
+        launchStrategyIdModal: strategyId || '',
+        modals: {
+          ...state.modals,
+          isLaunchStrategyModalVisible: isVisible,
+        },
+      }
+    }
     case types.SET_IS_ORDER_EXECUTING: {
       const { executing } = payload
       return {
@@ -629,14 +644,6 @@ function reducer(state = getInitialState(), action = {}) {
           ...state.modals,
           isCcyInfoModalVisible: isVisible,
         },
-      }
-    }
-    case types.SET_STRATEGIES_TAB: {
-      const { tab } = payload
-
-      return {
-        ...state,
-        strategiesActiveTab: tab,
       }
     }
     case types.SET_SETTINGS_TAB: {

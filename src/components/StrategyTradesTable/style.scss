@@ -1,8 +1,12 @@
-@import '../../variables.scss';
+@import "../../variables.scss";
 
 .hfui-strategytradestable__wrapper {
+  width: auto;
+  margin: 0;
+  
   .ReactVirtualized__Table__headerRow {
-    .ReactVirtualized__Table__headerColumn:first-of-type, .ReactVirtualized__Table__rowColumn:first-of-type {
+    .ReactVirtualized__Table__headerColumn:first-of-type,
+    .ReactVirtualized__Table__rowColumn:first-of-type {
       margin-left: 24px;
     }
 
@@ -23,8 +27,7 @@
     align-items: center;
   }
 
-  .export_csv_btn {
-    margin-left: 10px;
-    padding: 5px 10px;
+  .panel-button {
+    text-transform: uppercase;
   }
 }

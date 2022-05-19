@@ -25,7 +25,11 @@ PercentInput.propTypes = {
     PropTypes.number,
     PropTypes.array,
     PropTypes.object,
-  ])).isRequired,
+  ])),
+}
+
+PercentInput.defaultProps = {
+  layout: null,
 }
 
 export default PercentInput

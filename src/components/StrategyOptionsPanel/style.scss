@@ -1,0 +1,84 @@
+.hfui-strategy-options {
+  display: flex;
+  justify-content: space-between;
+
+  .item {
+    margin-right: 10px;
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+
+  &__buttons-container {
+    display: flex;
+  }
+
+  &__option {
+    padding-top: 7px;
+  }
+
+  &__strategy-name {
+    @extend .hfui-strategy-options__option;
+    font-size: 20px;
+    font-weight: 700;
+    cursor: pointer;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  &__input {
+    display: flex;
+    flex-direction: column;
+    max-width: 200px;
+    margin-bottom: 0;
+  }
+
+  &__amount-input {
+    @extend .hfui-strategy-options__input;
+    padding: 8 16px;
+  }
+
+  &__strategy-type-input {
+    @extend .hfui-strategy-options__input;
+    flex-direction: row;
+  }
+
+  &__type-selection {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+
+    .hfui-strategy-options__input:not(:last-child) {
+      margin-right: 10px;
+    }
+  }
+
+  &__option-btn {
+    height: 34px;
+    min-width: 70px;
+  }
+
+  &__ok-btn {
+    min-width: 36px;
+    height: 36px;
+  }
+
+  &__search-btn {
+    width: 15px;
+    height: 15px;
+  }
+
+  &__save-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+
+    .message {
+      text-transform: uppercase;
+      margin-bottom: 3px;
+      font-weight: 700;
+    }
+  }
+}

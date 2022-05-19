@@ -1,0 +1,13 @@
+body.Light {
+  .icon-move {
+    color: var(--text-color);
+
+    &:hover {
+      color: var(--shade-5);
+    }
+  }
+}
+
+.toggle-fullscreen {
+  cursor: pointer;
+}

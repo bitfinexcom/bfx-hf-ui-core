@@ -31,13 +31,23 @@ import {
 import { generateLayout } from './Grid.layouts'
 import tradingTerminalLayout from './layouts/trading'
 import marketDataLayout from './layouts/marketData'
-import { marketData } from '../../constants/routes'
+import { marketData, strategyEditor, tradingTerminal } from '../../constants/routes'
 
-import './style.scss'
+import './style.css'
 
 const ReactGridLayout = WidthProvider(RGL)
 
-const getLayoutConfig = pathname => (pathname === marketData.path ? marketDataLayout : tradingTerminalLayout)
+const getLayoutConfig = pathname => {
+  switch (pathname) {
+    case marketData.path:
+      return marketDataLayout
+    case tradingTerminal.path:
+      return tradingTerminalLayout
+
+    default:
+      return null
+  }
+}
 
 const GridLayout = ({
   sharedProps, tradesProps, bookProps, chartProps, orderFormProps,
@@ -46,6 +56,8 @@ const GridLayout = ({
   const [breakpoint, setBreakpoint] = useState(RGL.utils.getBreakpointFromWidth(GRID_BREAKPOINTS, document.body.clientWidth))
 
   const { pathname } = useLocation()
+  const isAbleToSaveLayout = !pathname === strategyEditor.path
+
   const layoutConfig = useMemo(() => getLayoutConfig(pathname), [pathname])
   const layoutID = useSelector(getLayoutID)
 
@@ -107,31 +119,29 @@ const GridLayout = ({
 
   const currentLayout = nextLayouts?.[breakpoint] || []
 
-  if (!layoutID) {
+  if (isAbleToSaveLayout && !layoutID) {
     return <Spinner className='grid-spinner' />
   }
 
   return (
-    <div className='hfui-gridlayoutpage__wrapper'>
-      <ReactGridLayout
-        draggableHandle='.icon-move'
-        cols={GRID_COLUMNS}
-        breakpoints={GRID_BREAKPOINTS}
-        margin={GRID_CELL_SPACINGS}
-        containerPadding={GRID_CONTAINER_SPACINGS}
-        rowHeight={GRID_ROW_HEIGHT}
-        layouts={nextLayouts}
-        onBreakpointChange={setBreakpoint}
-        onLayoutChange={onLayoutChange}
-        measureBeforeMount={false}
-      >
-        {_map(currentLayout, def => (
-          <div key={def.i}>
-            {renderLayoutElement(layoutID, def, componentProps, onRemoveComponent)}
-          </div>
-        ))}
-      </ReactGridLayout>
-    </div>
+    <ReactGridLayout
+      draggableHandle='.icon-move'
+      cols={GRID_COLUMNS}
+      breakpoints={GRID_BREAKPOINTS}
+      margin={GRID_CELL_SPACINGS}
+      containerPadding={GRID_CONTAINER_SPACINGS}
+      rowHeight={GRID_ROW_HEIGHT}
+      layouts={nextLayouts}
+      onBreakpointChange={setBreakpoint}
+      onLayoutChange={onLayoutChange}
+      measureBeforeMount={false}
+    >
+      {_map(currentLayout, def => (
+        <div key={def.i}>
+          {renderLayoutElement(layoutID, def, componentProps, onRemoveComponent)}
+        </div>
+      ))}
+    </ReactGridLayout>
   )
 }
 

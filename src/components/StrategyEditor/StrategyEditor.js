@@ -1,200 +1,146 @@
-import React, { memo, useState } from 'react'
+import React, { memo, useMemo, useState } from 'react'
 import Debug from 'debug'
-import ClassNames from 'clsx'
-import _ from 'lodash'
 import _isEmpty from 'lodash/isEmpty'
-import _keys from 'lodash/keys'
-import _values from 'lodash/values'
-import _forEach from 'lodash/forEach'
 import _size from 'lodash/size'
+import _some from 'lodash/some'
+import _values from 'lodash/values'
 import _find from 'lodash/find'
-import Indicators from 'bfx-hf-indicators'
-import { nonce } from 'bfx-api-node-util'
-import HFS from 'bfx-hf-strategy'
-import HFU from 'bfx-hf-util'
 import PropTypes from 'prop-types'
+import { useTranslation } from 'react-i18next'
 
+import { v4 } from 'uuid'
 import { saveAsJSON, readJSONFile } from '../../util/ui'
-import { THEMES } from '../../redux/selectors/ui'
 import { MAX_STRATEGY_LABEL_LENGTH } from '../../constants/variables'
-import Templates from './templates'
 import StrategyEditorPanel from './components/StrategyEditorPanel'
 import CreateNewStrategyModal from '../../modals/Strategy/CreateNewStrategyModal'
 import RemoveExistingStrategyModal from '../../modals/Strategy/RemoveExistingStrategyModal'
 import OpenExistingStrategyModal from '../../modals/Strategy/OpenExistingStrategyModal'
-import MonacoEditor from './components/MonacoEditor'
 import EmptyContent from './components/StrategyEditorEmpty'
+import StrategyTab from './tabs/StrategyTab'
+import BacktestTab from './tabs/BacktestTab'
+import IDETab from './tabs/IDETab'
+import { getDefaultMarket } from '../../util/market'
+import CreateNewStrategyFromModalOpen from '../../modals/Strategy/CreateNewStrategyFromModal'
+import SaveStrategyAsModal from '../../modals/Strategy/SaveStrategyAsModal/SaveStrategyAsModal'
+import StrategyTabTitle from './tabs/StrategyTab.Title'
+import BacktestTabTitle from './tabs/BacktestTab.Title'
+import IDETabTitle from './tabs/IDETab.Title'
+import ExecutionOptionsModal from '../../modals/Strategy/ExecutionOptionsModal'
+
 import './style.css'
 
 const debug = Debug('hfui-ui:c:strategy-editor')
-const STRATEGY_SECTIONS = [
-  'defineIndicators',
-  'onPriceUpdate',
-  'onEnter',
-  'onUpdate',
-  'onUpdateLong',
-  'onUpdateShort',
-  'onUpdateClosing',
-  'onPositionOpen',
-  'onPositionUpdate',
-  'onPositionClose',
-  'onStart',
-  'onStop',
-]
+const ONE_MIN = 1000 * 60
+const ONE_HOUR = ONE_MIN * 60
+const ONE_DAY = ONE_HOUR * 24
 
-const StrategyEditor = ({
-  moveable, removeable, strategyId, renderResults, onSave, onRemove, authToken, onStrategyChange, onStrategySelect,
-  gaCreateStrategy, onIndicatorsChange, clearBacktestOptions, strategyContent, strategies, backtestResults, liveExecuting,
-  liveLoading, settingsTheme,
-}) => {
-  const [strategy, setStrategy] = useState(strategyContent)
-  const [sectionErrors, setSectionErrors] = useState({})
-  const [strategyDirty, setStrategyDirty] = useState(false)
+const DEFAULT_TIMEFRAME = '1m'
+const DEFAULT_USE_TRADES = false
+const DEFAULT_USE_MARGIN = false
+const DEFAULT_SEED_COUNT = 150
+
+const StrategyEditor = (props) => {
+  const {
+    moveable,
+    removeable,
+    strategyId,
+    onRemove,
+    authToken,
+    gaCreateStrategy,
+    strategyContent,
+    backtestResults,
+    strategyDirty,
+    setStrategyDirty,
+    setStrategy,
+    strategy,
+    onLoadStrategy,
+    dsExecuteLiveStrategy,
+    dsStopLiveStrategy,
+    options,
+    markets,
+    saveStrategy,
+    isPaperTrading,
+    dsExecuteBacktest,
+    // setBacktestOptions,
+    showError,
+    flags,
+    isBetaVersion,
+    allExecutionResults,
+    executing,
+    sectionErrors,
+    liveResults,
+    runningStrategiesMapping,
+  } = props
+  const { t } = useTranslation()
   const [isRemoveModalOpened, setIsRemoveModalOpened] = useState(false)
-  const [activeContent, setActiveContent] = useState('defineIndicators')
   const [createNewStrategyModalOpen, setCreateNewStrategyModalOpen] = useState(false)
+  const [createNewStrategyFromModalOpen, setCreateNewStrategyFromModalOpen] = useState(false)
   const [openExistingStrategyModalOpen, setOpenExistingStrategyModalOpen] = useState(false)
-  const [execError, setExecError] = useState('')
+  const [isSaveStrategyAsModalOpen, setIsSaveStrategyModalOpen] = useState(false)
+  const [isExecutionOptionsModalOpen, setIsExecutionOptionsModalOpen] = useState(false)
 
-  const processStrategy = (updatedStrategy) => {
-    const { id, label } = updatedStrategy
-    const updatedContent = { id, label }
-    setStrategy(updatedStrategy)
+  const [symbol, setSymbol] = useState(
+    options.symbol
+      ? _find(markets, (m) => m.wsID === options.symbol)
+      : getDefaultMarket(markets),
+  )
+  const [timeframe, setTimeframe] = useState(options.tf || DEFAULT_TIMEFRAME)
+  const [trades, setTrades] = useState(
+    options.includeTrades || DEFAULT_USE_TRADES,
+  )
+  const [candles, setCandles] = useState(false)
+  const [candleSeed, setCandleSeed] = useState(
+    options.seedCandleCount || DEFAULT_SEED_COUNT,
+  )
+  const [startDate, setStartDate] = useState(new Date(Date.now() - ONE_DAY))
+  const [endDate, setEndDate] = useState(new Date(Date.now() - ONE_MIN * 15))
+  const [margin, setMargin] = useState(options.margin || DEFAULT_USE_MARGIN)
+  const [capitalAllocation, setCapitalAllocation] = useState('')
+  const [stopLossPerc, setStopLossPerc] = useState('')
+  const [maxDrawdownPerc, setMaxDrawdownPerc] = useState('')
 
-    for (let i = 0; i < STRATEGY_SECTIONS.length; ++i) {
-      const section = STRATEGY_SECTIONS[i]
-      const content = updatedStrategy[section]
+  const runningStrategyID = runningStrategiesMapping[strategyId]
+  const currentStrategyResults = liveResults?.[runningStrategyID] || {}
 
-      if (!_isEmpty(content)) {
-        updatedContent[section] = content
-      }
-    }
-
-    return updatedContent
+  const optionsProps = {
+    timeframe,
+    candles,
+    setCandles,
+    symbol,
+    setSymbol,
+    setTimeframe,
+    trades,
+    setTrades,
+    candleSeed,
+    setCandleSeed,
+    margin,
+    setMargin,
+    startDate,
+    setStartDate,
+    endDate,
+    setEndDate,
   }
 
-  const selectStrategy = (selected) => {
-    const content = processStrategy(selected)
-    onStrategySelect(content)
-    clearBacktestOptions()
-  }
-
-  const setSectionError = (section, error) => {
-    setSectionErrors({
-      ...sectionErrors,
-      [section]: error,
-    })
-  }
-
-  const clearSectionError = (section) => {
-    setSectionError(section, '')
-  }
-
-  const processSectionError = (section, e) => {
-    if (e.lineNumber && e.columnNumber) {
-      // currently it's a non-standard property supported by Firefox only :(
-      setSectionError(section, `Line ${e.lineNumber}:${e.columnNumber}: ${e.message}`)
-    } else {
-      setSectionError(section, e.message)
-    }
-  }
-
-  const evalSectionContent = (section, providedContent) => {
-    const content = providedContent || strategy[section] || ''
-
-    if (section.substring(0, 6) === 'define') {
-      try {
-        const func = eval(content) // eslint-disable-line
-        clearSectionError(section)
-        return func
-      } catch (e) {
-        processSectionError(section, e)
-        return null
-      }
-    } else if (section.substring(0, 2) === 'on') {
-      try {
-        const func = eval(content)({ HFS, HFU, _ }) // eslint-disable-line
-        clearSectionError(section)
-        return func
-      } catch (e) {
-        processSectionError(section, e)
-        return null
-      }
-    } else {
-      debug('unrecognised section handler prefix: %s', section)
-      return null
-    }
-  }
-
-  const onDefineIndicatorsChange = (content) => {
-    const indicatorFunc = evalSectionContent('defineIndicators', content)
-    let indicators = {}
-
-    if (indicatorFunc) {
-      try {
-        indicators = indicatorFunc(Indicators)
-      } catch (e) {
-        processSectionError('defineIndicators', e)
-      }
-    }
-
-    _forEach(_values(indicators), (i) => {
-      i.key = `${nonce()}` // eslint-disable-line
-    })
-
-    onIndicatorsChange(indicators)
-  }
-
-  const onCreateNewStrategy = (label, templateLabel, content = {}) => {
-    const newStrategy = { label, ...content }
-    const template = _find(Templates, _t => _t.label === templateLabel)
-
-    if (!template) {
-      debug('unknown template: %s', templateLabel)
-    }
-
-    const templateSections = _keys(template)
-
-    _forEach(templateSections, (s) => {
-      if (s === 'label') return
-
-      newStrategy[s] = template[s]
-    })
-
-    setSectionErrors({})
-    setStrategyDirty(true)
-    selectStrategy(newStrategy)
-
-    if (newStrategy.defineIndicators) {
-      onDefineIndicatorsChange(newStrategy.defineIndicators)
-    }
-  }
-
-  const onLoadStrategy = (newStrategy) => {
-    onSave(authToken, { ...newStrategy, savedTs: Date.now() })
-    setSectionErrors({})
-    setStrategyDirty(false)
-    selectStrategy(newStrategy)
-
-    if (newStrategy.defineIndicators) {
-      onDefineIndicatorsChange(newStrategy.defineIndicators)
-    }
+  const execResults = {
+    ...allExecutionResults,
+    executing,
+    results: currentStrategyResults,
   }
 
   const onCloseModals = () => {
     setOpenExistingStrategyModalOpen(false)
     setCreateNewStrategyModalOpen(false)
     setIsRemoveModalOpened(false)
+    setCreateNewStrategyFromModalOpen(false)
+    setIsSaveStrategyModalOpen(false)
+    setIsExecutionOptionsModalOpen(false)
   }
 
-  const onClearErrors = () => {
-    setSectionErrors({})
-    setExecError('')
-  }
+  const onCreateNewStrategy = (label, content = {}) => {
+    const newStrategy = { ...content, label, id: v4() }
+    saveStrategy(newStrategy)
+    onLoadStrategy(newStrategy)
 
-  const onSaveStrategy = () => {
-    onSave(authToken, { ...strategy, savedTs: Date.now() })
-    setStrategyDirty(false)
     onCloseModals()
   }
 
@@ -202,13 +148,7 @@ const StrategyEditor = ({
     const { id = strategyId } = strategy
     onCloseModals()
     onRemove(authToken, id)
-    setStrategy(null)
-    onStrategyChange(null)
-  }
-
-  const updateStrategy = (updatedStrategy) => {
-    const content = processStrategy(updatedStrategy)
-    onStrategyChange(content)
+    onLoadStrategy({}, true)
   }
 
   const onExportStrategy = () => {
@@ -219,121 +159,235 @@ const StrategyEditor = ({
   const onImportStrategy = async () => {
     try {
       const newStrategy = await readJSONFile()
-      if ('label' in newStrategy && _size(newStrategy.label) < MAX_STRATEGY_LABEL_LENGTH) {
+      if (
+        'label' in newStrategy
+        && _size(newStrategy.label) < MAX_STRATEGY_LABEL_LENGTH
+      ) {
         delete newStrategy.id
-        onCreateNewStrategy(newStrategy.label, null, newStrategy)
+        onCreateNewStrategy(newStrategy.label, newStrategy)
       }
     } catch (e) {
       debug('Error while importing strategy: %s', e)
     }
   }
 
-  const onEditorContentChange = (code) => {
-    setStrategyDirty(true)
-    updateStrategy({
-      ...strategy,
-      [activeContent]: code,
-    })
+  const onSaveStrategy = () => {
+    saveStrategy(strategy)
+    setStrategyDirty(false)
+  }
 
-    if (activeContent === 'defineIndicators') {
-      onDefineIndicatorsChange(code) // tracks errors
-    } else {
-      evalSectionContent(activeContent, code)
+  const onSaveAsStrategy = (newStrategy) => {
+    setStrategy(newStrategy)
+    saveStrategy(newStrategy)
+    setStrategyDirty(false)
+  }
+
+  const onBacktestStart = () => {
+    const startNum = new Date(startDate).getTime()
+    const endNum = new Date(endDate).getTime()
+
+    if (!trades && !candles) {
+      showError(t('strategyEditor.checkboxWarningMessage'))
+      return
     }
+
+    if (!timeframe) {
+      showError(t('strategyEditor.invalidTF'))
+      return
+    }
+
+    if (endNum <= startNum) {
+      showError(t('strategyEditor.invalidPeriod'))
+      return
+    }
+
+    dsExecuteBacktest(
+      startNum,
+      endNum,
+      symbol?.wsID,
+      timeframe,
+      candles,
+      trades,
+      strategy,
+    )
+    // setBacktestOptions(optionsProps)
+  }
+
+  const startExecution = () => {
+    const isFullFilled = capitalAllocation && stopLossPerc && maxDrawdownPerc
+
+    if (!isFullFilled) {
+      setIsExecutionOptionsModalOpen(true)
+      return
+    }
+    onSaveStrategy()
+    dsExecuteLiveStrategy(
+      authToken,
+      strategyId,
+      strategy.label,
+      symbol?.wsID,
+      timeframe,
+      trades,
+      strategyContent,
+      candleSeed,
+      margin,
+      isPaperTrading,
+    )
+  }
+
+  const stopExecution = () => {
+    dsStopLiveStrategy(authToken, runningStrategyID)
+  }
+
+  const hasErrorsInIDE = useMemo(
+    () => _some(_values(sectionErrors), (e) => !!e),
+    [sectionErrors],
+  )
+
+  const openCreateNewStrategyModal = () => {
+    setCreateNewStrategyModalOpen(true)
+  }
+
+  const openCreateNewStrategyFromModal = () => {
+    setCreateNewStrategyFromModalOpen(true)
+  }
+
+  const openRemoveModal = () => {
+    setIsRemoveModalOpened(true)
+  }
+
+  const openSaveStrategyAsModal = () => {
+    setIsSaveStrategyModalOpen(true)
+  }
+
+  const openExecutionOptionsModal = () => {
+    setIsExecutionOptionsModalOpen(true)
   }
 
   return (
-    <StrategyEditorPanel
-      onRemove={onRemove}
-      moveable={moveable}
-      removeable={removeable}
-      execRunning={backtestResults.executing || backtestResults.loading || liveExecuting || liveLoading}
-      strategyDirty={strategyDirty}
-      strategy={strategy}
-      strategies={strategies}
-      strategyId={strategyId}
-      onOpenSelectModal={() => setOpenExistingStrategyModalOpen(true)}
-      onOpenCreateModal={() => setCreateNewStrategyModalOpen(true)}
-      onOpenRemoveModal={() => setIsRemoveModalOpened(true)}
-      onSaveStrategy={onSaveStrategy}
-      onRemoveStrategy={onRemoveStrategy}
-      onExportStrategy={onExportStrategy}
-      onImportStrategy={onImportStrategy}
-    >
-      {!strategy || _isEmpty(strategy)
-        ? (
-          <EmptyContent
-            strategies={strategies}
-            openCreateNewStrategyModal={() => setCreateNewStrategyModalOpen(true)}
-            openSelectExistingStrategyModal={() => setOpenExistingStrategyModalOpen(true)}
-            onOpen={onLoadStrategy}
-          />
-        ) : (
-          <div className='hfui-strategyeditor__wrapper'>
-            <ul className='hfui-strategyeditor__func-select'>
-              {/* eslint-disable-next-line lodash/prefer-lodash-method */}
-              {STRATEGY_SECTIONS.map(section => (
-                <li
-                  key={section}
-                  onClick={() => setActiveContent(section)}
-                  className={ClassNames({
-                    active: activeContent === section,
-                    hasError: !!sectionErrors[section],
-                  })}
-                >
-                  <p>{section}</p>
-
-                  {_isEmpty(strategy[section])
-                    ? null
-                    : _isEmpty(sectionErrors[section])
-                      ? <p>~</p>
-                      : <p>*</p>}
-                </li>
-              ))}
-            </ul>
-
-            <div className='hfui-strategyeditor__content-wrapper'>
-              <div
-                className={ClassNames('hfui-strategyeditor__editor-wrapper', {
-                  noresults: !renderResults,
-                  'exec-error': execError || sectionErrors[activeContent],
-                })}
-              >
-                <MonacoEditor
-                  value={strategy[activeContent] || ''}
-                  onChange={onEditorContentChange}
-                  theme={settingsTheme}
+    <>
+      {!strategy || _isEmpty(strategy) ? (
+        <EmptyContent
+          openCreateNewStrategyModal={openCreateNewStrategyModal}
+          openCreateNewStrategyFromModal={openCreateNewStrategyFromModal}
+        />
+      ) : (
+        <StrategyEditorPanel
+          moveable={moveable}
+          removeable={removeable}
+          onRemoveStrategy={onRemoveStrategy}
+        >
+          {(isBetaVersion || flags?.live_execution) && (
+            <StrategyTab
+              htmlKey='strategy'
+              sbtitle={({ selectedTab, sidebarOpened }) => (
+                <StrategyTabTitle
+                  startExecution={startExecution}
+                  stopExecution={stopExecution}
+                  onLoadStrategy={onLoadStrategy}
+                  onExportStrategy={onExportStrategy}
+                  onSaveStrategy={onSaveStrategy}
+                  onOpenRemoveModal={openRemoveModal}
+                  onOpenCreateStrategyModal={openCreateNewStrategyModal}
+                  onOpenCreateStrategyFromModal={openCreateNewStrategyFromModal}
+                  onOpenSaveStrategyAsModal={openSaveStrategyAsModal}
+                  onImportStrategy={onImportStrategy}
+                  strategy={strategy}
+                  strategyId={strategyId}
+                  executionResults={execResults}
+                  selectedTab={selectedTab}
+                  sidebarOpened={sidebarOpened}
+                  strategyDirty={strategyDirty}
                 />
-                {(execError || sectionErrors[activeContent]) && (
-                  <div className='hfui-strategyeditor__editor-error-output'>
-                    <p className='hfui-panel__close strategyeditor__close-icon' onClick={onClearErrors}>&#10005; </p>
-                    <pre>{execError || sectionErrors[activeContent]}</pre>
-                  </div>
-                )}
-              </div>
-            </div>
-
-            <RemoveExistingStrategyModal
-              isOpen={isRemoveModalOpened}
-              onClose={onCloseModals}
-              onRemoveStrategy={onRemoveStrategy}
-              strategy={strategy}
+              )}
+              onOpenSaveStrategyAsModal={openSaveStrategyAsModal}
+              isPaperTrading={isPaperTrading}
+              startExecution={startExecution}
+              stopExecution={stopExecution}
+              executionResults={execResults}
+              onSaveAsStrategy={onSaveAsStrategy}
+              openExecutionOptionsModal={openExecutionOptionsModal}
+              {...optionsProps}
+              {...props}
             />
-          </div>
+          )}
 
-        )}
+          {isPaperTrading && (isBetaVersion || flags?.backtest) && (
+            <BacktestTab
+              htmlKey='backtest'
+              sbtitle={({ sidebarOpened }) => (
+                <BacktestTabTitle
+                  results={backtestResults}
+                  sidebarOpened={sidebarOpened}
+                />
+              )}
+              results={backtestResults}
+              onBacktestStart={onBacktestStart}
+              {...optionsProps}
+              {...props}
+            />
+          )}
+          {(isBetaVersion || flags?.docs) && (
+            <IDETab
+              htmlKey='view_in_ide'
+              key='view_in_ide'
+              hasErrors={hasErrorsInIDE}
+              onSaveStrategy={onSaveStrategy}
+              onOpenSaveStrategyAsModal={openSaveStrategyAsModal}
+              sbtitle={({ sidebarOpened }) => (
+                <IDETabTitle
+                  hasErrors={hasErrorsInIDE}
+                  strategyDirty={strategyDirty}
+                  sidebarOpened={sidebarOpened}
+                />
+              )}
+              {...props}
+            />
+          )}
+        </StrategyEditorPanel>
+      )}
+      <CreateNewStrategyFromModalOpen
+        isOpen={createNewStrategyFromModalOpen}
+        gaCreateStrategy={gaCreateStrategy}
+        onClose={onCloseModals}
+        onSubmit={onCreateNewStrategy}
+      />
       <CreateNewStrategyModal
         isOpen={createNewStrategyModalOpen}
         gaCreateStrategy={gaCreateStrategy}
         onClose={onCloseModals}
         onSubmit={onCreateNewStrategy}
+        onImportStrategy={onImportStrategy}
       />
       <OpenExistingStrategyModal
         isOpen={openExistingStrategyModalOpen}
         onClose={onCloseModals}
         onOpen={onLoadStrategy}
       />
-    </StrategyEditorPanel>
+      <RemoveExistingStrategyModal
+        isOpen={isRemoveModalOpened}
+        onClose={onCloseModals}
+        onRemoveStrategy={onRemoveStrategy}
+        strategy={strategy}
+      />
+      <SaveStrategyAsModal
+        isOpen={isSaveStrategyAsModalOpen}
+        onClose={onCloseModals}
+        strategy={strategy}
+        onSubmit={onSaveAsStrategy}
+      />
+      <ExecutionOptionsModal
+        isOpen={isExecutionOptionsModalOpen}
+        onClose={onCloseModals}
+        capitalAllocation={capitalAllocation}
+        setCapitalAllocation={setCapitalAllocation}
+        stopLossPerc={stopLossPerc}
+        setStopLossPerc={setStopLossPerc}
+        maxDrawdownPerc={maxDrawdownPerc}
+        setMaxDrawdownPerc={setMaxDrawdownPerc}
+        startExecution={startExecution}
+      />
+    </>
   )
 }
 
@@ -341,36 +395,68 @@ StrategyEditor.propTypes = {
   moveable: PropTypes.bool,
   removeable: PropTypes.bool,
   strategyId: PropTypes.string,
-  renderResults: PropTypes.bool,
-  onSave: PropTypes.func.isRequired,
   onRemove: PropTypes.func.isRequired,
   authToken: PropTypes.string.isRequired,
   onStrategyChange: PropTypes.func.isRequired,
-  onStrategySelect: PropTypes.func.isRequired,
+  markets: PropTypes.objectOf(PropTypes.object).isRequired,
+  setStrategy: PropTypes.func,
+  backtestResults: PropTypes.objectOf(PropTypes.any).isRequired,
+  options: PropTypes.objectOf(
+    PropTypes.oneOfType([PropTypes.string, PropTypes.number, PropTypes.bool]),
+  ).isRequired,
+  strategy: PropTypes.shape({
+    id: PropTypes.string,
+    label: PropTypes.string,
+  }),
+  dsStopLiveStrategy: PropTypes.func.isRequired,
+  dsExecuteLiveStrategy: PropTypes.func.isRequired,
+  onLoadStrategy: PropTypes.func.isRequired,
+  indicators: PropTypes.arrayOf(PropTypes.object),
+  strategyDirty: PropTypes.bool.isRequired,
+  setStrategyDirty: PropTypes.func.isRequired,
   gaCreateStrategy: PropTypes.func.isRequired,
-  onIndicatorsChange: PropTypes.func.isRequired,
-  clearBacktestOptions: PropTypes.func.isRequired,
-  liveExecuting: PropTypes.bool.isRequired,
-  liveLoading: PropTypes.bool.isRequired,
+  allExecutionResults: PropTypes.shape({
+    executing: PropTypes.bool,
+    loading: PropTypes.bool,
+  }).isRequired,
   strategyContent: PropTypes.objectOf(
     PropTypes.oneOfType([
       PropTypes.string.isRequired,
+      PropTypes.number,
       PropTypes.oneOf([null]).isRequired,
+      PropTypes.object,
     ]),
   ),
-  strategies: PropTypes.arrayOf(PropTypes.object).isRequired,
-  backtestResults: PropTypes.objectOf(PropTypes.any),
-  settingsTheme: PropTypes.oneOf([THEMES.LIGHT, THEMES.DARK]),
+  saveStrategy: PropTypes.func.isRequired,
+  isPaperTrading: PropTypes.bool.isRequired,
+  // setBacktestOptions: PropTypes.func.isRequired,
+  dsExecuteBacktest: PropTypes.func.isRequired,
+  isBetaVersion: PropTypes.bool.isRequired,
+  flags: PropTypes.shape({
+    docs: PropTypes.bool,
+    live_execution: PropTypes.bool,
+    backtest: PropTypes.bool,
+  }).isRequired,
+  showError: PropTypes.func.isRequired,
+  liveResults: PropTypes.objectOf(PropTypes.object),
+  runningStrategiesMapping: PropTypes.objectOf(PropTypes.string),
+  sectionErrors: PropTypes.objectOf(PropTypes.string).isRequired,
+  executing: PropTypes.bool.isRequired,
 }
 
 StrategyEditor.defaultProps = {
   strategyId: '',
   moveable: false,
   removeable: false,
-  renderResults: true,
   strategyContent: {},
-  backtestResults: {},
-  settingsTheme: THEMES.DARK,
+  setStrategy: () => {},
+  strategy: {
+    id: null,
+    label: null,
+  },
+  indicators: [],
+  liveResults: {},
+  runningStrategiesMapping: {},
 }
 
 export default memo(StrategyEditor)

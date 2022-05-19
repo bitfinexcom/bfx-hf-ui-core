@@ -404,53 +404,84 @@ export default (alias, store) => (e = {}) => {
         break
       }
 
-      case 'strategy.start_live_execution_submit_status': {
-        const [, status] = payload
-
-        if (status) {
-          store.dispatch(WSActions.startLiveExecution())
-        } else {
-          store.dispatch(WSActions.stopLiveExecution())
-        }
-        store.dispatch(WSActions.setExecutionLoading(false))
-
-        break
-      }
-
-      case 'strategy.stop_live_execution_submit_status': {
-        const [, status] = payload
-
-        if (status) {
-          store.dispatch(WSActions.stopLiveExecution())
-        } else {
-          store.dispatch(WSActions.startLiveExecution())
-        }
-        store.dispatch(WSActions.setExecutionLoading(false))
-
-        break
-      }
-
       case 'strategy.live_execution_status': {
-        const [, status, options] = payload
+        const [,, options] = payload
 
-        if (status) {
-          store.dispatch(WSActions.startLiveExecution())
+        if (_isEmpty(options)) {
+          store.dispatch(WSActions.setExecutingStrategies([]))
         } else {
-          store.dispatch(WSActions.stopLiveExecution())
-        }
+          const mappedOptions = {}
+          const mappedStrategies = []
 
-        if (!_isEmpty(options)) {
-          store.dispatch(WSActions.setExecutionOptions(options))
+          _map(options, (option) => {
+            const { id } = option
+            mappedOptions[id] = option
+            mappedStrategies.push(id)
+          })
+
+          store.dispatch(WSActions.setExecutionOptions(mappedOptions))
+          store.dispatch(WSActions.setExecutingStrategies(mappedStrategies))
         }
 
         store.dispatch(WSActions.setExecutionLoading(false))
+
+        break
+      }
+
+      // emitted when the strategy execution is started
+      case 'strategy.live_execution_started': {
+        const [, strategyMapKey, executionResultsObj] = payload
+        store.dispatch(WSActions.setStartedLiveStrategy(strategyMapKey, executionResultsObj))
+
+        break
+      }
+
+      // emitted when the strategy execution is stopped
+      case 'strategy.live_execution_stopped': {
+        const [, strategyMapKey, executionResultsObj] = payload
+        store.dispatch(WSActions.setStoppedLiveStrategy(strategyMapKey, executionResultsObj))
+
+        break
+      }
+
+      // emitted on each price update
+      case 'strategy.rt_execution_results': {
+        const [, strategyMapKey, executionResultsObj] = payload
+        store.dispatch(WSActions.setLivePriceUpdate(strategyMapKey, executionResultsObj))
+
+        break
+      }
+
+      // emitted when a position is opened
+      case 'strategy.opened_position_data': {
+        const [, strategyMapKey, openedPositionDetails] = payload
+        const { trades } = openedPositionDetails
+
+        store.dispatch(WSActions.setLiveExecutionTrades(strategyMapKey, trades))
+
+        break
+      }
+
+      // emitted when a position is closed
+      case 'strategy.closed_position_data': {
+        const [, strategyMapKey, closedPositionDetails] = payload
+        const { trades } = closedPositionDetails
+
+        store.dispatch(WSActions.setLiveExecutionTrades(strategyMapKey, trades))
+
+        break
+      }
+
+      case 'data.past_strategies': {
+        const [, pastStrategies] = payload
+        store.dispatch(WSActions.setPastStrategies(pastStrategies))
 
         break
       }
 
       case 'strategy.live_execution_results': {
-        const [, results] = payload
-        store.dispatch(WSActions.setExecutionResults(results))
+        const [, strategyId, results] = payload
+        store.dispatch(WSActions.setExecutionResults(strategyId, results))
 
         break
       }
