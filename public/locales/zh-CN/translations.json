@@ -268,8 +268,8 @@
   },
   "AOPauseModal": {
     "title": "暂停演算法订单",
-    "text1": "持有待成交演算法订单期间，关闭应用程式后，将于重启Honey Framework应用程式时，询问您要重启/取消演算法订单。",
-    "text2": "重启Honey Framework应用程式时，将提供两种选项，您需选取现有待成交演算法订单套用相关设置。",
+    "text1": "持有待成交演算法订单期间，关闭应用程式后，将于重启HoneyFramework应用程式时，询问您要重启/取消演算法订单。",
+    "text2": "重启HoneyFramework应用程式时，将提供两种选项，您需选取现有待成交演算法订单套用相关设置。",
     "text3": "1. 重启：已选取的待成交演算法订单其自动订单将被取消，且将依照可用余额重新提交演算法订单。而未选取的演算法订单则将不再次提交并永久取消。",
     "text4": "2. 取消全部：所有演算法的待成交自动订单将自动取消且非演算法订单将重启。",
     "text5": "提醒：如禁用失能开关选项，自动订单将留存为待成交状态。"
@@ -320,7 +320,7 @@
     "title": "连接问题",
     "text1": "我们注意到数次连接问题。此需{{action}} 应用程式以继续正常运作。",
     "text2": "请确保您有稳定且良好的网路连接",
-    "text3": "点击Okay后，将{{action}} Honey Framework。",
+    "text3": "点击Okay后，将{{action}} HoneyFramework。",
     "text4": "将于{{countdown}} 秒内，自动{{action}} 应用程式。",
     "checkbox": "自动{{action}}",
     "reboot": "重新启用",
@@ -409,7 +409,7 @@
   },
   "confirmDMSModal": {
     "title": "启用失能开关",
-    "text": "请了解启用此设置后，关闭应用程式将会取消所有于Honey Framework、Bitfinex平台或其他地方所创建的待成交订单。\n\n此仅为建议设置，应了解启用时其相关影响。",
+    "text": "请了解启用此设置后，关闭应用程式将会取消所有于HoneyFramework、Bitfinex平台或其他地方所创建的待成交订单。\n\n此仅为建议设置，应了解启用时其相关影响。",
     "dontShowAgain": "不再显示"
   },
   "editOrderModal": {
@@ -626,7 +626,7 @@
     "startBtn": "开始"
   },
   "crashHandler": {
-    "text1": "错误发生，Honey Framework介面停止运作。请重启应用程式以继续使用。",
+    "text1": "错误发生，HoneyFramework介面停止运作。请重启应用程式以继续使用。",
     "text2_1": "请回报此问题于",
     "text2_2": "我们将尽快修复此问题！",
     "text3": "技术故障信息"
