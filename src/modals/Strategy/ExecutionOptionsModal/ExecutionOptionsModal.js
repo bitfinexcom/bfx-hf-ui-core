@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 import { useTranslation } from 'react-i18next'
+import { Tooltip } from '@ufx-ui/core'
 import Modal from '../../../ui/Modal'
 import AmountInput from '../../../components/OrderForm/FieldComponents/input.amount'
 import PercentInput from '../../../components/OrderForm/FieldComponents/input.percent'
@@ -54,6 +55,12 @@ const ExecutionOptionsModal = ({
         <div className='hfui-execution-options-modal__option'>
           <p className='title'>
             {t('strategyEditor.executionOptionsModal.capitalAllocationLabel')}
+            <Tooltip
+              className='__react-tooltip __react-tooltip-break-line'
+              content={t('strategyEditor.capitalAllocationHelp')}
+            >
+              <i className='fa fa-info-circle __react_component_tooltip title-tooltip' />
+            </Tooltip>
           </p>
           <AmountInput
             placeholder={t('ui.e.g.', { value: 12.345 })}
@@ -65,6 +72,12 @@ const ExecutionOptionsModal = ({
         <div className='hfui-execution-options-modal__option'>
           <p className='title'>
             {`${t('strategyEditor.executionOptionsModal.stopLoss')}, %`}
+            <Tooltip
+              className='__react-tooltip __react-tooltip-break-line'
+              content={t('strategyEditor.stopLossHelp')}
+            >
+              <i className='fa fa-info-circle __react_component_tooltip title-tooltip' />
+            </Tooltip>
           </p>
           <PercentInput
             placeholder={t('ui.e.g.', { value: '45%' })}
@@ -75,6 +88,12 @@ const ExecutionOptionsModal = ({
         <div className='hfui-execution-options-modal__option'>
           <p className='title'>
             {`${t('strategyEditor.executionOptionsModal.maxDrawdown')}, %`}
+            <Tooltip
+              className='__react-tooltip __react-tooltip-break-line'
+              content={t('strategyEditor.maximumDrawdownHelp')}
+            >
+              <i className='fa fa-info-circle __react_component_tooltip title-tooltip' />
+            </Tooltip>
           </p>
           <PercentInput
             placeholder={t('ui.e.g.', { value: '45%' })}
