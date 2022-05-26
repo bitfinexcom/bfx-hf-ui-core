@@ -62,7 +62,7 @@ const StrategyLiveChart = ({
 }
 
 StrategyLiveChart.propTypes = {
-  markets: PropTypes.objectOf(PropTypes.object).isRequired, // eslint-disable-line
+  markets: PropTypes.objectOf(PropTypes.object).isRequired,
   symbol: PropTypes.objectOf(
     PropTypes.oneOfType([
       PropTypes.string,
@@ -72,7 +72,7 @@ StrategyLiveChart.propTypes = {
     ]),
   ).isRequired,
   timeframe: PropTypes.oneOf(timeFrames).isRequired,
-  indicators: PropTypes.arrayOf(PropTypes.object), // eslint-disable-line
+  indicators: PropTypes.arrayOf(PropTypes.object),
   results: PropTypes.objectOf(PropTypes.oneOfType([
     PropTypes.array, PropTypes.bool, PropTypes.object, PropTypes.number, PropTypes.string,
   ])),

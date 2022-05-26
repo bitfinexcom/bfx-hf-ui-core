@@ -72,7 +72,7 @@ function SidebarContent(props) {
 }
 
 SidebarContent.propTypes = {
-  notifications: PropTypes.arrayOf(PropTypes.object).isRequired, // eslint-disable-line
+  notifications: PropTypes.arrayOf(PropTypes.object).isRequired,
   removeNotifications: PropTypes.func.isRequired,
   closeNotificationPanel: PropTypes.func.isRequired,
   onClearNotifications: PropTypes.func.isRequired,

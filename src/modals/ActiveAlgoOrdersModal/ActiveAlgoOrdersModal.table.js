@@ -40,7 +40,7 @@ AlgoOrdersTable.propTypes = {
   isOrderSelected: PropTypes.func,
   isAllOrdersSelected: PropTypes.func,
   onOrderSelect: PropTypes.func.isRequired,
-  orders: PropTypes.arrayOf(PropTypes.object), // eslint-disable-line
+  orders: PropTypes.arrayOf(PropTypes.object),
   onAllOrdersSelect: PropTypes.func.isRequired,
 }
 

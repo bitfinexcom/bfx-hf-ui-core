@@ -31,7 +31,7 @@ const PastStrategiesList = ({ onRowClick, strategies, getMarketPair }) => {
 
 PastStrategiesList.propTypes = {
   onRowClick: PropTypes.func.isRequired,
-  strategies: PropTypes.arrayOf(PropTypes.object).isRequired, // eslint-disable-line
+  strategies: PropTypes.arrayOf(PropTypes.object).isRequired,
   getMarketPair: PropTypes.func.isRequired,
 }
 

@@ -129,7 +129,7 @@ const StrategyOptionsPanel = ({
 }
 
 StrategyOptionsPanel.propTypes = {
-  markets: PropTypes.objectOf(PropTypes.object).isRequired, // eslint-disable-line
+  markets: PropTypes.objectOf(PropTypes.object).isRequired,
   symbol: PropTypes.objectOf(
     PropTypes.oneOfType([
       PropTypes.string,

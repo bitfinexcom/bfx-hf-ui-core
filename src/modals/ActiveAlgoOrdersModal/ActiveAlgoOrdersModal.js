@@ -128,7 +128,7 @@ const ActiveAlgoOrdersModal = ({
 
 ActiveAlgoOrdersModal.propTypes = {
   handleActiveOrders: PropTypes.func.isRequired,
-  activeAlgoOrders: PropTypes.arrayOf(PropTypes.object), // eslint-disable-line
+  activeAlgoOrders: PropTypes.arrayOf(PropTypes.object),
   isOpen: PropTypes.bool.isRequired,
 }
 

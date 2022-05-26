@@ -58,7 +58,7 @@ const OrderHistory = ({
 }
 
 OrderHistory.propTypes = {
-  orders: PropTypes.arrayOf(PropTypes.object), // eslint-disable-line
+  orders: PropTypes.arrayOf(PropTypes.object),
   dark: PropTypes.bool,
   onRemove: PropTypes.func,
   fetchOrderHistory: PropTypes.func.isRequired,

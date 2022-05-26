@@ -102,7 +102,7 @@ BacktestTab.propTypes = {
   results: PropTypes.shape({
     finished: PropTypes.bool,
     loading: PropTypes.bool,
-    trades: PropTypes.arrayOf(PropTypes.object), // eslint-disable-line
+    trades: PropTypes.arrayOf(PropTypes.object),
   }).isRequired,
 }
 

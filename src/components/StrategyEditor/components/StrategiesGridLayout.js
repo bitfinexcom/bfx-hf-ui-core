@@ -45,7 +45,7 @@ const StrategiesGridLayout = ({ renderGridComponents, layoutConfig, isLoading })
 
 StrategiesGridLayout.propTypes = {
   renderGridComponents: PropTypes.func.isRequired,
-  layoutConfig: PropTypes.arrayOf(PropTypes.object), // eslint-disable-line
+  layoutConfig: PropTypes.arrayOf(PropTypes.object),
   isLoading: PropTypes.bool,
 }
 

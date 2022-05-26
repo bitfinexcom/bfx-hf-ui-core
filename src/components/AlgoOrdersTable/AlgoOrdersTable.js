@@ -31,8 +31,8 @@ const AlgoOrdersTable = ({
 }
 
 AlgoOrdersTable.propTypes = {
-  algoOrders: PropTypes.objectOf(PropTypes.object), // eslint-disable-line
-  filteredAlgoOrders: PropTypes.objectOf(PropTypes.object), // eslint-disable-line
+  algoOrders: PropTypes.objectOf(PropTypes.object),
+  filteredAlgoOrders: PropTypes.objectOf(PropTypes.object),
   cancelOrder: PropTypes.func.isRequired,
   gaCancelOrder: PropTypes.func.isRequired,
   authToken: PropTypes.string.isRequired,

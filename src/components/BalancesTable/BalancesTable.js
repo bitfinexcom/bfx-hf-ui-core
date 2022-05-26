@@ -36,8 +36,8 @@ const BalancesTable = ({
 }
 
 BalancesTable.propTypes = {
-  balances: PropTypes.objectOf(PropTypes.object), // eslint-disable-line
-  filteredBalances: PropTypes.objectOf(PropTypes.object), // eslint-disable-line
+  balances: PropTypes.objectOf(PropTypes.object),
+  filteredBalances: PropTypes.objectOf(PropTypes.object),
   renderedInTradingState: PropTypes.bool,
   hideZeroBalances: PropTypes.bool,
 }

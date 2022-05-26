@@ -398,9 +398,9 @@ StrategyEditor.propTypes = {
   onRemove: PropTypes.func.isRequired,
   authToken: PropTypes.string.isRequired,
   onStrategyChange: PropTypes.func.isRequired,
-  markets: PropTypes.objectOf(PropTypes.object).isRequired, // eslint-disable-line
+  markets: PropTypes.objectOf(PropTypes.object).isRequired,
   setStrategy: PropTypes.func,
-  backtestResults: PropTypes.objectOf(PropTypes.any).isRequired, // eslint-disable-line
+  backtestResults: PropTypes.objectOf(PropTypes.any).isRequired,
   options: PropTypes.objectOf(
     PropTypes.oneOfType([PropTypes.string, PropTypes.number, PropTypes.bool]),
   ).isRequired,
@@ -411,7 +411,7 @@ StrategyEditor.propTypes = {
   dsStopLiveStrategy: PropTypes.func.isRequired,
   dsExecuteLiveStrategy: PropTypes.func.isRequired,
   onLoadStrategy: PropTypes.func.isRequired,
-  indicators: PropTypes.arrayOf(PropTypes.object), // eslint-disable-line
+  indicators: PropTypes.arrayOf(PropTypes.object),
   strategyDirty: PropTypes.bool.isRequired,
   setStrategyDirty: PropTypes.func.isRequired,
   gaCreateStrategy: PropTypes.func.isRequired,
@@ -438,7 +438,7 @@ StrategyEditor.propTypes = {
     backtest: PropTypes.bool,
   }).isRequired,
   showError: PropTypes.func.isRequired,
-  liveResults: PropTypes.objectOf(PropTypes.object), // eslint-disable-line
+  liveResults: PropTypes.objectOf(PropTypes.object),
   runningStrategiesMapping: PropTypes.objectOf(PropTypes.string),
   sectionErrors: PropTypes.objectOf(PropTypes.string).isRequired,
   executing: PropTypes.bool.isRequired,
