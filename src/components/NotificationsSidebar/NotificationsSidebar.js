@@ -80,7 +80,7 @@ const NotificationsSidebar = ({
 }
 
 NotificationsSidebar.propTypes = {
-  notifications: PropTypes.arrayOf(PropTypes.object).isRequired,
+  notifications: PropTypes.arrayOf(PropTypes.object).isRequired, // eslint-disable-line
   removeNotifications: PropTypes.func.isRequired,
   clearNotifications: PropTypes.func.isRequired,
   closeNotificationPanel: PropTypes.func.isRequired,

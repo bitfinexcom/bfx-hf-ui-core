@@ -139,7 +139,7 @@ TradingStatePanel.propTypes = {
   getPositionsCount: PropTypes.func,
   getAtomicOrdersCount: PropTypes.func,
   getAlgoOrdersCount: PropTypes.func,
-  markets: PropTypes.objectOf(PropTypes.object).isRequired,
+  markets: PropTypes.objectOf(PropTypes.object).isRequired, // eslint-disable-line
   savedState: PropTypes.shape({
     currentMarket: PropTypes.shape({
       base: PropTypes.string,
