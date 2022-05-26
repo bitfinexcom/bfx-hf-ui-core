@@ -52,6 +52,14 @@ body.hosted {
   }
 }
 
+.hfui-execution-tab {
+  padding: 15px 20px;
+
+  .hfui-input > input {
+    background-color: var(--darker-background-color) !important;
+  }
+}
+
 .hfui-removestrategymodal__wrapper {
   button {
     margin-right: 10px;

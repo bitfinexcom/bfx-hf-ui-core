@@ -28,6 +28,7 @@ import BacktestTabTitle from './tabs/BacktestTab.Title'
 import ExecParamsTabTitle from './tabs/ExecParamsTab.Title'
 import IDETabTitle from './tabs/IDETab.Title'
 import ExecutionOptionsModal from '../../modals/Strategy/ExecutionOptionsModal'
+import AmountInput from '../OrderForm/FieldComponents/input.amount'
 
 import './style.css'
 
@@ -100,6 +101,19 @@ const StrategyEditor = (props) => {
   const [capitalAllocation, setCapitalAllocation] = useState('')
   const [stopLossPerc, setStopLossPerc] = useState('')
   const [maxDrawdownPerc, setMaxDrawdownPerc] = useState('')
+  const [capitalAllocationError, setCapitalAllocationError] = useState(null)
+
+  const capitalAllocationHandler = (v) => {
+    const error = AmountInput.validateValue(v, t)
+    const processed = AmountInput.processValue(v)
+
+    setCapitalAllocationError(error)
+    if (error) {
+      return
+    }
+    setCapitalAllocation(processed)
+  }
+
   const isFullFilled = capitalAllocation && stopLossPerc && maxDrawdownPerc
 
   const runningStrategyID = runningStrategiesMapping[strategyId]
@@ -349,6 +363,13 @@ const StrategyEditor = (props) => {
             <ExecParamsTab
               htmlKey='exec_params'
               key='exec_params'
+              capitalAllocation={capitalAllocation}
+              capitalAllocationHandler={capitalAllocationHandler}
+              capitalAllocationError={capitalAllocationError}
+              stopLossPerc={stopLossPerc}
+              setStopLossPerc={setStopLossPerc}
+              maxDrawdownPerc={maxDrawdownPerc}
+              setMaxDrawdownPerc={setMaxDrawdownPerc}
               sbtitle={({ sidebarOpened }) => (
                 <ExecParamsTabTitle
                   hasErrors={!isFullFilled}
