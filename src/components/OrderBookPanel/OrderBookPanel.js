@@ -215,12 +215,12 @@ OrderBookPanel.propTypes = {
     quote: PropTypes.string,
     uiID: PropTypes.string,
   }),
-  markets: PropTypes.objectOf(PropTypes.object).isRequired,
+  markets: PropTypes.objectOf(PropTypes.object).isRequired, // eslint-disable-line
   canChangeMarket: PropTypes.bool.isRequired,
   layoutID: PropTypes.string,
   layoutI: PropTypes.string.isRequired,
   updateState: PropTypes.func.isRequired,
-  allMarketBooks: PropTypes.arrayOf(PropTypes.object),
+  allMarketBooks: PropTypes.arrayOf(PropTypes.object), // eslint-disable-line
   getCurrencySymbol: PropTypes.func.isRequired,
 }
 

@@ -162,7 +162,7 @@ GridLayout.propTypes = {
   }),
   tradesProps: PropTypes.objectOf(PropTypes.bool),
   orderFormProps: PropTypes.shape({
-    orders: PropTypes.arrayOf(PropTypes.object),
+    orders: PropTypes.arrayOf(PropTypes.object), // eslint-disable-line
   }),
   sharedProps: PropTypes.objectOf(PropTypes.oneOfType(
     [PropTypes.bool, PropTypes.string],

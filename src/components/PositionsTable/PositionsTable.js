@@ -32,8 +32,8 @@ const PositionsTable = ({
 
 PositionsTable.propTypes = {
   setClosePositionModal: PropTypes.func.isRequired,
-  filteredPositions: PropTypes.objectOf(PropTypes.object),
-  positions: PropTypes.objectOf(PropTypes.object),
+  filteredPositions: PropTypes.objectOf(PropTypes.object), // eslint-disable-line
+  positions: PropTypes.objectOf(PropTypes.object), // eslint-disable-line
   renderedInTradingState: PropTypes.bool,
   getMarketPair: PropTypes.func.isRequired,
 }
