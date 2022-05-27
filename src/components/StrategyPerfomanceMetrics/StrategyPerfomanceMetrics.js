@@ -44,6 +44,8 @@ const StrategyPerfomanceMetrics = ({
   const quoteCcy = getCurrencySymbol(quote)
   const { t } = useTranslation()
 
+  console.warn(results)
+
   return (
     <Panel
       moveable={false}
@@ -110,7 +112,7 @@ StrategyPerfomanceMetrics.propTypes = {
     avgPL: PropTypes.number,
     backtestOptions: PropTypes.shape({
       activeMarket: PropTypes.string,
-    }).isRequired,
+    }),
   }),
   isExecuting: PropTypes.bool.isRequired,
   startedOn: PropTypes.number,
