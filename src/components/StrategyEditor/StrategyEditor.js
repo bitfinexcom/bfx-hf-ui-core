@@ -118,6 +118,11 @@ const StrategyEditor = (props) => {
 
   const runningStrategyID = runningStrategiesMapping[strategyId]
   const currentStrategyResults = liveResults?.[runningStrategyID] || {}
+  const constraints = {
+    allocation: Number(capitalAllocation),
+    percStopLoss: Number(stopLossPerc),
+    maxDrawdown: Number(maxDrawdownPerc),
+  }
 
   const optionsProps = {
     timeframe,
@@ -226,6 +231,7 @@ const StrategyEditor = (props) => {
       candles,
       trades,
       strategy,
+      constraints,
     )
     // setBacktestOptions(optionsProps)
   }
