@@ -1,7 +1,6 @@
 import _isArray from 'lodash/isArray'
 import _isObject from 'lodash/isObject'
 import _isNumber from 'lodash/isNumber'
-import _isEmpty from 'lodash/isEmpty'
 import _reduce from 'lodash/reduce'
 import _map from 'lodash/map'
 import Debug from 'debug'
