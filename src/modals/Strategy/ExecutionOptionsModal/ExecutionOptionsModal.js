@@ -20,8 +20,8 @@ const ExecutionOptionsModal = (props) => {
     const error = AmountInput.validateValue(v, t)
     const processed = AmountInput.processValue(v)
 
-    setCapitalAllocationError(error)
     if (error) {
+      setCapitalAllocationError(error)
       return
     }
     setCapitalAllocation(processed)
