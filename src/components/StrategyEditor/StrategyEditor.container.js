@@ -71,6 +71,7 @@ const mapDispatchToProps = (dispatch) => ({
     seedCandleCount,
     margin,
     isPaperTrading,
+    constraints,
   ) => {
     const processedStrategy = _omitBy(strategy, _isEmpty)
     const executionOptions = {
@@ -105,6 +106,7 @@ const mapDispatchToProps = (dispatch) => ({
           processedStrategy,
           seedCandleCount,
           margin,
+          constraints,
         ]),
       )
       dispatch(WSActions.setExecutionLoading(true))

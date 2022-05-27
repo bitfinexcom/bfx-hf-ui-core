@@ -253,6 +253,7 @@ const StrategyEditor = (props) => {
       candleSeed,
       margin,
       isPaperTrading,
+      constraints,
     )
   }
 
