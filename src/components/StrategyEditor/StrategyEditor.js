@@ -101,7 +101,7 @@ const StrategyEditor = (props) => {
   const [capitalAllocation, setCapitalAllocation] = useState('')
   const [stopLossPerc, setStopLossPerc] = useState('')
   const [maxDrawdownPerc, setMaxDrawdownPerc] = useState('')
-  const [capitalAllocationError, setCapitalAllocationError] = useState(null)
+  const [capitalAllocationError, setCapitalAllocationError] = useState('')
 
   const capitalAllocationHandler = (v) => {
     const error = AmountInput.validateValue(v, t)
