@@ -1,15 +1,16 @@
 import _get from 'lodash/get'
-import _includes from 'lodash/includes'
+import _some from 'lodash/some'
 
 import { REDUCER_PATHS } from '../../config'
 
 const path = REDUCER_PATHS.WS
 
-const EMPTY_ARRAY = []
-
 const getIsStrategyExecuting = (state) => (strategyId) => {
-  const executingStrategies = _get(state, `${path}.execution.executing`, EMPTY_ARRAY)
-  return _includes(executingStrategies, strategyId)
+  if (!strategyId) {
+    return false
+  }
+  const executingStrategies = _get(state, `${path}.execution.activeStrategies`, {})
+  return _some(executingStrategies, strategy => strategy && strategy.id === strategyId)
 }
 
 export default getIsStrategyExecuting
