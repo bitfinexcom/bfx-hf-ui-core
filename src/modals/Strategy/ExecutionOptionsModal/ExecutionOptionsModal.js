@@ -18,7 +18,7 @@ const ExecutionOptionsModal = (props) => {
 
   const capitalAllocationHandler = (v) => {
     const error = AmountInput.validateValue(v, t)
-    const processed = AmountInput.processValue(v)
+    const processed = String(AmountInput.processValue(v))
 
     if (error) {
       setCapitalAllocationError(error)
