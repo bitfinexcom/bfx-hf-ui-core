@@ -14,6 +14,8 @@ import './style.css'
 
 const { getCurrencySymbolMemo } = reduxSelectors
 
+const adjustPercentage = value => value * 100
+
 const StrategyPerfomanceMetrics = ({
   results,
   startedOn,
@@ -33,9 +35,14 @@ const StrategyPerfomanceMetrics = ({
     stdDeviation = 0,
     avgPL = 0,
     backtestOptions: { activeMarket } = {},
-    // maxPL,
-    // minPL,
-    // fees,
+    allocation = 0,
+    positionSize = 0,
+    currentAllocation = 0,
+    availableFunds = 0,
+    equityCurve = 0,
+    return: ret = 0,
+    returnPerc: retPerc = 0,
+    drawdown = 0,
   } = results
   const hasTrades = !!vol
 
@@ -43,8 +50,6 @@ const StrategyPerfomanceMetrics = ({
   const getCurrencySymbol = useSelector(getCurrencySymbolMemo)
   const quoteCcy = getCurrencySymbol(quote)
   const { t } = useTranslation()
-
-  console.warn(results)
 
   return (
     <Panel
@@ -72,6 +77,38 @@ const StrategyPerfomanceMetrics = ({
         <MetricRow
           label={t('strategyEditor.volatility')}
           value={resultNumber(stdDeviation)}
+        />
+        <MetricRow
+          label={t('strategyEditor.allocation')}
+          value={resultNumber(allocation, quoteCcy)}
+        />
+        <MetricRow
+          label={t('strategyEditor.positionSize')}
+          value={resultNumber(positionSize)}
+        />
+        <MetricRow
+          label={t('strategyEditor.currentAllocation')}
+          value={resultNumber(currentAllocation, quoteCcy)}
+        />
+        <MetricRow
+          label={t('strategyEditor.availableFunds')}
+          value={resultNumber(availableFunds, quoteCcy)}
+        />
+        <MetricRow
+          label={t('strategyEditor.equityCurve')}
+          value={resultNumber(equityCurve)}
+        />
+        <MetricRow
+          label={t('strategyEditor.ret')}
+          value={resultNumber(ret, quoteCcy)}
+        />
+        <MetricRow
+          label={t('strategyEditor.retPerc')}
+          value={resultNumber(adjustPercentage(retPerc))}
+        />
+        <MetricRow
+          label={t('strategyEditor.drawdown')}
+          value={resultNumber(adjustPercentage(drawdown))}
         />
         <MetricRow
           label={t('strategyEditor.backtestCandles')}
@@ -113,6 +150,14 @@ StrategyPerfomanceMetrics.propTypes = {
     backtestOptions: PropTypes.shape({
       activeMarket: PropTypes.string,
     }),
+    allocation: PropTypes.string,
+    positionSize: PropTypes.string,
+    currentAllocation: PropTypes.string,
+    availableFunds: PropTypes.string,
+    equityCurve: PropTypes.string,
+    return: PropTypes.string,
+    returnPerc: PropTypes.string,
+    drawdown: PropTypes.string,
   }),
   isExecuting: PropTypes.bool.isRequired,
   startedOn: PropTypes.number,
