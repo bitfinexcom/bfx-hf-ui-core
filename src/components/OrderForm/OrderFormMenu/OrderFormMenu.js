@@ -35,8 +35,8 @@ const OrderFormMenu = ({ atomicOrderTypes, algoOrderTypes, onSelect }) => {
 }
 
 OrderFormMenu.propTypes = {
-  atomicOrderTypes: PropTypes.arrayOf(PropTypes.object).isRequired,
-  algoOrderTypes: PropTypes.arrayOf(PropTypes.object).isRequired,
+  atomicOrderTypes: PropTypes.arrayOf(PropTypes.object).isRequired, // eslint-disable-line
+  algoOrderTypes: PropTypes.arrayOf(PropTypes.object).isRequired, // eslint-disable-line
   onSelect: PropTypes.func.isRequired,
 }
 

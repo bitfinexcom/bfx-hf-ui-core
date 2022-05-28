@@ -3,21 +3,15 @@ import PropTypes from 'prop-types'
 import { useTranslation } from 'react-i18next'
 import Modal from '../../../ui/Modal'
 import AmountInput from '../../../components/OrderForm/FieldComponents/input.amount'
-import PercentInput from '../../../components/OrderForm/FieldComponents/input.percent'
 
+import ExecutionOptionsBody from './ExecutionOptionsBody'
 import './style.scss'
 
-const ExecutionOptionsModal = ({
-  isOpen,
-  onClose,
-  capitalAllocation,
-  setCapitalAllocation,
-  stopLossPerc,
-  setStopLossPerc,
-  maxDrawdownPerc,
-  setMaxDrawdownPerc,
-  startExecution,
-}) => {
+const ExecutionOptionsModal = (props) => {
+  const {
+    isOpen, onClose, capitalAllocation, setCapitalAllocation, stopLossPerc,
+    maxDrawdownPerc, startExecution,
+  } = props
   const [capitalAllocationError, setCapitalAllocationError] = useState(null)
 
   const { t } = useTranslation()
@@ -50,39 +44,7 @@ const ExecutionOptionsModal = ({
       label={t('strategyEditor.executionOptionsModal.title')}
       onSubmit={onSubmit}
     >
-      <div className='hfui-execution-options-modal'>
-        <div className='hfui-execution-options-modal__option'>
-          <p className='title'>
-            {t('strategyEditor.executionOptionsModal.capitalAllocationLabel')}
-          </p>
-          <AmountInput
-            placeholder={t('ui.e.g.', { value: 12.345 })}
-            onChange={capitalAllocationHandler}
-            value={capitalAllocation}
-            validationError={capitalAllocationError}
-          />
-        </div>
-        <div className='hfui-execution-options-modal__option'>
-          <p className='title'>
-            {`${t('strategyEditor.executionOptionsModal.stopLoss')}, %`}
-          </p>
-          <PercentInput
-            placeholder={t('ui.e.g.', { value: '45%' })}
-            value={stopLossPerc}
-            onChange={setStopLossPerc}
-          />
-        </div>
-        <div className='hfui-execution-options-modal__option'>
-          <p className='title'>
-            {`${t('strategyEditor.executionOptionsModal.maxDrawdown')}, %`}
-          </p>
-          <PercentInput
-            placeholder={t('ui.e.g.', { value: '45%' })}
-            value={maxDrawdownPerc}
-            onChange={setMaxDrawdownPerc}
-          />
-        </div>
-      </div>
+      <ExecutionOptionsBody capitalAllocationHandler={capitalAllocationHandler} capitalAllocationError={capitalAllocationError} t={t} {...props} />
       <Modal.Footer>
         <Modal.Button secondary onClick={onClose}>
           {t('ui.closeBtn')}

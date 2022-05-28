@@ -18,14 +18,17 @@ import OpenExistingStrategyModal from '../../modals/Strategy/OpenExistingStrateg
 import EmptyContent from './components/StrategyEditorEmpty'
 import StrategyTab from './tabs/StrategyTab'
 import BacktestTab from './tabs/BacktestTab'
+import ExecParamsTab from './tabs/ExecParamsTab'
 import IDETab from './tabs/IDETab'
 import { getDefaultMarket } from '../../util/market'
 import CreateNewStrategyFromModalOpen from '../../modals/Strategy/CreateNewStrategyFromModal'
 import SaveStrategyAsModal from '../../modals/Strategy/SaveStrategyAsModal/SaveStrategyAsModal'
 import StrategyTabTitle from './tabs/StrategyTab.Title'
 import BacktestTabTitle from './tabs/BacktestTab.Title'
+import ExecParamsTabTitle from './tabs/ExecParamsTab.Title'
 import IDETabTitle from './tabs/IDETab.Title'
 import ExecutionOptionsModal from '../../modals/Strategy/ExecutionOptionsModal'
+import AmountInput from '../OrderForm/FieldComponents/input.amount'
 
 import './style.css'
 
@@ -98,6 +101,20 @@ const StrategyEditor = (props) => {
   const [capitalAllocation, setCapitalAllocation] = useState('')
   const [stopLossPerc, setStopLossPerc] = useState('')
   const [maxDrawdownPerc, setMaxDrawdownPerc] = useState('')
+  const [capitalAllocationError, setCapitalAllocationError] = useState(null)
+
+  const capitalAllocationHandler = (v) => {
+    const error = AmountInput.validateValue(v, t)
+    const processed = AmountInput.processValue(v)
+
+    setCapitalAllocationError(error)
+    if (error) {
+      return
+    }
+    setCapitalAllocation(processed)
+  }
+
+  const isFullFilled = capitalAllocation && stopLossPerc && maxDrawdownPerc
 
   const runningStrategyID = runningStrategiesMapping[strategyId]
   const currentStrategyResults = liveResults?.[runningStrategyID] || {}
@@ -214,8 +231,6 @@ const StrategyEditor = (props) => {
   }
 
   const startExecution = () => {
-    const isFullFilled = capitalAllocation && stopLossPerc && maxDrawdownPerc
-
     if (!isFullFilled) {
       setIsExecutionOptionsModalOpen(true)
       return
@@ -344,6 +359,25 @@ const StrategyEditor = (props) => {
               {...props}
             />
           )}
+          {isBetaVersion && (
+            <ExecParamsTab
+              htmlKey='exec_params'
+              key='exec_params'
+              capitalAllocation={capitalAllocation}
+              capitalAllocationHandler={capitalAllocationHandler}
+              capitalAllocationError={capitalAllocationError}
+              stopLossPerc={stopLossPerc}
+              setStopLossPerc={setStopLossPerc}
+              maxDrawdownPerc={maxDrawdownPerc}
+              setMaxDrawdownPerc={setMaxDrawdownPerc}
+              sbtitle={({ sidebarOpened }) => (
+                <ExecParamsTabTitle
+                  hasErrors={!isFullFilled}
+                  sidebarOpened={sidebarOpened}
+                />
+              )}
+            />
+          )}
         </StrategyEditorPanel>
       )}
       <CreateNewStrategyFromModalOpen
@@ -398,9 +432,9 @@ StrategyEditor.propTypes = {
   onRemove: PropTypes.func.isRequired,
   authToken: PropTypes.string.isRequired,
   onStrategyChange: PropTypes.func.isRequired,
-  markets: PropTypes.objectOf(PropTypes.object).isRequired,
+  markets: PropTypes.objectOf(PropTypes.object).isRequired, // eslint-disable-line
   setStrategy: PropTypes.func,
-  backtestResults: PropTypes.objectOf(PropTypes.any).isRequired,
+  backtestResults: PropTypes.objectOf(PropTypes.any).isRequired, // eslint-disable-line
   options: PropTypes.objectOf(
     PropTypes.oneOfType([PropTypes.string, PropTypes.number, PropTypes.bool]),
   ).isRequired,
@@ -411,7 +445,7 @@ StrategyEditor.propTypes = {
   dsStopLiveStrategy: PropTypes.func.isRequired,
   dsExecuteLiveStrategy: PropTypes.func.isRequired,
   onLoadStrategy: PropTypes.func.isRequired,
-  indicators: PropTypes.arrayOf(PropTypes.object),
+  indicators: PropTypes.arrayOf(PropTypes.object), // eslint-disable-line
   strategyDirty: PropTypes.bool.isRequired,
   setStrategyDirty: PropTypes.func.isRequired,
   gaCreateStrategy: PropTypes.func.isRequired,
@@ -438,7 +472,7 @@ StrategyEditor.propTypes = {
     backtest: PropTypes.bool,
   }).isRequired,
   showError: PropTypes.func.isRequired,
-  liveResults: PropTypes.objectOf(PropTypes.object),
+  liveResults: PropTypes.objectOf(PropTypes.object), // eslint-disable-line
   runningStrategiesMapping: PropTypes.objectOf(PropTypes.string),
   sectionErrors: PropTypes.objectOf(PropTypes.string).isRequired,
   executing: PropTypes.bool.isRequired,

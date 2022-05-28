@@ -14,7 +14,12 @@ import './style.css'
 
 const { getCurrencySymbolMemo } = reduxSelectors
 
-const StrategyPerfomanceMetrics = ({ results, startedOn, isExecuting }) => {
+const StrategyPerfomanceMetrics = ({
+  results,
+  startedOn,
+  isExecuting,
+  isBacktest,
+}) => {
   const {
     nCandles,
     nTrades,
@@ -47,7 +52,9 @@ const StrategyPerfomanceMetrics = ({ results, startedOn, isExecuting }) => {
       label={t('strategyEditor.perfomanceMetrics.title')}
     >
       <ul>
-        <ExecutionTimer isExecuting={isExecuting} startedOn={startedOn} />
+        {!isBacktest && (
+          <ExecutionTimer isExecuting={isExecuting} startedOn={startedOn} />
+        )}
         <MetricRow
           label={t('strategyEditor.totalPL')}
           value={resultNumber(preparePrice(pl), quoteCcy)}
@@ -107,6 +114,7 @@ StrategyPerfomanceMetrics.propTypes = {
   }),
   isExecuting: PropTypes.bool.isRequired,
   startedOn: PropTypes.number,
+  isBacktest: PropTypes.bool,
 }
 
 StrategyPerfomanceMetrics.defaultProps = {
@@ -130,6 +138,7 @@ StrategyPerfomanceMetrics.defaultProps = {
     },
   },
   startedOn: 0,
+  isBacktest: false,
 }
 
 export default StrategyPerfomanceMetrics

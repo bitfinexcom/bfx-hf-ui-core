@@ -76,7 +76,6 @@
       padding-bottom: spacing(1.5);
       border-bottom: 1px solid grey;
       position: relative;
-      color: var(--primary-8);
     }
 
     &:last-child {
@@ -178,17 +177,13 @@
     top: 160px;
     transform: none;
 
-    &__title {
-      color: var(--primary-8);
-    }
-
     &__content {
       margin-top: 20px;
     }
 
     &__button {
-      background-color: #f7d448;
-      color: var(--shade-0);
+      background-color: #fed203;
+      color: #172d3e;
       margin: 20px auto;
       display: block;
     }

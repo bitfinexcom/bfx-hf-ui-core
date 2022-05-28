@@ -170,6 +170,10 @@ body.Light {
   }
 }
 
+.__react-tooltip-break-line {
+  white-space: pre-line;
+}
+
 .__react_component_tooltip,
 .ufx-tooltip {
   background-color: var(--darker-background-color) !important;

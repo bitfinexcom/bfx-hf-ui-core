@@ -95,7 +95,7 @@ ChartPanel.propTypes = {
       PropTypes.array, PropTypes.string, PropTypes.bool, PropTypes.number,
     ])),
   }),
-  markets: PropTypes.objectOf(PropTypes.object),
+  markets: PropTypes.objectOf(PropTypes.object), // eslint-disable-line
   getCurrencySymbol: PropTypes.func.isRequired,
   settingsTheme: PropTypes.oneOf([THEMES.LIGHT, THEMES.DARK]),
 }

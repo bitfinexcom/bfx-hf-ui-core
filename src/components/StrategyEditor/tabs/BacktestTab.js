@@ -56,7 +56,13 @@ const BacktestTab = (props) => {
           )
 
         case COMPONENTS_KEYS.STRATEGY_PERFOMANCE:
-          return <StrategyPerfomanceMetrics results={results} isLoading={loading} />
+          return (
+            <StrategyPerfomanceMetrics
+              results={results}
+              isLoading={loading}
+              isBacktest
+            />
+          )
 
         case COMPONENTS_KEYS.STRATEGY_TRADES:
           return (
@@ -96,7 +102,7 @@ BacktestTab.propTypes = {
   results: PropTypes.shape({
     finished: PropTypes.bool,
     loading: PropTypes.bool,
-    trades: PropTypes.arrayOf(PropTypes.object),
+    trades: PropTypes.arrayOf(PropTypes.object), // eslint-disable-line
   }).isRequired,
 }
 

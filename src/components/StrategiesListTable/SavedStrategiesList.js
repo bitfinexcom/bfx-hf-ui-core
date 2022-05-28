@@ -31,7 +31,7 @@ const SavedStrategiesList = ({ onRowClick, strategies }) => {
 
 SavedStrategiesList.propTypes = {
   onRowClick: PropTypes.func.isRequired,
-  strategies: PropTypes.arrayOf(PropTypes.object).isRequired,
+  strategies: PropTypes.arrayOf(PropTypes.object).isRequired, // eslint-disable-line
 }
 
 export default SavedStrategiesList
