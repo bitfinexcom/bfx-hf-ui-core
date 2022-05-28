@@ -3,6 +3,8 @@ import cx from 'clsx'
 import PropTypes from 'prop-types'
 import { useTranslation } from 'react-i18next'
 import { Icon } from 'react-fa'
+import { useSelector } from 'react-redux'
+import { getCurrentModeAPIKeyState } from '../../../redux/selectors/ws'
 
 const Item = ({
   isSelected, isDisabled, children, onClick, ...props // eslint-disable-line
@@ -43,11 +45,14 @@ const StrategyParams = ({
     onLoadStrategy({})
   }
 
+  const apiCredentials = useSelector(getCurrentModeAPIKeyState)
+  const apiClientConfigured = apiCredentials?.configured && apiCredentials?.valid
+
   return (
     <div className='hfui-orderform__ao-settings'>
       <div className='hfui-orderform__ao-settings__menu hfui-strategy__options-panel'>
         <div className='hfui-orderform__ao-settings__menu-buttons' onClick={closeParams}>
-          <Item onClick={startExecution} isDisabled={executing}>
+          <Item onClick={startExecution} isDisabled={executing || !apiClientConfigured}>
             <Icon name='play' />
                 &nbsp;&nbsp;
             {t('strategyEditor.launchStrategy')}
