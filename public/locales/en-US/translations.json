@@ -671,6 +671,8 @@
     },
     "candleSeedCount": "Candle seed count",
     "noActiveStrategies": "There are no active strategies",
+    "noSavedStrategies": "There are no saved strategies",
+    "noPastStrategies": "There are no active strategies",
     "saveWithDifferentName": "Save with different name",
     "templatesTab": "Templates",
     "savedStrategiesTab": "From saved",
