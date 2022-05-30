@@ -15,7 +15,7 @@ import StrategyLiveChart from '../../../StrategyLiveChart'
 import StrategyOptionsPanel from '../../../StrategyOptionsPanel'
 import StrategyTabWrapper from '../../components/StrategyTabWrapper'
 
-const StrategyTab = (props) => {
+const StrategyLiveTab = (props) => {
   const { executionResults, options } = props
   const [layoutConfig, setLayoutConfig] = useState()
   const [fullscreenChart, setFullScreenChart] = useState(false)
@@ -110,7 +110,7 @@ const StrategyTab = (props) => {
   )
 }
 
-StrategyTab.propTypes = {
+StrategyLiveTab.propTypes = {
   executionResults: PropTypes.shape({
     loading: PropTypes.bool,
     executing: PropTypes.bool,
@@ -122,4 +122,4 @@ StrategyTab.propTypes = {
   }).isRequired,
 }
 
-export default StrategyTab
+export default StrategyLiveTab

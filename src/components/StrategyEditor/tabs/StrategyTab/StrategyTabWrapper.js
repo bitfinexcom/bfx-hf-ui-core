@@ -1,7 +1,7 @@
 import React, { memo } from 'react'
 import { useSelector } from 'react-redux'
 import { getIsPaperTrading } from '../../../../redux/selectors/ui'
-import StrategyLiveChart from '../../../StrategyLiveChart'
+import StrategyLiveTab from './StrategyLiveTab'
 import StrategySandboxTab from './StrategySandboxTabSandbox'
 
 const StrategyTabWrapper = (props) => {
@@ -10,7 +10,7 @@ const StrategyTabWrapper = (props) => {
   return isPaperTrading ? (
     <StrategySandboxTab {...props} />
   ) : (
-    <StrategyLiveChart {...props} />
+    <StrategyLiveTab {...props} />
   )
 }
 
