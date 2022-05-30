@@ -9,6 +9,30 @@
     }
   }
 
+  &__left-container {
+    display: flex;
+    justify-content: space-between;
+    flex: 2 1;
+  }
+
+  &__right-container {
+    flex: 1 1;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+
+    .message {
+      text-transform: uppercase;
+      margin-bottom: 3px;
+      font-weight: 400;
+    }
+
+    .save-btn{
+      height: 28px;
+      width: 80px;
+    }
+  }
+
   &__buttons-container {
     display: flex;
   }
@@ -68,17 +92,5 @@
   &__search-btn {
     width: 15px;
     height: 15px;
-  }
-
-  &__save-container {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-
-    .message {
-      text-transform: uppercase;
-      margin-bottom: 3px;
-      font-weight: 700;
-    }
   }
 }

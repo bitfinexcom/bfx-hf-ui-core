@@ -21,7 +21,7 @@ const IDEOptionsPanel = ({
   const { t } = useTranslation()
 
   return (
-    <div className='hfui-strategy-options hfui-strategy-options--ide'>
+    <div className='hfui-strategy-options'>
       <p
         className='hfui-strategy-options__strategy-name item'
         onClick={onOpenSaveStrategyAsModal}
