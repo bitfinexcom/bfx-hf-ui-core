@@ -12,7 +12,7 @@ const LaunchStrategyModal = ({
   const { t } = useTranslation()
 
   const onClose = () => {
-    changeLaunchStrategyModalState(false, {})
+    changeLaunchStrategyModalState(false)
   }
 
   const onSubmit = () => {

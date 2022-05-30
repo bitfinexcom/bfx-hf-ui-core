@@ -112,7 +112,7 @@ const mapDispatchToProps = (dispatch) => ({
       dispatch(WSActions.setExecutionLoading(true))
     } else {
       dispatch(
-        UIActions.changeLaunchStrategyModalState(true, executionOptions),
+        UIActions.changeLaunchStrategyModalState(true, strategyId, executionOptions),
       )
     }
   },
