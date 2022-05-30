@@ -35,10 +35,10 @@ const SaveStrategyAsModal = ({
   }
 
   useEffect(() => {
-    if (_isEmpty(label) && strategy?.label) {
+    if (strategy?.label) {
       setLabel(strategy.label)
     }
-  }, [strategy, label])
+  }, [strategy.label])
 
   return (
     <Modal
