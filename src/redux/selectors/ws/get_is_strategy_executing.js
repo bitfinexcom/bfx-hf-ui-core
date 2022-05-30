@@ -1,16 +1,17 @@
-import _get from 'lodash/get'
 import _some from 'lodash/some'
+import { createSelector } from 'reselect'
 
-import { REDUCER_PATHS } from '../../config'
+import getActiveStrategies from './get_active_strategies'
 
-const path = REDUCER_PATHS.WS
-
-const getIsStrategyExecuting = (state) => (strategyId) => {
+const getIsStrategyExecuting = (strategyId) => createSelector([getActiveStrategies], (executingStrategies) => {
   if (!strategyId) {
     return false
   }
-  const executingStrategies = _get(state, `${path}.execution.activeStrategies`, {})
-  return _some(executingStrategies, strategy => strategy && strategy.id === strategyId)
-}
+
+  return _some(
+    executingStrategies,
+    (strategy) => strategy && strategy.id === strategyId,
+  )
+})
 
 export default getIsStrategyExecuting

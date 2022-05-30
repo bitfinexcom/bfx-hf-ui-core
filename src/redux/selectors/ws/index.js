@@ -41,6 +41,7 @@ import getIsPaperModeApiKeyUpdating from './get_is_paper_mode_api_key_updating'
 
 import getExecutionResults from './get_execution_results'
 import getExecutionOptions from './get_execution_options'
+import getActiveStrategies from './get_active_strategies'
 
 export {
   getSockets,
@@ -92,4 +93,5 @@ export {
   getExecutionResults,
   getExecutionOptions,
   getIsStrategyExecuting,
+  getActiveStrategies,
 }
