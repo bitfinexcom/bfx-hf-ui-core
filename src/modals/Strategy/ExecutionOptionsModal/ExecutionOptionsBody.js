@@ -21,7 +21,7 @@ const ExecutionOptionsBody = ({
         </Tooltip>
       </p>
       <AmountInput
-        placeholder={t('ui.e.g.', { value: 12.345 })}
+        placeholder={t('ui.e.g.', { value: 3000.00 })}
         onChange={capitalAllocationHandler}
         value={capitalAllocation}
         validationError={capitalAllocationError}

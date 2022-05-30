@@ -12,16 +12,16 @@ const ExecutionOptionsModal = (props) => {
     isOpen, onClose, capitalAllocation, setCapitalAllocation, stopLossPerc,
     maxDrawdownPerc, startExecution,
   } = props
-  const [capitalAllocationError, setCapitalAllocationError] = useState(null)
+  const [capitalAllocationError, setCapitalAllocationError] = useState('')
 
   const { t } = useTranslation()
 
   const capitalAllocationHandler = (v) => {
     const error = AmountInput.validateValue(v, t)
-    const processed = AmountInput.processValue(v)
+    const processed = String(AmountInput.processValue(v))
 
-    setCapitalAllocationError(error)
     if (error) {
+      setCapitalAllocationError(error)
       return
     }
     setCapitalAllocation(processed)

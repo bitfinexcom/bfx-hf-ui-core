@@ -1,7 +1,6 @@
 import _isArray from 'lodash/isArray'
 import _isObject from 'lodash/isObject'
 import _isNumber from 'lodash/isNumber'
-import _isEmpty from 'lodash/isEmpty'
 import _reduce from 'lodash/reduce'
 import _map from 'lodash/map'
 import Debug from 'debug'
@@ -405,22 +404,19 @@ export default (alias, store) => (e = {}) => {
       }
 
       case 'strategy.live_execution_status': {
-        const [,, options] = payload
+        const [, executing, options] = payload
 
-        if (_isEmpty(options)) {
-          store.dispatch(WSActions.setExecutingStrategies([]))
-        } else {
+        store.dispatch(WSActions.setExecutingStrategies(executing))
+
+        if (executing) {
           const mappedOptions = {}
-          const mappedStrategies = []
 
           _map(options, (option) => {
             const { id } = option
             mappedOptions[id] = option
-            mappedStrategies.push(id)
           })
 
           store.dispatch(WSActions.setExecutionOptions(mappedOptions))
-          store.dispatch(WSActions.setExecutingStrategies(mappedStrategies))
         }
 
         store.dispatch(WSActions.setExecutionLoading(false))

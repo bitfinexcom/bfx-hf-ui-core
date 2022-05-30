@@ -42,6 +42,11 @@ const DEFAULT_USE_TRADES = false
 const DEFAULT_USE_MARGIN = false
 const DEFAULT_SEED_COUNT = 150
 
+const EXECUTION_TYPES = Object.freeze({
+  LIVE: 'LIVE',
+  BACKTEST: 'BACKTEST',
+})
+
 const StrategyEditor = (props) => {
   const {
     moveable,
@@ -81,6 +86,7 @@ const StrategyEditor = (props) => {
   const [openExistingStrategyModalOpen, setOpenExistingStrategyModalOpen] = useState(false)
   const [isSaveStrategyAsModalOpen, setIsSaveStrategyModalOpen] = useState(false)
   const [isExecutionOptionsModalOpen, setIsExecutionOptionsModalOpen] = useState(false)
+  const [executionOptionsModalType, setExecutionOptionsModalType] = useState(EXECUTION_TYPES.LIVE)
 
   const [symbol, setSymbol] = useState(
     options.symbol
@@ -101,14 +107,14 @@ const StrategyEditor = (props) => {
   const [capitalAllocation, setCapitalAllocation] = useState('')
   const [stopLossPerc, setStopLossPerc] = useState('')
   const [maxDrawdownPerc, setMaxDrawdownPerc] = useState('')
-  const [capitalAllocationError, setCapitalAllocationError] = useState(null)
+  const [capitalAllocationError, setCapitalAllocationError] = useState('')
 
   const capitalAllocationHandler = (v) => {
     const error = AmountInput.validateValue(v, t)
     const processed = AmountInput.processValue(v)
 
-    setCapitalAllocationError(error)
     if (error) {
+      setCapitalAllocationError(error)
       return
     }
     setCapitalAllocation(processed)
@@ -118,6 +124,11 @@ const StrategyEditor = (props) => {
 
   const runningStrategyID = runningStrategiesMapping[strategyId]
   const currentStrategyResults = liveResults?.[runningStrategyID] || {}
+  const constraints = {
+    allocation: Number(capitalAllocation),
+    percStopLoss: Number(stopLossPerc),
+    maxDrawdown: Number(maxDrawdownPerc),
+  }
 
   const optionsProps = {
     timeframe,
@@ -218,6 +229,12 @@ const StrategyEditor = (props) => {
       return
     }
 
+    if (!isFullFilled) {
+      setIsExecutionOptionsModalOpen(true)
+      setExecutionOptionsModalType(EXECUTION_TYPES.BACKTEST)
+      return
+    }
+
     dsExecuteBacktest(
       startNum,
       endNum,
@@ -226,6 +243,7 @@ const StrategyEditor = (props) => {
       candles,
       trades,
       strategy,
+      constraints,
     )
     // setBacktestOptions(optionsProps)
   }
@@ -233,6 +251,7 @@ const StrategyEditor = (props) => {
   const startExecution = () => {
     if (!isFullFilled) {
       setIsExecutionOptionsModalOpen(true)
+      setExecutionOptionsModalType(EXECUTION_TYPES.LIVE)
       return
     }
     onSaveStrategy()
@@ -247,6 +266,7 @@ const StrategyEditor = (props) => {
       candleSeed,
       margin,
       isPaperTrading,
+      constraints,
     )
   }
 
@@ -277,6 +297,7 @@ const StrategyEditor = (props) => {
 
   const openExecutionOptionsModal = () => {
     setIsExecutionOptionsModalOpen(true)
+    setExecutionOptionsModalType(EXECUTION_TYPES.LIVE)
   }
 
   return (
@@ -419,7 +440,11 @@ const StrategyEditor = (props) => {
         setStopLossPerc={setStopLossPerc}
         maxDrawdownPerc={maxDrawdownPerc}
         setMaxDrawdownPerc={setMaxDrawdownPerc}
-        startExecution={startExecution}
+        startExecution={
+          executionOptionsModalType === EXECUTION_TYPES.LIVE
+            ? startExecution
+            : onBacktestStart
+        }
       />
     </>
   )

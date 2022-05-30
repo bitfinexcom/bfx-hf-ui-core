@@ -71,6 +71,7 @@ const mapDispatchToProps = (dispatch) => ({
     seedCandleCount,
     margin,
     isPaperTrading,
+    constraints,
   ) => {
     const processedStrategy = _omitBy(strategy, _isEmpty)
     const executionOptions = {
@@ -105,6 +106,7 @@ const mapDispatchToProps = (dispatch) => ({
           processedStrategy,
           seedCandleCount,
           margin,
+          constraints,
         ]),
       )
       dispatch(WSActions.setExecutionLoading(true))
@@ -114,7 +116,7 @@ const mapDispatchToProps = (dispatch) => ({
       )
     }
   },
-  dsExecuteBacktest: (from, to, symbol, tf, candles, trades, strategy) => {
+  dsExecuteBacktest: (from, to, symbol, tf, candles, trades, strategy, constraints) => {
     const processedStrategy = _omitBy(strategy, _isEmpty)
 
     dispatch(WSActions.purgeBacktestData())
@@ -134,6 +136,7 @@ const mapDispatchToProps = (dispatch) => ({
             true,
             processedStrategy,
             uuidv4(),
+            constraints,
           ],
         ],
       }),
