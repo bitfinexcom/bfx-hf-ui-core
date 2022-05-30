@@ -620,6 +620,7 @@
     "more": "More",
     "importStrategy": "Import strategy from JSON...",
     "orSelectOne": "or select one from the list below",
+    "selectStrategy": "Please select a strategy from the list below or head to the SANDBOX mode to begin drafting a new one",
     "newStrategyModalTitle": "Create a New Strategy",
     "saveStrategyAsModalTitle": "Save strategy as...",
     "newStrategyFromModalTitle": "Create a New Strategy from...",
