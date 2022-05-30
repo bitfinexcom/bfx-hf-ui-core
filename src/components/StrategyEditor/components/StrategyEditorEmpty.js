@@ -7,8 +7,17 @@ import Button from '../../../ui/Button'
 const EmptyContent = ({
   openCreateNewStrategyModal,
   openCreateNewStrategyFromModal,
+  isPaperTrading,
 }) => {
   const { t } = useTranslation()
+
+  if (!isPaperTrading) {
+    return (
+      <div className='hfui-strategyeditor__without-strategies'>
+        <div className='select-one-text select-strategy-live-text'>{t('strategyEditor.selectStrategy')}</div>
+      </div>
+    )
+  }
 
   return (
     <div className='hfui-strategyeditor__without-strategies'>
@@ -41,6 +50,7 @@ const EmptyContent = ({
 EmptyContent.propTypes = {
   openCreateNewStrategyModal: PropTypes.func.isRequired,
   openCreateNewStrategyFromModal: PropTypes.func.isRequired,
+  isPaperTrading: PropTypes.bool.isRequired,
 }
 
 export default memo(EmptyContent)
