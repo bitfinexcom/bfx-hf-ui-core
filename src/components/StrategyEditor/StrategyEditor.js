@@ -16,7 +16,7 @@ import CreateNewStrategyModal from '../../modals/Strategy/CreateNewStrategyModal
 import RemoveExistingStrategyModal from '../../modals/Strategy/RemoveExistingStrategyModal'
 import OpenExistingStrategyModal from '../../modals/Strategy/OpenExistingStrategyModal'
 import EmptyContent from './components/StrategyEditorEmpty'
-import StrategyTab from './tabs/StrategyTab'
+import StrategyTab from './tabs/StrategyLiveTab'
 import BacktestTab from './tabs/BacktestTab'
 import ExecParamsTab from './tabs/ExecParamsTab'
 import IDETab from './tabs/IDETab'
