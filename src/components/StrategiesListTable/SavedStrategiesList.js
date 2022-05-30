@@ -13,7 +13,7 @@ const SavedStrategiesList = ({ onRowClick, strategies }) => {
       {_isEmpty(strategies) ? (
         <div className='no-trades__wrapper'>
           <span className='no-trades__notification'>
-            {t('strategyEditor.noSavedStrategies')}
+            {t('strategyEditor.noStrategiesToDisplay')}
           </span>
         </div>
       ) : (
