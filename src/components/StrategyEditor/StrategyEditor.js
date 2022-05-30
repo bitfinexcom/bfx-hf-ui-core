@@ -86,7 +86,9 @@ const StrategyEditor = (props) => {
   const [openExistingStrategyModalOpen, setOpenExistingStrategyModalOpen] = useState(false)
   const [isSaveStrategyAsModalOpen, setIsSaveStrategyModalOpen] = useState(false)
   const [isExecutionOptionsModalOpen, setIsExecutionOptionsModalOpen] = useState(false)
-  const [executionOptionsModalType, setExecutionOptionsModalType] = useState(EXECUTION_TYPES.LIVE)
+  const [executionOptionsModalType, setExecutionOptionsModalType] = useState(
+    EXECUTION_TYPES.LIVE,
+  )
 
   const [symbol, setSymbol] = useState(
     options.symbol
@@ -363,7 +365,7 @@ const StrategyEditor = (props) => {
               {...props}
             />
           )}
-          {(isBetaVersion || flags?.docs) && (
+          {(isBetaVersion || flags?.docs) && !isPaperTrading && (
             <IDETab
               htmlKey='view_in_ide'
               key='view_in_ide'
