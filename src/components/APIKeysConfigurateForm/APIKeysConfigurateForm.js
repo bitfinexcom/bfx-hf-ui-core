@@ -2,11 +2,15 @@ import React, { memo } from 'react'
 import PropTypes from 'prop-types'
 import { useTranslation } from 'react-i18next'
 import Scrollbars from '../../ui/Scrollbars'
+import NavbarLink from '../Navbar/Navbar.Link'
 
 import './style.scss'
 
+const CREATE_API_KEYS_URL = 'https://setting.bitfinex.com/api#new-key'
+const CREATE_BFX_ACCOUNT_URL = 'https://www.bitfinex.com/sign-up'
+
 const APIKeysConfigurateForm = ({
-  content, icon, title, form, buttons, onClick, titleColor, apiClientConnecting,
+  content, icon, title, form, buttons, onClick, titleColor, apiClientConnecting, showDescription,
 }) => {
   const { t } = useTranslation()
 
@@ -22,33 +26,43 @@ const APIKeysConfigurateForm = ({
           >
             {icon && (<i className={icon} />)}
             {title && (
-            <p
-              style={!titleColor ? {} : {
-                color: titleColor,
-              }}
-            >
-              {title}
-            </p>
+              <p
+                style={!titleColor ? {} : {
+                  color: titleColor,
+                }}
+              >
+                {title}
+              </p>
             )}
 
             {content && (content)}
 
             {form && (
-            <div className='hfui-apikeys-configurate-form__modal-form'>
-              {form}
-            </div>
+              <div className='hfui-apikeys-configurate-form__modal-form'>
+                {form}
+              </div>
             )}
 
             {buttons && (
-            <div className='hfui-apikeys-configurate-form__modal-buttons'>
-              {buttons}
-            </div>
+              <div className='hfui-apikeys-configurate-form__modal-buttons'>
+                {buttons}
+              </div>
+            )}
+
+            {showDescription && (
+              <div className='hfui-apikeys-configurate-form__modal-description'>
+                {t('appSettings.noApiKeys')}
+                <NavbarLink className='link' external={CREATE_API_KEYS_URL} label={t('appSettings.createAPI')} />
+                <br />
+                {t('appSettings.noBfxAccount')}
+                <NavbarLink className='link' external={CREATE_BFX_ACCOUNT_URL} label={t('appSettings.clickToSignup')} />
+              </div>
             )}
 
             {apiClientConnecting && (
-            <span>
-              {t('orderForm.exchangeConnectings')}
-            </span>
+              <span>
+                {t('orderForm.exchangeConnectings')}
+              </span>
             )}
           </div>
         </Scrollbars>
@@ -72,6 +86,7 @@ APIKeysConfigurateForm.propTypes = {
   onClick: PropTypes.func,
   apiClientConnecting: PropTypes.bool,
   titleColor: PropTypes.string,
+  showDescription: PropTypes.bool,
 }
 
 APIKeysConfigurateForm.defaultProps = {
@@ -83,6 +98,7 @@ APIKeysConfigurateForm.defaultProps = {
   content: null,
   form: null,
   buttons: null,
+  showDescription: false,
 }
 
 export default memo(APIKeysConfigurateForm)

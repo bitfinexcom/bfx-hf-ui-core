@@ -43,7 +43,7 @@ const SubmitAPIKeysModal = ({
       isModal={isModal}
       apiClientConnecting={apiClientConnecting}
       form={[
-        <div key='form' className='row'>
+        <div key='form' className='inputs'>
           <Input
             type='text'
             placeholder={_toUpper(t('appSettings.apiKey'))}
@@ -69,6 +69,7 @@ const SubmitAPIKeysModal = ({
           <Button onClick={onClose} label={t('ui.cancel')} red />
         </div>
       )}
+      showDescription
     />
   )
 }
