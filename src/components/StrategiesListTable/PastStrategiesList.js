@@ -13,7 +13,7 @@ const PastStrategiesList = ({ onRowClick, strategies, getMarketPair }) => {
       {_isEmpty(strategies) ? (
         <div className='no-trades__wrapper'>
           <span className='no-trades__notification'>
-            {t('strategyEditor.noActiveStrategies')}
+            {t('strategyEditor.noStrategiesToDisplay')}
           </span>
         </div>
       ) : (

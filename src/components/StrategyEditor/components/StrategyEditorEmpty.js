@@ -32,7 +32,7 @@ const EmptyContent = ({
           ]}
         />
         <br />
-        <p>{t('strategyEditor.orSelectOne')}</p>
+        <div className='select-one-text'>{t('strategyEditor.orSelectOne')}</div>
       </div>
     </div>
   )
