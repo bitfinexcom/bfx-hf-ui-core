@@ -12,7 +12,7 @@ import Indicator from '../../ui/Indicator'
 import './style.css'
 
 const NavbarButton = ({
-  route, label, external,
+  route, label, external, className,
 }) => {
   const { pathname } = useLocation()
   const dispatch = useDispatch()
@@ -38,7 +38,7 @@ const NavbarButton = ({
 
   if (external) {
     return (
-      <a href={external} target='_blank' rel='noopener noreferrer'>
+      <a href={external} className={className} target='_blank' rel='noopener noreferrer'>
         {label}
       </a>
     )
@@ -47,7 +47,7 @@ const NavbarButton = ({
   return (
     <button
       type='button'
-      className={ClassNames('hfui-navbarbutton', { active: pathname === route })}
+      className={ClassNames('hfui-navbarbutton', className, { active: pathname === route })}
       onClick={route === pathname ? undefined : () => navigate(route)}
     >
       {label}
@@ -62,11 +62,13 @@ NavbarButton.propTypes = {
     PropTypes.string, PropTypes.array, PropTypes.element,
   ]).isRequired,
   external: PropTypes.string,
+  className: PropTypes.string,
 }
 
 NavbarButton.defaultProps = {
   external: '',
   route: '',
+  className: null,
 }
 
 export default memo(NavbarButton)

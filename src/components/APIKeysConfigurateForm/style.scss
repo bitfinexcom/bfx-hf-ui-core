@@ -26,6 +26,7 @@
 
   &__modal-form {
     margin: 16px 0 !important;
+    width: 100%;
 
     .error {
       font-size: 13px;
@@ -34,8 +35,19 @@
     }
   }
 
-  &__modal-buttons {
+  &__modal-buttons,
+  &__modal-description {
     width: 100%;
+
+    .link {
+      margin-left: 5px;
+    }
+  }
+
+  &__modal-form .inputs {
+    > *:first-child {
+      margin-bottom: 5px;
+    }
   }
 
   &__modal-form .row,
@@ -45,16 +57,6 @@
 
     > *:first-child {
       margin-right: 15px;
-    }
-
-    .hfui-input {
-      width: 50%;
-      line-height: 32px;
-
-      input {
-        height: 24px;
-        font-size: 13px;
-      }
     }
 
     .hfui-button {
