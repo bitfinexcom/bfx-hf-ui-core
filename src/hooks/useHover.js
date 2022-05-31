@@ -1,3 +1,4 @@
+/* eslint-disable */
 import { useEffect, useRef, useState } from 'react'
 
 // https://usehooks.com/useHover/
@@ -10,7 +11,6 @@ const useHover = () => {
   const handleMouseOut = () => setValue(false)
 
   useEffect(
-    // eslint-disable-next-line consistent-return
     () => {
       const node = ref.current
       if (node) {

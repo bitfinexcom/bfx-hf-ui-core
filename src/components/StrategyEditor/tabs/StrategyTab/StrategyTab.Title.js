@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
 import _isEmpty from 'lodash/isEmpty'
-import _debounce from 'lodash/debounce'
 import { useTranslation } from 'react-i18next'
 import { Icon } from 'react-fa'
 import StrategiesMenuSideBarParams from '../../components/StrategiesMenuSideBarParams'
