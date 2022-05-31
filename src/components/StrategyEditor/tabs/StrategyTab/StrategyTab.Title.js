@@ -4,8 +4,8 @@ import _isEmpty from 'lodash/isEmpty'
 import { useTranslation } from 'react-i18next'
 import OutsideClickHandler from 'react-outside-click-handler'
 import { Icon } from 'react-fa'
-import StrategiesMenuSideBarParams from '../components/StrategiesMenuSideBarParams'
-import Indicator from '../../../ui/Indicator'
+import StrategiesMenuSideBarParams from '../../components/StrategiesMenuSideBarParams'
+import Indicator from '../../../../ui/Indicator'
 
 const StrategyTabTitle = (props) => {
   const { executionResults, selectedTab, sidebarOpened } = props

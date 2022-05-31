@@ -6,6 +6,7 @@ import { Tooltip } from '@ufx-ui/core'
 import _includes from 'lodash/includes'
 import { useTranslation } from 'react-i18next'
 
+import { Icon } from 'react-fa'
 import MarketSelect from '../MarketSelect'
 import Button from '../../ui/Button'
 import { makeShorterLongName } from '../../util/ui'
@@ -25,13 +26,13 @@ const StrategyOptionsPanel = ({
   markets,
   setMargin,
   setSymbol,
-  setFullScreenChart,
-  startExecution,
   isExecuting,
   hasResults,
-  stopExecution,
   onSaveAsStrategy,
   openExecutionOptionsModal,
+  strategyDirty,
+  hasErrors,
+  onSaveStrategy,
 }) => {
   const { label } = strategy || {}
   const { t } = useTranslation()
@@ -46,82 +47,78 @@ const StrategyOptionsPanel = ({
 
   return (
     <div className='hfui-strategy-options'>
-      <p
-        className='hfui-strategy-options__strategy-name item'
-        onClick={onOpenSaveStrategyAsModal}
-      >
-        <>
-          {_size(label) > MAX_STRATEGY_LABEL_LENGTH ? (
-            <Tooltip
-              className='__react-tooltip __react_component_tooltip wide'
-              content={label}
-            >
-              {makeShorterLongName(label, MAX_STRATEGY_LABEL_LENGTH)}
-            </Tooltip>
-          ) : (
-            label
-          )}
-        </>
-      </p>
-      {isExecuting && (
+      <div className='hfui-strategy-options__left-container'>
+        <p
+          className='hfui-strategy-options__strategy-name item'
+          onClick={onOpenSaveStrategyAsModal}
+        >
+          <>
+            {_size(label) > MAX_STRATEGY_LABEL_LENGTH ? (
+              <Tooltip
+                className='__react-tooltip __react_component_tooltip wide'
+                content={label}
+              >
+                {makeShorterLongName(label, MAX_STRATEGY_LABEL_LENGTH)}
+              </Tooltip>
+            ) : (
+              label
+            )}
+          </>
+        </p>
+        {isExecuting && (
         <div className='hfui-strategy-options__option item'>
           <StrategyRunned />
         </div>
-      )}
-      {!isExecuting && hasResults && (
+        )}
+        {!isExecuting && hasResults && (
         <div className='hfui-strategy-options__option item'>
           <StrategyStopped />
         </div>
-      )}
-      <div className='hfui-strategy-options__input item'>
-        <MarketSelect
-          value={symbol}
-          onChange={onMarketSelectChange}
-          markets={markets}
-          disabled={isExecuting}
-          renderWithFavorites
-        />
-        <p className='hfui-orderform__input-label'>
-          {isExecuting
-            ? t('strategyEditor.selectMarketDescriptionDisabled')
-            : t('strategyEditor.selectMarketDescription')}
-        </p>
-      </div>
-      <StrategyTypeSelect
-        onSaveAsStrategy={onSaveAsStrategy}
-        strategy={strategy}
-        isExecuting={isExecuting}
-      />
-      <div className='hfui-strategy-options__buttons-container item'>
-        <NavbarButton
-          alt='Application settings'
-          icon='settings-icon'
-          className='hfui-navbar__app-settings__icon item'
-          onClick={openExecutionOptionsModal}
-        />
-        {isExecuting ? (
-          <>
-            <Button
-              className='hfui-strategy-options__option-btn item'
-              label={t('strategyEditor.fullscreenChartBtn')}
-              onClick={setFullScreenChart}
-              green
-            />
-            <Button
-              className='hfui-strategy-options__option-btn item'
-              label={t('ui.stopBtn')}
-              onClick={stopExecution}
-              red
-            />
-          </>
-        ) : (
-          <Button
-            className='hfui-strategy-options__option-btn item'
-            label={t('ui.startBtn')}
-            onClick={startExecution}
-            green
-          />
         )}
+        <div className='hfui-strategy-options__input item'>
+          <MarketSelect
+            value={symbol}
+            onChange={onMarketSelectChange}
+            markets={markets}
+            disabled={isExecuting}
+            renderWithFavorites
+          />
+          <p className='hfui-orderform__input-label'>
+            {isExecuting
+              ? t('strategyEditor.selectMarketDescriptionDisabled')
+              : t('strategyEditor.selectMarketDescription')}
+          </p>
+        </div>
+        <StrategyTypeSelect
+          onSaveAsStrategy={onSaveAsStrategy}
+          strategy={strategy}
+          isExecuting={isExecuting}
+        />
+        <div className='hfui-strategy-options__buttons-container item'>
+          <NavbarButton
+            alt='Application settings'
+            icon='settings-icon'
+            className='hfui-navbar__app-settings__icon item'
+            onClick={openExecutionOptionsModal}
+          />
+        </div>
+      </div>
+      <div className='hfui-strategy-options__right-container'>
+        <p className='message'>
+          {hasErrors && t('strategyEditor.errorsInIDE')}
+          {strategyDirty && !hasErrors && t('strategyEditor.unsavedChanges')}
+          {!hasErrors && !strategyDirty && t('strategyEditor.saved')}
+        </p>
+        <Button
+          green
+          className='save-btn'
+          label={[
+            <Icon key='icon' name='floppy-o' />,
+            <span key='text'>{t('ui.save')}</span>,
+          ]}
+          onClick={onSaveStrategy}
+          disabled={hasErrors || !strategyDirty}
+        />
       </div>
 
     </div>
@@ -144,13 +141,13 @@ StrategyOptionsPanel.propTypes = {
   strategy: PropTypes.shape({
     label: PropTypes.string,
   }).isRequired,
-  setFullScreenChart: PropTypes.func.isRequired,
-  startExecution: PropTypes.func.isRequired,
   isExecuting: PropTypes.bool.isRequired,
   hasResults: PropTypes.bool.isRequired,
-  stopExecution: PropTypes.func.isRequired,
   onSaveAsStrategy: PropTypes.func.isRequired,
   openExecutionOptionsModal: PropTypes.func.isRequired,
+  strategyDirty: PropTypes.bool.isRequired,
+  hasErrors: PropTypes.bool.isRequired,
+  onSaveStrategy: PropTypes.func.isRequired,
 }
 
 export default StrategyOptionsPanel

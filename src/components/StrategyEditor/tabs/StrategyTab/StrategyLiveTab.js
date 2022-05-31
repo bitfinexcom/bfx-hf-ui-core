@@ -2,20 +2,20 @@ import React, { useCallback, useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
 import _isEmpty from 'lodash/isEmpty'
 import { useTranslation } from 'react-i18next'
-import StrategyPerfomanceMetrics from '../../StrategyPerfomanceMetrics'
-import StrategyTradesTable from '../../StrategyTradesTable'
-import StrategiesGridLayout from '../components/StrategiesGridLayout'
+import StrategyPerfomanceMetrics from '../../../StrategyPerfomanceMetrics'
+import StrategyTradesTable from '../../../StrategyTradesTable'
+import StrategiesGridLayout from '../../components/StrategiesGridLayout'
 import {
   COMPONENTS_KEYS,
   LAYOUT_CONFIG,
   LAYOUT_CONFIG_NO_DATA,
   LAYOUT_CONFIG_WITHOUT_TRADES,
-} from '../components/StrategiesGridLayout.constants'
-import StrategyLiveChart from '../../StrategyLiveChart'
-import StrategyOptionsPanel from '../../StrategyOptionsPanel'
-import StrategyTabWrapper from '../components/StrategyTabWrapper'
+} from '../../components/StrategiesGridLayout.constants'
+import StrategyLiveChart from '../../../StrategyLiveChart'
+import StrategyOptionsPanel from '../../../StrategyOptionsPanel'
+import StrategyTabWrapper from '../../components/StrategyTabWrapper'
 
-const StrategyTab = (props) => {
+const StrategyLiveTab = (props) => {
   const { executionResults, options } = props
   const [layoutConfig, setLayoutConfig] = useState()
   const [fullscreenChart, setFullScreenChart] = useState(false)
@@ -110,7 +110,7 @@ const StrategyTab = (props) => {
   )
 }
 
-StrategyTab.propTypes = {
+StrategyLiveTab.propTypes = {
   executionResults: PropTypes.shape({
     loading: PropTypes.bool,
     executing: PropTypes.bool,
@@ -122,4 +122,4 @@ StrategyTab.propTypes = {
   }).isRequired,
 }
 
-export default StrategyTab
+export default StrategyLiveTab

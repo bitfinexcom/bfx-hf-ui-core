@@ -16,14 +16,14 @@ import CreateNewStrategyModal from '../../modals/Strategy/CreateNewStrategyModal
 import RemoveExistingStrategyModal from '../../modals/Strategy/RemoveExistingStrategyModal'
 import OpenExistingStrategyModal from '../../modals/Strategy/OpenExistingStrategyModal'
 import EmptyContent from './components/StrategyEditorEmpty'
-import StrategyTab from './tabs/StrategyTab'
+import StrategyTab from './tabs/StrategyTab/StrategyTabWrapper'
 import BacktestTab from './tabs/BacktestTab'
 import ExecParamsTab from './tabs/ExecParamsTab'
 import IDETab from './tabs/IDETab'
 import { getDefaultMarket } from '../../util/market'
 import CreateNewStrategyFromModalOpen from '../../modals/Strategy/CreateNewStrategyFromModal'
 import SaveStrategyAsModal from '../../modals/Strategy/SaveStrategyAsModal/SaveStrategyAsModal'
-import StrategyTabTitle from './tabs/StrategyTab.Title'
+import StrategyTabTitle from './tabs/StrategyTab/StrategyTab.Title'
 import BacktestTabTitle from './tabs/BacktestTab.Title'
 import ExecParamsTabTitle from './tabs/ExecParamsTab.Title'
 import IDETabTitle from './tabs/IDETab.Title'
@@ -86,7 +86,9 @@ const StrategyEditor = (props) => {
   const [openExistingStrategyModalOpen, setOpenExistingStrategyModalOpen] = useState(false)
   const [isSaveStrategyAsModalOpen, setIsSaveStrategyModalOpen] = useState(false)
   const [isExecutionOptionsModalOpen, setIsExecutionOptionsModalOpen] = useState(false)
-  const [executionOptionsModalType, setExecutionOptionsModalType] = useState(EXECUTION_TYPES.LIVE)
+  const [executionOptionsModalType, setExecutionOptionsModalType] = useState(
+    EXECUTION_TYPES.LIVE,
+  )
 
   const [symbol, setSymbol] = useState(
     options.symbol
@@ -363,7 +365,7 @@ const StrategyEditor = (props) => {
               {...props}
             />
           )}
-          {(isBetaVersion || flags?.docs) && (
+          {(isBetaVersion || flags?.docs) && !isPaperTrading && (
             <IDETab
               htmlKey='view_in_ide'
               key='view_in_ide'
