@@ -45,10 +45,10 @@ const StrategyTabTitle = (props) => {
   const openParams = () => setParamsOpen(true)
 
   useEffect(() => {
-    if (isHovered && !paramsOpen) {
+    if (isStrategyTabSelected && isHovered && !paramsOpen) {
       openParams()
     }
-  }, [isHovered, paramsOpen])
+  }, [isHovered, paramsOpen, isStrategyTabSelected])
 
   return (
     <div
