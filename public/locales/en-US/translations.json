@@ -606,6 +606,8 @@
     "newStrategyFrom": "Create a new strategy from...",
     "newStrategy2": "New strategy",
     "newStrategyFrom2": "New strategy from...",
+    "useSandboxTooltip": "Click the toggle to move to the SANDBOX environment where you can create, edit and backtest strategies and much more",
+    "nothingToDisplay": "Nothing to display",
     "running": "Running",
     "paused": "Paused",
     "stopped": "Stopped",
