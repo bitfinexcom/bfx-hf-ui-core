@@ -617,7 +617,6 @@
     "strategyTab": "Strategy",
     "backtestTab": "Backtest",
     "viewInIDETab": "View in IDE",
-    "execParamsTab": "Execution Params",
     "activeStrategies": "Active strategies",
     "pastStrategies": "Past strategies",
     "savedStrategies": "Saved strategies",
