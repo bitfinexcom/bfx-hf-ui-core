@@ -13,9 +13,20 @@ const EmptyContent = ({
 
   if (!isPaperTrading) {
     return (
-      <div className='hfui-strategyeditor__without-strategies'>
-        <div className='select-one-text select-strategy-live-text'>{t('strategyEditor.selectStrategy')}</div>
-      </div>
+      <>
+        <div className='hfui-strategyeditor__without-strategies'>
+          <div className='select-one-text select-strategy-live-text'>
+            <p>
+              {t('strategyEditor.nothingToDisplay')}
+            </p>
+            <br />
+            {t('strategyEditor.selectStrategy')}
+          </div>
+        </div>
+        <div className='hfui-strategyeditor__use-sandbox-tooltip'>
+          {t('strategyEditor.useSandboxTooltip')}
+        </div>
+      </>
     )
   }
 
