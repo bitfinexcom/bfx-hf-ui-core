@@ -18,17 +18,14 @@ import OpenExistingStrategyModal from '../../modals/Strategy/OpenExistingStrateg
 import EmptyContent from './components/StrategyEditorEmpty'
 import StrategyTab from './tabs/StrategyTab/StrategyTabWrapper'
 import BacktestTab from './tabs/BacktestTab'
-import ExecParamsTab from './tabs/ExecParamsTab'
 import IDETab from './tabs/IDETab'
 import { getDefaultMarket } from '../../util/market'
 import CreateNewStrategyFromModalOpen from '../../modals/Strategy/CreateNewStrategyFromModal'
 import SaveStrategyAsModal from '../../modals/Strategy/SaveStrategyAsModal/SaveStrategyAsModal'
 import StrategyTabTitle from './tabs/StrategyTab/StrategyTab.Title'
 import BacktestTabTitle from './tabs/BacktestTab.Title'
-import ExecParamsTabTitle from './tabs/ExecParamsTab.Title'
 import IDETabTitle from './tabs/IDETab.Title'
 import ExecutionOptionsModal from '../../modals/Strategy/ExecutionOptionsModal'
-import AmountInput from '../OrderForm/FieldComponents/input.amount'
 
 import './style.css'
 
@@ -109,18 +106,6 @@ const StrategyEditor = (props) => {
   const [capitalAllocation, setCapitalAllocation] = useState('')
   const [stopLossPerc, setStopLossPerc] = useState('')
   const [maxDrawdownPerc, setMaxDrawdownPerc] = useState('')
-  const [capitalAllocationError, setCapitalAllocationError] = useState('')
-
-  const capitalAllocationHandler = (v) => {
-    const error = AmountInput.validateValue(v, t)
-    const processed = AmountInput.processValue(v)
-
-    if (error) {
-      setCapitalAllocationError(error)
-      return
-    }
-    setCapitalAllocation(processed)
-  }
 
   const isFullFilled = capitalAllocation && stopLossPerc && maxDrawdownPerc
 
@@ -380,25 +365,6 @@ const StrategyEditor = (props) => {
                 />
               )}
               {...props}
-            />
-          )}
-          {isBetaVersion && (
-            <ExecParamsTab
-              htmlKey='exec_params'
-              key='exec_params'
-              capitalAllocation={capitalAllocation}
-              capitalAllocationHandler={capitalAllocationHandler}
-              capitalAllocationError={capitalAllocationError}
-              stopLossPerc={stopLossPerc}
-              setStopLossPerc={setStopLossPerc}
-              maxDrawdownPerc={maxDrawdownPerc}
-              setMaxDrawdownPerc={setMaxDrawdownPerc}
-              sbtitle={({ sidebarOpened }) => (
-                <ExecParamsTabTitle
-                  hasErrors={!isFullFilled}
-                  sidebarOpened={sidebarOpened}
-                />
-              )}
             />
           )}
         </StrategyEditorPanel>
