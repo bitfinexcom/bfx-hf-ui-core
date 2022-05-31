@@ -1,17 +1,19 @@
 import React, { useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
 import _isEmpty from 'lodash/isEmpty'
+import _debounce from 'lodash/debounce'
 import { useTranslation } from 'react-i18next'
-import OutsideClickHandler from 'react-outside-click-handler'
 import { Icon } from 'react-fa'
 import StrategiesMenuSideBarParams from '../../components/StrategiesMenuSideBarParams'
 import Indicator from '../../../../ui/Indicator'
+import useHover from '../../../../hooks/useHover'
 
 const StrategyTabTitle = (props) => {
   const { executionResults, selectedTab, sidebarOpened } = props
   const { results, executing, loading } = executionResults
 
   const [paramsOpen, setParamsOpen] = useState(false)
+  const [hoverRef, isHovered] = useHover()
 
   const { t } = useTranslation()
   const title = t('strategyEditor.strategyTab')
@@ -43,24 +45,27 @@ const StrategyTabTitle = (props) => {
   const openParams = () => setParamsOpen(true)
 
   useEffect(() => {
-    if (selectedTab === 0) {
-      setParamsOpen(true)
+    if (isHovered && !paramsOpen) {
+      openParams()
     }
-  }, [selectedTab])
+  }, [isHovered, paramsOpen])
 
   return (
-    <div className='hfui-strategyeditor__sidebar-title' onClick={openParams}>
+    <div
+      className='hfui-strategyeditor__sidebar-title'
+      onClick={openParams}
+      ref={hoverRef}
+    >
       <Icon name='file-code-o' className='title-icon' />
       {sidebarOpened && <span className='title-label'>{title}</span>}
       {getIndicator()}
       {paramsOpen && (
-        <OutsideClickHandler onOutsideClick={closeParams}>
-          <StrategiesMenuSideBarParams
-            {...props}
-            executing={executing}
-            closeParams={closeParams}
-          />
-        </OutsideClickHandler>
+        <StrategiesMenuSideBarParams
+          {...props}
+          executing={executing}
+          closeParams={closeParams}
+          isTabHovered={isHovered}
+        />
       )}
     </div>
   )

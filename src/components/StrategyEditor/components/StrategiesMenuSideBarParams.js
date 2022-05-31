@@ -1,13 +1,14 @@
-import React, { memo } from 'react'
+import React, { memo, useEffect, useRef } from 'react'
 import cx from 'clsx'
 import PropTypes from 'prop-types'
 import { useTranslation } from 'react-i18next'
 import { Icon } from 'react-fa'
 import { useSelector } from 'react-redux'
 import { getCurrentModeAPIKeyState } from '../../../redux/selectors/ws'
+import useHover from '../../../hooks/useHover'
 
 const Item = ({
-  isSelected, isDisabled, children, onClick, ...props // eslint-disable-line
+  isSelected,isDisabled,children,onClick,...props // eslint-disable-line
 }) => (
   <div
     className={cx('hfui-orderform__ao-settings__item is-layout', {
@@ -37,9 +38,15 @@ const StrategyParams = ({
   onImportStrategy,
   closeParams,
   strategyDirty,
+  isTabHovered,
+  sidebarOpened,
 }) => {
   const { id = strategyId } = strategy || {}
   const { t } = useTranslation()
+
+  const [hoverRef, isHovered] = useHover()
+
+  const timeoutRef = useRef()
 
   const onClose = () => {
     onLoadStrategy({})
@@ -48,18 +55,44 @@ const StrategyParams = ({
   const apiCredentials = useSelector(getCurrentModeAPIKeyState)
   const apiClientConfigured = apiCredentials?.configured && apiCredentials?.valid
 
+  useEffect(() => {
+    // We need to use timeout for closing bar because isHovered becomes false,
+    // when user move mouse between menu items and subsequently, bar blinks
+    if (!isHovered && !isTabHovered) {
+      timeoutRef.current = setTimeout(() => closeParams(), 200)
+      return
+    }
+    if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current)
+    }
+  }, [isHovered, closeParams, isTabHovered])
+
   return (
     <div className='hfui-orderform__ao-settings'>
-      <div className='hfui-orderform__ao-settings__menu hfui-strategy__options-panel'>
-        <div className='hfui-orderform__ao-settings__menu-buttons' onClick={closeParams}>
-          <Item onClick={startExecution} isDisabled={executing || !apiClientConfigured}>
+      <div
+        className={cx(
+          'hfui-orderform__ao-settings__menu hfui-strategy__options-panel',
+          {
+            'hfui-strategy__options-panel--sidebar-closed': !sidebarOpened,
+          },
+        )}
+        ref={hoverRef}
+      >
+        <div
+          className='hfui-orderform__ao-settings__menu-buttons'
+          onClick={closeParams}
+        >
+          <Item
+            onClick={startExecution}
+            isDisabled={executing || !apiClientConfigured}
+          >
             <Icon name='play' />
-                &nbsp;&nbsp;
+            &nbsp;&nbsp;
             {t('strategyEditor.launchStrategy')}
           </Item>
           <Item onClick={stopExecution} isDisabled={!executing}>
             <Icon name='stop' />
-                &nbsp;&nbsp;
+            &nbsp;&nbsp;
             {t('strategyEditor.stopExec')}
           </Item>
           <div className='hfui-navbar__layout-settings__separator' />
@@ -75,18 +108,14 @@ const StrategyParams = ({
           <Item onClick={onSaveStrategy} isDisabled={!strategyDirty}>
             {t('ui.save')}
           </Item>
-          <Item onClick={onOpenSaveStrategyAsModal}>
-            {t('ui.saveAs')}
-          </Item>
+          <Item onClick={onOpenSaveStrategyAsModal}>{t('ui.saveAs')}</Item>
           <Item onClick={onExportStrategy}>
             {t('strategyEditor.exportStrategy')}
           </Item>
           <Item onClick={onOpenRemoveModal} isDisabled={!id}>
             {t('ui.removeBtn')}
           </Item>
-          <Item onClick={onClose}>
-            {t('strategyEditor.closeStrategy')}
-          </Item>
+          <Item onClick={onClose}>{t('strategyEditor.closeStrategy')}</Item>
         </div>
       </div>
     </div>
@@ -111,6 +140,8 @@ StrategyParams.propTypes = {
   strategyId: PropTypes.string,
   closeParams: PropTypes.func.isRequired,
   strategyDirty: PropTypes.bool.isRequired,
+  isTabHovered: PropTypes.bool.isRequired,
+  sidebarOpened: PropTypes.bool.isRequired,
 }
 
 StrategyParams.defaultProps = {

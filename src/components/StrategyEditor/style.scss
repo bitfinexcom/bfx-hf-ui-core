@@ -264,8 +264,13 @@ body.hosted {
 
 .hfui-strategy__options-panel {
   min-width: 180px !important;
-  left: 150px !important;
+  left: 240px !important;
   top: -27px !important;
+  box-shadow: 5px -4px 15px 0px #000000;
+
+  &--sidebar-closed {
+    left: 150px !important;
+  }
 }
 
 .hfui-strategyeditor__initial-message {
