@@ -6,9 +6,10 @@ import { Icon } from 'react-fa'
 import { useSelector } from 'react-redux'
 import { getCurrentModeAPIKeyState } from '../../../redux/selectors/ws'
 import useHover from '../../../hooks/useHover'
+import { getIsPaperTrading } from '../../../redux/selectors/ui'
 
 const Item = ({
-  isSelected,isDisabled,children,onClick,...props // eslint-disable-line
+  isSelected, isDisabled, children, onClick, ...props
 }) => (
   <div
     className={cx('hfui-orderform__ao-settings__item is-layout', {
@@ -21,6 +22,13 @@ const Item = ({
     {children}
   </div>
 )
+
+Item.propTypes = {
+  isSelected: PropTypes.bool.isRequired,
+  isDisabled: PropTypes.bool.isRequired,
+  children: PropTypes.node.isRequired,
+  onClick: PropTypes.func.isRequired,
+}
 
 const StrategyParams = ({
   startExecution,
@@ -53,6 +61,7 @@ const StrategyParams = ({
   }
 
   const apiCredentials = useSelector(getCurrentModeAPIKeyState)
+  const isPaperTrading = useSelector(getIsPaperTrading)
   const apiClientConfigured = apiCredentials?.configured && apiCredentials?.valid
 
   useEffect(() => {
@@ -90,11 +99,13 @@ const StrategyParams = ({
             &nbsp;&nbsp;
             {t('strategyEditor.launchStrategy')}
           </Item>
-          <Item onClick={stopExecution} isDisabled={!executing}>
-            <Icon name='stop' />
-            &nbsp;&nbsp;
-            {t('strategyEditor.stopExec')}
-          </Item>
+          {!isPaperTrading && (
+            <Item onClick={stopExecution} isDisabled={!executing}>
+              <Icon name='stop' />
+              &nbsp;&nbsp;
+              {t('strategyEditor.stopExec')}
+            </Item>
+          )}
           <div className='hfui-navbar__layout-settings__separator' />
           <Item onClick={onOpenCreateStrategyModal}>
             {t('strategyEditor.newStrategy2')}
