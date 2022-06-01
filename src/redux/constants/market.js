@@ -5,3 +5,8 @@ export default {
   GET_PERPS_NAMES: 'MARKET_GET_PERPS_NAMES',
   SET_PERPS_NAMES: 'MARKET_SET_PERPS_NAMES',
 }
+
+export const MARKET_TYPES_KEYS = {
+  LIVE_MARKETS: 'liveMarkets',
+  SANDBOX_MARKETS: 'sandboxMarkets',
+}
