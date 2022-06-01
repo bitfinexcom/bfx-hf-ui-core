@@ -197,6 +197,10 @@ const StrategyEditor = (props) => {
     setStrategyDirty(false)
   }
 
+  const onCancelProcess = () => {
+
+  }
+
   const onBacktestStart = () => {
     const startNum = new Date(startDate).getTime()
     const endNum = new Date(endDate).getTime()
@@ -331,6 +335,7 @@ const StrategyEditor = (props) => {
               executionResults={execResults}
               onSaveAsStrategy={onSaveAsStrategy}
               openExecutionOptionsModal={openExecutionOptionsModal}
+              onCancelProcess={onCancelProcess}
               {...optionsProps}
               {...props}
             />

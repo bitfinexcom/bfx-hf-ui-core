@@ -16,13 +16,15 @@ import StrategyOptionsPanel from '../../../StrategyOptionsPanel'
 import StrategyTabWrapper from '../../components/StrategyTabWrapper'
 
 const StrategyLiveTab = (props) => {
-  const { executionResults, options } = props
+  const { executionResults, options, onCancelProcess } = props
   const [layoutConfig, setLayoutConfig] = useState()
   const [fullscreenChart, setFullScreenChart] = useState(false)
 
   const { t } = useTranslation()
 
-  const { loading, executing, results } = executionResults
+  const { /* loading, */ executing, results } = executionResults
+
+  const loading = true
 
   const hasResults = !_isEmpty(results)
 
@@ -100,6 +102,7 @@ const StrategyLiveTab = (props) => {
         layoutConfig={layoutConfig}
         renderGridComponents={renderGridComponents}
         isLoading={loading}
+        onCancelProcess={onCancelProcess}
       />
       {_isEmpty(results) && !executing && !loading && (
         <p className='hfui-strategyeditor__initial-message'>
@@ -120,6 +123,7 @@ StrategyLiveTab.propTypes = {
   options: PropTypes.shape({
     startedOn: PropTypes.number,
   }).isRequired,
+  onCancelProcess: PropTypes.func.isRequired,
 }
 
 export default StrategyLiveTab
