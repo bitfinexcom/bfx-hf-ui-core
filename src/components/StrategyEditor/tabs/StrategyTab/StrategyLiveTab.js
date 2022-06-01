@@ -12,8 +12,8 @@ import {
   LAYOUT_CONFIG_WITHOUT_TRADES,
 } from '../../components/StrategiesGridLayout.constants'
 import StrategyLiveChart from '../../../StrategyLiveChart'
-import StrategyOptionsPanel from '../../../StrategyOptionsPanel'
 import StrategyTabWrapper from '../../components/StrategyTabWrapper'
+import StrategyOptionsPanelLive from '../../../StrategyOptionsPanel/StrategyOptionsPanelLive'
 
 const StrategyLiveTab = (props) => {
   const { executionResults, options } = props
@@ -43,7 +43,7 @@ const StrategyLiveTab = (props) => {
       switch (i) {
         case COMPONENTS_KEYS.OPTIONS:
           return (
-            <StrategyOptionsPanel
+            <StrategyOptionsPanelLive
               {...props}
               setFullScreenChart={() => setFullScreenChart(true)}
               isExecuting={executing}

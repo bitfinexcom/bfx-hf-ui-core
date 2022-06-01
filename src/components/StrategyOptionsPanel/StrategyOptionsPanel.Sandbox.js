@@ -19,7 +19,7 @@ import './style.css'
 
 const MAX_STRATEGY_LABEL_LENGTH = 25
 
-const StrategyOptionsPanel = ({
+const StrategyOptionsPanelSandbox = ({
   strategy,
   onOpenSaveStrategyAsModal,
   symbol,
@@ -94,16 +94,14 @@ const StrategyOptionsPanel = ({
           strategy={strategy}
           isExecuting={isExecuting}
         />
-        <div className='hfui-strategy-options__buttons-container item'>
-          <NavbarButton
-            alt='Application settings'
-            icon='settings-icon'
-            className='hfui-navbar__app-settings__icon item'
-            onClick={openExecutionOptionsModal}
-          />
-        </div>
+        <NavbarButton
+          alt='Application settings'
+          icon='settings-icon'
+          className='hfui-navbar__app-settings__icon item'
+          onClick={openExecutionOptionsModal}
+        />
       </div>
-      <div className='hfui-strategy-options__right-container'>
+      <div className='hfui-strategy-options__save-container'>
         <p className='message'>
           {hasErrors && t('strategyEditor.errorsInIDE')}
           {strategyDirty && !hasErrors && t('strategyEditor.unsavedChanges')}
@@ -125,7 +123,7 @@ const StrategyOptionsPanel = ({
   )
 }
 
-StrategyOptionsPanel.propTypes = {
+StrategyOptionsPanelSandbox.propTypes = {
   markets: PropTypes.objectOf(PropTypes.object).isRequired, // eslint-disable-line
   symbol: PropTypes.objectOf(
     PropTypes.oneOfType([
@@ -150,4 +148,4 @@ StrategyOptionsPanel.propTypes = {
   onSaveStrategy: PropTypes.func.isRequired,
 }
 
-export default StrategyOptionsPanel
+export default StrategyOptionsPanelSandbox
