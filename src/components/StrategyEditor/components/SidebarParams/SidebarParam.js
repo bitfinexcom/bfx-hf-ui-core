@@ -18,10 +18,15 @@ const SidebarParam = ({
 )
 
 SidebarParam.propTypes = {
-  isSelected: PropTypes.bool.isRequired,
-  isDisabled: PropTypes.bool.isRequired,
+  isSelected: PropTypes.bool,
+  isDisabled: PropTypes.bool,
   children: PropTypes.node.isRequired,
   onClick: PropTypes.func.isRequired,
+}
+
+SidebarParam.defaultProps = {
+  isSelected: false,
+  isDisabled: false,
 }
 
 export default SidebarParam
