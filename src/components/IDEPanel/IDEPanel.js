@@ -5,7 +5,7 @@ import _isEmpty from 'lodash/isEmpty'
 
 import { useSelector } from 'react-redux'
 import MonacoEditor from '../StrategyEditor/components/MonacoEditor'
-import { getThemeSetting } from '../../redux/selectors/ui'
+import { getIsPaperTrading, getThemeSetting } from '../../redux/selectors/ui'
 import Panel from '../../ui/Panel'
 
 const STRATEGY_SECTIONS = [
@@ -37,6 +37,7 @@ const IDEPanel = ({
   const [execError, setExecError] = useState('')
 
   const settingsTheme = useSelector(getThemeSetting)
+  const isPaperTrading = useSelector(getIsPaperTrading)
 
   const processStrategy = (updatedStrategy) => {
     const { id, label } = updatedStrategy
@@ -123,6 +124,7 @@ const IDEPanel = ({
               value={strategy[activeContent] || ''}
               onChange={onEditorContentChange}
               theme={settingsTheme}
+              readOnly={!isPaperTrading}
             />
             {(execError || sectionErrors[activeContent]) && (
             <div className='hfui-strategyeditor__editor-error-output'>

@@ -1,16 +1,27 @@
 import Editor, { monaco } from 'react-monaco-editor'
-import React, { useEffect } from 'react'
+import React, { useEffect, useMemo } from 'react'
 import PropTypes from 'prop-types'
 import _isEmpty from 'lodash/isEmpty'
 
 import { THEMES } from '../../../redux/selectors/ui'
 
 const HF_MONACO_THEME = 'HFTheme'
-const monacoOptions = {
+const getMonacoOptions = (readOnly) => ({
   automaticLayout: true,
-}
+  readOnly,
+})
 
-const MonacoEditor = ({ value, onChange, theme }) => {
+const MonacoEditor = ({
+  value, onChange, theme, readOnly,
+}) => {
+  const monacoOptions = useMemo(() => getMonacoOptions(readOnly), [readOnly])
+
+  const onEditorChangeHandler = (e) => {
+    if (readOnly) {
+      return
+    }
+    onChange(e)
+  }
   useEffect(() => {
     if (_isEmpty(monaco)) {
       return
@@ -37,7 +48,7 @@ const MonacoEditor = ({ value, onChange, theme }) => {
       language='javascript'
       theme={theme === THEMES.DARK ? HF_MONACO_THEME : 'vs'}
       value={value}
-      onChange={onChange}
+      onChange={onEditorChangeHandler}
       options={monacoOptions}
     />
   )
@@ -47,6 +58,7 @@ MonacoEditor.propTypes = {
   value: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
   theme: PropTypes.oneOf([THEMES.LIGHT, THEMES.DARK]).isRequired,
+  readOnly: PropTypes.bool.isRequired,
 }
 
 export default MonacoEditor
