@@ -706,6 +706,7 @@
     "closeStrategy": "Close strategy",
     "executionOptionsModal": {
       "title": "Select execution parameters before launch",
+      "disabledTitle": "Execution parameters",
       "capitalAllocationLabel": "Capital Allocation",
       "stopLoss": "Stop-Loss",
       "maxDrawdown": "Maximum Drawdown"

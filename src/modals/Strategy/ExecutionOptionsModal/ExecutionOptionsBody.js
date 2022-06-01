@@ -6,8 +6,15 @@ import AmountInput from '../../../components/OrderForm/FieldComponents/input.amo
 import PercentInput from '../../../components/OrderForm/FieldComponents/input.percent'
 
 const ExecutionOptionsBody = ({
-  maxDrawdownPerc, setMaxDrawdownPerc, capitalAllocationHandler, capitalAllocation, capitalAllocationError,
-  stopLossPerc, setStopLossPerc, t,
+  isPaperTrading,
+  maxDrawdownPerc,
+  setMaxDrawdownPerc,
+  capitalAllocationHandler,
+  capitalAllocation,
+  capitalAllocationError,
+  stopLossPerc,
+  setStopLossPerc,
+  t,
 }) => (
   <div className='hfui-execution-options-modal'>
     <div className='hfui-execution-options-modal__option'>
@@ -21,10 +28,11 @@ const ExecutionOptionsBody = ({
         </Tooltip>
       </p>
       <AmountInput
-        placeholder={t('ui.e.g.', { value: 3000.00 })}
+        placeholder={t('ui.e.g.', { value: 3000.0 })}
         onChange={capitalAllocationHandler}
         value={capitalAllocation}
         validationError={capitalAllocationError}
+        disabled={!isPaperTrading}
       />
     </div>
     <div className='hfui-execution-options-modal__option'>
@@ -41,6 +49,7 @@ const ExecutionOptionsBody = ({
         placeholder={t('ui.e.g.', { value: '45%' })}
         value={stopLossPerc}
         onChange={setStopLossPerc}
+        disabled={!isPaperTrading}
       />
     </div>
     <div className='hfui-execution-options-modal__option'>
@@ -57,6 +66,7 @@ const ExecutionOptionsBody = ({
         placeholder={t('ui.e.g.', { value: '45%' })}
         value={maxDrawdownPerc}
         onChange={setMaxDrawdownPerc}
+        disabled={!isPaperTrading}
       />
     </div>
   </div>
@@ -71,6 +81,7 @@ ExecutionOptionsBody.propTypes = {
   capitalAllocationError: PropTypes.string.isRequired,
   capitalAllocationHandler: PropTypes.func.isRequired,
   t: PropTypes.func.isRequired,
+  isPaperTrading: PropTypes.bool.isRequired,
 }
 
 export default ExecutionOptionsBody
