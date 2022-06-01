@@ -6,9 +6,9 @@ import {
   COMPONENTS_KEYS,
   IDE_LAYOUT_CONFIG,
 } from '../../components/StrategiesGridLayout.constants'
-import StrategyOptionsPanel from '../../../StrategyOptionsPanel'
 import IDEPanel from '../../../IDEPanel'
 import IDEHelpPanel from '../../../IDEHelpPanel'
+import StrategyOptionsPanelSandbox from '../../../StrategyOptionsPanel/StrategyOptionsPanel.Sandbox'
 
 const StrategySandboxTab = (props) => {
   const { executionResults } = props
@@ -21,7 +21,9 @@ const StrategySandboxTab = (props) => {
     (i) => {
       switch (i) {
         case COMPONENTS_KEYS.OPTIONS:
-          return <StrategyOptionsPanel {...props} hasResults={hasResults} />
+          return (
+            <StrategyOptionsPanelSandbox {...props} hasResults={hasResults} />
+          )
 
         case COMPONENTS_KEYS.IDE:
           return <IDEPanel {...props} />
