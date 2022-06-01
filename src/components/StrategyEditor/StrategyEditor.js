@@ -22,6 +22,7 @@ import IDETab from './tabs/IDETab'
 import { getDefaultMarket } from '../../util/market'
 import CreateNewStrategyFromModalOpen from '../../modals/Strategy/CreateNewStrategyFromModal'
 import SaveStrategyAsModal from '../../modals/Strategy/SaveStrategyAsModal/SaveStrategyAsModal'
+import CancelProcessModal from '../../modals/Strategy/CancelProcessModal'
 import StrategyTabTitle from './tabs/StrategyTab/StrategyTab.Title'
 import BacktestTabTitle from './tabs/BacktestTab.Title'
 import IDETabTitle from './tabs/IDETab.Title'
@@ -82,6 +83,7 @@ const StrategyEditor = (props) => {
   const [createNewStrategyFromModalOpen, setCreateNewStrategyFromModalOpen] = useState(false)
   const [openExistingStrategyModalOpen, setOpenExistingStrategyModalOpen] = useState(false)
   const [isSaveStrategyAsModalOpen, setIsSaveStrategyModalOpen] = useState(false)
+  const [isCancelProcessModalOpen, setIsCancelProcessModalOpen] = useState(false)
   const [isExecutionOptionsModalOpen, setIsExecutionOptionsModalOpen] = useState(false)
   const [executionOptionsModalType, setExecutionOptionsModalType] = useState(
     EXECUTION_TYPES.LIVE,
@@ -149,6 +151,7 @@ const StrategyEditor = (props) => {
     setCreateNewStrategyFromModalOpen(false)
     setIsSaveStrategyModalOpen(false)
     setIsExecutionOptionsModalOpen(false)
+    setIsCancelProcessModalOpen(false)
   }
 
   const onCreateNewStrategy = (label, content = {}) => {
@@ -197,8 +200,12 @@ const StrategyEditor = (props) => {
     setStrategyDirty(false)
   }
 
-  const onCancelProcess = () => {
+  const cancelProcess = () => {
 
+  }
+
+  const onCancelProcess = () => {
+    setIsCancelProcessModalOpen(true)
   }
 
   const onBacktestStart = () => {
@@ -404,6 +411,11 @@ const StrategyEditor = (props) => {
         onClose={onCloseModals}
         strategy={strategy}
         onSubmit={onSaveAsStrategy}
+      />
+      <CancelProcessModal
+        isOpen={isCancelProcessModalOpen}
+        onClose={onCloseModals}
+        onSubmit={cancelProcess}
       />
       <ExecutionOptionsModal
         isOpen={isExecutionOptionsModalOpen}
