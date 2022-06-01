@@ -714,7 +714,8 @@
     "perfomanceMetrics": {
       "title": "Perfomance metrics",
       "runTime": "Strategy Run Time"
-    }
+    },
+    "IDEreadonlyNotice": "Strategy editing is disabled while the strategy is being executed. To update your strategy, change to SANDBOX environment and reopen this strategy from your ACTIVE STRATEGIES tab"
   },
   "ui": {
     "ok": "Okay",
