@@ -25,7 +25,7 @@ import {
   getIsBetaVersion,
 } from '../../redux/selectors/ui'
 import StrategyEditor from './StrategyEditor'
-import { getMarkets } from '../../redux/selectors/meta'
+import { getMarketsForExecution } from '../../redux/selectors/meta'
 
 const mapStateToProps = (state = {}) => {
   const strategyId = getStrategyId(state)
@@ -38,7 +38,7 @@ const mapStateToProps = (state = {}) => {
     settingsTheme: getThemeSetting(state),
     options: getExecutionOptions(state)(strategyId),
     executing: getIsStrategyExecuting(state)(strategyId),
-    markets: getMarkets(state),
+    markets: getMarketsForExecution(state),
     isPaperTrading: getIsPaperTrading(state),
     flags: getStrategiesFeatureFlags(state),
     isBetaVersion: getIsBetaVersion(state),
