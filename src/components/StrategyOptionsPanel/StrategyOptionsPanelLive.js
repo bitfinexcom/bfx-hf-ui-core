@@ -66,6 +66,7 @@ const StrategyOptionsPanelLive = ({
           <MarketSelect
             value={symbol}
             markets={markets}
+            onChange={() => {}}
             disabled
             renderWithFavorites
           />
