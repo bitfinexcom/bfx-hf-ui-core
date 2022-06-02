@@ -1,6 +1,4 @@
 import React, { memo, useCallback } from 'react'
-import PropTypes from 'prop-types'
-import _isEmpty from 'lodash/isEmpty'
 import StrategiesGridLayout from '../../components/StrategiesGridLayout'
 import {
   COMPONENTS_KEYS,
@@ -11,19 +9,11 @@ import IDEHelpPanel from '../../../IDEHelpPanel'
 import StrategyOptionsPanelSandbox from '../../../StrategyOptionsPanel/StrategyOptionsPanel.Sandbox'
 
 const StrategySandboxTab = (props) => {
-  const { executionResults } = props
-
-  const { results } = executionResults
-
-  const hasResults = !_isEmpty(results)
-
   const renderGridComponents = useCallback(
     (i) => {
       switch (i) {
         case COMPONENTS_KEYS.OPTIONS:
-          return (
-            <StrategyOptionsPanelSandbox {...props} hasResults={hasResults} />
-          )
+          return <StrategyOptionsPanelSandbox {...props} />
 
         case COMPONENTS_KEYS.IDE:
           return <IDEPanel {...props} />
@@ -34,7 +24,7 @@ const StrategySandboxTab = (props) => {
           return null
       }
     },
-    [props, hasResults],
+    [props],
   )
 
   return (
@@ -45,13 +35,6 @@ const StrategySandboxTab = (props) => {
       />
     </div>
   )
-}
-
-StrategySandboxTab.propTypes = {
-  executionResults: PropTypes.shape({
-    // eslint-disable-next-line react/forbid-prop-types
-    results: PropTypes.object,
-  }).isRequired,
 }
 
 export default memo(StrategySandboxTab)

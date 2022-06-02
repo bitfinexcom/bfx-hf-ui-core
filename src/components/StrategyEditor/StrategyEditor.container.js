@@ -36,7 +36,6 @@ const mapStateToProps = (state = {}) => {
     backtestResults: getBacktestResults(state),
     allExecutionResults: getExecutionResults(state),
     settingsTheme: getThemeSetting(state),
-    options: getExecutionOptions(state)(strategyId),
     executing: getIsStrategyExecuting(state)(strategyId),
     markets: getMarketsForExecution(state),
     isPaperTrading: getIsPaperTrading(state),
@@ -113,11 +112,24 @@ const mapDispatchToProps = (dispatch) => ({
       dispatch(WSActions.setExecutionLoading(true))
     } else {
       dispatch(
-        UIActions.changeLaunchStrategyModalState(true, strategyId, executionOptions),
+        UIActions.changeLaunchStrategyModalState(
+          true,
+          strategyId,
+          executionOptions,
+        ),
       )
     }
   },
-  dsExecuteBacktest: (from, to, symbol, tf, candles, trades, strategy, constraints) => {
+  dsExecuteBacktest: (
+    from,
+    to,
+    symbol,
+    tf,
+    candles,
+    trades,
+    strategy,
+    constraints,
+  ) => {
     const processedStrategy = _omitBy(strategy, _isEmpty)
 
     dispatch(WSActions.purgeBacktestData())
@@ -149,7 +161,9 @@ const mapDispatchToProps = (dispatch) => ({
   },
   dsStopLiveStrategy: (authToken, runningStrategyID) => {
     dispatch(WSActions.setExecutionLoading(true))
-    dispatch(WSActions.send(['strategy.execute_stop', authToken, runningStrategyID]))
+    dispatch(
+      WSActions.send(['strategy.execute_stop', authToken, runningStrategyID]),
+    )
   },
   showError: (text) => {
     dispatch(

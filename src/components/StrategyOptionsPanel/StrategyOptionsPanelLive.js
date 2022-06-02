@@ -19,7 +19,6 @@ const MAX_STRATEGY_LABEL_LENGTH = 25
 const StrategyOptionsPanelLive = ({
   strategy,
   onOpenSaveStrategyAsModal,
-  symbol,
   markets,
   isExecuting,
   hasResults,
@@ -29,7 +28,10 @@ const StrategyOptionsPanelLive = ({
   stopExecution,
   startExecution,
 }) => {
-  const { label } = strategy || {}
+  const {
+    label,
+    strategyOptions: { symbol },
+  } = strategy || {}
   const { t } = useTranslation()
 
   return (
@@ -53,14 +55,14 @@ const StrategyOptionsPanelLive = ({
           </>
         </p>
         {isExecuting && (
-        <div className='hfui-strategy-options__option item'>
-          <StrategyRunned />
-        </div>
+          <div className='hfui-strategy-options__option item'>
+            <StrategyRunned />
+          </div>
         )}
         {!isExecuting && hasResults && (
-        <div className='hfui-strategy-options__option item'>
-          <StrategyStopped />
-        </div>
+          <div className='hfui-strategy-options__option item'>
+            <StrategyStopped />
+          </div>
         )}
         <div className='hfui-strategy-options__input item'>
           <MarketSelect
@@ -118,17 +120,17 @@ const StrategyOptionsPanelLive = ({
 
 StrategyOptionsPanelLive.propTypes = {
   markets: PropTypes.objectOf(PropTypes.object).isRequired, // eslint-disable-line
-  symbol: PropTypes.objectOf(
-    PropTypes.oneOfType([
-      PropTypes.string,
-      PropTypes.arrayOf(PropTypes.string),
-      PropTypes.bool,
-      PropTypes.number,
-    ]),
-  ).isRequired,
   onOpenSaveStrategyAsModal: PropTypes.func.isRequired,
   strategy: PropTypes.shape({
     label: PropTypes.string,
+    symbol: PropTypes.objectOf(
+      PropTypes.oneOfType([
+        PropTypes.string,
+        PropTypes.arrayOf(PropTypes.string),
+        PropTypes.bool,
+        PropTypes.number,
+      ]),
+    ).isRequired,
   }).isRequired,
   isExecuting: PropTypes.bool.isRequired,
   hasResults: PropTypes.bool.isRequired,

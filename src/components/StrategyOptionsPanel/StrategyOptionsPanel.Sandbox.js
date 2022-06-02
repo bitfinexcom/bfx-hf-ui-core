@@ -10,10 +10,9 @@ import { Icon } from 'react-fa'
 import MarketSelect from '../MarketSelect'
 import Button from '../../ui/Button'
 import { makeShorterLongName } from '../../util/ui'
-import StrategyRunned from '../StrategyEditor/components/StrategyRunned'
-import StrategyStopped from '../StrategyEditor/components/StrategyStopped'
 import StrategyTypeSelect from './StrategyTypeSelect'
 import NavbarButton from '../Navbar/Navbar.Button'
+import { STRATEGY_OPTIONS_KEYS } from '../StrategyEditor/StrategyEditor.helpers'
 
 import './style.css'
 
@@ -22,27 +21,30 @@ const MAX_STRATEGY_LABEL_LENGTH = 25
 const StrategyOptionsPanelSandbox = ({
   strategy,
   onOpenSaveStrategyAsModal,
-  symbol,
   markets,
-  setMargin,
-  setSymbol,
-  isExecuting,
-  hasResults,
   onSaveAsStrategy,
   openExecutionOptionsModal,
   strategyDirty,
   hasErrors,
   onSaveStrategy,
+  saveStrategyOptions,
 }) => {
-  const { label } = strategy || {}
+  const {
+    label,
+    strategyOptions: { symbol },
+  } = strategy || {}
   const { t } = useTranslation()
 
   const onMarketSelectChange = (selection) => {
     const sel = _find(markets, (m) => m.wsID === selection.wsID)
-    if (!_includes(sel?.contexts, 'm')) {
-      setMargin(false)
+    const options = {
+      [STRATEGY_OPTIONS_KEYS.SYMBOL]: sel,
     }
-    setSymbol(sel)
+
+    if (!_includes(sel?.contexts, 'm')) {
+      options[STRATEGY_OPTIONS_KEYS.MARGIN] = false
+    }
+    saveStrategyOptions(options)
   }
 
   return (
@@ -65,34 +67,21 @@ const StrategyOptionsPanelSandbox = ({
             )}
           </>
         </p>
-        {isExecuting && (
-        <div className='hfui-strategy-options__option item'>
-          <StrategyRunned />
-        </div>
-        )}
-        {!isExecuting && hasResults && (
-        <div className='hfui-strategy-options__option item'>
-          <StrategyStopped />
-        </div>
-        )}
         <div className='hfui-strategy-options__input item'>
           <MarketSelect
             value={symbol}
             onChange={onMarketSelectChange}
             markets={markets}
-            disabled={isExecuting}
             renderWithFavorites
           />
           <p className='hfui-orderform__input-label'>
-            {isExecuting
-              ? t('strategyEditor.selectMarketDescriptionDisabled')
-              : t('strategyEditor.selectMarketDescription')}
+            {t('strategyEditor.selectMarketDescription')}
           </p>
         </div>
         <StrategyTypeSelect
           onSaveAsStrategy={onSaveAsStrategy}
           strategy={strategy}
-          isExecuting={isExecuting}
+          isExecuting={false}
         />
         <NavbarButton
           alt='Application settings'
@@ -118,29 +107,27 @@ const StrategyOptionsPanelSandbox = ({
           disabled={hasErrors || !strategyDirty}
         />
       </div>
-
     </div>
   )
 }
 
 StrategyOptionsPanelSandbox.propTypes = {
   markets: PropTypes.objectOf(PropTypes.object).isRequired, // eslint-disable-line
-  symbol: PropTypes.objectOf(
-    PropTypes.oneOfType([
-      PropTypes.string,
-      PropTypes.arrayOf(PropTypes.string),
-      PropTypes.bool,
-      PropTypes.number,
-    ]),
-  ).isRequired,
-  setSymbol: PropTypes.func.isRequired,
-  setMargin: PropTypes.func.isRequired,
+  saveStrategyOptions: PropTypes.func.isRequired,
   onOpenSaveStrategyAsModal: PropTypes.func.isRequired,
   strategy: PropTypes.shape({
     label: PropTypes.string,
+    strategyOptions: PropTypes.shape({
+      symbol: PropTypes.objectOf(
+        PropTypes.oneOfType([
+          PropTypes.string,
+          PropTypes.arrayOf(PropTypes.string),
+          PropTypes.bool,
+          PropTypes.number,
+        ]),
+      ).isRequired,
+    }).isRequired,
   }).isRequired,
-  isExecuting: PropTypes.bool.isRequired,
-  hasResults: PropTypes.bool.isRequired,
   onSaveAsStrategy: PropTypes.func.isRequired,
   openExecutionOptionsModal: PropTypes.func.isRequired,
   strategyDirty: PropTypes.bool.isRequired,
