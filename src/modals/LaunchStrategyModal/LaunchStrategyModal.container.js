@@ -5,7 +5,6 @@ import {
   getLaunchStrategyOptions, getLaunchStrategyModalVisible, getLaunchStrategyIdModal,
 } from '../../redux/selectors/ui'
 import LaunchStrategyModal from './LaunchStrategyModal'
-import WSActions from '../../redux/actions/ws'
 
 const mapStateToProps = (state = {}) => ({
   visible: getLaunchStrategyModalVisible(state),
@@ -16,15 +15,6 @@ const mapStateToProps = (state = {}) => ({
 const mapDispatchToProps = dispatch => ({
   changeLaunchStrategyModalState: (isVisible) => {
     dispatch(UIActions.changeLaunchStrategyModalState(isVisible, '', {}))
-  },
-  dsExecuteLiveStrategy: (strategyId, {
-    authToken, name, symbol, tf, includeTrades, strategy, seedCandleCount, margin, constraints,
-  }) => {
-    dispatch(WSActions.setExecutionOption(strategyId, {
-      includeTrades, seedCandleCount, symbol, tf, margin, constraints,
-    }))
-    dispatch(WSActions.send(['strategy.execute_start', authToken, name, symbol, tf, includeTrades, strategy, seedCandleCount, margin, constraints]))
-    dispatch(WSActions.setExecutionLoading(true))
   },
 })
 

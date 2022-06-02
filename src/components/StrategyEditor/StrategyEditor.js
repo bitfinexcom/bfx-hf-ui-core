@@ -60,7 +60,6 @@ const StrategyEditor = (props) => {
     saveStrategy,
     isPaperTrading,
     dsExecuteBacktest,
-    // setBacktestOptions,
     showError,
     flags,
     isBetaVersion,
@@ -179,7 +178,6 @@ const StrategyEditor = (props) => {
   }
 
   const saveStrategyOptions = (newOptions) => {
-    console.log(newOptions)
     onSaveAsStrategy({
       ...strategy,
       strategyOptions: { ...strategyOptions, ...newOptions },
@@ -221,7 +219,6 @@ const StrategyEditor = (props) => {
       strategy,
       constraints,
     )
-    // setBacktestOptions(optionsProps)
   }
 
   const startExecution = () => {
@@ -449,7 +446,6 @@ StrategyEditor.propTypes = {
   ),
   saveStrategy: PropTypes.func.isRequired,
   isPaperTrading: PropTypes.bool.isRequired,
-  // setBacktestOptions: PropTypes.func.isRequired,
   dsExecuteBacktest: PropTypes.func.isRequired,
   isBetaVersion: PropTypes.bool.isRequired,
   flags: PropTypes.shape({

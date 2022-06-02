@@ -6,9 +6,6 @@ function getInitialState() {
       // ['strategy-id', 'strategy-id', ...]
     ],
     loading: false,
-    options: {
-      // 'strategy-id': { /* options */ }
-    },
     results: {
       // 'strategy-map-key': { /* results */ }
     },
@@ -98,27 +95,6 @@ function reducer(state = getInitialState(), action = {}) {
           [id]: undefined,
         },
         loading: false,
-      }
-    }
-
-    case types.SET_EXECUTION_OPTION: {
-      const { strategyId, options = {} } = payload
-
-      return {
-        ...state,
-        options: {
-          ...state,
-          [strategyId]: options,
-        },
-      }
-    }
-
-    case types.SET_EXECUTION_OPTIONS: {
-      const { options = {} } = payload
-
-      return {
-        ...state,
-        options,
       }
     }
 

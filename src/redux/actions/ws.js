@@ -263,21 +263,6 @@ export default {
     payload: { channel },
   }),
 
-  setBacktestOptions: options => ({
-    type: t.SET_BACKTEST_OPTIONS,
-    payload: { options },
-  }),
-
-  setExecutionOption: (strategyId, options) => ({
-    type: t.SET_EXECUTION_OPTION,
-    payload: { strategyId, options },
-  }),
-
-  setExecutionOptions: (options) => ({
-    type: t.SET_EXECUTION_OPTIONS,
-    payload: { options },
-  }),
-
   setLivePriceUpdate: (strategyMapKey, executionResultsObj) => ({
     type: t.SET_PRICE_UPDATE,
     payload: {
