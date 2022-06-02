@@ -87,15 +87,6 @@ const mapDispatchToProps = (dispatch) => ({
 
     if (isPaperTrading) {
       dispatch(
-        WSActions.setExecutionOption(strategyId, {
-          includeTrades,
-          seedCandleCount,
-          symbol,
-          tf,
-          margin,
-        }),
-      )
-      dispatch(
         WSActions.send([
           'strategy.execute_start',
           authToken,
@@ -155,9 +146,6 @@ const mapDispatchToProps = (dispatch) => ({
       }),
     )
     dispatch(WSActions.setBacktestLoading())
-  },
-  setBacktestOptions: (options) => {
-    dispatch(WSActions.setBacktestOptions(options))
   },
   dsStopLiveStrategy: (authToken, runningStrategyID) => {
     dispatch(WSActions.setExecutionLoading(true))

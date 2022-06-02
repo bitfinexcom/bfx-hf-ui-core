@@ -410,20 +410,9 @@ export default (alias, store) => (e = {}) => {
       }
 
       case 'strategy.live_execution_status': {
-        const [, executing, options] = payload
+        const [, executing] = payload
 
         store.dispatch(WSActions.setExecutingStrategies(executing))
-
-        if (executing) {
-          const mappedOptions = {}
-
-          _map(options, (option) => {
-            const { id } = option
-            mappedOptions[id] = option
-          })
-
-          store.dispatch(WSActions.setExecutionOptions(mappedOptions))
-        }
 
         store.dispatch(WSActions.setExecutionLoading(false))
 
