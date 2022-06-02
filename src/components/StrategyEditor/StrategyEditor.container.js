@@ -83,6 +83,7 @@ const mapDispatchToProps = (dispatch) => ({
       strategy: processedStrategy,
       seedCandleCount,
       margin,
+      constraints,
     }
 
     if (isPaperTrading) {

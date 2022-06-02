@@ -18,12 +18,12 @@ const mapDispatchToProps = dispatch => ({
     dispatch(UIActions.changeLaunchStrategyModalState(isVisible, '', {}))
   },
   dsExecuteLiveStrategy: (strategyId, {
-    authToken, name, symbol, tf, includeTrades, strategy, seedCandleCount, margin,
+    authToken, name, symbol, tf, includeTrades, strategy, seedCandleCount, margin, constraints,
   }) => {
     dispatch(WSActions.setExecutionOption(strategyId, {
-      includeTrades, seedCandleCount, symbol, tf, margin,
+      includeTrades, seedCandleCount, symbol, tf, margin, constraints,
     }))
-    dispatch(WSActions.send(['strategy.execute_start', authToken, name, symbol, tf, includeTrades, strategy, seedCandleCount, margin]))
+    dispatch(WSActions.send(['strategy.execute_start', authToken, name, symbol, tf, includeTrades, strategy, seedCandleCount, margin, constraints]))
     dispatch(WSActions.setExecutionLoading(true))
   },
 })
