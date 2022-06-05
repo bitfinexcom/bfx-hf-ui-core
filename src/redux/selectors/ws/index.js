@@ -23,7 +23,7 @@ import getFilteredAlgoOrdersCount from './get_filtered_algo_orders_count'
 import getAlgoOrders from './get_algo_orders'
 import getNotifications from './get_notifications'
 import getOrderHistory from './get_order_history'
-import getIsStrategyExecuting from './get_is_strategy_executing'
+import getIsCurrentStrategyExecuting from './get_is_current_strategy_executing'
 
 import getBacktestState from './get_backtest_state'
 import getBacktestData from './get_backtest_data'
@@ -39,8 +39,9 @@ import getCurrentModeAPIKeyState from './get_current_mode_api_key_state'
 import getIsMainModeApiKeyUpdating from './get_is_main_mode_api_key_updating'
 import getIsPaperModeApiKeyUpdating from './get_is_paper_mode_api_key_updating'
 
+import getSavedStrategies from './get_saved_strategies'
 import getExecutionResults from './get_execution_results'
-import getExecutionOptions from './get_execution_options'
+import getCurrentStrategyExecutionOptions from './get_current_strategy_execution_options'
 import getActiveStrategies from './get_active_strategies'
 
 export {
@@ -90,8 +91,9 @@ export {
   getIsMainModeApiKeyUpdating,
   getIsPaperModeApiKeyUpdating,
 
+  getSavedStrategies,
   getExecutionResults,
-  getExecutionOptions,
-  getIsStrategyExecuting,
+  getCurrentStrategyExecutionOptions,
+  getIsCurrentStrategyExecuting,
   getActiveStrategies,
 }

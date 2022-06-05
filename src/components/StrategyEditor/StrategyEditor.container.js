@@ -10,15 +10,14 @@ import WSTypes from '../../redux/constants/ws'
 import {
   getAuthToken,
   getBacktestResults,
-  getExecutionOptions,
   getExecutionResults,
   // getSortedByTimeActiveStrategies,
   getRunningStrategiesMapping,
   getLiveExecutionResults,
-  getIsStrategyExecuting,
+  getIsCurrentStrategyExecuting,
+  getSavedStrategies,
 } from '../../redux/selectors/ws'
 import {
-  getStrategyId,
   getThemeSetting,
   getIsPaperTrading,
   getStrategiesFeatureFlags,
@@ -28,15 +27,12 @@ import StrategyEditor from './StrategyEditor'
 import { getMarketsForExecution } from '../../redux/selectors/meta'
 
 const mapStateToProps = (state = {}) => {
-  const strategyId = getStrategyId(state)
-
   return {
     authToken: getAuthToken(state),
-    strategyId,
     backtestResults: getBacktestResults(state),
     allExecutionResults: getExecutionResults(state),
     settingsTheme: getThemeSetting(state),
-    executing: getIsStrategyExecuting(state)(strategyId),
+    executing: getIsCurrentStrategyExecuting(state),
     markets: getMarketsForExecution(state),
     isPaperTrading: getIsPaperTrading(state),
     flags: getStrategiesFeatureFlags(state),
@@ -44,6 +40,7 @@ const mapStateToProps = (state = {}) => {
     liveResults: getLiveExecutionResults(state),
     // activeStrategies: getSortedByTimeActiveStrategies(state),
     runningStrategiesMapping: getRunningStrategiesMapping(state),
+    savedStrategies: getSavedStrategies(state),
   }
 }
 
@@ -59,57 +56,34 @@ const mapDispatchToProps = (dispatch) => ({
   clearBacktestOptions: () => {
     dispatch(WSActions.resetBacktestData())
   },
-  dsExecuteLiveStrategy: (
+  dsExecuteLiveStrategy: ({
     authToken,
-    strategyId,
     name,
     symbol,
-    tf,
-    includeTrades,
+    timeframe,
+    trades,
     strategy,
-    seedCandleCount,
+    candleSeed,
     margin,
-    isPaperTrading,
     constraints,
-  ) => {
+  }) => {
     const processedStrategy = _omitBy(strategy, _isEmpty)
-    const executionOptions = {
-      authToken,
-      name,
-      symbol,
-      tf,
-      includeTrades,
-      strategy: processedStrategy,
-      seedCandleCount,
-      margin,
-      constraints,
-    }
 
-    if (isPaperTrading) {
-      dispatch(
-        WSActions.send([
-          'strategy.execute_start',
-          authToken,
-          name,
-          symbol,
-          tf,
-          includeTrades,
-          processedStrategy,
-          seedCandleCount,
-          margin,
-          constraints,
-        ]),
-      )
-      dispatch(WSActions.setExecutionLoading(true))
-    } else {
-      dispatch(
-        UIActions.changeLaunchStrategyModalState(
-          true,
-          strategyId,
-          executionOptions,
-        ),
-      )
-    }
+    dispatch(
+      WSActions.send([
+        'strategy.execute_start',
+        authToken,
+        name,
+        symbol,
+        timeframe,
+        trades,
+        processedStrategy,
+        candleSeed,
+        margin,
+        constraints,
+      ]),
+    )
+    dispatch(WSActions.setExecutionLoading(true))
   },
   dsExecuteBacktest: (
     from,

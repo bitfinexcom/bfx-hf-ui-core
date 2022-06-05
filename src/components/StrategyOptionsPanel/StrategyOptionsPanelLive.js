@@ -123,14 +123,16 @@ StrategyOptionsPanelLive.propTypes = {
   onOpenSaveStrategyAsModal: PropTypes.func.isRequired,
   strategy: PropTypes.shape({
     label: PropTypes.string,
-    symbol: PropTypes.objectOf(
-      PropTypes.oneOfType([
-        PropTypes.string,
-        PropTypes.arrayOf(PropTypes.string),
-        PropTypes.bool,
-        PropTypes.number,
-      ]),
-    ).isRequired,
+    strategyOptions: PropTypes.shape({
+      symbol: PropTypes.objectOf(
+        PropTypes.oneOfType([
+          PropTypes.string,
+          PropTypes.arrayOf(PropTypes.string),
+          PropTypes.bool,
+          PropTypes.number,
+        ]),
+      ).isRequired,
+    }),
   }).isRequired,
   isExecuting: PropTypes.bool.isRequired,
   hasResults: PropTypes.bool.isRequired,

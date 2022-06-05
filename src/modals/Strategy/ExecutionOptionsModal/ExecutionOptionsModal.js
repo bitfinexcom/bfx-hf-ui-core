@@ -67,7 +67,6 @@ const ExecutionOptionsModal = (props) => {
     const processed = String(AmountInput.processValue(v))
 
     setCapitalAllocationError(error)
-    console.log(processed, error)
     if (error) {
       return
     }

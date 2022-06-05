@@ -2,6 +2,7 @@ import React, { useCallback, useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
 import _isEmpty from 'lodash/isEmpty'
 import { useTranslation } from 'react-i18next'
+import { useSelector } from 'react-redux'
 import StrategyPerfomanceMetrics from '../../../StrategyPerfomanceMetrics'
 import StrategyTradesTable from '../../../StrategyTradesTable'
 import StrategiesGridLayout from '../../components/StrategiesGridLayout'
@@ -14,11 +15,14 @@ import {
 import StrategyLiveChart from '../../../StrategyLiveChart'
 import StrategyTabWrapper from '../../components/StrategyTabWrapper'
 import StrategyOptionsPanelLive from '../../../StrategyOptionsPanel/StrategyOptionsPanelLive'
+import { getCurrentStrategyExecutionOptions } from '../../../../redux/selectors/ws'
 
 const StrategyLiveTab = (props) => {
-  const { executionResults, options } = props
+  const { executionResults } = props
   const [layoutConfig, setLayoutConfig] = useState()
   const [fullscreenChart, setFullScreenChart] = useState(false)
+
+  const options = useSelector(getCurrentStrategyExecutionOptions)
 
   const { t } = useTranslation()
 
@@ -116,9 +120,6 @@ StrategyLiveTab.propTypes = {
     executing: PropTypes.bool,
     // eslint-disable-next-line react/forbid-prop-types
     results: PropTypes.object,
-  }).isRequired,
-  options: PropTypes.shape({
-    startedOn: PropTypes.number,
   }).isRequired,
 }
 
