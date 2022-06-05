@@ -5,6 +5,7 @@ import _size from 'lodash/size'
 import _some from 'lodash/some'
 import _values from 'lodash/values'
 import _find from 'lodash/find'
+import _includes from 'lodash/includes'
 import PropTypes from 'prop-types'
 import { useTranslation } from 'react-i18next'
 import { useDispatch, useSelector } from 'react-redux'
@@ -29,10 +30,10 @@ import IDETabTitle from './tabs/IDETab.Title'
 import ExecutionOptionsModal from '../../modals/Strategy/ExecutionOptionsModal'
 
 import './style.css'
-import { getCurrentMode } from '../../redux/selectors/ui'
 import { getCurrentModeAPIKeyState } from '../../redux/selectors/ws'
 import { changeAppSettingsModalState, recvNotification, setSettingsTab } from '../../redux/actions/ui'
 import { SETTINGS_TABS } from '../../modals/AppSettingsModal/AppSettingsModal.constants'
+import { MAIN_MODE, PAPER_MODE, ALLOWED_PAPER_PAIRS } from '../../redux/reducers/ui'
 
 const debug = Debug('hfui-ui:c:strategy-editor')
 const ONE_MIN = 1000 * 60
@@ -240,12 +241,11 @@ const StrategyEditor = (props) => {
     // setBacktestOptions(optionsProps)
   }
 
-  const currentMode = useSelector(getCurrentMode)
   const apiCredentials = useSelector(getCurrentModeAPIKeyState)
   const apiClientConfigured = apiCredentials?.configured && apiCredentials?.valid
   const dispatch = useDispatch()
   const openAppSettingsModal = () => dispatch(changeAppSettingsModalState(true))
-  const setAPIKeysTab = () => dispatch(setSettingsTab(SETTINGS_TABS.Keys, currentMode))
+  const setAPIKeysTab = () => dispatch(setSettingsTab(SETTINGS_TABS.Keys, _includes(ALLOWED_PAPER_PAIRS, symbol?.wsID) ? PAPER_MODE : MAIN_MODE))
   const showAPIKeyError = () => dispatch(recvNotification({
     mts: Date.now(),
     status: 'error',
