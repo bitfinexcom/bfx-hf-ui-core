@@ -305,6 +305,7 @@ const StrategyEditor = (props) => {
       return
     }
     loadStrategyAndStartExecution(strategyToLoad)
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [savedStrategies, executing, location])
 
   return (
