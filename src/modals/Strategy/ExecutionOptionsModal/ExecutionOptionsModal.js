@@ -104,8 +104,8 @@ const ExecutionOptionsModal = (props) => {
     if (!isFullFilled) {
       return
     }
-    startExecution()
     onClose()
+    startExecution()
   }
 
   return (
