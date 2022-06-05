@@ -2,7 +2,6 @@ import React, { memo, useEffect, useRef } from 'react'
 import cx from 'clsx'
 import PropTypes from 'prop-types'
 import { useSelector } from 'react-redux'
-import { getCurrentModeAPIKeyState } from '../../../../redux/selectors/ws'
 import useHover from '../../../../hooks/useHover'
 import { getIsPaperTrading } from '../../../../redux/selectors/ui'
 import ParamsForSandbox from './ParamsForSandbox'
@@ -24,11 +23,7 @@ const StrategyParams = ({
     onLoadStrategy({})
   }
 
-  const apiCredentials = useSelector(getCurrentModeAPIKeyState)
   const isPaperTrading = useSelector(getIsPaperTrading)
-
-  const apiClientConfigured = apiCredentials?.configured && apiCredentials?.valid
-  const isExecutionDisabled = executing || !apiClientConfigured
 
   useEffect(() => {
     // We need to use timeout for closing bar because isHovered becomes false,
@@ -57,13 +52,13 @@ const StrategyParams = ({
         {isPaperTrading ? (
           <ParamsForSandbox
             onClose={onClose}
-            isExecutionDisabled={isExecutionDisabled}
+            isExecutionDisabled={executing}
             {...props}
           />
         ) : (
           <ParamsForLive
             onClose={onClose}
-            isExecutionDisabled={isExecutionDisabled}
+            isExecutionDisabled={executing}
             {...props}
           />
         )}

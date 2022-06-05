@@ -22,11 +22,26 @@
     overflow: auto;
   }
 
-  &__title {
+  &__key-title {
+    margin-bottom: spacing();
+  }
+
+  &__title, &__key-title {
     font-weight: 600;
     font-size: 14px;
     color: var(--shade-9);
-    margin-bottom: spacing();
+  }
+
+  &__key-text {
+    font-size: 12px;
+  }
+
+  &__key-desc {
+    margin-top: 5px;
+  }
+
+  &__key-link {
+    margin-left: 5px;
   }
 
   p {
@@ -70,7 +85,17 @@
   }
 
   &__setting {
-    margin-bottom: spacing(1.5);
+    margin-bottom: spacing(0.5);
+    transition: box-shadow 1s ease, background-color 1s ease;
+    width: 102%;
+    margin-left: 2%;
+    border-radius: 10px;
+
+    &.highlight {
+      box-shadow: rgba(100, 100, 100, 0.25) 0px 5px 6px, rgba(100, 100, 100, 0.12) 0px -12px 30px, rgba(100, 100, 100, 0.12) 0px 4px 6px, rgba(100, 100, 100, 0.17) 0px 12px 13px, rgba(100, 100, 100, 0.29) 0px 1px 2px;
+      background-color: var(--shade-1);
+      border-radius: 10px;
+    }
 
     &--beta {
       padding-bottom: spacing(1.5);

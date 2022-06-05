@@ -9,10 +9,12 @@ import _size from 'lodash/size'
 import _some from 'lodash/some'
 import _values from 'lodash/values'
 import _get from 'lodash/get'
+import _includes from 'lodash/includes'
 import PropTypes from 'prop-types'
 import { useTranslation } from 'react-i18next'
-
+import { useDispatch, useSelector } from 'react-redux'
 import { v4 } from 'uuid'
+
 import { saveAsJSON, readJSONFile } from '../../util/ui'
 import { MAX_STRATEGY_LABEL_LENGTH } from '../../constants/variables'
 import StrategyEditorPanel from './components/StrategyEditorPanel'
@@ -37,6 +39,18 @@ import LaunchStrategyModal from '../../modals/Strategy/LaunchStrategyModal'
 import routes from '../../constants/routes'
 
 import './style.css'
+import { getCurrentModeAPIKeyState } from '../../redux/selectors/ws'
+import {
+  changeAppSettingsModalState,
+  recvNotification,
+  setSettingsTab,
+} from '../../redux/actions/ui'
+import { SETTINGS_TABS } from '../../modals/AppSettingsModal/AppSettingsModal.constants'
+import {
+  MAIN_MODE,
+  PAPER_MODE,
+  ALLOWED_PAPER_PAIRS,
+} from '../../redux/reducers/ui'
 
 const debug = Debug('hfui-ui:c:strategy-editor')
 
@@ -230,9 +244,45 @@ const StrategyEditor = (props) => {
     )
   }
 
+  const apiCredentials = useSelector(getCurrentModeAPIKeyState)
+  const apiClientConfigured = apiCredentials?.configured && apiCredentials?.valid
+  const dispatch = useDispatch()
+  const openAppSettingsModal = () => dispatch(changeAppSettingsModalState(true))
+  const setAPIKeysTab = () => dispatch(
+    setSettingsTab(
+      SETTINGS_TABS.Keys,
+      _includes(ALLOWED_PAPER_PAIRS, symbol?.wsID) ? PAPER_MODE : MAIN_MODE,
+    ),
+  )
+  const showAPIKeyError = () => dispatch(
+    recvNotification({
+      mts: Date.now(),
+      status: 'error',
+      text: t('notifications.strategyLaunchMissingAPIKey'),
+      cid: v4(),
+    }),
+  )
+
+  const checkForAPIKeys = () => {
+    if (!apiClientConfigured) {
+      showAPIKeyError()
+      setTimeout(() => {
+        setAPIKeysTab()
+        openAppSettingsModal()
+      }, 250)
+
+      return false
+    }
+
+    return true
+  }
+
   const onLaunchExecutionClick = () => setIsLaunchStrategyModalOpen(true)
 
   const saveStrategyAndStartExecution = () => {
+    if (!checkForAPIKeys()) {
+      return
+    }
     if (!isFullFilled) {
       setIsExecutionOptionsModalOpen(true)
       setExecutionOptionsModalType(EXECUTION_TYPES.LIVE)
@@ -248,6 +298,9 @@ const StrategyEditor = (props) => {
   }
 
   const loadStrategyAndStartExecution = (strategyToLoad) => {
+    if (!checkForAPIKeys()) {
+      return
+    }
     onLoadStrategy(strategyToLoad)
     setTimeout(() => {
       const executionArgs = prepareStrategyExecutionArgs(strategyToLoad)
@@ -285,6 +338,10 @@ const StrategyEditor = (props) => {
   }
 
   const openExecutionOptionsModal = () => {
+    if (!checkForAPIKeys()) {
+      return
+    }
+
     setIsExecutionOptionsModalOpen(true)
     setExecutionOptionsModalType(EXECUTION_TYPES.LIVE)
   }
@@ -305,7 +362,7 @@ const StrategyEditor = (props) => {
       return
     }
     loadStrategyAndStartExecution(strategyToLoad)
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [savedStrategies, executing, location])
 
   return (

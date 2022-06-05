@@ -25,7 +25,7 @@ import getClosePositionModalData from './get_close_position_modal_data'
 import getOrderToEdit from './get_order_to_edit'
 import getLayoutForRoute from './layouts/get_layout_for_route'
 import getIsAppSettingsModalVisible from './get_is_app_settings_modal_visible'
-import getSettingsActiveTab from './get_settings_active_tab'
+import getSettingsActiveTab, { getSettingActiveSection } from './get_settings_active_tab'
 import getIsLoadingOrderHistData from './get_is_loading_order_hist_data'
 
 export * from './get_settings'
@@ -61,5 +61,6 @@ export {
   getClosePositionModalData,
   getIsAppSettingsModalVisible,
   getSettingsActiveTab,
+  getSettingActiveSection,
   getIsLoadingOrderHistData,
 }

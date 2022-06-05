@@ -1,8 +1,9 @@
-import React, { useState, memo } from 'react'
+import React, { useState, memo, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import _size from 'lodash/size'
 import _trim from 'lodash/trim'
-import { Button, Intent } from '@ufx-ui/core'
+import cx from 'clsx'
+import { Button, Intent, useInterval } from '@ufx-ui/core'
 
 import { useTranslation } from 'react-i18next'
 import {
@@ -12,7 +13,7 @@ import {
   getIsMainModeApiKeyUpdating,
   getIsPaperModeApiKeyUpdating,
 } from '../../redux/selectors/ws'
-import { getCurrentMode } from '../../redux/selectors/ui'
+import { getCurrentMode, getSettingActiveSection } from '../../redux/selectors/ui'
 import WSActions from '../../redux/actions/ws'
 import Input from '../../ui/Input'
 import {
@@ -30,6 +31,7 @@ const ApiKeys = () => {
   const mainAPIKeyState = useSelector(getMainAPIKeyState)
   const isMainApiKeyUpdating = useSelector(getIsMainModeApiKeyUpdating)
   const isPaperApiKeyUpdating = useSelector(getIsPaperModeApiKeyUpdating)
+  const activeSection = useSelector(getSettingActiveSection)
 
   const [apiKey, setApiKey] = useState('')
   const [apiSecret, setApiSecret] = useState('')
@@ -71,96 +73,129 @@ const ApiKeys = () => {
     }
   }
 
+  const [highlight, setHighlight] = useState(false)
+
+  const getClasses = (mode) => cx('appsettings-modal__setting', {
+    highlight: highlight && activeSection === mode,
+  })
+
+  useEffect(() => {
+    if (activeSection) {
+      setTimeout(() => {
+        setHighlight(true)
+      }, 350)
+    }
+  })
+
   return (
     <div>
-      <div className='appsettings-modal__title'>
-        {t('appSettings.apiKeys')}
+      <div className='appsettings-modal__content'>
+        <div className='appsettings-modal__title'>
+          {t('appSettings.apiKeys')}
+        </div>
       </div>
-      <div className='appsettings-modal__setting'>
-        <p>
-          {t('appSettings.productionKey')}
-          <br />
-          <a
-            href='https://support.bitfinex.com/hc/en-us/articles/115002349625-API-Key-Setup-Login'
-            target='_blank'
-            rel='noopener noreferrer'
+      <div className={getClasses(MAIN_MODE)}>
+        <div className='appsettings-modal__content'>
+          <p>
+            <span className='appsettings-modal__key-title'>
+              {t('appSettings.productionKey')}
+            </span>
+            {' '}
+            <a
+              href='https://support.bitfinex.com/hc/en-us/articles/115002349625-API-Key-Setup-Login'
+              target='_blank'
+              rel='noopener noreferrer'
+              className='appsettings-modal__key-text appsettings-modal__key-link'
+            >
+              <i className='fa fa-info-circle' />
+              {' '}
+              {t('appSettings.howToCreate')}
+            </a>
+            <div className='appsettings-modal__key-text appsettings-modal__key-desc'>{t('appSettings.howToCreateDesc')}</div>
+          </p>
+          <ApiBanner
+            apiKeyState={mainAPIKeyState}
+            isUpdating={isMainApiKeyUpdating}
+          />
+          <div className='appsettings-modal__input'>
+            <Input
+              type='text'
+              placeholder={t('appSettings.apiKey')}
+              onChange={setApiKey}
+              value={apiKey}
+              autocomplete='off'
+            />
+          </div>
+          <div className='appsettings-modal__input'>
+            <Input
+              type='password'
+              placeholder={t('appSettings.apiSecret')}
+              onChange={setApiSecret}
+              value={apiSecret}
+              autocomplete='off'
+            />
+          </div>
+          <Button
+            intent={Intent.PRIMARY}
+            small
+            onClick={onSaveMainModeApiKey}
+            disabled={!isProductionKeysTouched}
           >
-            {t('appSettings.howToCreate')}
-          </a>
-        </p>
-        <ApiBanner
-          apiKeyState={mainAPIKeyState}
-          isUpdating={isMainApiKeyUpdating}
-        />
-        <div className='appsettings-modal__input'>
-          <Input
-            type='text'
-            placeholder={t('appSettings.apiKey')}
-            onChange={setApiKey}
-            value={apiKey}
-            autocomplete='off'
-          />
+            {mainAPIKeyState.configured ? t('ui.updateBtn') : t('ui.save')}
+          </Button>
         </div>
-        <div className='appsettings-modal__input'>
-          <Input
-            type='password'
-            placeholder={t('appSettings.apiSecret')}
-            onChange={setApiSecret}
-            value={apiSecret}
-            autocomplete='off'
-          />
-        </div>
-        <Button
-          intent={Intent.PRIMARY}
-          small
-          onClick={onSaveMainModeApiKey}
-          disabled={!isProductionKeysTouched}
-        >
-          {mainAPIKeyState.configured ? t('ui.updateBtn') : t('ui.save')}
-        </Button>
       </div>
-      <div className='appsettings-modal__setting'>
-        <p>
-          {t('appSettings.paperKey')}
-          {' - '}
-          <a
-            href='https://support.bitfinex.com/hc/en-us/articles/900001525006-Paper-Trading-test-learn-and-simulate-trading-strategies-'
-            target='_blank'
-            rel='noopener noreferrer'
+      <div className={getClasses(PAPER_MODE)}>
+        <div className='appsettings-modal__content'>
+          <p>
+            <span className='appsettings-modal__key-title'>
+              {t('appSettings.paperKey')}
+            </span>
+            {' '}
+            <a
+              href='https://support.bitfinex.com/hc/en-us/articles/900001525006-Paper-Trading-test-learn-and-simulate-trading-strategies-'
+              target='_blank'
+              rel='noopener noreferrer'
+              className='appsettings-modal__key-text appsettings-modal__key-link'
+            >
+              <i className='fa fa-info-circle' />
+              {' '}
+              {t('appSettings.howToCreatePaper')}
+            </a>
+            <div className='appsettings-modal__key-text appsettings-modal__key-desc'>{t('appSettings.howToCreatePaperDesc')}</div>
+          </p>
+
+          <ApiBanner
+            apiKeyState={paperAPIKeyState}
+            isUpdating={isPaperApiKeyUpdating}
+          />
+          <div className='appsettings-modal__input'>
+            <Input
+              type='text'
+              placeholder={t('appSettings.apiKey')}
+              onChange={setPaperApiKey}
+              value={paperApiKey}
+              autocomplete='off'
+            />
+          </div>
+          <div className='appsettings-modal__input'>
+            <Input
+              type='password'
+              placeholder={t('appSettings.apiSecret')}
+              onChange={setPaperApiSecret}
+              value={paperApiSecret}
+              autocomplete='off'
+            />
+          </div>
+          <Button
+            intent={Intent.PRIMARY}
+            small
+            onClick={onSavePaperModeApiKey}
+            disabled={!isPaperKeysTouched}
           >
-            {t('appSettings.learnMore')}
-          </a>
-        </p>
-        <ApiBanner
-          apiKeyState={paperAPIKeyState}
-          isUpdating={isPaperApiKeyUpdating}
-        />
-        <div className='appsettings-modal__input'>
-          <Input
-            type='text'
-            placeholder={t('appSettings.apiKey')}
-            onChange={setPaperApiKey}
-            value={paperApiKey}
-            autocomplete='off'
-          />
+            {paperAPIKeyState.configured ? t('ui.updateBtn') : t('ui.save')}
+          </Button>
         </div>
-        <div className='appsettings-modal__input'>
-          <Input
-            type='password'
-            placeholder={t('appSettings.apiSecret')}
-            onChange={setPaperApiSecret}
-            value={paperApiSecret}
-            autocomplete='off'
-          />
-        </div>
-        <Button
-          intent={Intent.PRIMARY}
-          small
-          onClick={onSavePaperModeApiKey}
-          disabled={!isPaperKeysTouched}
-        >
-          {paperAPIKeyState.configured ? t('ui.updateBtn') : t('ui.save')}
-        </Button>
       </div>
     </div>
   )
