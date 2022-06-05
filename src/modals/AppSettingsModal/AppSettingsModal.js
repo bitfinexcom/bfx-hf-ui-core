@@ -66,7 +66,7 @@ const AppSettingsModal = () => {
           </div>
         ))}
       </div>
-      <div className='appsettings-modal__content'>
+      <div className={activeTab === SETTINGS_TABS.Keys ? '' : 'appsettings-modal__content'}>
         {isElectronApp && (
           <>
             {activeTab === SETTINGS_TABS.General && <GeneralTab />}

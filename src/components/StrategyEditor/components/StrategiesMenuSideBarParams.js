@@ -3,10 +3,13 @@ import cx from 'clsx'
 import PropTypes from 'prop-types'
 import { useTranslation } from 'react-i18next'
 import { Icon } from 'react-fa'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
+import { v4 as uuidv4 } from 'uuid'
 import { getCurrentModeAPIKeyState } from '../../../redux/selectors/ws'
 import useHover from '../../../hooks/useHover'
-import { getIsPaperTrading } from '../../../redux/selectors/ui'
+import { getIsPaperTrading, getCurrentMode } from '../../../redux/selectors/ui'
+import { changeAppSettingsModalState, setSettingsTab, recvNotification } from '../../../redux/actions/ui'
+import { SETTINGS_TABS } from '../../../modals/AppSettingsModal/AppSettingsModal.constants'
 
 const Item = ({
   isSelected, isDisabled, children, onClick, ...props
@@ -60,6 +63,7 @@ const StrategyParams = ({
     onLoadStrategy({})
   }
 
+  const currentMode = useSelector(getCurrentMode)
   const apiCredentials = useSelector(getCurrentModeAPIKeyState)
   const isPaperTrading = useSelector(getIsPaperTrading)
   const apiClientConfigured = apiCredentials?.configured && apiCredentials?.valid
@@ -75,6 +79,28 @@ const StrategyParams = ({
       clearTimeout(timeoutRef.current)
     }
   }, [isHovered, closeParams, isTabHovered])
+
+  const dispatch = useDispatch()
+  const openAppSettingsModal = () => dispatch(changeAppSettingsModalState(true))
+  const setAPIKeysTab = () => dispatch(setSettingsTab(SETTINGS_TABS.Keys, currentMode))
+  const showAPIKeyError = () => dispatch(recvNotification({
+    mts: Date.now(),
+    status: 'error',
+    text: t('notifications.strategyLaunchMissingAPIKey'),
+    cid: uuidv4(),
+  }))
+
+  const handleLaunchStrategyClick = async () => {
+    if (!apiClientConfigured) {
+      showAPIKeyError()
+      setTimeout(() => {
+        setAPIKeysTab()
+        openAppSettingsModal()
+      }, 250)
+    } else {
+      startExecution()
+    }
+  }
 
   return (
     <div className='hfui-orderform__ao-settings'>
@@ -92,8 +118,8 @@ const StrategyParams = ({
           onClick={closeParams}
         >
           <Item
-            onClick={startExecution}
-            isDisabled={executing || !apiClientConfigured}
+            onClick={handleLaunchStrategyClick}
+            isDisabled={executing}
           >
             <Icon name='play' />
             &nbsp;&nbsp;

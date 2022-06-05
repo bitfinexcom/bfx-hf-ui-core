@@ -647,11 +647,12 @@ function reducer(state = getInitialState(), action = {}) {
       }
     }
     case types.SET_SETTINGS_TAB: {
-      const { tab } = payload
+      const { tab, section } = payload
 
       return {
         ...state,
         settingsActiveTab: tab,
+        settingsActiveSection: section,
       }
     }
 

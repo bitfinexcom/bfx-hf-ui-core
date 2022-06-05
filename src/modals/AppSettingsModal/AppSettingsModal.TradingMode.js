@@ -53,7 +53,7 @@ const TradingMode = ({ onClose }) => {
             target='_blank'
             rel='noopener noreferrer'
           >
-            {t('appSettings.learnMore')}
+            {t('appSettings.howToCreatePaper')}
           </a>
         </div>
       </div>
