@@ -150,7 +150,7 @@ StrategyPerfomanceMetrics.propTypes = {
     backtestOptions: PropTypes.shape({
       activeMarket: PropTypes.string,
     }),
-    allocation: PropTypes.string,
+    allocation: PropTypes.number,
     positionSize: PropTypes.string,
     currentAllocation: PropTypes.string,
     availableFunds: PropTypes.string,

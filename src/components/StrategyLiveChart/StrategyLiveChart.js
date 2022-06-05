@@ -13,7 +13,12 @@ import timeFrames, { TIMEFRAME_INTERVAL_MAPPING } from '../../util/time_frames'
 import './style.css'
 
 const StrategyLiveChart = ({
-  results, indicators, markets, timeframe, symbol, fullscreenChart, exitFullscreenChart,
+  results,
+  indicators,
+  markets,
+  fullscreenChart,
+  exitFullscreenChart,
+  strategy: { strategyOptions: { timeframe, symbol } },
 }) => {
   const { t } = useTranslation()
   const { trades = [], backtestOptions: { activeMarket } = {} } = results
@@ -21,11 +26,7 @@ const StrategyLiveChart = ({
   const chartIndicators = prepareTVIndicators(indicators)
   const interval = TIMEFRAME_INTERVAL_MAPPING[timeframe] || '15'
 
-  const activeMarketObject = _find(
-    markets,
-    (market) => market.wsID === activeMarket,
-    null,
-  ) || symbol
+  const activeMarketObject = _find(markets, (market) => market.wsID === activeMarket, null) || symbol
 
   return (
     <Panel
@@ -63,19 +64,31 @@ const StrategyLiveChart = ({
 
 StrategyLiveChart.propTypes = {
   markets: PropTypes.objectOf(PropTypes.object).isRequired, // eslint-disable-line
-  symbol: PropTypes.objectOf(
+  strategy: PropTypes.shape({
+    strategyOptions: PropTypes.shape({
+      symbol: PropTypes.objectOf(
+        PropTypes.oneOfType([
+          PropTypes.string,
+          PropTypes.arrayOf(PropTypes.string),
+          PropTypes.bool,
+          PropTypes.number,
+        ]),
+      ).isRequired,
+      timeframe: PropTypes.oneOf(timeFrames).isRequired,
+    }),
+  }).isRequired,
+  indicators: PropTypes.arrayOf(
+    PropTypes.oneOfType([PropTypes.array, PropTypes.object]),
+  ), // eslint-disable-line
+  results: PropTypes.objectOf(
     PropTypes.oneOfType([
-      PropTypes.string,
-      PropTypes.arrayOf(PropTypes.string),
+      PropTypes.array,
       PropTypes.bool,
+      PropTypes.object,
       PropTypes.number,
+      PropTypes.string,
     ]),
-  ).isRequired,
-  timeframe: PropTypes.oneOf(timeFrames).isRequired,
-  indicators: PropTypes.arrayOf(PropTypes.object), // eslint-disable-line
-  results: PropTypes.objectOf(PropTypes.oneOfType([
-    PropTypes.array, PropTypes.bool, PropTypes.object, PropTypes.number, PropTypes.string,
-  ])),
+  ),
   fullscreenChart: PropTypes.bool.isRequired,
   exitFullscreenChart: PropTypes.func.isRequired,
 }

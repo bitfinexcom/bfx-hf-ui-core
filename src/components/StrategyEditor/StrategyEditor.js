@@ -3,10 +3,11 @@ import React, {
 } from 'react'
 import Debug from 'debug'
 import _isEmpty from 'lodash/isEmpty'
+import queryString from 'query-string'
+import { useHistory, useLocation } from 'react-router'
 import _size from 'lodash/size'
 import _some from 'lodash/some'
 import _values from 'lodash/values'
-import _find from 'lodash/find'
 import _get from 'lodash/get'
 import PropTypes from 'prop-types'
 import { useTranslation } from 'react-i18next'
@@ -28,7 +29,12 @@ import StrategyTabTitle from './tabs/StrategyTab/StrategyTab.Title'
 import BacktestTabTitle from './tabs/BacktestTab.Title'
 import IDETabTitle from './tabs/IDETab.Title'
 import ExecutionOptionsModal from '../../modals/Strategy/ExecutionOptionsModal'
-import { getDefaultStrategyOptions } from './StrategyEditor.helpers'
+import {
+  getDefaultStrategyOptions,
+  prepareStrategyExecutionArgs,
+} from './StrategyEditor.helpers'
+import LaunchStrategyModal from '../../modals/Strategy/LaunchStrategyModal'
+import routes from '../../constants/routes'
 
 import './style.css'
 
@@ -43,7 +49,6 @@ const StrategyEditor = (props) => {
   const {
     moveable,
     removeable,
-    strategyId,
     onRemove,
     authToken,
     gaCreateStrategy,
@@ -68,14 +73,19 @@ const StrategyEditor = (props) => {
     sectionErrors,
     liveResults,
     runningStrategiesMapping,
+    savedStrategies,
   } = props
   const { t } = useTranslation()
+  const location = useLocation()
+  const history = useHistory()
+
   const [isRemoveModalOpened, setIsRemoveModalOpened] = useState(false)
   const [createNewStrategyModalOpen, setCreateNewStrategyModalOpen] = useState(false)
   const [createNewStrategyFromModalOpen, setCreateNewStrategyFromModalOpen] = useState(false)
   const [openExistingStrategyModalOpen, setOpenExistingStrategyModalOpen] = useState(false)
   const [isSaveStrategyAsModalOpen, setIsSaveStrategyModalOpen] = useState(false)
   const [isExecutionOptionsModalOpen, setIsExecutionOptionsModalOpen] = useState(false)
+  const [isLaunchStrategyModalOpen, setIsLaunchStrategyModalOpen] = useState(false)
   const [executionOptionsModalType, setExecutionOptionsModalType] = useState(
     EXECUTION_TYPES.LIVE,
   )
@@ -86,22 +96,20 @@ const StrategyEditor = (props) => {
     getDefaultStrategyOptions(markets),
   )
 
-  // If strategy doesn't have saved options it set default ones
   const {
     symbol,
     timeframe,
     trades,
     candles,
-    candleSeed,
     startDate,
     endDate,
-    margin,
     capitalAllocation,
     stopLossPerc,
     maxDrawdownPerc,
   } = strategyOptions
 
-  const isFullFilled = capitalAllocation && stopLossPerc && maxDrawdownPerc
+  const isFullFilled = !!capitalAllocation && !!stopLossPerc && !!maxDrawdownPerc
+  const strategyId = strategy?.id
 
   const runningStrategyID = runningStrategiesMapping[strategyId]
   const currentStrategyResults = liveResults?.[runningStrategyID] || {}
@@ -124,6 +132,7 @@ const StrategyEditor = (props) => {
     setCreateNewStrategyFromModalOpen(false)
     setIsSaveStrategyModalOpen(false)
     setIsExecutionOptionsModalOpen(false)
+    setIsLaunchStrategyModalOpen(false)
   }
 
   const onCreateNewStrategy = (label, content = {}) => {
@@ -166,10 +175,10 @@ const StrategyEditor = (props) => {
     }
   }
 
-  const onSaveStrategy = () => {
+  const onSaveStrategy = useCallback(() => {
     saveStrategy(strategy)
     setStrategyDirty(false)
-  }
+  }, [saveStrategy, setStrategyDirty, strategy])
 
   const onSaveAsStrategy = (newStrategy) => {
     setStrategy(newStrategy)
@@ -221,26 +230,33 @@ const StrategyEditor = (props) => {
     )
   }
 
-  const startExecution = () => {
+  const onLaunchExecutionClick = () => setIsLaunchStrategyModalOpen(true)
+
+  const saveStrategyAndStartExecution = () => {
     if (!isFullFilled) {
       setIsExecutionOptionsModalOpen(true)
       setExecutionOptionsModalType(EXECUTION_TYPES.LIVE)
       return
     }
     onSaveStrategy()
-    dsExecuteLiveStrategy(
+
+    const executionArgs = prepareStrategyExecutionArgs(strategy)
+    dsExecuteLiveStrategy({
       authToken,
-      strategyId,
-      strategy.label,
-      symbol?.wsID,
-      timeframe,
-      trades,
-      strategyContent,
-      candleSeed,
-      margin,
-      isPaperTrading,
-      constraints,
-    )
+      ...executionArgs,
+    })
+  }
+
+  const loadStrategyAndStartExecution = (strategyToLoad) => {
+    onLoadStrategy(strategyToLoad)
+    setTimeout(() => {
+      const executionArgs = prepareStrategyExecutionArgs(strategyToLoad)
+      dsExecuteLiveStrategy({
+        authToken,
+        ...executionArgs,
+      })
+      history.push(routes.strategyEditor.path)
+    }, 500)
   }
 
   const stopExecution = () => {
@@ -273,6 +289,24 @@ const StrategyEditor = (props) => {
     setExecutionOptionsModalType(EXECUTION_TYPES.LIVE)
   }
 
+  useEffect(() => {
+    const { search } = location
+    if (executing || !search || _isEmpty(savedStrategies)) {
+      return
+    }
+    const { execute } = queryString.parse(location.search)
+    if (!execute) {
+      return
+    }
+
+    const strategyToLoad = savedStrategies[execute]
+
+    if (_isEmpty(strategyToLoad)) {
+      return
+    }
+    loadStrategyAndStartExecution(strategyToLoad)
+  }, [savedStrategies, executing, location])
+
   return (
     <>
       {!strategy || _isEmpty(strategy) ? (
@@ -293,7 +327,7 @@ const StrategyEditor = (props) => {
                 htmlKey='strategy'
                 sbtitle={({ selectedTab, sidebarOpened }) => (
                   <StrategyTabTitle
-                    startExecution={startExecution}
+                    startExecution={onLaunchExecutionClick}
                     stopExecution={stopExecution}
                     onLoadStrategy={onLoadStrategy}
                     onExportStrategy={onExportStrategy}
@@ -315,7 +349,7 @@ const StrategyEditor = (props) => {
                 )}
                 onOpenSaveStrategyAsModal={openSaveStrategyAsModal}
                 isPaperTrading={isPaperTrading}
-                startExecution={startExecution}
+                startExecution={onLaunchExecutionClick}
                 stopExecution={stopExecution}
                 executionResults={execResults}
                 onSaveAsStrategy={onSaveAsStrategy}
@@ -381,9 +415,15 @@ const StrategyEditor = (props) => {
             maxDrawdownPerc={maxDrawdownPerc}
             startExecution={
               executionOptionsModalType === EXECUTION_TYPES.LIVE
-                ? startExecution
+                ? saveStrategyAndStartExecution
                 : onBacktestStart
             }
+          />
+          <LaunchStrategyModal
+            onSubmit={saveStrategyAndStartExecution}
+            isOpen={isLaunchStrategyModalOpen}
+            onClose={onCloseModals}
+            strategyId={strategyId}
           />
         </>
       )}
@@ -412,7 +452,6 @@ const StrategyEditor = (props) => {
 StrategyEditor.propTypes = {
   moveable: PropTypes.bool,
   removeable: PropTypes.bool,
-  strategyId: PropTypes.string,
   onRemove: PropTypes.func.isRequired,
   authToken: PropTypes.string.isRequired,
   onStrategyChange: PropTypes.func.isRequired,
@@ -428,7 +467,9 @@ StrategyEditor.propTypes = {
   dsStopLiveStrategy: PropTypes.func.isRequired,
   dsExecuteLiveStrategy: PropTypes.func.isRequired,
   onLoadStrategy: PropTypes.func.isRequired,
-  indicators: PropTypes.arrayOf(PropTypes.object), // eslint-disable-line
+  indicators: PropTypes.arrayOf(
+    PropTypes.oneOfType([PropTypes.array, PropTypes.object]),
+  ), // eslint-disable-line
   strategyDirty: PropTypes.bool.isRequired,
   setStrategyDirty: PropTypes.func.isRequired,
   gaCreateStrategy: PropTypes.func.isRequired,
@@ -444,6 +485,7 @@ StrategyEditor.propTypes = {
       PropTypes.object,
     ]),
   ),
+  savedStrategies: PropTypes.objectOf(PropTypes.object), // eslint-disable-line
   saveStrategy: PropTypes.func.isRequired,
   isPaperTrading: PropTypes.bool.isRequired,
   dsExecuteBacktest: PropTypes.func.isRequired,
@@ -461,7 +503,6 @@ StrategyEditor.propTypes = {
 }
 
 StrategyEditor.defaultProps = {
-  strategyId: '',
   moveable: false,
   removeable: false,
   strategyContent: {},
