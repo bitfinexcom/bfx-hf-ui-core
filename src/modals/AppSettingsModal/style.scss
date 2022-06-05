@@ -93,7 +93,7 @@
 
     &.highlight {
       box-shadow: rgba(100, 100, 100, 0.25) 0px 5px 6px, rgba(100, 100, 100, 0.12) 0px -12px 30px, rgba(100, 100, 100, 0.12) 0px 4px 6px, rgba(100, 100, 100, 0.17) 0px 12px 13px, rgba(100, 100, 100, 0.29) 0px 1px 2px;
-      background-color: rgba($color: #102331, $alpha: 0.5);
+      background-color: var(--shade-1);
       border-radius: 10px;
     }
 

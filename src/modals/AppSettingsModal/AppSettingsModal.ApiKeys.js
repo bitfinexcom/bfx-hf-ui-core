@@ -1,4 +1,4 @@
-import React, { useState, memo } from 'react'
+import React, { useState, memo, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import _size from 'lodash/size'
 import _trim from 'lodash/trim'
@@ -73,15 +73,19 @@ const ApiKeys = () => {
     }
   }
 
-  const [highlight, setHighlight] = useState(activeSection)
+  const [highlight, setHighlight] = useState(false)
 
   const getClasses = (mode) => cx('appsettings-modal__setting', {
     highlight: highlight && activeSection === mode,
   })
 
-  useInterval(() => {
-    setHighlight(!highlight)
-  }, 800)
+  useEffect(() => {
+    if (activeSection) {
+      setTimeout(() => {
+        setHighlight(true)
+      }, 350)
+    }
+  })
 
   return (
     <div>
