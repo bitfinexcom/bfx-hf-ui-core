@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import _size from 'lodash/size'
 import _trim from 'lodash/trim'
 import cx from 'clsx'
-import { Button, Intent, useInterval } from '@ufx-ui/core'
+import { Button, Intent } from '@ufx-ui/core'
 
 import { useTranslation } from 'react-i18next'
 import {
