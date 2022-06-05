@@ -305,8 +305,8 @@
     "noBfxAccount": "Don't have a Bitfinex account?",
     "createAPI": "Create them here",
     "clickToSignup": "Click here to sign up",
-    "productionKey": "Live Mode API Key",
-    "paperKey": "Sandbox Mode API Key",
+    "productionKey": "Live API Key",
+    "paperKey": "Paper Account API Key",
     "apiNotValid": "Invalid API Key entered",
     "apiNotConfigured": "Not Configured",
     "apiConnecting": "Please wait while connecting to the API server...",
@@ -325,8 +325,10 @@
     "showPauseInfoText": "If checked, the modal with explanations will be displayed when you close the app with active Algo Orders.",
     "rebootCheckbox": "Reboot automatically on bad connection",
     "rebootText": " When you experience a poor internet connection, the modal window that notifies you of this will not be displayed and the app will restart automatically.",
-    "howToCreate": "How to Create a Key?",
-    "learnMore": "Learn More",
+    "howToCreate": "How to create an API Key in Bitfinex?",
+    "howToCreateDesc": "This is required to operate in the Live Environment",
+    "howToCreatePaper": "How to create a Paper Sub-Account?",
+    "howToCreatePaperDesc": "This is required to operate with Paper Markets using your paper balance",
     "validating": "Validating...",
     "configured": "Configured",
     "productionTradingCheckbox": "Live Mode",
@@ -430,7 +432,8 @@
     "authenticatedWith": "Authenticated with {{target}}",
     "disconnectedFrom": "Disconnected from {{target}}",
     "decryptedCredentialsFor": "Decrypted credentials for {{target}} ({{mode}})",
-    "reboot_notify": "Noticed several internet connection issues. Rebooting app..."
+    "reboot_notify": "Noticed several internet connection issues. Rebooting app...",
+    "strategyLaunchMissingAPIKey": "Please configure API keys first and relaunch strategy"
   },
   "tradingModeModal": {
     "title": "Switch Trade Mode",

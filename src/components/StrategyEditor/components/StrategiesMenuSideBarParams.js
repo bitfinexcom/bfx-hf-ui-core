@@ -4,7 +4,6 @@ import PropTypes from 'prop-types'
 import { useTranslation } from 'react-i18next'
 import { Icon } from 'react-fa'
 import { useSelector } from 'react-redux'
-import { getCurrentModeAPIKeyState } from '../../../redux/selectors/ws'
 import useHover from '../../../hooks/useHover'
 import { getIsPaperTrading } from '../../../redux/selectors/ui'
 
@@ -60,9 +59,7 @@ const StrategyParams = ({
     onLoadStrategy({})
   }
 
-  const apiCredentials = useSelector(getCurrentModeAPIKeyState)
   const isPaperTrading = useSelector(getIsPaperTrading)
-  const apiClientConfigured = apiCredentials?.configured && apiCredentials?.valid
 
   useEffect(() => {
     // We need to use timeout for closing bar because isHovered becomes false,
@@ -93,7 +90,7 @@ const StrategyParams = ({
         >
           <Item
             onClick={startExecution}
-            isDisabled={executing || !apiClientConfigured}
+            isDisabled={executing}
           >
             <Icon name='play' />
             &nbsp;&nbsp;
