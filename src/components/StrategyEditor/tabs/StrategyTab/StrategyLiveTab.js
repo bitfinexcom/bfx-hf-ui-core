@@ -14,7 +14,7 @@ import {
 } from '../../components/StrategiesGridLayout.constants'
 import StrategyLiveChart from '../../../StrategyLiveChart'
 import StrategyTabWrapper from '../../components/StrategyTabWrapper'
-import StrategyOptionsPanelLive from '../../../StrategyOptionsPanel/StrategyOptionsPanelLive'
+import StrategyOptionsPanelLive from '../../../StrategyOptionsPanel/StrategyOptionsPanel.Live'
 import { getCurrentStrategyExecutionOptions } from '../../../../redux/selectors/ws'
 
 const StrategyLiveTab = (props) => {

@@ -415,7 +415,7 @@ const StrategyEditor = (props) => {
             maxDrawdownPerc={maxDrawdownPerc}
             startExecution={
               executionOptionsModalType === EXECUTION_TYPES.LIVE
-                ? saveStrategyAndStartExecution
+                ? onLaunchExecutionClick
                 : onBacktestStart
             }
           />
