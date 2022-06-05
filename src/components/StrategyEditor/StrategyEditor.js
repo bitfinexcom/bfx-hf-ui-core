@@ -7,8 +7,9 @@ import _values from 'lodash/values'
 import _find from 'lodash/find'
 import PropTypes from 'prop-types'
 import { useTranslation } from 'react-i18next'
-
+import { useDispatch, useSelector } from 'react-redux'
 import { v4 } from 'uuid'
+
 import { saveAsJSON, readJSONFile } from '../../util/ui'
 import { MAX_STRATEGY_LABEL_LENGTH } from '../../constants/variables'
 import StrategyEditorPanel from './components/StrategyEditorPanel'
@@ -28,6 +29,10 @@ import IDETabTitle from './tabs/IDETab.Title'
 import ExecutionOptionsModal from '../../modals/Strategy/ExecutionOptionsModal'
 
 import './style.css'
+import { getCurrentMode } from '../../redux/selectors/ui'
+import { getCurrentModeAPIKeyState } from '../../redux/selectors/ws'
+import { changeAppSettingsModalState, recvNotification, setSettingsTab } from '../../redux/actions/ui'
+import { SETTINGS_TABS } from '../../modals/AppSettingsModal/AppSettingsModal.constants'
 
 const debug = Debug('hfui-ui:c:strategy-editor')
 const ONE_MIN = 1000 * 60
@@ -235,7 +240,38 @@ const StrategyEditor = (props) => {
     // setBacktestOptions(optionsProps)
   }
 
+  const currentMode = useSelector(getCurrentMode)
+  const apiCredentials = useSelector(getCurrentModeAPIKeyState)
+  const apiClientConfigured = apiCredentials?.configured && apiCredentials?.valid
+  const dispatch = useDispatch()
+  const openAppSettingsModal = () => dispatch(changeAppSettingsModalState(true))
+  const setAPIKeysTab = () => dispatch(setSettingsTab(SETTINGS_TABS.Keys, currentMode))
+  const showAPIKeyError = () => dispatch(recvNotification({
+    mts: Date.now(),
+    status: 'error',
+    text: t('notifications.strategyLaunchMissingAPIKey'),
+    cid: v4(),
+  }))
+
+  const checkForAPIKeys = () => {
+    if (!apiClientConfigured) {
+      showAPIKeyError()
+      setTimeout(() => {
+        setAPIKeysTab()
+        openAppSettingsModal()
+      }, 250)
+
+      return false
+    }
+
+    return true
+  }
+
   const startExecution = () => {
+    if (!checkForAPIKeys()) {
+      return
+    }
+
     if (!isFullFilled) {
       setIsExecutionOptionsModalOpen(true)
       setExecutionOptionsModalType(EXECUTION_TYPES.LIVE)
@@ -283,6 +319,10 @@ const StrategyEditor = (props) => {
   }
 
   const openExecutionOptionsModal = () => {
+    if (!checkForAPIKeys()) {
+      return
+    }
+
     setIsExecutionOptionsModalOpen(true)
     setExecutionOptionsModalType(EXECUTION_TYPES.LIVE)
   }
