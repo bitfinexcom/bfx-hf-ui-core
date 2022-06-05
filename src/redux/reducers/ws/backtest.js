@@ -70,11 +70,17 @@ function reducer(state = getInitialState(), action = {}) {
       return {
         ...state,
         ...payload,
+      }
+    }
+
+    case types.BACKTEST_STOPPED: {
+      return {
         loading: false,
         executing: false,
         finished: true,
       }
     }
+
     case types.RESET_DATA_BACKTEST: {
       return getInitialState()
     }

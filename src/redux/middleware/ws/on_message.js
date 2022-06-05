@@ -390,6 +390,12 @@ export default (alias, store) => (e = {}) => {
         break
       }
 
+      case 'bt.stopped': {
+        const [, gid] = payload
+        store.dispatch(WSActions.recvBacktestStopped(gid))
+        break
+      }
+
       case 'algo.active_orders': {
         const [, activeAlgoOrders] = payload
         store.dispatch(AOActions.setActiveAlgoOrders(activeAlgoOrders))
