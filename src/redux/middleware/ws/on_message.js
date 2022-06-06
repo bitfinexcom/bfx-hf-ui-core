@@ -427,6 +427,13 @@ export default (alias, store) => (e = {}) => {
         break
       }
 
+      case 'strategy.start_live_execution_submit_status': {
+        const [, status] = payload
+        store.dispatch(WSActions.setExecutionLoading(status))
+
+        break
+      }
+
       // emitted when the strategy execution is stopped
       case 'strategy.live_execution_stopped': {
         const [, strategyMapKey, executionResultsObj] = payload
