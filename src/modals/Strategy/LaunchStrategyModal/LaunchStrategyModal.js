@@ -1,7 +1,6 @@
 import React, { memo } from 'react'
 import PropTypes from 'prop-types'
 import { useTranslation } from 'react-i18next'
-import { useHistory } from 'react-router'
 
 import Modal from '../../../ui/Modal'
 
