@@ -3,7 +3,6 @@ import React, {
 } from 'react'
 import Debug from 'debug'
 import _isEmpty from 'lodash/isEmpty'
-import queryString from 'query-string'
 import { useHistory, useLocation } from 'react-router'
 import _size from 'lodash/size'
 import _some from 'lodash/some'
@@ -359,7 +358,8 @@ const StrategyEditor = (props) => {
     if (executing || !search || _isEmpty(savedStrategies)) {
       return
     }
-    const { execute } = queryString.parse(location.search)
+    const execute = new URLSearchParams(location.search).get('execute')
+
     if (!execute) {
       return
     }
