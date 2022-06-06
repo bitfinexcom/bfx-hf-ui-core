@@ -1,14 +1,11 @@
 import _get from 'lodash/get'
 import { createSelector } from 'reselect'
-
-import getMarkets from './get_markets'
+import { getMarkets } from '.'
 
 const EMPTY_OBJ = {}
 
 const getMarketBySymbol = createSelector(
-  [
-    getMarkets,
-  ],
+  [getMarkets],
   (markets) => (symbol) => {
     return _get(markets, [symbol], EMPTY_OBJ)
   },

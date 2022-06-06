@@ -6,8 +6,17 @@ import AmountInput from '../../../components/OrderForm/FieldComponents/input.amo
 import PercentInput from '../../../components/OrderForm/FieldComponents/input.percent'
 
 const ExecutionOptionsBody = ({
-  maxDrawdownPerc, setMaxDrawdownPerc, capitalAllocationHandler, capitalAllocation, capitalAllocationError,
-  stopLossPerc, setStopLossPerc, t,
+  isPaperTrading,
+  maxDrawdownPerc,
+  setMaxDrawdownPerc,
+  maxDrawdownError,
+  setCapitalAllocation,
+  capitalAllocation,
+  capitalAllocationError,
+  stopLossPerc,
+  stopLossPercError,
+  setStopLossPerc,
+  t,
 }) => (
   <div className='hfui-execution-options-modal'>
     <div className='hfui-execution-options-modal__option'>
@@ -21,10 +30,11 @@ const ExecutionOptionsBody = ({
         </Tooltip>
       </p>
       <AmountInput
-        placeholder={t('ui.e.g.', { value: 3000.00 })}
-        onChange={capitalAllocationHandler}
+        placeholder={t('ui.e.g.', { value: 3000.0 })}
+        onChange={setCapitalAllocation}
         value={capitalAllocation}
         validationError={capitalAllocationError}
+        disabled={!isPaperTrading}
       />
     </div>
     <div className='hfui-execution-options-modal__option'>
@@ -41,6 +51,8 @@ const ExecutionOptionsBody = ({
         placeholder={t('ui.e.g.', { value: '45%' })}
         value={stopLossPerc}
         onChange={setStopLossPerc}
+        disabled={!isPaperTrading}
+        validationError={stopLossPercError}
       />
     </div>
     <div className='hfui-execution-options-modal__option'>
@@ -57,6 +69,8 @@ const ExecutionOptionsBody = ({
         placeholder={t('ui.e.g.', { value: '45%' })}
         value={maxDrawdownPerc}
         onChange={setMaxDrawdownPerc}
+        disabled={!isPaperTrading}
+        validationError={maxDrawdownError}
       />
     </div>
   </div>
@@ -66,11 +80,20 @@ ExecutionOptionsBody.propTypes = {
   capitalAllocation: PropTypes.string.isRequired,
   stopLossPerc: PropTypes.string.isRequired,
   setStopLossPerc: PropTypes.func.isRequired,
+  stopLossPercError: PropTypes.string,
   maxDrawdownPerc: PropTypes.string.isRequired,
+  maxDrawdownError: PropTypes.string,
   setMaxDrawdownPerc: PropTypes.func.isRequired,
-  capitalAllocationError: PropTypes.string.isRequired,
-  capitalAllocationHandler: PropTypes.func.isRequired,
+  capitalAllocationError: PropTypes.string,
+  setCapitalAllocation: PropTypes.func.isRequired,
   t: PropTypes.func.isRequired,
+  isPaperTrading: PropTypes.bool.isRequired,
+}
+
+ExecutionOptionsBody.defaultProps = {
+  stopLossPercError: '',
+  maxDrawdownError: '',
+  capitalAllocationError: '',
 }
 
 export default ExecutionOptionsBody

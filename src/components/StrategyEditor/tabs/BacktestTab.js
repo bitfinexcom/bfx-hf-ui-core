@@ -98,7 +98,6 @@ const BacktestTab = (props) => {
 }
 
 BacktestTab.propTypes = {
-  trades: PropTypes.bool.isRequired,
   results: PropTypes.shape({
     finished: PropTypes.bool,
     loading: PropTypes.bool,

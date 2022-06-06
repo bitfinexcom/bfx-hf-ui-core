@@ -12,11 +12,10 @@
   &__left-container {
     display: flex;
     justify-content: space-between;
-    flex: 2 1;
+    width: 80%;
   }
 
-  &__right-container {
-    flex: 1 1;
+  &__save-container {
     display: flex;
     flex-direction: column;
     align-items: flex-end;
@@ -27,7 +26,7 @@
       font-weight: 400;
     }
 
-    .save-btn{
+    .save-btn {
       height: 28px;
       width: 80px;
     }
@@ -35,6 +34,8 @@
 
   &__buttons-container {
     display: flex;
+    justify-content: flex-end;
+    align-items: flex-start;
   }
 
   &__option {
