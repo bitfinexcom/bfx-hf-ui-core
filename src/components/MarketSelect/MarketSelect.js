@@ -90,7 +90,7 @@ const MarketSelect = forwardRef(function MarketSelect(props, ref) {
       onChange={(val) => {
         onChange(_find(markets, m => m?.uiID === val))
       }}
-      value={value.uiID}
+      value={value?.uiID}
       options={sortedOptions}
       onSearchTermChange={setSearchTerm}
       optionRenderer={renderWithFavorites ? (optionValue, optionLabel) => {
