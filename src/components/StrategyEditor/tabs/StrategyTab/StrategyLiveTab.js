@@ -18,7 +18,7 @@ import StrategyOptionsPanelLive from '../../../StrategyOptionsPanel/StrategyOpti
 import { getCurrentStrategyExecutionOptions } from '../../../../redux/selectors/ws'
 
 const StrategyLiveTab = (props) => {
-  const { executionResults, options, onCancelProcess } = props
+  const { executionResults, onCancelProcess } = props
   const [layoutConfig, setLayoutConfig] = useState()
   const [fullscreenChart, setFullScreenChart] = useState(false)
 
@@ -123,9 +123,6 @@ StrategyLiveTab.propTypes = {
     executing: PropTypes.bool,
     // eslint-disable-next-line react/forbid-prop-types
     results: PropTypes.object,
-  }).isRequired,
-  options: PropTypes.shape({
-    startedOn: PropTypes.number,
   }).isRequired,
   onCancelProcess: PropTypes.func.isRequired,
 }
