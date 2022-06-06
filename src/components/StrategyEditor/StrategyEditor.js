@@ -88,6 +88,8 @@ const StrategyEditor = (props) => {
     liveResults,
     runningStrategiesMapping,
     savedStrategies,
+    changeTradingMode,
+    currentMode,
   } = props
   const { t } = useTranslation()
   const location = useLocation()
@@ -286,6 +288,12 @@ const StrategyEditor = (props) => {
     if (!isFullFilled) {
       setIsExecutionOptionsModalOpen(true)
       setExecutionOptionsModalType(EXECUTION_TYPES.LIVE)
+      return
+    }
+    if (isPaperTrading) {
+      changeTradingMode(!isPaperTrading, authToken, currentMode)
+      history.push(`${routes.strategyEditor.path}?execute=${strategyId}`)
+      setTimeout(() => window.location.reload(), 500)
       return
     }
     onSaveStrategy()
@@ -558,6 +566,8 @@ StrategyEditor.propTypes = {
   runningStrategiesMapping: PropTypes.objectOf(PropTypes.string),
   sectionErrors: PropTypes.objectOf(PropTypes.string).isRequired,
   executing: PropTypes.bool.isRequired,
+  changeTradingMode: PropTypes.func.isRequired,
+  currentMode: PropTypes.string.isRequired,
 }
 
 StrategyEditor.defaultProps = {

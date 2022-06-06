@@ -4,7 +4,6 @@ import { useTranslation } from 'react-i18next'
 import { useHistory } from 'react-router'
 
 import Modal from '../../../ui/Modal'
-import routes from '../../../constants/routes'
 
 import './style.css'
 
@@ -12,24 +11,12 @@ const LaunchStrategyModal = ({
   onSubmit,
   onClose,
   isOpen,
-  isPaperTrading,
-  changeTradingMode,
-  authToken,
-  currentMode,
-  strategyId,
 }) => {
   const { t } = useTranslation()
-  const history = useHistory()
 
   const _onSubmit = () => {
-    if (isPaperTrading) {
-      changeTradingMode(!isPaperTrading, authToken, currentMode)
-      history.push(`${routes.strategyEditor.path}?execute=${strategyId}`)
-      setTimeout(() => window.location.reload(), 500)
-      return
-    }
-    onSubmit()
     onClose()
+    onSubmit()
   }
 
   return (
@@ -54,17 +41,9 @@ const LaunchStrategyModal = ({
 }
 
 LaunchStrategyModal.propTypes = {
-  isPaperTrading: PropTypes.bool.isRequired,
-  strategyId: PropTypes.string.isRequired,
-  changeTradingMode: PropTypes.func.isRequired,
-  authToken: PropTypes.string.isRequired,
-  currentMode: PropTypes.string.isRequired,
   onSubmit: PropTypes.func.isRequired,
   onClose: PropTypes.func.isRequired,
   isOpen: PropTypes.bool.isRequired,
-}
-
-LaunchStrategyModal.defaultProps = {
 }
 
 export default memo(LaunchStrategyModal)
