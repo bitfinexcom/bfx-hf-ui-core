@@ -65,6 +65,7 @@ const StrategiesListTable = ({ onLoadStrategy }) => {
         getMarketPair={_getMarketPair}
         tabtitle={t('strategyEditor.pastStrategies')}
         count={_size(pastStrategies)}
+        onLoadStrategy={onLoadStrategy}
       />
       <SavedStrategiesList
         onRowClick={onRowClick}
