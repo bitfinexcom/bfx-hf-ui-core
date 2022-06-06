@@ -30,7 +30,7 @@ const StrategyOptionsPanelLive = ({
 }) => {
   const {
     label,
-    strategyOptions: { symbol },
+    strategyOptions: { symbol } = {},
   } = strategy || {}
   const { t } = useTranslation()
 
