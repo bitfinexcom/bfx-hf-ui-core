@@ -1,14 +1,20 @@
-import React, { memo, useMemo, useState } from 'react'
+import React, {
+  memo, useCallback, useEffect, useMemo, useState,
+} from 'react'
 import Debug from 'debug'
 import _isEmpty from 'lodash/isEmpty'
+import queryString from 'query-string'
+import { useHistory, useLocation } from 'react-router'
 import _size from 'lodash/size'
 import _some from 'lodash/some'
 import _values from 'lodash/values'
-import _find from 'lodash/find'
+import _get from 'lodash/get'
+import _includes from 'lodash/includes'
 import PropTypes from 'prop-types'
 import { useTranslation } from 'react-i18next'
-
+import { useDispatch, useSelector } from 'react-redux'
 import { v4 } from 'uuid'
+
 import { saveAsJSON, readJSONFile } from '../../util/ui'
 import { MAX_STRATEGY_LABEL_LENGTH } from '../../constants/variables'
 import StrategyEditorPanel from './components/StrategyEditorPanel'
@@ -19,7 +25,6 @@ import EmptyContent from './components/StrategyEditorEmpty'
 import StrategyTab from './tabs/StrategyTab/StrategyTabWrapper'
 import BacktestTab from './tabs/BacktestTab'
 import IDETab from './tabs/IDETab'
-import { getDefaultMarket } from '../../util/market'
 import CreateNewStrategyFromModalOpen from '../../modals/Strategy/CreateNewStrategyFromModal'
 import SaveStrategyAsModal from '../../modals/Strategy/SaveStrategyAsModal/SaveStrategyAsModal'
 import CancelProcessModal from '../../modals/Strategy/CancelProcessModal'
@@ -27,18 +32,28 @@ import StrategyTabTitle from './tabs/StrategyTab/StrategyTab.Title'
 import BacktestTabTitle from './tabs/BacktestTab.Title'
 import IDETabTitle from './tabs/IDETab.Title'
 import ExecutionOptionsModal from '../../modals/Strategy/ExecutionOptionsModal'
+import {
+  getDefaultStrategyOptions,
+  prepareStrategyExecutionArgs,
+} from './StrategyEditor.helpers'
+import LaunchStrategyModal from '../../modals/Strategy/LaunchStrategyModal'
+import routes from '../../constants/routes'
 
 import './style.css'
+import { getCurrentModeAPIKeyState } from '../../redux/selectors/ws'
+import {
+  changeAppSettingsModalState,
+  recvNotification,
+  setSettingsTab,
+} from '../../redux/actions/ui'
+import { SETTINGS_TABS } from '../../modals/AppSettingsModal/AppSettingsModal.constants'
+import {
+  MAIN_MODE,
+  PAPER_MODE,
+  ALLOWED_PAPER_PAIRS,
+} from '../../redux/reducers/ui'
 
 const debug = Debug('hfui-ui:c:strategy-editor')
-const ONE_MIN = 1000 * 60
-const ONE_HOUR = ONE_MIN * 60
-const ONE_DAY = ONE_HOUR * 24
-
-const DEFAULT_TIMEFRAME = '1m'
-const DEFAULT_USE_TRADES = false
-const DEFAULT_USE_MARGIN = false
-const DEFAULT_SEED_COUNT = 150
 
 const EXECUTION_TYPES = Object.freeze({
   LIVE: 'LIVE',
@@ -49,7 +64,6 @@ const StrategyEditor = (props) => {
   const {
     moveable,
     removeable,
-    strategyId,
     onRemove,
     authToken,
     gaCreateStrategy,
@@ -62,12 +76,10 @@ const StrategyEditor = (props) => {
     onLoadStrategy,
     dsExecuteLiveStrategy,
     dsStopLiveStrategy,
-    options,
     markets,
     saveStrategy,
     isPaperTrading,
     dsExecuteBacktest,
-    // setBacktestOptions,
     showError,
     flags,
     isBetaVersion,
@@ -76,8 +88,12 @@ const StrategyEditor = (props) => {
     sectionErrors,
     liveResults,
     runningStrategiesMapping,
+    savedStrategies,
   } = props
   const { t } = useTranslation()
+  const location = useLocation()
+  const history = useHistory()
+
   const [isRemoveModalOpened, setIsRemoveModalOpened] = useState(false)
   const [createNewStrategyModalOpen, setCreateNewStrategyModalOpen] = useState(false)
   const [createNewStrategyFromModalOpen, setCreateNewStrategyFromModalOpen] = useState(false)
@@ -85,31 +101,31 @@ const StrategyEditor = (props) => {
   const [isSaveStrategyAsModalOpen, setIsSaveStrategyModalOpen] = useState(false)
   const [isCancelProcessModalOpen, setIsCancelProcessModalOpen] = useState(false)
   const [isExecutionOptionsModalOpen, setIsExecutionOptionsModalOpen] = useState(false)
+  const [isLaunchStrategyModalOpen, setIsLaunchStrategyModalOpen] = useState(false)
   const [executionOptionsModalType, setExecutionOptionsModalType] = useState(
     EXECUTION_TYPES.LIVE,
   )
 
-  const [symbol, setSymbol] = useState(
-    options.symbol
-      ? _find(markets, (m) => m.wsID === options.symbol)
-      : getDefaultMarket(markets),
+  const strategyOptions = _get(
+    strategy,
+    'strategyOptions',
+    getDefaultStrategyOptions(markets),
   )
-  const [timeframe, setTimeframe] = useState(options.tf || DEFAULT_TIMEFRAME)
-  const [trades, setTrades] = useState(
-    options.includeTrades || DEFAULT_USE_TRADES,
-  )
-  const [candles, setCandles] = useState(false)
-  const [candleSeed, setCandleSeed] = useState(
-    options.seedCandleCount || DEFAULT_SEED_COUNT,
-  )
-  const [startDate, setStartDate] = useState(new Date(Date.now() - ONE_DAY))
-  const [endDate, setEndDate] = useState(new Date(Date.now() - ONE_MIN * 15))
-  const [margin, setMargin] = useState(options.margin || DEFAULT_USE_MARGIN)
-  const [capitalAllocation, setCapitalAllocation] = useState('')
-  const [stopLossPerc, setStopLossPerc] = useState('')
-  const [maxDrawdownPerc, setMaxDrawdownPerc] = useState('')
 
-  const isFullFilled = capitalAllocation && stopLossPerc && maxDrawdownPerc
+  const {
+    symbol,
+    timeframe,
+    trades,
+    candles,
+    startDate,
+    endDate,
+    capitalAllocation,
+    stopLossPerc,
+    maxDrawdownPerc,
+  } = strategyOptions
+
+  const isFullFilled = !!capitalAllocation && !!stopLossPerc && !!maxDrawdownPerc
+  const strategyId = strategy?.id
 
   const runningStrategyID = runningStrategiesMapping[strategyId]
   const currentStrategyResults = liveResults?.[runningStrategyID] || {}
@@ -117,25 +133,6 @@ const StrategyEditor = (props) => {
     allocation: Number(capitalAllocation),
     percStopLoss: Number(stopLossPerc),
     maxDrawdown: Number(maxDrawdownPerc),
-  }
-
-  const optionsProps = {
-    timeframe,
-    candles,
-    setCandles,
-    symbol,
-    setSymbol,
-    setTimeframe,
-    trades,
-    setTrades,
-    candleSeed,
-    setCandleSeed,
-    margin,
-    setMargin,
-    startDate,
-    setStartDate,
-    endDate,
-    setEndDate,
   }
 
   const execResults = {
@@ -152,10 +149,16 @@ const StrategyEditor = (props) => {
     setIsSaveStrategyModalOpen(false)
     setIsExecutionOptionsModalOpen(false)
     setIsCancelProcessModalOpen(false)
+    setIsLaunchStrategyModalOpen(false)
   }
 
   const onCreateNewStrategy = (label, content = {}) => {
-    const newStrategy = { ...content, label, id: v4() }
+    const newStrategy = {
+      ...content,
+      label,
+      id: v4(),
+      strategyOptions: getDefaultStrategyOptions(markets),
+    }
     saveStrategy(newStrategy)
     onLoadStrategy(newStrategy)
 
@@ -189,10 +192,10 @@ const StrategyEditor = (props) => {
     }
   }
 
-  const onSaveStrategy = () => {
+  const onSaveStrategy = useCallback(() => {
     saveStrategy(strategy)
     setStrategyDirty(false)
-  }
+  }, [saveStrategy, setStrategyDirty, strategy])
 
   const onSaveAsStrategy = (newStrategy) => {
     setStrategy(newStrategy)
@@ -206,6 +209,13 @@ const StrategyEditor = (props) => {
 
   const onCancelProcess = () => {
     setIsCancelProcessModalOpen(true)
+  }
+
+  const saveStrategyOptions = (newOptions) => {
+    onSaveAsStrategy({
+      ...strategy,
+      strategyOptions: { ...strategyOptions, ...newOptions },
+    })
   }
 
   const onBacktestStart = () => {
@@ -243,29 +253,74 @@ const StrategyEditor = (props) => {
       strategy,
       constraints,
     )
-    // setBacktestOptions(optionsProps)
   }
 
-  const startExecution = () => {
+  const apiCredentials = useSelector(getCurrentModeAPIKeyState)
+  const apiClientConfigured = apiCredentials?.configured && apiCredentials?.valid
+  const dispatch = useDispatch()
+  const openAppSettingsModal = () => dispatch(changeAppSettingsModalState(true))
+  const setAPIKeysTab = () => dispatch(
+    setSettingsTab(
+      SETTINGS_TABS.Keys,
+      _includes(ALLOWED_PAPER_PAIRS, symbol?.wsID) ? PAPER_MODE : MAIN_MODE,
+    ),
+  )
+  const showAPIKeyError = () => dispatch(
+    recvNotification({
+      mts: Date.now(),
+      status: 'error',
+      text: t('notifications.strategyLaunchMissingAPIKey'),
+      cid: v4(),
+    }),
+  )
+
+  const checkForAPIKeys = () => {
+    if (!apiClientConfigured) {
+      showAPIKeyError()
+      setTimeout(() => {
+        setAPIKeysTab()
+        openAppSettingsModal()
+      }, 250)
+
+      return false
+    }
+
+    return true
+  }
+
+  const onLaunchExecutionClick = () => setIsLaunchStrategyModalOpen(true)
+
+  const saveStrategyAndStartExecution = () => {
+    if (!checkForAPIKeys()) {
+      return
+    }
     if (!isFullFilled) {
       setIsExecutionOptionsModalOpen(true)
       setExecutionOptionsModalType(EXECUTION_TYPES.LIVE)
       return
     }
     onSaveStrategy()
-    dsExecuteLiveStrategy(
+
+    const executionArgs = prepareStrategyExecutionArgs(strategy)
+    dsExecuteLiveStrategy({
       authToken,
-      strategyId,
-      strategy.label,
-      symbol?.wsID,
-      timeframe,
-      trades,
-      strategyContent,
-      candleSeed,
-      margin,
-      isPaperTrading,
-      constraints,
-    )
+      ...executionArgs,
+    })
+  }
+
+  const loadStrategyAndStartExecution = (strategyToLoad) => {
+    if (!checkForAPIKeys()) {
+      return
+    }
+    onLoadStrategy(strategyToLoad)
+    setTimeout(() => {
+      const executionArgs = prepareStrategyExecutionArgs(strategyToLoad)
+      dsExecuteLiveStrategy({
+        authToken,
+        ...executionArgs,
+      })
+      history.push(routes.strategyEditor.path)
+    }, 500)
   }
 
   const stopExecution = () => {
@@ -294,9 +349,32 @@ const StrategyEditor = (props) => {
   }
 
   const openExecutionOptionsModal = () => {
+    if (!checkForAPIKeys()) {
+      return
+    }
+
     setIsExecutionOptionsModalOpen(true)
     setExecutionOptionsModalType(EXECUTION_TYPES.LIVE)
   }
+
+  useEffect(() => {
+    const { search } = location
+    if (executing || !search || _isEmpty(savedStrategies)) {
+      return
+    }
+    const { execute } = queryString.parse(location.search)
+    if (!execute) {
+      return
+    }
+
+    const strategyToLoad = savedStrategies[execute]
+
+    if (_isEmpty(strategyToLoad)) {
+      return
+    }
+    loadStrategyAndStartExecution(strategyToLoad)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [savedStrategies, executing, location])
 
   return (
     <>
@@ -307,80 +385,117 @@ const StrategyEditor = (props) => {
           isPaperTrading={isPaperTrading}
         />
       ) : (
-        <StrategyEditorPanel
-          moveable={moveable}
-          removeable={removeable}
-          onRemoveStrategy={onRemoveStrategy}
-        >
-          {(isBetaVersion || flags?.live_execution) && (
-            <StrategyTab
-              htmlKey='strategy'
-              sbtitle={({ selectedTab, sidebarOpened }) => (
-                <StrategyTabTitle
-                  startExecution={startExecution}
-                  stopExecution={stopExecution}
-                  onLoadStrategy={onLoadStrategy}
-                  onExportStrategy={onExportStrategy}
-                  onSaveStrategy={onSaveStrategy}
-                  onOpenRemoveModal={openRemoveModal}
-                  onOpenCreateStrategyModal={openCreateNewStrategyModal}
-                  onOpenCreateStrategyFromModal={openCreateNewStrategyFromModal}
-                  onOpenSaveStrategyAsModal={openSaveStrategyAsModal}
-                  onImportStrategy={onImportStrategy}
-                  strategy={strategy}
-                  strategyId={strategyId}
-                  executionResults={execResults}
-                  selectedTab={selectedTab}
-                  sidebarOpened={sidebarOpened}
-                  strategyDirty={strategyDirty}
-                />
-              )}
-              onOpenSaveStrategyAsModal={openSaveStrategyAsModal}
-              isPaperTrading={isPaperTrading}
-              startExecution={startExecution}
-              stopExecution={stopExecution}
-              executionResults={execResults}
-              onSaveAsStrategy={onSaveAsStrategy}
-              openExecutionOptionsModal={openExecutionOptionsModal}
-              onCancelProcess={onCancelProcess}
-              {...optionsProps}
-              {...props}
-            />
-          )}
+        <>
+          <StrategyEditorPanel
+            moveable={moveable}
+            removeable={removeable}
+            onRemoveStrategy={onRemoveStrategy}
+          >
+            {(isBetaVersion || flags?.live_execution) && (
+              <StrategyTab
+                htmlKey='strategy'
+                sbtitle={({ selectedTab, sidebarOpened }) => (
+                  <StrategyTabTitle
+                    startExecution={onLaunchExecutionClick}
+                    stopExecution={stopExecution}
+                    onLoadStrategy={onLoadStrategy}
+                    onExportStrategy={onExportStrategy}
+                    onSaveStrategy={onSaveStrategy}
+                    onOpenRemoveModal={openRemoveModal}
+                    onOpenCreateStrategyModal={openCreateNewStrategyModal}
+                    onOpenCreateStrategyFromModal={
+                      openCreateNewStrategyFromModal
+                    }
+                    onOpenSaveStrategyAsModal={openSaveStrategyAsModal}
+                    onImportStrategy={onImportStrategy}
+                    strategy={strategy}
+                    strategyId={strategyId}
+                    executionResults={execResults}
+                    selectedTab={selectedTab}
+                    sidebarOpened={sidebarOpened}
+                    strategyDirty={strategyDirty}
+                  />
+                )}
+                onOpenSaveStrategyAsModal={openSaveStrategyAsModal}
+                isPaperTrading={isPaperTrading}
+                startExecution={onLaunchExecutionClick}
+                stopExecution={stopExecution}
+                executionResults={execResults}
+                onSaveAsStrategy={onSaveAsStrategy}
+                onSaveStrategy={onSaveStrategy}
+                openExecutionOptionsModal={openExecutionOptionsModal}
+                saveStrategyOptions={saveStrategyOptions}
+                hasErrors={hasErrorsInIDE}
+                onCancelProcess={onCancelProcess}
+                {...props}
+              />
+            )}
 
-          {isPaperTrading && (isBetaVersion || flags?.backtest) && (
-            <BacktestTab
-              htmlKey='backtest'
-              sbtitle={({ sidebarOpened }) => (
-                <BacktestTabTitle
-                  results={backtestResults}
-                  sidebarOpened={sidebarOpened}
-                />
-              )}
-              results={backtestResults}
-              onBacktestStart={onBacktestStart}
-              {...optionsProps}
-              {...props}
-            />
-          )}
-          {(isBetaVersion || flags?.docs) && !isPaperTrading && (
-            <IDETab
-              htmlKey='view_in_ide'
-              key='view_in_ide'
-              hasErrors={hasErrorsInIDE}
-              onSaveStrategy={onSaveStrategy}
-              onOpenSaveStrategyAsModal={openSaveStrategyAsModal}
-              sbtitle={({ sidebarOpened }) => (
-                <IDETabTitle
-                  hasErrors={hasErrorsInIDE}
-                  strategyDirty={strategyDirty}
-                  sidebarOpened={sidebarOpened}
-                />
-              )}
-              {...props}
-            />
-          )}
-        </StrategyEditorPanel>
+            {isPaperTrading && (isBetaVersion || flags?.backtest) && (
+              <BacktestTab
+                htmlKey='backtest'
+                sbtitle={({ sidebarOpened }) => (
+                  <BacktestTabTitle
+                    results={backtestResults}
+                    sidebarOpened={sidebarOpened}
+                  />
+                )}
+                results={backtestResults}
+                onBacktestStart={onBacktestStart}
+                saveStrategyOptions={saveStrategyOptions}
+                {...props}
+              />
+            )}
+            {(isBetaVersion || flags?.docs) && !isPaperTrading && (
+              <IDETab
+                htmlKey='view_in_ide'
+                key='view_in_ide'
+                hasErrors={hasErrorsInIDE}
+                onSaveStrategy={onSaveStrategy}
+                onOpenSaveStrategyAsModal={openSaveStrategyAsModal}
+                sbtitle={({ sidebarOpened }) => (
+                  <IDETabTitle
+                    hasErrors={hasErrorsInIDE}
+                    strategyDirty={strategyDirty}
+                    sidebarOpened={sidebarOpened}
+                  />
+                )}
+                {...props}
+              />
+            )}
+          </StrategyEditorPanel>
+          <RemoveExistingStrategyModal
+            isOpen={isRemoveModalOpened}
+            onClose={onCloseModals}
+            onRemoveStrategy={onRemoveStrategy}
+            strategy={strategy}
+          />
+          <SaveStrategyAsModal
+            isOpen={isSaveStrategyAsModalOpen}
+            onClose={onCloseModals}
+            strategy={strategy}
+            onSubmit={onSaveAsStrategy}
+          />
+          <ExecutionOptionsModal
+            isOpen={isExecutionOptionsModalOpen}
+            onClose={onCloseModals}
+            saveStrategyOptions={saveStrategyOptions}
+            capitalAllocation={capitalAllocation}
+            stopLossPerc={stopLossPerc}
+            maxDrawdownPerc={maxDrawdownPerc}
+            startExecution={
+              executionOptionsModalType === EXECUTION_TYPES.LIVE
+                ? onLaunchExecutionClick
+                : onBacktestStart
+            }
+          />
+          <LaunchStrategyModal
+            onSubmit={saveStrategyAndStartExecution}
+            isOpen={isLaunchStrategyModalOpen}
+            onClose={onCloseModals}
+            strategyId={strategyId}
+          />
+        </>
       )}
       <CreateNewStrategyFromModalOpen
         isOpen={createNewStrategyFromModalOpen}
@@ -400,37 +515,10 @@ const StrategyEditor = (props) => {
         onClose={onCloseModals}
         onOpen={onLoadStrategy}
       />
-      <RemoveExistingStrategyModal
-        isOpen={isRemoveModalOpened}
-        onClose={onCloseModals}
-        onRemoveStrategy={onRemoveStrategy}
-        strategy={strategy}
-      />
-      <SaveStrategyAsModal
-        isOpen={isSaveStrategyAsModalOpen}
-        onClose={onCloseModals}
-        strategy={strategy}
-        onSubmit={onSaveAsStrategy}
-      />
       <CancelProcessModal
         isOpen={isCancelProcessModalOpen}
         onClose={onCloseModals}
         onSubmit={cancelProcess}
-      />
-      <ExecutionOptionsModal
-        isOpen={isExecutionOptionsModalOpen}
-        onClose={onCloseModals}
-        capitalAllocation={capitalAllocation}
-        setCapitalAllocation={setCapitalAllocation}
-        stopLossPerc={stopLossPerc}
-        setStopLossPerc={setStopLossPerc}
-        maxDrawdownPerc={maxDrawdownPerc}
-        setMaxDrawdownPerc={setMaxDrawdownPerc}
-        startExecution={
-          executionOptionsModalType === EXECUTION_TYPES.LIVE
-            ? startExecution
-            : onBacktestStart
-        }
       />
     </>
   )
@@ -439,24 +527,24 @@ const StrategyEditor = (props) => {
 StrategyEditor.propTypes = {
   moveable: PropTypes.bool,
   removeable: PropTypes.bool,
-  strategyId: PropTypes.string,
   onRemove: PropTypes.func.isRequired,
   authToken: PropTypes.string.isRequired,
   onStrategyChange: PropTypes.func.isRequired,
   markets: PropTypes.objectOf(PropTypes.object).isRequired, // eslint-disable-line
   setStrategy: PropTypes.func,
   backtestResults: PropTypes.objectOf(PropTypes.any).isRequired, // eslint-disable-line
-  options: PropTypes.objectOf(
-    PropTypes.oneOfType([PropTypes.string, PropTypes.number, PropTypes.bool]),
-  ).isRequired,
   strategy: PropTypes.shape({
     id: PropTypes.string,
     label: PropTypes.string,
+    // eslint-disable-next-line react/forbid-prop-types
+    strategyOptions: PropTypes.object,
   }),
   dsStopLiveStrategy: PropTypes.func.isRequired,
   dsExecuteLiveStrategy: PropTypes.func.isRequired,
   onLoadStrategy: PropTypes.func.isRequired,
-  indicators: PropTypes.arrayOf(PropTypes.object), // eslint-disable-line
+  indicators: PropTypes.arrayOf(
+    PropTypes.oneOfType([PropTypes.array, PropTypes.object]),
+  ), // eslint-disable-line
   strategyDirty: PropTypes.bool.isRequired,
   setStrategyDirty: PropTypes.func.isRequired,
   gaCreateStrategy: PropTypes.func.isRequired,
@@ -472,9 +560,9 @@ StrategyEditor.propTypes = {
       PropTypes.object,
     ]),
   ),
+  savedStrategies: PropTypes.objectOf(PropTypes.object), // eslint-disable-line
   saveStrategy: PropTypes.func.isRequired,
   isPaperTrading: PropTypes.bool.isRequired,
-  // setBacktestOptions: PropTypes.func.isRequired,
   dsExecuteBacktest: PropTypes.func.isRequired,
   isBetaVersion: PropTypes.bool.isRequired,
   flags: PropTypes.shape({
@@ -490,7 +578,6 @@ StrategyEditor.propTypes = {
 }
 
 StrategyEditor.defaultProps = {
-  strategyId: '',
   moveable: false,
   removeable: false,
   strategyContent: {},

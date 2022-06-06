@@ -10,7 +10,6 @@ const CcyInfoModal = lazy(() => import('../CcyInfoModal'))
 const ClosePositionModal = lazy(() => import('../ClosePositionModal'))
 const ConfirmDMSModal = lazy(() => import('../ConfirmDMSModal'))
 const EditOrderModal = lazy(() => import('../EditOrderModal'))
-const LaunchStrategyModal = lazy(() => import('../LaunchStrategyModal'))
 
 const ModalsWrapper = ({ isElectronApp }) => {
   return (
@@ -22,8 +21,6 @@ const ModalsWrapper = ({ isElectronApp }) => {
         <ConfirmDMSModal />
         <AOPauseModal />
         <AppSettingsModal />
-        {/* Putting this modal for electron mode only until strategies will be supported by the hosted version too */}
-        <LaunchStrategyModal />
       </>
       )}
       <BadConnectionModal />

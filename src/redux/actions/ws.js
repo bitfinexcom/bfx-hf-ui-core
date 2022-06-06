@@ -226,6 +226,11 @@ export default {
     payload: opts,
   }),
 
+  recvBacktestStopped: gid => ({
+    type: t.BACKTEST_STOPPED,
+    payload: gid,
+  }),
+
   recvBacktestCandle: candle => ({
     type: t.BACKTEST_CANDLE,
     payload: candle,
@@ -256,21 +261,6 @@ export default {
   purgeDataBook: (channel) => ({
     type: t.PURGE_DATA_BOOK,
     payload: { channel },
-  }),
-
-  setBacktestOptions: options => ({
-    type: t.SET_BACKTEST_OPTIONS,
-    payload: { options },
-  }),
-
-  setExecutionOption: (strategyId, options) => ({
-    type: t.SET_EXECUTION_OPTION,
-    payload: { strategyId, options },
-  }),
-
-  setExecutionOptions: (options) => ({
-    type: t.SET_EXECUTION_OPTIONS,
-    payload: { options },
   }),
 
   setLivePriceUpdate: (strategyMapKey, executionResultsObj) => ({

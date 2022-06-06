@@ -1,9 +1,10 @@
 import _some from 'lodash/some'
 import { createSelector } from 'reselect'
+import { getStrategyId } from '../ui'
 
 import getActiveStrategies from './get_active_strategies'
 
-const getIsStrategyExecuting = (strategyId) => createSelector([getActiveStrategies], (executingStrategies) => {
+const getIsCurrentStrategyExecuting = createSelector([getActiveStrategies, getStrategyId], (executingStrategies, strategyId) => {
   if (!strategyId) {
     return false
   }
@@ -14,4 +15,4 @@ const getIsStrategyExecuting = (strategyId) => createSelector([getActiveStrategi
   )
 })
 
-export default getIsStrategyExecuting
+export default getIsCurrentStrategyExecuting

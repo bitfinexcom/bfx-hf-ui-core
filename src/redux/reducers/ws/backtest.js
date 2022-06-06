@@ -1,4 +1,3 @@
-import _size from 'lodash/size'
 import types from '../../constants/ws'
 
 function getInitialState() {
@@ -8,7 +7,6 @@ function getInitialState() {
     executing: false,
     trades: [],
     candles: [],
-    backtestOptions: {},
   }
 }
 
@@ -53,28 +51,21 @@ function reducer(state = getInitialState(), action = {}) {
       }
     }
 
-    case types.SET_BACKTEST_OPTIONS: {
-      const { options = {} } = payload
-      if (!_size(options)) {
-        return {
-          ...state,
-        }
-      }
-      return {
-        ...state,
-        backtestOptions: options,
-      }
-    }
-
     case types.BACKTEST_RESULTS: {
       return {
         ...state,
         ...payload,
+      }
+    }
+
+    case types.BACKTEST_STOPPED: {
+      return {
         loading: false,
         executing: false,
         finished: true,
       }
     }
+
     case types.RESET_DATA_BACKTEST: {
       return getInitialState()
     }

@@ -1,9 +1,16 @@
 @import "../../variables.scss";
 
+.hfui-strategies-list {
+  .no-trades__wrapper {
+    margin-top: 20px;
+    text-align: center;
+  }
+}
+
 .hfui-strategytradestable__wrapper {
   width: auto;
   margin: 0;
-  
+
   .ReactVirtualized__Table__headerRow {
     .ReactVirtualized__Table__headerColumn:first-of-type,
     .ReactVirtualized__Table__rowColumn:first-of-type {

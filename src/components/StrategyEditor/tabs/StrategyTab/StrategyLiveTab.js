@@ -2,6 +2,7 @@ import React, { useCallback, useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
 import _isEmpty from 'lodash/isEmpty'
 import { useTranslation } from 'react-i18next'
+import { useSelector } from 'react-redux'
 import StrategyPerfomanceMetrics from '../../../StrategyPerfomanceMetrics'
 import StrategyTradesTable from '../../../StrategyTradesTable'
 import StrategiesGridLayout from '../../components/StrategiesGridLayout'
@@ -12,13 +13,16 @@ import {
   LAYOUT_CONFIG_WITHOUT_TRADES,
 } from '../../components/StrategiesGridLayout.constants'
 import StrategyLiveChart from '../../../StrategyLiveChart'
-import StrategyOptionsPanel from '../../../StrategyOptionsPanel'
 import StrategyTabWrapper from '../../components/StrategyTabWrapper'
+import StrategyOptionsPanelLive from '../../../StrategyOptionsPanel/StrategyOptionsPanel.Live'
+import { getCurrentStrategyExecutionOptions } from '../../../../redux/selectors/ws'
 
 const StrategyLiveTab = (props) => {
   const { executionResults, options, onCancelProcess } = props
   const [layoutConfig, setLayoutConfig] = useState()
   const [fullscreenChart, setFullScreenChart] = useState(false)
+
+  const options = useSelector(getCurrentStrategyExecutionOptions)
 
   const { t } = useTranslation()
 
@@ -45,7 +49,7 @@ const StrategyLiveTab = (props) => {
       switch (i) {
         case COMPONENTS_KEYS.OPTIONS:
           return (
-            <StrategyOptionsPanel
+            <StrategyOptionsPanelLive
               {...props}
               setFullScreenChart={() => setFullScreenChart(true)}
               isExecuting={executing}

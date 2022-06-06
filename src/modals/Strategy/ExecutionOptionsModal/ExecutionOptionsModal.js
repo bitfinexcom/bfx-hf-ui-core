@@ -1,30 +1,101 @@
-import React, { useState } from 'react'
+import React, { useCallback, useState } from 'react'
+import { useSelector } from 'react-redux'
 import PropTypes from 'prop-types'
 import { useTranslation } from 'react-i18next'
+import _debounce from 'lodash/debounce'
 import Modal from '../../../ui/Modal'
 import AmountInput from '../../../components/OrderForm/FieldComponents/input.amount'
+import PercentInput from '../../../components/OrderForm/FieldComponents/input.percent'
 
 import ExecutionOptionsBody from './ExecutionOptionsBody'
+import { getIsPaperTrading } from '../../../redux/selectors/ui'
+import { STRATEGY_OPTIONS_KEYS } from '../../../components/StrategyEditor/StrategyEditor.helpers'
+
 import './style.scss'
 
 const ExecutionOptionsModal = (props) => {
   const {
-    isOpen, onClose, capitalAllocation, setCapitalAllocation, stopLossPerc,
-    maxDrawdownPerc, startExecution,
+    isOpen,
+    onClose,
+    saveStrategyOptions,
+    startExecution,
+    capitalAllocation,
+    stopLossPerc,
+    maxDrawdownPerc,
   } = props
+  const [capitalAllocationValue, setCapitalAllocationValue] = useState(capitalAllocation)
+  const [stopLossPercValue, setStopLossPercValue] = useState(stopLossPerc)
+  const [maxDrawdownPercValue, setMaxDrawdownPercValue] = useState(maxDrawdownPerc)
+
   const [capitalAllocationError, setCapitalAllocationError] = useState('')
+  const [stopLossPercError, setStopLossError] = useState('')
+  const [maxDrawdownError, setMaxDrawdownError] = useState('')
+
+  const isPaperTrading = useSelector(getIsPaperTrading)
 
   const { t } = useTranslation()
+
+  const setCapitalAllocation = useCallback(
+    _debounce(
+      (value) => saveStrategyOptions({
+        [STRATEGY_OPTIONS_KEYS.CAPITAL_ALLOCATION]: value,
+      }),
+      500,
+    ),
+    [saveStrategyOptions],
+  )
+  const setStopLossPerc = useCallback(
+    _debounce(
+      (value) => saveStrategyOptions({ [STRATEGY_OPTIONS_KEYS.STOP_LESS_PERC]: value }),
+      500,
+    ),
+    [saveStrategyOptions],
+  )
+
+  const setMaxDrawdownPerc = useCallback(
+    _debounce(
+      (value) => saveStrategyOptions({
+        [STRATEGY_OPTIONS_KEYS.MAX_DRAWDOWN_PERC]: value,
+      }),
+      500,
+    ),
+    [saveStrategyOptions],
+  )
 
   const capitalAllocationHandler = (v) => {
     const error = AmountInput.validateValue(v, t)
     const processed = String(AmountInput.processValue(v))
 
+    setCapitalAllocationError(error)
     if (error) {
-      setCapitalAllocationError(error)
       return
     }
+    setCapitalAllocationValue(processed)
     setCapitalAllocation(processed)
+  }
+
+  const stopLossPercHandler = (v) => {
+    const error = PercentInput.validateValue(v, t)
+    const processed = String(AmountInput.processValue(v))
+
+    setStopLossError(error)
+    if (error) {
+      return
+    }
+    setStopLossPercValue(processed)
+    setStopLossPerc(processed)
+  }
+
+  const maxDrawdownHandler = (v) => {
+    const error = PercentInput.validateValue(v, t)
+    const processed = String(AmountInput.processValue(v))
+
+    setMaxDrawdownError(error)
+    if (error) {
+      return
+    }
+    setMaxDrawdownPercValue(processed)
+    setMaxDrawdownPerc(processed)
   }
 
   const isFullFilled = capitalAllocation && stopLossPerc && maxDrawdownPerc
@@ -33,25 +104,44 @@ const ExecutionOptionsModal = (props) => {
     if (!isFullFilled) {
       return
     }
-    startExecution()
     onClose()
+    startExecution()
   }
 
   return (
     <Modal
       isOpen={isOpen}
       onClose={onClose}
-      label={t('strategyEditor.executionOptionsModal.title')}
+      label={
+        isPaperTrading
+          ? t('strategyEditor.executionOptionsModal.title')
+          : t('strategyEditor.executionOptionsModal.disabledTitle')
+      }
       onSubmit={onSubmit}
     >
-      <ExecutionOptionsBody capitalAllocationHandler={capitalAllocationHandler} capitalAllocationError={capitalAllocationError} t={t} {...props} />
+      <ExecutionOptionsBody
+        {...props}
+        isPaperTrading={isPaperTrading}
+        capitalAllocation={capitalAllocationValue}
+        setCapitalAllocation={capitalAllocationHandler}
+        capitalAllocationError={capitalAllocationError}
+        stopLossPerc={stopLossPercValue}
+        stopLossPercError={stopLossPercError}
+        setStopLossPerc={stopLossPercHandler}
+        maxDrawdownPerc={maxDrawdownPercValue}
+        maxDrawdownError={maxDrawdownError}
+        setMaxDrawdownPerc={maxDrawdownHandler}
+        t={t}
+      />
       <Modal.Footer>
         <Modal.Button secondary onClick={onClose}>
           {t('ui.closeBtn')}
         </Modal.Button>
-        <Modal.Button primary onClick={onSubmit} disabled={!isFullFilled}>
-          {t('ui.startBtn')}
-        </Modal.Button>
+        {isPaperTrading && (
+          <Modal.Button primary onClick={onSubmit} disabled={!isFullFilled}>
+            {t('ui.startBtn')}
+          </Modal.Button>
+        )}
       </Modal.Footer>
     </Modal>
   )
@@ -61,12 +151,10 @@ ExecutionOptionsModal.propTypes = {
   isOpen: PropTypes.bool.isRequired,
   onClose: PropTypes.func.isRequired,
   capitalAllocation: PropTypes.string.isRequired,
-  setCapitalAllocation: PropTypes.func.isRequired,
   stopLossPerc: PropTypes.string.isRequired,
-  setStopLossPerc: PropTypes.func.isRequired,
   maxDrawdownPerc: PropTypes.string.isRequired,
-  setMaxDrawdownPerc: PropTypes.func.isRequired,
   startExecution: PropTypes.func.isRequired,
+  saveStrategyOptions: PropTypes.func.isRequired,
 }
 
 export default ExecutionOptionsModal

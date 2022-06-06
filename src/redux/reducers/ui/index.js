@@ -46,6 +46,8 @@ export const PAPER_MODE = 'paper'
 export const MAIN_MODE = 'main'
 let shownOldFormatModal = false
 
+export const ALLOWED_PAPER_PAIRS = ['tTESTBTC:TESTUSD']
+
 const DEFAULT_MARKET = {
   contexts: ['e', 'm'],
   restID: 'tBTCUSD',
@@ -54,8 +56,6 @@ const DEFAULT_MARKET = {
   quote: 'USD',
   uiID: 'BTC/USD',
 }
-
-const ALLOWED_PAPER_PAIRS = ['tTESTBTC:TESTUSD']
 
 const getActiveLayoutDef = state => (!_isEmpty(state.unsavedLayout)
   ? state.unsavedLayout
@@ -80,12 +80,9 @@ function getInitialState() {
       isTradingModeModalVisible: false,
       isClosePositionModalVisible: false,
       isAppSettingsModalVisible: false,
-      isLaunchStrategyModalVisible: false,
     },
     orderToEdit: {},
     isBadInternetConnection: false,
-    launchStrategyOptions: {},
-    launchStrategyIdModal: '',
     closePositionModalData: {},
     isOrderExecuting: false,
     content: {},
@@ -436,19 +433,6 @@ function reducer(state = getInitialState(), action = {}) {
         },
       }
     }
-    case types.CHANGE_LAUNCH_STRATEGY_MODAL_STATE: {
-      const { isVisible, options, strategyId } = payload
-
-      return {
-        ...state,
-        launchStrategyOptions: options,
-        launchStrategyIdModal: strategyId || '',
-        modals: {
-          ...state.modals,
-          isLaunchStrategyModalVisible: isVisible,
-        },
-      }
-    }
     case types.SET_IS_ORDER_EXECUTING: {
       const { executing } = payload
       return {
@@ -647,11 +631,12 @@ function reducer(state = getInitialState(), action = {}) {
       }
     }
     case types.SET_SETTINGS_TAB: {
-      const { tab } = payload
+      const { tab, section } = payload
 
       return {
         ...state,
         settingsActiveTab: tab,
+        settingsActiveSection: section,
       }
     }
 

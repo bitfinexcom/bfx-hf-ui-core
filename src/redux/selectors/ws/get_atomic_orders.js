@@ -5,8 +5,8 @@ import _filter from 'lodash/filter'
 import _keys from 'lodash/keys'
 import _reduce from 'lodash/reduce'
 
-import getMarkets from '../meta/get_markets'
 import { REDUCER_PATHS } from '../../config'
+import { getMarkets } from '../meta'
 
 const path = REDUCER_PATHS.WS
 

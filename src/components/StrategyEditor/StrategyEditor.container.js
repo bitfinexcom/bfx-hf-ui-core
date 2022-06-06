@@ -10,41 +10,37 @@ import WSTypes from '../../redux/constants/ws'
 import {
   getAuthToken,
   getBacktestResults,
-  getExecutionOptions,
   getExecutionResults,
   // getSortedByTimeActiveStrategies,
   getRunningStrategiesMapping,
   getLiveExecutionResults,
-  getIsStrategyExecuting,
+  getIsCurrentStrategyExecuting,
+  getSavedStrategies,
 } from '../../redux/selectors/ws'
 import {
-  getStrategyId,
   getThemeSetting,
   getIsPaperTrading,
   getStrategiesFeatureFlags,
   getIsBetaVersion,
 } from '../../redux/selectors/ui'
 import StrategyEditor from './StrategyEditor'
-import { getMarkets } from '../../redux/selectors/meta'
+import { getMarketsForExecution } from '../../redux/selectors/meta'
 
 const mapStateToProps = (state = {}) => {
-  const strategyId = getStrategyId(state)
-
   return {
     authToken: getAuthToken(state),
-    strategyId,
     backtestResults: getBacktestResults(state),
     allExecutionResults: getExecutionResults(state),
     settingsTheme: getThemeSetting(state),
-    options: getExecutionOptions(state)(strategyId),
-    executing: getIsStrategyExecuting(state)(strategyId),
-    markets: getMarkets(state),
+    executing: getIsCurrentStrategyExecuting(state),
+    markets: getMarketsForExecution(state),
     isPaperTrading: getIsPaperTrading(state),
     flags: getStrategiesFeatureFlags(state),
     isBetaVersion: getIsBetaVersion(state),
     liveResults: getLiveExecutionResults(state),
     // activeStrategies: getSortedByTimeActiveStrategies(state),
     runningStrategiesMapping: getRunningStrategiesMapping(state),
+    savedStrategies: getSavedStrategies(state),
   }
 }
 
@@ -60,63 +56,45 @@ const mapDispatchToProps = (dispatch) => ({
   clearBacktestOptions: () => {
     dispatch(WSActions.resetBacktestData())
   },
-  dsExecuteLiveStrategy: (
+  dsExecuteLiveStrategy: ({
     authToken,
-    strategyId,
     name,
     symbol,
-    tf,
-    includeTrades,
+    timeframe,
+    trades,
     strategy,
-    seedCandleCount,
+    candleSeed,
     margin,
-    isPaperTrading,
+    constraints,
+  }) => {
+    const processedStrategy = _omitBy(strategy, _isEmpty)
+
+    dispatch(
+      WSActions.send([
+        'strategy.execute_start',
+        authToken,
+        name,
+        symbol,
+        timeframe,
+        trades,
+        processedStrategy,
+        candleSeed,
+        margin,
+        constraints,
+      ]),
+    )
+    dispatch(WSActions.setExecutionLoading(true))
+  },
+  dsExecuteBacktest: (
+    from,
+    to,
+    symbol,
+    tf,
+    candles,
+    trades,
+    strategy,
     constraints,
   ) => {
-    const processedStrategy = _omitBy(strategy, _isEmpty)
-    const executionOptions = {
-      authToken,
-      name,
-      symbol,
-      tf,
-      includeTrades,
-      strategy: processedStrategy,
-      seedCandleCount,
-      margin,
-    }
-
-    if (isPaperTrading) {
-      dispatch(
-        WSActions.setExecutionOption(strategyId, {
-          includeTrades,
-          seedCandleCount,
-          symbol,
-          tf,
-          margin,
-        }),
-      )
-      dispatch(
-        WSActions.send([
-          'strategy.execute_start',
-          authToken,
-          name,
-          symbol,
-          tf,
-          includeTrades,
-          processedStrategy,
-          seedCandleCount,
-          margin,
-          constraints,
-        ]),
-      )
-      dispatch(WSActions.setExecutionLoading(true))
-    } else {
-      dispatch(
-        UIActions.changeLaunchStrategyModalState(true, strategyId, executionOptions),
-      )
-    }
-  },
-  dsExecuteBacktest: (from, to, symbol, tf, candles, trades, strategy, constraints) => {
     const processedStrategy = _omitBy(strategy, _isEmpty)
 
     dispatch(WSActions.purgeBacktestData())
@@ -143,12 +121,11 @@ const mapDispatchToProps = (dispatch) => ({
     )
     dispatch(WSActions.setBacktestLoading())
   },
-  setBacktestOptions: (options) => {
-    dispatch(WSActions.setBacktestOptions(options))
-  },
   dsStopLiveStrategy: (authToken, runningStrategyID) => {
     dispatch(WSActions.setExecutionLoading(true))
-    dispatch(WSActions.send(['strategy.execute_stop', authToken, runningStrategyID]))
+    dispatch(
+      WSActions.send(['strategy.execute_stop', authToken, runningStrategyID]),
+    )
   },
   showError: (text) => {
     dispatch(

@@ -14,7 +14,7 @@ import './style.css'
 
 const OrderHistory = ({
   onRemove, dark, orders, fetchOrderHistory, authToken, setIsLoadingOrderHistFlag,
-  isLoadingOrderHistData,
+  isLoadingOrderHistData, apiCredentials,
 }) => {
   const [ref, { width }] = useSize()
   const { t } = useTranslation()
@@ -28,9 +28,13 @@ const OrderHistory = ({
     fetchMoreItems({ fetchMoreItems: true })
   }
 
+  const apiClientConfigured = apiCredentials?.configured && apiCredentials?.valid
+
   useEffect(() => {
-    fetchOrderHistory(authToken)
-  }, [authToken, fetchOrderHistory])
+    if (apiClientConfigured) {
+      fetchOrderHistory(authToken)
+    }
+  }, [apiClientConfigured, authToken, fetchOrderHistory])
 
   return (
     <Panel
@@ -65,6 +69,7 @@ OrderHistory.propTypes = {
   setIsLoadingOrderHistFlag: PropTypes.func.isRequired,
   authToken: PropTypes.string,
   isLoadingOrderHistData: PropTypes.bool,
+  apiCredentials: PropTypes.objectOf(PropTypes.bool),
 }
 
 OrderHistory.defaultProps = {
@@ -73,6 +78,7 @@ OrderHistory.defaultProps = {
   orders: [],
   authToken: '',
   isLoadingOrderHistData: false,
+  apiCredentials: {},
 }
 
 export default OrderHistory

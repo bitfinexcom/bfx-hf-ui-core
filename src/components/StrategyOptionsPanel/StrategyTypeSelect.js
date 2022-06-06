@@ -33,7 +33,9 @@ const getStrategyTypesOptions = () => [
   },
 ]
 
-const StrategyTypeSelect = ({ strategy, onSaveAsStrategy, isExecuting }) => {
+const StrategyTypeSelect = ({
+  strategy, onSaveAsStrategy, isExecuting, isDisabled,
+}) => {
   const [showCustomStrategyTypeInput, setShowCustomStrategyTypeInput] = useState(false)
   const [customTypeValue, setCustomTypeValue] = useState('')
   const [strategyTypeDropdownValue, setStrategyTypeDropdownValue] = useState(null)
@@ -118,11 +120,11 @@ const StrategyTypeSelect = ({ strategy, onSaveAsStrategy, isExecuting }) => {
           value={strategyTypeDropdownValue}
           options={strategyTypesOptionsMemo}
           onChange={onSelectStrategyType}
-          disabled={isExecuting || showCustomStrategyTypeInput}
-          placeholder={isExecuting ? t('ui.notSelected') : ''}
+          disabled={isDisabled || isExecuting || showCustomStrategyTypeInput}
+          placeholder={isExecuting || isDisabled ? t('ui.notSelected') : ''}
         />
         <p className='hfui-orderform__input-label'>
-          {isExecuting
+          {isExecuting || isDisabled
             ? t('strategyEditor.strategyTypeDescriptionDisabled')
             : t('strategyEditor.strategyTypeDescription')}
         </p>
@@ -169,12 +171,14 @@ StrategyTypeSelect.propTypes = {
   }),
   onSaveAsStrategy: PropTypes.func.isRequired,
   isExecuting: PropTypes.bool.isRequired,
+  isDisabled: PropTypes.bool,
 }
 
 StrategyTypeSelect.defaultProps = {
   strategy: {
     strategyType: null,
   },
+  isDisabled: false,
 }
 
 export default StrategyTypeSelect

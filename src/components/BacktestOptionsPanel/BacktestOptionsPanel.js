@@ -1,6 +1,6 @@
-import React, { useState } from 'react'
+import React, { useCallback, useState } from 'react'
 import PropTypes from 'prop-types'
-
+import _debounce from 'lodash/debounce'
 import { useTranslation } from 'react-i18next'
 import { Checkbox, Truncate } from '@ufx-ui/core'
 import timeFrames from '../../util/time_frames'
@@ -8,30 +8,48 @@ import AmountInput from '../OrderForm/FieldComponents/input.amount'
 import DateInput from '../OrderForm/FieldComponents/input.date'
 import TimeFrameDropdown from '../TimeFrameDropdown'
 import Button from '../../ui/Button'
+import { STRATEGY_OPTIONS_KEYS } from '../StrategyEditor/StrategyEditor.helpers'
 
 const MAX_DATE = new Date()
 
 const BacktestOptionsPanel = ({
-  timeframe,
-  setTimeframe,
-  trades,
-  setTrades,
   // margin,
-  candleSeed,
-  setCandleSeed,
   setFullScreenChart,
   onBacktestStart,
-  startDate,
-  endDate,
-  setStartDate,
-  setEndDate,
   isFinished,
-  candles,
-  setCandles,
+  strategy,
+  saveStrategyOptions,
 }) => {
+  const {
+    strategyOptions: {
+      timeframe,
+      trades,
+      candleSeed,
+      startDate: _startDate,
+      endDate: _endDate,
+      candles,
+    },
+  } = strategy
   const [seedError, setSeedError] = useState(null)
+  const [candleSeedValue, setCandleSeedValue] = useState(candleSeed)
+
+  const startDate = new Date(_startDate)
+  const endDate = new Date(_endDate)
 
   const { t } = useTranslation()
+
+  const setTimeframe = (value) => saveStrategyOptions({ [STRATEGY_OPTIONS_KEYS.TIMEFRAME]: value })
+  const setTrades = (value) => saveStrategyOptions({ [STRATEGY_OPTIONS_KEYS.TRADES]: value })
+  const setCandleSeed = useCallback(
+    _debounce(
+      (value) => saveStrategyOptions({ [STRATEGY_OPTIONS_KEYS.CANDLE_SEED]: value }),
+      1000,
+    ),
+    [saveStrategyOptions],
+  )
+  const setStartDate = (value) => saveStrategyOptions({ [STRATEGY_OPTIONS_KEYS.START_DATE]: value })
+  const setEndDate = (value) => saveStrategyOptions({ [STRATEGY_OPTIONS_KEYS.END_DATE]: value })
+  const setCandles = (value) => saveStrategyOptions({ [STRATEGY_OPTIONS_KEYS.CANDLES]: value })
 
   const updateSeed = (v) => {
     const error = AmountInput.validateValue(v, t)
@@ -41,6 +59,7 @@ const BacktestOptionsPanel = ({
     if (error) {
       return
     }
+    setCandleSeedValue(processed)
     setCandleSeed(processed)
   }
 
@@ -59,21 +78,21 @@ const BacktestOptionsPanel = ({
         </div>
       </div>
       {candles && (
-      <>
-        <div className='hfui-strategy-options__input item'>
-          <TimeFrameDropdown tf={timeframe} onChange={setTimeframe} />
-          <p className='hfui-orderform__input-label'>
-            {t('strategyEditor.selectCandleDurationDescription')}
-          </p>
-        </div>
-        <AmountInput
-          className='hfui-strategy-options__amount-input item'
-          def={{ label: t('strategyEditor.candleSeedCount') }}
-          validationError={seedError}
-          value={candleSeed}
-          onChange={updateSeed}
-        />
-      </>
+        <>
+          <div className='hfui-strategy-options__input item'>
+            <TimeFrameDropdown tf={timeframe} onChange={setTimeframe} />
+            <p className='hfui-orderform__input-label'>
+              {t('strategyEditor.selectCandleDurationDescription')}
+            </p>
+          </div>
+          <AmountInput
+            className='hfui-strategy-options__amount-input item'
+            def={{ label: t('strategyEditor.candleSeedCount') }}
+            validationError={seedError}
+            value={candleSeedValue}
+            onChange={updateSeed}
+          />
+        </>
       )}
       {/* {!isPaperTrading && _includes(symbol?.contexts, 'm') && (
         <div className='hfui-strategy-options__amount-input item'>
@@ -130,31 +149,26 @@ const BacktestOptionsPanel = ({
           green
         />
       </div>
-
     </div>
   )
 }
 
 BacktestOptionsPanel.propTypes = {
-  timeframe: PropTypes.oneOf(timeFrames).isRequired,
-  setTimeframe: PropTypes.func.isRequired,
-  trades: PropTypes.bool.isRequired,
-  setTrades: PropTypes.func.isRequired,
-  // margin: PropTypes.bool.isRequired,
-  candleSeed: PropTypes.number.isRequired,
-  setCandleSeed: PropTypes.func.isRequired,
   strategy: PropTypes.shape({
     label: PropTypes.string,
+    strategyOptions: PropTypes.shape({
+      timeframe: PropTypes.oneOf(timeFrames).isRequired,
+      trades: PropTypes.bool.isRequired,
+      candleSeed: PropTypes.number.isRequired,
+      candles: PropTypes.bool.isRequired,
+      startDate: PropTypes.string.isRequired,
+      endDate: PropTypes.string.isRequired,
+    }),
   }).isRequired,
   setFullScreenChart: PropTypes.func.isRequired,
   onBacktestStart: PropTypes.func,
   isFinished: PropTypes.bool.isRequired,
-  candles: PropTypes.bool.isRequired,
-  setCandles: PropTypes.func.isRequired,
-  startDate: PropTypes.instanceOf(Date).isRequired,
-  endDate: PropTypes.instanceOf(Date).isRequired,
-  setStartDate: PropTypes.func.isRequired,
-  setEndDate: PropTypes.func.isRequired,
+  saveStrategyOptions: PropTypes.func.isRequired,
 }
 
 BacktestOptionsPanel.defaultProps = {

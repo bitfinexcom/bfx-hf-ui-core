@@ -2,8 +2,7 @@ import _keys from 'lodash/keys'
 import _filter from 'lodash/filter'
 import { createSelector } from 'reselect'
 import { reduxSelectors } from '@ufx-ui/bfx-containers'
-
-import getMarkets from './get_markets'
+import { getMarkets } from '.'
 
 const { getIsSecuritiesPair, getIsTradingPair, getIsDerivativePair } = reduxSelectors
 

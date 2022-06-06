@@ -3,9 +3,9 @@ import PropTypes from 'prop-types'
 import _isEmpty from 'lodash/isEmpty'
 import { useTranslation } from 'react-i18next'
 import { Icon } from 'react-fa'
-import StrategiesMenuSideBarParams from '../../components/StrategiesMenuSideBarParams'
 import Indicator from '../../../../ui/Indicator'
 import useHover from '../../../../hooks/useHover'
+import SidebarParams from '../../components/SidebarParams/SidebarParams'
 
 const StrategyTabTitle = (props) => {
   const { executionResults, selectedTab, sidebarOpened } = props
@@ -59,7 +59,7 @@ const StrategyTabTitle = (props) => {
       {sidebarOpened && <span className='title-label'>{title}</span>}
       {getIndicator()}
       {paramsOpen && (
-        <StrategiesMenuSideBarParams
+        <SidebarParams
           {...props}
           executing={executing}
           closeParams={closeParams}
