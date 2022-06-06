@@ -1,4 +1,5 @@
 import _get from 'lodash/get'
+import _reduce from 'lodash/reduce'
 import { createSelector } from 'reselect'
 import memoizeOne from 'memoize-one'
 import { reduxSelectors } from '@ufx-ui/bfx-containers'
@@ -8,7 +9,9 @@ import { REDUCER_PATHS } from '../../config'
 import { getIsPaperTrading } from '../ui'
 import { MARKET_TYPES_KEYS } from '../../constants/market'
 
-const { getCurrencySymbolMemo } = reduxSelectors
+const {
+  getCurrencySymbolMemo, getIsSecuritiesPair, getIsTradingPair, getIsDerivativePair,
+} = reduxSelectors
 
 const path = REDUCER_PATHS.META
 
@@ -38,6 +41,24 @@ export const getMarketPair = createSelector(
 )
 
 export const getMarketsForExecution = createSelector(
-  [getMarketsObject],
-  (markets) => _get(markets, MARKET_TYPES_KEYS.LIVE_MARKETS, EMPTY_OBJ),
+  [
+    getMarketsObject,
+    getIsTradingPair,
+    getIsDerivativePair,
+    getIsSecuritiesPair,
+  ],
+  (markets, isTradingPair, isDerivativePair, isSecuritiesPair) => {
+    const liveMarkets = _get(markets, MARKET_TYPES_KEYS.LIVE_MARKETS, EMPTY_OBJ)
+
+    return _reduce(liveMarkets, (result, value, key) => {
+      if (isTradingPair(key) && !isDerivativePair(key) && !isSecuritiesPair(key)) {
+        return {
+          ...result,
+          [key]: value,
+        }
+      }
+
+      return result
+    }, {})
+  },
 )
