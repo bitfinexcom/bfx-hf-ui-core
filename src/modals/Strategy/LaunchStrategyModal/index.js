@@ -1,3 +1,3 @@
-import LaunchStrategyModal from './LaunchStrategyModal.container'
+import LaunchStrategyModal from './LaunchStrategyModal'
 
 export default LaunchStrategyModal
