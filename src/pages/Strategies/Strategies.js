@@ -1,6 +1,4 @@
-import React, {
-  lazy, Suspense, useState,
-} from 'react'
+import React, { lazy, Suspense, useState } from 'react'
 import Debug from 'debug'
 import PropTypes from 'prop-types'
 import randomColor from 'randomcolor'
@@ -9,6 +7,7 @@ import _values from 'lodash/values'
 import _map from 'lodash/map'
 // import _remove from 'lodash/remove'
 import _forEach from 'lodash/forEach'
+import _isEmpty from 'lodash/isEmpty'
 import Indicators from 'bfx-hf-indicators'
 import { nonce } from 'bfx-api-node-util'
 import HFS from 'bfx-hf-strategy'
@@ -176,22 +175,22 @@ const StrategiesPage = ({
 
   const onLoadStrategy = (newStrategy, forcedLoad = false) => {
     // const updated = { ...newStrategy, savedTs: Date.now() }
+    const strategyToLoad = { ...newStrategy }
     if (strategyDirty && !forcedLoad) {
-      setNextStrategyToOpen(newStrategy)
+      setNextStrategyToOpen(strategyToLoad)
       setIsUnsavedStrategyModalOpen(true)
       return
     }
-    if (!newStrategy?.strategyOptions) {
-      // eslint-disable-next-line no-param-reassign
-      newStrategy.strategyOptions = getDefaultStrategyOptions(markets)
+    if (_isEmpty(strategyToLoad?.strategyOptions)) {
+      strategyToLoad.strategyOptions = getDefaultStrategyOptions(markets)
     }
-    selectStrategyHandler(newStrategy, forcedLoad)
+    selectStrategyHandler(strategyToLoad, forcedLoad)
     setSectionErrors({})
     setNextStrategyToOpen(null)
     setStrategyDirty(false)
 
-    if (newStrategy.defineIndicators) {
-      onDefineIndicatorsChange(newStrategy.defineIndicators)
+    if (strategyToLoad.defineIndicators) {
+      onDefineIndicatorsChange(strategyToLoad.defineIndicators)
     }
   }
 
