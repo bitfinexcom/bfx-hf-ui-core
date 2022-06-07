@@ -3,7 +3,6 @@ import React, {
 } from 'react'
 import Debug from 'debug'
 import _isEmpty from 'lodash/isEmpty'
-import queryString from 'query-string'
 import { useHistory, useLocation } from 'react-router'
 import _size from 'lodash/size'
 import _some from 'lodash/some'
@@ -90,6 +89,8 @@ const StrategyEditor = (props) => {
     runningStrategiesMapping,
     savedStrategies,
     cancelProcess,
+    changeTradingMode,
+    currentMode,
   } = props
   const { t } = useTranslation()
   const location = useLocation()
@@ -306,6 +307,12 @@ const StrategyEditor = (props) => {
       setExecutionOptionsModalType(EXECUTION_TYPES.LIVE)
       return
     }
+    if (isPaperTrading) {
+      changeTradingMode(!isPaperTrading, authToken, currentMode)
+      history.push(`${routes.strategyEditor.path}?execute=${strategyId}`)
+      setTimeout(() => window.location.reload(), 500)
+      return
+    }
     onSaveStrategy()
 
     const executionArgs = prepareStrategyExecutionArgs(strategy)
@@ -369,7 +376,8 @@ const StrategyEditor = (props) => {
     if (executing || !search || _isEmpty(savedStrategies)) {
       return
     }
-    const { execute } = queryString.parse(location.search)
+    const execute = new URLSearchParams(location.search).get('execute')
+
     if (!execute) {
       return
     }
@@ -592,6 +600,8 @@ StrategyEditor.propTypes = {
   sectionErrors: PropTypes.objectOf(PropTypes.string).isRequired,
   executing: PropTypes.bool.isRequired,
   cancelProcess: PropTypes.func.isRequired,
+  changeTradingMode: PropTypes.func.isRequired,
+  currentMode: PropTypes.string.isRequired,
 }
 
 StrategyEditor.defaultProps = {

@@ -17,7 +17,7 @@ const TradingModeModal = ({
 
   const onTradingModeModalSubmit = () => {
     changeTradingMode(!isPaperTrading, authToken, currentMode)
-    location.reload() // eslint-disable-line
+    location.replace('/index.html'); // eslint-disable-line
   }
 
   const { t } = useTranslation()

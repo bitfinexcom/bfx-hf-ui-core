@@ -1,6 +1,4 @@
-import React, {
-  lazy, Suspense, useState,
-} from 'react'
+import React, { lazy, Suspense, useState } from 'react'
 import Debug from 'debug'
 import PropTypes from 'prop-types'
 import randomColor from 'randomcolor'
@@ -9,6 +7,7 @@ import _values from 'lodash/values'
 import _map from 'lodash/map'
 // import _remove from 'lodash/remove'
 import _forEach from 'lodash/forEach'
+import _isEmpty from 'lodash/isEmpty'
 import Indicators from 'bfx-hf-indicators'
 import { nonce } from 'bfx-api-node-util'
 import HFS from 'bfx-hf-strategy'
@@ -20,6 +19,7 @@ import {
 import Layout from '../../components/Layout'
 import useTourGuide from '../../hooks/useTourGuide'
 import SaveUnsavedChangesModal from '../../modals/Strategy/SaveUnsavedChangesModal'
+import { getDefaultStrategyOptions } from '../../components/StrategyEditor/StrategyEditor.helpers'
 
 import './style.css'
 
@@ -38,6 +38,7 @@ const StrategiesPage = ({
   strategyContent,
   authToken,
   onSave,
+  markets,
 }) => {
   const [strategy, setStrategy] = useState(strategyContent)
   const [indicators, setIndicators] = useState([])
@@ -174,18 +175,22 @@ const StrategiesPage = ({
 
   const onLoadStrategy = (newStrategy, forcedLoad = false) => {
     // const updated = { ...newStrategy, savedTs: Date.now() }
+    const strategyToLoad = { ...newStrategy }
     if (strategyDirty && !forcedLoad) {
-      setNextStrategyToOpen(newStrategy)
+      setNextStrategyToOpen(strategyToLoad)
       setIsUnsavedStrategyModalOpen(true)
       return
     }
-    selectStrategyHandler(newStrategy, forcedLoad)
+    if (_isEmpty(strategyToLoad?.strategyOptions)) {
+      strategyToLoad.strategyOptions = getDefaultStrategyOptions(markets)
+    }
+    selectStrategyHandler(strategyToLoad, forcedLoad)
     setSectionErrors({})
     setNextStrategyToOpen(null)
     setStrategyDirty(false)
 
-    if (newStrategy.defineIndicators) {
-      onDefineIndicatorsChange(newStrategy.defineIndicators)
+    if (strategyToLoad.defineIndicators) {
+      onDefineIndicatorsChange(strategyToLoad.defineIndicators)
     }
   }
 
@@ -255,6 +260,7 @@ StrategiesPage.propTypes = {
   strategyContent: PropTypes.objectOf(Object),
   authToken: PropTypes.string.isRequired,
   onSave: PropTypes.func.isRequired,
+  markets: PropTypes.objectOf(PropTypes.object).isRequired, // eslint-disable-line
 }
 
 StrategiesPage.defaultProps = {

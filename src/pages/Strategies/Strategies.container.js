@@ -6,12 +6,14 @@ import WSActions from '../../redux/actions/ws'
 
 import StrategiesPage from './Strategies'
 import { getAuthToken } from '../../redux/selectors/ws'
+import { getMarketsForExecution } from '../../redux/selectors/meta'
 
 const mapStateToProps = (state) => ({
   authToken: getAuthToken(state),
   firstLogin: getFirstLogin(state),
   isGuideActive: getGuideStatusForPage(state, STRATEGY_PAGE),
   strategyContent: state.ui.content,
+  markets: getMarketsForExecution(state),
 })
 
 const mapDispatchToProps = (dispatch) => ({

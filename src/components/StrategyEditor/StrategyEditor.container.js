@@ -22,6 +22,7 @@ import {
   getIsPaperTrading,
   getStrategiesFeatureFlags,
   getIsBetaVersion,
+  getCurrentMode,
 } from '../../redux/selectors/ui'
 import StrategyEditor from './StrategyEditor'
 import { getMarketsForExecution } from '../../redux/selectors/meta'
@@ -41,6 +42,7 @@ const mapStateToProps = (state = {}) => {
     // activeStrategies: getSortedByTimeActiveStrategies(state),
     runningStrategiesMapping: getRunningStrategiesMapping(state),
     savedStrategies: getSavedStrategies(state),
+    currentMode: getCurrentMode(state),
   }
 }
 
@@ -150,6 +152,10 @@ const mapDispatchToProps = (dispatch) => ({
       // stopping live execution
       // TODO
     }
+  },
+  changeTradingMode: (isPaperTrading, authToken, currentMode) => {
+    dispatch(UIActions.setTradingMode(isPaperTrading))
+    dispatch(WSActions.send(['algo_order.pause', authToken, currentMode]))
   },
 })
 
