@@ -226,6 +226,11 @@ export default {
     payload: opts,
   }),
 
+  recvBacktestStarted: gid => ({
+    type: t.BACKTEST_STARTED,
+    payload: { gid },
+  }),
+
   recvBacktestStopped: gid => ({
     type: t.BACKTEST_STOPPED,
     payload: gid,

@@ -89,6 +89,7 @@ const StrategyEditor = (props) => {
     liveResults,
     runningStrategiesMapping,
     savedStrategies,
+    cancelProcess,
   } = props
   const { t } = useTranslation()
   const location = useLocation()
@@ -203,12 +204,18 @@ const StrategyEditor = (props) => {
     setStrategyDirty(false)
   }
 
-  const cancelProcess = () => {
-
+  const _cancelProcess = () => {
+    const { gid } = backtestResults
+    cancelProcess(gid, isPaperTrading)
   }
 
   const onCancelProcess = () => {
-    setIsCancelProcessModalOpen(true)
+    console.log('onCancelProcess')
+    if (isPaperTrading) {
+      _cancelProcess()
+    } else {
+      setIsCancelProcessModalOpen(true)
+    }
   }
 
   const saveStrategyOptions = (newOptions) => {
@@ -447,6 +454,7 @@ const StrategyEditor = (props) => {
                 results={backtestResults}
                 onBacktestStart={onBacktestStart}
                 saveStrategyOptions={saveStrategyOptions}
+                onCancelProcess={onCancelProcess}
                 {...props}
                 strategy={{
                   ...strategy,
@@ -526,7 +534,7 @@ const StrategyEditor = (props) => {
       <CancelProcessModal
         isOpen={isCancelProcessModalOpen}
         onClose={onCloseModals}
-        onSubmit={cancelProcess}
+        onSubmit={_cancelProcess}
       />
     </>
   )
@@ -583,6 +591,7 @@ StrategyEditor.propTypes = {
   runningStrategiesMapping: PropTypes.objectOf(PropTypes.string),
   sectionErrors: PropTypes.objectOf(PropTypes.string).isRequired,
   executing: PropTypes.bool.isRequired,
+  cancelProcess: PropTypes.func.isRequired,
 }
 
 StrategyEditor.defaultProps = {

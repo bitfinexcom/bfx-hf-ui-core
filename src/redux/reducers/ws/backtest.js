@@ -7,6 +7,7 @@ function getInitialState() {
     executing: false,
     trades: [],
     candles: [],
+    gid: null,
   }
 }
 
@@ -58,17 +59,28 @@ function reducer(state = getInitialState(), action = {}) {
       }
     }
 
+    case types.BACKTEST_STARTED: {
+      const { gid } = payload
+
+      return {
+        ...state,
+        gid,
+      }
+    }
+
     case types.BACKTEST_STOPPED: {
       return {
         loading: false,
         executing: false,
         finished: true,
+        gid: null,
       }
     }
 
     case types.RESET_DATA_BACKTEST: {
       return getInitialState()
     }
+
     case types.PURGE_DATA_BACKTEST: {
       return {
         candles: [],

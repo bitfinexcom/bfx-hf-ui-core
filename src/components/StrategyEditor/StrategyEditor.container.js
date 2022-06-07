@@ -137,6 +137,20 @@ const mapDispatchToProps = (dispatch) => ({
       }),
     )
   },
+  cancelProcess: (gid, isPaperTrading) => {
+    if (isPaperTrading) {
+      // stopping backtesting
+      dispatch(
+        WSActions.send({
+          alias: WSTypes.ALIAS_DATA_SERVER,
+          data: ['stop.bt', gid],
+        }),
+      )
+    } else {
+      // stopping live execution
+      // TODO
+    }
+  },
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(StrategyEditor)

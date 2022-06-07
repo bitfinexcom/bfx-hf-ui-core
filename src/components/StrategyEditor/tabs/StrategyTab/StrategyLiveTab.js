@@ -26,9 +26,7 @@ const StrategyLiveTab = (props) => {
 
   const { t } = useTranslation()
 
-  const { /* loading, */ executing, results } = executionResults
-
-  const loading = true
+  const { loading, executing, results } = executionResults
 
   const hasResults = !_isEmpty(results)
 

@@ -390,6 +390,12 @@ export default (alias, store) => (e = {}) => {
         break
       }
 
+      case 'bt.started': {
+        const [, gid] = payload
+        store.dispatch(WSActions.recvBacktestStarted(gid))
+        break
+      }
+
       case 'bt.stopped': {
         const [, gid] = payload
         store.dispatch(WSActions.recvBacktestStopped(gid))
