@@ -429,7 +429,9 @@ export default (alias, store) => (e = {}) => {
 
       case 'strategy.start_live_execution_submit_status': {
         const [, status] = payload
-        store.dispatch(WSActions.setExecutionLoading(status))
+        if (status === false) {
+          store.dispatch(WSActions.setExecutionLoading(status))
+        }
 
         break
       }
