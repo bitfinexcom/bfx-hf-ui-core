@@ -20,6 +20,7 @@ import {
 import Layout from '../../components/Layout'
 import useTourGuide from '../../hooks/useTourGuide'
 import SaveUnsavedChangesModal from '../../modals/Strategy/SaveUnsavedChangesModal'
+import { getDefaultStrategyOptions } from '../../components/StrategyEditor/StrategyEditor.helpers'
 
 import './style.css'
 
@@ -38,6 +39,7 @@ const StrategiesPage = ({
   strategyContent,
   authToken,
   onSave,
+  markets,
 }) => {
   const [strategy, setStrategy] = useState(strategyContent)
   const [indicators, setIndicators] = useState([])
@@ -178,6 +180,10 @@ const StrategiesPage = ({
       setNextStrategyToOpen(newStrategy)
       setIsUnsavedStrategyModalOpen(true)
       return
+    }
+    if (!newStrategy?.strategyOptions) {
+      // eslint-disable-next-line no-param-reassign
+      newStrategy.strategyOptions = getDefaultStrategyOptions(markets)
     }
     selectStrategyHandler(newStrategy, forcedLoad)
     setSectionErrors({})
