@@ -260,6 +260,7 @@ StrategiesPage.propTypes = {
   strategyContent: PropTypes.objectOf(Object),
   authToken: PropTypes.string.isRequired,
   onSave: PropTypes.func.isRequired,
+  markets: PropTypes.objectOf(PropTypes.object).isRequired, // eslint-disable-line
 }
 
 StrategiesPage.defaultProps = {
