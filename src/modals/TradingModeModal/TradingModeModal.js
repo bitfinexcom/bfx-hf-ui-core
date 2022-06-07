@@ -2,6 +2,7 @@ import React, { memo } from 'react'
 import PropTypes from 'prop-types'
 import { useTranslation } from 'react-i18next'
 import Modal from '../../ui/Modal'
+import { isElectronApp } from '../../redux/config'
 
 const TradingModeModal = ({
   authToken,
@@ -17,7 +18,11 @@ const TradingModeModal = ({
 
   const onTradingModeModalSubmit = () => {
     changeTradingMode(!isPaperTrading, authToken, currentMode)
-    location.reload() // eslint-disable-line
+    if (isElectronApp) {
+      location.replace("/index.html"); // eslint-disable-line
+    } else {
+      location.reload(); // eslint-disable-line
+    }
   }
 
   const { t } = useTranslation()
