@@ -3,12 +3,14 @@ import { reduxSelectors } from '@ufx-ui/bfx-containers'
 import { getPairParts } from '@ufx-ui/utils'
 import { preparePrice } from 'bfx-api-node-util'
 import PropTypes from 'prop-types'
+import _get from 'lodash/get'
 import { useTranslation } from 'react-i18next'
 import { useSelector } from 'react-redux'
 import Panel from '../../ui/Panel'
 import { resultNumber } from '../Backtester/Results/Results.utils'
 import MetricRow from './MetricRow'
 import ExecutionTimer from './ExecutionTimer'
+import { getCurrentStrategyExecutionOptions } from '../../redux/selectors/ws'
 
 import './style.css'
 
@@ -18,7 +20,6 @@ const adjustPercentage = value => value * 100
 
 const StrategyPerfomanceMetrics = ({
   results,
-  startedOn,
   isExecuting,
   isBacktest,
 }) => {
@@ -48,6 +49,7 @@ const StrategyPerfomanceMetrics = ({
 
   const [, quote] = getPairParts(activeMarket)
   const getCurrencySymbol = useSelector(getCurrencySymbolMemo)
+  const options = useSelector(getCurrentStrategyExecutionOptions)
   const quoteCcy = getCurrencySymbol(quote)
   const { t } = useTranslation()
 
@@ -60,7 +62,7 @@ const StrategyPerfomanceMetrics = ({
     >
       <ul>
         {!isBacktest && (
-          <ExecutionTimer isExecuting={isExecuting} startedOn={startedOn} />
+          <ExecutionTimer isExecuting={isExecuting} startedOn={_get(options, 'startedOn', 0)} />
         )}
         <MetricRow
           label={t('strategyEditor.totalPL')}
@@ -160,7 +162,6 @@ StrategyPerfomanceMetrics.propTypes = {
     drawdown: PropTypes.string,
   }),
   isExecuting: PropTypes.bool.isRequired,
-  startedOn: PropTypes.number,
   isBacktest: PropTypes.bool,
 }
 
@@ -184,7 +185,6 @@ StrategyPerfomanceMetrics.defaultProps = {
       activeMarket: null,
     },
   },
-  startedOn: 0,
   isBacktest: false,
 }
 

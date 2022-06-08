@@ -1,18 +1,18 @@
 import _get from 'lodash/get'
 import { createSelector } from 'reselect'
+import { getRunningStrategiesMapping } from '.'
 
-import { REDUCER_PATHS } from '../../config'
 import { getStrategyId } from '../ui'
-
-const path = REDUCER_PATHS.WS
+import getActiveStrategies from './get_active_strategies'
 
 const EMPTY_OBJ = {}
 
-const getExecutionOptions = (state) => _get(state, `${path}.execution.options`, EMPTY_OBJ)
-
 const getCurrentStrategyExecutionOptions = createSelector(
-  [getStrategyId, getExecutionOptions],
-  (strategyId, options) => _get(options, strategyId, EMPTY_OBJ),
+  [getStrategyId, getActiveStrategies, getRunningStrategiesMapping],
+  (strategyId, strategies, strategiesMapping) => {
+    const executionId = _get(strategiesMapping, strategyId, null)
+    return _get(strategies, executionId, EMPTY_OBJ)
+  },
 )
 
 export default getCurrentStrategyExecutionOptions

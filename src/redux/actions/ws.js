@@ -216,11 +216,6 @@ export default {
     payload: opts,
   }),
 
-  recvBacktestEnd: opts => ({
-    type: t.BACKTEST_END,
-    payload: opts,
-  }),
-
   recvBacktestResults: opts => ({
     type: t.BACKTEST_RESULTS,
     payload: opts,

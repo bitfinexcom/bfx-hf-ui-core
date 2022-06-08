@@ -39,7 +39,6 @@ const BacktestOptionsPanel = ({
   const { t } = useTranslation()
 
   const setTimeframe = (value) => saveStrategyOptions({ [STRATEGY_OPTIONS_KEYS.TIMEFRAME]: value })
-  const setTrades = (value) => saveStrategyOptions({ [STRATEGY_OPTIONS_KEYS.TRADES]: value })
   const setCandleSeed = useCallback(
     _debounce(
       (value) => saveStrategyOptions({ [STRATEGY_OPTIONS_KEYS.CANDLE_SEED]: value }),
@@ -49,7 +48,14 @@ const BacktestOptionsPanel = ({
   )
   const setStartDate = (value) => saveStrategyOptions({ [STRATEGY_OPTIONS_KEYS.START_DATE]: value })
   const setEndDate = (value) => saveStrategyOptions({ [STRATEGY_OPTIONS_KEYS.END_DATE]: value })
-  const setCandles = (value) => saveStrategyOptions({ [STRATEGY_OPTIONS_KEYS.CANDLES]: value })
+  const setTrades = (value) => saveStrategyOptions({
+    [STRATEGY_OPTIONS_KEYS.TRADES]: value,
+    [STRATEGY_OPTIONS_KEYS.CANDLES]: !value,
+  })
+  const setCandles = (value) => saveStrategyOptions({
+    [STRATEGY_OPTIONS_KEYS.CANDLES]: value,
+    [STRATEGY_OPTIONS_KEYS.TRADES]: !value,
+  })
 
   const updateSeed = (v) => {
     const error = AmountInput.validateValue(v, t)

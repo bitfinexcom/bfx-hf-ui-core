@@ -378,12 +378,6 @@ export default (alias, store) => (e = {}) => {
         break
       }
 
-      case 'bt.end': {
-        const [, , , from, to] = payload
-        store.dispatch(WSActions.recvBacktestEnd({ from, to }))
-        break
-      }
-
       case 'bt.btresult': {
         const [, res] = payload
         store.dispatch(WSActions.recvBacktestResults(res))
@@ -435,7 +429,9 @@ export default (alias, store) => (e = {}) => {
 
       case 'strategy.start_live_execution_submit_status': {
         const [, status, gid] = payload
-        store.dispatch(WSActions.setExecutionLoading(status, gid))
+        if (status === false) {
+          store.dispatch(WSActions.setExecutionLoading(status))
+        }
 
         break
       }
