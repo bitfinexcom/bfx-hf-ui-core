@@ -60,7 +60,7 @@ export const prepareStrategyExecutionArgs = (strategy) => {
   } = strategy
 
   return {
-    name: label,
+    label,
     symbol: symbol?.wsID,
     [STRATEGY_OPTIONS_KEYS.TIMEFRAME]: timeframe,
     [STRATEGY_OPTIONS_KEYS.TRADES]: trades,
@@ -68,9 +68,40 @@ export const prepareStrategyExecutionArgs = (strategy) => {
     [STRATEGY_OPTIONS_KEYS.CANDLE_SEED]: candleSeed,
     [STRATEGY_OPTIONS_KEYS.MARGIN]: margin,
     constraints: {
-      allocation: Number(capitalAllocation),
-      percStopLoss: Number(stopLossPerc),
-      maxDrawdown: Number(maxDrawdownPerc),
+      [STRATEGY_OPTIONS_KEYS.CAPITAL_ALLOCATION]: Number(capitalAllocation),
+      [STRATEGY_OPTIONS_KEYS.STOP_LESS_PERC]: Number(stopLossPerc),
+      [STRATEGY_OPTIONS_KEYS.MAX_DRAWDOWN_PERC]: Number(maxDrawdownPerc),
+    },
+  }
+}
+
+export const prepareStrategyBacktestingArgs = (strategy) => {
+  const {
+    strategyOptions: {
+      symbol,
+      timeframe,
+      trades,
+      candles,
+      capitalAllocation,
+      stopLossPerc,
+      maxDrawdownPerc,
+      startDate,
+      endDate,
+    },
+  } = strategy
+
+  return {
+    symbol: symbol?.wsID,
+    startNum: new Date(startDate).getTime(),
+    endNum: new Date(endDate).getTime(),
+    [STRATEGY_OPTIONS_KEYS.TIMEFRAME]: timeframe,
+    [STRATEGY_OPTIONS_KEYS.TRADES]: trades,
+    strategy,
+    [STRATEGY_OPTIONS_KEYS.CANDLES]: candles,
+    constraints: {
+      [STRATEGY_OPTIONS_KEYS.CAPITAL_ALLOCATION]: Number(capitalAllocation),
+      [STRATEGY_OPTIONS_KEYS.STOP_LESS_PERC]: Number(stopLossPerc),
+      [STRATEGY_OPTIONS_KEYS.MAX_DRAWDOWN_PERC]: Number(maxDrawdownPerc),
     },
   }
 }

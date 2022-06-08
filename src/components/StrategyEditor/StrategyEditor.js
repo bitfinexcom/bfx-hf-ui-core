@@ -32,6 +32,7 @@ import IDETabTitle from './tabs/IDETab.Title'
 import ExecutionOptionsModal from '../../modals/Strategy/ExecutionOptionsModal'
 import {
   getDefaultStrategyOptions,
+  prepareStrategyBacktestingArgs,
   prepareStrategyExecutionArgs,
   removeStrategyToExecuteFromLS,
   saveStrategyToExecuteToLS,
@@ -118,8 +119,6 @@ const StrategyEditor = (props) => {
     timeframe,
     trades,
     candles,
-    startDate,
-    endDate,
     capitalAllocation,
     stopLossPerc,
     maxDrawdownPerc,
@@ -130,11 +129,6 @@ const StrategyEditor = (props) => {
 
   const runningStrategyID = runningStrategiesMapping[strategyId]
   const currentStrategyResults = liveResults?.[runningStrategyID] || {}
-  const constraints = {
-    allocation: Number(capitalAllocation),
-    percStopLoss: Number(stopLossPerc),
-    maxDrawdown: Number(maxDrawdownPerc),
-  }
 
   const execResults = {
     ...allExecutionResults,
@@ -211,8 +205,8 @@ const StrategyEditor = (props) => {
   }
 
   const onBacktestStart = () => {
-    const startNum = new Date(startDate).getTime()
-    const endNum = new Date(endDate).getTime()
+    const backtestArgs = prepareStrategyBacktestingArgs(strategy)
+    const { endNum, startNum } = backtestArgs
 
     if (!trades && !candles) {
       showError(t('strategyEditor.checkboxWarningMessage'))
@@ -235,16 +229,7 @@ const StrategyEditor = (props) => {
       return
     }
 
-    dsExecuteBacktest(
-      startNum,
-      endNum,
-      symbol?.wsID,
-      timeframe,
-      candles,
-      trades,
-      strategy,
-      constraints,
-    )
+    dsExecuteBacktest(backtestArgs)
   }
 
   const apiCredentials = useSelector(getCurrentModeAPIKeyState)

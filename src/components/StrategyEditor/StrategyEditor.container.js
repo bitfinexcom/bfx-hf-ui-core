@@ -60,7 +60,7 @@ const mapDispatchToProps = (dispatch) => ({
   },
   dsExecuteLiveStrategy: ({
     authToken,
-    name,
+    label,
     symbol,
     timeframe,
     // trades,
@@ -75,7 +75,7 @@ const mapDispatchToProps = (dispatch) => ({
       WSActions.send([
         'strategy.execute_start',
         authToken,
-        name,
+        label,
         symbol,
         timeframe,
         false, // trades
@@ -87,16 +87,16 @@ const mapDispatchToProps = (dispatch) => ({
     )
     dispatch(WSActions.setExecutionLoading(true))
   },
-  dsExecuteBacktest: (
-    from,
-    to,
+  dsExecuteBacktest: ({
+    startNum,
+    endNum,
     symbol,
-    tf,
+    timeframe,
     candles,
     trades,
     strategy,
     constraints,
-  ) => {
+  }) => {
     const processedStrategy = _omitBy(strategy, _isEmpty)
 
     dispatch(WSActions.purgeBacktestData())
@@ -107,10 +107,10 @@ const mapDispatchToProps = (dispatch) => ({
           'exec.str',
           [
             'bitfinex',
-            from,
-            to,
+            startNum,
+            endNum,
             symbol,
-            tf,
+            timeframe,
             candles,
             trades,
             true,
