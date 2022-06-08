@@ -7,6 +7,7 @@ import { savedStrategiesColumns } from './StrategiesList.columns'
 
 const SavedStrategiesList = ({ onRowClick, strategies }) => {
   const { t } = useTranslation()
+  console.log(strategies)
 
   return (
     <>

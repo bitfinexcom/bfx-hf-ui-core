@@ -1,3 +1,5 @@
+import React, { useState } from 'react'
+import { Icon } from 'react-fa'
 import { preparePrice } from 'bfx-api-node-util'
 import { defaultCellRenderer } from '../../util/ui'
 import { resultNumber } from '../Backtester/Results/Results.utils'
@@ -5,6 +7,7 @@ import { resultNumber } from '../Backtester/Results/Results.utils'
 const STYLES = {
   flexStart: { justifyContent: 'flex-start' },
   center: { justifyContent: 'center' },
+  flexEnd: { justifyContent: 'flex-end' },
 }
 
 const activeStrategiesColumns = (t, getMarketPair) => [
@@ -148,13 +151,46 @@ const pastStrategiesColumns = (t, getMarketPair) => [
   },
 ]
 
+const SavedStrategiesActions = ({ rowData }) => {
+  const [activeAction, setActiveAction] = useState(null)
+
+  return (
+    <div className='list-actions'>
+      <p>
+        {activeAction}
+      </p>
+      <Icon
+        name='copy'
+        aria-label='Copy'
+        onClick={() => {}}
+        onMouseEnter={() => setActiveAction('Copy')}
+        onMouseLeave={() => setActiveAction(null)}
+      />
+      <Icon
+        name='pencil'
+        aria-label='Edit'
+        onClick={() => {}}
+        onMouseEnter={() => setActiveAction('Edit')}
+        onMouseLeave={() => setActiveAction(null)}
+      />
+      <Icon
+        name='trash-o'
+        aria-label='Delete'
+        onClick={() => {}}
+        onMouseEnter={() => setActiveAction('Delete draft strategy')}
+        onMouseLeave={() => setActiveAction(null)}
+      />
+    </div>
+  )
+}
+
 const savedStrategiesColumns = (t) => [
   {
     label: t('table.name'),
     dataKey: 'label',
     style: { ...STYLES.flexStart, fontWeight: '700' },
     width: 300,
-    flexGrow: 1.5,
+    flexGrow: 3,
     cellRenderer: ({ rowData = {} }) => (defaultCellRenderer(rowData.label)),
     headerStyle: STYLES.flexStart,
   },
@@ -163,9 +199,16 @@ const savedStrategiesColumns = (t) => [
     dataKey: 'savedTs',
     style: STYLES.flexStart,
     headerStyle: STYLES.flexStart,
-    width: 200,
-    flexGrow: 1.25,
+    width: 800,
+    flexGrow: 8,
     cellRenderer: ({ rowData = {} }) => defaultCellRenderer(new Date(rowData.savedTs).toLocaleString()),
+  },
+  {
+    dataKey: 'id',
+    style: STYLES.flexEnd,
+    width: 200,
+    flexGrow: 2,
+    cellRenderer: (props) => <SavedStrategiesActions {...props} />,
   },
 ]
 
