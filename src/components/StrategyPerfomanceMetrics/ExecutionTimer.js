@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useMemo } from 'react'
 import PropTypes from 'prop-types'
 import { useTranslation } from 'react-i18next'
 import { useStopwatch } from 'react-timer-hook'
@@ -7,9 +7,19 @@ import { pad2 } from '@ufx-ui/utils'
 const ExecutionTimer = ({ startedOn, isExecuting }) => {
   const { t } = useTranslation()
 
+  const stopWatchParams = useMemo(() => {
+    const stopwatchOffset = new Date()
+    stopwatchOffset.setMilliseconds(
+      stopwatchOffset.getMilliseconds() + (Date.now() - startedOn),
+    )
+    return {
+      offsetTimestamp: stopwatchOffset,
+    }
+  }, [startedOn])
+
   const {
     days, hours, minutes, seconds, pause, isRunning, start,
-  } = useStopwatch({ offsetTimestamp: startedOn })
+  } = useStopwatch(stopWatchParams)
 
   useEffect(() => {
     if (isExecuting && !isRunning) {

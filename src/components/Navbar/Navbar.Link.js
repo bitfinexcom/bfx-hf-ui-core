@@ -27,7 +27,7 @@ const NavbarButton = ({
     if (loading || btLoading) {
       return <Indicator white blinking />
     }
-    if (!_isEmpty(executing)) {
+    if (executing) {
       return <Indicator red blinking />
     }
     if (finished || !_isEmpty(results)) {
