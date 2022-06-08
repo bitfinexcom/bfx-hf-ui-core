@@ -4,11 +4,11 @@ const ONE_MIN = 1000 * 60
 const ONE_HOUR = ONE_MIN * 60
 const ONE_DAY = ONE_HOUR * 24
 
-const DEFAULT_TIMEFRAME = '1m'
-const DEFAULT_USE_TRADES = true
+const DEFAULT_TIMEFRAME = '5m'
+const DEFAULT_USE_TRADES = false
 const DEFAULT_USE_MARGIN = false
 const DEFAULT_SEED_COUNT = 150
-const DEFAULT_CANDLES = false
+const DEFAULT_CANDLES = true
 
 export const STRATEGY_OPTIONS_KEYS = {
   SYMBOL: 'symbol',
