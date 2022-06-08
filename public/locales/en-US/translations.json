@@ -607,6 +607,7 @@
   "strategyEditor": {
     "unsavedChanges": "You have unsaved changes",
     "unsavedChangesModalTitle": "Do you need to save changes in the strategy before closing?",
+    "cancelThisProcess": "Cancel this process",
     "cancelAppProcessTitle": "Cancel application process",
     "cancelAppProcessSubmit": "Cancel process",
     "cancelAppProcessDescription": "If you feel this process is taking too long you can cancel it by clicking in the next button.\n\nTake into consideration that this might have unintended consequences in case you are operating in the LIVE environment.",

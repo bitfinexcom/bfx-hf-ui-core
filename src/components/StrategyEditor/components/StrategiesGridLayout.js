@@ -5,12 +5,15 @@ import { AutoSizer } from 'react-virtualized'
 import ReactGridLayout from 'react-grid-layout'
 import ClassNames from 'clsx'
 import { Spinner } from '@ufx-ui/core'
+import { useTranslation } from 'react-i18next'
 
 const GRID_LAYOUT_MIN_HEIGHT = 530
 
 const StrategiesGridLayout = ({
   renderGridComponents, layoutConfig, isLoading, onCancelProcess,
 }) => {
+  const { t } = useTranslation()
+
   return (
     <AutoSizer>
       {({ width, height }) => {
@@ -41,7 +44,7 @@ const StrategiesGridLayout = ({
               <>
                 <Spinner className='spinner' />
                 <button type='button' onClick={onCancelProcess} className='hfui-strategy-editor_cancel-process-btn'>
-                  Cancel this process
+                  {t('strategyEditor.cancelThisProcess')}
                 </button>
               </>
             )}
