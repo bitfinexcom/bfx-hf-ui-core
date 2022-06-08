@@ -119,6 +119,7 @@ export const prepareStrategyToLoad = (strategyToLoad, markets, strategies) => {
   return {
     ...savedStrategyContent,
     ...strategyToLoad,
+    id: strategyId,
     strategyOptions: {
       ...getDefaultStrategyOptions(markets),
       ...strategyToLoad.strategyOptions,

@@ -1,5 +1,5 @@
 import React, {
-  memo, useCallback, useEffect, useMemo, useState,
+  memo, useEffect, useMemo, useState,
 } from 'react'
 import Debug from 'debug'
 import _isEmpty from 'lodash/isEmpty'
@@ -39,8 +39,6 @@ import {
 } from './StrategyEditor.helpers'
 import LaunchStrategyModal from '../../modals/Strategy/LaunchStrategyModal'
 import routes from '../../constants/routes'
-
-import './style.css'
 import { getCurrentModeAPIKeyState } from '../../redux/selectors/ws'
 import {
   changeAppSettingsModalState,
@@ -53,6 +51,8 @@ import {
   PAPER_MODE,
   ALLOWED_PAPER_PAIRS,
 } from '../../redux/reducers/ui'
+
+import './style.css'
 
 const debug = Debug('hfui-ui:c:strategy-editor')
 
@@ -186,10 +186,10 @@ const StrategyEditor = (props) => {
     }
   }
 
-  const onSaveStrategy = useCallback(() => {
+  const onSaveStrategy = () => {
     saveStrategy(strategy)
     setStrategyDirty(false)
-  }, [saveStrategy, setStrategyDirty, strategy])
+  }
 
   const onSaveAsStrategy = (newStrategy) => {
     setStrategy(newStrategy)
