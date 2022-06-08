@@ -139,18 +139,20 @@ const mapDispatchToProps = (dispatch) => ({
       }),
     )
   },
-  cancelProcess: (gid, isPaperTrading) => {
+  cancelProcess: (authToken, isPaperTrading, backtestGid, liveExecGid) => {
     if (isPaperTrading) {
       // stopping backtesting
       dispatch(
         WSActions.send({
           alias: WSTypes.ALIAS_DATA_SERVER,
-          data: ['stop.bt', gid],
+          data: ['stop.bt', backtestGid],
         }),
       )
     } else {
       // stopping live execution
-      // TODO
+      dispatch(
+        WSActions.send(['strategy.execute_stop', authToken, liveExecGid]),
+      )
     }
   },
   changeTradingMode: (isPaperTrading, authToken, currentMode) => {

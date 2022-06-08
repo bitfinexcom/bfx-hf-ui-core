@@ -207,11 +207,13 @@ const StrategyEditor = (props) => {
 
   const _cancelProcess = () => {
     const { gid } = backtestResults
-    cancelProcess(gid, isPaperTrading)
+    const { loadingGid } = allExecutionResults
+
+    cancelProcess(authToken, isPaperTrading, gid, loadingGid)
+    setIsCancelProcessModalOpen(false)
   }
 
   const onCancelProcess = () => {
-    console.log('onCancelProcess')
     if (isPaperTrading) {
       _cancelProcess()
     } else {
@@ -575,6 +577,7 @@ StrategyEditor.propTypes = {
   allExecutionResults: PropTypes.shape({
     executing: PropTypes.bool,
     loading: PropTypes.bool,
+    loadingGid: PropTypes.bool,
   }).isRequired,
   strategyContent: PropTypes.objectOf(
     PropTypes.oneOfType([

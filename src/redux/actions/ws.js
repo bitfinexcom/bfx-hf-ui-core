@@ -312,9 +312,9 @@ export default {
     payload: { executing },
   }),
 
-  setExecutionLoading: (loading) => ({
+  setExecutionLoading: (loading, loadingGid) => ({
     type: t.EXECUTION_LOADING,
-    payload: { loading },
+    payload: { loading, loadingGid },
   }),
 
   setExecutionResults: (strategyId, results) => ({
