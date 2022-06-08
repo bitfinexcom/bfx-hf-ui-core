@@ -445,10 +445,6 @@ const StrategyEditor = (props) => {
                 hasErrors={hasErrorsInIDE}
                 onCancelProcess={onCancelProcess}
                 {...props}
-                strategy={{
-                  ...strategy,
-                  strategyOptions,
-                }}
               />
             )}
 
@@ -466,10 +462,6 @@ const StrategyEditor = (props) => {
                 saveStrategyOptions={saveStrategyOptions}
                 onCancelProcess={onCancelProcess}
                 {...props}
-                strategy={{
-                  ...strategy,
-                  strategyOptions,
-                }}
               />
             )}
             {(isBetaVersion || flags?.docs) && !isPaperTrading && (
