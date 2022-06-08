@@ -11,10 +11,11 @@ import {
   getSortedByTimeStrategies, getSortedByTimeActiveStrategies, sortedByTimePastStrategies,
   getRunningStrategiesMapping, getLiveExecutionResults,
 } from '../../redux/selectors/ws'
-import { getMarketPair } from '../../redux/selectors/meta'
+import { getMarketPair, getMarketsForExecution } from '../../redux/selectors/meta'
 import PastStrategiesList from './PastStrategiesList'
 import ActiveStrategiesList from './ActiveStrategiesList'
 import SavedStrategiesList from './SavedStrategiesList'
+import { prepareStrategyToLoad } from '../StrategyEditor/StrategyEditor.helpers'
 
 import './style.css'
 
@@ -28,6 +29,7 @@ const StrategiesListTable = ({
   const liveExecutionResults = useSelector(getLiveExecutionResults)
   const pastStrategies = useSelector(sortedByTimePastStrategies)
   const savedStrategies = useSelector(getSortedByTimeStrategies)
+  const markets = useSelector(getMarketsForExecution)
 
   activeStrategies = _filter(_map(activeStrategies, (activeStrategy) => {
     if (_isEmpty(activeStrategy)) {
@@ -47,6 +49,11 @@ const StrategiesListTable = ({
     onLoadStrategy(rowData)
   }
 
+  const onActiveOrPastStrategyRowClick = ({ rowData: strategy }) => {
+    const newStrategyObject = prepareStrategyToLoad(strategy, markets, savedStrategies)
+    onLoadStrategy(newStrategyObject)
+  }
+
   return (
     <Panel
       moveable={false}
@@ -55,19 +62,19 @@ const StrategiesListTable = ({
       darkHeader
     >
       <ActiveStrategiesList
-        onRowClick={onRowClick}
+        onRowClick={onActiveOrPastStrategyRowClick}
         getMarketPair={_getMarketPair}
         strategies={activeStrategies}
         tabtitle={t('strategyEditor.activeStrategies')}
         count={_size(activeStrategies)}
       />
       <PastStrategiesList
-        onRowClick={onRowClick}
         strategies={pastStrategies}
         getMarketPair={_getMarketPair}
         tabtitle={t('strategyEditor.pastStrategies')}
         count={_size(pastStrategies)}
-        onLoadStrategy={onLoadStrategy}
+        onRowClick={onActiveOrPastStrategyRowClick}
+
       />
       <SavedStrategiesList
         onRowClick={onRowClick}

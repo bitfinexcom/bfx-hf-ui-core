@@ -1,3 +1,4 @@
+import _find from 'lodash/find'
 import { getDefaultMarket } from '../../util/market'
 
 const ONE_MIN = 1000 * 60
@@ -102,6 +103,29 @@ export const prepareStrategyBacktestingArgs = (strategy) => {
       [STRATEGY_OPTIONS_KEYS.CAPITAL_ALLOCATION]: Number(capitalAllocation),
       [STRATEGY_OPTIONS_KEYS.STOP_LESS_PERC]: Number(stopLossPerc),
       [STRATEGY_OPTIONS_KEYS.MAX_DRAWDOWN_PERC]: Number(maxDrawdownPerc),
+    },
+  }
+}
+
+export const prepareStrategyToLoad = (strategyToLoad, markets, strategies) => {
+  const {
+    strategyOptions: {
+      symbol, capitalAllocation, stopLossPerc, maxDrawdownPerc,
+    },
+    strategyId,
+  } = strategyToLoad
+  const savedStrategyContent = _find(strategies, (st) => st.id === strategyId)
+
+  return {
+    ...savedStrategyContent,
+    ...strategyToLoad,
+    strategyOptions: {
+      ...getDefaultStrategyOptions(markets),
+      ...strategyToLoad.strategyOptions,
+      [STRATEGY_OPTIONS_KEYS.SYMBOL]: _find(markets, (m) => m.wsID === symbol),
+      [STRATEGY_OPTIONS_KEYS.CAPITAL_ALLOCATION]: String(capitalAllocation),
+      [STRATEGY_OPTIONS_KEYS.STOP_LESS_PERC]: String(stopLossPerc),
+      [STRATEGY_OPTIONS_KEYS.MAX_DRAWDOWN_PERC]: String(maxDrawdownPerc),
     },
   }
 }
