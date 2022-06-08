@@ -49,6 +49,15 @@ function reducer(state = getInitialState(), action = {}) {
       }
     }
 
+    case types.EXECUTION_LOADING_GID: {
+      const { loadingGid } = payload
+
+      return {
+        ...state,
+        loadingGid,
+      }
+    }
+
     case types.SET_PRICE_UPDATE: {
       const { strategyMapKey, executionResultsObj } = payload
 
