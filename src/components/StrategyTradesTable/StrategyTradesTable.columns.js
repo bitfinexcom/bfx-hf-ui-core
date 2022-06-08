@@ -29,14 +29,14 @@ export default (t) => [
     headerStyle: STYLES.flexStart,
     cellRenderer: ({ rowData = {} }) => defaultCellRenderer(rowData.order_js.type),
   },
-  {
-    label: t('table.signal'),
-    dataKey: 'signal',
-    width: 150,
-    style: STYLES.center,
-    headerStyle: STYLES.center,
-    cellRenderer: () => defaultCellRenderer('signal_plug'),
-  },
+  // {
+  //   label: t('table.signal'),
+  //   dataKey: 'signal',
+  //   width: 150,
+  //   style: STYLES.center,
+  //   headerStyle: STYLES.center,
+  //   cellRenderer: () => defaultCellRenderer('signal_plug'),
+  // },
   {
     label: t('table.time'),
     dataKey: 'mts',
@@ -74,21 +74,21 @@ export default (t) => [
         />
       ) : 'open'),
   },
-  {
-    label: t('table.units'),
-    dataKey: 'units',
-    width: 150,
-    style: STYLES.center,
-    headerStyle: STYLES.center,
-    cellRenderer: () => defaultCellRenderer(
-      // <PrettyValue
-      //   value={0.0012}
-      //   sigFig={PRICE_SIG_FIGS}
-      //   fadeTrailingZeros
-      // />,
-      'plug',
-    ),
-  },
+  // {
+  //   label: t('table.units'),
+  //   dataKey: 'units',
+  //   width: 150,
+  //   style: STYLES.center,
+  //   headerStyle: STYLES.center,
+  //   cellRenderer: () => defaultCellRenderer(
+  //     // <PrettyValue
+  //     //   value={0.0012}
+  //     //   sigFig={PRICE_SIG_FIGS}
+  //     //   fadeTrailingZeros
+  //     // />,
+  //     'plug',
+  //   ),
+  // },
   {
     label: t('table.profit'),
     dataKey: 'profit',
@@ -97,20 +97,20 @@ export default (t) => [
     headerStyle: STYLES.center,
     cellRenderer: ({ rowData = {} }) => resultNumber(rowData.pl),
   },
-  {
-    label: t('table.position'),
-    dataKey: 'profit',
-    width: 150,
-    style: STYLES.center,
-    headerStyle: STYLES.center,
-    cellRenderer: () => resultNumber('plug'),
-  },
-  {
-    label: t('table.drawdown'),
-    dataKey: 'drawdown',
-    width: 150,
-    style: STYLES.center,
-    headerStyle: STYLES.center,
-    cellRenderer: () => resultNumber('plug'),
-  },
+  // {
+  //   label: t('table.position'),
+  //   dataKey: 'profit',
+  //   width: 150,
+  //   style: STYLES.center,
+  //   headerStyle: STYLES.center,
+  //   cellRenderer: () => resultNumber('plug'),
+  // },
+  // {
+  //   label: t('table.drawdown'),
+  //   dataKey: 'drawdown',
+  //   width: 150,
+  //   style: STYLES.center,
+  //   headerStyle: STYLES.center,
+  //   cellRenderer: () => resultNumber('plug'),
+  // },
 ]
