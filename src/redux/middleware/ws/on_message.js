@@ -378,12 +378,6 @@ export default (alias, store) => (e = {}) => {
         break
       }
 
-      case 'bt.end': {
-        const [, , , from, to] = payload
-        store.dispatch(WSActions.recvBacktestEnd({ from, to }))
-        break
-      }
-
       case 'bt.btresult': {
         const [, res] = payload
         store.dispatch(WSActions.recvBacktestResults(res))
