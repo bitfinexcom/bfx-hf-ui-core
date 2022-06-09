@@ -152,7 +152,7 @@ const pastStrategiesColumns = (t, getMarketPair) => [
 ]
 
 const SavedStrategiesActions = ({
-  rowData, onStrategyRemove, saveAsHandler, renameStrategy, // eslint-disable-line react/prop-types
+  t, rowData, onStrategyRemove, saveAsHandler, renameStrategy, // eslint-disable-line react/prop-types
 }) => {
   const [activeAction, setActiveAction] = useState(null)
 
@@ -168,23 +168,23 @@ const SavedStrategiesActions = ({
       </p>
       <Icon
         name='copy'
-        aria-label='Copy'
+        aria-label={t('strategyEditor.copyStrategy')}
         onClick={onActionClick(saveAsHandler)}
-        onMouseEnter={() => setActiveAction('Copy draft strategy')}
+        onMouseEnter={() => setActiveAction(t('strategyEditor.copyStrategy'))}
         onMouseLeave={() => setActiveAction(null)}
       />
       <Icon
         name='pencil'
-        aria-label='Edit'
+        aria-label={t('strategyEditor.renameStrategy')}
         onClick={onActionClick(renameStrategy)}
-        onMouseEnter={() => setActiveAction('Rename draft strategy')}
+        onMouseEnter={() => setActiveAction(t('strategyEditor.renameStrategy'))}
         onMouseLeave={() => setActiveAction(null)}
       />
       <Icon
         name='trash-o'
-        aria-label='Delete'
+        aria-label={t('strategyEditor.deleteStrategy')}
         onClick={onActionClick(onStrategyRemove)}
-        onMouseEnter={() => setActiveAction('Delete draft strategy')}
+        onMouseEnter={() => setActiveAction(t('strategyEditor.deleteStrategy'))}
         onMouseLeave={() => setActiveAction(null)}
       />
     </div>
@@ -206,17 +206,17 @@ const savedStrategiesColumns = (t, onStrategyRemove, saveAsHandler, renameStrate
     dataKey: 'savedTs',
     style: STYLES.flexStart,
     headerStyle: STYLES.flexStart,
-    width: 800,
-    flexGrow: 8,
+    width: 300,
+    flexGrow: 3,
     cellRenderer: ({ rowData = {} }) => defaultCellRenderer(new Date(rowData.savedTs).toLocaleString()),
   },
   {
     dataKey: 'id',
     style: STYLES.flexEnd,
-    width: 200,
-    flexGrow: 2,
+    width: 800,
+    flexGrow: 8,
     cellRenderer: (props) => (
-      <SavedStrategiesActions {...props} onStrategyRemove={onStrategyRemove} saveAsHandler={saveAsHandler} renameStrategy={renameStrategy} />
+      <SavedStrategiesActions {...props} t={t} onStrategyRemove={onStrategyRemove} saveAsHandler={saveAsHandler} renameStrategy={renameStrategy} />
     ),
   },
 ]
