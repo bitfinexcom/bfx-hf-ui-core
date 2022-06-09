@@ -21,6 +21,10 @@
       display: none;
       justify-content: space-around;
       align-items: center;
+
+      > p {
+        color: var(--primary-8);
+      }
     
       > * {
         margin-right: 20px;
@@ -28,7 +32,7 @@
     
         &:hover {
           cursor: pointer;
-          color: var(--shade-7);
+          color: var(--primary-8);
         }
       }
     }
