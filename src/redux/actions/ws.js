@@ -265,10 +265,10 @@ export default {
     },
   }),
 
-  setLiveExecutionTrades: (strategyMapKey, trades) => ({
+  setLiveExecutionTrades: (strategyMapKey, positionData) => ({
     type: t.SET_LIVE_EXECUTION_TRADES,
     payload: {
-      strategyMapKey, trades,
+      strategyMapKey, positionData,
     },
   }),
 

@@ -99,16 +99,19 @@ function reducer(state = getInitialState(), action = {}) {
     }
 
     case types.SET_LIVE_EXECUTION_TRADES: {
-      const { strategyMapKey, trades } = payload
+      const { strategyMapKey, positionData } = payload
+      const { id } = positionData
+      const currentState = state.results?.[strategyMapKey] || {}
 
       return {
         ...state,
         results: {
           ...state.results,
           [strategyMapKey]: {
-            ...(state.results[strategyMapKey] || {}),
-            strategy: {
-              trades,
+            ...currentState,
+            [id]: {
+              ...(currentState?.[id] || {}),
+              ...positionData,
             },
           },
         },
