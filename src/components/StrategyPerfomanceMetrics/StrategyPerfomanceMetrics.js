@@ -47,7 +47,7 @@ const StrategyPerfomanceMetrics = ({
   } = results
   const hasTrades = !!vol
 
-  const [, quote] = getPairParts(activeMarket)
+  const [, quote] = activeMarket ? getPairParts(activeMarket) : []
   const getCurrencySymbol = useSelector(getCurrencySymbolMemo)
   const options = useSelector(getCurrentStrategyExecutionOptions)
   const quoteCcy = getCurrencySymbol(quote)
