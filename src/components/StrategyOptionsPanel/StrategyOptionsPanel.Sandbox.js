@@ -22,7 +22,6 @@ const StrategyOptionsPanelSandbox = ({
   strategy,
   onOpenSaveStrategyAsModal,
   markets,
-  onSaveAsStrategy,
   openExecutionOptionsModal,
   strategyDirty,
   hasErrors,
@@ -31,7 +30,7 @@ const StrategyOptionsPanelSandbox = ({
 }) => {
   const {
     label,
-    strategyOptions: { symbol } = {},
+    strategyOptions: { symbol, strategyType } = {},
   } = strategy || {}
   const { t } = useTranslation()
 
@@ -79,8 +78,8 @@ const StrategyOptionsPanelSandbox = ({
           </p>
         </div>
         <StrategyTypeSelect
-          onSaveAsStrategy={onSaveAsStrategy}
-          strategy={strategy}
+          saveStrategyOptions={saveStrategyOptions}
+          strategyType={strategyType}
           isExecuting={false}
         />
         <NavbarButton
@@ -126,9 +125,12 @@ StrategyOptionsPanelSandbox.propTypes = {
           PropTypes.number,
         ]),
       ).isRequired,
+      strategyType: PropTypes.shape({
+        i18nKey: PropTypes.string,
+        customValue: PropTypes.string,
+      }),
     }).isRequired,
   }).isRequired,
-  onSaveAsStrategy: PropTypes.func.isRequired,
   openExecutionOptionsModal: PropTypes.func.isRequired,
   strategyDirty: PropTypes.bool.isRequired,
   hasErrors: PropTypes.bool.isRequired,
