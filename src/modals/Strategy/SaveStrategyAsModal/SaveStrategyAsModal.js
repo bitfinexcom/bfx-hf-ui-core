@@ -1,4 +1,5 @@
 import React, { useState, memo, useEffect } from 'react'
+import { v4 as uuidv4 } from 'uuid'
 import _isEmpty from 'lodash/isEmpty'
 import _size from 'lodash/size'
 import PropTypes from 'prop-types'
@@ -30,7 +31,7 @@ const SaveStrategyAsModal = ({
       return
     }
 
-    onSubmit({ ...strategy, label })
+    onSubmit({ ...strategy, id: uuidv4(), label })
     onClose()
   }
 
