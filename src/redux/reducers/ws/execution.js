@@ -40,11 +40,15 @@ function reducer(state = getInitialState(), action = {}) {
 
     case types.SET_PAST_STRATEGIES: {
       const { pastStrategies } = payload
-      const results = _reduce(pastStrategies, (acc, strategy) => {
-        const { results: execResults, id } = strategy
-        acc[id] = execResults
-        return acc
-      }, {})
+      const results = _reduce(
+        pastStrategies,
+        (acc, strategy) => {
+          const { results: execResults, id } = strategy
+          acc[id] = execResults
+          return acc
+        },
+        {},
+      )
 
       return {
         ...state,
@@ -71,12 +75,15 @@ function reducer(state = getInitialState(), action = {}) {
     case types.SET_STOPPED_LIVE_STRATEGY: {
       const { strategyMapKey } = payload
 
+      const activeStrategies = { ...state.activeStrategies }
+      const pastStrategies = [...state.pastStrategies, activeStrategies[strategyMapKey]]
+
+      delete activeStrategies[strategyMapKey]
+
       return {
         ...state,
-        activeStrategies: {
-          ...state.activeStrategies,
-          [strategyMapKey]: undefined,
-        },
+        activeStrategies,
+        pastStrategies,
         loading: false,
       }
     }
