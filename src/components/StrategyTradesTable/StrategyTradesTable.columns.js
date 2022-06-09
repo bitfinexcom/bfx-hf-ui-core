@@ -3,6 +3,7 @@
 import React from 'react'
 import { PrettyValue } from '@ufx-ui/core'
 import { defaultTableRowRenderer } from 'react-virtualized'
+import { Icon } from 'react-fa'
 
 import { defaultCellRenderer } from '../../util/ui'
 import { PRICE_SIG_FIGS } from '../../constants/precision'
@@ -25,7 +26,8 @@ export default (t, selectedIndex, setSelectedIndex) => [
   {
     label: t('table.id'),
     dataKey: 'id',
-    width: 210,
+    width: 50,
+    flexGrow: 1,
     cellRenderer: ({ rowData }) => defaultCellRenderer(`#${rowData?.id}`),
     style: STYLES.flexStart,
     headerStyle: STYLES.flexStart,
@@ -34,6 +36,7 @@ export default (t, selectedIndex, setSelectedIndex) => [
     label: t('table.entryAt'),
     dataKey: 'entryAt',
     width: 180,
+    flexGrow: 1,
     style: STYLES.flexEnd,
     headerStyle: STYLES.flexEnd,
     cellRenderer: ({ rowData }) => defaultCellRenderer(new Date(rowData?.entryAt).toLocaleString()),
@@ -42,6 +45,7 @@ export default (t, selectedIndex, setSelectedIndex) => [
     label: t('table.leftAt'),
     dataKey: 'closedAt',
     width: 180,
+    flexGrow: 1,
     style: STYLES.flexEnd,
     headerStyle: STYLES.flexEnd,
     cellRenderer: ({ rowData = {} }) => (rowData.closedAt ? defaultCellRenderer(new Date(rowData.closedAt).toLocaleString()) : '--'),
@@ -50,6 +54,7 @@ export default (t, selectedIndex, setSelectedIndex) => [
     label: t('table.entryPrice'),
     dataKey: 'entryPrice',
     width: 150,
+    flexGrow: 1,
     style: STYLES.flexEnd,
     headerStyle: STYLES.flexEnd,
     cellRenderer: ({ rowData = {} }) => defaultCellRenderer(
@@ -64,6 +69,7 @@ export default (t, selectedIndex, setSelectedIndex) => [
     label: t('table.closingPrice'),
     dataKey: 'closingPrice',
     width: 150,
+    flexGrow: 1,
     style: STYLES.flexEnd,
     headerStyle: STYLES.flexEnd,
     cellRenderer: ({ rowData = {} }) => (rowData.closingPrice
@@ -79,6 +85,7 @@ export default (t, selectedIndex, setSelectedIndex) => [
     label: t('table.units'),
     dataKey: 'amount',
     width: 150,
+    flexGrow: 1,
     style: STYLES.flexEnd,
     headerStyle: STYLES.flexEnd,
     cellRenderer: ({ rowData }) => defaultCellRenderer(
@@ -93,6 +100,7 @@ export default (t, selectedIndex, setSelectedIndex) => [
     label: t('table.position'),
     dataKey: 'pl',
     width: 150,
+    flexGrow: 1,
     style: STYLES.flexEnd,
     headerStyle: STYLES.flexEnd,
     cellRenderer: ({ rowData }) => resultNumber(rowData?.pl),
@@ -101,6 +109,7 @@ export default (t, selectedIndex, setSelectedIndex) => [
   //   label: t('table.drawdown'),
   //   dataKey: 'drawdown',
   //   width: 150,
+  //   flexGrow: 1,
   //   style: STYLES.flexEnd,
   //   headerStyle: STYLES.flexEnd,
   //   cellRenderer: () => resultNumber(),
@@ -109,13 +118,28 @@ export default (t, selectedIndex, setSelectedIndex) => [
     label: '',
     cellDataGetter: ({ rowData }) => rowData.length,
     dataKey: 'index',
-    width: 30,
+    width: 100,
+    flexGrow: 1.5,
     disableSort: true,
+    style: STYLES.flexEnd,
+    headerStyle: STYLES.flexEnd,
     cellRenderer: ({ rowIndex }) => {
       if (rowIndex !== selectedIndex) {
-        return <RowExpandCell index={rowIndex} setSelectedIndex={setSelectedIndex}>+</RowExpandCell>
+        return (
+          <RowExpandCell index={rowIndex} setSelectedIndex={setSelectedIndex}>
+            <Icon name='plus' />
+            {' '}
+            {t('table.viewTrades')}
+          </RowExpandCell>
+        )
       }
-      return <RowExpandCell index={-1} setSelectedIndex={setSelectedIndex}>-</RowExpandCell>
+      return (
+        <RowExpandCell index={-1} setSelectedIndex={setSelectedIndex}>
+          <Icon name='minus' />
+          {' '}
+          {t('table.viewTrades')}
+        </RowExpandCell>
+      )
     },
   },
 ]

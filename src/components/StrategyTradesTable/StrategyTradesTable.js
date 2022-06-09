@@ -40,7 +40,7 @@ const StrategyTradesTable = ({
     setTimeout(() => {
       console.log('useEffect setTimeout: ')
       dispatch(WSActions.setLiveExecutionTrades('6e76ab74-d26b-4115-bf66-aae2cff7e20e', TEST_DATA[0]))
-    }, 5000)
+    }, 500)
   }, [dispatch])
 
   const onExpandClick = useCallback(() => {
@@ -75,6 +75,8 @@ const StrategyTradesTable = ({
     }
   },
   [selectedIndex])
+
+  // TODO: use dynamic height for selected row
   const _getRowHeight = ({ index }) => (index === selectedIndex ? 140 : 32)
   const columns = StrategyTradesTableColumns(t, selectedIndex, setSelectedIndex)
 
