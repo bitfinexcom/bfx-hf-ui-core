@@ -10,6 +10,8 @@ const DEFAULT_USE_MARGIN = false
 const DEFAULT_SEED_COUNT = 150
 const DEFAULT_CANDLES = true
 
+const LS_HF_UI_EXECUTE_STRATEGY = 'HF_UI_EXECUTE_STRATEGY'
+
 export const STRATEGY_OPTIONS_KEYS = {
   SYMBOL: 'symbol',
   TIMEFRAME: 'timeframe',
@@ -69,4 +71,20 @@ export const prepareStrategyExecutionArgs = (strategy) => {
       maxDrawdown: Number(maxDrawdownPerc),
     },
   }
+}
+
+export const saveStrategyToExecuteToLS = (strategyToExecute) => {
+  localStorage.setItem(LS_HF_UI_EXECUTE_STRATEGY, strategyToExecute.id)
+}
+
+export const parseStrategyToExecuteFromLS = () => {
+  const strategyId = localStorage.getItem(LS_HF_UI_EXECUTE_STRATEGY)
+  if (strategyId) {
+    localStorage.removeItem(LS_HF_UI_EXECUTE_STRATEGY)
+  }
+  return strategyId
+}
+
+export const removeStrategyToExecuteFromLS = () => {
+  localStorage.removeItem(LS_HF_UI_EXECUTE_STRATEGY)
 }

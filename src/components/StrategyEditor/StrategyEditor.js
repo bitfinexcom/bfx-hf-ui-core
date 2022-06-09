@@ -33,6 +33,8 @@ import ExecutionOptionsModal from '../../modals/Strategy/ExecutionOptionsModal'
 import {
   getDefaultStrategyOptions,
   prepareStrategyExecutionArgs,
+  removeStrategyToExecuteFromLS,
+  saveStrategyToExecuteToLS,
 } from './StrategyEditor.helpers'
 import LaunchStrategyModal from '../../modals/Strategy/LaunchStrategyModal'
 import routes from '../../constants/routes'
@@ -291,8 +293,8 @@ const StrategyEditor = (props) => {
     }
     if (isPaperTrading) {
       changeTradingMode(!isPaperTrading, authToken, currentMode)
-      history.push(`${routes.strategyEditor.path}?execute=${strategyId}`)
-      setTimeout(() => window.location.reload(), 500)
+      saveStrategyToExecuteToLS(strategy)
+      window.location.replace('/index.html'); // eslint-disable-line
       return
     }
     onSaveStrategy()
@@ -316,6 +318,7 @@ const StrategyEditor = (props) => {
         ...executionArgs,
       })
       history.push(routes.strategyEditor.path)
+      removeStrategyToExecuteFromLS()
     }, 500)
   }
 
