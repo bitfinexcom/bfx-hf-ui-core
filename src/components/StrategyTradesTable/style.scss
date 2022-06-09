@@ -25,9 +25,18 @@
     }
   }
 
+  .hfui-trades-sub-table {
+    margin-right: auto;
+    margin-left: 40px;
+    display: flex;
+    align-items: center;
+    border-left: 1px solid #dcdcdc;
+  }
+
   .ufx-table {
     margin-top: 20px;
     background-color: $background-color;
+    font-size: 12px;
 
     thead {
       text-transform: uppercase;

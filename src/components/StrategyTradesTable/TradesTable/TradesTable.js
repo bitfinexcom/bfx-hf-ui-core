@@ -11,16 +11,7 @@ function TradesTable({ data }) {
   const columns = getColumns(t)
 
   return (
-    <div
-      style={{
-        marginRight: 'auto',
-        marginLeft: 40,
-        height: 148,
-        display: 'flex',
-        alignItems: 'center',
-        borderLeft: '2px solid #dcdcdc',
-      }}
-    >
+    <div className='hfui-trades-sub-table'>
       <Table condensed>
         <thead>
           {_map(columns, col => (
