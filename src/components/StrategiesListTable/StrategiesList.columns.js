@@ -152,7 +152,7 @@ const pastStrategiesColumns = (t, getMarketPair) => [
 ]
 
 const SavedStrategiesActions = ({
-  rowData, onStrategyRemove, saveAsHandler, // eslint-disable-line react/prop-types
+  rowData, onStrategyRemove, saveAsHandler, renameStrategy, // eslint-disable-line react/prop-types
 }) => {
   const [activeAction, setActiveAction] = useState(null)
 
@@ -176,8 +176,8 @@ const SavedStrategiesActions = ({
       <Icon
         name='pencil'
         aria-label='Edit'
-        onClick={() => {}}
-        onMouseEnter={() => setActiveAction('Edit')}
+        onClick={onActionClick(renameStrategy)}
+        onMouseEnter={() => setActiveAction('Rename draft strategy')}
         onMouseLeave={() => setActiveAction(null)}
       />
       <Icon
@@ -191,7 +191,7 @@ const SavedStrategiesActions = ({
   )
 }
 
-const savedStrategiesColumns = (t, onStrategyRemove, saveAsHandler) => [
+const savedStrategiesColumns = (t, onStrategyRemove, saveAsHandler, renameStrategy) => [
   {
     label: t('table.name'),
     dataKey: 'label',
@@ -215,7 +215,9 @@ const savedStrategiesColumns = (t, onStrategyRemove, saveAsHandler) => [
     style: STYLES.flexEnd,
     width: 200,
     flexGrow: 2,
-    cellRenderer: (props) => <SavedStrategiesActions {...props} onStrategyRemove={onStrategyRemove} saveAsHandler={saveAsHandler} />,
+    cellRenderer: (props) => (
+      <SavedStrategiesActions {...props} onStrategyRemove={onStrategyRemove} saveAsHandler={saveAsHandler} renameStrategy={renameStrategy} />
+    ),
   },
 ]
 

@@ -19,7 +19,7 @@ import SavedStrategiesList from './SavedStrategiesList'
 import './style.css'
 
 const StrategiesListTable = ({
-  onLoadStrategy, onStrategyRemove, saveAsHandler,
+  onLoadStrategy, onStrategyRemove, saveAsHandler, renameStrategy,
 }) => {
   const { t } = useTranslation()
   const _getMarketPair = useSelector(getMarketPair)
@@ -76,6 +76,7 @@ const StrategiesListTable = ({
         count={_size(savedStrategies)}
         onStrategyRemove={onStrategyRemove}
         saveAsHandler={saveAsHandler}
+        renameStrategy={renameStrategy}
       />
     </Panel>
   )
@@ -85,6 +86,7 @@ StrategiesListTable.propTypes = {
   onLoadStrategy: PropTypes.func.isRequired,
   onStrategyRemove: PropTypes.func.isRequired,
   saveAsHandler: PropTypes.func.isRequired,
+  renameStrategy: PropTypes.func.isRequired,
 }
 
 export default StrategiesListTable

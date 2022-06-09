@@ -51,6 +51,7 @@ const StrategiesPage = ({
   const [isUnsavedStrategyModalOpen, setIsUnsavedStrategyModalOpen] = useState(false)
   const [isRemoveModalOpened, setIsRemoveModalOpened] = useState(false)
   const [isSaveStrategyAsModalOpen, setIsSaveStrategyAsModalOpen] = useState(false)
+  const [isRenameStrategyModalOpen, setIsRenameStrategyModalOpen] = useState(false)
   const [actionStrategy, setActionStrategy] = useState({})
   const [nextStrategyToOpen, setNextStrategyToOpen] = useState(null)
 
@@ -208,6 +209,7 @@ const StrategiesPage = ({
     setActionStrategy({})
     setIsRemoveModalOpened(false)
     setIsSaveStrategyAsModalOpen(false)
+    setIsRenameStrategyModalOpen(false)
   }
 
   const removeStrategy = () => {
@@ -221,9 +223,19 @@ const StrategiesPage = ({
     onCloseModals()
   }
 
+  const renameStrategy = ({ label }) => {
+    onSave(authToken, { ...actionStrategy, label, savedTs: Date.now() })
+    onCloseModals()
+  }
+
   const saveAsHandler = (rowData) => {
     setActionStrategy(rowData)
     setIsSaveStrategyAsModalOpen(true)
+  }
+
+  const renameStrategyHandler = (rowData) => {
+    setActionStrategy(rowData)
+    setIsRenameStrategyModalOpen(true)
   }
 
   const strategyRemoveHandler = (rowData) => {
@@ -273,6 +285,7 @@ const StrategiesPage = ({
           onLoadStrategy={onLoadStrategy}
           onStrategyRemove={strategyRemoveHandler}
           saveAsHandler={saveAsHandler}
+          renameStrategy={renameStrategyHandler}
         />
         <SaveUnsavedChangesModal
           isOpen={isUnsavedStrategyModalOpen}
@@ -287,6 +300,12 @@ const StrategiesPage = ({
           onClose={onCloseModals}
           strategy={actionStrategy}
           onSubmit={saveAsStrategy}
+        />
+        <SaveStrategyAsModal
+          isOpen={isRenameStrategyModalOpen}
+          onClose={onCloseModals}
+          strategy={actionStrategy}
+          onSubmit={renameStrategy}
         />
         <RemoveExistingStrategyModal
           isOpen={isRemoveModalOpened}

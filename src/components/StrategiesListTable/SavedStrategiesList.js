@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next'
 import { savedStrategiesColumns } from './StrategiesList.columns'
 
 const SavedStrategiesList = ({
-  onRowClick, strategies, onStrategyRemove, saveAsHandler,
+  onRowClick, strategies, onStrategyRemove, saveAsHandler, renameStrategy,
 }) => {
   const { t } = useTranslation()
 
@@ -21,7 +21,7 @@ const SavedStrategiesList = ({
       ) : (
         <VirtualTable
           data={strategies}
-          columns={savedStrategiesColumns(t, onStrategyRemove, saveAsHandler)}
+          columns={savedStrategiesColumns(t, onStrategyRemove, saveAsHandler, renameStrategy)}
           defaultSortBy='mts'
           defaultSortDirection='DESC'
           onRowClick={onRowClick}
@@ -36,6 +36,7 @@ SavedStrategiesList.propTypes = {
   strategies: PropTypes.arrayOf(PropTypes.object).isRequired, // eslint-disable-line
   onStrategyRemove: PropTypes.func.isRequired,
   saveAsHandler: PropTypes.func.isRequired,
+  renameStrategy: PropTypes.func.isRequired,
 }
 
 export default SavedStrategiesList
