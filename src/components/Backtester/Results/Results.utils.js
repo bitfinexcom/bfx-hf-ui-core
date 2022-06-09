@@ -19,7 +19,7 @@ const appendUnit = (value, unit, prefix) => {
 
 const getSmallestUnit = (isFiatValue) => (isFiatValue ? 0.01 : 0.00000001)
 
-export const resultNumber = (value, ccy) => {
+export const resultNumber = (value, ccy, hideTooltip) => {
   const val = _toNumber(value)
   const isZero = val === 0
   const isPositive = val > 0
@@ -51,6 +51,12 @@ export const resultNumber = (value, ccy) => {
         : appendUnit(`>-${smallestUnit}`, quotePrefix, isCcyFiat)
 
   const style = { color: isPositive ? 'green' : 'red' }
+
+  if (hideTooltip) {
+    return (
+      <span style={style}>{resultValueWithCcySign}</span>
+    )
+  }
 
   return (
     <Tooltip
