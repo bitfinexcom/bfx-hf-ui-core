@@ -151,8 +151,13 @@ const pastStrategiesColumns = (t, getMarketPair) => [
   },
 ]
 
-const SavedStrategiesActions = ({ rowData }) => {
+const SavedStrategiesActions = ({ rowData, onStrategyRemove }) => { // eslint-disable-line react/prop-types
   const [activeAction, setActiveAction] = useState(null)
+
+  const onActionClick = (action) => (e) => {
+    e.stopPropagation()
+    action(rowData)
+  }
 
   return (
     <div className='list-actions'>
@@ -176,7 +181,7 @@ const SavedStrategiesActions = ({ rowData }) => {
       <Icon
         name='trash-o'
         aria-label='Delete'
-        onClick={() => {}}
+        onClick={onActionClick(onStrategyRemove)}
         onMouseEnter={() => setActiveAction('Delete draft strategy')}
         onMouseLeave={() => setActiveAction(null)}
       />
@@ -184,7 +189,7 @@ const SavedStrategiesActions = ({ rowData }) => {
   )
 }
 
-const savedStrategiesColumns = (t) => [
+const savedStrategiesColumns = (t, onStrategyRemove) => [
   {
     label: t('table.name'),
     dataKey: 'label',
@@ -208,7 +213,7 @@ const savedStrategiesColumns = (t) => [
     style: STYLES.flexEnd,
     width: 200,
     flexGrow: 2,
-    cellRenderer: (props) => <SavedStrategiesActions {...props} />,
+    cellRenderer: (props) => <SavedStrategiesActions {...props} onStrategyRemove={onStrategyRemove} />,
   },
 ]
 

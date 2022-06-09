@@ -19,6 +19,7 @@ import {
 import Layout from '../../components/Layout'
 import useTourGuide from '../../hooks/useTourGuide'
 import SaveUnsavedChangesModal from '../../modals/Strategy/SaveUnsavedChangesModal'
+import RemoveExistingStrategyModal from '../../modals/Strategy/RemoveExistingStrategyModal'
 import { getDefaultStrategyOptions } from '../../components/StrategyEditor/StrategyEditor.helpers'
 
 import './style.css'
@@ -39,6 +40,7 @@ const StrategiesPage = ({
   authToken,
   onSave,
   markets,
+  onRemove,
 }) => {
   const [strategy, setStrategy] = useState(strategyContent)
   const [indicators, setIndicators] = useState([])
@@ -46,6 +48,8 @@ const StrategiesPage = ({
   const [tourStep, setTourStep] = useState(0)
   const [sectionErrors, setSectionErrors] = useState({})
   const [isUnsavedStrategyModalOpen, setIsUnsavedStrategyModalOpen] = useState(false)
+  const [isRemoveModalOpened, setIsRemoveModalOpened] = useState(false)
+  const [actionStrategy, setActionStrategy] = useState({})
   const [nextStrategyToOpen, setNextStrategyToOpen] = useState(null)
 
   const showGuide = useTourGuide(isGuideActive)
@@ -198,6 +202,22 @@ const StrategiesPage = ({
     onSave(authToken, { ...content, savedTs: Date.now() })
   }
 
+  const onCloseModals = () => {
+    setActionStrategy({})
+    setIsRemoveModalOpened(false)
+  }
+
+  const removeStrategy = () => {
+    const { id } = actionStrategy
+    onRemove(authToken, id)
+    onCloseModals()
+  }
+
+  const strategyRemoveHandler = (rowData) => {
+    setActionStrategy(rowData)
+    setIsRemoveModalOpened(true)
+  }
+
   return (
     <Layout>
       <Layout.Header />
@@ -236,7 +256,7 @@ const StrategiesPage = ({
             />
           </Suspense>
         )}
-        <StrategiesListTable onLoadStrategy={onLoadStrategy} />
+        <StrategiesListTable onLoadStrategy={onLoadStrategy} onStrategyRemove={strategyRemoveHandler} />
         <SaveUnsavedChangesModal
           isOpen={isUnsavedStrategyModalOpen}
           onClose={() => setIsUnsavedStrategyModalOpen(false)}
@@ -244,6 +264,12 @@ const StrategiesPage = ({
           nextStrategy={nextStrategyToOpen}
           onLoadStrategy={onLoadStrategy}
           saveStrategy={saveStrategy}
+        />
+        <RemoveExistingStrategyModal
+          isOpen={isRemoveModalOpened}
+          onClose={onCloseModals}
+          onRemoveStrategy={removeStrategy}
+          strategy={actionStrategy}
         />
       </Layout.Main>
       <Layout.Footer />
@@ -261,6 +287,7 @@ StrategiesPage.propTypes = {
   authToken: PropTypes.string.isRequired,
   onSave: PropTypes.func.isRequired,
   markets: PropTypes.objectOf(PropTypes.object).isRequired, // eslint-disable-line
+  onRemove: PropTypes.func.isRequired,
 }
 
 StrategiesPage.defaultProps = {
