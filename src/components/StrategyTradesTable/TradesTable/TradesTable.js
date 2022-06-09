@@ -30,14 +30,6 @@ function TradesTable({ data }) {
               ))}
             </tr>
           ))}
-          {/* TODO:remove */}
-          {/* <tr>
-            <td>#456</td>
-            <td>SELL</td>
-            <td>Exchange Market</td>
-            <td>{new Date().toLocaleString()}</td>
-            <td>{new Date().toLocaleString()}</td>
-          </tr> */}
         </tbody>
       </Table>
     </div>

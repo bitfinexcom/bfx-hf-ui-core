@@ -1,5 +1,5 @@
 import React from 'react'
-import { PrettyValue, FullDate } from '@ufx-ui/core'
+import { PrettyValue } from '@ufx-ui/core'
 import _toString from 'lodash/toString'
 import { defaultCellRenderer } from '../../../util/ui'
 import { AMOUNT_DECIMALS } from '../../../constants/precision'

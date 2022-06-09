@@ -35,15 +35,14 @@ const StrategyLiveTab = (props) => {
   const hasResults = !_isEmpty(results)
 
   useEffect(() => {
-    // TODO: uncomment
-    // if (!executing && !hasResults) {
-    //   setLayoutConfig(LAYOUT_CONFIG_NO_DATA)
-    //   return
-    // }
-    // if (_isEmpty(results.strategy?.trades)) {
-    //   setLayoutConfig(LAYOUT_CONFIG_WITHOUT_TRADES)
-    //   return
-    // }
+    if (!executing && !hasResults) {
+      setLayoutConfig(LAYOUT_CONFIG_NO_DATA)
+      return
+    }
+    if (_isEmpty(results?.trades)) {
+      setLayoutConfig(LAYOUT_CONFIG_WITHOUT_TRADES)
+      return
+    }
     setLayoutConfig(LAYOUT_CONFIG)
   }, [hasResults, results, executing])
 

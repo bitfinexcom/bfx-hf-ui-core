@@ -7,6 +7,7 @@ import PropTypes from 'prop-types'
 import { useTranslation } from 'react-i18next'
 import { useDispatch, useSelector } from 'react-redux'
 import _findIndex from 'lodash/findIndex'
+import _isEmpty from 'lodash/isEmpty'
 
 import { Icon } from 'react-fa'
 
@@ -33,15 +34,6 @@ const StrategyTradesTable = ({
 }) => {
   const [isExpanded, setIsExpanded] = useState(false)
   const activeMarket = useSelector(getActiveMarket)
-
-  // TODO: remove
-  const dispatch = useDispatch()
-  useEffect(() => {
-    setTimeout(() => {
-      console.log('useEffect setTimeout: ')
-      dispatch(WSActions.setLiveExecutionTrades('6e76ab74-d26b-4115-bf66-aae2cff7e20e', TEST_DATA[0]))
-    }, 500)
-  }, [dispatch])
 
   const onExpandClick = useCallback(() => {
     const currentElementIndex = _findIndex(
@@ -116,25 +108,24 @@ const StrategyTradesTable = ({
         </>
       )}
     >
-      {/* TODO: */}
-      {/* {_isEmpty(results) ? (
+      {_isEmpty(results) ? (
         <div className='no-trades__wrapper'>
           <span className='no-trades__notification'>
             {t('tradesTableModal.noTrades')}
           </span>
         </div>
-      ) : ( */}
-      <VirtualTable
-        ref={tableRef}
-        data={results}
-        columns={columns}
-        defaultSortBy='mts'
-        defaultSortDirection='DESC'
-        onRowClick={({ rowData }) => onTradeClick(rowData)}
-        rowRenderer={getRowRenderer(selectedIndex)}
-        rowHeight={_getRowHeight}
-      />
-      {/* )} */}
+      ) : (
+        <VirtualTable
+          ref={tableRef}
+          data={results}
+          columns={columns}
+          defaultSortBy='mts'
+          defaultSortDirection='DESC'
+          onRowClick={({ rowData }) => onTradeClick(rowData)}
+          rowRenderer={getRowRenderer(selectedIndex)}
+          rowHeight={_getRowHeight}
+        />
+      )}
     </Panel>
   )
 }
