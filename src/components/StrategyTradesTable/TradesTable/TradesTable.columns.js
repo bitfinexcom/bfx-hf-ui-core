@@ -52,7 +52,7 @@ export default (t) => ([
   },
   {
     label: t('table.units'),
-    dataKey: 'amount',
+    dataKey: 'units',
     cellRenderer: ({ rowData }) => defaultCellRenderer(
       <PrettyValue
         value={rowData?.amount}

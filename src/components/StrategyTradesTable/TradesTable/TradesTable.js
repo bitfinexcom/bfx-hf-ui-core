@@ -1,30 +1,34 @@
-import React from 'react'
+import React, { forwardRef } from 'react'
 import { Table } from '@ufx-ui/core'
 import _map from 'lodash/map'
 import { useTranslation } from 'react-i18next'
 
 import getColumns from './TradesTable.columns'
 
-// eslint-disable-next-line react/prop-types
-function TradesTable({ data }) {
+// eslint-disable-next-line prefer-arrow-callback
+const TradesTable = forwardRef(function TradesTable({ data }, ref) { // eslint-disable-line react/prop-types
   const { t } = useTranslation()
   const columns = getColumns(t)
 
   return (
     <div className='hfui-trades-sub-table'>
-      <Table condensed>
+      <Table condensed ref={ref}>
         <thead>
-          {_map(columns, col => (
-            <th style={col?.style}>
-              {col.label}
-            </th>
-          ))}
+          <tr>
+            {_map(columns, col => (
+              <th style={col?.style} key={col.dataKey || col.label}>
+                {col.label}
+              </th>
+            ))}
+          </tr>
         </thead>
         <tbody>
           {_map(data, (rowData) => (
-            <tr>
-              {_map(columns, ({ cellRenderer, style }) => (
-                <td style={style}>
+            <tr key={rowData?.order_id}>
+              {_map(columns, ({
+                cellRenderer, style, dataKey, label,
+              }) => (
+                <td style={style} key={dataKey || label}>
                   {cellRenderer({ rowData })}
                 </td>
               ))}
@@ -34,7 +38,7 @@ function TradesTable({ data }) {
       </Table>
     </div>
   )
-}
+})
 
 TradesTable.propTypes = {}
 

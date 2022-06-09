@@ -5,7 +5,7 @@ import React, {
 import { Button, VirtualTable } from '@ufx-ui/core'
 import PropTypes from 'prop-types'
 import { useTranslation } from 'react-i18next'
-import { useDispatch, useSelector } from 'react-redux'
+import { useSelector } from 'react-redux'
 import _findIndex from 'lodash/findIndex'
 import _isEmpty from 'lodash/isEmpty'
 
@@ -20,11 +20,8 @@ import {
 
 import { onTradeExportClick } from './StrategyTradesTable.helpers'
 import { getActiveMarket } from '../../redux/selectors/ui'
-import WSActions from '../../redux/actions/ws'
 
 import './style.css'
-
-import TEST_DATA from './test_data'
 
 const StrategyTradesTable = ({
   results,
