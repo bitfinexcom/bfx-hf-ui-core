@@ -5,7 +5,10 @@ import { push } from 'connected-react-router'
 import ClassNames from 'clsx'
 import PropTypes from 'prop-types'
 import { useLocation } from 'react-router'
-import { getBacktestResults, getExecutionResults } from '../../redux/selectors/ws'
+import {
+  getBacktestResults,
+  getCurrentStrategyExecutionState,
+} from '../../redux/selectors/ws'
 import { strategyEditor } from '../../constants/routes'
 import Indicator from '../../ui/Indicator'
 
@@ -17,7 +20,9 @@ const NavbarButton = ({
   const { pathname } = useLocation()
   const dispatch = useDispatch()
   const navigate = (path) => dispatch(push(path))
-  const { executing, loading, results } = useSelector(getExecutionResults)
+  const { executing, loading, results } = useSelector(
+    getCurrentStrategyExecutionState,
+  )
   const { loading: btLoading, finished } = useSelector(getBacktestResults)
 
   const getIndicator = () => {
@@ -38,7 +43,12 @@ const NavbarButton = ({
 
   if (external) {
     return (
-      <a href={external} className={className} target='_blank' rel='noopener noreferrer'>
+      <a
+        href={external}
+        className={className}
+        target='_blank'
+        rel='noopener noreferrer'
+      >
         {label}
       </a>
     )
@@ -47,7 +57,9 @@ const NavbarButton = ({
   return (
     <button
       type='button'
-      className={ClassNames('hfui-navbarbutton', className, { active: pathname === route })}
+      className={ClassNames('hfui-navbarbutton', className, {
+        active: pathname === route,
+      })}
       onClick={route === pathname ? undefined : () => navigate(route)}
     >
       {label}
@@ -59,7 +71,9 @@ const NavbarButton = ({
 NavbarButton.propTypes = {
   route: PropTypes.string,
   label: PropTypes.oneOfType([
-    PropTypes.string, PropTypes.array, PropTypes.element,
+    PropTypes.string,
+    PropTypes.array,
+    PropTypes.element,
   ]).isRequired,
   external: PropTypes.string,
   className: PropTypes.string,

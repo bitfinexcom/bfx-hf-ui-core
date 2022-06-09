@@ -84,14 +84,12 @@ const StrategyEditor = (props) => {
     showError,
     flags,
     isBetaVersion,
-    allExecutionResults,
-    executing,
+    executionState,
     sectionErrors,
-    liveResults,
-    runningStrategiesMapping,
     savedStrategies,
     changeTradingMode,
     currentMode,
+    executionId,
   } = props
   const { t } = useTranslation()
   const location = useLocation()
@@ -124,17 +122,10 @@ const StrategyEditor = (props) => {
     maxDrawdownPerc,
   } = strategyOptions
 
+  const { executing } = executionState
+
   const isFullFilled = !!capitalAllocation && !!stopLossPerc && !!maxDrawdownPerc
   const strategyId = strategy?.id
-
-  const runningStrategyID = runningStrategiesMapping[strategyId]
-  const currentStrategyResults = liveResults?.[runningStrategyID] || {}
-
-  const execResults = {
-    ...allExecutionResults,
-    executing,
-    results: currentStrategyResults,
-  }
 
   const onCloseModals = () => {
     setOpenExistingStrategyModalOpen(false)
@@ -279,7 +270,7 @@ const StrategyEditor = (props) => {
     if (isPaperTrading) {
       changeTradingMode(!isPaperTrading, authToken, currentMode)
       saveStrategyToExecuteToLS(strategy)
-      window.location.replace('/index.html'); // eslint-disable-line
+      setTimeout(() => window.location.replace("/index.html"), 500); // eslint-disable-line
       return
     }
     onSaveStrategy()
@@ -308,7 +299,10 @@ const StrategyEditor = (props) => {
   }
 
   const stopExecution = () => {
-    dsStopLiveStrategy(authToken, runningStrategyID)
+    if (!executionId) {
+      return
+    }
+    dsStopLiveStrategy(authToken, executionId)
   }
 
   const hasErrorsInIDE = useMemo(
@@ -395,17 +389,16 @@ const StrategyEditor = (props) => {
                     onImportStrategy={onImportStrategy}
                     strategy={strategy}
                     strategyId={strategyId}
-                    executionResults={execResults}
                     selectedTab={selectedTab}
                     sidebarOpened={sidebarOpened}
                     strategyDirty={strategyDirty}
+                    hasErrors={hasErrorsInIDE}
                   />
                 )}
                 onOpenSaveStrategyAsModal={openSaveStrategyAsModal}
                 isPaperTrading={isPaperTrading}
                 startExecution={onLaunchExecutionClick}
                 stopExecution={stopExecution}
-                executionResults={execResults}
                 onSaveStrategy={onSaveStrategy}
                 openExecutionOptionsModal={openExecutionOptionsModal}
                 saveStrategyOptions={saveStrategyOptions}
@@ -437,11 +430,7 @@ const StrategyEditor = (props) => {
                 onSaveStrategy={onSaveStrategy}
                 onOpenSaveStrategyAsModal={openSaveStrategyAsModal}
                 sbtitle={({ sidebarOpened }) => (
-                  <IDETabTitle
-                    hasErrors={hasErrorsInIDE}
-                    strategyDirty={strategyDirty}
-                    sidebarOpened={sidebarOpened}
-                  />
+                  <IDETabTitle sidebarOpened={sidebarOpened} />
                 )}
                 {...props}
               />
@@ -526,9 +515,8 @@ StrategyEditor.propTypes = {
   strategyDirty: PropTypes.bool.isRequired,
   setStrategyDirty: PropTypes.func.isRequired,
   gaCreateStrategy: PropTypes.func.isRequired,
-  allExecutionResults: PropTypes.shape({
+  executionState: PropTypes.shape({
     executing: PropTypes.bool,
-    loading: PropTypes.bool,
   }).isRequired,
   strategyContent: PropTypes.objectOf(
     PropTypes.oneOfType([
@@ -549,12 +537,11 @@ StrategyEditor.propTypes = {
     backtest: PropTypes.bool,
   }).isRequired,
   showError: PropTypes.func.isRequired,
-  liveResults: PropTypes.objectOf(PropTypes.object), // eslint-disable-line
-  runningStrategiesMapping: PropTypes.objectOf(PropTypes.string),
+  strategiesMapping: PropTypes.objectOf(PropTypes.string),
   sectionErrors: PropTypes.objectOf(PropTypes.string).isRequired,
-  executing: PropTypes.bool.isRequired,
   changeTradingMode: PropTypes.func.isRequired,
   currentMode: PropTypes.string.isRequired,
+  executionId: PropTypes.string,
 }
 
 StrategyEditor.defaultProps = {
@@ -567,8 +554,8 @@ StrategyEditor.defaultProps = {
     label: null,
   },
   indicators: [],
-  liveResults: {},
-  runningStrategiesMapping: {},
+  strategiesMapping: {},
+  executionId: null,
 }
 
 export default memo(StrategyEditor)

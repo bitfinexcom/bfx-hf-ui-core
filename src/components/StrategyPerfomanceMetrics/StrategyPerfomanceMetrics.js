@@ -3,23 +3,22 @@ import { reduxSelectors } from '@ufx-ui/bfx-containers'
 import { getPairParts } from '@ufx-ui/utils'
 import { preparePrice } from 'bfx-api-node-util'
 import PropTypes from 'prop-types'
-import _get from 'lodash/get'
 import { useTranslation } from 'react-i18next'
 import { useSelector } from 'react-redux'
 import Panel from '../../ui/Panel'
 import { resultNumber } from '../Backtester/Results/Results.utils'
 import MetricRow from './MetricRow'
 import ExecutionTimer from './ExecutionTimer'
-import { getCurrentStrategyExecutionOptions } from '../../redux/selectors/ws'
 
 import './style.css'
 
 const { getCurrencySymbolMemo } = reduxSelectors
 
-const adjustPercentage = value => value * 100
+const adjustPercentage = (value) => value * 100
 
 const StrategyPerfomanceMetrics = ({
   results,
+  startedOn,
   isExecuting,
   isBacktest,
 }) => {
@@ -49,7 +48,6 @@ const StrategyPerfomanceMetrics = ({
 
   const [, quote] = getPairParts(activeMarket)
   const getCurrencySymbol = useSelector(getCurrencySymbolMemo)
-  const options = useSelector(getCurrentStrategyExecutionOptions)
   const quoteCcy = getCurrencySymbol(quote)
   const { t } = useTranslation()
 
@@ -61,8 +59,8 @@ const StrategyPerfomanceMetrics = ({
       label={t('strategyEditor.perfomanceMetrics.title')}
     >
       <ul>
-        {!isBacktest && (
-          <ExecutionTimer isExecuting={isExecuting} startedOn={_get(options, 'startedOn', 0)} />
+        {!isBacktest && startedOn && (
+          <ExecutionTimer isExecuting={isExecuting} startedOn={startedOn} />
         )}
         <MetricRow
           label={t('strategyEditor.totalPL')}
@@ -152,7 +150,7 @@ StrategyPerfomanceMetrics.propTypes = {
     backtestOptions: PropTypes.shape({
       activeMarket: PropTypes.string,
     }),
-    allocation: PropTypes.number,
+    allocation: PropTypes.string,
     positionSize: PropTypes.string,
     currentAllocation: PropTypes.string,
     availableFunds: PropTypes.string,
@@ -163,6 +161,7 @@ StrategyPerfomanceMetrics.propTypes = {
   }),
   isExecuting: PropTypes.bool.isRequired,
   isBacktest: PropTypes.bool,
+  startedOn: PropTypes.number,
 }
 
 StrategyPerfomanceMetrics.defaultProps = {
@@ -186,6 +185,7 @@ StrategyPerfomanceMetrics.defaultProps = {
     },
   },
   isBacktest: false,
+  startedOn: 0,
 }
 
 export default StrategyPerfomanceMetrics

@@ -10,11 +10,7 @@ import WSTypes from '../../redux/constants/ws'
 import {
   getAuthToken,
   getBacktestResults,
-  getExecutionResults,
-  // getSortedByTimeActiveStrategies,
-  getRunningStrategiesMapping,
-  getLiveExecutionResults,
-  getIsCurrentStrategyExecuting,
+  getCurrentStrategyExecutionState,
   getSavedStrategies,
 } from '../../redux/selectors/ws'
 import {
@@ -23,6 +19,7 @@ import {
   getStrategiesFeatureFlags,
   getIsBetaVersion,
   getCurrentMode,
+  getStrategyExecutionId,
 } from '../../redux/selectors/ui'
 import StrategyEditor from './StrategyEditor'
 import { getMarketsForExecution } from '../../redux/selectors/meta'
@@ -31,18 +28,15 @@ const mapStateToProps = (state = {}) => {
   return {
     authToken: getAuthToken(state),
     backtestResults: getBacktestResults(state),
-    allExecutionResults: getExecutionResults(state),
+    executionState: getCurrentStrategyExecutionState(state),
     settingsTheme: getThemeSetting(state),
-    executing: getIsCurrentStrategyExecuting(state),
     markets: getMarketsForExecution(state),
     isPaperTrading: getIsPaperTrading(state),
     flags: getStrategiesFeatureFlags(state),
     isBetaVersion: getIsBetaVersion(state),
-    liveResults: getLiveExecutionResults(state),
-    // activeStrategies: getSortedByTimeActiveStrategies(state),
-    runningStrategiesMapping: getRunningStrategiesMapping(state),
     savedStrategies: getSavedStrategies(state),
     currentMode: getCurrentMode(state),
+    executionId: getStrategyExecutionId(state),
   }
 }
 

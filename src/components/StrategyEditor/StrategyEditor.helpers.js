@@ -113,6 +113,7 @@ export const prepareStrategyToLoad = (strategyToLoad, markets, strategies) => {
       symbol, capitalAllocation, stopLossPerc, maxDrawdownPerc,
     },
     strategyId,
+    id,
   } = strategyToLoad
   const savedStrategyContent = _find(strategies, (st) => st.id === strategyId)
 
@@ -120,6 +121,7 @@ export const prepareStrategyToLoad = (strategyToLoad, markets, strategies) => {
     ...savedStrategyContent,
     ...strategyToLoad,
     id: strategyId,
+    executionId: id,
     strategyOptions: {
       ...getDefaultStrategyOptions(markets),
       ...strategyToLoad.strategyOptions,

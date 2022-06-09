@@ -297,11 +297,6 @@ export default {
     type: t.RESET_DATA_EXECUTION,
   }),
 
-  setExecutingStrategies: (executing) => ({
-    type: t.SET_EXECUTING_STRATEGIES,
-    payload: { executing },
-  }),
-
   setExecutionLoading: (loading) => ({
     type: t.EXECUTION_LOADING,
     payload: { loading },

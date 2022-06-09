@@ -58,7 +58,7 @@ const StrategyParams = ({
         ) : (
           <ParamsForLive
             onClose={onClose}
-            isExecutionDisabled={executing}
+            executing={executing}
             {...props}
           />
         )}

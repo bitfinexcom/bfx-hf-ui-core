@@ -3,18 +3,12 @@ import types from '../../constants/ws'
 
 function getInitialState() {
   return {
-    executing: [
-      // ['strategy-id', 'strategy-id', ...]
-    ],
     loading: false,
     results: {
       // 'strategy-map-key': { /* results */ }
     },
     activeStrategies: {
       // 'strategy-map-key': { /* ...strategy, startedOn */ }
-    },
-    runningStrategiesMapping: {
-      // 'strategy-id': 'strategy-map-key'
     },
     pastStrategies: [],
   }
@@ -23,15 +17,6 @@ function getInitialState() {
 function reducer(state = getInitialState(), action = {}) {
   const { type, payload = {} } = action
   switch (type) {
-    case types.SET_EXECUTING_STRATEGIES: {
-      const { executing } = payload
-
-      return {
-        ...state,
-        executing,
-      }
-    }
-
     case types.EXECUTION_LOADING: {
       const { loading } = payload
 
@@ -55,9 +40,9 @@ function reducer(state = getInitialState(), action = {}) {
 
     case types.SET_PAST_STRATEGIES: {
       const { pastStrategies } = payload
-      const pastStrategiesResults = _reduce(pastStrategies, (acc, strategy) => {
-        const { results, id } = strategy
-        acc[id] = results
+      const results = _reduce(pastStrategies, (acc, strategy) => {
+        const { results: execResults, id } = strategy
+        acc[id] = execResults
         return acc
       }, {})
 
@@ -66,43 +51,31 @@ function reducer(state = getInitialState(), action = {}) {
         pastStrategies,
         results: {
           ...state.results,
-          ...pastStrategiesResults,
+          ...results,
         },
       }
     }
 
     case types.SET_STARTED_LIVE_STRATEGY: {
       const { strategyMapKey, executionResultsObj } = payload
-      const { strategyId } = executionResultsObj
 
       return {
         ...state,
         activeStrategies: {
           ...state.activeStrategies,
-          [strategyMapKey]: executionResultsObj,
-        },
-        runningStrategiesMapping: {
-          [strategyId]: strategyMapKey,
-        },
-        results: {
-          ...state.results,
           [strategyMapKey]: executionResultsObj,
         },
       }
     }
 
     case types.SET_STOPPED_LIVE_STRATEGY: {
-      const { strategyMapKey, executionResultsObj } = payload
-      const { id } = executionResultsObj
+      const { strategyMapKey } = payload
 
       return {
         ...state,
         activeStrategies: {
           ...state.activeStrategies,
           [strategyMapKey]: undefined,
-        },
-        runningStrategiesMapping: {
-          [id]: undefined,
         },
         loading: false,
       }
