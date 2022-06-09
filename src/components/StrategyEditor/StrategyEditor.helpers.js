@@ -24,6 +24,7 @@ export const STRATEGY_OPTIONS_KEYS = {
   CAPITAL_ALLOCATION: 'capitalAllocation',
   STOP_LESS_PERC: 'stopLossPerc',
   MAX_DRAWDOWN_PERC: 'maxDrawdownPerc',
+  STRATEGY_TYPE: 'strategyType',
 }
 
 export const getDefaultStrategyOptions = (markets) => {
@@ -39,6 +40,7 @@ export const getDefaultStrategyOptions = (markets) => {
     [STRATEGY_OPTIONS_KEYS.CAPITAL_ALLOCATION]: '',
     [STRATEGY_OPTIONS_KEYS.STOP_LESS_PERC]: '',
     [STRATEGY_OPTIONS_KEYS.MAX_DRAWDOWN_PERC]: '',
+    [STRATEGY_OPTIONS_KEYS.STRATEGY_TYPE]: null,
   }
 }
 
