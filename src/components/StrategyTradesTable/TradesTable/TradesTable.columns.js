@@ -2,7 +2,7 @@ import React from 'react'
 import { PrettyValue } from '@ufx-ui/core'
 import _toString from 'lodash/toString'
 import { defaultCellRenderer } from '../../../util/ui'
-import { AMOUNT_DECIMALS } from '../../../constants/precision'
+import { AMOUNT_DECIMALS, PRICE_SIG_FIGS } from '../../../constants/precision'
 
 const STYLES = {
   RIGHT_ALIGN: { textAlign: 'right' },
@@ -39,14 +39,14 @@ export default (t) => ([
   {
     label: t('table.orderPrice'),
     dataKey: 'price',
-    cellRenderer: ({ rowData }) => defaultCellRenderer(<PrettyValue value={_toString(rowData?.order_js?.price)} sigFig={5} fadeTrailingZeros />),
+    cellRenderer: ({ rowData }) => defaultCellRenderer(<PrettyValue value={_toString(rowData?.order_js?.price)} sigFig={PRICE_SIG_FIGS} fadeTrailingZeros />),
     style: STYLES.RIGHT_ALIGN,
   },
   {
     label: t('table.tradePrice'),
     dataKey: 'priceAvg',
     cellRenderer: ({ rowData }) => defaultCellRenderer(
-      <PrettyValue value={_toString(rowData?.order_js?.priceAvg)} sigFig={5} fadeTrailingZeros />,
+      <PrettyValue value={_toString(rowData?.order_js?.priceAvg)} sigFig={PRICE_SIG_FIGS} fadeTrailingZeros />,
     ),
     style: STYLES.RIGHT_ALIGN,
   },

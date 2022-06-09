@@ -4,7 +4,7 @@ import React from 'react'
 import { PrettyValue } from '@ufx-ui/core'
 
 import { defaultCellRenderer } from '../../util/ui'
-import { PRICE_SIG_FIGS } from '../../constants/precision'
+import { AMOUNT_DECIMALS, PRICE_SIG_FIGS } from '../../constants/precision'
 import { resultNumber } from '../Backtester/Results/Results.utils'
 
 const STYLES = {
@@ -80,13 +80,12 @@ export default (t) => [
     width: 150,
     style: STYLES.center,
     headerStyle: STYLES.center,
-    cellRenderer: () => defaultCellRenderer(
-      // <PrettyValue
-      //   value={0.0012}
-      //   sigFig={PRICE_SIG_FIGS}
-      //   fadeTrailingZeros
-      // />,
-      'plug',
+    cellRenderer: ({ rowData }) => defaultCellRenderer(
+      <PrettyValue
+        value={rowData?.amount}
+        decimals={AMOUNT_DECIMALS}
+        fadeTrailingZeros
+      />,
     ),
   },
   {
@@ -97,20 +96,20 @@ export default (t) => [
     headerStyle: STYLES.center,
     cellRenderer: ({ rowData = {} }) => resultNumber(rowData.pl),
   },
-  {
-    label: t('table.position'),
-    dataKey: 'profit',
-    width: 150,
-    style: STYLES.center,
-    headerStyle: STYLES.center,
-    cellRenderer: () => resultNumber('plug'),
-  },
-  {
-    label: t('table.drawdown'),
-    dataKey: 'drawdown',
-    width: 150,
-    style: STYLES.center,
-    headerStyle: STYLES.center,
-    cellRenderer: () => resultNumber('plug'),
-  },
+  // {
+  //   label: t('table.position'),
+  //   dataKey: 'profit',
+  //   width: 150,
+  //   style: STYLES.center,
+  //   headerStyle: STYLES.center,
+  //   cellRenderer: () => resultNumber('plug'),
+  // },
+  // {
+  //   label: t('table.drawdown'),
+  //   dataKey: 'drawdown',
+  //   width: 150,
+  //   style: STYLES.center,
+  //   headerStyle: STYLES.center,
+  //   cellRenderer: () => resultNumber('plug'),
+  // },
 ]
