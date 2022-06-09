@@ -63,7 +63,7 @@ function reducer(state = getInitialState(), action = {}) {
 
     case types.SET_STARTED_LIVE_STRATEGY: {
       const { strategyMapKey, executionResultsObj } = payload
-      const { id } = executionResultsObj
+      const { strategyId } = executionResultsObj
 
       return {
         ...state,
@@ -72,7 +72,7 @@ function reducer(state = getInitialState(), action = {}) {
           [strategyMapKey]: executionResultsObj,
         },
         runningStrategiesMapping: {
-          [id]: strategyMapKey,
+          [strategyId]: strategyMapKey,
         },
         results: {
           ...state.results,
