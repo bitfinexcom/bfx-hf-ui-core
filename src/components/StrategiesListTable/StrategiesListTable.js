@@ -18,7 +18,9 @@ import SavedStrategiesList from './SavedStrategiesList'
 
 import './style.css'
 
-const StrategiesListTable = ({ onLoadStrategy, onStrategyRemove }) => {
+const StrategiesListTable = ({
+  onLoadStrategy, onStrategyRemove, saveAsHandler,
+}) => {
   const { t } = useTranslation()
   const _getMarketPair = useSelector(getMarketPair)
   let activeStrategies = useSelector(getSortedByTimeActiveStrategies)
@@ -73,6 +75,7 @@ const StrategiesListTable = ({ onLoadStrategy, onStrategyRemove }) => {
         tabtitle={t('strategyEditor.savedStrategies')}
         count={_size(savedStrategies)}
         onStrategyRemove={onStrategyRemove}
+        saveAsHandler={saveAsHandler}
       />
     </Panel>
   )
@@ -81,6 +84,7 @@ const StrategiesListTable = ({ onLoadStrategy, onStrategyRemove }) => {
 StrategiesListTable.propTypes = {
   onLoadStrategy: PropTypes.func.isRequired,
   onStrategyRemove: PropTypes.func.isRequired,
+  saveAsHandler: PropTypes.func.isRequired,
 }
 
 export default StrategiesListTable

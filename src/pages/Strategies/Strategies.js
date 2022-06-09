@@ -20,6 +20,7 @@ import Layout from '../../components/Layout'
 import useTourGuide from '../../hooks/useTourGuide'
 import SaveUnsavedChangesModal from '../../modals/Strategy/SaveUnsavedChangesModal'
 import RemoveExistingStrategyModal from '../../modals/Strategy/RemoveExistingStrategyModal'
+import SaveStrategyAsModal from '../../modals/Strategy/SaveStrategyAsModal/SaveStrategyAsModal'
 import { getDefaultStrategyOptions } from '../../components/StrategyEditor/StrategyEditor.helpers'
 
 import './style.css'
@@ -49,6 +50,7 @@ const StrategiesPage = ({
   const [sectionErrors, setSectionErrors] = useState({})
   const [isUnsavedStrategyModalOpen, setIsUnsavedStrategyModalOpen] = useState(false)
   const [isRemoveModalOpened, setIsRemoveModalOpened] = useState(false)
+  const [isSaveStrategyAsModalOpen, setIsSaveStrategyAsModalOpen] = useState(false)
   const [actionStrategy, setActionStrategy] = useState({})
   const [nextStrategyToOpen, setNextStrategyToOpen] = useState(null)
 
@@ -205,12 +207,23 @@ const StrategiesPage = ({
   const onCloseModals = () => {
     setActionStrategy({})
     setIsRemoveModalOpened(false)
+    setIsSaveStrategyAsModalOpen(false)
   }
 
   const removeStrategy = () => {
     const { id } = actionStrategy
     onRemove(authToken, id)
     onCloseModals()
+  }
+
+  const saveAsStrategy = (updatedStrategy) => {
+    onSave(authToken, { ...updatedStrategy, savedTs: Date.now() })
+    onCloseModals()
+  }
+
+  const saveAsHandler = (rowData) => {
+    setActionStrategy(rowData)
+    setIsSaveStrategyAsModalOpen(true)
   }
 
   const strategyRemoveHandler = (rowData) => {
@@ -256,7 +269,11 @@ const StrategiesPage = ({
             />
           </Suspense>
         )}
-        <StrategiesListTable onLoadStrategy={onLoadStrategy} onStrategyRemove={strategyRemoveHandler} />
+        <StrategiesListTable
+          onLoadStrategy={onLoadStrategy}
+          onStrategyRemove={strategyRemoveHandler}
+          saveAsHandler={saveAsHandler}
+        />
         <SaveUnsavedChangesModal
           isOpen={isUnsavedStrategyModalOpen}
           onClose={() => setIsUnsavedStrategyModalOpen(false)}
@@ -264,6 +281,12 @@ const StrategiesPage = ({
           nextStrategy={nextStrategyToOpen}
           onLoadStrategy={onLoadStrategy}
           saveStrategy={saveStrategy}
+        />
+        <SaveStrategyAsModal
+          isOpen={isSaveStrategyAsModalOpen}
+          onClose={onCloseModals}
+          strategy={actionStrategy}
+          onSubmit={saveAsStrategy}
         />
         <RemoveExistingStrategyModal
           isOpen={isRemoveModalOpened}
