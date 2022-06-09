@@ -73,7 +73,7 @@ const onTradeExportClick = (rawTrades, results, activeMarket, t) => {
 
   csvExport.export(documents, (buffer) => {
     const blob = new Blob([buffer], { type: 'application/zip' })
-    const filename = getExportFilename(activeMarket)
+    const filename = getExportFilename(`${activeMarket.base}-${activeMarket.quote}`)
 
     saveAs(blob, filename)
   })
