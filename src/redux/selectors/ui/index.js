@@ -27,6 +27,8 @@ import getLayoutForRoute from './layouts/get_layout_for_route'
 import getIsAppSettingsModalVisible from './get_is_app_settings_modal_visible'
 import getSettingsActiveTab, { getSettingActiveSection } from './get_settings_active_tab'
 import getIsLoadingOrderHistData from './get_is_loading_order_hist_data'
+import getStrategyExecutionId from './get_strategy_execution_id'
+import getStrategyContent from './get_strategy_content'
 
 export * from './get_settings'
 export * from './get_core_settings'
@@ -63,4 +65,6 @@ export {
   getSettingsActiveTab,
   getSettingActiveSection,
   getIsLoadingOrderHistData,
+  getStrategyExecutionId,
+  getStrategyContent,
 }

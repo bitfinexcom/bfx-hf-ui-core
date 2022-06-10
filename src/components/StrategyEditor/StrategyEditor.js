@@ -1,5 +1,5 @@
 import React, {
-  memo, useCallback, useEffect, useMemo, useState,
+  memo, useEffect, useMemo, useState,
 } from 'react'
 import Debug from 'debug'
 import _isEmpty from 'lodash/isEmpty'
@@ -33,14 +33,13 @@ import IDETabTitle from './tabs/IDETab.Title'
 import ExecutionOptionsModal from '../../modals/Strategy/ExecutionOptionsModal'
 import {
   getDefaultStrategyOptions,
+  prepareStrategyBacktestingArgs,
   prepareStrategyExecutionArgs,
   removeStrategyToExecuteFromLS,
   saveStrategyToExecuteToLS,
 } from './StrategyEditor.helpers'
 import LaunchStrategyModal from '../../modals/Strategy/LaunchStrategyModal'
 import routes from '../../constants/routes'
-
-import './style.css'
 import { getCurrentModeAPIKeyState } from '../../redux/selectors/ws'
 import {
   changeAppSettingsModalState,
@@ -53,6 +52,8 @@ import {
   PAPER_MODE,
   ALLOWED_PAPER_PAIRS,
 } from '../../redux/reducers/ui'
+
+import './style.css'
 
 const debug = Debug('hfui-ui:c:strategy-editor')
 
@@ -84,15 +85,13 @@ const StrategyEditor = (props) => {
     showError,
     flags,
     isBetaVersion,
-    allExecutionResults,
-    executing,
+    executionState,
     sectionErrors,
-    liveResults,
-    runningStrategiesMapping,
     savedStrategies,
     cancelProcess,
     changeTradingMode,
     currentMode,
+    executionId,
   } = props
   const { t } = useTranslation()
   const location = useLocation()
@@ -121,29 +120,15 @@ const StrategyEditor = (props) => {
     timeframe,
     trades,
     candles,
-    startDate,
-    endDate,
     capitalAllocation,
     stopLossPerc,
     maxDrawdownPerc,
   } = strategyOptions
 
+  const { executing, loadingGid } = executionState
+
   const isFullFilled = !!capitalAllocation && !!stopLossPerc && !!maxDrawdownPerc
   const strategyId = strategy?.id
-
-  const runningStrategyID = runningStrategiesMapping[strategyId]
-  const currentStrategyResults = liveResults?.[runningStrategyID] || {}
-  const constraints = {
-    allocation: Number(capitalAllocation),
-    percStopLoss: Number(stopLossPerc),
-    maxDrawdown: Number(maxDrawdownPerc),
-  }
-
-  const execResults = {
-    ...allExecutionResults,
-    executing,
-    results: currentStrategyResults,
-  }
 
   const onCloseModals = () => {
     setOpenExistingStrategyModalOpen(false)
@@ -196,10 +181,10 @@ const StrategyEditor = (props) => {
     }
   }
 
-  const onSaveStrategy = useCallback(() => {
+  const onSaveStrategy = () => {
     saveStrategy(strategy)
     setStrategyDirty(false)
-  }, [saveStrategy, setStrategyDirty, strategy])
+  }
 
   const onSaveAsStrategy = (newStrategy) => {
     setStrategy(newStrategy)
@@ -209,7 +194,6 @@ const StrategyEditor = (props) => {
 
   const _cancelProcess = () => {
     const { gid } = backtestResults
-    const { loadingGid } = allExecutionResults
 
     cancelProcess(authToken, isPaperTrading, gid, loadingGid)
     setIsCancelProcessModalOpen(false)
@@ -231,8 +215,8 @@ const StrategyEditor = (props) => {
   }
 
   const onBacktestStart = () => {
-    const startNum = new Date(startDate).getTime()
-    const endNum = new Date(endDate).getTime()
+    const backtestArgs = prepareStrategyBacktestingArgs(strategy)
+    const { endNum, startNum } = backtestArgs
 
     if (!trades && !candles) {
       showError(t('strategyEditor.checkboxWarningMessage'))
@@ -255,16 +239,7 @@ const StrategyEditor = (props) => {
       return
     }
 
-    dsExecuteBacktest(
-      startNum,
-      endNum,
-      symbol?.wsID,
-      timeframe,
-      candles,
-      trades,
-      strategy,
-      constraints,
-    )
+    dsExecuteBacktest(backtestArgs)
   }
 
   const apiCredentials = useSelector(getCurrentModeAPIKeyState)
@@ -314,7 +289,7 @@ const StrategyEditor = (props) => {
     if (isPaperTrading) {
       changeTradingMode(!isPaperTrading, authToken, currentMode)
       saveStrategyToExecuteToLS(strategy)
-      window.location.replace('/index.html'); // eslint-disable-line
+      setTimeout(() => window.location.replace("/index.html"), 500); // eslint-disable-line
       return
     }
     onSaveStrategy()
@@ -343,7 +318,10 @@ const StrategyEditor = (props) => {
   }
 
   const stopExecution = () => {
-    dsStopLiveStrategy(authToken, runningStrategyID)
+    if (!executionId) {
+      return
+    }
+    dsStopLiveStrategy(authToken, executionId)
   }
 
   const hasErrorsInIDE = useMemo(
@@ -430,17 +408,16 @@ const StrategyEditor = (props) => {
                     onImportStrategy={onImportStrategy}
                     strategy={strategy}
                     strategyId={strategyId}
-                    executionResults={execResults}
                     selectedTab={selectedTab}
                     sidebarOpened={sidebarOpened}
                     strategyDirty={strategyDirty}
+                    hasErrors={hasErrorsInIDE}
                   />
                 )}
                 onOpenSaveStrategyAsModal={openSaveStrategyAsModal}
                 isPaperTrading={isPaperTrading}
                 startExecution={onLaunchExecutionClick}
                 stopExecution={stopExecution}
-                executionResults={execResults}
                 onSaveStrategy={onSaveStrategy}
                 openExecutionOptionsModal={openExecutionOptionsModal}
                 saveStrategyOptions={saveStrategyOptions}
@@ -474,11 +451,7 @@ const StrategyEditor = (props) => {
                 onSaveStrategy={onSaveStrategy}
                 onOpenSaveStrategyAsModal={openSaveStrategyAsModal}
                 sbtitle={({ sidebarOpened }) => (
-                  <IDETabTitle
-                    hasErrors={hasErrorsInIDE}
-                    strategyDirty={strategyDirty}
-                    sidebarOpened={sidebarOpened}
-                  />
+                  <IDETabTitle sidebarOpened={sidebarOpened} />
                 )}
                 {...props}
               />
@@ -568,7 +541,7 @@ StrategyEditor.propTypes = {
   strategyDirty: PropTypes.bool.isRequired,
   setStrategyDirty: PropTypes.func.isRequired,
   gaCreateStrategy: PropTypes.func.isRequired,
-  allExecutionResults: PropTypes.shape({
+  executionState: PropTypes.shape({
     executing: PropTypes.bool,
     loading: PropTypes.bool,
     loadingGid: PropTypes.bool,
@@ -592,13 +565,12 @@ StrategyEditor.propTypes = {
     backtest: PropTypes.bool,
   }).isRequired,
   showError: PropTypes.func.isRequired,
-  liveResults: PropTypes.objectOf(PropTypes.object), // eslint-disable-line
-  runningStrategiesMapping: PropTypes.objectOf(PropTypes.string),
+  strategiesMapping: PropTypes.objectOf(PropTypes.string),
   sectionErrors: PropTypes.objectOf(PropTypes.string).isRequired,
-  executing: PropTypes.bool.isRequired,
   cancelProcess: PropTypes.func.isRequired,
   changeTradingMode: PropTypes.func.isRequired,
   currentMode: PropTypes.string.isRequired,
+  executionId: PropTypes.string,
 }
 
 StrategyEditor.defaultProps = {
@@ -611,8 +583,8 @@ StrategyEditor.defaultProps = {
     label: null,
   },
   indicators: [],
-  liveResults: {},
-  runningStrategiesMapping: {},
+  strategiesMapping: {},
+  executionId: null,
 }
 
 export default memo(StrategyEditor)
