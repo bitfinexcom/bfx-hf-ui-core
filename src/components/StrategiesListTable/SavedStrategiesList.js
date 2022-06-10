@@ -5,7 +5,9 @@ import { VirtualTable } from '@ufx-ui/core'
 import { useTranslation } from 'react-i18next'
 import { savedStrategiesColumns } from './StrategiesList.columns'
 
-const SavedStrategiesList = ({ onRowClick, strategies }) => {
+const SavedStrategiesList = ({
+  onRowClick, strategies, onStrategyRemove, saveAsHandler, renameStrategy,
+}) => {
   const { t } = useTranslation()
 
   return (
@@ -19,7 +21,7 @@ const SavedStrategiesList = ({ onRowClick, strategies }) => {
       ) : (
         <VirtualTable
           data={strategies}
-          columns={savedStrategiesColumns(t)}
+          columns={savedStrategiesColumns(t, onStrategyRemove, saveAsHandler, renameStrategy)}
           defaultSortBy='mts'
           defaultSortDirection='DESC'
           onRowClick={onRowClick}
@@ -32,6 +34,9 @@ const SavedStrategiesList = ({ onRowClick, strategies }) => {
 SavedStrategiesList.propTypes = {
   onRowClick: PropTypes.func.isRequired,
   strategies: PropTypes.arrayOf(PropTypes.object).isRequired, // eslint-disable-line
+  onStrategyRemove: PropTypes.func.isRequired,
+  saveAsHandler: PropTypes.func.isRequired,
+  renameStrategy: PropTypes.func.isRequired,
 }
 
 export default SavedStrategiesList
