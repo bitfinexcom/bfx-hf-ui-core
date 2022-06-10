@@ -81,12 +81,16 @@ function reducer(state = getInitialState(), action = {}) {
     case types.SET_STARTED_LIVE_STRATEGY: {
       const { strategyMapKey, executionResultsObj } = payload
 
+      const loadingGid = state.loadingGid === strategyMapKey ? null : state.loadingGid
+
       return {
         ...state,
         activeStrategies: {
           ...state.activeStrategies,
           [strategyMapKey]: executionResultsObj,
         },
+        loading: false,
+        loadingGid,
       }
     }
 
@@ -94,7 +98,10 @@ function reducer(state = getInitialState(), action = {}) {
       const { strategyMapKey } = payload
 
       const activeStrategies = { ...state.activeStrategies }
-      const pastStrategies = [...state.pastStrategies, activeStrategies[strategyMapKey]]
+      const pastStrategies = [
+        ...state.pastStrategies,
+        activeStrategies[strategyMapKey],
+      ]
 
       delete activeStrategies[strategyMapKey]
 
