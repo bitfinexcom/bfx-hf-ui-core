@@ -6,7 +6,6 @@ import SidebarParam from './SidebarParam'
 
 const ParamsForLive = ({
   startExecution,
-  isExecutionDisabled,
   executing,
   stopExecution,
   onClose,
@@ -14,7 +13,7 @@ const ParamsForLive = ({
   const { t } = useTranslation()
   return (
     <div className='hfui-orderform__ao-settings__menu-buttons'>
-      <SidebarParam onClick={startExecution} isDisabled={isExecutionDisabled}>
+      <SidebarParam onClick={startExecution} isDisabled={executing}>
         <Icon name='play' />
         &nbsp;&nbsp;
         {t('strategyEditor.launchStrategy')}
@@ -34,7 +33,6 @@ const ParamsForLive = ({
 
 ParamsForLive.propTypes = {
   startExecution: PropTypes.func.isRequired,
-  isExecutionDisabled: PropTypes.bool.isRequired,
   executing: PropTypes.bool.isRequired,
   stopExecution: PropTypes.func.isRequired,
   onClose: PropTypes.func.isRequired,

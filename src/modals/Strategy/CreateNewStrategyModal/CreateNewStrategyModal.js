@@ -1,43 +1,32 @@
-import React, { useState, memo } from 'react'
+import React, { useState, memo, useCallback } from 'react'
 import _isEmpty from 'lodash/isEmpty'
-import _size from 'lodash/size'
 import PropTypes from 'prop-types'
 import { useTranslation } from 'react-i18next'
-import {
-  MAX_STRATEGY_LABEL_LENGTH as MAX_LABEL_LENGTH,
-} from '../../../constants/variables'
 import Input from '../../../ui/Input'
 import Modal from '../../../ui/Modal'
 import blankTemplate from '../../../components/StrategyEditor/templates/blank'
+import { validateStrategyName } from '../Strategy.helpers'
 
 import './style.css'
 
 const CreateNewStrategyModal = ({
-  onSubmit, onClose, gaCreateStrategy, isOpen,
+  onSubmit, onClose, isOpen,
 }) => {
   const [label, setLabel] = useState('')
   const [error, setError] = useState('')
 
   const { t } = useTranslation()
 
-  const onSubmitHandler = () => {
-    const labelSize = _size(label)
-
-    if (_isEmpty(label)) {
-      setError(t('strategyEditor.newStrategyModalEmptyError'))
+  const onSubmitHandler = useCallback(() => {
+    const err = validateStrategyName(label, t)
+    setError(err)
+    if (err) {
       return
     }
-
-    if (labelSize > MAX_LABEL_LENGTH) {
-      setError(t('strategyEditor.newStrategyModalLongError', { labelSize, MAX_LABEL_LENGTH }))
-      return
-    }
-
-    gaCreateStrategy()
 
     onSubmit(label, blankTemplate)
     onClose()
-  }
+  }, [label, onClose, onSubmit, t])
 
   return (
     <Modal
@@ -55,9 +44,8 @@ const CreateNewStrategyModal = ({
           onChange={setLabel}
         />
 
-        {!_isEmpty(error) && (
-        <p className='error'>{error}</p>
-        )}
+        {!_isEmpty(error) && <p className='error'>{error}</p>}
+
       </div>
       <Modal.Footer className='hfui-createnewstrategymodal__footer'>
         <Modal.Button primary onClick={onSubmitHandler}>
@@ -71,12 +59,10 @@ const CreateNewStrategyModal = ({
 CreateNewStrategyModal.propTypes = {
   onSubmit: PropTypes.func.isRequired,
   onClose: PropTypes.func.isRequired,
-  gaCreateStrategy: PropTypes.func,
   isOpen: PropTypes.bool,
 }
 
 CreateNewStrategyModal.defaultProps = {
-  gaCreateStrategy: () => { },
   isOpen: true,
 }
 

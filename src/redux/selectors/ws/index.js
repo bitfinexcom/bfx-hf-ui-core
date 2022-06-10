@@ -8,7 +8,6 @@ import getAuthConfigured from './get_auth_configured'
 import getSortedByTimeStrategies from './get_sorted_by_time_strategies'
 import getSortedByTimeActiveStrategies from './get_sorted_by_time_active_strategies'
 import sortedByTimePastStrategies from './get_sorted_by_time_past_strategies'
-import getRunningStrategiesMapping from './get_running_strategies_mapping'
 import getLiveExecutionResults from './get_live_execution_results'
 import getAllPositions from './get_all_positions'
 import getFilteredPositions from './get_filtered_positions'
@@ -23,7 +22,6 @@ import getFilteredAlgoOrdersCount from './get_filtered_algo_orders_count'
 import getAlgoOrders from './get_algo_orders'
 import getNotifications from './get_notifications'
 import getOrderHistory from './get_order_history'
-import getIsCurrentStrategyExecuting from './get_is_current_strategy_executing'
 
 import getBacktestState from './get_backtest_state'
 import getBacktestData from './get_backtest_data'
@@ -40,9 +38,9 @@ import getIsMainModeApiKeyUpdating from './get_is_main_mode_api_key_updating'
 import getIsPaperModeApiKeyUpdating from './get_is_paper_mode_api_key_updating'
 
 import getSavedStrategies from './get_saved_strategies'
-import getExecutionResults from './get_execution_results'
-import getCurrentStrategyExecutionOptions from './get_current_strategy_execution_options'
+import getIsExecutionLoading from './get_is_execution_loading'
 import getActiveStrategies from './get_active_strategies'
+import getCurrentStrategyExecutionState from './get_current_strategy_execution_state'
 
 export {
   getSockets,
@@ -55,7 +53,6 @@ export {
   getOrderHistory,
 
   sortedByTimePastStrategies,
-  getRunningStrategiesMapping,
   getLiveExecutionResults,
   getSortedByTimeActiveStrategies,
   getSortedByTimeStrategies,
@@ -92,8 +89,7 @@ export {
   getIsPaperModeApiKeyUpdating,
 
   getSavedStrategies,
-  getExecutionResults,
-  getCurrentStrategyExecutionOptions,
-  getIsCurrentStrategyExecuting,
+  getIsExecutionLoading,
   getActiveStrategies,
+  getCurrentStrategyExecutionState,
 }

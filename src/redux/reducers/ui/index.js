@@ -383,6 +383,16 @@ function reducer(state = getInitialState(), action = {}) {
         },
       }
     }
+    case types.SET_STRATEGY_EXECUTION_ID: {
+      const { executionId } = payload
+      return {
+        ...state,
+        content: {
+          ...state.content,
+          executionId,
+        },
+      }
+    }
     case types.CLEAR_STRATEGIES: {
       return {
         ...state,

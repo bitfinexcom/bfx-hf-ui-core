@@ -20,7 +20,7 @@ const ActiveStrategiesList = ({ onRowClick, strategies, getMarketPair }) => {
         <VirtualTable
           data={strategies}
           columns={activeStrategiesColumns(t, getMarketPair)}
-          defaultSortBy='mts'
+          defaultSortBy='startedOn'
           defaultSortDirection='DESC'
           onRowClick={onRowClick}
         />

@@ -22,7 +22,7 @@ const SavedStrategiesList = ({
         <VirtualTable
           data={strategies}
           columns={savedStrategiesColumns(t, onStrategyRemove, saveAsHandler, renameStrategy)}
-          defaultSortBy='mts'
+          defaultSortBy='savedTs'
           defaultSortDirection='DESC'
           onRowClick={onRowClick}
         />

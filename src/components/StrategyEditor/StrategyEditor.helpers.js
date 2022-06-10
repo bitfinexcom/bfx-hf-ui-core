@@ -1,3 +1,4 @@
+import _find from 'lodash/find'
 import { getDefaultMarket } from '../../util/market'
 
 const ONE_MIN = 1000 * 60
@@ -60,7 +61,7 @@ export const prepareStrategyExecutionArgs = (strategy) => {
   } = strategy
 
   return {
-    name: label,
+    label,
     symbol: symbol?.wsID,
     [STRATEGY_OPTIONS_KEYS.TIMEFRAME]: timeframe,
     [STRATEGY_OPTIONS_KEYS.TRADES]: trades,
@@ -68,9 +69,66 @@ export const prepareStrategyExecutionArgs = (strategy) => {
     [STRATEGY_OPTIONS_KEYS.CANDLE_SEED]: candleSeed,
     [STRATEGY_OPTIONS_KEYS.MARGIN]: margin,
     constraints: {
-      allocation: Number(capitalAllocation),
-      percStopLoss: Number(stopLossPerc),
-      maxDrawdown: Number(maxDrawdownPerc),
+      [STRATEGY_OPTIONS_KEYS.CAPITAL_ALLOCATION]: Number(capitalAllocation),
+      [STRATEGY_OPTIONS_KEYS.STOP_LESS_PERC]: Number(stopLossPerc),
+      [STRATEGY_OPTIONS_KEYS.MAX_DRAWDOWN_PERC]: Number(maxDrawdownPerc),
+    },
+  }
+}
+
+export const prepareStrategyBacktestingArgs = (strategy) => {
+  const {
+    strategyOptions: {
+      symbol,
+      timeframe,
+      trades,
+      candles,
+      capitalAllocation,
+      stopLossPerc,
+      maxDrawdownPerc,
+      startDate,
+      endDate,
+    },
+  } = strategy
+
+  return {
+    symbol: symbol?.wsID,
+    startNum: new Date(startDate).getTime(),
+    endNum: new Date(endDate).getTime(),
+    [STRATEGY_OPTIONS_KEYS.TIMEFRAME]: timeframe,
+    [STRATEGY_OPTIONS_KEYS.TRADES]: trades,
+    strategy,
+    [STRATEGY_OPTIONS_KEYS.CANDLES]: candles,
+    constraints: {
+      [STRATEGY_OPTIONS_KEYS.CAPITAL_ALLOCATION]: Number(capitalAllocation),
+      [STRATEGY_OPTIONS_KEYS.STOP_LESS_PERC]: Number(stopLossPerc),
+      [STRATEGY_OPTIONS_KEYS.MAX_DRAWDOWN_PERC]: Number(maxDrawdownPerc),
+    },
+  }
+}
+
+export const prepareStrategyToLoad = (strategyToLoad, markets, strategies) => {
+  const {
+    strategyOptions: {
+      symbol, capitalAllocation, stopLossPerc, maxDrawdownPerc,
+    },
+    strategyId,
+    id,
+  } = strategyToLoad
+  const savedStrategyContent = _find(strategies, (st) => st.id === strategyId)
+
+  return {
+    ...savedStrategyContent,
+    ...strategyToLoad,
+    id: strategyId,
+    executionId: id,
+    strategyOptions: {
+      ...getDefaultStrategyOptions(markets),
+      ...strategyToLoad.strategyOptions,
+      [STRATEGY_OPTIONS_KEYS.SYMBOL]: _find(markets, (m) => m.wsID === symbol),
+      [STRATEGY_OPTIONS_KEYS.CAPITAL_ALLOCATION]: String(capitalAllocation),
+      [STRATEGY_OPTIONS_KEYS.STOP_LESS_PERC]: String(stopLossPerc),
+      [STRATEGY_OPTIONS_KEYS.MAX_DRAWDOWN_PERC]: String(maxDrawdownPerc),
     },
   }
 }

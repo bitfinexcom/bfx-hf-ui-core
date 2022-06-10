@@ -1,4 +1,4 @@
-import React, { memo } from 'react'
+import React, { memo, useCallback } from 'react'
 import PropTypes from 'prop-types'
 import { useTranslation } from 'react-i18next'
 
@@ -13,10 +13,10 @@ const LaunchStrategyModal = ({
 }) => {
   const { t } = useTranslation()
 
-  const _onSubmit = () => {
-    onClose()
+  const _onSubmit = useCallback(() => {
     onSubmit()
-  }
+    onClose()
+  }, [onClose, onSubmit])
 
   return (
     <Modal

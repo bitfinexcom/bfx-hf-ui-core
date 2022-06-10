@@ -410,10 +410,6 @@ export default (alias, store) => (e = {}) => {
       }
 
       case 'strategy.live_execution_status': {
-        const [, executing] = payload
-
-        store.dispatch(WSActions.setExecutingStrategies(executing))
-
         store.dispatch(WSActions.setExecutionLoading(false))
 
         break
@@ -423,6 +419,7 @@ export default (alias, store) => (e = {}) => {
       case 'strategy.live_execution_started': {
         const [, strategyMapKey, executionResultsObj] = payload
         store.dispatch(WSActions.setStartedLiveStrategy(strategyMapKey, executionResultsObj))
+        store.dispatch(UIActions.setStrategyExecutionId(strategyMapKey))
 
         break
       }
