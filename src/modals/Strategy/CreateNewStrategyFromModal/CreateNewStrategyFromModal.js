@@ -1,13 +1,11 @@
-import React, { useEffect, useMemo, useState } from 'react'
+import React, {
+  useCallback, useEffect, useMemo, useState,
+} from 'react'
 import PropTypes from 'prop-types'
 import _isEmpty from 'lodash/isEmpty'
-import _size from 'lodash/size'
-import _map from 'lodash/map'
 import _find from 'lodash/find'
 import { useTranslation } from 'react-i18next'
-import { Icon } from 'react-fa'
 import { useSelector } from 'react-redux'
-import { MAX_STRATEGY_LABEL_LENGTH as MAX_LABEL_LENGTH } from '../../../constants/variables'
 import MACD from '../../../components/StrategyEditor/templates/macd_cross'
 import Modal from '../../../ui/Modal'
 import Input from '../../../ui/Input'
@@ -16,32 +14,18 @@ import Templates from '../../../components/StrategyEditor/templates'
 import Tabs from '../../../ui/Tabs/Tabs'
 import { getSortedByTimeStrategies } from '../../../redux/selectors/ws'
 
+import { validateStrategyName, dropdownOptionsAdaptor, getTabs } from './CreateNewStrategyFromModal.helpers'
+
 const CreateNewStrategyFromModalOpen = ({
   onSubmit,
   onClose,
-  gaCreateStrategy,
   isOpen,
 }) => {
   const savedStrategies = useSelector(getSortedByTimeStrategies)
-
   const { t } = useTranslation()
 
-  const tabs = useMemo(() => {
-    return [
-      {
-        label: t('strategyEditor.templatesTab'),
-        value: 'templates',
-        Icon: <Icon name='file' />,
-        disabled: false,
-      },
-      {
-        label: t('strategyEditor.savedStrategiesTab'),
-        value: 'saved',
-        Icon: <Icon name='file-code-o' />,
-        disabled: _isEmpty(savedStrategies),
-      },
-    ]
-  }, [t, savedStrategies])
+  const savedStrategiesExists = !_isEmpty(savedStrategies)
+  const tabs = useMemo(() => getTabs(t, savedStrategiesExists), [t, savedStrategiesExists])
 
   const [label, setLabel] = useState('')
   const [activeTab, setActiveTab] = useState(tabs[0].value)
@@ -52,25 +36,12 @@ const CreateNewStrategyFromModalOpen = ({
 
   const isTemplatesTabSelected = tabs[0].value === activeTab
 
-  const onSubmitHandler = () => {
-    const labelSize = _size(label)
-
-    if (_isEmpty(label)) {
-      setError(t('strategyEditor.newStrategyModalEmptyError'))
+  const onSubmitHandler = useCallback(() => {
+    const err = validateStrategyName(label, t)
+    setError(err)
+    if (err) {
       return
     }
-
-    if (labelSize > MAX_LABEL_LENGTH) {
-      setError(
-        t('strategyEditor.newStrategyModalLongError', {
-          labelSize,
-          MAX_LABEL_LENGTH,
-        }),
-      )
-      return
-    }
-
-    gaCreateStrategy()
 
     let newStrategy
 
@@ -87,30 +58,13 @@ const CreateNewStrategyFromModalOpen = ({
     onSubmit(label, newStrategy)
 
     onClose()
-  }
-
-  const templatesOptions = useMemo(
-    () => _map(Templates, (_t) => ({
-      label: _t.label,
-      value: _t.label,
-    })),
-    [],
-  )
-
-  const savedStrategiesOptions = useMemo(
-    () => _map(savedStrategies, (s) => ({
-      label: s.label,
-      value: s.label,
-    })),
-    [savedStrategies],
-  )
+  }, [isTemplatesTabSelected, label, onClose, onSubmit, savedStrategies, selectedStrategyLabel, t, template])
 
   useEffect(() => {
-    if (_isEmpty(savedStrategies)) {
-      return
+    if (savedStrategiesExists) {
+      setSelectedStrategyLabel(savedStrategies[0].label)
     }
-    setSelectedStrategyLabel(savedStrategies[0].label)
-  }, [savedStrategies])
+  }, [savedStrategies, savedStrategiesExists])
 
   return (
     <Modal
@@ -132,13 +86,15 @@ const CreateNewStrategyFromModalOpen = ({
           <Dropdown
             value={template}
             onChange={setTemplate}
-            options={templatesOptions}
+            options={Templates}
+            adapter={dropdownOptionsAdaptor}
           />
         ) : (
           <Dropdown
             value={selectedStrategyLabel}
             onChange={setSelectedStrategyLabel}
-            options={savedStrategiesOptions}
+            options={savedStrategies}
+            adapter={dropdownOptionsAdaptor}
           />
         )}
 
@@ -157,12 +113,10 @@ const CreateNewStrategyFromModalOpen = ({
 CreateNewStrategyFromModalOpen.propTypes = {
   onSubmit: PropTypes.func.isRequired,
   onClose: PropTypes.func.isRequired,
-  gaCreateStrategy: PropTypes.func,
   isOpen: PropTypes.bool,
 }
 
 CreateNewStrategyFromModalOpen.defaultProps = {
-  gaCreateStrategy: () => {},
   isOpen: true,
 }
 
