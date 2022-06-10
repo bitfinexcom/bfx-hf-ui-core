@@ -1,6 +1,6 @@
 import types from '../constants/ui'
 
-export const saveRemoteVersion = version => ({
+export const saveRemoteVersion = (version) => ({
   type: types.SAVE_REMOTE_VERSION,
   payload: {
     version,
@@ -33,25 +33,21 @@ export const createLayout = (id) => ({
   },
 })
 
-export const deleteLayout = id => ({
+export const deleteLayout = (id) => ({
   type: types.DELETE_LAYOUT,
   payload: {
     id,
   },
 })
 
-export const setActiveMarket = market => ({
+export const setActiveMarket = (market) => ({
   type: types.SET_ACTIVE_MARKET,
   payload: {
     market,
   },
 })
 
-export const saveComponentState = ({
-  layoutID,
-  componentID,
-  state,
-}) => ({
+export const saveComponentState = ({ layoutID, componentID, state }) => ({
   type: types.SAVE_COMPONENT_STATE,
   payload: {
     state,
@@ -60,11 +56,7 @@ export const saveComponentState = ({
   },
 })
 
-export const updateComponentState = ({
-  layoutID,
-  componentID,
-  state,
-}) => ({
+export const updateComponentState = ({ layoutID, componentID, state }) => ({
   type: types.UPDATE_COMPONENT_STATE,
   payload: {
     layoutID,
@@ -112,7 +104,7 @@ export const finishGuide = (page) => ({
   payload: page,
 })
 
-export const recvNotification = notification => ({
+export const recvNotification = (notification) => ({
   type: types.DATA_NOTIFICATION,
   payload: { notification },
 })
@@ -121,14 +113,19 @@ export const strategySelect = () => ({
   type: types.STRATEGY_SELECT,
 })
 
-export const updateStrategyContent = content => ({
+export const updateStrategyContent = (content) => ({
   type: types.UPDATE_STRATEGY_CONTENT,
   payload: { content },
 })
 
-export const updateStrategyId = id => ({
+export const updateStrategyId = (id) => ({
   type: types.UPDATE_STRATEGY_ID,
   payload: { id },
+})
+
+export const setStrategyExecutionId = (execId) => ({
+  type: types.SET_STRATEGY_EXECUTION_ID,
+  payload: { executionId: execId },
 })
 
 export const clearStrategies = () => ({
@@ -191,12 +188,12 @@ export const setIsOrderExecuting = (executing) => ({
   payload: { executing },
 })
 
-export const changeReffilBalanceModalState = isVisible => ({
+export const changeReffilBalanceModalState = (isVisible) => ({
   type: types.CHANGE_REFILL_BALANCE_MODAL_STATE,
   payload: { isVisible },
 })
 
-export const setLayoutID = layoutID => ({
+export const setLayoutID = (layoutID) => ({
   type: types.SET_LAYOUT_ID,
   payload: { layoutID },
 })
@@ -216,7 +213,7 @@ export const changeLayout = (incomingLayout) => ({
   payload: { incomingLayout },
 })
 
-export const changeTickersVolumeUnit = key => ({
+export const changeTickersVolumeUnit = (key) => ({
   type: types.CHANGE_TICKERS_VOLUME_UNIT,
   payload: { key },
 })
@@ -236,7 +233,7 @@ export const setSettingsTab = (tab, section) => ({
   payload: { tab, section },
 })
 
-export const setIsLoadingOrderHistData = flag => ({
+export const setIsLoadingOrderHistData = (flag) => ({
   type: types.SET_IS_LOADING_ORDER_HIST_DATA,
   payload: flag,
 })
@@ -261,6 +258,7 @@ export default {
   strategySelect,
   updateStrategyContent,
   updateStrategyId,
+  setStrategyExecutionId,
   setTradingMode,
   setMarketFromStore,
   changeTradingModeModalState,

@@ -14,7 +14,7 @@ import './style.css'
 
 const { getCurrencySymbolMemo } = reduxSelectors
 
-const adjustPercentage = value => value * 100
+const adjustPercentage = (value) => value * 100
 
 const StrategyPerfomanceMetrics = ({
   results,
@@ -46,7 +46,7 @@ const StrategyPerfomanceMetrics = ({
   } = results
   const hasTrades = !!vol
 
-  const [, quote] = getPairParts(activeMarket)
+  const [, quote] = activeMarket ? getPairParts(activeMarket) : []
   const getCurrencySymbol = useSelector(getCurrencySymbolMemo)
   const quoteCcy = getCurrencySymbol(quote)
   const { t } = useTranslation()
@@ -59,7 +59,7 @@ const StrategyPerfomanceMetrics = ({
       label={t('strategyEditor.perfomanceMetrics.title')}
     >
       <ul>
-        {!isBacktest && (
+        {!isBacktest && startedOn && (
           <ExecutionTimer isExecuting={isExecuting} startedOn={startedOn} />
         )}
         <MetricRow
@@ -150,7 +150,7 @@ StrategyPerfomanceMetrics.propTypes = {
     backtestOptions: PropTypes.shape({
       activeMarket: PropTypes.string,
     }),
-    allocation: PropTypes.number,
+    allocation: PropTypes.string,
     positionSize: PropTypes.string,
     currentAllocation: PropTypes.string,
     availableFunds: PropTypes.string,
@@ -160,8 +160,8 @@ StrategyPerfomanceMetrics.propTypes = {
     drawdown: PropTypes.string,
   }),
   isExecuting: PropTypes.bool.isRequired,
-  startedOn: PropTypes.number,
   isBacktest: PropTypes.bool,
+  startedOn: PropTypes.number,
 }
 
 StrategyPerfomanceMetrics.defaultProps = {
@@ -184,8 +184,8 @@ StrategyPerfomanceMetrics.defaultProps = {
       activeMarket: null,
     },
   },
-  startedOn: 0,
   isBacktest: false,
+  startedOn: 0,
 }
 
 export default StrategyPerfomanceMetrics

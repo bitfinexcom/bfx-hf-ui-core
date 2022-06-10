@@ -10,11 +10,7 @@ import WSTypes from '../../redux/constants/ws'
 import {
   getAuthToken,
   getBacktestResults,
-  getExecutionResults,
-  // getSortedByTimeActiveStrategies,
-  getRunningStrategiesMapping,
-  getLiveExecutionResults,
-  getIsCurrentStrategyExecuting,
+  getCurrentStrategyExecutionState,
   getSavedStrategies,
 } from '../../redux/selectors/ws'
 import {
@@ -23,6 +19,7 @@ import {
   getStrategiesFeatureFlags,
   getIsBetaVersion,
   getCurrentMode,
+  getStrategyExecutionId,
 } from '../../redux/selectors/ui'
 import StrategyEditor from './StrategyEditor'
 import { getMarketsForExecution } from '../../redux/selectors/meta'
@@ -31,18 +28,15 @@ const mapStateToProps = (state = {}) => {
   return {
     authToken: getAuthToken(state),
     backtestResults: getBacktestResults(state),
-    allExecutionResults: getExecutionResults(state),
+    executionState: getCurrentStrategyExecutionState(state),
     settingsTheme: getThemeSetting(state),
-    executing: getIsCurrentStrategyExecuting(state),
     markets: getMarketsForExecution(state),
     isPaperTrading: getIsPaperTrading(state),
     flags: getStrategiesFeatureFlags(state),
     isBetaVersion: getIsBetaVersion(state),
-    liveResults: getLiveExecutionResults(state),
-    // activeStrategies: getSortedByTimeActiveStrategies(state),
-    runningStrategiesMapping: getRunningStrategiesMapping(state),
     savedStrategies: getSavedStrategies(state),
     currentMode: getCurrentMode(state),
+    executionId: getStrategyExecutionId(state),
   }
 }
 
@@ -60,10 +54,10 @@ const mapDispatchToProps = (dispatch) => ({
   },
   dsExecuteLiveStrategy: ({
     authToken,
-    name,
+    label,
     symbol,
     timeframe,
-    trades,
+    // trades,
     strategy,
     candleSeed,
     margin,
@@ -75,10 +69,10 @@ const mapDispatchToProps = (dispatch) => ({
       WSActions.send([
         'strategy.execute_start',
         authToken,
-        name,
+        label,
         symbol,
         timeframe,
-        trades,
+        false, // trades
         processedStrategy,
         candleSeed,
         margin,
@@ -87,16 +81,16 @@ const mapDispatchToProps = (dispatch) => ({
     )
     dispatch(WSActions.setExecutionLoading(true))
   },
-  dsExecuteBacktest: (
-    from,
-    to,
+  dsExecuteBacktest: ({
+    startNum,
+    endNum,
     symbol,
-    tf,
+    timeframe,
     candles,
     trades,
     strategy,
     constraints,
-  ) => {
+  }) => {
     const processedStrategy = _omitBy(strategy, _isEmpty)
 
     dispatch(WSActions.purgeBacktestData())
@@ -107,10 +101,10 @@ const mapDispatchToProps = (dispatch) => ({
           'exec.str',
           [
             'bitfinex',
-            from,
-            to,
+            startNum,
+            endNum,
             symbol,
-            tf,
+            timeframe,
             candles,
             trades,
             true,
@@ -138,6 +132,22 @@ const mapDispatchToProps = (dispatch) => ({
         cid: uuidv4(),
       }),
     )
+  },
+  cancelProcess: (authToken, isPaperTrading, backtestGid, liveExecGid) => {
+    if (isPaperTrading) {
+      // stopping backtesting
+      dispatch(
+        WSActions.send({
+          alias: WSTypes.ALIAS_DATA_SERVER,
+          data: ['stop.bt', backtestGid],
+        }),
+      )
+    } else {
+      // stopping live execution
+      dispatch(
+        WSActions.send(['strategy.execute_stop', authToken, liveExecGid]),
+      )
+    }
   },
   changeTradingMode: (isPaperTrading, authToken, currentMode) => {
     dispatch(UIActions.setTradingMode(isPaperTrading))

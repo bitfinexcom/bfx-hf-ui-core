@@ -7,6 +7,7 @@ function getInitialState() {
     executing: false,
     trades: [],
     candles: [],
+    gid: null,
   }
 }
 
@@ -34,16 +35,6 @@ function reducer(state = getInitialState(), action = {}) {
       }
     }
 
-    case types.BACKTEST_END: {
-      return {
-        ...state,
-        candles: state.candles.sort((a, b) => a.mts - b.mts),
-        trades: state.trades.sort((a, b) => a.mts - b.mts),
-        loading: false,
-        executing: false,
-      }
-    }
-
     case types.SET_BACKTEST_LOADING: {
       return {
         ...state,
@@ -55,20 +46,34 @@ function reducer(state = getInitialState(), action = {}) {
       return {
         ...state,
         ...payload,
+        candles: payload.candles.sort((a, b) => a.mts - b.mts),
+        trades: payload.trades.sort((a, b) => a.mts - b.mts),
+      }
+    }
+
+    case types.BACKTEST_STARTED: {
+      const { gid } = payload
+
+      return {
+        ...state,
+        gid,
       }
     }
 
     case types.BACKTEST_STOPPED: {
       return {
+        ...state,
         loading: false,
         executing: false,
         finished: true,
+        gid: null,
       }
     }
 
     case types.RESET_DATA_BACKTEST: {
       return getInitialState()
     }
+
     case types.PURGE_DATA_BACKTEST: {
       return {
         candles: [],

@@ -1,6 +1,10 @@
 import { connect } from 'react-redux'
 import { STRATEGY_PAGE } from '../../redux/constants/ui'
-import { getFirstLogin, getGuideStatusForPage } from '../../redux/selectors/ui'
+import {
+  getFirstLogin,
+  getGuideStatusForPage,
+  getStrategyContent,
+} from '../../redux/selectors/ui'
 import UIActions from '../../redux/actions/ui'
 import WSActions from '../../redux/actions/ws'
 
@@ -12,7 +16,7 @@ const mapStateToProps = (state) => ({
   authToken: getAuthToken(state),
   firstLogin: getFirstLogin(state),
   isGuideActive: getGuideStatusForPage(state, STRATEGY_PAGE),
-  strategyContent: state.ui.content,
+  strategyContent: getStrategyContent(state),
   markets: getMarketsForExecution(state),
 })
 
@@ -28,6 +32,11 @@ const mapDispatchToProps = (dispatch) => ({
   },
   onSave: (authToken, strategy = {}) => {
     dispatch(WSActions.send(['strategy.save', authToken, strategy]))
+  },
+  onRemove: (authToken, id) => {
+    dispatch(WSActions.send(['strategy.remove', authToken, id]))
+    dispatch(WSActions.resetBacktestData())
+    dispatch(UIActions.clearStrategies())
   },
 })
 

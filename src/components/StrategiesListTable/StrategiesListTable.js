@@ -1,48 +1,51 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import _map from 'lodash/map'
 import _size from 'lodash/size'
-import _isEmpty from 'lodash/isEmpty'
-import _filter from 'lodash/filter'
 import { useTranslation } from 'react-i18next'
 import { useSelector } from 'react-redux'
 import Panel from '../../ui/Panel'
 import {
-  getSortedByTimeStrategies, getSortedByTimeActiveStrategies, sortedByTimePastStrategies,
-  getRunningStrategiesMapping, getLiveExecutionResults,
+  getSortedByTimeStrategies,
+  getSortedByTimeActiveStrategies,
+  sortedByTimePastStrategies,
 } from '../../redux/selectors/ws'
-import { getMarketPair } from '../../redux/selectors/meta'
+import {
+  getMarketPair,
+  getMarketsForExecution,
+} from '../../redux/selectors/meta'
 import PastStrategiesList from './PastStrategiesList'
 import ActiveStrategiesList from './ActiveStrategiesList'
 import SavedStrategiesList from './SavedStrategiesList'
+import { prepareStrategyToLoad } from '../StrategyEditor/StrategyEditor.helpers'
+import { getIsPaperTrading } from '../../redux/selectors/ui'
 
 import './style.css'
 
-const StrategiesListTable = ({ onLoadStrategy }) => {
+const StrategiesListTable = ({
+  onLoadStrategy,
+  onStrategyRemove,
+  saveAsHandler,
+  renameStrategy,
+}) => {
   const { t } = useTranslation()
   const _getMarketPair = useSelector(getMarketPair)
-  let activeStrategies = useSelector(getSortedByTimeActiveStrategies)
-  const runningStrategiesMapping = useSelector(getRunningStrategiesMapping)
-  const liveExecutionResults = useSelector(getLiveExecutionResults)
+  const activeStrategies = useSelector(getSortedByTimeActiveStrategies())
   const pastStrategies = useSelector(sortedByTimePastStrategies)
   const savedStrategies = useSelector(getSortedByTimeStrategies)
-
-  activeStrategies = _filter(_map(activeStrategies, (activeStrategy) => {
-    if (_isEmpty(activeStrategy)) {
-      return {}
-    }
-
-    const execID = runningStrategiesMapping[activeStrategy.id]
-    const results = liveExecutionResults?.[execID] || {}
-
-    return {
-      ...activeStrategy,
-      results,
-    }
-  }), strategy => !_isEmpty(strategy))
+  const markets = useSelector(getMarketsForExecution)
+  const isPaperTrading = useSelector(getIsPaperTrading)
 
   const onRowClick = ({ rowData }) => {
     onLoadStrategy(rowData)
+  }
+
+  const onActiveOrPastStrategyRowClick = ({ rowData: strategy }) => {
+    const newStrategyObject = prepareStrategyToLoad(
+      strategy,
+      markets,
+      savedStrategies,
+    )
+    onLoadStrategy(newStrategyObject)
   }
 
   return (
@@ -53,32 +56,39 @@ const StrategiesListTable = ({ onLoadStrategy }) => {
       darkHeader
     >
       <ActiveStrategiesList
-        onRowClick={onRowClick}
+        onRowClick={onActiveOrPastStrategyRowClick}
         getMarketPair={_getMarketPair}
         strategies={activeStrategies}
         tabtitle={t('strategyEditor.activeStrategies')}
         count={_size(activeStrategies)}
       />
       <PastStrategiesList
-        onRowClick={onRowClick}
         strategies={pastStrategies}
         getMarketPair={_getMarketPair}
         tabtitle={t('strategyEditor.pastStrategies')}
         count={_size(pastStrategies)}
-        onLoadStrategy={onLoadStrategy}
+        onRowClick={onActiveOrPastStrategyRowClick}
       />
-      <SavedStrategiesList
-        onRowClick={onRowClick}
-        strategies={savedStrategies}
-        tabtitle={t('strategyEditor.savedStrategies')}
-        count={_size(savedStrategies)}
-      />
+      {isPaperTrading && (
+        <SavedStrategiesList
+          onRowClick={onRowClick}
+          strategies={savedStrategies}
+          tabtitle={t('strategyEditor.savedStrategies')}
+          count={_size(savedStrategies)}
+          onStrategyRemove={onStrategyRemove}
+          saveAsHandler={saveAsHandler}
+          renameStrategy={renameStrategy}
+        />
+      )}
     </Panel>
   )
 }
 
 StrategiesListTable.propTypes = {
   onLoadStrategy: PropTypes.func.isRequired,
+  onStrategyRemove: PropTypes.func.isRequired,
+  saveAsHandler: PropTypes.func.isRequired,
+  renameStrategy: PropTypes.func.isRequired,
 }
 
 export default StrategiesListTable

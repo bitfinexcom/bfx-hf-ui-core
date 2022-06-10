@@ -5,10 +5,15 @@ import { AutoSizer } from 'react-virtualized'
 import ReactGridLayout from 'react-grid-layout'
 import ClassNames from 'clsx'
 import { Spinner } from '@ufx-ui/core'
+import { useTranslation } from 'react-i18next'
 
 const GRID_LAYOUT_MIN_HEIGHT = 530
 
-const StrategiesGridLayout = ({ renderGridComponents, layoutConfig, isLoading }) => {
+const StrategiesGridLayout = ({
+  renderGridComponents, layoutConfig, isLoading, onCancelProcess,
+}) => {
+  const { t } = useTranslation()
+
   return (
     <AutoSizer>
       {({ width, height }) => {
@@ -35,7 +40,14 @@ const StrategiesGridLayout = ({ renderGridComponents, layoutConfig, isLoading })
                 )
               })}
             </ReactGridLayout>
-            {isLoading && <Spinner className='spinner' />}
+            {isLoading && (
+              <>
+                <Spinner className='spinner' />
+                <button type='button' onClick={onCancelProcess} className='hfui-strategy-editor_cancel-process-btn'>
+                  {t('strategyEditor.cancelThisProcess')}
+                </button>
+              </>
+            )}
           </>
         )
       }}
@@ -47,11 +59,13 @@ StrategiesGridLayout.propTypes = {
   renderGridComponents: PropTypes.func.isRequired,
   layoutConfig: PropTypes.arrayOf(PropTypes.object), // eslint-disable-line
   isLoading: PropTypes.bool,
+  onCancelProcess: PropTypes.func,
 }
 
 StrategiesGridLayout.defaultProps = {
   isLoading: false,
   layoutConfig: [],
+  onCancelProcess: null,
 }
 
 export default StrategiesGridLayout

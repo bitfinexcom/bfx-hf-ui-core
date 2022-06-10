@@ -378,15 +378,15 @@ export default (alias, store) => (e = {}) => {
         break
       }
 
-      case 'bt.end': {
-        const [, , , from, to] = payload
-        store.dispatch(WSActions.recvBacktestEnd({ from, to }))
-        break
-      }
-
       case 'bt.btresult': {
         const [, res] = payload
         store.dispatch(WSActions.recvBacktestResults(res))
+        break
+      }
+
+      case 'bt.started': {
+        const [, gid] = payload
+        store.dispatch(WSActions.recvBacktestStarted(gid))
         break
       }
 
@@ -410,10 +410,6 @@ export default (alias, store) => (e = {}) => {
       }
 
       case 'strategy.live_execution_status': {
-        const [, executing] = payload
-
-        store.dispatch(WSActions.setExecutingStrategies(executing))
-
         store.dispatch(WSActions.setExecutionLoading(false))
 
         break
@@ -423,13 +419,19 @@ export default (alias, store) => (e = {}) => {
       case 'strategy.live_execution_started': {
         const [, strategyMapKey, executionResultsObj] = payload
         store.dispatch(WSActions.setStartedLiveStrategy(strategyMapKey, executionResultsObj))
+        store.dispatch(UIActions.setStrategyExecutionId(strategyMapKey))
 
         break
       }
 
       case 'strategy.start_live_execution_submit_status': {
-        const [, status] = payload
-        store.dispatch(WSActions.setExecutionLoading(status))
+        const [, status, gid] = payload
+
+        if (status) {
+          store.dispatch(WSActions.setExecutionLoadingGid(gid))
+        } else {
+          store.dispatch(WSActions.setExecutionLoading(false, gid))
+        }
 
         break
       }
@@ -453,9 +455,8 @@ export default (alias, store) => (e = {}) => {
       // emitted when a position is opened
       case 'strategy.opened_position_data': {
         const [, strategyMapKey, openedPositionDetails] = payload
-        const { trades } = openedPositionDetails
 
-        store.dispatch(WSActions.setLiveExecutionTrades(strategyMapKey, trades))
+        store.dispatch(WSActions.setLiveExecutionTrades(strategyMapKey, openedPositionDetails))
 
         break
       }
@@ -463,9 +464,8 @@ export default (alias, store) => (e = {}) => {
       // emitted when a position is closed
       case 'strategy.closed_position_data': {
         const [, strategyMapKey, closedPositionDetails] = payload
-        const { trades } = closedPositionDetails
 
-        store.dispatch(WSActions.setLiveExecutionTrades(strategyMapKey, trades))
+        store.dispatch(WSActions.setLiveExecutionTrades(strategyMapKey, closedPositionDetails))
 
         break
       }

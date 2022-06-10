@@ -15,18 +15,20 @@ import {
 import StrategyLiveChart from '../../../StrategyLiveChart'
 import StrategyTabWrapper from '../../components/StrategyTabWrapper'
 import StrategyOptionsPanelLive from '../../../StrategyOptionsPanel/StrategyOptionsPanel.Live'
-import { getCurrentStrategyExecutionOptions } from '../../../../redux/selectors/ws'
+import { getCurrentStrategyExecutionState } from '../../../../redux/selectors/ws'
 
 const StrategyLiveTab = (props) => {
-  const { executionResults } = props
+  const { onCancelProcess } = props
   const [layoutConfig, setLayoutConfig] = useState()
   const [fullscreenChart, setFullScreenChart] = useState(false)
 
-  const options = useSelector(getCurrentStrategyExecutionOptions)
+  const executionState = useSelector(getCurrentStrategyExecutionState)
 
   const { t } = useTranslation()
 
-  const { loading, executing, results } = executionResults
+  const {
+    loading, executing, results, startedOn,
+  } = executionState
 
   const hasResults = !_isEmpty(results)
 
@@ -35,7 +37,7 @@ const StrategyLiveTab = (props) => {
       setLayoutConfig(LAYOUT_CONFIG_NO_DATA)
       return
     }
-    if (_isEmpty(results.strategy?.trades)) {
+    if (_isEmpty(results?.trades)) {
       setLayoutConfig(LAYOUT_CONFIG_WITHOUT_TRADES)
       return
     }
@@ -68,8 +70,8 @@ const StrategyLiveTab = (props) => {
           return (
             <StrategyPerfomanceMetrics
               results={results}
-              startedOn={options.startedOn}
               isExecuting={executing}
+              startedOn={startedOn}
             />
           )
 
@@ -94,7 +96,7 @@ const StrategyLiveTab = (props) => {
       executing,
       results,
       hasResults,
-      options,
+      startedOn,
     ],
   )
 
@@ -104,6 +106,7 @@ const StrategyLiveTab = (props) => {
         layoutConfig={layoutConfig}
         renderGridComponents={renderGridComponents}
         isLoading={loading}
+        onCancelProcess={onCancelProcess}
       />
       {_isEmpty(results) && !executing && !loading && (
         <p className='hfui-strategyeditor__initial-message'>
@@ -115,12 +118,7 @@ const StrategyLiveTab = (props) => {
 }
 
 StrategyLiveTab.propTypes = {
-  executionResults: PropTypes.shape({
-    loading: PropTypes.bool,
-    executing: PropTypes.bool,
-    // eslint-disable-next-line react/forbid-prop-types
-    results: PropTypes.object,
-  }).isRequired,
+  onCancelProcess: PropTypes.func.isRequired,
 }
 
 export default StrategyLiveTab

@@ -1,6 +1,7 @@
 import React from 'react'
 
 import _toNumber from 'lodash/toNumber'
+import _isNaN from 'lodash/isNaN'
 import { isFiat, formatNumber } from '@ufx-ui/utils'
 import { Tooltip } from '@ufx-ui/core'
 import getQuotePrefix from '../../../util/quote_prefix'
@@ -20,6 +21,10 @@ const appendUnit = (value, unit, prefix) => {
 const getSmallestUnit = (isFiatValue) => (isFiatValue ? 0.01 : 0.00000001)
 
 export const resultNumber = (value, ccy) => {
+  if (_isNaN(value)) {
+    return '--'
+  }
+
   const val = _toNumber(value)
   const isZero = val === 0
   const isPositive = val > 0

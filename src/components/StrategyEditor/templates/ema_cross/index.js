@@ -3,7 +3,6 @@ import defineMeta from './defineMeta'
 
 import onEnter from './onEnter'
 import onUpdateLong from './onUpdateLong'
-import onUpdateShort from './onUpdateShort'
 
 export default {
   label: 'Basic EMA Cross',
@@ -12,5 +11,4 @@ export default {
   defineMeta,
   onEnter,
   onUpdateLong,
-  onUpdateShort,
 }

@@ -3,13 +3,21 @@ import PropTypes from 'prop-types'
 import _isEmpty from 'lodash/isEmpty'
 import { useTranslation } from 'react-i18next'
 import { Icon } from 'react-fa'
+import { useSelector } from 'react-redux'
 import Indicator from '../../../../ui/Indicator'
 import useHover from '../../../../hooks/useHover'
 import SidebarParams from '../../components/SidebarParams/SidebarParams'
+import { getCurrentStrategyExecutionState } from '../../../../redux/selectors/ws'
+import { getIsPaperTrading } from '../../../../redux/selectors/ui'
 
 const StrategyTabTitle = (props) => {
-  const { executionResults, selectedTab, sidebarOpened } = props
-  const { results, executing, loading } = executionResults
+  const {
+    selectedTab, sidebarOpened, hasErrors, strategyDirty,
+  } = props
+
+  const executionState = useSelector(getCurrentStrategyExecutionState)
+  const isPaperTrading = useSelector(getIsPaperTrading)
+  const { results, executing, loading } = executionState
 
   const [paramsOpen, setParamsOpen] = useState(false)
   const [hoverRef, isHovered] = useHover()
@@ -22,6 +30,12 @@ const StrategyTabTitle = (props) => {
   const indicatorClassName = !sidebarOpened ? 'indicator-near-icon' : null
 
   const getIndicator = () => {
+    if (isPaperTrading && hasErrors) {
+      return <Indicator red className={indicatorClassName} />
+    }
+    if (isPaperTrading && strategyDirty) {
+      return <Indicator white className={indicatorClassName} />
+    }
     if (loading) {
       return <Indicator white blinking className={indicatorClassName} />
     }
@@ -71,14 +85,10 @@ const StrategyTabTitle = (props) => {
 }
 
 StrategyTabTitle.propTypes = {
-  executionResults: PropTypes.shape({
-    executing: PropTypes.bool,
-    // eslint-disable-next-line react/forbid-prop-types
-    results: PropTypes.object,
-    loading: PropTypes.bool,
-  }).isRequired,
   selectedTab: PropTypes.number.isRequired,
   sidebarOpened: PropTypes.bool.isRequired,
+  strategyDirty: PropTypes.bool.isRequired,
+  hasErrors: PropTypes.bool.isRequired,
 }
 
 export default StrategyTabTitle

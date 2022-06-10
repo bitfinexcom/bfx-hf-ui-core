@@ -216,14 +216,14 @@ export default {
     payload: opts,
   }),
 
-  recvBacktestEnd: opts => ({
-    type: t.BACKTEST_END,
-    payload: opts,
-  }),
-
   recvBacktestResults: opts => ({
     type: t.BACKTEST_RESULTS,
     payload: opts,
+  }),
+
+  recvBacktestStarted: gid => ({
+    type: t.BACKTEST_STARTED,
+    payload: { gid },
   }),
 
   recvBacktestStopped: gid => ({
@@ -270,10 +270,10 @@ export default {
     },
   }),
 
-  setLiveExecutionTrades: (strategyMapKey, trades) => ({
+  setLiveExecutionTrades: (strategyMapKey, positionData) => ({
     type: t.SET_LIVE_EXECUTION_TRADES,
     payload: {
-      strategyMapKey, trades,
+      strategyMapKey, positionData,
     },
   }),
 
@@ -302,14 +302,14 @@ export default {
     type: t.RESET_DATA_EXECUTION,
   }),
 
-  setExecutingStrategies: (executing) => ({
-    type: t.SET_EXECUTING_STRATEGIES,
-    payload: { executing },
+  setExecutionLoading: (loading, loadingGid) => ({
+    type: t.EXECUTION_LOADING,
+    payload: { loading, loadingGid },
   }),
 
-  setExecutionLoading: (loading) => ({
-    type: t.EXECUTION_LOADING,
-    payload: { loading },
+  setExecutionLoadingGid: (loadingGid) => ({
+    type: t.EXECUTION_LOADING_GID,
+    payload: { loadingGid },
   }),
 
   setExecutionResults: (strategyId, results) => ({

@@ -1,19 +1,15 @@
+import _reduce from 'lodash/reduce'
 import types from '../../constants/ws'
 
 function getInitialState() {
   return {
-    executing: [
-      // ['strategy-id', 'strategy-id', ...]
-    ],
     loading: false,
+    loadingGid: null,
     results: {
       // 'strategy-map-key': { /* results */ }
     },
     activeStrategies: {
       // 'strategy-map-key': { /* ...strategy, startedOn */ }
-    },
-    runningStrategiesMapping: {
-      // 'strategy-id': 'strategy-map-key'
     },
     pastStrategies: [],
   }
@@ -22,21 +18,29 @@ function getInitialState() {
 function reducer(state = getInitialState(), action = {}) {
   const { type, payload = {} } = action
   switch (type) {
-    case types.SET_EXECUTING_STRATEGIES: {
-      const { executing } = payload
-
-      return {
-        ...state,
-        executing,
-      }
-    }
-
     case types.EXECUTION_LOADING: {
-      const { loading } = payload
+      const { loading, loadingGid } = payload
+
+      if (loadingGid) {
+        return {
+          ...state,
+          loading,
+          loadingGid,
+        }
+      }
 
       return {
         ...state,
         loading,
+      }
+    }
+
+    case types.EXECUTION_LOADING_GID: {
+      const { loadingGid } = payload
+
+      return {
+        ...state,
+        loadingGid,
       }
     }
 
@@ -54,16 +58,30 @@ function reducer(state = getInitialState(), action = {}) {
 
     case types.SET_PAST_STRATEGIES: {
       const { pastStrategies } = payload
+      const results = _reduce(
+        pastStrategies,
+        (acc, strategy) => {
+          const { results: execResults, id } = strategy
+          acc[id] = execResults
+          return acc
+        },
+        {},
+      )
 
       return {
         ...state,
         pastStrategies,
+        results: {
+          ...state.results,
+          ...results,
+        },
       }
     }
 
     case types.SET_STARTED_LIVE_STRATEGY: {
       const { strategyMapKey, executionResultsObj } = payload
-      const { id } = executionResultsObj
+
+      const loadingGid = state.loadingGid === strategyMapKey ? null : state.loadingGid
 
       return {
         ...state,
@@ -71,44 +89,44 @@ function reducer(state = getInitialState(), action = {}) {
           ...state.activeStrategies,
           [strategyMapKey]: executionResultsObj,
         },
-        runningStrategiesMapping: {
-          [id]: strategyMapKey,
-        },
-        results: {
-          ...state.results,
-          [strategyMapKey]: executionResultsObj,
-        },
+        loading: false,
+        loadingGid,
       }
     }
 
     case types.SET_STOPPED_LIVE_STRATEGY: {
-      const { strategyMapKey, executionResultsObj } = payload
-      const { id } = executionResultsObj
+      const { strategyMapKey } = payload
+
+      const activeStrategies = { ...state.activeStrategies }
+      const pastStrategies = [
+        ...state.pastStrategies,
+        activeStrategies[strategyMapKey],
+      ]
+
+      delete activeStrategies[strategyMapKey]
 
       return {
         ...state,
-        activeStrategies: {
-          ...state.activeStrategies,
-          [strategyMapKey]: undefined,
-        },
-        runningStrategiesMapping: {
-          [id]: undefined,
-        },
+        activeStrategies,
+        pastStrategies,
         loading: false,
       }
     }
 
     case types.SET_LIVE_EXECUTION_TRADES: {
-      const { strategyMapKey, trades } = payload
+      const { strategyMapKey, positionData } = payload
+      const { id } = positionData
+      const currentState = state.results?.[strategyMapKey] || {}
 
       return {
         ...state,
         results: {
           ...state.results,
           [strategyMapKey]: {
-            ...(state.results[strategyMapKey] || {}),
-            strategy: {
-              trades,
+            ...currentState,
+            [id]: {
+              ...(currentState?.[id] || {}),
+              ...positionData,
             },
           },
         },
