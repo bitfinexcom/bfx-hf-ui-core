@@ -17,11 +17,15 @@ import PastStrategiesList from './PastStrategiesList'
 import ActiveStrategiesList from './ActiveStrategiesList'
 import SavedStrategiesList from './SavedStrategiesList'
 import { prepareStrategyToLoad } from '../StrategyEditor/StrategyEditor.helpers'
+import { getIsPaperTrading } from '../../redux/selectors/ui'
 
 import './style.css'
 
 const StrategiesListTable = ({
-  onLoadStrategy, onStrategyRemove, saveAsHandler, renameStrategy,
+  onLoadStrategy,
+  onStrategyRemove,
+  saveAsHandler,
+  renameStrategy,
 }) => {
   const { t } = useTranslation()
   const _getMarketPair = useSelector(getMarketPair)
@@ -29,6 +33,7 @@ const StrategiesListTable = ({
   const pastStrategies = useSelector(sortedByTimePastStrategies)
   const savedStrategies = useSelector(getSortedByTimeStrategies)
   const markets = useSelector(getMarketsForExecution)
+  const isPaperTrading = useSelector(getIsPaperTrading)
 
   const onRowClick = ({ rowData }) => {
     onLoadStrategy(rowData)
@@ -64,15 +69,17 @@ const StrategiesListTable = ({
         count={_size(pastStrategies)}
         onRowClick={onActiveOrPastStrategyRowClick}
       />
-      <SavedStrategiesList
-        onRowClick={onRowClick}
-        strategies={savedStrategies}
-        tabtitle={t('strategyEditor.savedStrategies')}
-        count={_size(savedStrategies)}
-        onStrategyRemove={onStrategyRemove}
-        saveAsHandler={saveAsHandler}
-        renameStrategy={renameStrategy}
-      />
+      {isPaperTrading && (
+        <SavedStrategiesList
+          onRowClick={onRowClick}
+          strategies={savedStrategies}
+          tabtitle={t('strategyEditor.savedStrategies')}
+          count={_size(savedStrategies)}
+          onStrategyRemove={onStrategyRemove}
+          saveAsHandler={saveAsHandler}
+          renameStrategy={renameStrategy}
+        />
+      )}
     </Panel>
   )
 }
