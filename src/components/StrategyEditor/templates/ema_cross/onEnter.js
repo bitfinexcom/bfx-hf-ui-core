@@ -13,22 +13,13 @@ export default `({ HFS, _, HFU }) => async (state = {}, update = {}) => {
   const s = iv.emaS
   const amount = 1
   
-  if (emaS.crossed(l)) {
-    if (s > l) {
-      return HFS.openLongPositionMarket(state, {
-        mtsCreate: mts,
-        amount,
-        price,
-        label: 'enter long',
-      })
-    } else {
-      return HFS.openShortPositionMarket(state, {
-        mtsCreate: mts,
-        amount,
-        price,
-        label: 'enter short',
-      })
-    }
+  if (emaS.crossed(l) && s > l) {
+    return HFS.openLongPositionMarket(state, {
+      mtsCreate: mts,
+      amount,
+      price,
+      label: 'enter long',
+    })
   }
 
   return state
