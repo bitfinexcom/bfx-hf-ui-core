@@ -34,7 +34,10 @@ const getStrategyTypesOptions = () => [
 ]
 
 const StrategyTypeSelect = ({
-  strategy, onSaveAsStrategy, isExecuting, isDisabled,
+  strategyType,
+  saveStrategyOptions,
+  isExecuting,
+  isDisabled,
 }) => {
   const [showCustomStrategyTypeInput, setShowCustomStrategyTypeInput] = useState(false)
   const [customTypeValue, setCustomTypeValue] = useState('')
@@ -45,8 +48,6 @@ const StrategyTypeSelect = ({
 
   const { i18n, t } = useTranslation()
 
-  const { strategyType } = strategy
-
   const onSelectStrategyType = (option) => {
     if (option === OTHER_OPTION_VALUE) {
       setStrategyTypeDropdownValue(OTHER_OPTION_VALUE)
@@ -54,12 +55,11 @@ const StrategyTypeSelect = ({
       return
     }
     const isI18nKey = i18n.exists(option)
-    const newStrategy = {
-      ...strategy,
+    const strategyTypeToSave = {
       strategyType: isI18nKey ? { i18nKey: option } : { customValue: option },
     }
 
-    onSaveAsStrategy(newStrategy)
+    saveStrategyOptions(strategyTypeToSave)
   }
 
   const saveCustomStrategyType = (e) => {
@@ -69,20 +69,15 @@ const StrategyTypeSelect = ({
     }
     setShowCustomStrategyTypeInput(false)
     setCustomTypeValue('')
-    onSaveAsStrategy({
-      ...strategy,
+    saveStrategyOptions({
       strategyType: { customValue: customTypeValue },
     })
   }
 
   const onRemoveStrategyType = () => {
-    const newStrategy = {
-      ...strategy,
-      strategyType: null,
-    }
     setShowCustomStrategyTypeInput(false)
     setStrategyTypeDropdownValue(null)
-    onSaveAsStrategy(newStrategy)
+    saveStrategyOptions({ strategyType: null })
   }
 
   const strategyTypesOptionsMemo = useMemo(() => {
@@ -110,7 +105,7 @@ const StrategyTypeSelect = ({
       setStrategyTypesOptions(newOptionsList)
       setStrategyTypeDropdownValue(customValue)
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [strategyType])
 
   return (
@@ -163,21 +158,17 @@ const StrategyTypeSelect = ({
 }
 
 StrategyTypeSelect.propTypes = {
-  strategy: PropTypes.shape({
-    strategyType: PropTypes.shape({
-      i18nKey: PropTypes.string,
-      customValue: PropTypes.string,
-    }),
+  strategyType: PropTypes.shape({
+    i18nKey: PropTypes.string,
+    customValue: PropTypes.string,
   }),
-  onSaveAsStrategy: PropTypes.func.isRequired,
+  saveStrategyOptions: PropTypes.func.isRequired,
   isExecuting: PropTypes.bool.isRequired,
   isDisabled: PropTypes.bool,
 }
 
 StrategyTypeSelect.defaultProps = {
-  strategy: {
-    strategyType: null,
-  },
+  strategyType: null,
   isDisabled: false,
 }
 

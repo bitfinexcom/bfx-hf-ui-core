@@ -188,7 +188,7 @@ const StrategiesPage = ({
       setIsUnsavedStrategyModalOpen(true)
       return
     }
-    if (_isEmpty(strategyToLoad?.strategyOptions)) {
+    if (!_isEmpty(strategyToLoad) && _isEmpty(strategyToLoad.strategyOptions)) {
       strategyToLoad.strategyOptions = getDefaultStrategyOptions(markets)
     }
     selectStrategyHandler(strategyToLoad, forcedLoad)

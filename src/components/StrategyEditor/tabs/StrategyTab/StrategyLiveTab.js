@@ -15,20 +15,20 @@ import {
 import StrategyLiveChart from '../../../StrategyLiveChart'
 import StrategyTabWrapper from '../../components/StrategyTabWrapper'
 import StrategyOptionsPanelLive from '../../../StrategyOptionsPanel/StrategyOptionsPanel.Live'
-import { getStrategyId } from '../../../../redux/selectors/ui'
-import { getExecutionResults } from '../../../../redux/selectors/ws'
+import { getCurrentStrategyExecutionState } from '../../../../redux/selectors/ws'
 
 const StrategyLiveTab = (props) => {
-  const executionResults = useSelector(getExecutionResults)
   const { onCancelProcess } = props
   const [layoutConfig, setLayoutConfig] = useState()
   const [fullscreenChart, setFullScreenChart] = useState(false)
 
+  const executionState = useSelector(getCurrentStrategyExecutionState)
+
   const { t } = useTranslation()
 
-  const { loading, executing, results: allResults } = executionResults
-  const id = useSelector(getStrategyId)
-  const results = allResults?.[id]
+  const {
+    loading, executing, results, startedOn,
+  } = executionState
 
   const hasResults = !_isEmpty(results)
 
@@ -71,6 +71,7 @@ const StrategyLiveTab = (props) => {
             <StrategyPerfomanceMetrics
               results={results}
               isExecuting={executing}
+              startedOn={startedOn}
             />
           )
 
@@ -95,6 +96,7 @@ const StrategyLiveTab = (props) => {
       executing,
       results,
       hasResults,
+      startedOn,
     ],
   )
 
@@ -116,12 +118,6 @@ const StrategyLiveTab = (props) => {
 }
 
 StrategyLiveTab.propTypes = {
-  executionResults: PropTypes.shape({
-    loading: PropTypes.bool,
-    executing: PropTypes.bool,
-    // eslint-disable-next-line react/forbid-prop-types
-    results: PropTypes.object,
-  }).isRequired,
   onCancelProcess: PropTypes.func.isRequired,
 }
 

@@ -10,11 +10,7 @@ import WSTypes from '../../redux/constants/ws'
 import {
   getAuthToken,
   getBacktestResults,
-  getExecutionResults,
-  // getSortedByTimeActiveStrategies,
-  getRunningStrategiesMapping,
-  getLiveExecutionResults,
-  getIsCurrentStrategyExecuting,
+  getCurrentStrategyExecutionState,
   getSavedStrategies,
 } from '../../redux/selectors/ws'
 import {
@@ -23,6 +19,7 @@ import {
   getStrategiesFeatureFlags,
   getIsBetaVersion,
   getCurrentMode,
+  getStrategyExecutionId,
 } from '../../redux/selectors/ui'
 import StrategyEditor from './StrategyEditor'
 import { getMarketsForExecution } from '../../redux/selectors/meta'
@@ -31,18 +28,15 @@ const mapStateToProps = (state = {}) => {
   return {
     authToken: getAuthToken(state),
     backtestResults: getBacktestResults(state),
-    allExecutionResults: getExecutionResults(state),
+    executionState: getCurrentStrategyExecutionState(state),
     settingsTheme: getThemeSetting(state),
-    executing: getIsCurrentStrategyExecuting(state),
     markets: getMarketsForExecution(state),
     isPaperTrading: getIsPaperTrading(state),
     flags: getStrategiesFeatureFlags(state),
     isBetaVersion: getIsBetaVersion(state),
-    liveResults: getLiveExecutionResults(state),
-    // activeStrategies: getSortedByTimeActiveStrategies(state),
-    runningStrategiesMapping: getRunningStrategiesMapping(state),
     savedStrategies: getSavedStrategies(state),
     currentMode: getCurrentMode(state),
+    executionId: getStrategyExecutionId(state),
   }
 }
 
@@ -60,7 +54,7 @@ const mapDispatchToProps = (dispatch) => ({
   },
   dsExecuteLiveStrategy: ({
     authToken,
-    name,
+    label,
     symbol,
     timeframe,
     // trades,
@@ -75,7 +69,7 @@ const mapDispatchToProps = (dispatch) => ({
       WSActions.send([
         'strategy.execute_start',
         authToken,
-        name,
+        label,
         symbol,
         timeframe,
         false, // trades
@@ -87,16 +81,16 @@ const mapDispatchToProps = (dispatch) => ({
     )
     dispatch(WSActions.setExecutionLoading(true))
   },
-  dsExecuteBacktest: (
-    from,
-    to,
+  dsExecuteBacktest: ({
+    startNum,
+    endNum,
     symbol,
-    tf,
+    timeframe,
     candles,
     trades,
     strategy,
     constraints,
-  ) => {
+  }) => {
     const processedStrategy = _omitBy(strategy, _isEmpty)
 
     dispatch(WSActions.purgeBacktestData())
@@ -107,10 +101,10 @@ const mapDispatchToProps = (dispatch) => ({
           'exec.str',
           [
             'bitfinex',
-            from,
-            to,
+            startNum,
+            endNum,
             symbol,
-            tf,
+            timeframe,
             candles,
             trades,
             true,

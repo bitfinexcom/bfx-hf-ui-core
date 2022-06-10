@@ -22,15 +22,15 @@ const StrategyOptionsPanelLive = ({
   markets,
   isExecuting,
   hasResults,
-  onSaveAsStrategy,
   openExecutionOptionsModal,
   setFullScreenChart,
   stopExecution,
   startExecution,
+  saveStrategyOptions,
 }) => {
   const {
     label,
-    strategyOptions: { symbol } = {},
+    strategyOptions: { symbol, strategyType } = {},
   } = strategy || {}
   const { t } = useTranslation()
 
@@ -77,8 +77,8 @@ const StrategyOptionsPanelLive = ({
           </p>
         </div>
         <StrategyTypeSelect
-          onSaveAsStrategy={onSaveAsStrategy}
-          strategy={strategy}
+          saveStrategyOptions={saveStrategyOptions}
+          strategyType={strategyType}
           isExecuting={isExecuting}
           isDisabled
         />
@@ -132,11 +132,15 @@ StrategyOptionsPanelLive.propTypes = {
           PropTypes.number,
         ]),
       ).isRequired,
+      strategyType: PropTypes.shape({
+        i18nKey: PropTypes.string,
+        customValue: PropTypes.string,
+      }),
     }),
   }).isRequired,
   isExecuting: PropTypes.bool.isRequired,
   hasResults: PropTypes.bool.isRequired,
-  onSaveAsStrategy: PropTypes.func.isRequired,
+  saveStrategyOptions: PropTypes.func.isRequired,
   openExecutionOptionsModal: PropTypes.func.isRequired,
   setFullScreenChart: PropTypes.func.isRequired,
   stopExecution: PropTypes.func.isRequired,
