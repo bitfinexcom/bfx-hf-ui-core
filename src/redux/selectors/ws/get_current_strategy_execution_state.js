@@ -1,5 +1,4 @@
 import { createSelector } from 'reselect'
-import _isEmpty from 'lodash/isEmpty'
 import {
   getIsExecutionLoading,
   getLiveExecutionResults,
@@ -14,11 +13,11 @@ const getCurrentStrategyExecutionState = createSelector(
     getActiveStrategies,
     getStrategyExecutionId,
   ],
-  (loading, executionResults, activeStrategies, executionId) => {
+  (loadingState, executionResults, activeStrategies, executionId) => {
     const results = executionResults[executionId] || {}
 
     return {
-      loading: _isEmpty(results) ? false : loading,
+      ...loadingState,
       executing: Boolean(executionId && activeStrategies[executionId]),
       results,
       startedOn: activeStrategies?.[executionId]?.startedOn || null,
