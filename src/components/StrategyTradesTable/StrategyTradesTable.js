@@ -25,14 +25,11 @@ import { getActiveMarket } from '../../redux/selectors/ui'
 
 import './style.css'
 
-import TEST_DATA from './test_data'
-
 const StrategyTradesTable = ({
-  // results,
+  results,
   setLayoutConfig,
   layoutConfig,
 }) => {
-  const results = TEST_DATA
   const [isExpanded, setIsExpanded] = useState(false)
   const activeMarket = useSelector(getActiveMarket)
 
