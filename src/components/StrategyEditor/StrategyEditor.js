@@ -142,6 +142,8 @@ const StrategyEditor = (props) => {
   }
 
   const onCreateNewStrategy = (label, content = {}) => {
+    gaCreateStrategy()
+
     const newStrategy = {
       ...content,
       label,
@@ -492,13 +494,11 @@ const StrategyEditor = (props) => {
       )}
       <CreateNewStrategyFromModalOpen
         isOpen={createNewStrategyFromModalOpen}
-        gaCreateStrategy={gaCreateStrategy}
         onClose={onCloseModals}
         onSubmit={onCreateNewStrategy}
       />
       <CreateNewStrategyModal
         isOpen={createNewStrategyModalOpen}
-        gaCreateStrategy={gaCreateStrategy}
         onClose={onCloseModals}
         onSubmit={onCreateNewStrategy}
         onImportStrategy={onImportStrategy}

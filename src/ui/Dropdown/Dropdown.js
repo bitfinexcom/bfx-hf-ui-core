@@ -22,10 +22,11 @@ const Dropdown = forwardRef(function Dropdown(props, ref) {
     options,
     highlight,
     className,
+    adapter,
     ...rest
   } = props
 
-  const adaptedOptions = useMemo(() => optionsAdaptor(options), [options])
+  const adaptedOptions = useMemo(() => adapter(options), [adapter, options])
 
   return (
     <div className='hfui-dropdown__wrapper'>
@@ -59,6 +60,7 @@ Dropdown.propTypes = {
     label: PropTypes.any, // eslint-disable-line
     value: PropTypes.any, // eslint-disable-line
   })).isRequired,
+  adapter: PropTypes.func,
 }
 Dropdown.defaultProps = {
   value: '',
@@ -69,6 +71,7 @@ Dropdown.defaultProps = {
   disabled: false,
   highlight: false,
   placeholder: undefined,
+  adapter: optionsAdaptor,
 }
 
 export default memo(Dropdown)

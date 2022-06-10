@@ -62,51 +62,51 @@ const ExecutionOptionsModal = (props) => {
     [saveStrategyOptions],
   )
 
-  const capitalAllocationHandler = (v) => {
+  const capitalAllocationHandler = useCallback((v) => {
     const error = AmountInput.validateValue(v, t)
     const processed = String(AmountInput.processValue(v))
 
     setCapitalAllocationError(error)
+    setCapitalAllocationValue(v)
     if (error) {
       return
     }
-    setCapitalAllocationValue(processed)
     setCapitalAllocation(processed)
-  }
+  }, [setCapitalAllocation, t])
 
-  const stopLossPercHandler = (v) => {
+  const stopLossPercHandler = useCallback((v) => {
     const error = PercentInput.validateValue(v, t)
     const processed = String(AmountInput.processValue(v))
 
     setStopLossError(error)
+    setStopLossPercValue(v)
     if (error) {
       return
     }
-    setStopLossPercValue(processed)
     setStopLossPerc(processed)
-  }
+  }, [setStopLossPerc, t])
 
-  const maxDrawdownHandler = (v) => {
+  const maxDrawdownHandler = useCallback((v) => {
     const error = PercentInput.validateValue(v, t)
     const processed = String(AmountInput.processValue(v))
 
     setMaxDrawdownError(error)
+    setMaxDrawdownPercValue(v)
     if (error) {
       return
     }
-    setMaxDrawdownPercValue(processed)
     setMaxDrawdownPerc(processed)
-  }
+  }, [setMaxDrawdownPerc, t])
 
-  const isFullFilled = capitalAllocation && stopLossPerc && maxDrawdownPerc
+  const isFullFilled = capitalAllocationValue > 0 && stopLossPercValue && maxDrawdownPercValue
 
-  const onSubmit = () => {
+  const onSubmit = useCallback(() => {
     if (!isFullFilled) {
       return
     }
     onClose()
     startExecution()
-  }
+  }, [isFullFilled, onClose, startExecution])
 
   return (
     <Modal
