@@ -51,7 +51,7 @@ const activeStrategiesColumns = (t, getMarketPair) => [
     headerStyle: STYLES.flexStart,
     width: 100,
     flexGrow: 1,
-    cellRenderer: ({ rowData = {} }) => defaultCellRenderer(resultNumber(rowData.results?.pf, null, true)),
+    cellRenderer: ({ rowData = {} }) => resultNumber(rowData.results?.pf),
   },
   // {
   //   label: t('table.sharpeRatio'),
@@ -69,7 +69,7 @@ const activeStrategiesColumns = (t, getMarketPair) => [
     headerStyle: STYLES.flexStart,
     width: 100,
     flexGrow: 1,
-    cellRenderer: ({ rowData = {} }) => defaultCellRenderer(resultNumber(preparePrice(rowData.results?.pl), 'USD')),
+    cellRenderer: ({ rowData = {} }) => resultNumber(preparePrice(rowData.results?.pl), 'USD'),
   },
 ]
 
@@ -126,7 +126,7 @@ const pastStrategiesColumns = (t, getMarketPair) => [
     headerStyle: STYLES.flexStart,
     width: 100,
     flexGrow: 1,
-    cellRenderer: ({ rowData = {} }) => defaultCellRenderer(resultNumber(rowData.results?.pf, null, true)),
+    cellRenderer: ({ rowData = {} }) => resultNumber(rowData.results?.pf),
   },
   // {
   //   label: t('table.sharpeRatio'),
@@ -144,7 +144,7 @@ const pastStrategiesColumns = (t, getMarketPair) => [
     headerStyle: STYLES.flexStart,
     width: 100,
     flexGrow: 1,
-    cellRenderer: ({ rowData = {} }) => defaultCellRenderer(resultNumber(preparePrice(rowData.results?.pl), 'USD', true)),
+    cellRenderer: ({ rowData = {} }) => resultNumber(preparePrice(rowData.results?.pl), 'USD'),
   },
 ]
 
