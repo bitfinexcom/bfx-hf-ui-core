@@ -15,7 +15,7 @@ import StrategyLiveChart from '../../StrategyLiveChart'
 import BacktestOptionsPanel from '../../BacktestOptionsPanel'
 
 const BacktestTab = (props) => {
-  const { results } = props
+  const { results, onCancelProcess } = props
   const { t } = useTranslation()
   const [layoutConfig, setLayoutConfig] = useState()
   const [fullscreenChart, setFullScreenChart] = useState(false)
@@ -87,6 +87,7 @@ const BacktestTab = (props) => {
         layoutConfig={layoutConfig}
         renderGridComponents={renderGridComponents}
         isLoading={loading}
+        onCancelProcess={onCancelProcess}
       />
       {!finished && !loading && (
         <p className='hfui-strategyeditor__initial-message'>
@@ -103,6 +104,7 @@ BacktestTab.propTypes = {
     loading: PropTypes.bool,
     trades: PropTypes.arrayOf(PropTypes.object), // eslint-disable-line
   }).isRequired,
+  onCancelProcess: PropTypes.func.isRequired,
 }
 
 export default BacktestTab

@@ -20,6 +20,7 @@ import { getExecutionResults } from '../../../../redux/selectors/ws'
 
 const StrategyLiveTab = (props) => {
   const executionResults = useSelector(getExecutionResults)
+  const { onCancelProcess } = props
   const [layoutConfig, setLayoutConfig] = useState()
   const [fullscreenChart, setFullScreenChart] = useState(false)
 
@@ -103,6 +104,7 @@ const StrategyLiveTab = (props) => {
         layoutConfig={layoutConfig}
         renderGridComponents={renderGridComponents}
         isLoading={loading}
+        onCancelProcess={onCancelProcess}
       />
       {_isEmpty(results) && !executing && !loading && (
         <p className='hfui-strategyeditor__initial-message'>
@@ -120,6 +122,7 @@ StrategyLiveTab.propTypes = {
     // eslint-disable-next-line react/forbid-prop-types
     results: PropTypes.object,
   }).isRequired,
+  onCancelProcess: PropTypes.func.isRequired,
 }
 
 export default StrategyLiveTab

@@ -27,20 +27,6 @@ export default `({ HFS, _, HFU }) => async (state = {}, update = {}) => {
   }
   
   if (
-    (roc < -1) &&
-    (s < l - 0.1 && s > vwap) &&
-    (price < vwap - 0.5)
-  ) {
-    return HFS.openShortPositionMarket(state, {
-      mtsCreate: mts,
-      amount,
-      price,
-      label: 'enter short roc',
-      tag: 'esrocspike',
-    })
-  }
-  
-  if (
     (roc < 1) &&
     (price > vwap) &&
     (s > l + 0.1) &&

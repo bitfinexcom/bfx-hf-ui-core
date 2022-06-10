@@ -139,6 +139,22 @@ const mapDispatchToProps = (dispatch) => ({
       }),
     )
   },
+  cancelProcess: (authToken, isPaperTrading, backtestGid, liveExecGid) => {
+    if (isPaperTrading) {
+      // stopping backtesting
+      dispatch(
+        WSActions.send({
+          alias: WSTypes.ALIAS_DATA_SERVER,
+          data: ['stop.bt', backtestGid],
+        }),
+      )
+    } else {
+      // stopping live execution
+      dispatch(
+        WSActions.send(['strategy.execute_stop', authToken, liveExecGid]),
+      )
+    }
+  },
   changeTradingMode: (isPaperTrading, authToken, currentMode) => {
     dispatch(UIActions.setTradingMode(isPaperTrading))
     dispatch(WSActions.send(['algo_order.pause', authToken, currentMode]))

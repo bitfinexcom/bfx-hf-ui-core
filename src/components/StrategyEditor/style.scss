@@ -78,6 +78,21 @@ body.hosted {
   }
 }
 
+.hfui-strategy-editor_cancel-process-btn {
+  position: absolute;
+  bottom: 10%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  margin-top: 0;
+  background: transparent;
+  color: var(--shade-5);
+
+  &:hover {
+    opacity: 1;
+    color: var(--text-color);
+  }
+}
+
 .hfui-strategyeditor__editor-wrapper {
   width: 100%;
   display: flex;

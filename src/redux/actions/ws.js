@@ -221,6 +221,11 @@ export default {
     payload: opts,
   }),
 
+  recvBacktestStarted: gid => ({
+    type: t.BACKTEST_STARTED,
+    payload: { gid },
+  }),
+
   recvBacktestStopped: gid => ({
     type: t.BACKTEST_STOPPED,
     payload: gid,
@@ -302,9 +307,14 @@ export default {
     payload: { executing },
   }),
 
-  setExecutionLoading: (loading) => ({
+  setExecutionLoading: (loading, loadingGid) => ({
     type: t.EXECUTION_LOADING,
-    payload: { loading },
+    payload: { loading, loadingGid },
+  }),
+
+  setExecutionLoadingGid: (loadingGid) => ({
+    type: t.EXECUTION_LOADING_GID,
+    payload: { loadingGid },
   }),
 
   setExecutionResults: (strategyId, results) => ({

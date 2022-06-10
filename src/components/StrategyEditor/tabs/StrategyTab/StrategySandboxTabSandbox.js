@@ -1,4 +1,5 @@
 import React, { memo, useCallback } from 'react'
+import PropTypes from 'prop-types'
 import StrategiesGridLayout from '../../components/StrategiesGridLayout'
 import {
   COMPONENTS_KEYS,
@@ -9,6 +10,8 @@ import IDEHelpPanel from '../../../IDEHelpPanel'
 import StrategyOptionsPanelSandbox from '../../../StrategyOptionsPanel/StrategyOptionsPanel.Sandbox'
 
 const StrategySandboxTab = (props) => {
+  const { onCancelProcess } = props
+
   const renderGridComponents = useCallback(
     (i) => {
       switch (i) {
@@ -32,9 +35,14 @@ const StrategySandboxTab = (props) => {
       <StrategiesGridLayout
         layoutConfig={IDE_LAYOUT_CONFIG}
         renderGridComponents={renderGridComponents}
+        onCancelProcess={onCancelProcess}
       />
     </div>
   )
+}
+
+StrategySandboxTab.propTypes = {
+  onCancelProcess: PropTypes.func.isRequired,
 }
 
 export default memo(StrategySandboxTab)

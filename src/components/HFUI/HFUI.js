@@ -3,7 +3,7 @@ import React, {
   useEffect, Suspense, lazy, useCallback,
 } from 'react'
 import {
-  Route, Switch, Redirect, useLocation,
+  Route, Switch, Redirect, useLocation, useHistory,
 } from 'react-router'
 import PropTypes from 'prop-types'
 
@@ -15,6 +15,8 @@ import closeElectronApp from '../../redux/helpers/close_electron_app'
 import Routes from '../../constants/routes'
 import { isElectronApp } from '../../redux/config'
 import ModalsWrapper from '../../modals/ModalsWrapper/ModalsWrapper'
+import { MAIN_MODE } from '../../redux/reducers/ui'
+import { parseStrategyToExecuteFromLS } from '../StrategyEditor/StrategyEditor.helpers'
 
 import './style.css'
 
@@ -46,6 +48,8 @@ const HFUI = (props) => {
     getPastStrategies,
   } = props
   useInjectBfxData()
+
+  const history = useHistory()
 
   const unloadHandler = useCallback(() => {
     if (authToken !== null) {
@@ -81,6 +85,16 @@ const HFUI = (props) => {
       }
     }
   }, [authToken, onElectronAppClose, settingsShowAlgoPauseInfo])
+
+  useEffect(() => {
+    if (isElectronApp && currentMode === MAIN_MODE) {
+      const strategyToExecute = parseStrategyToExecuteFromLS()
+      if (strategyToExecute) {
+        history.push(`${Routes.strategyEditor.path}?execute=${strategyToExecute}`)
+      }
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   useEffect(() => {
     const { body } = document
