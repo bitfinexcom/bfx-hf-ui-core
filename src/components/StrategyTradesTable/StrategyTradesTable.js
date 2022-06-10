@@ -3,9 +3,8 @@
 import React, {
   useEffect, memo, useState, useRef, useCallback, useMemo,
 } from 'react'
-import {
-  Button, VirtualTable,
-} from '@ufx-ui/core'
+import { Button, VirtualTable } from '@ufx-ui/core'
+import { reduxSelectors } from '@ufx-ui/bfx-containers'
 import PropTypes from 'prop-types'
 import { useTranslation } from 'react-i18next'
 import { useSelector } from 'react-redux'
@@ -26,6 +25,8 @@ import { getActiveMarket } from '../../redux/selectors/ui'
 
 import './style.css'
 
+const { getCurrencySymbolMemo } = reduxSelectors
+
 const StrategyTradesTable = ({
   results,
   setLayoutConfig,
@@ -33,6 +34,7 @@ const StrategyTradesTable = ({
 }) => {
   const [isExpanded, setIsExpanded] = useState(false)
   const activeMarket = useSelector(getActiveMarket)
+  const getCurrencySymbol = useSelector(getCurrencySymbolMemo)
 
   const onExpandClick = useCallback(() => {
     const currentElementIndex = _findIndex(
@@ -85,7 +87,7 @@ const StrategyTradesTable = ({
         <>
           <Button
             className='panel-button'
-            onClick={() => onTradeExportClick(results, results, activeMarket, t)}
+            onClick={() => onTradeExportClick(results, results, activeMarket, t, getCurrencySymbol)}
           >
             <Icon name='file' />
             &nbsp;&nbsp;
