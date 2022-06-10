@@ -384,6 +384,12 @@ export default (alias, store) => (e = {}) => {
         break
       }
 
+      case 'bt.started': {
+        const [, gid] = payload
+        store.dispatch(WSActions.recvBacktestStarted(gid))
+        break
+      }
+
       case 'bt.stopped': {
         const [, gid] = payload
         store.dispatch(WSActions.recvBacktestStopped(gid))
@@ -419,9 +425,12 @@ export default (alias, store) => (e = {}) => {
       }
 
       case 'strategy.start_live_execution_submit_status': {
-        const [, status] = payload
-        if (status === false) {
-          store.dispatch(WSActions.setExecutionLoading(status))
+        const [, status, gid] = payload
+
+        if (status) {
+          store.dispatch(WSActions.setExecutionLoadingGid(gid))
+        } else {
+          store.dispatch(WSActions.setExecutionLoading(false, gid))
         }
 
         break

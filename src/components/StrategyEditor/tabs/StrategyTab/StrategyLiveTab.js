@@ -1,4 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react'
+import PropTypes from 'prop-types'
 import _isEmpty from 'lodash/isEmpty'
 import { useTranslation } from 'react-i18next'
 import { useSelector } from 'react-redux'
@@ -17,6 +18,7 @@ import StrategyOptionsPanelLive from '../../../StrategyOptionsPanel/StrategyOpti
 import { getCurrentStrategyExecutionState } from '../../../../redux/selectors/ws'
 
 const StrategyLiveTab = (props) => {
+  const { onCancelProcess } = props
   const [layoutConfig, setLayoutConfig] = useState()
   const [fullscreenChart, setFullScreenChart] = useState(false)
 
@@ -104,6 +106,7 @@ const StrategyLiveTab = (props) => {
         layoutConfig={layoutConfig}
         renderGridComponents={renderGridComponents}
         isLoading={loading}
+        onCancelProcess={onCancelProcess}
       />
       {_isEmpty(results) && !executing && !loading && (
         <p className='hfui-strategyeditor__initial-message'>
@@ -112,6 +115,10 @@ const StrategyLiveTab = (props) => {
       )}
     </StrategyTabWrapper>
   )
+}
+
+StrategyLiveTab.propTypes = {
+  onCancelProcess: PropTypes.func.isRequired,
 }
 
 export default StrategyLiveTab
