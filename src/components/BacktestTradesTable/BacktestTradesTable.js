@@ -1,40 +1,36 @@
-/* eslint-disable react/display-name */
-/* eslint-disable react/prop-types */
-import React, {
-  useEffect, memo, useState, useRef, useCallback, useMemo,
-} from 'react'
-import {
-  Button, VirtualTable,
-} from '@ufx-ui/core'
+import React, { memo, useState } from 'react'
+import { Button, VirtualTable } from '@ufx-ui/core'
+import _isEmpty from 'lodash/isEmpty'
 import PropTypes from 'prop-types'
 import { useTranslation } from 'react-i18next'
 import { useSelector } from 'react-redux'
 import _findIndex from 'lodash/findIndex'
-import _isEmpty from 'lodash/isEmpty'
-import { Icon } from 'react-fa'
 
+import { Icon } from 'react-fa'
 import Panel from '../../ui/Panel'
-import StrategyTradesTableColumns from './StrategyTradesTable.columns'
+import BacktestTradesTableColumns from './BacktestTradesTable.columns'
 import {
   COMPONENTS_KEYS,
   LAYOUT_CONFIG,
 } from '../StrategyEditor/components/StrategiesGridLayout.constants'
-import { getRowRenderer, rowCache } from './StrategyTradesTable.Row'
 
-import { onTradeExportClick } from './StrategyTradesTable.helpers'
+import { onTradeExportClick } from './BacktestTradesTable.helpers'
 import { getActiveMarket } from '../../redux/selectors/ui'
 
 import './style.css'
 
-const StrategyTradesTable = ({
+const BacktestTradesTable = ({
   results,
+  onTradeClick,
   setLayoutConfig,
   layoutConfig,
 }) => {
   const [isExpanded, setIsExpanded] = useState(false)
   const activeMarket = useSelector(getActiveMarket)
+  const strategyTrades = results.strategy?.trades
+  const { trades = strategyTrades } = results
 
-  const onExpandClick = useCallback(() => {
+  const onExpandClick = () => {
     const currentElementIndex = _findIndex(
       layoutConfig,
       (c) => c.i === COMPONENTS_KEYS.STRATEGY_TRADES,
@@ -49,7 +45,7 @@ const StrategyTradesTable = ({
     newLayoutConfig[currentElementIndex] = newElementConfig
     setIsExpanded(true)
     setLayoutConfig(newLayoutConfig)
-  }, [layoutConfig, setLayoutConfig])
+  }
 
   const onCompressClick = () => {
     setIsExpanded(false)
@@ -58,19 +54,6 @@ const StrategyTradesTable = ({
 
   const { t } = useTranslation()
 
-  const [selectedIndex, setSelectedIndex] = useState(-1)
-  const tableRef = useRef()
-  useEffect(() => {
-    if (tableRef.current) {
-      tableRef.current.recomputeRowHeights()
-    }
-  },
-  [tableRef, selectedIndex])
-
-  const columns = StrategyTradesTableColumns(t, selectedIndex, setSelectedIndex)
-
-  const rowRenderer = useMemo(() => getRowRenderer(selectedIndex), [selectedIndex])
-
   return (
     <Panel
       dark
@@ -78,14 +61,14 @@ const StrategyTradesTable = ({
       label={t('tradesTableModal.title')}
       removeable={false}
       moveable={false}
-      className='hfui-strategytradestable__wrapper'
+      className='backtesttradestable__wrapper'
       hideIcons
       hasShadow={isExpanded}
       preHeaderComponents={(
         <>
           <Button
             className='panel-button'
-            onClick={() => onTradeExportClick(results, results, activeMarket, t)}
+            onClick={() => onTradeExportClick(trades, results, activeMarket, t)}
           >
             <Icon name='file' />
             &nbsp;&nbsp;
@@ -107,7 +90,7 @@ const StrategyTradesTable = ({
         </>
       )}
     >
-      {_isEmpty(results) ? (
+      {_isEmpty(trades) ? (
         <div className='no-trades__wrapper'>
           <span className='no-trades__notification'>
             {t('tradesTableModal.noTrades')}
@@ -115,24 +98,25 @@ const StrategyTradesTable = ({
         </div>
       ) : (
         <VirtualTable
-          ref={tableRef}
-          deferredMeasurementCache={rowCache}
-          rowHeight={rowCache.rowHeight}
-          rowRenderer={rowRenderer}
-          columns={columns}
-          data={results || []}
+          data={trades}
+          columns={BacktestTradesTableColumns(t)}
+          defaultSortBy='mts'
+          defaultSortDirection='DESC'
+          onRowClick={({ rowData }) => onTradeClick(rowData)}
         />
       )}
     </Panel>
   )
 }
 
-StrategyTradesTable.propTypes = {
+BacktestTradesTable.propTypes = {
   results: PropTypes.shape({
+    strategy: PropTypes.objectOf(PropTypes.object).isRequired, // eslint-disable-line
     trades: PropTypes.arrayOf(PropTypes.object).isRequired,  // eslint-disable-line
   }).isRequired,
+  onTradeClick: PropTypes.func.isRequired,
   layoutConfig: PropTypes.arrayOf(PropTypes.object).isRequired, // eslint-disable-line
   setLayoutConfig: PropTypes.func.isRequired,
 }
 
-export default memo(StrategyTradesTable)
+export default memo(BacktestTradesTable)
