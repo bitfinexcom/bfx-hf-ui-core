@@ -26,11 +26,8 @@ const StrategyLiveTab = (props) => {
   const { t } = useTranslation()
 
   const { loading, executing, results: allResults } = executionResults
-  console.log('executionResults: ', executionResults)
-  console.log('allResults: ', allResults)
   const id = useSelector(getStrategyId)
   const results = allResults?.[id]
-  console.log('results: 456: ', results)
 
   const hasResults = !_isEmpty(results)
 

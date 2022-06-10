@@ -1,34 +1,38 @@
+/* eslint-disable react/display-name */
 /* eslint-disable react/prop-types */
 import React, {
-  useEffect, memo, useState, useRef, useCallback,
+  useEffect, memo, useState, useRef, useCallback, useMemo,
 } from 'react'
-import { Button, VirtualTable } from '@ufx-ui/core'
+import {
+  Button, VirtualTable,
+} from '@ufx-ui/core'
 import PropTypes from 'prop-types'
 import { useTranslation } from 'react-i18next'
 import { useSelector } from 'react-redux'
 import _findIndex from 'lodash/findIndex'
-import _isEmpty from 'lodash/isEmpty'
-
 import { Icon } from 'react-fa'
 
 import Panel from '../../ui/Panel'
-import StrategyTradesTableColumns, { getRowRenderer } from './StrategyTradesTable.columns'
+import StrategyTradesTableColumns from './StrategyTradesTable.columns'
 import {
   COMPONENTS_KEYS,
   LAYOUT_CONFIG,
 } from '../StrategyEditor/components/StrategiesGridLayout.constants'
+import { getRowRenderer, rowCache } from './StrategyTradesTable.Row'
 
 import { onTradeExportClick } from './StrategyTradesTable.helpers'
 import { getActiveMarket } from '../../redux/selectors/ui'
 
 import './style.css'
 
+import TEST_DATA from './test_data'
+
 const StrategyTradesTable = ({
-  results,
-  onTradeClick,
+  // results,
   setLayoutConfig,
   layoutConfig,
 }) => {
+  const results = TEST_DATA
   const [isExpanded, setIsExpanded] = useState(false)
   const activeMarket = useSelector(getActiveMarket)
 
@@ -63,11 +67,38 @@ const StrategyTradesTable = ({
       tableRef.current.recomputeRowHeights()
     }
   },
-  [selectedIndex])
+  [tableRef, selectedIndex])
 
-  // TODO: use dynamic height for selected row
-  const _getRowHeight = ({ index }) => (index === selectedIndex ? 140 : 32)
   const columns = StrategyTradesTableColumns(t, selectedIndex, setSelectedIndex)
+
+  const rowRenderer = useMemo(() => getRowRenderer(selectedIndex), [selectedIndex])
+
+  // const rowRenderer = (props) => {
+  //   const {
+  //     parent, index, key, rowData, columns: rowCols,
+  //   } = props
+
+  //   return (
+  //     <CellMeasurer
+  //       cache={_cache}
+  //       key={key}
+  //       parent={parent}
+  //       columnIndex={0}
+  //       rowIndex={index}
+  //     >
+  //       {({ measure, registerChild }) => (
+  //         <MAIN_ROW
+  //           rowIndex={index}
+  //           selectedIndex={selectedIndex}
+  //           columns={rowCols}
+  //           measure={measure}
+  //           registerChild={registerChild}
+  //           rowData={rowData}
+  //         />
+  //       )}
+  //     </CellMeasurer>
+  //   )
+  // }
 
   return (
     <Panel
@@ -105,24 +136,14 @@ const StrategyTradesTable = ({
         </>
       )}
     >
-      {_isEmpty(results) ? (
-        <div className='no-trades__wrapper'>
-          <span className='no-trades__notification'>
-            {t('tradesTableModal.noTrades')}
-          </span>
-        </div>
-      ) : (
-        <VirtualTable
-          ref={tableRef}
-          data={results}
-          columns={columns}
-          defaultSortBy='mts'
-          defaultSortDirection='DESC'
-          onRowClick={({ rowData }) => onTradeClick(rowData)}
-          rowRenderer={getRowRenderer(selectedIndex)}
-          rowHeight={_getRowHeight}
-        />
-      )}
+      <VirtualTable
+        ref={tableRef}
+        deferredMeasurementCache={rowCache}
+        rowHeight={rowCache.rowHeight}
+        rowRenderer={rowRenderer}
+        columns={columns}
+        data={results || []}
+      />
     </Panel>
   )
 }
@@ -131,7 +152,6 @@ StrategyTradesTable.propTypes = {
   results: PropTypes.shape({
     trades: PropTypes.arrayOf(PropTypes.object).isRequired,  // eslint-disable-line
   }).isRequired,
-  onTradeClick: PropTypes.func.isRequired,
   layoutConfig: PropTypes.arrayOf(PropTypes.object).isRequired, // eslint-disable-line
   setLayoutConfig: PropTypes.func.isRequired,
 }

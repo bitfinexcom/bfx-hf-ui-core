@@ -19,11 +19,14 @@
     color: var(--shade-8);
   }
 
-  .ReactVirtualized__Table__row.selected {
-    .ReactVirtualized__Table__row {
+  .stratatey-main-row {
+    padding: 5px 0;
+    &.selected {
       background-color: $background-color;
     }
   }
+
+
 
   .hfui-trades-sub-table {
     margin-right: auto;

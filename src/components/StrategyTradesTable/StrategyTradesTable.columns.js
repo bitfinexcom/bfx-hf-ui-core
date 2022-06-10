@@ -2,13 +2,11 @@
 /* eslint-disable react/display-name */
 import React from 'react'
 import { PrettyValue } from '@ufx-ui/core'
-import { defaultTableRowRenderer } from 'react-virtualized'
 import { Icon } from 'react-fa'
 
 import { defaultCellRenderer } from '../../util/ui'
 import { PRICE_SIG_FIGS } from '../../constants/precision'
 import { resultNumber } from '../Backtester/Results/Results.utils'
-import TradesTable from './TradesTable'
 
 const STYLES = {
   flexStart: { justifyContent: 'flex-start' },
@@ -143,25 +141,3 @@ export default (t, selectedIndex, setSelectedIndex) => [
     },
   },
 ]
-
-export const getRowRenderer = (selectedIndex) => props => {
-  const {
-    index, style, className, key, rowData,
-  } = props
-  if (index === selectedIndex) {
-    return (
-      <div
-        style={{ ...style, display: 'flex', flexDirection: 'column' }}
-        className={`${className} selected`}
-        key={key}
-      >
-        {defaultTableRowRenderer({
-          ...props,
-          style: { width: style.width, minHeight: 32 },
-        })}
-        <TradesTable data={rowData?.trades || []} />
-      </div>
-    )
-  }
-  return defaultTableRowRenderer(props)
-}
