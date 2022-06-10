@@ -10,6 +10,7 @@ import PropTypes from 'prop-types'
 import { useTranslation } from 'react-i18next'
 import { useSelector } from 'react-redux'
 import _findIndex from 'lodash/findIndex'
+import _isEmpty from 'lodash/isEmpty'
 import { Icon } from 'react-fa'
 
 import Panel from '../../ui/Panel'
@@ -70,33 +71,6 @@ const StrategyTradesTable = ({
 
   const rowRenderer = useMemo(() => getRowRenderer(selectedIndex), [selectedIndex])
 
-  // const rowRenderer = (props) => {
-  //   const {
-  //     parent, index, key, rowData, columns: rowCols,
-  //   } = props
-
-  //   return (
-  //     <CellMeasurer
-  //       cache={_cache}
-  //       key={key}
-  //       parent={parent}
-  //       columnIndex={0}
-  //       rowIndex={index}
-  //     >
-  //       {({ measure, registerChild }) => (
-  //         <MAIN_ROW
-  //           rowIndex={index}
-  //           selectedIndex={selectedIndex}
-  //           columns={rowCols}
-  //           measure={measure}
-  //           registerChild={registerChild}
-  //           rowData={rowData}
-  //         />
-  //       )}
-  //     </CellMeasurer>
-  //   )
-  // }
-
   return (
     <Panel
       dark
@@ -133,14 +107,22 @@ const StrategyTradesTable = ({
         </>
       )}
     >
-      <VirtualTable
-        ref={tableRef}
-        deferredMeasurementCache={rowCache}
-        rowHeight={rowCache.rowHeight}
-        rowRenderer={rowRenderer}
-        columns={columns}
-        data={results || []}
-      />
+      {_isEmpty(results) ? (
+        <div className='no-trades__wrapper'>
+          <span className='no-trades__notification'>
+            {t('tradesTableModal.noTrades')}
+          </span>
+        </div>
+      ) : (
+        <VirtualTable
+          ref={tableRef}
+          deferredMeasurementCache={rowCache}
+          rowHeight={rowCache.rowHeight}
+          rowRenderer={rowRenderer}
+          columns={columns}
+          data={results || []}
+        />
+      )}
     </Panel>
   )
 }
