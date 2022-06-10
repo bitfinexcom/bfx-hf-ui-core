@@ -16,7 +16,7 @@ import StrategyTabWrapper from '../../components/StrategyTabWrapper'
 import StrategyOptionsPanelLive from '../../../StrategyOptionsPanel/StrategyOptionsPanel.Live'
 
 const StrategyLiveTab = (props) => {
-  const { executionResults } = props
+  const { executionResults, onCancelProcess } = props
   const [layoutConfig, setLayoutConfig] = useState()
   const [fullscreenChart, setFullScreenChart] = useState(false)
 
@@ -98,6 +98,7 @@ const StrategyLiveTab = (props) => {
         layoutConfig={layoutConfig}
         renderGridComponents={renderGridComponents}
         isLoading={loading}
+        onCancelProcess={onCancelProcess}
       />
       {_isEmpty(results) && !executing && !loading && (
         <p className='hfui-strategyeditor__initial-message'>
@@ -115,6 +116,7 @@ StrategyLiveTab.propTypes = {
     // eslint-disable-next-line react/forbid-prop-types
     results: PropTypes.object,
   }).isRequired,
+  onCancelProcess: PropTypes.func.isRequired,
 }
 
 export default StrategyLiveTab

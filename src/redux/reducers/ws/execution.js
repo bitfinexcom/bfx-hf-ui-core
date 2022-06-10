@@ -6,6 +6,7 @@ function getInitialState() {
       // ['strategy-id', 'strategy-id', ...]
     ],
     loading: false,
+    loadingGid: null,
     results: {
       // 'strategy-map-key': { /* results */ }
     },
@@ -32,11 +33,28 @@ function reducer(state = getInitialState(), action = {}) {
     }
 
     case types.EXECUTION_LOADING: {
-      const { loading } = payload
+      const { loading, loadingGid } = payload
+
+      if (loadingGid) {
+        return {
+          ...state,
+          loading,
+          loadingGid,
+        }
+      }
 
       return {
         ...state,
         loading,
+      }
+    }
+
+    case types.EXECUTION_LOADING_GID: {
+      const { loadingGid } = payload
+
+      return {
+        ...state,
+        loadingGid,
       }
     }
 

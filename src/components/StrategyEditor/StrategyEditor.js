@@ -26,6 +26,7 @@ import BacktestTab from './tabs/BacktestTab'
 import IDETab from './tabs/IDETab'
 import CreateNewStrategyFromModalOpen from '../../modals/Strategy/CreateNewStrategyFromModal'
 import SaveStrategyAsModal from '../../modals/Strategy/SaveStrategyAsModal/SaveStrategyAsModal'
+import CancelProcessModal from '../../modals/Strategy/CancelProcessModal'
 import StrategyTabTitle from './tabs/StrategyTab/StrategyTab.Title'
 import BacktestTabTitle from './tabs/BacktestTab.Title'
 import IDETabTitle from './tabs/IDETab.Title'
@@ -89,6 +90,7 @@ const StrategyEditor = (props) => {
     liveResults,
     runningStrategiesMapping,
     savedStrategies,
+    cancelProcess,
     changeTradingMode,
     currentMode,
   } = props
@@ -101,6 +103,7 @@ const StrategyEditor = (props) => {
   const [createNewStrategyFromModalOpen, setCreateNewStrategyFromModalOpen] = useState(false)
   const [openExistingStrategyModalOpen, setOpenExistingStrategyModalOpen] = useState(false)
   const [isSaveStrategyAsModalOpen, setIsSaveStrategyModalOpen] = useState(false)
+  const [isCancelProcessModalOpen, setIsCancelProcessModalOpen] = useState(false)
   const [isExecutionOptionsModalOpen, setIsExecutionOptionsModalOpen] = useState(false)
   const [isLaunchStrategyModalOpen, setIsLaunchStrategyModalOpen] = useState(false)
   const [executionOptionsModalType, setExecutionOptionsModalType] = useState(
@@ -149,6 +152,7 @@ const StrategyEditor = (props) => {
     setCreateNewStrategyFromModalOpen(false)
     setIsSaveStrategyModalOpen(false)
     setIsExecutionOptionsModalOpen(false)
+    setIsCancelProcessModalOpen(false)
     setIsLaunchStrategyModalOpen(false)
   }
 
@@ -201,6 +205,22 @@ const StrategyEditor = (props) => {
     setStrategy(newStrategy)
     saveStrategy(newStrategy)
     setStrategyDirty(false)
+  }
+
+  const _cancelProcess = () => {
+    const { gid } = backtestResults
+    const { loadingGid } = allExecutionResults
+
+    cancelProcess(authToken, isPaperTrading, gid, loadingGid)
+    setIsCancelProcessModalOpen(false)
+  }
+
+  const onCancelProcess = () => {
+    if (isPaperTrading) {
+      _cancelProcess()
+    } else {
+      setIsCancelProcessModalOpen(true)
+    }
   }
 
   const saveStrategyOptions = (newOptions) => {
@@ -426,6 +446,7 @@ const StrategyEditor = (props) => {
                 openExecutionOptionsModal={openExecutionOptionsModal}
                 saveStrategyOptions={saveStrategyOptions}
                 hasErrors={hasErrorsInIDE}
+                onCancelProcess={onCancelProcess}
                 {...props}
               />
             )}
@@ -442,6 +463,7 @@ const StrategyEditor = (props) => {
                 results={backtestResults}
                 onBacktestStart={onBacktestStart}
                 saveStrategyOptions={saveStrategyOptions}
+                onCancelProcess={onCancelProcess}
                 {...props}
               />
             )}
@@ -514,6 +536,11 @@ const StrategyEditor = (props) => {
         onClose={onCloseModals}
         onOpen={onLoadStrategy}
       />
+      <CancelProcessModal
+        isOpen={isCancelProcessModalOpen}
+        onClose={onCloseModals}
+        onSubmit={_cancelProcess}
+      />
     </>
   )
 }
@@ -545,6 +572,7 @@ StrategyEditor.propTypes = {
   allExecutionResults: PropTypes.shape({
     executing: PropTypes.bool,
     loading: PropTypes.bool,
+    loadingGid: PropTypes.bool,
   }).isRequired,
   strategyContent: PropTypes.objectOf(
     PropTypes.oneOfType([
@@ -569,6 +597,7 @@ StrategyEditor.propTypes = {
   runningStrategiesMapping: PropTypes.objectOf(PropTypes.string),
   sectionErrors: PropTypes.objectOf(PropTypes.string).isRequired,
   executing: PropTypes.bool.isRequired,
+  cancelProcess: PropTypes.func.isRequired,
   changeTradingMode: PropTypes.func.isRequired,
   currentMode: PropTypes.string.isRequired,
 }
