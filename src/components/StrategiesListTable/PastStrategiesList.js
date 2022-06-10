@@ -20,7 +20,7 @@ const PastStrategiesList = ({ onRowClick, strategies, getMarketPair }) => {
         <VirtualTable
           data={strategies}
           columns={pastStrategiesColumns(t, getMarketPair)}
-          defaultSortBy='mts'
+          defaultSortBy='startedOn'
           defaultSortDirection='DESC'
           onRowClick={onRowClick}
         />
