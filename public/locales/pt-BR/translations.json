@@ -609,7 +609,7 @@
     "backtestTab": "Backtest",
     "viewInIDETab": "View in IDE",
     "activeStrategies": "Active strategies",
-    "pastStrategies": "Past strategies",
+    "pastStrategies": "Executed strategies",
     "savedStrategies": "Saved strategies",
     "more": "Mais",
     "importStrategy": "Import strategy from JSON...",

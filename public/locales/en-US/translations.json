@@ -627,7 +627,7 @@
     "backtestTab": "Backtest",
     "viewInIDETab": "View in IDE",
     "activeStrategies": "Active strategies",
-    "pastStrategies": "Past strategies",
+    "pastStrategies": "Executed strategies",
     "savedStrategies": "Draft strategies",
     "copyStrategy": "Copy draft strategy",
     "renameStrategy": "Rename draft strategy",
