@@ -1,13 +1,12 @@
-import React, { useState, memo, useEffect } from 'react'
+import React, {
+  useState, memo, useEffect, useCallback,
+} from 'react'
 import _isEmpty from 'lodash/isEmpty'
-import _size from 'lodash/size'
 import PropTypes from 'prop-types'
 import { useTranslation } from 'react-i18next'
-import {
-  MAX_STRATEGY_LABEL_LENGTH as MAX_LABEL_LENGTH,
-} from '../../../constants/variables'
 import Input from '../../../ui/Input'
 import Modal from '../../../ui/Modal'
+import { validateStrategyName } from '../Strategy.helpers'
 
 const SaveStrategyAsModal = ({
   onSubmit, onClose, isOpen, strategy,
@@ -17,22 +16,16 @@ const SaveStrategyAsModal = ({
 
   const { t } = useTranslation()
 
-  const onSubmitHandler = () => {
-    const labelSize = _size(label)
-
-    if (_isEmpty(label)) {
-      setError(t('strategyEditor.newStrategyModalEmptyError'))
-      return
-    }
-
-    if (labelSize > MAX_LABEL_LENGTH) {
-      setError(t('strategyEditor.newStrategyModalLongError', { labelSize, MAX_LABEL_LENGTH }))
+  const onSubmitHandler = useCallback(() => {
+    const err = validateStrategyName(label, t)
+    setError(err)
+    if (err) {
       return
     }
 
     onSubmit({ ...strategy, label })
     onClose()
-  }
+  }, [label, onClose, onSubmit, strategy, t])
 
   useEffect(() => {
     if (strategy?.label) {
@@ -56,9 +49,7 @@ const SaveStrategyAsModal = ({
           onChange={setLabel}
         />
 
-        {!_isEmpty(error) && (
-        <p className='error'>{error}</p>
-        )}
+        {!_isEmpty(error) && <p className='error'>{error}</p>}
       </div>
       <Modal.Footer className='hfui-createnewstrategymodal__footer'>
         <Modal.Button primary onClick={onSubmitHandler}>

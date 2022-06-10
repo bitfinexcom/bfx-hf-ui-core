@@ -57,7 +57,6 @@ const CreateNewStrategyFromModalOpen = ({
     }
 
     onSubmit(label, newStrategy)
-
     onClose()
   }, [isTemplatesTabSelected, label, onClose, onSubmit, savedStrategies, selectedStrategyLabel, t, template])
 
