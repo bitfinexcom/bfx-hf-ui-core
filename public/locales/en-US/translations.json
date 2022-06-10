@@ -557,6 +557,8 @@
     "fee": "Fee",
     "id": "Id",
     "signal": "Signal",
+    "entryAt": "Entry At",
+    "leftAt": "Left At",
     "entryPrice": "Entry Price",
     "closingPrice": "Closing Price",
     "units": "Units",
@@ -565,7 +567,13 @@
     "drawdown": "Drawdown",
     "runningSince": "Running since",
     "leverage": "Leverage",
-    "sharpeRatio": "Sharpe Ratio"
+    "sharpeRatio": "Sharpe Ratio",
+    "action": "Action",
+    "timestamp": "Timestamp",
+    "executedAt": "Executed At",
+    "orderPrice": "Order Price",
+    "tradePrice": "Trade Price",
+    "viewTrades": "View Trades"
   },
   "tickersPanel": {
     "title": "Ticker Panel"

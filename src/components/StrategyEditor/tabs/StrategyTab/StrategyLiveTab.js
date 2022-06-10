@@ -2,6 +2,7 @@ import React, { useCallback, useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
 import _isEmpty from 'lodash/isEmpty'
 import { useTranslation } from 'react-i18next'
+import { useSelector } from 'react-redux'
 import StrategyPerfomanceMetrics from '../../../StrategyPerfomanceMetrics'
 import StrategyTradesTable from '../../../StrategyTradesTable'
 import StrategiesGridLayout from '../../components/StrategiesGridLayout'
@@ -14,15 +15,20 @@ import {
 import StrategyLiveChart from '../../../StrategyLiveChart'
 import StrategyTabWrapper from '../../components/StrategyTabWrapper'
 import StrategyOptionsPanelLive from '../../../StrategyOptionsPanel/StrategyOptionsPanel.Live'
+import { getStrategyId } from '../../../../redux/selectors/ui'
+import { getExecutionResults } from '../../../../redux/selectors/ws'
 
 const StrategyLiveTab = (props) => {
-  const { executionResults, onCancelProcess } = props
+  const executionResults = useSelector(getExecutionResults)
+  const { onCancelProcess } = props
   const [layoutConfig, setLayoutConfig] = useState()
   const [fullscreenChart, setFullScreenChart] = useState(false)
 
   const { t } = useTranslation()
 
-  const { loading, executing, results } = executionResults
+  const { loading, executing, results: allResults } = executionResults
+  const id = useSelector(getStrategyId)
+  const results = allResults?.[id]
 
   const hasResults = !_isEmpty(results)
 
@@ -31,7 +37,7 @@ const StrategyLiveTab = (props) => {
       setLayoutConfig(LAYOUT_CONFIG_NO_DATA)
       return
     }
-    if (_isEmpty(results.strategy?.trades)) {
+    if (_isEmpty(results?.trades)) {
       setLayoutConfig(LAYOUT_CONFIG_WITHOUT_TRADES)
       return
     }
