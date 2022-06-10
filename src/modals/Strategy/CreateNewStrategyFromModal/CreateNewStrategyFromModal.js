@@ -14,7 +14,8 @@ import Templates from '../../../components/StrategyEditor/templates'
 import Tabs from '../../../ui/Tabs/Tabs'
 import { getSortedByTimeStrategies } from '../../../redux/selectors/ws'
 
-import { validateStrategyName, dropdownOptionsAdaptor, getTabs } from './CreateNewStrategyFromModal.helpers'
+import { dropdownOptionsAdaptor, getTabs } from './CreateNewStrategyFromModal.helpers'
+import { validateStrategyName } from '../Strategy.helpers'
 
 const CreateNewStrategyFromModalOpen = ({
   onSubmit,

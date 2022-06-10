@@ -1,9 +1,6 @@
 import React from 'react'
-import _isEmpty from 'lodash/isEmpty'
-import _size from 'lodash/size'
 import _reduce from 'lodash/reduce'
 import { Icon } from 'react-fa'
-import { MAX_STRATEGY_LABEL_LENGTH as MAX_LABEL_LENGTH } from '../../../constants/variables'
 
 export const dropdownOptionsAdaptor = (options) => {
   return _reduce(options, (nextOptions, option) => ({
@@ -27,21 +24,4 @@ export const getTabs = (t, savedStrategiesExists) => {
       disabled: !savedStrategiesExists,
     },
   ]
-}
-
-export const validateStrategyName = (label, t) => {
-  const labelSize = _size(label)
-
-  if (_isEmpty(label)) {
-    return t('strategyEditor.newStrategyModalEmptyError')
-  }
-
-  if (labelSize > MAX_LABEL_LENGTH) {
-    return t('strategyEditor.newStrategyModalLongError', {
-      labelSize,
-      MAX_LABEL_LENGTH,
-    })
-  }
-
-  return ''
 }
