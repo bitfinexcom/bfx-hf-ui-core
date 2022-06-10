@@ -441,7 +441,6 @@ const StrategyEditor = (props) => {
                 startExecution={onLaunchExecutionClick}
                 stopExecution={stopExecution}
                 executionResults={execResults}
-                onSaveAsStrategy={onSaveAsStrategy}
                 onSaveStrategy={onSaveStrategy}
                 openExecutionOptionsModal={openExecutionOptionsModal}
                 saveStrategyOptions={saveStrategyOptions}
