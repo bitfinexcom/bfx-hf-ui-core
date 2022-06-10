@@ -98,9 +98,12 @@ function reducer(state = getInitialState(), action = {}) {
       const { strategyMapKey } = payload
 
       const activeStrategies = { ...state.activeStrategies }
+      const stoppedStrategy = activeStrategies[strategyMapKey]
+      stoppedStrategy.stoppedOn = Date.now()
+
       const pastStrategies = [
         ...state.pastStrategies,
-        activeStrategies[strategyMapKey],
+        stoppedStrategy,
       ]
 
       delete activeStrategies[strategyMapKey]
