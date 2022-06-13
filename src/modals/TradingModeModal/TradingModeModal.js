@@ -17,7 +17,7 @@ const TradingModeModal = ({
 
   const onTradingModeModalSubmit = () => {
     changeTradingMode(!isPaperTrading, authToken, currentMode)
-    location.replace('/index.html'); // eslint-disable-line
+    setTimeout(() => location.replace('/index.html'), 500); // eslint-disable-line
   }
 
   const { t } = useTranslation()
