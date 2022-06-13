@@ -79,7 +79,7 @@ const BacktestTab = (props) => {
           return null
       }
     },
-    [layoutConfig, props, fullscreenChart, finished, loading, results],
+    [layoutConfig, props, fullscreenChart, finished, loading, results, strategy],
   )
 
   return (
@@ -106,6 +106,7 @@ BacktestTab.propTypes = {
     trades: PropTypes.arrayOf(PropTypes.object), // eslint-disable-line
   }).isRequired,
   onCancelProcess: PropTypes.func.isRequired,
+  strategy: PropTypes.object.isRequired, // eslint-disable-line
 }
 
 export default BacktestTab
