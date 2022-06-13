@@ -115,15 +115,11 @@
   &__settings-btn {
     display: flex;
     align-items: center;
-    justify-content: flex-end;
+    justify-content: space-between;
     cursor: pointer;
     text-transform: uppercase;
     height: 32px;
-    width: 120px;
-
-    span {
-      margin-right: 5px;
-    }
+    width: 110px;
 
     .hfui-exchangeinfobar__button {
       &:hover,

@@ -15,8 +15,8 @@ const StrategyOptionsButton = ({ onClick }) => {
       onMouseEnter={() => setShowLabel(true)}
       onMouseLeave={() => setShowLabel(false)}
     >
-      {showLabel && <span>{t('strategyEditor.strategyOptionsBtn')}</span>}
       <NavbarButton alt='Application settings' icon='settings-icon' />
+      {showLabel && <span>{t('strategyEditor.strategyOptionsBtn')}</span>}
     </div>
   )
 }
