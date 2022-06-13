@@ -123,7 +123,7 @@ const MarketSelect = forwardRef(function MarketSelect(props, ref) {
 })
 
 MarketSelect.propTypes = {
-  value: PropTypes.instanceOf(Object).isRequired,
+  value: PropTypes.instanceOf(Object),
   onChange: PropTypes.func.isRequired,
   markets: PropTypes.objectOf(PropTypes.object).isRequired, // eslint-disable-line
   renderLabel: PropTypes.bool,
@@ -138,6 +138,7 @@ MarketSelect.propTypes = {
 }
 
 MarketSelect.defaultProps = {
+  value: null,
   className: {},
   favoritePairs: [],
   currentMode: '',

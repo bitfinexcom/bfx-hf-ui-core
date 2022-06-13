@@ -73,7 +73,6 @@ const StrategyEditor = (props) => {
     onLoadStrategy,
     dsExecuteLiveStrategy,
     dsStopLiveStrategy,
-    markets,
     saveStrategy,
     isPaperTrading,
     dsExecuteBacktest,
@@ -107,7 +106,7 @@ const StrategyEditor = (props) => {
   const strategyOptions = _get(
     strategy,
     'strategyOptions',
-    getDefaultStrategyOptions(markets),
+    getDefaultStrategyOptions(),
   )
 
   const {
@@ -143,7 +142,7 @@ const StrategyEditor = (props) => {
       ...content,
       label,
       id: v4(),
-      strategyOptions: getDefaultStrategyOptions(markets),
+      strategyOptions: getDefaultStrategyOptions(),
     }
     saveStrategy(newStrategy)
     onLoadStrategy(newStrategy)
@@ -515,7 +514,6 @@ StrategyEditor.propTypes = {
   onRemove: PropTypes.func.isRequired,
   authToken: PropTypes.string.isRequired,
   onStrategyChange: PropTypes.func.isRequired,
-  markets: PropTypes.objectOf(PropTypes.object).isRequired, // eslint-disable-line
   setStrategy: PropTypes.func,
   backtestResults: PropTypes.objectOf(PropTypes.any).isRequired, // eslint-disable-line
   strategy: PropTypes.shape({

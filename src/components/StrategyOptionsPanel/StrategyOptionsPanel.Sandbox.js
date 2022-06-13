@@ -71,10 +71,15 @@ const StrategyOptionsPanelSandbox = ({
             value={symbol}
             onChange={onMarketSelectChange}
             markets={markets}
+            placeholder={t('strategyEditor.selectMarketPlaceholder')}
             renderWithFavorites
           />
           <p className='hfui-orderform__input-label'>
-            {t('strategyEditor.selectMarketDescription')}
+            <span>
+              <b>{t('ui.required')}</b>
+              .&nbsp;
+              {t('strategyEditor.selectMarketDescription')}
+            </span>
           </p>
         </div>
         <StrategyTypeSelect
@@ -124,7 +129,7 @@ StrategyOptionsPanelSandbox.propTypes = {
           PropTypes.bool,
           PropTypes.number,
         ]),
-      ).isRequired,
+      ),
       strategyType: PropTypes.shape({
         i18nKey: PropTypes.string,
         customValue: PropTypes.string,

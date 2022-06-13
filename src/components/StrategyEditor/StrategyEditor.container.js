@@ -30,13 +30,13 @@ const mapStateToProps = (state = {}) => {
     backtestResults: getBacktestResults(state),
     executionState: getCurrentStrategyExecutionState(state),
     settingsTheme: getThemeSetting(state),
-    markets: getMarketsForExecution(state),
     isPaperTrading: getIsPaperTrading(state),
     flags: getStrategiesFeatureFlags(state),
     isBetaVersion: getIsBetaVersion(state),
     savedStrategies: getSavedStrategies(state),
     currentMode: getCurrentMode(state),
     executionId: getStrategyExecutionId(state),
+    markets: getMarketsForExecution(state),
   }
 }
 

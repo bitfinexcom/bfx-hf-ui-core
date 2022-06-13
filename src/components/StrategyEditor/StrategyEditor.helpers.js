@@ -28,9 +28,9 @@ export const STRATEGY_OPTIONS_KEYS = {
   STRATEGY_TYPE: 'strategyType',
 }
 
-export const getDefaultStrategyOptions = (markets) => {
+export const getDefaultStrategyOptions = () => {
   return {
-    [STRATEGY_OPTIONS_KEYS.SYMBOL]: getDefaultMarket(markets),
+    [STRATEGY_OPTIONS_KEYS.SYMBOL]: null,
     [STRATEGY_OPTIONS_KEYS.TIMEFRAME]: DEFAULT_TIMEFRAME,
     [STRATEGY_OPTIONS_KEYS.TRADES]: DEFAULT_USE_TRADES,
     [STRATEGY_OPTIONS_KEYS.CANDLES]: DEFAULT_CANDLES,
@@ -123,7 +123,7 @@ export const prepareStrategyToLoad = (strategyToLoad, markets, strategies) => {
     id: strategyId,
     executionId: id,
     strategyOptions: {
-      ...getDefaultStrategyOptions(markets),
+      ...getDefaultStrategyOptions(),
       ...strategyToLoad.strategyOptions,
       [STRATEGY_OPTIONS_KEYS.SYMBOL]: _find(markets, (m) => m.wsID === symbol),
       [STRATEGY_OPTIONS_KEYS.CAPITAL_ALLOCATION]: String(capitalAllocation),
