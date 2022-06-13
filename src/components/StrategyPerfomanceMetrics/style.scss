@@ -3,10 +3,19 @@
     display: flex;
     justify-content: space-between;
     font-size: 12px;
-    margin-bottom: 10px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+
+    &:hover {
+      background-color: var(--lighter-background-color);
+    }
 
     &:last-child {
-      margin-bottom: 0;
+      padding-bottom: 0;
+    }
+
+    &:first-child {
+      padding-top: 0;
     }
   }
 
