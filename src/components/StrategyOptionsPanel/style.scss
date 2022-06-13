@@ -1,3 +1,5 @@
+@import "../../variables.scss";
+
 .hfui-strategy-options {
   display: flex;
   justify-content: space-between;
@@ -93,5 +95,31 @@
   &__search-btn {
     width: 15px;
     height: 15px;
+  }
+
+  &__settings-btn {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    cursor: pointer;
+    text-transform: uppercase;
+    height: 32px;
+    width: 120px;
+
+    span {
+      margin-right: 5px;
+    }
+
+    .hfui-exchangeinfobar__button {
+      &:hover,
+      &:active {
+        color: inherit;
+      }
+    }
+
+    &:hover {
+      color: $green-color;
+      justify-content: space-between;
+    }
   }
 }

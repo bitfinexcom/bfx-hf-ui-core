@@ -11,8 +11,8 @@ import MarketSelect from '../MarketSelect'
 import Button from '../../ui/Button'
 import { makeShorterLongName } from '../../util/ui'
 import StrategyTypeSelect from './StrategyTypeSelect'
-import NavbarButton from '../Navbar/Navbar.Button'
 import { STRATEGY_OPTIONS_KEYS } from '../StrategyEditor/StrategyEditor.helpers'
+import StrategyOptionsButton from './StrategyOptionsButton'
 
 import './style.css'
 
@@ -87,12 +87,8 @@ const StrategyOptionsPanelSandbox = ({
           strategyType={strategyType}
           isExecuting={false}
         />
-        <NavbarButton
-          alt='Application settings'
-          icon='settings-icon'
-          className='hfui-navbar__app-settings__icon item'
-          onClick={openExecutionOptionsModal}
-        />
+        <StrategyOptionsButton onClick={openExecutionOptionsModal} />
+
       </div>
       <div className='hfui-strategy-options__save-container'>
         <p className='message'>
