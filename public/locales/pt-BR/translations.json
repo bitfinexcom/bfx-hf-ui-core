@@ -592,7 +592,7 @@
     "disconnected": "Desconectado"
   },
   "strategyEditor": {
-    "unsavedChanges": "You have unsaved changes",
+    "unsavedChanges": "Unsaved changes",
     "unsavedChangesModalTitle": "Do you need to save changes in the strategy before closing?",
     "unsavedChangesModalText": "You have unsaved changes in \"{{strategyName}}\". If you don`t save them, they will be permanently deleted",
     "saved": "Saved",

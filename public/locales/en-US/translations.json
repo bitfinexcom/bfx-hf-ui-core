@@ -613,7 +613,7 @@
     "disconnected": "Disconnected"
   },
   "strategyEditor": {
-    "unsavedChanges": "You have unsaved changes",
+    "unsavedChanges": "Unsaved changes",
     "unsavedChangesModalTitle": "Do you need to save changes in the strategy before closing?",
     "cancelThisProcess": "Cancel this process",
     "cancelAppProcessTitle": "Cancel application process",
