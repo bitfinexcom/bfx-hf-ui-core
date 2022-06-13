@@ -91,10 +91,10 @@ const StrategyOptionsPanelSandbox = ({
 
       </div>
       <div className='hfui-strategy-options__save-container'>
-        <p className='message'>
-          {hasErrors && t('strategyEditor.errorsInIDE')}
-          {strategyDirty && !hasErrors && t('strategyEditor.unsavedChanges')}
-          {!hasErrors && !strategyDirty && t('strategyEditor.saved')}
+        <p className='saving-message'>
+          {hasErrors && <span className='red'>{t('strategyEditor.errorsInIDE')}</span>}
+          {strategyDirty && !hasErrors && <span className='grey'>{t('strategyEditor.unsavedChanges')}</span>}
+          {!hasErrors && !strategyDirty && <span className='green'>{t('strategyEditor.saved')}</span>}
         </p>
         <Button
           green

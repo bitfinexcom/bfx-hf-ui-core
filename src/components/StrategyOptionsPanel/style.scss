@@ -14,18 +14,33 @@
   &__left-container {
     display: flex;
     justify-content: space-between;
-    width: 80%;
+    width: 75%;
   }
 
   &__save-container {
     display: flex;
-    flex-direction: column;
-    align-items: flex-end;
+    align-items: center;
+    height: 34px;
 
-    .message {
+    .saving-message {
       text-transform: uppercase;
-      margin-bottom: 3px;
-      font-weight: 400;
+      font-size: 10px;
+      line-height: 12px;
+      font-weight: 700;
+      margin-right: 10px;
+      text-align: end;
+
+      .red {
+        color: red;
+      }
+
+      .green {
+        color: var(--primary-7);
+      }
+
+      .grey {
+        color: var(--shade-6);
+      }
     }
 
     .save-btn {
@@ -58,7 +73,7 @@
   &__input {
     display: flex;
     flex-direction: column;
-    max-width: 350px;
+    max-width: 250px;
     margin-bottom: 0;
   }
 
