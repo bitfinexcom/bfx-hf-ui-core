@@ -5,9 +5,10 @@ import { useTranslation } from 'react-i18next'
 import { useSelector } from 'react-redux'
 import Panel from '../../ui/Panel'
 import {
-  getSortedByTimeStrategies,
   getSortedByTimeActiveStrategies,
   sortedByTimePastStrategies,
+  getDraftStrategies,
+  getSortedByTimeStrategies,
 } from '../../redux/selectors/ws'
 import {
   getExecutionMarketPair,
@@ -32,6 +33,7 @@ const StrategiesListTable = ({
   const activeStrategies = useSelector(getSortedByTimeActiveStrategies())
   const pastStrategies = useSelector(sortedByTimePastStrategies)
   const savedStrategies = useSelector(getSortedByTimeStrategies)
+  const draftStrategies = useSelector(getDraftStrategies)
   const markets = useSelector(getMarketsForExecution)
   const isPaperTrading = useSelector(getIsPaperTrading)
 
@@ -72,9 +74,9 @@ const StrategiesListTable = ({
       {isPaperTrading && (
         <SavedStrategiesList
           onRowClick={onRowClick}
-          strategies={savedStrategies}
+          strategies={draftStrategies}
           tabtitle={t('strategyEditor.savedStrategies')}
-          count={_size(savedStrategies)}
+          count={_size(draftStrategies)}
           onStrategyRemove={onStrategyRemove}
           saveAsHandler={saveAsHandler}
           renameStrategy={renameStrategy}
