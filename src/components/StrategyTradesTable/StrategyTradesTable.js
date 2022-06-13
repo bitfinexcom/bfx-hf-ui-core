@@ -21,7 +21,6 @@ import {
 import { getRowRenderer, rowCache } from './StrategyTradesTable.Row'
 
 import { onTradeExportClick } from './StrategyTradesTable.helpers'
-import { getActiveMarket } from '../../redux/selectors/ui'
 
 import './style.css'
 
@@ -31,10 +30,11 @@ const StrategyTradesTable = ({
   results,
   setLayoutConfig,
   layoutConfig,
+  strategy,
 }) => {
   const [isExpanded, setIsExpanded] = useState(false)
-  const activeMarket = useSelector(getActiveMarket)
   const getCurrencySymbol = useSelector(getCurrencySymbolMemo)
+  const { strategyOptions: { symbol = {} } = {} } = strategy
 
   const onExpandClick = useCallback(() => {
     const currentElementIndex = _findIndex(
@@ -87,7 +87,7 @@ const StrategyTradesTable = ({
         <>
           <Button
             className='panel-button'
-            onClick={() => onTradeExportClick(results, results, activeMarket, t, getCurrencySymbol)}
+            onClick={() => onTradeExportClick(results, results, symbol, t, getCurrencySymbol)}
           >
             <Icon name='file' />
             &nbsp;&nbsp;
@@ -135,6 +135,7 @@ StrategyTradesTable.propTypes = {
   }).isRequired,
   layoutConfig: PropTypes.arrayOf(PropTypes.object).isRequired, // eslint-disable-line
   setLayoutConfig: PropTypes.func.isRequired,
+  strategy: PropTypes.object.isRequired, // eslint-disable-line
 }
 
 export default memo(StrategyTradesTable)

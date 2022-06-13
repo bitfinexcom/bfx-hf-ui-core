@@ -15,7 +15,7 @@ import StrategyLiveChart from '../../StrategyLiveChart'
 import BacktestOptionsPanel from '../../BacktestOptionsPanel'
 
 const BacktestTab = (props) => {
-  const { results, onCancelProcess } = props
+  const { results, onCancelProcess, strategy } = props
   const { t } = useTranslation()
   const [layoutConfig, setLayoutConfig] = useState()
   const [fullscreenChart, setFullScreenChart] = useState(false)
@@ -71,6 +71,7 @@ const BacktestTab = (props) => {
               setLayoutConfig={setLayoutConfig}
               layoutConfig={layoutConfig}
               onTradeClick={() => {}}
+              strategy={strategy}
             />
           )
 
@@ -78,7 +79,7 @@ const BacktestTab = (props) => {
           return null
       }
     },
-    [layoutConfig, props, fullscreenChart, finished, loading, results],
+    [layoutConfig, props, fullscreenChart, finished, loading, results, strategy],
   )
 
   return (
@@ -105,6 +106,7 @@ BacktestTab.propTypes = {
     trades: PropTypes.arrayOf(PropTypes.object), // eslint-disable-line
   }).isRequired,
   onCancelProcess: PropTypes.func.isRequired,
+  strategy: PropTypes.object.isRequired, // eslint-disable-line
 }
 
 export default BacktestTab
