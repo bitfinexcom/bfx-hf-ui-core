@@ -2,11 +2,13 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import _find from 'lodash/find'
 import _size from 'lodash/size'
+import _isEmpty from 'lodash/isEmpty'
 import { Tooltip } from '@ufx-ui/core'
 import _includes from 'lodash/includes'
 import { useTranslation } from 'react-i18next'
 
 import { Icon } from 'react-fa'
+import clsx from 'clsx'
 import MarketSelect from '../MarketSelect'
 import Button from '../../ui/Button'
 import { makeShorterLongName } from '../../util/ui'
@@ -74,7 +76,7 @@ const StrategyOptionsPanelSandbox = ({
             placeholder={t('strategyEditor.selectMarketPlaceholder')}
             renderWithFavorites
           />
-          <p className='hfui-orderform__input-label'>
+          <p className={clsx('hfui-orderform__input-label', { error: _isEmpty(symbol) })}>
             <span>
               <b>{t('ui.required')}</b>
               .&nbsp;

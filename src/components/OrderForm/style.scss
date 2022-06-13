@@ -388,6 +388,10 @@
   display: flex;
   flex-shrink: 0;
   justify-content: space-between;
+
+  &.error {
+    color: $red-color;
+  }
 }
 
 .hfui-orderform__input-error-label {
