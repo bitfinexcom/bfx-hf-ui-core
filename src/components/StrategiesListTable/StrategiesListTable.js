@@ -57,13 +57,15 @@ const StrategiesListTable = ({
       className='hfui-strategies-list'
       darkHeader
     >
-      <ActiveStrategiesList
-        onRowClick={onActiveOrPastStrategyRowClick}
-        getMarketPair={_getMarketPair}
-        strategies={activeStrategies}
-        tabtitle={t('strategyEditor.activeStrategies')}
-        count={_size(activeStrategies)}
-      />
+      {!isPaperTrading && (
+        <ActiveStrategiesList
+          onRowClick={onActiveOrPastStrategyRowClick}
+          getMarketPair={_getMarketPair}
+          strategies={activeStrategies}
+          tabtitle={t('strategyEditor.activeStrategies')}
+          count={_size(activeStrategies)}
+        />
+      )}
       <PastStrategiesList
         strategies={pastStrategies}
         getMarketPair={_getMarketPair}
