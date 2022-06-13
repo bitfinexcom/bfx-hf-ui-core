@@ -18,7 +18,7 @@ import StrategyOptionsPanelLive from '../../../StrategyOptionsPanel/StrategyOpti
 import { getCurrentStrategyExecutionState } from '../../../../redux/selectors/ws'
 
 const StrategyLiveTab = (props) => {
-  const { onCancelProcess } = props
+  const { onCancelProcess, strategy } = props
   const [layoutConfig, setLayoutConfig] = useState()
   const [fullscreenChart, setFullScreenChart] = useState(false)
 
@@ -82,6 +82,7 @@ const StrategyLiveTab = (props) => {
               setLayoutConfig={setLayoutConfig}
               layoutConfig={layoutConfig}
               onTradeClick={() => {}}
+              strategy={strategy}
             />
           )
 

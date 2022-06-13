@@ -16,7 +16,6 @@ import {
 } from '../StrategyEditor/components/StrategiesGridLayout.constants'
 
 import { onTradeExportClick } from './BacktestTradesTable.helpers'
-import { getActiveMarket } from '../../redux/selectors/ui'
 
 import './style.css'
 
@@ -27,12 +26,13 @@ const BacktestTradesTable = ({
   onTradeClick,
   setLayoutConfig,
   layoutConfig,
+  strategy,
 }) => {
   const [isExpanded, setIsExpanded] = useState(false)
-  const activeMarket = useSelector(getActiveMarket)
   const strategyTrades = results.strategy?.trades
   const { trades = strategyTrades } = results
   const getCurrencySymbol = useSelector(getCurrencySymbolMemo)
+  const { strategyOptions: { symbol = {} } = {} } = strategy
 
   const onExpandClick = () => {
     const currentElementIndex = _findIndex(
@@ -72,7 +72,7 @@ const BacktestTradesTable = ({
         <>
           <Button
             className='panel-button'
-            onClick={() => onTradeExportClick(trades, results, activeMarket, t, getCurrencySymbol)}
+            onClick={() => onTradeExportClick(trades, results, symbol, t, getCurrencySymbol)}
           >
             <Icon name='file' />
             &nbsp;&nbsp;
@@ -121,6 +121,7 @@ BacktestTradesTable.propTypes = {
   onTradeClick: PropTypes.func.isRequired,
   layoutConfig: PropTypes.arrayOf(PropTypes.object).isRequired, // eslint-disable-line
   setLayoutConfig: PropTypes.func.isRequired,
+  strategy: PropTypes.object.isRequired, // eslint-disable-line
 }
 
 export default memo(BacktestTradesTable)

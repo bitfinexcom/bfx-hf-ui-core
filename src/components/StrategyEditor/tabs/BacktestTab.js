@@ -15,7 +15,7 @@ import StrategyLiveChart from '../../StrategyLiveChart'
 import BacktestOptionsPanel from '../../BacktestOptionsPanel'
 
 const BacktestTab = (props) => {
-  const { results, onCancelProcess } = props
+  const { results, onCancelProcess, strategy } = props
   const { t } = useTranslation()
   const [layoutConfig, setLayoutConfig] = useState()
   const [fullscreenChart, setFullScreenChart] = useState(false)
@@ -71,6 +71,7 @@ const BacktestTab = (props) => {
               setLayoutConfig={setLayoutConfig}
               layoutConfig={layoutConfig}
               onTradeClick={() => {}}
+              strategy={strategy}
             />
           )
 
