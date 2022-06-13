@@ -33,15 +33,6 @@ const lookForTrade = async (state = {}, update = {}) => {
     })
   }
 
-  const crossedUnder = (
-    (current.macd <= current.signal) &&
-    (previous.macd >= previous.signal)
-  )
-
-  if (crossedUnder) {
-    return HFS.closePositionMarket(state, { price, mtsCreate: mts })
-  }
-
   return state
 }
 
