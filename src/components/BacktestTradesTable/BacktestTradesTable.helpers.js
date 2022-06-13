@@ -3,14 +3,15 @@ import { saveAs } from 'file-saver'
 import _map from 'lodash/map'
 import _split from 'lodash/split'
 import _replace from 'lodash/replace'
+import { getPairFromMarket } from '../../util/market'
 
-const getExportFilename = (activeMarket) => {
+const getExportFilename = (prefix) => {
   // turn something like 2022-02-22T12:55:03.800Z into 2022-02-22T12-55-03
   const date = _replace(_split(new Date().toISOString(), '.')[0], /:/g, '-')
-  return `${activeMarket}-${date}.zip`
+  return `${prefix}-${date}.zip`
 }
 
-const onTradeExportClick = (rawTrades, results, activeMarket, t) => {
+const onTradeExportClick = (rawTrades, results, activeMarket, t, getCurrencySymbol) => {
   const {
     nCandles,
     nTrades,
@@ -73,7 +74,7 @@ const onTradeExportClick = (rawTrades, results, activeMarket, t) => {
 
   csvExport.export(documents, (buffer) => {
     const blob = new Blob([buffer], { type: 'application/zip' })
-    const filename = getExportFilename(activeMarket)
+    const filename = getExportFilename(getPairFromMarket(activeMarket, getCurrencySymbol, '-'))
 
     saveAs(blob, filename)
   })
