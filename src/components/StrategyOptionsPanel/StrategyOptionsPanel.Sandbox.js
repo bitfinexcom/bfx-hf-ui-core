@@ -30,10 +30,7 @@ const StrategyOptionsPanelSandbox = ({
   onSaveStrategy,
   saveStrategyOptions,
 }) => {
-  const {
-    label,
-    strategyOptions: { symbol, strategyType } = {},
-  } = strategy || {}
+  const { label, strategyOptions: { symbol, strategyType } = {} } = strategy || {}
   const { t } = useTranslation()
 
   const onMarketSelectChange = (selection) => {
@@ -76,7 +73,11 @@ const StrategyOptionsPanelSandbox = ({
             placeholder={t('strategyEditor.selectMarketPlaceholder')}
             renderWithFavorites
           />
-          <p className={clsx('hfui-orderform__input-label', { error: _isEmpty(symbol) })}>
+          <p
+            className={clsx('hfui-orderform__input-label', {
+              error: _isEmpty(symbol),
+            })}
+          >
             <span>
               <b>{t('ui.required')}</b>
               .&nbsp;
@@ -90,13 +91,18 @@ const StrategyOptionsPanelSandbox = ({
           isExecuting={false}
         />
         <StrategyOptionsButton onClick={openExecutionOptionsModal} />
-
       </div>
       <div className='hfui-strategy-options__save-container'>
         <p className='saving-message'>
-          {hasErrors && <span className='red'>{t('strategyEditor.errorsInIDE')}</span>}
-          {strategyDirty && !hasErrors && <span className='grey'>{t('strategyEditor.unsavedChanges')}</span>}
-          {!hasErrors && !strategyDirty && <span className='green'>{t('strategyEditor.saved')}</span>}
+          {hasErrors && (
+            <span className='red'>{t('strategyEditor.errorsInIDE')}</span>
+          )}
+          {strategyDirty && !hasErrors && (
+            <span className='grey'>{t('strategyEditor.unsavedChanges')}</span>
+          )}
+          {!hasErrors && !strategyDirty && (
+            <span className='green'>{t('strategyEditor.saved')}</span>
+          )}
         </p>
         <Button
           green
