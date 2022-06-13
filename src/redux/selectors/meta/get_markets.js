@@ -10,7 +10,10 @@ import { getIsPaperTrading } from '../ui'
 import { MARKET_TYPES_KEYS } from '../../constants/market'
 
 const {
-  getCurrencySymbolMemo, getIsSecuritiesPair, getIsTradingPair, getIsDerivativePair,
+  getCurrencySymbolMemo,
+  getIsSecuritiesPair,
+  getIsTradingPair,
+  getIsDerivativePair,
 } = reduxSelectors
 
 const path = REDUCER_PATHS.META
@@ -32,14 +35,6 @@ export const getMarkets = createSelector(
   },
 )
 
-export const getMarketPair = createSelector(
-  [getMarkets, getCurrencySymbolMemo],
-  (markets, getCurrencySymbol) => memoizeOne((symbol) => {
-    const currentMarket = markets?.[symbol]
-    return getPairFromMarket(currentMarket, getCurrencySymbol)
-  }),
-)
-
 export const getMarketsForExecution = createSelector(
   [
     getMarketsObject,
@@ -48,17 +43,45 @@ export const getMarketsForExecution = createSelector(
     getIsSecuritiesPair,
   ],
   (markets, isTradingPair, isDerivativePair, isSecuritiesPair) => {
-    const liveMarkets = _get(markets, MARKET_TYPES_KEYS.LIVE_MARKETS, EMPTY_OBJ)
+    const liveMarkets = _get(
+      markets,
+      MARKET_TYPES_KEYS.LIVE_MARKETS,
+      EMPTY_OBJ,
+    )
 
-    return _reduce(liveMarkets, (result, value, key) => {
-      if (isTradingPair(key) && !isDerivativePair(key) && !isSecuritiesPair(key)) {
-        return {
-          ...result,
-          [key]: value,
+    return _reduce(
+      liveMarkets,
+      (result, value, key) => {
+        if (
+          isTradingPair(key)
+          && !isDerivativePair(key)
+          && !isSecuritiesPair(key)
+        ) {
+          return {
+            ...result,
+            [key]: value,
+          }
         }
-      }
 
-      return result
-    }, {})
+        return result
+      },
+      {},
+    )
   },
+)
+
+export const getMarketPair = createSelector(
+  [getMarkets, getCurrencySymbolMemo],
+  (markets, getCurrencySymbol) => memoizeOne((symbol) => {
+    const currentMarket = markets?.[symbol]
+    return getPairFromMarket(currentMarket, getCurrencySymbol)
+  }),
+)
+
+export const getExecutionMarketPair = createSelector(
+  [getMarketsForExecution, getCurrencySymbolMemo],
+  (markets, getCurrencySymbol) => memoizeOne((symbol) => {
+    const currentMarket = markets?.[symbol]
+    return getPairFromMarket(currentMarket, getCurrencySymbol)
+  }),
 )
