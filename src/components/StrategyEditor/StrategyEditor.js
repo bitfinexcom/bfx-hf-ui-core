@@ -8,7 +8,6 @@ import _size from 'lodash/size'
 import _some from 'lodash/some'
 import _values from 'lodash/values'
 import _get from 'lodash/get'
-import _includes from 'lodash/includes'
 import PropTypes from 'prop-types'
 import { useTranslation } from 'react-i18next'
 import { useDispatch, useSelector } from 'react-redux'
@@ -40,20 +39,16 @@ import {
 } from './StrategyEditor.helpers'
 import LaunchStrategyModal from '../../modals/Strategy/LaunchStrategyModal'
 import routes from '../../constants/routes'
-import { getCurrentModeAPIKeyState } from '../../redux/selectors/ws'
+import { getAPIKeyStates } from '../../redux/selectors/ws'
 import {
   changeAppSettingsModalState,
   recvNotification,
   setSettingsTab,
 } from '../../redux/actions/ui'
 import { SETTINGS_TABS } from '../../modals/AppSettingsModal/AppSettingsModal.constants'
-import {
-  MAIN_MODE,
-  PAPER_MODE,
-  ALLOWED_PAPER_PAIRS,
-} from '../../redux/reducers/ui'
 
 import './style.css'
+import { getStrategyModeForSymbol } from '../../util/market'
 
 const debug = Debug('hfui-ui:c:strategy-editor')
 
@@ -244,14 +239,13 @@ const StrategyEditor = (props) => {
     dsExecuteBacktest(backtestArgs)
   }
 
-  const apiCredentials = useSelector(getCurrentModeAPIKeyState)
-  const apiClientConfigured = apiCredentials?.configured && apiCredentials?.valid
+  const apiKeyStates = useSelector(getAPIKeyStates)
   const dispatch = useDispatch()
   const openAppSettingsModal = () => dispatch(changeAppSettingsModalState(true))
   const setAPIKeysTab = () => dispatch(
     setSettingsTab(
       SETTINGS_TABS.Keys,
-      _includes(ALLOWED_PAPER_PAIRS, symbol?.wsID) ? PAPER_MODE : MAIN_MODE,
+      getStrategyModeForSymbol(symbol),
     ),
   )
   const showAPIKeyError = () => dispatch(
@@ -263,8 +257,10 @@ const StrategyEditor = (props) => {
     }),
   )
 
-  const checkForAPIKeys = () => {
-    if (!apiClientConfigured) {
+  const checkForAPIKeys = (strategyToRun) => {
+    const mode = getStrategyModeForSymbol(strategyToRun?.strategyOptions?.symbol)
+    const apiKeyState = apiKeyStates?.[mode]
+    if (!apiKeyState?.configured || !apiKeyState?.valid) {
       showAPIKeyError()
       setTimeout(() => {
         setAPIKeysTab()
@@ -280,7 +276,7 @@ const StrategyEditor = (props) => {
   const onLaunchExecutionClick = () => setIsLaunchStrategyModalOpen(true)
 
   const saveStrategyAndStartExecution = () => {
-    if (!checkForAPIKeys()) {
+    if (!checkForAPIKeys(strategy)) {
       return
     }
     if (!isFullFilled) {
@@ -304,7 +300,7 @@ const StrategyEditor = (props) => {
   }
 
   const loadStrategyAndStartExecution = (strategyToLoad) => {
-    if (!checkForAPIKeys()) {
+    if (!checkForAPIKeys(strategyToLoad)) {
       return
     }
     onLoadStrategy(strategyToLoad)
@@ -348,10 +344,6 @@ const StrategyEditor = (props) => {
   }
 
   const openExecutionOptionsModal = () => {
-    if (!checkForAPIKeys()) {
-      return
-    }
-
     setIsExecutionOptionsModalOpen(true)
     setExecutionOptionsModalType(EXECUTION_TYPES.LIVE)
   }
