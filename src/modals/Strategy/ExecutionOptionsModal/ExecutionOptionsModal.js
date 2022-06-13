@@ -22,6 +22,7 @@ const ExecutionOptionsModal = (props) => {
     capitalAllocation,
     stopLossPerc,
     maxDrawdownPerc,
+    isFullFilled,
   } = props
   const [capitalAllocationValue, setCapitalAllocationValue] = useState(capitalAllocation)
   const [stopLossPercValue, setStopLossPercValue] = useState(stopLossPerc)
@@ -68,9 +69,7 @@ const ExecutionOptionsModal = (props) => {
 
     setCapitalAllocationError(error)
     setCapitalAllocationValue(v)
-    if (error) {
-      return
-    }
+
     setCapitalAllocation(processed)
   }, [setCapitalAllocation, t])
 
@@ -97,8 +96,6 @@ const ExecutionOptionsModal = (props) => {
     }
     setMaxDrawdownPerc(processed)
   }, [setMaxDrawdownPerc, t])
-
-  const isFullFilled = capitalAllocationValue > 0 && stopLossPercValue && maxDrawdownPercValue
 
   const onSubmit = useCallback(() => {
     if (!isFullFilled) {
@@ -155,6 +152,7 @@ ExecutionOptionsModal.propTypes = {
   maxDrawdownPerc: PropTypes.string.isRequired,
   startExecution: PropTypes.func.isRequired,
   saveStrategyOptions: PropTypes.func.isRequired,
+  isFullFilled: PropTypes.bool.isRequired,
 }
 
 export default ExecutionOptionsModal

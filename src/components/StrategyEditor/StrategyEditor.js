@@ -32,6 +32,7 @@ import IDETabTitle from './tabs/IDETab.Title'
 import ExecutionOptionsModal from '../../modals/Strategy/ExecutionOptionsModal'
 import {
   getDefaultStrategyOptions,
+  isExecutionInputsFullFilled,
   prepareStrategyBacktestingArgs,
   prepareStrategyExecutionArgs,
   removeStrategyToExecuteFromLS,
@@ -121,7 +122,13 @@ const StrategyEditor = (props) => {
 
   const { executing, loadingGid } = executionState
 
-  const isFullFilled = !!capitalAllocation && !!stopLossPerc && !!maxDrawdownPerc
+  const isFullFilled = isExecutionInputsFullFilled(
+    capitalAllocation,
+    stopLossPerc,
+    maxDrawdownPerc,
+    symbol,
+  )
+
   const strategyId = strategy?.id
 
   const onCloseModals = () => {
@@ -405,6 +412,7 @@ const StrategyEditor = (props) => {
                     sidebarOpened={sidebarOpened}
                     strategyDirty={strategyDirty}
                     hasErrors={hasErrorsInIDE}
+                    isFullFilled={isFullFilled}
                   />
                 )}
                 onOpenSaveStrategyAsModal={openSaveStrategyAsModal}
@@ -474,6 +482,7 @@ const StrategyEditor = (props) => {
                 ? onLaunchExecutionClick
                 : onBacktestStart
             }
+            isFullFilled={isFullFilled}
           />
           <LaunchStrategyModal
             onSubmit={saveStrategyAndStartExecution}

@@ -1,5 +1,5 @@
 import _find from 'lodash/find'
-import { getDefaultMarket } from '../../util/market'
+import _isEmpty from 'lodash/isEmpty'
 
 const ONE_MIN = 1000 * 60
 const ONE_HOUR = ONE_MIN * 60
@@ -110,7 +110,10 @@ export const prepareStrategyBacktestingArgs = (strategy) => {
 export const prepareStrategyToLoad = (strategyToLoad, markets, strategies) => {
   const {
     strategyOptions: {
-      symbol, capitalAllocation, stopLossPerc, maxDrawdownPerc,
+      symbol,
+      capitalAllocation,
+      stopLossPerc,
+      maxDrawdownPerc,
     },
     strategyId,
     id,
@@ -148,3 +151,14 @@ export const parseStrategyToExecuteFromLS = () => {
 export const removeStrategyToExecuteFromLS = () => {
   localStorage.removeItem(LS_HF_UI_EXECUTE_STRATEGY)
 }
+
+export const isExecutionInputsFullFilled = (
+  capitalAllocation,
+  stopLossPerc,
+  maxDrawdownPerc,
+  symbol,
+) => !!capitalAllocation
+  && Number(capitalAllocation) > 0
+  && !!stopLossPerc
+  && !!maxDrawdownPerc
+  && !_isEmpty(symbol)
