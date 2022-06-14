@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import _isEmpty from 'lodash/isEmpty'
 import { useTranslation } from 'react-i18next'
 import StrategyPerfomanceMetrics from '../../StrategyPerfomanceMetrics'
-import BacktestTradesTable from '../../BacktestTradesTable'
+import BacktestTradesTable from '../../StrategyTradesTable'
 import StrategiesGridLayout from '../components/StrategiesGridLayout'
 import {
   COMPONENTS_KEYS,
@@ -21,6 +21,7 @@ const BacktestTab = (props) => {
   const [fullscreenChart, setFullScreenChart] = useState(false)
 
   const { finished = false, loading, trades } = results
+  const positions = results?.strategy?.closedPositions
 
   useEffect(() => {
     if (!finished) {
@@ -67,7 +68,7 @@ const BacktestTab = (props) => {
         case COMPONENTS_KEYS.STRATEGY_TRADES:
           return (
             <BacktestTradesTable
-              results={results}
+              results={positions}
               setLayoutConfig={setLayoutConfig}
               layoutConfig={layoutConfig}
               onTradeClick={() => {}}
@@ -79,7 +80,7 @@ const BacktestTab = (props) => {
           return null
       }
     },
-    [layoutConfig, props, fullscreenChart, finished, loading, results, strategy],
+    [layoutConfig, props, fullscreenChart, finished, loading, results, strategy, positions],
   )
 
   return (
@@ -104,6 +105,7 @@ BacktestTab.propTypes = {
     finished: PropTypes.bool,
     loading: PropTypes.bool,
     trades: PropTypes.arrayOf(PropTypes.object), // eslint-disable-line
+    strategy: PropTypes.object, // eslint-disable-line
   }).isRequired,
   onCancelProcess: PropTypes.func.isRequired,
   strategy: PropTypes.object.isRequired, // eslint-disable-line
