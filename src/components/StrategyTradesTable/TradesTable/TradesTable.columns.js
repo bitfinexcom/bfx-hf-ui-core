@@ -4,6 +4,8 @@ import _toString from 'lodash/toString'
 import { defaultCellRenderer } from '../../../util/ui'
 import { AMOUNT_DECIMALS, PRICE_SIG_FIGS } from '../../../constants/precision'
 
+import { getTradeAmount, getTradePrice } from './TradesTable.helpers'
+
 const STYLES = {
   RIGHT_ALIGN: { textAlign: 'right' },
 }
@@ -46,20 +48,22 @@ export default (t) => ([
     label: t('table.tradePrice'),
     dataKey: 'priceAvg',
     cellRenderer: ({ rowData }) => defaultCellRenderer(
-      <PrettyValue value={_toString(rowData?.order_js?.priceAvg)} sigFig={PRICE_SIG_FIGS} fadeTrailingZeros />,
+      <PrettyValue value={_toString(getTradePrice(rowData))} sigFig={PRICE_SIG_FIGS} fadeTrailingZeros />,
     ),
     style: STYLES.RIGHT_ALIGN,
   },
   {
-    label: t('table.units'),
+    label: t('table.amount'),
     dataKey: 'units',
-    cellRenderer: ({ rowData }) => defaultCellRenderer(
-      <PrettyValue
-        value={rowData?.amount}
-        decimals={AMOUNT_DECIMALS}
-        fadeTrailingZeros
-      />,
-    ),
+    cellRenderer: ({ rowData }) => {
+      return defaultCellRenderer(
+        <PrettyValue
+          value={getTradeAmount(rowData)}
+          decimals={AMOUNT_DECIMALS}
+          fadeTrailingZeros
+        />,
+      )
+    },
     style: STYLES.RIGHT_ALIGN,
   },
 ])

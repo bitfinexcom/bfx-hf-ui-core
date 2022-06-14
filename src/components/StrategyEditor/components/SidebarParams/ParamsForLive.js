@@ -5,7 +5,6 @@ import { Icon } from 'react-fa'
 import SidebarParam from './SidebarParam'
 
 const ParamsForLive = ({
-  startExecution,
   executing,
   stopExecution,
   onClose,
@@ -13,11 +12,6 @@ const ParamsForLive = ({
   const { t } = useTranslation()
   return (
     <div className='hfui-orderform__ao-settings__menu-buttons'>
-      <SidebarParam onClick={startExecution} isDisabled={executing}>
-        <Icon name='play' />
-        &nbsp;&nbsp;
-        {t('strategyEditor.launchStrategy')}
-      </SidebarParam>
       <SidebarParam onClick={stopExecution} isDisabled={!executing}>
         <Icon name='stop' />
         &nbsp;&nbsp;
@@ -32,7 +26,6 @@ const ParamsForLive = ({
 }
 
 ParamsForLive.propTypes = {
-  startExecution: PropTypes.func.isRequired,
   executing: PropTypes.bool.isRequired,
   stopExecution: PropTypes.func.isRequired,
   onClose: PropTypes.func.isRequired,

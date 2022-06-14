@@ -66,7 +66,7 @@ const AuthenticationInitForm = ({ onInit }) => {
 
   return (
     <div className='hfui-authenticationpage__content'>
-      <h2>HoneyFramework UI</h2>
+      <h2>Bitfinex Honey UI</h2>
       <p>
         {t('auth.initMsg')}
       </p>

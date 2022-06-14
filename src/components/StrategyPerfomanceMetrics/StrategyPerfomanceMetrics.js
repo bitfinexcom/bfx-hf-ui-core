@@ -159,7 +159,7 @@ StrategyPerfomanceMetrics.propTypes = {
     returnPerc: PropTypes.string,
     drawdown: PropTypes.string,
   }),
-  isExecuting: PropTypes.bool.isRequired,
+  isExecuting: PropTypes.bool,
   isBacktest: PropTypes.bool,
   startedOn: PropTypes.number,
 }
@@ -186,6 +186,7 @@ StrategyPerfomanceMetrics.defaultProps = {
   },
   isBacktest: false,
   startedOn: 0,
+  isExecuting: false,
 }
 
 export default StrategyPerfomanceMetrics
