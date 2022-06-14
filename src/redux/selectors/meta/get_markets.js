@@ -82,15 +82,11 @@ export const getMarketPair = createSelector(
 export const getExecutionMarketPair = createSelector(
   [getMarketsForExecution, getCurrencySymbolMemo],
   (markets, getCurrencySymbol) => memoizeOne((symbol) => {
-    if (_isEmpty(symbol)) {
-      return 'N/A'
-    }
-
     const currentMarket = markets?.[symbol]
     if (_isEmpty(currentMarket)) {
       return 'N/A'
     }
-    
+
     return getPairFromMarket(currentMarket, getCurrencySymbol)
   }),
 )
