@@ -42,6 +42,9 @@ const CHART_URL = isElectronApp ? 'https://bitfinexcom.github.io/bfx-hf-tradingv
 
 const HONEY_AUTH_URL = `${process.env.REACT_APP_UFX_API_URL}/honey`
 
+const PASSWORD_MIN_LENGTH = 8
+const PASSWORD_MAX_LENGTH = 64
+
 export {
   REDUCER_PATHS,
   PUB_REST_API_URL,
@@ -57,4 +60,6 @@ export {
   LICENCE_URL,
   HF_DESC_URL,
   isDevEnv,
+  PASSWORD_MIN_LENGTH,
+  PASSWORD_MAX_LENGTH,
 }

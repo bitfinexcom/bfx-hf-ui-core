@@ -1,8 +1,6 @@
 /* eslint-disable no-useless-escape */
 import _size from 'lodash/size'
-
-const PASSWORD_MIN_LENGTH = 8
-const PASSWORD_MAX_LENGTH = 64
+import { PASSWORD_MIN_LENGTH, PASSWORD_MAX_LENGTH } from '../redux/config'
 
 export const validatePassword = (password, t) => {
   if (_size(password) < PASSWORD_MIN_LENGTH) {
