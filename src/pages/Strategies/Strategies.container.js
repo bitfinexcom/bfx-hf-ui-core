@@ -36,6 +36,9 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch(WSActions.resetBacktestData())
     dispatch(UIActions.clearStrategies())
   },
+  clearBacktestOptions: () => {
+    dispatch(WSActions.resetBacktestData())
+  },
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(StrategiesPage)

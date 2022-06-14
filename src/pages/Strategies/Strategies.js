@@ -41,6 +41,7 @@ const StrategiesPage = ({
   authToken,
   onSave,
   onRemove,
+  clearBacktestOptions,
 }) => {
   const [strategy, setStrategy] = useState(strategyContent)
   const [indicators, setIndicators] = useState([])
@@ -190,6 +191,7 @@ const StrategiesPage = ({
     if (!_isEmpty(strategyToLoad) && _isEmpty(strategyToLoad.strategyOptions)) {
       strategyToLoad.strategyOptions = getDefaultStrategyOptions()
     }
+    clearBacktestOptions()
     selectStrategyHandler(strategyToLoad, forcedLoad)
     setSectionErrors({})
     setNextStrategyToOpen(null)
@@ -328,6 +330,7 @@ StrategiesPage.propTypes = {
   authToken: PropTypes.string.isRequired,
   onSave: PropTypes.func.isRequired,
   onRemove: PropTypes.func.isRequired,
+  clearBacktestOptions: PropTypes.func.isRequired,
 }
 
 StrategiesPage.defaultProps = {
