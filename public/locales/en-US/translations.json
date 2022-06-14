@@ -26,7 +26,8 @@
       "lowercase": "Password must have at least one Lowercase letter.",
       "numbers": "Password must have at least one number.",
       "specialChars": "Password must have at least one valid special character."
-    }
+    },
+    "strongPassword": "For your security, we require you to use a strong password."
   },
   "activeAlgoOrdersModal": {
     "title": "Active Orders",
