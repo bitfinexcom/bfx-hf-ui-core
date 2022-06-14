@@ -1,6 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
-import _isEmpty from 'lodash/isEmpty'
 import { useTranslation } from 'react-i18next'
 import StrategyPerfomanceMetrics from '../../StrategyPerfomanceMetrics'
 import BacktestTradesTable from '../../StrategyTradesTable'
@@ -9,7 +8,6 @@ import {
   COMPONENTS_KEYS,
   LAYOUT_CONFIG,
   LAYOUT_CONFIG_NO_DATA,
-  LAYOUT_CONFIG_WITHOUT_TRADES,
 } from '../components/StrategiesGridLayout.constants'
 import StrategyLiveChart from '../../StrategyLiveChart'
 import BacktestOptionsPanel from '../../BacktestOptionsPanel'
