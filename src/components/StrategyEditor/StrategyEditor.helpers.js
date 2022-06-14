@@ -1,5 +1,9 @@
 import _find from 'lodash/find'
 import _isEmpty from 'lodash/isEmpty'
+import _map from 'lodash/map'
+import _reduce from 'lodash/reduce'
+
+import { getTradeAmount, getTradePrice } from '../StrategyTradesTable/TradesTable/TradesTable.helpers'
 
 const ONE_MIN = 1000 * 60
 const ONE_HOUR = ONE_MIN * 60
@@ -161,3 +165,16 @@ export const isExecutionInputsFullFilled = (
   && Number(stopLossPerc) > 0
   && Number(maxDrawdownPerc) > 0
   && !_isEmpty(symbol)
+
+export const prepareChartTrades = (positions) => {
+  return _reduce(positions, (trades, position) => {
+    return [
+      ...trades,
+      ..._map(position?.trades, trade => ({
+        ...trade,
+        price: getTradePrice(trade),
+        amount: getTradeAmount(trade),
+      })),
+    ]
+  }, [])
+}

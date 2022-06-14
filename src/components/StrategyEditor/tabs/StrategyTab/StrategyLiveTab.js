@@ -1,4 +1,6 @@
-import React, { useCallback, useEffect, useState } from 'react'
+import React, {
+  useMemo, useCallback, useEffect, useState,
+} from 'react'
 import PropTypes from 'prop-types'
 import _isEmpty from 'lodash/isEmpty'
 import { useTranslation } from 'react-i18next'
@@ -16,6 +18,7 @@ import StrategyLiveChart from '../../../StrategyLiveChart'
 import StrategyTabWrapper from '../../components/StrategyTabWrapper'
 import StrategyOptionsPanelLive from '../../../StrategyOptionsPanel/StrategyOptionsPanel.Live'
 import { getCurrentStrategyExecutionState, getStrategyPositions } from '../../../../redux/selectors/ws'
+import { prepareChartTrades } from '../../StrategyEditor.helpers'
 
 const StrategyLiveTab = (props) => {
   const { onCancelProcess, strategy } = props
@@ -24,6 +27,7 @@ const StrategyLiveTab = (props) => {
 
   const executionState = useSelector(getCurrentStrategyExecutionState)
   const positions = useSelector(getStrategyPositions)
+  const trades = useMemo(() => prepareChartTrades(positions), [positions])
 
   const { t } = useTranslation()
 
@@ -62,6 +66,7 @@ const StrategyLiveTab = (props) => {
               {...props}
               fullscreenChart={fullscreenChart}
               exitFullscreenChart={() => setFullScreenChart(false)}
+              trades={trades}
             />
           )
 

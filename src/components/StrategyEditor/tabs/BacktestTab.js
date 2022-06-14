@@ -1,4 +1,6 @@
-import React, { useCallback, useEffect, useState } from 'react'
+import React, {
+  useCallback, useEffect, useState, useMemo,
+} from 'react'
 import PropTypes from 'prop-types'
 import { useTranslation } from 'react-i18next'
 import StrategyPerfomanceMetrics from '../../StrategyPerfomanceMetrics'
@@ -11,6 +13,7 @@ import {
 } from '../components/StrategiesGridLayout.constants'
 import StrategyLiveChart from '../../StrategyLiveChart'
 import BacktestOptionsPanel from '../../BacktestOptionsPanel'
+import { prepareChartTrades } from '../StrategyEditor.helpers'
 
 const BacktestTab = (props) => {
   const { results, onCancelProcess, strategy } = props
@@ -20,6 +23,8 @@ const BacktestTab = (props) => {
 
   const { finished = false, loading } = results
   const positions = results?.strategy?.closedPositions
+
+  const trades = useMemo(() => prepareChartTrades(positions), [positions])
 
   useEffect(() => {
     if (!finished) {
@@ -47,6 +52,7 @@ const BacktestTab = (props) => {
               {...props}
               fullscreenChart={fullscreenChart}
               exitFullscreenChart={() => setFullScreenChart(false)}
+              trades={trades}
             />
           )
 
