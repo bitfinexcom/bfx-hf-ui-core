@@ -268,8 +268,8 @@
   },
   "AOPauseModal": {
     "title": "暫停演算法訂單",
-    "text1": "在演算法訂單等待成交期間關閉HoneyFramework應用程序，您須在重啟應用程序時恢復或者取消演算法訂單。",
-    "text2": "重新啟動 HoneyFramework 應用程序時，您必須為現有的待成交演算法訂單套用以下其中一種設定：",
+    "text1": "在演算法訂單等待成交期間關閉Bitfinex Honey應用程序，您須在重啟應用程序時恢復或者取消演算法訂單。",
+    "text2": "重新啟動 Bitfinex Honey 應用程序時，您必須為現有的待成交演算法訂單套用以下其中一種設定：",
     "text3": "1. 恢復：所勾選的演算法訂單（如待成交）其原有的自動訂單將被取消，並根據剩餘數量重新下單。未勾選的演算法訂單將永久取消，不再更新。",
     "text4": "2. 全部取消：所有演算法訂單將不再重新下單，包含其原有的待成交自動訂單亦被取消。",
     "text5": "提醒您：若停用 DMS 選項，自動訂單將持續有效，等待成交。"
@@ -320,7 +320,7 @@
     "title": "連線問題",
     "text1": "網路連線發生問題。 請 {{action}} 應用程序以恢復正常運作。",
     "text2": "請確保您的網路連線狀態穩定且良好。",
-    "text3": "按下「Okay」後，HoneyFramework 將 {{action}}。",
+    "text3": "按下「Okay」後，Bitfinex Honey 將 {{action}}。",
     "text4": "此應用程序將在 {{countdown}} 秒後自動 {{action}}。",
     "checkbox": "自動 {{action}}",
     "reboot": "重新加載",
@@ -409,7 +409,7 @@
   },
   "confirmDMSModal": {
     "title": "啟動「當關閉程式訂單將自動取消」功能",
-    "text": "請注意：當開啟此設定時，一旦關閉APP，系統將會取消您在HoneyFramework、Bitfinex網頁及其它地方建立之所有訂單。\n\n此為建議設定，但您應了解設定後可能發生的狀況。",
+    "text": "請注意：當開啟此設定時，一旦關閉APP，系統將會取消您在Bitfinex Honey、Bitfinex網頁及其它地方建立之所有訂單。\n\n此為建議設定，但您應了解設定後可能發生的狀況。",
     "dontShowAgain": "不再顯示"
   },
   "editOrderModal": {
@@ -626,7 +626,7 @@
     "startBtn": "開始"
   },
   "crashHandler": {
-    "text1": "發生導致HoneyFramework UI停止運作的錯誤。請重啟應用程式以恢復運作。",
+    "text1": "發生導致Bitfinex Honey UI停止運作的錯誤。請重啟應用程式以恢復運作。",
     "text2_1": "請回報問題至",
     "text2_2": "我們將會盡快修復此問題！",
     "text3": "技術崩潰資訊"
