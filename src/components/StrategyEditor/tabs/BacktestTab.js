@@ -20,7 +20,7 @@ const BacktestTab = (props) => {
   const [layoutConfig, setLayoutConfig] = useState()
   const [fullscreenChart, setFullScreenChart] = useState(false)
 
-  const { finished = false, loading, trades } = results
+  const { finished = false, loading } = results
   const positions = results?.strategy?.closedPositions
 
   useEffect(() => {
@@ -28,12 +28,12 @@ const BacktestTab = (props) => {
       setLayoutConfig(LAYOUT_CONFIG_NO_DATA)
       return
     }
-    if (_isEmpty(trades)) {
+    if (_isEmpty(positions)) {
       setLayoutConfig(LAYOUT_CONFIG_WITHOUT_TRADES)
       return
     }
     setLayoutConfig(LAYOUT_CONFIG)
-  }, [finished, trades])
+  }, [finished, positions])
 
   const renderGridComponents = useCallback(
     (i) => {
@@ -104,7 +104,6 @@ BacktestTab.propTypes = {
   results: PropTypes.shape({
     finished: PropTypes.bool,
     loading: PropTypes.bool,
-    trades: PropTypes.arrayOf(PropTypes.object), // eslint-disable-line
     strategy: PropTypes.object, // eslint-disable-line
   }).isRequired,
   onCancelProcess: PropTypes.func.isRequired,
