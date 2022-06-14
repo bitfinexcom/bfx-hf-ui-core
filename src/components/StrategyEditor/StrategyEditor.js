@@ -483,6 +483,7 @@ const StrategyEditor = (props) => {
                 : onBacktestStart
             }
             isFullFilled={isFullFilled}
+            strategyId={strategyId}
           />
           <LaunchStrategyModal
             onSubmit={saveStrategyAndStartExecution}

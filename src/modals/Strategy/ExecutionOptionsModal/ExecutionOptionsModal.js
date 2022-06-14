@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import PropTypes from 'prop-types'
 import { useTranslation } from 'react-i18next'
@@ -23,10 +23,11 @@ const ExecutionOptionsModal = (props) => {
     stopLossPerc,
     maxDrawdownPerc,
     isFullFilled,
+    strategyId,
   } = props
-  const [capitalAllocationValue, setCapitalAllocationValue] = useState(capitalAllocation)
-  const [stopLossPercValue, setStopLossPercValue] = useState(stopLossPerc)
-  const [maxDrawdownPercValue, setMaxDrawdownPercValue] = useState(maxDrawdownPerc)
+  const [capitalAllocationValue, setCapitalAllocationValue] = useState('')
+  const [stopLossPercValue, setStopLossPercValue] = useState('')
+  const [maxDrawdownPercValue, setMaxDrawdownPercValue] = useState('')
 
   const [capitalAllocationError, setCapitalAllocationError] = useState('')
   const [stopLossPercError, setStopLossError] = useState('')
@@ -105,6 +106,14 @@ const ExecutionOptionsModal = (props) => {
     startExecution()
   }, [isFullFilled, onClose, startExecution])
 
+  useEffect(() => {
+    setCapitalAllocationValue(capitalAllocation)
+    setMaxDrawdownPercValue(maxDrawdownPerc)
+    setStopLossPercValue(stopLossPerc)
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [strategyId])
+
   return (
     <Modal
       isOpen={isOpen}
@@ -153,6 +162,7 @@ ExecutionOptionsModal.propTypes = {
   startExecution: PropTypes.func.isRequired,
   saveStrategyOptions: PropTypes.func.isRequired,
   isFullFilled: PropTypes.bool.isRequired,
+  strategyId: PropTypes.string.isRequired,
 }
 
 export default ExecutionOptionsModal
