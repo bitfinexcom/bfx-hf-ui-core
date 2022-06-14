@@ -277,8 +277,8 @@
   },
   "AOPauseModal": {
     "title": "Algo Orders Pause",
-    "text1": "Closing the application while algo orders are active will require you to resume/cancel the algo orders when you relaunch the HoneyFramework application.",
-    "text2": "When you restart the HoneyFramework application, you will be prompted to select between the currently active algo orders to which two of the given options can be applied:",
+    "text1": "Closing the application while algo orders are active will require you to resume/cancel the algo orders when you relaunch the Bitfinex Honey application.",
+    "text2": "When you restart the Bitfinex Honey application, you will be prompted to select between the currently active algo orders to which two of the given options can be applied:",
     "text3": "1. Resume: The atomic orders placed by the selected algo orders (if active) will be cancelled, and the algo orders will resume placing orders for the remaining amounts. The unselected algo orders will not be resumed and will be lost in perpetuity.",
     "text4": "2. Cancel All: All atomic orders placed by the algo orders (if active) will be cancelled and no algo orders will be resumed.",
     "text5": "Note: Atomic orders will remain active if DMS option is disabled."
@@ -299,7 +299,7 @@
     "description": "Official free algorithmic trading app based on the <url>Bitfinex API</url>, created by the Bitfinex team.",
     "licence": "This software is licenced under the <url>Apache-2.0</url> Licence.",
     "sourceCode": "The source code is available on <url>Github</url>.",
-    "moreInfo": "Visit the HoneyFramework <url>FAQ page</url> for more information.",
+    "moreInfo": "Visit the Bitfinex Honey <url>FAQ page</url> for more information.",
     "apiKeys": "API keys",
     "noApiKeys": "Don't have API keys?",
     "noBfxAccount": "Don't have a Bitfinex account?",
@@ -355,7 +355,7 @@
     "title": "Connection issue",
     "text1": "We've noticed several internet connection issues. It's required to {{action}} the app to continue normal operation.",
     "text2": "Please make sure you have stable and good internet connection.",
-    "text3": "The HoneyFramework will {{action}} after you press 'Okay'.",
+    "text3": "The Bitfinex Honey will {{action}} after you press 'Okay'.",
     "text4": "The app will {{action}} automatically in {{countdown}} seconds.",
     "checkbox": "{{action}} automatically",
     "reboot": "reboot",
@@ -445,7 +445,7 @@
   },
   "confirmDMSModal": {
     "title": "Enable Dead Man Switch",
-    "text": "Please be aware that when this setting is enabled, closing the app will not only cancel all orders that have been created by the HoneyFramework, but will also cancel all other orders, including those that have been opened on the Bitfinex website or elsewhere.\n\nThis is a recommended setting, but you should be aware of the possible consequences.",
+    "text": "Please be aware that when this setting is enabled, closing the app will not only cancel all orders that have been created by the Bitfinex Honey, but will also cancel all other orders, including those that have been opened on the Bitfinex website or elsewhere.\n\nThis is a recommended setting, but you should be aware of the possible consequences.",
     "dontShowAgain": "Don't show again"
   },
   "editOrderModal": {
@@ -779,7 +779,7 @@
     "proceed": "Proceed"
   },
   "crashHandler": {
-    "text1": "An error occurred that caused the HoneyFramework UI to halt. Please, restart the application to proceed working with it",
+    "text1": "An error occurred that caused the Bitfinex Honey UI to halt. Please, restart the application to proceed working with it",
     "text2_1": "Please, report this issue at",
     "text2_2": "so we would be able to fix it as soon as possible!",
     "text3": "Technical crash info"
