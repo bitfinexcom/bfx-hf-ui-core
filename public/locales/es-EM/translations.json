@@ -1,10 +1,11 @@
 {
   "main": {
-    "sandbox": "Trading de Simulación",
-    "production": "Producción",
+    "sandbox": "Modo Sandbox",
+    "production": "Modo en vivo",
+    "paperPrefix": "Simulado",
     "trading": "{{paperPrefix}} Terminal de Trading",
-    "market": " {{paperPrefix}} Estadísticas del Mercado",
-    "strategyEditor": "Configurador de Estrategias",
+    "market": "{{paperPrefix}} Datos del Mercado",
+    "strategyEditor": "Estrategias",
     "startingUp": "Iniciando aplicación...",
     "craftedBy": "Elaborado por Bitfinex"
   },
@@ -24,6 +25,14 @@
     "cancellBtn": "Cancelar Todo",
     "resumeBtn": "Reanudar",
     "selectAllBtn": "Seleccionar Todo"
+  },
+  "closePositionModal": {
+    "title": "Posición de Cierre",
+    "body": "¿Seguro que deseas cerrar la posición {{pair}}?"
+  },
+  "launchStrategyModal": {
+    "title": "Estrategia de Lanzamiento",
+    "body": "Esta acción lanzará esta estrategia en modo EN VIVO, actuando automáticamente por ti a través del API de Bitfinex y utilizando fondos reales de tu Cartera de Exchange. La estrategia actual se detendrá y está comenzará."
   },
   "algoOrderForm": {
     "accdist": {
@@ -268,8 +277,8 @@
   },
   "AOPauseModal": {
     "title": "Pausa de Órdenes de Algoritmo",
-    "text1": "Cerrar la aplicación mientras las órdenes de algoritmo están activas requerirá que reanudes/canceles las órdenes de algoritmo cuando vuelvas a iniciar la aplicación Bitfinex Honey.",
-    "text2": "Cuando reinicies la aplicación Bitfinex Honey, se te pedirá que selecciones entre las órdenes de algoritmo actualmente activas a las que se pueden aplicar dos de las opciones dadas:",
+    "text1": "Cerrar la aplicación mientras las órdenes de algoritmo están activas requerirá que reanudes/canceles las órdenes de algoritmo cuando vuelvas a iniciar la aplicación Honey Framework.",
+    "text2": "Cuando reinicies la aplicación Honey Framework, se te pedirá que selecciones entre las órdenes de algoritmo actualmente activas a las que se pueden aplicar dos de las opciones dadas:",
     "text3": "1. Reanudar: Los órdenes atómicas realizadas por las órdenes de algoritmo seleccionadas (si están activas) se cancelarán y las órdenes de algoritmo reanudarán la realización de órdenes por las cantidades restantes. Las órdenes de algoritmo no seleccionadas no se reanudarán y se perderán a perpetuidad.",
     "text4": "2. Cancelar todo: Todos las órdenes atómicos realizadas por las órdenes de algoritmo (si están activas) se cancelarán y no se reanudarán las órdenes de algoritmo.",
     "text5": "Nota: Las órdenes atómicas permanecerán activas si la opción DMS está desactivada."
@@ -283,9 +292,17 @@
     "title": "Configuraciones",
     "generalTab": "General",
     "tradingModeTab": "Modo de Trading",
+    "appearanceTab": "Apariencia",
+    "language": "Idioma",
+    "aboutTab": "Acerca",
+    "appVersion": "Versión {{version}}",
+    "description": "La aplicación de trading logarítmica basada en el <url>API de Bitfinex</url>, creada por el equipo de Bitfinex.",
+    "licence": "Este software tiene la licencia de <url>Apache-2.0</url>.",
+    "sourceCode": "El código fuente está disponible en <url>Github</url>.",
+    "moreInfo": "Visita la <url>página de preguntas frecuentes</url> de Honey Framework para más información.",
     "apiKeys": "Claves API",
-    "productionKey": "Clave API de Producción",
-    "paperKey": "Clave API para el Trading de Simulación",
+    "productionKey": "Llave API de modo En Vivo",
+    "paperKey": "Llave API de Modo Sandbox",
     "apiNotValid": "Se ingresó una clave de API no válida",
     "apiNotConfigured": "Sin configurar",
     "apiSubmit": "Confirmar",
@@ -306,11 +323,17 @@
     "learnMore": "Más Información",
     "validating": "Validando...",
     "configured": "Configurado",
-    "productionTradingCheckbox": "Trading de Producción",
+    "productionTradingCheckbox": "Modo En Vivo",
     "productionTradingText": "Trading en vivo con dinero real.",
     "paperTradingText": "Practica trading sin arriesgar dinero real.",
     "Dark": "Oscuro",
-    "Light": "Claro"
+    "Light": "Claro",
+    "termsConditions": "Términos y Condiciones",
+    "privacyPolicy": "Política de Privacidad",
+    "betaDesclaimer": "Las características incluidas en el modo de 'versión beta' todavía están en desarrollo, pueden tener fallas o errores, pueden estar incompletas, pueden cambiar materialmente antes de una versión estable o pueden nunca considerarse estables. Los usuarios del modo 'versión beta' usan este modo bajo su propio riesgo. En ningún caso, Bitfinex será responsable de ningún daño (incluidos, entre otros, daños por lucro cesante, interrupción del negocio, pérdida de información u otros) que surjan del uso o la imposibilidad de usar el modo de \"liberación beta\", incluso si Bitfinex ha sido advertido de la posibilidad de tales daños.",
+    "betaProgramCheckbox": "Únete al Programa Beta",
+    "betaProgramText": "Manténgase actualizado con cada nueva función y sea uno de los primeros en probarlas en cuanto se lance.",
+    "betaModalTitle": "EXENCIÓN DE RESPONSABILIDAD DEL PROGRAMA BETA"
   },
   "atomicOrdersTableModal": {
     "title": "Órdenes Atómicas",
@@ -320,7 +343,7 @@
     "title": "Error de conexión",
     "text1": "Hemos notado varios problemas de conexión a internet. Es necesario {{action}} la aplicación para continuar con el funcionamiento normal.",
     "text2": "Asegúrate de tener una conexión a internet estable y buena.",
-    "text3": "Bitfinex Honey hará {{action}} después de presionar 'Aceptar'.",
+    "text3": "Honey Framework hará {{action}} después de presionar 'Aceptar'.",
     "text4": "La aplicación hará {{action}} automáticamente en {{countdown}} segundos.",
     "checkbox": "{{action}} automáticamente",
     "reboot": "reiniciar",
@@ -369,8 +392,8 @@
     "orderPartiallyFilledBuyDetailed": "{{exID}} {{type}} orden de COMPRA de{{amount}} {{symbol}} parcialmente completada (ID: {{id}})",
     "orderPartiallyFilledSellAtDetailed": "{{exID}} {{type}} orden de VENTA {{amount}} {{symbol}} parcialmente completada {{price}} (ID: {{id}})",
     "orderPartiallyFilledSellDetailed": "{{exID}} {{type}} orden de VENTA{{amount}} {{symbol}} parcialmente completada (ID: {{id}})",
-    "startedLiveStrategyExecution": "Se inició la ejecución de la estrategia en vivo ({{label}}) para {{symbol}} - {{timeframe}}",
-    "stoppedLiveStrategyExecution": "Se pausó la ejecución de la estrategia en vivo ({{label}}) para {{symbol}} - {{timeframe}}",
+    "startedLiveStrategyExecution": "Se inició la ejecución de la estrategia en vivo ({{name}}) para {{symbol}} - {{tf}}",
+    "stoppedLiveStrategyExecution": "Se pausó la ejecución de la estrategia en vivo ({{name}}) para {{symbol}} - {{tf}}",
     "stoppedAO": "Orden de algoritmo detenida",
     "startedAO": "Comenzó AO {{name}} el {{target}}",
     "unknownAlgoOrderId": "ID de orden de algoritmo desconocido: {{aoID}}",
@@ -409,7 +432,7 @@
   },
   "confirmDMSModal": {
     "title": "Habilitar Interruptor de Dead Man",
-    "text": "Ten en cuenta que cuando esta configuración está habilitada, cerrar la aplicación no solo cancelará todos las órdenes creadas por Bitfinex Honey, sino que también cancelará todas las demás órdenes, incluidas las que se han abierto en el sitio web de Bitfinex o en otro lugar.\n\nEsta es una configuración recomendada, pero debes tener en cuenta las posibles consecuencias.",
+    "text": "Ten en cuenta que cuando esta configuración está habilitada, cerrar la aplicación no solo cancelará todos las órdenes creadas por Honey Framework, sino que también cancelará todas las demás órdenes, incluidas las que se han abierto en el sitio web de Bitfinex o en otro lugar.\n\nEsta es una configuración recomendada, pero debes tener en cuenta las posibles consecuencias.",
     "dontShowAgain": "No volver a mostrar"
   },
   "editOrderModal": {
@@ -500,6 +523,8 @@
     "name": "Nombre",
     "context": "Contexto",
     "created": "Creado",
+    "startedOn": "Comenzado el",
+    "stoppedOn": "Finalizado el",
     "symbol": "Símbolo",
     "label": "Etiqueta",
     "currency": "Moneda",
@@ -515,7 +540,19 @@
     "type": "Tipo",
     "price": "Precio",
     "status": "Estado",
-    "time": "Hora"
+    "time": "Hora",
+    "fee": "Comisión",
+    "id": "Id",
+    "signal": "Señal",
+    "entryPrice": "Precio de Entrada",
+    "closingPrice": "Precio de Cierre",
+    "units": "Unidades",
+    "profit": "Ganancia",
+    "position": "Posición",
+    "drawdown": "Drawdown",
+    "runningSince": "Corriendo desde",
+    "leverage": "Apalancamiento",
+    "sharpeRatio": "Ratio de Sharpe"
   },
   "tickersPanel": {
     "title": "Panel de Cotizaciones"
@@ -548,35 +585,61 @@
     "balancesTab": "Balances"
   },
   "statusbar": {
+    "liveModeDisclaimer": "Estás en modo En Vivo. Todas las órdenes colocadas en este modo se ejecutan en el mercado real utilizando fondos reales",
     "updateToLast": "Actualizar a la última versión",
     "connected": "Conectado",
     "connecting": "Conectando",
     "disconnected": "Desconectado"
   },
   "strategyEditor": {
-    "docsTab": "Docs",
-    "backtestTab": "Backtest",
-    "executeTab": "Ejecutar",
-    "newStrategy": "Nueva Estrategia",
+    "unsavedChanges": "Tienes cambios sin guardar",
+    "unsavedChangesModalTitle": "¿Necesitas guardar cambios en la estrategia antes de cerrar?",
+    "unsavedChangesModalText": "Tienes cambios sin guardar en \"{{strategyName}}\". Si no los salvas estarán permanentemente eliminados",
+    "saved": "Guardado",
+    "errorsInIDE": "Resolver errores de código y guardar",
+    "newStrategy": "Crear estrategia nueva",
+    "newStrategyFrom": "Crear nueva estrategia desde...",
+    "newStrategy2": "Nueva estrategia",
+    "newStrategyFrom2": "Nueva estrategia desde...",
+    "running": "Corriendo",
+    "paused": "Pausado",
+    "stopped": "Detenido",
     "recent": "Reciente",
+    "strategyTab": "Estrategia",
+    "backtestTab": "Backtest",
+    "viewInIDETab": "Ver en Entorno de Desarrollo",
+    "activeStrategies": "Estrategias activas",
+    "pastStrategies": "Estrategias pasadas",
+    "savedStrategies": "Estrategias guardadas",
     "more": "Más",
-    "createStrategyStringPart1": "Crear",
-    "createStrategyStringPart2": "una nueva estrategia para comenzar a hacer backtesting.",
+    "importStrategy": "Importar estrategia desde JSON...",
+    "orSelectOne": "o selecciona uno de la lista siguiente",
     "newStrategyModalTitle": "Crear una Nueva Estrategia",
+    "saveStrategyAsModalTitle": "Guardar estrategia como...",
+    "newStrategyFromModalTitle": "Crear nueva estrategia desde...",
     "newStrategyModalEmptyError": "La etiqueta está vacía",
     "newStrategyModalLongError": "El nombre de la estrategia es demasiado largo ({{labelSize}}/{{MAX_LABEL_LENGTH}} caracteres)",
     "openStrategyModalTitle": "Estrategia Abierta",
+    "launchStrategy": "Ejecutar estrategia",
+    "stopExec": "Detener ejecución",
     "openStartegyModalNoSelectedError": "No se seleccionó ninguna estrategia",
     "backtestingCreateMessage": "Crea una estrategia para comenzar a hacer backtesting",
     "backtestingLoadingMessage": "Cargando velas y ejecutando estrategia...",
-    "backtestingStartingMessage": "Presiona empezar para comenzar a hacer backtesting",
+    "backtestingStartingMessage": "Presiona iniciar para comenzar a hacer backtesting",
+    "exportCSV": "Exportar como CSV",
+    "exportStrategy": "Exportar estrategia a JSON",
     "historical": "Histórico",
     "startDate": "Fecha de Inicio",
     "endDate": "Fecha Final",
     "useCandlesCheckbox": "Usar velas",
+    "useCandlesCheckboxDescription": "Más rápido, menos preciso",
     "useTradesCheckbox": "Usar trades",
+    "useTradesCheckboxDescription": "Comparar contra la historial de trading real. Más lento, más preciso",
     "useMarginCheckbox": "Utiliza trading de margen",
+    "useMarginCheckboxDescription": "PLUG",
     "checkboxWarningMessage": "Se debe seleccionar al menos una casilla de verificación",
+    "invalidTF": "Periodo de tiempo seleccionado no válido",
+    "invalidPeriod": "La fecha de término debe ser posterior a la fecha de inicio",
     "totalPL": "G/P total",
     "avgPL": "GP Promedio",
     "profitFactor": "Factor de Ganancia",
@@ -593,13 +656,41 @@
     "largestGain": "Mayor Ganancia",
     "largestLoss": "Mayor Pérdida",
     "liveExecution": {
+      "initialMessage": "Presiona iniciar para comenzar la ejecución",
       "executing": "Tu estrategia se está ejecutando en tu cuenta real con balances reales.",
       "stopping": "Deteniendo la ejecución de la estrategia...",
       "preparing": "Procesar y preparar la estrategia antes de la ejecución...",
       "realBalancesWarning": "NOTA: Al presionar inicio, estarás ejecutando tu estrategia en tu cuenta real con balances reales.",
       "createStrategy": "Crea una estrategia para comenzar a ejecutar."
     },
-    "candleSeedCount": "Conteo semilla de Vela"
+    "candleSeedCount": "Conteo semilla de Vela",
+    "noActiveStrategies": "No hay estrategias activas",
+    "saveWithDifferentName": "Guardar con nombre diferente",
+    "templatesTab": "Plantillas",
+    "savedStrategiesTab": "De guardados",
+    "selectMarketDescription": "Seleccionar mercado",
+    "selectMarketDescriptionDisabled": "Mercado seleccionado",
+    "selectCandleDurationDescription": "Selecciona la duración de la vela",
+    "fullscreenChartBtn": "Gráfica en pantalla completa",
+    "exitFullscreenChartBtn": "Salir de pantalla completa",
+    "perfomanceMetrics": "Métricas de desempeño",
+    "strategyTypeDescription": "Selecciona tipo de estrategia",
+    "strategyTypeDescriptionDisabled": "Tipo de estrategia seleccionado",
+    "customStrategyTypeInputPlaceholder": "Introduce tu propio tipo...",
+    "strategyTypes": {
+      "momentum": "Momentum",
+      "meanReverting": "Reversión a la Media",
+      "trendFollowing": "Seguir la Tendencia",
+      "technicalAnalysis": "Análisis Técnico",
+      "other": "Otro..."
+    },
+    "closeStrategy": "Cerrar estrategia",
+    "executionOptionsModal": {
+      "title": "Seleccionar parámetros de ejecución antes de lanzar",
+      "capitalAllocationLabel": "Alocación de Capital",
+      "stopLoss": "Stop-Loss",
+      "maxDrawdown": "Máximo Drawdown"
+    }
   },
   "ui": {
     "ok": "Ok",
@@ -610,6 +701,7 @@
     "export": "Exportar",
     "import": "Importar",
     "closeBtn": "Cerrar",
+    "closeWithoutSaving": "Cerrar sin guardar",
     "lastBtn": "Terminar",
     "nextBtn": "Siguiente",
     "openDlgBtn": "Abre el dialogo",
@@ -623,10 +715,17 @@
     "openBtn": "Apertura",
     "removeBtn": "Eliminar",
     "createBtn": "Crear",
-    "startBtn": "Comenzar"
+    "startBtn": "Comenzar",
+    "stopBtn": "Stop",
+    "deleteBtn": "Eliminar",
+    "expandPanel": "Expandir Panel",
+    "compressPanel": "Comprimir Panel",
+    "name": "Nombre",
+    "notSelected": "No selecionado",
+    "e.g.": "ej. {{value}}"
   },
   "crashHandler": {
-    "text1": "Se produjo un error que hizo que se detuviera la interfaz de usuario de Bitfinex Honey. Por favor, reinicia la aplicación para continuar trabajando con ella",
+    "text1": "Se produjo un error que hizo que se detuviera la interfaz de usuario de Honey Framework. Por favor, reinicia la aplicación para continuar trabajando con ella",
     "text2_1": "Por favor, reporta este problema a",
     "text2_2": "¡para que podamos solucionarlo lo antes posible!",
     "text3": "Información técnica sobre accidentes"
@@ -682,5 +781,14 @@
         "label": "Liquidación"
       }
     }
+  },
+  "removeExistingStrategyModal": {
+    "title": "Eliminar Estrategia",
+    "text_1": "Seguro que deseas eliminar",
+    "text_2": "estrategia?",
+    "warning_1": "AVISO",
+    "warning_2": "¡Esta acción no se puede deshacer!",
+    "strategyName": "el nombre de la estrategia",
+    "input_placeholder": "Escribe {{label}} para eliminarlo"
   }
 }

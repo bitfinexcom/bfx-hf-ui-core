@@ -1,10 +1,11 @@
 {
   "main": {
-    "sandbox": "模擬交易",
-    "production": "真實交易",
+    "sandbox": "擬真測試模式",
+    "production": "正式環境模式",
+    "paperPrefix": "模擬交易",
     "trading": "{{paperPrefix}} 交易終端",
     "market": "{{paperPrefix}} 市場數據",
-    "strategyEditor": "交易策略編輯",
+    "strategyEditor": "策略",
     "startingUp": "正在啟動APP中...",
     "craftedBy": "由Bitfinex建構"
   },
@@ -24,6 +25,14 @@
     "cancellBtn": "全部取消",
     "resumeBtn": "恢復",
     "selectAllBtn": "選擇全部"
+  },
+  "closePositionModal": {
+    "title": "關閉倉位",
+    "body": "您確定要關閉{{pair}} 倉位？"
+  },
+  "launchStrategyModal": {
+    "title": "執行策略",
+    "body": "此操作會將您的策略移至正式環境裡執行，透過Bitfinex API代替您自動執行，並使用您兌換錢包中的真實資金。目前運行中的策略將停止，並由此一策略取代。"
   },
   "algoOrderForm": {
     "accdist": {
@@ -268,8 +277,8 @@
   },
   "AOPauseModal": {
     "title": "暫停演算法訂單",
-    "text1": "在演算法訂單等待成交期間關閉Bitfinex Honey應用程序，您須在重啟應用程序時恢復或者取消演算法訂單。",
-    "text2": "重新啟動 Bitfinex Honey 應用程序時，您必須為現有的待成交演算法訂單套用以下其中一種設定：",
+    "text1": "在演算法訂單等待成交期間關閉Honey Framework應用程序，您須在重啟應用程序時恢復或者取消演算法訂單。",
+    "text2": "重新啟動 Honey Framework 應用程序時，您必須為現有的待成交演算法訂單套用以下其中一種設定：",
     "text3": "1. 恢復：所勾選的演算法訂單（如待成交）其原有的自動訂單將被取消，並根據剩餘數量重新下單。未勾選的演算法訂單將永久取消，不再更新。",
     "text4": "2. 全部取消：所有演算法訂單將不再重新下單，包含其原有的待成交自動訂單亦被取消。",
     "text5": "提醒您：若停用 DMS 選項，自動訂單將持續有效，等待成交。"
@@ -283,9 +292,17 @@
     "title": "設定",
     "generalTab": "一般",
     "tradingModeTab": "交易模式",
+    "appearanceTab": "版面設計",
+    "language": "語言",
+    "aboutTab": "關於",
+    "appVersion": "版本 {{version}}",
+    "description": "由Bitfinex官方團隊根據 <url>Bitfinex API</url> 創建的免費算法交易應用程序。",
+    "licence": "此軟體獲得 <url>Apache-2.0</url> 許可授權。",
+    "sourceCode": "可從<url>Github</url> 取得原始碼。",
+    "moreInfo": "更多資訊，請參閱Honey Framework <url>常見問答集</url> 。",
     "apiKeys": "API 金鑰",
-    "productionKey": "真實帳戶API金鑰",
-    "paperKey": "模擬交易帳戶API金鑰",
+    "productionKey": "正式環境模式的API金鑰",
+    "paperKey": "擬真測試模式的API金鑰",
     "apiNotValid": "輸入的API金鑰無效",
     "apiNotConfigured": "未配置",
     "apiSubmit": "提交",
@@ -306,11 +323,17 @@
     "learnMore": "了解更多",
     "validating": "驗證中...",
     "configured": "已配置",
-    "productionTradingCheckbox": "真實帳戶交易",
+    "productionTradingCheckbox": "正式環境模式",
     "productionTradingText": "以真實資金進行交易",
     "paperTradingText": "以虛擬資金練習交易，無資金損失的風險",
     "Dark": "深色主題",
-    "Light": "淺色主題"
+    "Light": "淺色主題",
+    "termsConditions": "條款及條件",
+    "privacyPolicy": "隱私權政策",
+    "betaDesclaimer": "「Beta 版」模式所含之功能尚在開發中，可能存在漏洞或錯誤、 整體功能不完善，也有可能在發布穩定版前出現重大變更，抑或無法升級為穩定版本。「Beta 版」模式的使用者需自行承擔風險。 在任何情況下，Bitfinex對因使用或無法使用「Beta 版」模式所引致的任何損害（包括但不限於由利潤損失、業務中斷、資料遺失或其他形式造成的損害）均不承擔任何責任，即使Bitfinex已獲悉前述損害之可能性，亦同。",
+    "betaProgramCheckbox": "加入測試版計劃",
+    "betaProgramText": "即時掌握版本更新，搶先體驗新功能。",
+    "betaModalTitle": "測試版計劃免責聲明"
   },
   "atomicOrdersTableModal": {
     "title": "自動訂單",
@@ -320,7 +343,7 @@
     "title": "連線問題",
     "text1": "網路連線發生問題。 請 {{action}} 應用程序以恢復正常運作。",
     "text2": "請確保您的網路連線狀態穩定且良好。",
-    "text3": "按下「Okay」後，Bitfinex Honey 將 {{action}}。",
+    "text3": "按下「Okay」後，Honey Framework 將 {{action}}。",
     "text4": "此應用程序將在 {{countdown}} 秒後自動 {{action}}。",
     "checkbox": "自動 {{action}}",
     "reboot": "重新加載",
@@ -369,8 +392,8 @@
     "orderPartiallyFilledBuyDetailed": "{{amount}} {{symbol}} 的{{exID}} {{type}} 買單已部分成交 (ID: {{id}})",
     "orderPartiallyFilledSellAtDetailed": "{{amount}} {{symbol}} 的{{exID}} {{type}} 賣單以 {{price}} 的價格部分成交 (ID: {{id}})",
     "orderPartiallyFilledSellDetailed": "{{amount}} {{symbol}} 的{{exID}} {{type}} 賣單已部分成交 (ID: {{id}})",
-    "startedLiveStrategyExecution": "已開始執行{{symbol}}-{{timeframe}}的({{label}})即時策略",
-    "stoppedLiveStrategyExecution": "已停止執行{{symbol}}-{{timeframe}}的({{label}})即時策略",
+    "startedLiveStrategyExecution": "已開始執行{{symbol}}-{{tf}}的({{name}})即時策略",
+    "stoppedLiveStrategyExecution": "已停止執行{{symbol}}-{{tf}}的({{name}})即時策略",
     "stoppedAO": "已停止演算法訂單",
     "startedAO": "運行 {{target}} 中的演算法訂單 {{name}}",
     "unknownAlgoOrderId": "不明演算法訂單編號： {{aoID}}",
@@ -409,7 +432,7 @@
   },
   "confirmDMSModal": {
     "title": "啟動「當關閉程式訂單將自動取消」功能",
-    "text": "請注意：當開啟此設定時，一旦關閉APP，系統將會取消您在Bitfinex Honey、Bitfinex網頁及其它地方建立之所有訂單。\n\n此為建議設定，但您應了解設定後可能發生的狀況。",
+    "text": "請注意：當開啟此設定時，一旦關閉APP，系統將會取消您在Honey Framework、Bitfinex網頁及其它地方建立之所有訂單。\n\n此為建議設定，但您應了解設定後可能發生的狀況。",
     "dontShowAgain": "不再顯示"
   },
   "editOrderModal": {
@@ -500,6 +523,8 @@
     "name": "幣別",
     "context": "交易類型",
     "created": "建立時間",
+    "startedOn": "開始於",
+    "stoppedOn": "結束於",
     "symbol": "符號",
     "label": "標籤",
     "currency": "幣別",
@@ -515,7 +540,19 @@
     "type": "類型",
     "price": "價格",
     "status": "狀態",
-    "time": "時間"
+    "time": "時間",
+    "fee": "費用",
+    "id": "Id",
+    "signal": "買賣信號",
+    "entryPrice": "進場價",
+    "closingPrice": "出場價",
+    "units": "單位",
+    "profit": "獲利",
+    "position": "倉位",
+    "drawdown": "回撤",
+    "runningSince": "自",
+    "leverage": "槓桿倍率",
+    "sharpeRatio": "夏普比率"
   },
   "tickersPanel": {
     "title": "牌價面板"
@@ -548,35 +585,61 @@
     "balancesTab": "餘額"
   },
   "statusbar": {
+    "liveModeDisclaimer": "您正使用正式環境模式。此種模式下的所有訂單將使用真實資金在真實市場中執行",
     "updateToLast": "更新至最新版本",
     "connected": "已連線",
     "connecting": "連線中",
     "disconnected": "連線中斷"
   },
   "strategyEditor": {
-    "docsTab": "文檔",
-    "backtestTab": "回測",
-    "executeTab": "執行",
-    "newStrategy": "新增策略",
+    "unsavedChanges": "您有未儲存的變更",
+    "unsavedChangesModalTitle": "關閉前是否儲存策略中的變更？",
+    "unsavedChangesModalText": "您在「{{strategyName}}」中有未儲存的變更。 若不儲存變更，其將永久刪除",
+    "saved": "已存檔",
+    "errorsInIDE": "解決代碼錯誤並儲存",
+    "newStrategy": "建立新策略",
+    "newStrategyFrom": "建立新策略的位置：",
+    "newStrategy2": "新增策略",
+    "newStrategyFrom2": "從模板或儲存檔案建立新策略",
+    "running": "執行",
+    "paused": "暫停",
+    "stopped": "中止",
     "recent": "近期",
+    "strategyTab": "策略",
+    "backtestTab": "回測",
+    "viewInIDETab": "於整合開發環境（IDE）中預覽",
+    "activeStrategies": "運行中策略",
+    "pastStrategies": "過去策略",
+    "savedStrategies": "已儲存策略",
     "more": "更多",
-    "createStrategyStringPart1": "建立",
-    "createStrategyStringPart2": "進行回測的新策略",
+    "importStrategy": "從JSON導入策略",
+    "orSelectOne": "或從下方列表中選一",
     "newStrategyModalTitle": "建立新策略",
+    "saveStrategyAsModalTitle": "將此策略儲存為",
+    "newStrategyFromModalTitle": "從模板或儲存檔案建立新策略",
     "newStrategyModalEmptyError": "請填入標籤",
     "newStrategyModalLongError": "策略名稱過長 ({{labelSize}}/{{MAX_LABEL_LENGTH}} 個字符)",
     "openStrategyModalTitle": "開啟策略",
+    "launchStrategy": "執行策略",
+    "stopExec": "中止執行",
     "openStartegyModalNoSelectedError": "未選擇策略",
     "backtestingCreateMessage": "建立策略進行回測",
     "backtestingLoadingMessage": "K線和執行策略載入中...",
     "backtestingStartingMessage": "點擊「開始」進行回測",
+    "exportCSV": "匯出CSV",
+    "exportStrategy": "從策略匯出至JSON",
     "historical": "歷史紀錄",
     "startDate": "開始日期",
     "endDate": "結束日期",
     "useCandlesCheckbox": "使用K線圖",
+    "useCandlesCheckboxDescription": "速度較快，但準確度略差",
     "useTradesCheckbox": "使用交易紀錄",
+    "useTradesCheckboxDescription": "與真實交易歷史紀錄相符。雖然速度較慢，但準確度較高",
     "useMarginCheckbox": "進行保證金交易",
+    "useMarginCheckboxDescription": "PLUG",
     "checkboxWarningMessage": "請勾選至少一個項目",
+    "invalidTF": "選取時間範圍無效",
+    "invalidPeriod": "結束日期必須晚於開始日期",
     "totalPL": "總損益",
     "avgPL": "平均損益",
     "profitFactor": "利潤係數",
@@ -593,13 +656,41 @@
     "largestGain": "最大收益",
     "largestLoss": "最大虧損",
     "liveExecution": {
+      "initialMessage": "點擊「開始」以開始執行",
       "executing": "您正在使用真實帳戶中的餘額執行交易策略。",
       "stopping": "中止策略執行...",
       "preparing": "策略執行前處理和準備...",
       "realBalancesWarning": "注意：按下「開始」後，您將使用真實帳戶中的資金執行您的交易策略。",
       "createStrategy": "建立策略進行回測。"
     },
-    "candleSeedCount": "candle seed數量"
+    "candleSeedCount": "candle seed數量",
+    "noActiveStrategies": "無運行中策略",
+    "saveWithDifferentName": "另存新檔",
+    "templatesTab": "模板",
+    "savedStrategiesTab": "開啟舊檔",
+    "selectMarketDescription": "選取市況",
+    "selectMarketDescriptionDisabled": "已選取市況",
+    "selectCandleDurationDescription": "選取K線期間",
+    "fullscreenChartBtn": "全螢幕圖表",
+    "exitFullscreenChartBtn": "退出全螢幕模式",
+    "perfomanceMetrics": "性能指標",
+    "strategyTypeDescription": "選取策略類型",
+    "strategyTypeDescriptionDisabled": "已選取策略類型",
+    "customStrategyTypeInputPlaceholder": "自訂策略類型",
+    "strategyTypes": {
+      "momentum": "動量指標",
+      "meanReverting": "均值回歸",
+      "trendFollowing": "趨勢追蹤",
+      "technicalAnalysis": "技術分析",
+      "other": "其他"
+    },
+    "closeStrategy": "關閉策略",
+    "executionOptionsModal": {
+      "title": "執行前選擇執行參數",
+      "capitalAllocationLabel": "資本配置",
+      "stopLoss": "止損",
+      "maxDrawdown": "最大回撤"
+    }
   },
   "ui": {
     "ok": "Okay",
@@ -610,6 +701,7 @@
     "export": "匯出",
     "import": "導入",
     "closeBtn": "關閉",
+    "closeWithoutSaving": "退出而不儲存",
     "lastBtn": "結束",
     "nextBtn": "下一步",
     "openDlgBtn": "開啟對話框",
@@ -623,10 +715,17 @@
     "openBtn": "開啟",
     "removeBtn": "移除",
     "createBtn": "建立",
-    "startBtn": "開始"
+    "startBtn": "開始",
+    "stopBtn": "停止",
+    "deleteBtn": "刪除",
+    "expandPanel": "展開面板",
+    "compressPanel": "縮小面板",
+    "name": "名稱",
+    "notSelected": "未選取",
+    "e.g.": "例如：{{value}}"
   },
   "crashHandler": {
-    "text1": "發生導致Bitfinex Honey UI停止運作的錯誤。請重啟應用程式以恢復運作。",
+    "text1": "發生導致Honey Framework UI停止運作的錯誤。請重啟應用程式以恢復運作。",
     "text2_1": "請回報問題至",
     "text2_2": "我們將會盡快修復此問題！",
     "text3": "技術崩潰資訊"
@@ -682,5 +781,14 @@
         "label": "清算"
       }
     }
+  },
+  "removeExistingStrategyModal": {
+    "title": "移除策略",
+    "text_1": "請確定是否刪除",
+    "text_2": "策略？",
+    "warning_1": "注意",
+    "warning_2": "此操作無法復原！",
+    "strategyName": "策略名稱",
+    "input_placeholder": "輸入 {{label}} 以進行刪除"
   }
 }
