@@ -37,6 +37,7 @@ import {
   prepareStrategyExecutionArgs,
   removeStrategyToExecuteFromLS,
   saveStrategyToExecuteToLS,
+  EXECUTION_TYPES,
 } from './StrategyEditor.helpers'
 import LaunchStrategyModal from '../../modals/Strategy/LaunchStrategyModal'
 import routes from '../../constants/routes'
@@ -52,11 +53,6 @@ import './style.css'
 import { getStrategyModeForSymbol } from '../../util/market'
 
 const debug = Debug('hfui-ui:c:strategy-editor')
-
-const EXECUTION_TYPES = Object.freeze({
-  LIVE: 'LIVE',
-  BACKTEST: 'BACKTEST',
-})
 
 const StrategyEditor = (props) => {
   const {
@@ -100,9 +96,7 @@ const StrategyEditor = (props) => {
   const [isCancelProcessModalOpen, setIsCancelProcessModalOpen] = useState(false)
   const [isExecutionOptionsModalOpen, setIsExecutionOptionsModalOpen] = useState(false)
   const [isLaunchStrategyModalOpen, setIsLaunchStrategyModalOpen] = useState(false)
-  const [executionOptionsModalType, setExecutionOptionsModalType] = useState(
-    EXECUTION_TYPES.LIVE,
-  )
+  const [executionOptionsModalType, setExecutionOptionsModalType] = useState(null)
 
   const strategyOptions = _get(
     strategy,
@@ -126,7 +120,6 @@ const StrategyEditor = (props) => {
     capitalAllocation,
     stopLossPerc,
     maxDrawdownPerc,
-    symbol,
   )
 
   const strategyId = strategy?.id
@@ -279,12 +272,20 @@ const StrategyEditor = (props) => {
     return true
   }
 
-  const onLaunchExecutionClick = () => setIsLaunchStrategyModalOpen(true)
+  const onLaunchExecutionClick = () => {
+    if (isFullFilled) {
+      setIsLaunchStrategyModalOpen(true)
+      return
+    }
+    setExecutionOptionsModalType(EXECUTION_TYPES.LIVE)
+    setIsExecutionOptionsModalOpen(true)
+  }
 
   const saveStrategyAndStartExecution = () => {
     if (!checkForAPIKeys(strategy)) {
       return
     }
+
     if (!isFullFilled) {
       setIsExecutionOptionsModalOpen(true)
       setExecutionOptionsModalType(EXECUTION_TYPES.LIVE)
@@ -351,7 +352,6 @@ const StrategyEditor = (props) => {
 
   const openExecutionOptionsModal = () => {
     setIsExecutionOptionsModalOpen(true)
-    setExecutionOptionsModalType(EXECUTION_TYPES.LIVE)
   }
 
   useEffect(() => {
@@ -412,12 +412,11 @@ const StrategyEditor = (props) => {
                     sidebarOpened={sidebarOpened}
                     strategyDirty={strategyDirty}
                     hasErrors={hasErrorsInIDE}
-                    isFullFilled={isFullFilled}
+                    isMarketSelected={!_isEmpty(symbol)}
                   />
                 )}
                 onOpenSaveStrategyAsModal={openSaveStrategyAsModal}
                 isPaperTrading={isPaperTrading}
-                startExecution={onLaunchExecutionClick}
                 stopExecution={stopExecution}
                 onSaveStrategy={onSaveStrategy}
                 openExecutionOptionsModal={openExecutionOptionsModal}
@@ -477,11 +476,9 @@ const StrategyEditor = (props) => {
             capitalAllocation={capitalAllocation}
             stopLossPerc={stopLossPerc}
             maxDrawdownPerc={maxDrawdownPerc}
-            startExecution={
-              executionOptionsModalType === EXECUTION_TYPES.LIVE
-                ? onLaunchExecutionClick
-                : onBacktestStart
-            }
+            startExecution={onLaunchExecutionClick}
+            startBacktest={onBacktestStart}
+            executionOptionsModalType={executionOptionsModalType}
             isFullFilled={isFullFilled}
             strategyId={strategyId}
           />
@@ -544,7 +541,7 @@ StrategyEditor.propTypes = {
   executionState: PropTypes.shape({
     executing: PropTypes.bool,
     loading: PropTypes.bool,
-    loadingGid: PropTypes.bool,
+    loadingGid: PropTypes.string,
   }).isRequired,
   strategyContent: PropTypes.objectOf(
     PropTypes.oneOfType([

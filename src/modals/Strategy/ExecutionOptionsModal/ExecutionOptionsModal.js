@@ -9,7 +9,10 @@ import PercentInput from '../../../components/OrderForm/FieldComponents/input.pe
 
 import ExecutionOptionsBody from './ExecutionOptionsBody'
 import { getIsPaperTrading } from '../../../redux/selectors/ui'
-import { STRATEGY_OPTIONS_KEYS } from '../../../components/StrategyEditor/StrategyEditor.helpers'
+import {
+  EXECUTION_TYPES,
+  STRATEGY_OPTIONS_KEYS,
+} from '../../../components/StrategyEditor/StrategyEditor.helpers'
 
 import './style.scss'
 
@@ -19,6 +22,8 @@ const ExecutionOptionsModal = (props) => {
     onClose,
     saveStrategyOptions,
     startExecution,
+    startBacktest,
+    executionOptionsModalType,
     capitalAllocation,
     stopLossPerc,
     maxDrawdownPerc,
@@ -64,54 +69,75 @@ const ExecutionOptionsModal = (props) => {
     [saveStrategyOptions],
   )
 
-  const capitalAllocationHandler = useCallback((v) => {
-    const error = AmountInput.validateValue(v, t)
-    const processed = String(AmountInput.processValue(v))
+  const capitalAllocationHandler = useCallback(
+    (v) => {
+      const error = AmountInput.validateValue(v, t)
+      const processed = String(AmountInput.processValue(v))
 
-    setCapitalAllocationError(error)
-    setCapitalAllocationValue(v)
+      setCapitalAllocationError(error)
+      setCapitalAllocationValue(v)
 
-    setCapitalAllocation(processed)
-  }, [setCapitalAllocation, t])
+      setCapitalAllocation(processed)
+    },
+    [setCapitalAllocation, t],
+  )
 
-  const stopLossPercHandler = useCallback((v) => {
-    const error = PercentInput.validateValue(v, t)
-    const processed = String(AmountInput.processValue(v))
+  const stopLossPercHandler = useCallback(
+    (v) => {
+      const error = PercentInput.validateValue(v, t)
+      const processed = String(AmountInput.processValue(v))
 
-    setStopLossError(error)
-    setStopLossPercValue(v)
-    if (error) {
-      return
-    }
-    setStopLossPerc(processed)
-  }, [setStopLossPerc, t])
+      setStopLossError(error)
+      setStopLossPercValue(v)
+      if (error) {
+        return
+      }
+      setStopLossPerc(processed)
+    },
+    [setStopLossPerc, t],
+  )
 
-  const maxDrawdownHandler = useCallback((v) => {
-    const error = PercentInput.validateValue(v, t)
-    const processed = String(AmountInput.processValue(v))
+  const maxDrawdownHandler = useCallback(
+    (v) => {
+      const error = PercentInput.validateValue(v, t)
+      const processed = String(AmountInput.processValue(v))
 
-    setMaxDrawdownError(error)
-    setMaxDrawdownPercValue(v)
-    if (error) {
-      return
-    }
-    setMaxDrawdownPerc(processed)
-  }, [setMaxDrawdownPerc, t])
+      setMaxDrawdownError(error)
+      setMaxDrawdownPercValue(v)
+      if (error) {
+        return
+      }
+      setMaxDrawdownPerc(processed)
+    },
+    [setMaxDrawdownPerc, t],
+  )
 
   const onSubmit = useCallback(() => {
     if (!isFullFilled) {
       return
     }
     onClose()
-    startExecution()
-  }, [isFullFilled, onClose, startExecution])
+
+    const isExecution = executionOptionsModalType === EXECUTION_TYPES.LIVE
+    if (isExecution) {
+      startExecution()
+    } else {
+      startBacktest()
+    }
+  }, [
+    isFullFilled,
+    onClose,
+    startExecution,
+    startBacktest,
+    executionOptionsModalType,
+  ])
 
   useEffect(() => {
     setCapitalAllocationValue(capitalAllocation)
     setMaxDrawdownPercValue(maxDrawdownPerc)
     setStopLossPercValue(stopLossPerc)
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [strategyId])
 
   return (
@@ -140,12 +166,20 @@ const ExecutionOptionsModal = (props) => {
         t={t}
       />
       <Modal.Footer>
-        <Modal.Button secondary onClick={onClose}>
-          {t('ui.closeBtn')}
-        </Modal.Button>
-        {isPaperTrading && (
+        {!isPaperTrading ? (
+          <Modal.Button secondary onClick={onClose}>
+            {t('ui.closeBtn')}
+          </Modal.Button>
+        ) : !executionOptionsModalType ? (
+          <Modal.Button
+            primary
+            onClick={onClose}
+          >
+            {t('ui.save')}
+          </Modal.Button>
+        ) : (
           <Modal.Button primary onClick={onSubmit} disabled={!isFullFilled}>
-            {t('ui.startBtn')}
+            {t('strategyEditor.saveAndLaunchBtn')}
           </Modal.Button>
         )}
       </Modal.Footer>
@@ -163,6 +197,12 @@ ExecutionOptionsModal.propTypes = {
   saveStrategyOptions: PropTypes.func.isRequired,
   isFullFilled: PropTypes.bool.isRequired,
   strategyId: PropTypes.string.isRequired,
+  startBacktest: PropTypes.func.isRequired,
+  executionOptionsModalType: PropTypes.string,
+}
+
+ExecutionOptionsModal.defaultProps = {
+  executionOptionsModalType: null,
 }
 
 export default ExecutionOptionsModal
