@@ -47,8 +47,6 @@ function reducer(state = getInitialState(), action = {}) {
       return {
         ...state,
         ...payload,
-        candles: payload.candles.sort((a, b) => a.mts - b.mts),
-        trades: payload.trades.sort((a, b) => a.mts - b.mts),
       }
     }
 
