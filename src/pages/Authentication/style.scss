@@ -182,6 +182,11 @@
     p {
       margin-bottom: -6px;
     }
+
+    &_error {
+      margin-top: 5px;
+      color: $red-color;
+    }
   }
 
   .hfui-input,

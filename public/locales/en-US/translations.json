@@ -18,7 +18,15 @@
     "resetBtn": "Clear Data & Reset",
     "unlockBtn": "Unlock",
     "initMsg": "Create a password to encrypt your API credentials & strategies. All data is stored locally, and your password is hashed",
-    "saveCredentsBtn": "Save Credentials"
+    "saveCredentsBtn": "Save Credentials",
+    "passwordValidation": {
+      "atLeastXChars": "Password must be at least {{amount}} characters long.",
+      "lessThanX": "Password must be less than {{amount}} characters long.",
+      "uppercase": "Password must have at least one Uppercase letter.",
+      "lowercase": "Password must have at least one Lowercase letter.",
+      "numbers": "Password must have at least one number.",
+      "specialChars": "Password must have at least one valid special character."
+    }
   },
   "activeAlgoOrdersModal": {
     "title": "Active Orders",

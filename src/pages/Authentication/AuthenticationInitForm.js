@@ -1,8 +1,10 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import _isEmpty from 'lodash/isEmpty'
-
 import { useTranslation } from 'react-i18next'
+
+import { validatePassword } from '../../util/password'
+import { isDevEnv } from '../../redux/config'
 import Button from '../../ui/Button'
 import Input from '../../ui/Input'
 
@@ -11,8 +13,18 @@ const hiddenInputStyle = {
 }
 
 const AuthenticationInitForm = ({ onInit }) => {
+  const { t } = useTranslation()
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
+  const [passwordError, setPasswordError] = useState(null)
+  const [wasSubmitted, setWasSubmitted] = useState(false)
+
+  useEffect(() => {
+    if (!isDevEnv && wasSubmitted) {
+      const result = validatePassword(password, t)
+      setPasswordError(result)
+    }
+  }, [wasSubmitted, password, t])
 
   const submitReady = (
     (!_isEmpty(password) && !_isEmpty(confirmPassword))
@@ -28,10 +40,14 @@ const AuthenticationInitForm = ({ onInit }) => {
 
   const onSubmit = (e) => {
     e.preventDefault()
+
+    if (!isDevEnv && !_isEmpty(validatePassword(password, t))) {
+      setWasSubmitted(true)
+      return
+    }
+
     registerCredentials()
   }
-
-  const { t } = useTranslation()
 
   return (
     <div className='hfui-authenticationpage__content'>
@@ -64,14 +80,17 @@ const AuthenticationInitForm = ({ onInit }) => {
           onChange={setConfirmPassword}
         />
 
+        <div className='hfui-authenticationpage__inner-form_error'>
+          {passwordError}
+        </div>
+
         <Button
-          onClick={registerCredentials}
+          onClick={onSubmit}
           disabled={!submitReady}
           label={t('auth.saveCredentsBtn')}
           isSubmit
           green
         />
-
       </form>
     </div>
   )
