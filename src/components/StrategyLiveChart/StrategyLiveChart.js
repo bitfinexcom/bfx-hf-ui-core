@@ -18,7 +18,7 @@ const StrategyLiveChart = ({
   markets,
   fullscreenChart,
   exitFullscreenChart,
-  strategy: { strategyOptions: { timeframe, symbol } },
+  strategy: { strategyOptions: { timeframe, symbol }, id },
   trades,
 }) => {
   const { t } = useTranslation()
@@ -52,7 +52,7 @@ const StrategyLiveChart = ({
         <Chart
           market={activeMarketObject}
           theme={settingsTheme}
-          layoutI='strategy-editor'
+          layoutI={`strategy-editor-${id}`}
           indicators={chartIndicators}
           interval={interval}
           trades={trades}
@@ -77,6 +77,7 @@ StrategyLiveChart.propTypes = {
       ).isRequired,
       timeframe: PropTypes.oneOf(timeFrames).isRequired,
     }),
+    id: PropTypes.string.isRequired,
   }).isRequired,
   indicators: PropTypes.arrayOf(
     PropTypes.oneOfType([PropTypes.array, PropTypes.object]),
