@@ -5,6 +5,7 @@ function getInitialState() {
     currentTest: null,
     loading: false,
     executing: false,
+    finished: false,
     trades: [],
     candles: [],
     gid: null,
