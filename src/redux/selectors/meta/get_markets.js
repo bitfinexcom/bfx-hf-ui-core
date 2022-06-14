@@ -3,8 +3,9 @@ import _reduce from 'lodash/reduce'
 import { createSelector } from 'reselect'
 import memoizeOne from 'memoize-one'
 import { reduxSelectors } from '@ufx-ui/bfx-containers'
-import { getPairFromMarket } from '../../../util/market'
+import _isEmpty from 'lodash/isEmpty'
 
+import { getPairFromMarket } from '../../../util/market'
 import { REDUCER_PATHS } from '../../config'
 import { getIsPaperTrading } from '../ui'
 import { MARKET_TYPES_KEYS } from '../../constants/market'
@@ -81,6 +82,10 @@ export const getMarketPair = createSelector(
 export const getExecutionMarketPair = createSelector(
   [getMarketsForExecution, getCurrencySymbolMemo],
   (markets, getCurrencySymbol) => memoizeOne((symbol) => {
+    if (_isEmpty(symbol)) {
+      return 'N/A'
+    }
+
     const currentMarket = markets?.[symbol]
     return getPairFromMarket(currentMarket, getCurrencySymbol)
   }),
