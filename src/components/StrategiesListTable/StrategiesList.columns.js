@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { Icon } from 'react-fa'
+import _isEmpty from 'lodash/isEmpty'
 import { preparePrice } from 'bfx-api-node-util'
 import { defaultCellRenderer } from '../../util/ui'
 import { resultNumber } from '../Backtester/Results/Results.utils'
@@ -27,7 +28,7 @@ const activeStrategiesColumns = (t, getMarketPair) => [
     headerStyle: STYLES.flexStart,
     width: 100,
     flexGrow: 1,
-    cellRenderer: ({ rowData = {} }) => defaultCellRenderer(getMarketPair(rowData.strategyOptions.symbol)),
+    cellRenderer: ({ rowData = {} }) => defaultCellRenderer(_isEmpty(rowData.strategyOptions?.symbol) ? 'N/A' : getMarketPair(rowData.strategyOptions.symbol)),
   },
   {
     label: t('table.runningSince'),
@@ -93,7 +94,7 @@ const pastStrategiesColumns = (t, getMarketPair) => [
     headerStyle: STYLES.flexStart,
     width: 100,
     flexGrow: 1,
-    cellRenderer: ({ rowData = {} }) => defaultCellRenderer(getMarketPair(rowData.strategyOptions.symbol)),
+    cellRenderer: ({ rowData = {} }) => defaultCellRenderer(_isEmpty(rowData.strategyOptions?.symbol) ? 'N/A' : getMarketPair(rowData.strategyOptions.symbol)),
   },
   {
     label: t('table.startedOn'),
