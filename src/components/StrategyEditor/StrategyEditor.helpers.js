@@ -87,6 +87,7 @@ export const prepareStrategyBacktestingArgs = (strategy) => {
       timeframe,
       trades,
       candles,
+      candleSeed,
       capitalAllocation,
       stopLossPerc,
       maxDrawdownPerc,
@@ -103,6 +104,7 @@ export const prepareStrategyBacktestingArgs = (strategy) => {
     [STRATEGY_OPTIONS_KEYS.TRADES]: trades,
     strategy,
     [STRATEGY_OPTIONS_KEYS.CANDLES]: candles,
+    [STRATEGY_OPTIONS_KEYS.CANDLE_SEED]: candleSeed,
     constraints: {
       [STRATEGY_OPTIONS_KEYS.CAPITAL_ALLOCATION]: Number(capitalAllocation),
       [STRATEGY_OPTIONS_KEYS.STOP_LESS_PERC]: Number(stopLossPerc),
