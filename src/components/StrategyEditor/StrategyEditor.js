@@ -32,6 +32,7 @@ import IDETabTitle from './tabs/IDETab.Title'
 import ExecutionOptionsModal from '../../modals/Strategy/ExecutionOptionsModal'
 import {
   getDefaultStrategyOptions,
+  isExecutionInputsFullFilled,
   prepareStrategyBacktestingArgs,
   prepareStrategyExecutionArgs,
   removeStrategyToExecuteFromLS,
@@ -73,7 +74,6 @@ const StrategyEditor = (props) => {
     onLoadStrategy,
     dsExecuteLiveStrategy,
     dsStopLiveStrategy,
-    markets,
     saveStrategy,
     isPaperTrading,
     dsExecuteBacktest,
@@ -107,7 +107,7 @@ const StrategyEditor = (props) => {
   const strategyOptions = _get(
     strategy,
     'strategyOptions',
-    getDefaultStrategyOptions(markets),
+    getDefaultStrategyOptions(),
   )
 
   const {
@@ -122,7 +122,13 @@ const StrategyEditor = (props) => {
 
   const { executing, loadingGid } = executionState
 
-  const isFullFilled = !!capitalAllocation && !!stopLossPerc && !!maxDrawdownPerc
+  const isFullFilled = isExecutionInputsFullFilled(
+    capitalAllocation,
+    stopLossPerc,
+    maxDrawdownPerc,
+    symbol,
+  )
+
   const strategyId = strategy?.id
 
   const onCloseModals = () => {
@@ -143,7 +149,7 @@ const StrategyEditor = (props) => {
       ...content,
       label,
       id: v4(),
-      strategyOptions: getDefaultStrategyOptions(markets),
+      strategyOptions: getDefaultStrategyOptions(),
     }
     saveStrategy(newStrategy)
     onLoadStrategy(newStrategy)
@@ -406,6 +412,7 @@ const StrategyEditor = (props) => {
                     sidebarOpened={sidebarOpened}
                     strategyDirty={strategyDirty}
                     hasErrors={hasErrorsInIDE}
+                    isFullFilled={isFullFilled}
                   />
                 )}
                 onOpenSaveStrategyAsModal={openSaveStrategyAsModal}
@@ -475,6 +482,7 @@ const StrategyEditor = (props) => {
                 ? onLaunchExecutionClick
                 : onBacktestStart
             }
+            isFullFilled={isFullFilled}
           />
           <LaunchStrategyModal
             onSubmit={saveStrategyAndStartExecution}
@@ -515,7 +523,6 @@ StrategyEditor.propTypes = {
   onRemove: PropTypes.func.isRequired,
   authToken: PropTypes.string.isRequired,
   onStrategyChange: PropTypes.func.isRequired,
-  markets: PropTypes.objectOf(PropTypes.object).isRequired, // eslint-disable-line
   setStrategy: PropTypes.func,
   backtestResults: PropTypes.objectOf(PropTypes.any).isRequired, // eslint-disable-line
   strategy: PropTypes.shape({

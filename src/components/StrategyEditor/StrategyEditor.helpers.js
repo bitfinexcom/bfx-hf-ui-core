@@ -1,5 +1,5 @@
 import _find from 'lodash/find'
-import { getDefaultMarket } from '../../util/market'
+import _isEmpty from 'lodash/isEmpty'
 
 const ONE_MIN = 1000 * 60
 const ONE_HOUR = ONE_MIN * 60
@@ -28,9 +28,9 @@ export const STRATEGY_OPTIONS_KEYS = {
   STRATEGY_TYPE: 'strategyType',
 }
 
-export const getDefaultStrategyOptions = (markets) => {
+export const getDefaultStrategyOptions = () => {
   return {
-    [STRATEGY_OPTIONS_KEYS.SYMBOL]: getDefaultMarket(markets),
+    [STRATEGY_OPTIONS_KEYS.SYMBOL]: null,
     [STRATEGY_OPTIONS_KEYS.TIMEFRAME]: DEFAULT_TIMEFRAME,
     [STRATEGY_OPTIONS_KEYS.TRADES]: DEFAULT_USE_TRADES,
     [STRATEGY_OPTIONS_KEYS.CANDLES]: DEFAULT_CANDLES,
@@ -110,7 +110,10 @@ export const prepareStrategyBacktestingArgs = (strategy) => {
 export const prepareStrategyToLoad = (strategyToLoad, markets, strategies) => {
   const {
     strategyOptions: {
-      symbol, capitalAllocation, stopLossPerc, maxDrawdownPerc,
+      symbol,
+      capitalAllocation,
+      stopLossPerc,
+      maxDrawdownPerc,
     },
     strategyId,
     id,
@@ -123,7 +126,7 @@ export const prepareStrategyToLoad = (strategyToLoad, markets, strategies) => {
     id: strategyId,
     executionId: id,
     strategyOptions: {
-      ...getDefaultStrategyOptions(markets),
+      ...getDefaultStrategyOptions(),
       ...strategyToLoad.strategyOptions,
       [STRATEGY_OPTIONS_KEYS.SYMBOL]: _find(markets, (m) => m.wsID === symbol),
       [STRATEGY_OPTIONS_KEYS.CAPITAL_ALLOCATION]: String(capitalAllocation),
@@ -148,3 +151,13 @@ export const parseStrategyToExecuteFromLS = () => {
 export const removeStrategyToExecuteFromLS = () => {
   localStorage.removeItem(LS_HF_UI_EXECUTE_STRATEGY)
 }
+
+export const isExecutionInputsFullFilled = (
+  capitalAllocation,
+  stopLossPerc,
+  maxDrawdownPerc,
+  symbol,
+) => Number(capitalAllocation) > 0
+  &&  Number(stopLossPerc) > 0
+  && Number(maxDrawdownPerc) > 0
+  && !_isEmpty(symbol)

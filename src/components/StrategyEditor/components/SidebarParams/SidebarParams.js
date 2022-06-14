@@ -13,6 +13,7 @@ const StrategyParams = ({
   closeParams,
   isTabHovered,
   sidebarOpened,
+  isFullFilled,
   ...props
 }) => {
   const [hoverRef, isHovered] = useHover()
@@ -52,7 +53,7 @@ const StrategyParams = ({
         {isPaperTrading ? (
           <ParamsForSandbox
             onClose={onClose}
-            isExecutionDisabled={executing}
+            isExecutionDisabled={!isFullFilled}
             {...props}
           />
         ) : (
@@ -73,6 +74,7 @@ StrategyParams.propTypes = {
   isTabHovered: PropTypes.bool.isRequired,
   sidebarOpened: PropTypes.bool.isRequired,
   closeParams: PropTypes.func.isRequired,
+  isFullFilled: PropTypes.bool.isRequired,
 }
 
 export default memo(StrategyParams)

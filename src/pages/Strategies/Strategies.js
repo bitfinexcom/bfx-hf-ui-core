@@ -40,7 +40,6 @@ const StrategiesPage = ({
   strategyContent,
   authToken,
   onSave,
-  markets,
   onRemove,
 }) => {
   const [strategy, setStrategy] = useState(strategyContent)
@@ -189,7 +188,7 @@ const StrategiesPage = ({
       return
     }
     if (!_isEmpty(strategyToLoad) && _isEmpty(strategyToLoad.strategyOptions)) {
-      strategyToLoad.strategyOptions = getDefaultStrategyOptions(markets)
+      strategyToLoad.strategyOptions = getDefaultStrategyOptions()
     }
     selectStrategyHandler(strategyToLoad, forcedLoad)
     setSectionErrors({})
@@ -328,7 +327,6 @@ StrategiesPage.propTypes = {
   strategyContent: PropTypes.objectOf(Object),
   authToken: PropTypes.string.isRequired,
   onSave: PropTypes.func.isRequired,
-  markets: PropTypes.objectOf(PropTypes.object).isRequired, // eslint-disable-line
   onRemove: PropTypes.func.isRequired,
 }
 

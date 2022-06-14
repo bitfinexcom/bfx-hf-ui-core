@@ -116,7 +116,11 @@ const StrategyTypeSelect = ({
           options={strategyTypesOptionsMemo}
           onChange={onSelectStrategyType}
           disabled={isDisabled || isExecuting || showCustomStrategyTypeInput}
-          placeholder={isExecuting || isDisabled ? t('ui.notSelected') : ''}
+          placeholder={
+            isExecuting || isDisabled
+              ? t('ui.notSelected')
+              : t('strategyEditor.strategyTypePlaceholder')
+          }
         />
         <p className='hfui-orderform__input-label'>
           {isExecuting || isDisabled

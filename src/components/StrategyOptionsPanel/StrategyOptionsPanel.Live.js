@@ -10,7 +10,7 @@ import { makeShorterLongName } from '../../util/ui'
 import StrategyRunned from '../StrategyEditor/components/StrategyRunned'
 import StrategyStopped from '../StrategyEditor/components/StrategyStopped'
 import StrategyTypeSelect from './StrategyTypeSelect'
-import NavbarButton from '../Navbar/Navbar.Button'
+import StrategyOptionsButton from './StrategyOptionsButton'
 
 import './style.css'
 
@@ -82,12 +82,7 @@ const StrategyOptionsPanelLive = ({
           isExecuting={isExecuting}
           isDisabled
         />
-        <NavbarButton
-          alt='Application settings'
-          icon='settings-icon'
-          className='hfui-navbar__app-settings__icon item'
-          onClick={openExecutionOptionsModal}
-        />
+        <StrategyOptionsButton onClick={openExecutionOptionsModal} />
       </div>
       <div className='hfui-strategy-options__buttons-container'>
         {isExecuting ? (

@@ -613,7 +613,7 @@
     "disconnected": "Disconnected"
   },
   "strategyEditor": {
-    "unsavedChanges": "You have unsaved changes",
+    "unsavedChanges": "Unsaved changes",
     "unsavedChangesModalTitle": "Do you need to save changes in the strategy before closing?",
     "cancelThisProcess": "Cancel this process",
     "cancelAppProcessTitle": "Cancel application process",
@@ -710,12 +710,14 @@
     "saveWithDifferentName": "Save with different name",
     "templatesTab": "Templates",
     "savedStrategiesTab": "From saved",
-    "selectMarketDescription": "Select market",
+    "selectMarketDescription": "This is the market in which the strategy will run",
     "selectMarketDescriptionDisabled": "Selected Market",
+    "selectMarketPlaceholder": "Select a market",
     "selectCandleDurationDescription": "Select candle duration",
     "fullscreenChartBtn": "Fullscreen Chart",
     "exitFullscreenChartBtn": "Exit fullscreen",
-    "strategyTypeDescription": "Select strategy type",
+    "strategyTypeDescription": "Not required, but it will help categorize the strategy",
+    "strategyTypePlaceholder": "Select a strategy type",
     "strategyTypeDescriptionDisabled": "Selected strategy type",
     "customStrategyTypeInputPlaceholder": "Enter your own type...",
     "strategyTypes": {
@@ -737,7 +739,8 @@
       "title": "Perfomance metrics",
       "runTime": "Strategy Run Time"
     },
-    "IDEreadonlyNotice": "Strategy editing is disabled while the strategy is being executed. To update your strategy, change to SANDBOX environment and reopen this strategy from your ACTIVE STRATEGIES tab"
+    "IDEreadonlyNotice": "Strategy editing is disabled while the strategy is being executed. To update your strategy, change to SANDBOX environment and reopen this strategy from your ACTIVE STRATEGIES tab",
+    "strategyOptionsBtn": "Settings"
   },
   "ui": {
     "ok": "Okay",
@@ -769,7 +772,8 @@
     "compressPanel": "Compress Panel",
     "name": "Name",
     "notSelected": "Not selected",
-    "e.g.": "e.g. {{value}}"
+    "e.g.": "e.g. {{value}}",
+    "required": "REQUIRED"
   },
   "crashHandler": {
     "text1": "An error occurred that caused the HoneyFramework UI to halt. Please, restart the application to proceed working with it",
