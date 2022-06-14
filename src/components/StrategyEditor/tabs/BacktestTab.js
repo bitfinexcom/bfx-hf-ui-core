@@ -28,12 +28,8 @@ const BacktestTab = (props) => {
       setLayoutConfig(LAYOUT_CONFIG_NO_DATA)
       return
     }
-    if (_isEmpty(positions)) {
-      setLayoutConfig(LAYOUT_CONFIG_WITHOUT_TRADES)
-      return
-    }
     setLayoutConfig(LAYOUT_CONFIG)
-  }, [finished, positions])
+  }, [finished])
 
   const renderGridComponents = useCallback(
     (i) => {
