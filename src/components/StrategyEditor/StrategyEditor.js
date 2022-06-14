@@ -287,7 +287,7 @@ const StrategyEditor = (props) => {
     if (isPaperTrading) {
       changeTradingMode(!isPaperTrading, authToken, currentMode)
       saveStrategyToExecuteToLS(strategy)
-      setTimeout(() => window.location.replace("/index.html"), 500); // eslint-disable-line
+      setTimeout(() => window.location.replace('/index.html'), 500); // eslint-disable-line
       return
     }
     onSaveStrategy()
@@ -350,7 +350,7 @@ const StrategyEditor = (props) => {
 
   useEffect(() => {
     const { search } = location
-    if (executing || !search || _isEmpty(savedStrategies)) {
+    if (executing || !search || _isEmpty(savedStrategies) || isPaperTrading) {
       return
     }
     const execute = new URLSearchParams(location.search).get('execute')
