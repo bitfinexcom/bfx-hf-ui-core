@@ -94,17 +94,7 @@ const StrategyLiveTab = (props) => {
           return null
       }
     },
-    [
-      layoutConfig,
-      props,
-      fullscreenChart,
-      executing,
-      results,
-      positions,
-      hasResults,
-      startedOn,
-      strategy,
-    ],
+    [props, executing, hasResults, fullscreenChart, trades, results, startedOn, positions, layoutConfig, strategy],
   )
 
   return (

@@ -80,7 +80,7 @@ const BacktestTab = (props) => {
           return null
       }
     },
-    [layoutConfig, props, fullscreenChart, finished, loading, results, strategy, positions],
+    [props, finished, fullscreenChart, trades, results, loading, positions, layoutConfig, strategy],
   )
 
   return (
