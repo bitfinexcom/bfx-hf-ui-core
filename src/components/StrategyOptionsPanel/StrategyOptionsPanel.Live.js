@@ -25,7 +25,6 @@ const StrategyOptionsPanelLive = ({
   openExecutionOptionsModal,
   setFullScreenChart,
   stopExecution,
-  startExecution,
   saveStrategyOptions,
 }) => {
   const { label, strategyOptions: { symbol, strategyType } = {} } = strategy || {}
@@ -90,21 +89,12 @@ const StrategyOptionsPanelLive = ({
             green
           />
         )}
-        {isExecuting ? (
-          <>
-            <Button
-              className='hfui-strategy-options__option-btn item'
-              label={t('ui.stopBtn')}
-              onClick={stopExecution}
-              red
-            />
-          </>
-        ) : (
+        {isExecuting && (
           <Button
             className='hfui-strategy-options__option-btn item'
-            label={t('ui.startBtn')}
-            onClick={startExecution}
-            green
+            label={t('ui.stopBtn')}
+            onClick={stopExecution}
+            red
           />
         )}
       </div>
@@ -138,7 +128,6 @@ StrategyOptionsPanelLive.propTypes = {
   openExecutionOptionsModal: PropTypes.func.isRequired,
   setFullScreenChart: PropTypes.func.isRequired,
   stopExecution: PropTypes.func.isRequired,
-  startExecution: PropTypes.func.isRequired,
 }
 
 export default StrategyOptionsPanelLive
