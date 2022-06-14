@@ -15,7 +15,7 @@ import {
 import StrategyLiveChart from '../../../StrategyLiveChart'
 import StrategyTabWrapper from '../../components/StrategyTabWrapper'
 import StrategyOptionsPanelLive from '../../../StrategyOptionsPanel/StrategyOptionsPanel.Live'
-import { getCurrentStrategyExecutionState } from '../../../../redux/selectors/ws'
+import { getCurrentStrategyExecutionState, getStrategyPositions } from '../../../../redux/selectors/ws'
 
 const StrategyLiveTab = (props) => {
   const { onCancelProcess, strategy } = props
@@ -23,6 +23,7 @@ const StrategyLiveTab = (props) => {
   const [fullscreenChart, setFullScreenChart] = useState(false)
 
   const executionState = useSelector(getCurrentStrategyExecutionState)
+  const positions = useSelector(getStrategyPositions)
 
   const { t } = useTranslation()
 
@@ -30,19 +31,17 @@ const StrategyLiveTab = (props) => {
     loading, executing, results, startedOn,
   } = executionState
 
-  const hasResults = !_isEmpty(results)
+  const hasResults = !_isEmpty(positions)
 
   useEffect(() => {
     if (!executing && !hasResults) {
       setLayoutConfig(LAYOUT_CONFIG_NO_DATA)
-      return
-    }
-    if (_isEmpty(results?.trades)) {
+    } else if (!hasResults) {
       setLayoutConfig(LAYOUT_CONFIG_WITHOUT_TRADES)
-      return
+    } else {
+      setLayoutConfig(LAYOUT_CONFIG)
     }
-    setLayoutConfig(LAYOUT_CONFIG)
-  }, [hasResults, results, executing])
+  }, [hasResults, executing])
 
   const renderGridComponents = useCallback(
     (i) => {
@@ -78,7 +77,7 @@ const StrategyLiveTab = (props) => {
         case COMPONENTS_KEYS.STRATEGY_TRADES:
           return (
             <StrategyTradesTable
-              results={results}
+              results={positions}
               setLayoutConfig={setLayoutConfig}
               layoutConfig={layoutConfig}
               onTradeClick={() => {}}
@@ -96,6 +95,7 @@ const StrategyLiveTab = (props) => {
       fullscreenChart,
       executing,
       results,
+      positions,
       hasResults,
       startedOn,
       strategy,

@@ -1,15 +1,13 @@
 import React, { useCallback, useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
-import _isEmpty from 'lodash/isEmpty'
 import { useTranslation } from 'react-i18next'
 import StrategyPerfomanceMetrics from '../../StrategyPerfomanceMetrics'
-import BacktestTradesTable from '../../BacktestTradesTable'
+import BacktestTradesTable from '../../StrategyTradesTable'
 import StrategiesGridLayout from '../components/StrategiesGridLayout'
 import {
   COMPONENTS_KEYS,
   LAYOUT_CONFIG,
   LAYOUT_CONFIG_NO_DATA,
-  LAYOUT_CONFIG_WITHOUT_TRADES,
 } from '../components/StrategiesGridLayout.constants'
 import StrategyLiveChart from '../../StrategyLiveChart'
 import BacktestOptionsPanel from '../../BacktestOptionsPanel'
@@ -20,19 +18,16 @@ const BacktestTab = (props) => {
   const [layoutConfig, setLayoutConfig] = useState()
   const [fullscreenChart, setFullScreenChart] = useState(false)
 
-  const { finished = false, loading, trades } = results
+  const { finished = false, loading } = results
+  const positions = results?.strategy?.closedPositions
 
   useEffect(() => {
     if (!finished) {
       setLayoutConfig(LAYOUT_CONFIG_NO_DATA)
       return
     }
-    if (_isEmpty(trades)) {
-      setLayoutConfig(LAYOUT_CONFIG_WITHOUT_TRADES)
-      return
-    }
     setLayoutConfig(LAYOUT_CONFIG)
-  }, [finished, trades])
+  }, [finished])
 
   const renderGridComponents = useCallback(
     (i) => {
@@ -67,7 +62,7 @@ const BacktestTab = (props) => {
         case COMPONENTS_KEYS.STRATEGY_TRADES:
           return (
             <BacktestTradesTable
-              results={results}
+              results={positions}
               setLayoutConfig={setLayoutConfig}
               layoutConfig={layoutConfig}
               onTradeClick={() => {}}
@@ -79,7 +74,7 @@ const BacktestTab = (props) => {
           return null
       }
     },
-    [layoutConfig, props, fullscreenChart, finished, loading, results, strategy],
+    [layoutConfig, props, fullscreenChart, finished, loading, results, strategy, positions],
   )
 
   return (
@@ -103,7 +98,7 @@ BacktestTab.propTypes = {
   results: PropTypes.shape({
     finished: PropTypes.bool,
     loading: PropTypes.bool,
-    trades: PropTypes.arrayOf(PropTypes.object), // eslint-disable-line
+    strategy: PropTypes.object, // eslint-disable-line
   }).isRequired,
   onCancelProcess: PropTypes.func.isRequired,
   strategy: PropTypes.object.isRequired, // eslint-disable-line

@@ -130,9 +130,7 @@ const StrategyTradesTable = ({
 }
 
 StrategyTradesTable.propTypes = {
-  results: PropTypes.shape({
-    trades: PropTypes.arrayOf(PropTypes.object).isRequired,  // eslint-disable-line
-  }).isRequired,
+  results: PropTypes.object,  // eslint-disable-line
   layoutConfig: PropTypes.arrayOf(PropTypes.object).isRequired, // eslint-disable-line
   setLayoutConfig: PropTypes.func.isRequired,
   strategy: PropTypes.object.isRequired, // eslint-disable-line

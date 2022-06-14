@@ -8,7 +8,7 @@ import getAuthConfigured from './get_auth_configured'
 import getSortedByTimeStrategies from './get_sorted_by_time_strategies'
 import getSortedByTimeActiveStrategies from './get_sorted_by_time_active_strategies'
 import sortedByTimePastStrategies from './get_sorted_by_time_past_strategies'
-import getLiveExecutionResults from './get_live_execution_results'
+import getLiveExecutionResults, { getStrategyPositions } from './get_live_execution_results'
 import getAllPositions from './get_all_positions'
 import getFilteredPositions from './get_filtered_positions'
 import getFilteredPositionsCount from './get_filtered_positions_count'
@@ -55,6 +55,7 @@ export {
 
   sortedByTimePastStrategies,
   getLiveExecutionResults,
+  getStrategyPositions,
   getSortedByTimeActiveStrategies,
   getSortedByTimeStrategies,
   getDraftStrategies,

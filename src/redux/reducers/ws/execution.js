@@ -117,22 +117,23 @@ function reducer(state = getInitialState(), action = {}) {
     }
 
     case types.SET_LIVE_EXECUTION_TRADES: {
-      const { strategyMapKey, positionData } = payload
+      const { positionData } = payload
       const { id } = positionData
-      const currentState = state.results?.[strategyMapKey] || {}
+      const currentState = state.results?.positions || {}
+      const newState = {
+        ...state.results,
+        positions: {
+          ...currentState,
+          [id]: {
+            ...(currentState?.[id] || {}),
+            ...positionData,
+          },
+        },
+      }
 
       return {
         ...state,
-        results: {
-          ...state.results,
-          [strategyMapKey]: {
-            ...currentState,
-            [id]: {
-              ...(currentState?.[id] || {}),
-              ...positionData,
-            },
-          },
-        },
+        results: newState,
       }
     }
 

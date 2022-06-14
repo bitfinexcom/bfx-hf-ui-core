@@ -80,7 +80,7 @@ export default (t, selectedIndex, setSelectedIndex) => [
       ) : '--'),
   },
   {
-    label: t('table.units'),
+    label: t('table.amount'),
     dataKey: 'amount',
     width: 150,
     flexGrow: 1,
