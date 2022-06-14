@@ -65,7 +65,7 @@ const StrategyOptionsPanelSandbox = ({
             )}
           </>
         </p>
-        <div className='hfui-strategy-options__input item'>
+        <div className='hfui-strategy-options__input hfui-strategy-options__input--unlimited item'>
           <MarketSelect
             value={symbol}
             onChange={onMarketSelectChange}

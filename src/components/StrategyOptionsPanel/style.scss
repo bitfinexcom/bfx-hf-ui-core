@@ -5,7 +5,7 @@
   justify-content: space-between;
 
   .item {
-    margin-right: 10px;
+    margin-right: 30px;
     &:last-child {
       margin-right: 0;
     }
@@ -13,8 +13,7 @@
 
   &__left-container {
     display: flex;
-    justify-content: space-between;
-    width: 75%;
+    width: 80%;
   }
 
   &__save-container {
@@ -75,6 +74,10 @@
     flex-direction: column;
     max-width: 250px;
     margin-bottom: 0;
+
+    &--unlimited {
+      max-width: none;
+    }
   }
 
   &__amount-input {
@@ -130,6 +133,19 @@
 
     &:hover {
       color: $green-color;
+      justify-content: space-between;
+    }
+  }
+}
+
+// Remove after make BacktestOptionsPanel verical
+@media screen and (max-width: 1800px) {
+  .hfui-strategy-options {
+    .item {
+      margin-right: 10px;
+    }
+
+    &__left-container {
       justify-content: space-between;
     }
   }
