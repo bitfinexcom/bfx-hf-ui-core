@@ -19,7 +19,6 @@ const MAIN_ROW = ((props) => {
   const {
     selectedIndex, rowIndex, registerChild, measure, rowData, columns,
   } = props
-  console.log('props: ', props)
 
   useEffect(() => {
     measure()
