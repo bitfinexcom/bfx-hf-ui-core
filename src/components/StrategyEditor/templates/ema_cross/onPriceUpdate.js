@@ -4,6 +4,10 @@ export default `({ HFS, _, HFU }) => async (state = {}, update = {}) => {
   if (HFS.getNumCandles(state) < 2) { // 2 price points needed
     return state
   }
+  
+  if (HFS.getPosition(state)) {
+    return state
+  }
 
   const { price, mts } = update
   const i = HFS.indicators(state)

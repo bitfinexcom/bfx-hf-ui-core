@@ -1,7 +1,7 @@
 import defineIndicators from './defineIndicators'
 import defineMeta from './defineMeta'
 
-import onEnter from './onEnter'
+import onPriceUpdate from './onPriceUpdate'
 import onUpdateLong from './onUpdateLong'
 
 export default {
@@ -9,6 +9,6 @@ export default {
 
   defineIndicators,
   defineMeta,
-  onEnter,
+  onPriceUpdate,
   onUpdateLong,
 }
