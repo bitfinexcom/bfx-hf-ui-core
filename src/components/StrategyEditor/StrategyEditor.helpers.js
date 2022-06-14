@@ -1,5 +1,4 @@
 import _find from 'lodash/find'
-import _isEmpty from 'lodash/isEmpty'
 import _map from 'lodash/map'
 import _reduce from 'lodash/reduce'
 
