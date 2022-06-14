@@ -41,6 +41,7 @@ import getSavedStrategies from './get_saved_strategies'
 import getIsExecutionLoading from './get_is_execution_loading'
 import getActiveStrategies from './get_active_strategies'
 import getCurrentStrategyExecutionState from './get_current_strategy_execution_state'
+import getDraftStrategies from './get_draft_strategies'
 
 export {
   getSockets,
@@ -56,6 +57,7 @@ export {
   getLiveExecutionResults,
   getSortedByTimeActiveStrategies,
   getSortedByTimeStrategies,
+  getDraftStrategies,
 
   getBacktestState,
   getBacktestData,
