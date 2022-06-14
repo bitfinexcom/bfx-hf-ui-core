@@ -157,8 +157,7 @@ export const isExecutionInputsFullFilled = (
   stopLossPerc,
   maxDrawdownPerc,
   symbol,
-) => !!capitalAllocation
-  && Number(capitalAllocation) > 0
-  && !!stopLossPerc
-  && !!maxDrawdownPerc
+) => Number(capitalAllocation) > 0
+  &&  Number(stopLossPerc) > 0
+  && Number(maxDrawdownPerc) > 0
   && !_isEmpty(symbol)
