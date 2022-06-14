@@ -87,6 +87,10 @@ export const getExecutionMarketPair = createSelector(
     }
 
     const currentMarket = markets?.[symbol]
+    if (_isEmpty(currentMarket)) {
+      return 'N/A'
+    }
+    
     return getPairFromMarket(currentMarket, getCurrencySymbol)
   }),
 )
