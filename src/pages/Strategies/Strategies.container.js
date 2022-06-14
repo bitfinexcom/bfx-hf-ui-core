@@ -9,13 +9,14 @@ import UIActions from '../../redux/actions/ui'
 import WSActions from '../../redux/actions/ws'
 
 import StrategiesPage from './Strategies'
-import { getAuthToken } from '../../redux/selectors/ws'
+import { getAuthToken, getBacktestResults } from '../../redux/selectors/ws'
 
 const mapStateToProps = (state) => ({
   authToken: getAuthToken(state),
   firstLogin: getFirstLogin(state),
   isGuideActive: getGuideStatusForPage(state, STRATEGY_PAGE),
   strategyContent: getStrategyContent(state),
+  backtestResults: getBacktestResults(state),
 })
 
 const mapDispatchToProps = (dispatch) => ({
@@ -35,9 +36,6 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch(WSActions.send(['strategy.remove', authToken, id]))
     dispatch(WSActions.resetBacktestData())
     dispatch(UIActions.clearStrategies())
-  },
-  clearBacktestOptions: () => {
-    dispatch(WSActions.resetBacktestData())
   },
 })
 

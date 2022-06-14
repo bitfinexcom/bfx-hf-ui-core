@@ -22,6 +22,7 @@ import SaveUnsavedChangesModal from '../../modals/Strategy/SaveUnsavedChangesMod
 import RemoveExistingStrategyModal from '../../modals/Strategy/RemoveExistingStrategyModal'
 import SaveStrategyAsModal from '../../modals/Strategy/SaveStrategyAsModal/SaveStrategyAsModal'
 import { getDefaultStrategyOptions } from '../../components/StrategyEditor/StrategyEditor.helpers'
+import ClearBacktestResultsModal from '../../modals/Strategy/ClearBacktestResultsModal'
 
 import './style.css'
 
@@ -41,7 +42,7 @@ const StrategiesPage = ({
   authToken,
   onSave,
   onRemove,
-  clearBacktestOptions,
+  backtestResults: { finished },
 }) => {
   const [strategy, setStrategy] = useState(strategyContent)
   const [indicators, setIndicators] = useState([])
@@ -52,6 +53,7 @@ const StrategiesPage = ({
   const [isRemoveModalOpened, setIsRemoveModalOpened] = useState(false)
   const [isSaveStrategyAsModalOpen, setIsSaveStrategyAsModalOpen] = useState(false)
   const [isRenameStrategyModalOpen, setIsRenameStrategyModalOpen] = useState(false)
+  const [isClearBacktestResultsModalOpen, setIsClearBacktestResultsOpen] = useState(false)
   const [actionStrategy, setActionStrategy] = useState({})
   const [nextStrategyToOpen, setNextStrategyToOpen] = useState(null)
 
@@ -188,10 +190,14 @@ const StrategiesPage = ({
       setIsUnsavedStrategyModalOpen(true)
       return
     }
+    if (finished && !forcedLoad) {
+      setNextStrategyToOpen(strategyToLoad)
+      setIsClearBacktestResultsOpen(true)
+      return
+    }
     if (!_isEmpty(strategyToLoad) && _isEmpty(strategyToLoad.strategyOptions)) {
       strategyToLoad.strategyOptions = getDefaultStrategyOptions()
     }
-    clearBacktestOptions()
     selectStrategyHandler(strategyToLoad, forcedLoad)
     setSectionErrors({})
     setNextStrategyToOpen(null)
@@ -211,6 +217,8 @@ const StrategiesPage = ({
     setIsRemoveModalOpened(false)
     setIsSaveStrategyAsModalOpen(false)
     setIsRenameStrategyModalOpen(false)
+    setIsClearBacktestResultsOpen(false)
+    setIsUnsavedStrategyModalOpen(false)
   }
 
   const removeStrategy = () => {
@@ -290,7 +298,7 @@ const StrategiesPage = ({
         />
         <SaveUnsavedChangesModal
           isOpen={isUnsavedStrategyModalOpen}
-          onClose={() => setIsUnsavedStrategyModalOpen(false)}
+          onClose={onCloseModals}
           strategy={strategy}
           nextStrategy={nextStrategyToOpen}
           onLoadStrategy={onLoadStrategy}
@@ -314,6 +322,12 @@ const StrategiesPage = ({
           onRemoveStrategy={removeStrategy}
           strategy={actionStrategy}
         />
+        <ClearBacktestResultsModal
+          isOpen={isClearBacktestResultsModalOpen}
+          onClose={onCloseModals}
+          nextStrategy={nextStrategyToOpen}
+          onLoadStrategy={onLoadStrategy}
+        />
       </Layout.Main>
       <Layout.Footer />
     </Layout>
@@ -330,7 +344,9 @@ StrategiesPage.propTypes = {
   authToken: PropTypes.string.isRequired,
   onSave: PropTypes.func.isRequired,
   onRemove: PropTypes.func.isRequired,
-  clearBacktestOptions: PropTypes.func.isRequired,
+  backtestResults: PropTypes.shape({
+    finished: PropTypes.bool,
+  }).isRequired,
 }
 
 StrategiesPage.defaultProps = {

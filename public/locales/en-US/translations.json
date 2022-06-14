@@ -613,6 +613,8 @@
     "disconnected": "Disconnected"
   },
   "strategyEditor": {
+    "clearBacktestResultsModalTitle": "The current backtest results will be cleared",
+    "clearBacktestResultsModalText": "For now, we don't save result of backtesting. But we are working on it. If you select another strategy - backtest result of current strategy will be cleared",
     "unsavedChanges": "Unsaved changes",
     "unsavedChangesModalTitle": "Do you need to save changes in the strategy before closing?",
     "cancelThisProcess": "Cancel this process",
@@ -773,7 +775,8 @@
     "name": "Name",
     "notSelected": "Not selected",
     "e.g.": "e.g. {{value}}",
-    "required": "REQUIRED"
+    "required": "REQUIRED",
+    "proceed": "Proceed"
   },
   "crashHandler": {
     "text1": "An error occurred that caused the HoneyFramework UI to halt. Please, restart the application to proceed working with it",
