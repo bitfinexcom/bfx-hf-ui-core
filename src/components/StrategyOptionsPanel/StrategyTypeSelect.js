@@ -110,7 +110,7 @@ const StrategyTypeSelect = ({
 
   return (
     <div className='hfui-strategy-options__type-selection item'>
-      <div className='hfui-strategy-options__input'>
+      <div className='hfui-strategy-options__input hfui-strategy-options__input--unlimited'>
         <Dropdown
           value={strategyTypeDropdownValue}
           options={strategyTypesOptionsMemo}

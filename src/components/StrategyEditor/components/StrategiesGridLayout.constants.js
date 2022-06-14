@@ -77,16 +77,16 @@ export const IDE_LAYOUT_CONFIG = [
   {
     i: COMPONENTS_KEYS.IDE,
     x: 0,
-    y: 1.25,
+    y: 1,
     w: 60,
-    h: 7.75,
+    h: 8,
   },
   {
     i: COMPONENTS_KEYS.HELP_DOCS,
     x: 60,
-    y: 1.25,
+    y: 1,
     w: 40,
-    h: 7.75,
+    h: 8,
   },
   // OPTIONS should be after Chart and Perfomance to ensure overlapping dropdowns
   {
@@ -94,6 +94,6 @@ export const IDE_LAYOUT_CONFIG = [
     x: 0,
     y: 0,
     w: 100,
-    h: 1.25,
+    h: 1,
   },
 ]
