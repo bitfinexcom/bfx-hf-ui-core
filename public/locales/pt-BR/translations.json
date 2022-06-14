@@ -277,8 +277,8 @@
   },
   "AOPauseModal": {
     "title": "Pausa de ordens Algo",
-    "text1": "Fechar o aplicativo enquanto as ordens de algo estão ativas exigirá que você retome/cancele as ordens de algo ao reiniciar o aplicativo Honey Framework.",
-    "text2": "Ao reiniciar o aplicativo Honey Framework, será solicitado que você selecione entre as ordens de algoritmo atualmente ativas quais as duas opções fornecidas podem ser aplicadas:",
+    "text1": "Fechar o aplicativo enquanto as ordens de algo estão ativas exigirá que você retome/cancele as ordens de algo ao reiniciar o aplicativo Bitfinex Honey.",
+    "text2": "Ao reiniciar o aplicativo Bitfinex Honey, será solicitado que você selecione entre as ordens de algoritmo atualmente ativas quais as duas opções fornecidas podem ser aplicadas:",
     "text3": "1. Retomar: As ordens atomic realizadas pelas ordens de algo selecionadas (se ativas) serão canceladas, e as ordens de algo continuarão a realizar ordens para os valores restantes. As ordens de algo não selecionadas não serão retomadas e serão perdidas para sempre.",
     "text4": "2. Cancelar tudo: Todas as ordens atomic realizadas pelas ordens de algo (se ativas) serão canceladas e nenhuma ordem de algo será retomada.",
     "text5": "Obs.: As ordens atomic permanecerão ativas se a opção DMS estiver desabilitada."
@@ -299,7 +299,7 @@
     "description": "Aplicativo oficial de algoritmos para trading, gratuito, baseado no <url>API Bitfinex</url> e criado pelo time da Bitfinex.",
     "licence": "Este software é licenciado pela licença <url>Apache-2.0</url>.",
     "sourceCode": "O código fonte está disponível no <url>Github</url>.",
-    "moreInfo": "Veja a <url>Página de FAQ</url> do Honey Framework para mais informações.",
+    "moreInfo": "Veja a <url>Página de FAQ</url> do Bitfinex Honey para mais informações.",
     "apiKeys": "Chaves de API",
     "productionKey": "Chave API modo Live",
     "paperKey": "Chave API modo Sandbox",
@@ -343,7 +343,7 @@
     "title": "Problema com a conexão",
     "text1": "Notamos vários problemas de conexão com a internet. É necessário {{action}} o aplicativo para que ele continue a funcionar normalmente.",
     "text2": "Certifique-se de ter uma conexão com a internet estável e boa.",
-    "text3": "O Honey Framework irá {{action}} depois de você pressionar \"Ok\".",
+    "text3": "O Bitfinex Honey irá {{action}} depois de você pressionar \"Ok\".",
     "text4": "O aplicativo irá {{action}} automaticamente em {{countdown}} segundos.",
     "checkbox": "{{action}} automaticamente",
     "reboot": "reiniciar",
@@ -432,7 +432,7 @@
   },
   "confirmDMSModal": {
     "title": "Habilitar interruptor automático",
-    "text": "Esteja ciente de que, quando esta configuração estiver habilitada, fechar o aplicativo não apenas cancelará todas as ordens que foram criadas pelo Honey Framework, mas também cancelará todas as outras ordens, incluindo aquelas que foram abertas no site da Bitfinex ou em outro lugar.\n\nEsta é uma configuração recomendada, mas você deve estar ciente das possíveis consequências.",
+    "text": "Esteja ciente de que, quando esta configuração estiver habilitada, fechar o aplicativo não apenas cancelará todas as ordens que foram criadas pelo Bitfinex Honey, mas também cancelará todas as outras ordens, incluindo aquelas que foram abertas no site da Bitfinex ou em outro lugar.\n\nEsta é uma configuração recomendada, mas você deve estar ciente das possíveis consequências.",
     "dontShowAgain": "Não me mostre mais"
   },
   "editOrderModal": {
@@ -725,7 +725,7 @@
     "e.g.": "ex. {{value}}"
   },
   "crashHandler": {
-    "text1": "Ocorreu um erro que fez com que a interface do usuário do Honey Framework fosse interrompida. Reinicie o aplicativo para continuar trabalhando com ele",
+    "text1": "Ocorreu um erro que fez com que a interface do usuário do Bitfinex Honey fosse interrompida. Reinicie o aplicativo para continuar trabalhando com ele",
     "text2_1": "Comunique este problema em",
     "text2_2": "para que possamos corrigi-lo o mais rápido possível!",
     "text3": "Informação sobre travamento técnico"
