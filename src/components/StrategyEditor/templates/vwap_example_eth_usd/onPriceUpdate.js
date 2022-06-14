@@ -1,7 +1,11 @@
 /* eslint-disable */
 
 export default `({ HFS, _, HFU }) => async (state = {}, update = {}) => {
-  if (HFS.getNumCandles(state) < 1000) {
+  if (HFS.getNumCandles(state) < 150) {
+    return state
+  }
+  
+   if (HFS.getPosition(state)) {
     return state
   }
 
