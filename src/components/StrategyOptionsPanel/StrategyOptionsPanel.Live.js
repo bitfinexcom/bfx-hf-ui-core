@@ -28,10 +28,7 @@ const StrategyOptionsPanelLive = ({
   startExecution,
   saveStrategyOptions,
 }) => {
-  const {
-    label,
-    strategyOptions: { symbol, strategyType } = {},
-  } = strategy || {}
+  const { label, strategyOptions: { symbol, strategyType } = {} } = strategy || {}
   const { t } = useTranslation()
 
   return (
@@ -85,14 +82,16 @@ const StrategyOptionsPanelLive = ({
         <StrategyOptionsButton onClick={openExecutionOptionsModal} />
       </div>
       <div className='hfui-strategy-options__buttons-container'>
+        {hasResults && (
+          <Button
+            className='hfui-strategy-options__option-btn item'
+            label={t('strategyEditor.fullscreenChartBtn')}
+            onClick={setFullScreenChart}
+            green
+          />
+        )}
         {isExecuting ? (
           <>
-            <Button
-              className='hfui-strategy-options__option-btn item'
-              label={t('strategyEditor.fullscreenChartBtn')}
-              onClick={setFullScreenChart}
-              green
-            />
             <Button
               className='hfui-strategy-options__option-btn item'
               label={t('ui.stopBtn')}
