@@ -19,9 +19,10 @@ const StrategyLiveChart = ({
   fullscreenChart,
   exitFullscreenChart,
   strategy: { strategyOptions: { timeframe, symbol } },
+  trades,
 }) => {
   const { t } = useTranslation()
-  const { trades = [], backtestOptions: { activeMarket } = {} } = results
+  const { backtestOptions: { activeMarket } = {} } = results
   const settingsTheme = useSelector(getThemeSetting)
   const chartIndicators = prepareTVIndicators(indicators)
   const interval = TIMEFRAME_INTERVAL_MAPPING[timeframe] || '15'
@@ -89,6 +90,7 @@ StrategyLiveChart.propTypes = {
       PropTypes.string,
     ]),
   ),
+  trades: PropTypes.array, // eslint-disable-line
   fullscreenChart: PropTypes.bool.isRequired,
   exitFullscreenChart: PropTypes.func.isRequired,
 }
