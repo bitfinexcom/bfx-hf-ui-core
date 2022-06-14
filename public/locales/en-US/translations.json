@@ -613,8 +613,8 @@
     "disconnected": "Disconnected"
   },
   "strategyEditor": {
-    "clearBacktestResultsModalTitle": "The current backtest results will be cleared",
-    "clearBacktestResultsModalText": "For now, we don't save result of backtesting. But we are working on it. If you select another strategy - backtest result of current strategy will be cleared",
+    "clearBacktestResultsModalTitle": "Confirmation Required",
+    "clearBacktestResultsModalText": "If you choose to continue, the current backtest results will be cleared. Do you wish to proceed?",
     "unsavedChanges": "Unsaved changes",
     "unsavedChangesModalTitle": "Do you need to save changes in the strategy before closing?",
     "cancelThisProcess": "Cancel this process",
