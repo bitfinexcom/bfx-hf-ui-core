@@ -1,4 +1,6 @@
-import React, { lazy, Suspense, useState } from 'react'
+import React, {
+  lazy, Suspense, useEffect, useState,
+} from 'react'
 import Debug from 'debug'
 import PropTypes from 'prop-types'
 import randomColor from 'randomcolor'
@@ -33,18 +35,18 @@ const Joyride = lazy(() => import('../../components/Joyride'))
 const StrategiesListTable = lazy(() => import('../../components/StrategiesListTable'))
 
 const StrategiesPage = ({
-  selectStrategy,
   finishGuide,
-  setStrategyContent,
   firstLogin,
   isGuideActive,
-  strategyContent,
   authToken,
   onSave,
   onRemove,
   backtestResults: { finished },
+  strategy,
+  setStrategy,
 }) => {
-  const [strategy, setStrategy] = useState(strategyContent)
+  const [IDEcontent, setIDEcontent] = useState({})
+
   const [indicators, setIndicators] = useState([])
   const [strategyDirty, setStrategyDirty] = useState(false)
   const [tourStep, setTourStep] = useState(0)
@@ -176,12 +178,6 @@ const StrategiesPage = ({
     }
   }
 
-  const selectStrategyHandler = (content) => {
-    selectStrategy()
-    setStrategyContent(content)
-    setStrategy(content)
-  }
-
   const onLoadStrategy = (newStrategy, forcedLoad = false) => {
     // const updated = { ...newStrategy, savedTs: Date.now() }
     const strategyToLoad = { ...newStrategy }
@@ -198,18 +194,18 @@ const StrategiesPage = ({
     if (!_isEmpty(strategyToLoad) && _isEmpty(strategyToLoad.strategyOptions)) {
       strategyToLoad.strategyOptions = getDefaultStrategyOptions()
     }
-    selectStrategyHandler(strategyToLoad, forcedLoad)
+    setStrategy(strategyToLoad)
     setSectionErrors({})
     setNextStrategyToOpen(null)
     setStrategyDirty(false)
 
-    if (strategyToLoad.defineIndicators) {
-      onDefineIndicatorsChange(strategyToLoad.defineIndicators)
+    if (strategyToLoad.strategyContent.defineIndicators) {
+      onDefineIndicatorsChange(strategyToLoad.strategyContent.defineIndicators)
     }
   }
 
   const saveStrategy = (content) => {
-    onSave(authToken, { ...content, savedTs: Date.now() })
+    onSave(authToken, { ...content, strategyContent: IDEcontent, savedTs: Date.now() })
   }
 
   const onCloseModals = () => {
@@ -252,6 +248,13 @@ const StrategiesPage = ({
     setIsRemoveModalOpened(true)
   }
 
+  useEffect(() => {
+    if (_isEmpty(strategy.strategyContent)) {
+      return
+    }
+    setIDEcontent(strategy.strategyContent)
+  }, [strategy])
+
   return (
     <Layout>
       <Layout.Header />
@@ -259,16 +262,12 @@ const StrategiesPage = ({
         <Suspense fallback={<></>}>
           <StrategyEditor
             dark
-            onStrategySelect={selectStrategyHandler}
-            selectStrategy={selectStrategy}
-            onStrategyChange={setStrategyContent}
             key='editor'
             onIndicatorsChange={onIndicatorsChange}
             onLoadStrategy={onLoadStrategy}
             strategyDirty={strategyDirty}
             setStrategyDirty={setStrategyDirty}
             sectionErrors={sectionErrors}
-            strategyContent={strategyContent}
             strategy={strategy}
             setStrategy={setStrategy}
             setSectionErrors={setSectionErrors}
@@ -278,6 +277,8 @@ const StrategiesPage = ({
             moveable={false}
             indicators={indicators}
             removeable={false}
+            IDEcontent={IDEcontent}
+            setIDEcontent={setIDEcontent}
           />
         </Suspense>
         {firstLogin && (
@@ -338,9 +339,8 @@ StrategiesPage.propTypes = {
   firstLogin: PropTypes.bool,
   isGuideActive: PropTypes.bool,
   finishGuide: PropTypes.func.isRequired,
-  selectStrategy: PropTypes.func.isRequired,
-  setStrategyContent: PropTypes.func.isRequired,
-  strategyContent: PropTypes.objectOf(Object),
+  setStrategy: PropTypes.func.isRequired,
+  strategy: PropTypes.objectOf(Object).isRequired,
   authToken: PropTypes.string.isRequired,
   onSave: PropTypes.func.isRequired,
   onRemove: PropTypes.func.isRequired,
@@ -352,7 +352,6 @@ StrategiesPage.propTypes = {
 StrategiesPage.defaultProps = {
   firstLogin: false,
   isGuideActive: true,
-  strategyContent: {},
 }
 
 export default StrategiesPage

@@ -61,7 +61,6 @@ const StrategyEditor = (props) => {
     onRemove,
     authToken,
     gaCreateStrategy,
-    strategyContent,
     backtestResults,
     strategyDirty,
     setStrategyDirty,
@@ -138,11 +137,14 @@ const StrategyEditor = (props) => {
   const onCreateNewStrategy = (label, content = {}) => {
     gaCreateStrategy()
 
+    const newStrategyContent = { ...content }
+    delete newStrategyContent.id
+    delete newStrategyContent.label
     const newStrategy = {
-      ...content,
       label,
       id: v4(),
       strategyOptions: getDefaultStrategyOptions(),
+      strategyContent: newStrategyContent,
     }
     saveStrategy(newStrategy)
     onLoadStrategy(newStrategy)
@@ -158,8 +160,8 @@ const StrategyEditor = (props) => {
   }
 
   const onExportStrategy = () => {
-    const { label } = strategyContent
-    saveAsJSON(strategyContent, label)
+    const { label } = strategy
+    saveAsJSON(strategy, label)
   }
 
   const onImportStrategy = async () => {
@@ -169,7 +171,6 @@ const StrategyEditor = (props) => {
         'label' in newStrategy
         && _size(newStrategy.label) < MAX_STRATEGY_LABEL_LENGTH
       ) {
-        delete newStrategy.id
         onCreateNewStrategy(newStrategy.label, newStrategy)
       }
     } catch (e) {
@@ -520,7 +521,6 @@ StrategyEditor.propTypes = {
   removeable: PropTypes.bool,
   onRemove: PropTypes.func.isRequired,
   authToken: PropTypes.string.isRequired,
-  onStrategyChange: PropTypes.func.isRequired,
   setStrategy: PropTypes.func,
   backtestResults: PropTypes.objectOf(PropTypes.any).isRequired, // eslint-disable-line
   strategy: PropTypes.shape({
@@ -543,14 +543,6 @@ StrategyEditor.propTypes = {
     loading: PropTypes.bool,
     loadingGid: PropTypes.string,
   }).isRequired,
-  strategyContent: PropTypes.objectOf(
-    PropTypes.oneOfType([
-      PropTypes.string.isRequired,
-      PropTypes.number,
-      PropTypes.oneOf([null]).isRequired,
-      PropTypes.object,
-    ]),
-  ),
   savedStrategies: PropTypes.objectOf(PropTypes.object), // eslint-disable-line
   saveStrategy: PropTypes.func.isRequired,
   isPaperTrading: PropTypes.bool.isRequired,
@@ -562,7 +554,6 @@ StrategyEditor.propTypes = {
     backtest: PropTypes.bool,
   }).isRequired,
   showError: PropTypes.func.isRequired,
-  strategiesMapping: PropTypes.objectOf(PropTypes.string),
   sectionErrors: PropTypes.objectOf(PropTypes.string).isRequired,
   cancelProcess: PropTypes.func.isRequired,
   changeTradingMode: PropTypes.func.isRequired,
@@ -573,14 +564,12 @@ StrategyEditor.propTypes = {
 StrategyEditor.defaultProps = {
   moveable: false,
   removeable: false,
-  strategyContent: {},
-  setStrategy: () => {},
+  setStrategy: () => { },
   strategy: {
     id: null,
     label: null,
   },
   indicators: [],
-  strategiesMapping: {},
   executionId: null,
 }
 

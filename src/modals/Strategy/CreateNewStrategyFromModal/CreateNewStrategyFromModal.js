@@ -53,7 +53,6 @@ const CreateNewStrategyFromModalOpen = ({
         savedStrategies,
         (_s) => _s.label === selectedStrategyLabel,
       )
-      delete newStrategy.id
     }
 
     onSubmit(label, newStrategy)

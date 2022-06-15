@@ -66,6 +66,7 @@ export const prepareStrategyExecutionArgs = (strategy) => {
       maxDrawdownPerc,
     },
     label,
+    strategyContent,
   } = strategy
 
   return {
@@ -73,7 +74,7 @@ export const prepareStrategyExecutionArgs = (strategy) => {
     symbol: symbol?.wsID,
     [STRATEGY_OPTIONS_KEYS.TIMEFRAME]: timeframe,
     [STRATEGY_OPTIONS_KEYS.TRADES]: trades,
-    strategy,
+    strategyContent,
     [STRATEGY_OPTIONS_KEYS.CANDLE_SEED]: candleSeed,
     [STRATEGY_OPTIONS_KEYS.MARGIN]: margin,
     constraints: {
@@ -98,6 +99,7 @@ export const prepareStrategyBacktestingArgs = (strategy) => {
       startDate,
       endDate,
     },
+    strategyContent,
   } = strategy
 
   return {
@@ -106,7 +108,7 @@ export const prepareStrategyBacktestingArgs = (strategy) => {
     endNum: new Date(endDate).getTime(),
     [STRATEGY_OPTIONS_KEYS.TIMEFRAME]: timeframe,
     [STRATEGY_OPTIONS_KEYS.TRADES]: trades,
-    strategy,
+    strategyContent,
     [STRATEGY_OPTIONS_KEYS.CANDLES]: candles,
     [STRATEGY_OPTIONS_KEYS.CANDLE_SEED]: candleSeed,
     constraints: {
