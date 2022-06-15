@@ -27,7 +27,7 @@ const activeStrategiesColumns = (t, getMarketPair) => [
     headerStyle: STYLES.flexStart,
     width: 100,
     flexGrow: 1,
-    cellRenderer: ({ rowData = {} }) => defaultCellRenderer(getMarketPair(rowData.strategyOptions.symbol)),
+    cellRenderer: ({ rowData = {} }) => defaultCellRenderer(getMarketPair(rowData.strategyOptions?.symbol)),
   },
   {
     label: t('table.runningSince'),
@@ -93,7 +93,7 @@ const pastStrategiesColumns = (t, getMarketPair) => [
     headerStyle: STYLES.flexStart,
     width: 100,
     flexGrow: 1,
-    cellRenderer: ({ rowData = {} }) => defaultCellRenderer(getMarketPair(rowData.strategyOptions.symbol)),
+    cellRenderer: ({ rowData = {} }) => defaultCellRenderer(getMarketPair(rowData.strategyOptions?.symbol)),
   },
   {
     label: t('table.startedOn'),
