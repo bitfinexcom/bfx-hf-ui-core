@@ -5,10 +5,13 @@ import { preparePrice } from 'bfx-api-node-util'
 import PropTypes from 'prop-types'
 import { useTranslation } from 'react-i18next'
 import { useSelector } from 'react-redux'
+import { Icon } from 'react-fa'
+
 import Panel from '../../ui/Panel'
 import { resultNumber } from '../Backtester/Results/Results.utils'
 import MetricRow from './MetricRow'
 import ExecutionTimer from './ExecutionTimer'
+import { metricsExport } from './StrategyPerfomanceMetrics.helpers'
 
 import './style.css'
 
@@ -57,6 +60,9 @@ const StrategyPerfomanceMetrics = ({
       removeable={false}
       darkHeader
       label={t('strategyEditor.perfomanceMetrics.title')}
+      extraIcons={(
+        <Icon onClick={() => metricsExport(results, t, getCurrencySymbol)} name='download' />
+      )}
     >
       <ul>
         {!isBacktest && startedOn && (
