@@ -85,10 +85,12 @@ const mapDispatchToProps = (dispatch) => ({
     timeframe,
     candles,
     trades,
+    candleSeed,
     strategy,
     constraints,
   }) => {
     const processedStrategy = _omitBy(strategy, _isEmpty)
+    const sync = true
 
     dispatch(WSActions.purgeBacktestData())
     dispatch(
@@ -104,7 +106,8 @@ const mapDispatchToProps = (dispatch) => ({
             timeframe,
             candles,
             trades,
-            true,
+            candleSeed,
+            sync,
             processedStrategy,
             uuidv4(),
             constraints,
