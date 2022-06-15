@@ -35,17 +35,18 @@ const StrategyLiveTab = (props) => {
     loading, executing, results, startedOn,
   } = executionState
 
-  const hasResults = !_isEmpty(positions)
+  const hasResults = !_isEmpty(results)
+  const hasPositions = !_isEmpty(positions)
 
   useEffect(() => {
     if (!executing && !hasResults) {
       setLayoutConfig(LAYOUT_CONFIG_NO_DATA)
-    } else if (!hasResults) {
+    } else if (!hasPositions) {
       setLayoutConfig(LAYOUT_CONFIG_WITHOUT_TRADES)
     } else {
       setLayoutConfig(LAYOUT_CONFIG)
     }
-  }, [hasResults, executing])
+  }, [hasResults, executing, hasPositions])
 
   const renderGridComponents = useCallback(
     (i) => {
