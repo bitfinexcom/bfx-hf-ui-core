@@ -55,12 +55,12 @@ const mapDispatchToProps = (dispatch) => ({
     symbol,
     timeframe,
     // trades,
-    strategy,
+    strategyContent,
     candleSeed,
     margin,
     constraints,
   }) => {
-    const processedStrategy = _omitBy(strategy, _isEmpty)
+    const processedStrategy = _omitBy(strategyContent, _isEmpty)
 
     dispatch(
       WSActions.send([
@@ -86,10 +86,10 @@ const mapDispatchToProps = (dispatch) => ({
     candles,
     trades,
     candleSeed,
-    strategy,
+    strategyContent,
     constraints,
   }) => {
-    const processedStrategy = _omitBy(strategy, _isEmpty)
+    const processedStrategy = _omitBy(strategyContent, _isEmpty)
     const sync = true
 
     dispatch(WSActions.purgeBacktestData())
