@@ -741,8 +741,9 @@
       "title": "Perfomance metrics",
       "runTime": "Strategy Run Time"
     },
-    "IDEreadonlyNotice": "Strategy editing is disabled while the strategy is being executed. To update your strategy, change to SANDBOX environment and reopen this strategy from your ACTIVE STRATEGIES tab",
-    "strategyOptionsBtn": "Settings"
+    "IDEreadonlyNotice": "For you safety, strategy editing is disabled in the LIVE environment. To update your strategy, change to SANDBOX environment and reopen this strategy from your EXECUTED STRATEGIES tab",
+    "strategyOptionsBtn": "Settings",
+    "saveAndLaunchBtn": "Save and Launch"
   },
   "ui": {
     "ok": "Okay",

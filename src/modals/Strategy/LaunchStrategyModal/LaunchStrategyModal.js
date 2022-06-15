@@ -14,8 +14,9 @@ const LaunchStrategyModal = ({
   const { t } = useTranslation()
 
   const _onSubmit = useCallback(() => {
-    onSubmit()
+    // onClose should be before onSubmit
     onClose()
+    onSubmit()
   }, [onClose, onSubmit])
 
   return (

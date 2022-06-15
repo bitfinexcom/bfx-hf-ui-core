@@ -1,5 +1,4 @@
 import _find from 'lodash/find'
-import _isEmpty from 'lodash/isEmpty'
 import _map from 'lodash/map'
 import _reduce from 'lodash/reduce'
 
@@ -16,6 +15,11 @@ const DEFAULT_SEED_COUNT = 150
 const DEFAULT_CANDLES = true
 
 const LS_HF_UI_EXECUTE_STRATEGY = 'HF_UI_EXECUTE_STRATEGY'
+
+export const EXECUTION_TYPES = Object.freeze({
+  LIVE: 'LIVE',
+  BACKTEST: 'BACKTEST',
+})
 
 export const STRATEGY_OPTIONS_KEYS = {
   SYMBOL: 'symbol',
@@ -162,11 +166,9 @@ export const isExecutionInputsFullFilled = (
   capitalAllocation,
   stopLossPerc,
   maxDrawdownPerc,
-  symbol,
 ) => Number(capitalAllocation) > 0
   && Number(stopLossPerc) > 0
   && Number(maxDrawdownPerc) > 0
-  && !_isEmpty(symbol)
 
 export const prepareChartTrades = (positions) => {
   return _reduce(positions, (trades, position) => {

@@ -148,7 +148,7 @@ const StrategyTypeSelect = ({
         </form>
       )}
 
-      {strategyTypeDropdownValue && !isExecuting && (
+      {strategyTypeDropdownValue && !isExecuting && !isDisabled && (
         <UfxButton
           onClick={onRemoveStrategyType}
           className='hfui-strategy-options__search-btn'
