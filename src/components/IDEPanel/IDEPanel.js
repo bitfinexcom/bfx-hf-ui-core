@@ -24,14 +24,13 @@ const STRATEGY_SECTIONS = [
 ]
 
 const IDEPanel = ({
-  strategy,
-  setStrategy,
-  onStrategyChange,
   setStrategyDirty,
   onDefineIndicatorsChange,
   evalSectionContent,
   setSectionErrors,
   sectionErrors,
+  IDEcontent: strategyContent,
+  setIDEcontent,
 }) => {
   const [activeContent, setActiveContent] = useState('defineIndicators')
   const [execError, setExecError] = useState('')
@@ -40,9 +39,7 @@ const IDEPanel = ({
   const isPaperTrading = useSelector(getIsPaperTrading)
 
   const processStrategy = (updatedStrategy) => {
-    const { id, label } = updatedStrategy
-    const updatedContent = { id, label }
-    setStrategy(updatedStrategy)
+    const updatedContent = {}
 
     for (let i = 0; i < STRATEGY_SECTIONS.length; ++i) {
       const section = STRATEGY_SECTIONS[i]
@@ -58,13 +55,13 @@ const IDEPanel = ({
 
   const updateStrategy = (updatedStrategy) => {
     const content = processStrategy(updatedStrategy)
-    onStrategyChange(content)
+    setIDEcontent(content)
   }
 
   const onEditorContentChange = (code) => {
     setStrategyDirty(true)
     updateStrategy({
-      ...strategy,
+      ...strategyContent,
       [activeContent]: code,
     })
 
@@ -103,7 +100,7 @@ const IDEPanel = ({
             >
               <p>{section}</p>
 
-              {_isEmpty(strategy[section]) ? null : _isEmpty(
+              {_isEmpty(strategyContent[section]) ? null : _isEmpty(
                 sectionErrors[section],
               ) ? (
                 <p>~</p>
@@ -121,7 +118,7 @@ const IDEPanel = ({
             })}
           >
             <MonacoEditor
-              value={strategy[activeContent] || ''}
+              value={strategyContent[activeContent] || ''}
               onChange={onEditorContentChange}
               theme={settingsTheme}
               readOnly={!isPaperTrading}
@@ -145,17 +142,13 @@ const IDEPanel = ({
 }
 
 IDEPanel.propTypes = {
-  strategy: PropTypes.shape({
-    id: PropTypes.string,
-    label: PropTypes.string,
-  }).isRequired,
-  setStrategy: PropTypes.func.isRequired,
-  onStrategyChange: PropTypes.func.isRequired,
   setStrategyDirty: PropTypes.func.isRequired,
   onDefineIndicatorsChange: PropTypes.func.isRequired,
   evalSectionContent: PropTypes.func.isRequired,
   setSectionErrors: PropTypes.func.isRequired,
   sectionErrors: PropTypes.objectOf(PropTypes.string),
+  setIDEcontent: PropTypes.func.isRequired,
+  IDEcontent: PropTypes.objectOf(PropTypes.string).isRequired,
 }
 
 IDEPanel.defaultProps = {

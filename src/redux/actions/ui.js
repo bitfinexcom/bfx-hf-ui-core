@@ -109,18 +109,9 @@ export const recvNotification = (notification) => ({
   payload: { notification },
 })
 
-export const strategySelect = () => ({
-  type: types.STRATEGY_SELECT,
-})
-
-export const updateStrategyContent = (content) => ({
-  type: types.UPDATE_STRATEGY_CONTENT,
-  payload: { content },
-})
-
-export const updateStrategyId = (id) => ({
-  type: types.UPDATE_STRATEGY_ID,
-  payload: { id },
+export const setCurrentStrategy = (strategy) => ({
+  type: types.SET_CURRENT_STRATEGY,
+  payload: { strategy },
 })
 
 export const setStrategyExecutionId = (execId) => ({
@@ -255,9 +246,6 @@ export default {
   firstLogin,
   finishGuide,
   recvNotification,
-  strategySelect,
-  updateStrategyContent,
-  updateStrategyId,
   setStrategyExecutionId,
   setTradingMode,
   setMarketFromStore,
@@ -278,4 +266,5 @@ export default {
   changeAppSettingsModalState,
   setSettingsTab,
   setIsLoadingOrderHistData,
+  setCurrentStrategy,
 }

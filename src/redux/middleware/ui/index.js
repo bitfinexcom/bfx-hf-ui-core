@@ -3,11 +3,13 @@ import i18n from '../../../locales/i18n'
 
 import UIActions from '../../actions/ui'
 import UITypes from '../../constants/ui'
+import WSTypes from '../../constants/ws'
 
 export default () => {
   return store => next => (action = {}) => {
     const { type } = action
     const { payload } = action
+
     switch (type) {
       case UITypes.SAVE_LAYOUT: {
         store.dispatch(UIActions.recvNotification({
@@ -19,14 +21,9 @@ export default () => {
         next(action)
         break
       }
-      case UITypes.STRATEGY_SELECT: {
-        store.dispatch(UIActions.updateStrategyId(null))
-        next(action)
-        break
-      }
-      case 'WS_DATA_STRATEGY': {
-        const { id } = payload
-        store.dispatch(UIActions.updateStrategyId(id))
+      case WSTypes.DATA_STRATEGY: {
+        const { strategy } = payload
+        store.dispatch(UIActions.setCurrentStrategy(strategy))
         next(action)
         break
       }

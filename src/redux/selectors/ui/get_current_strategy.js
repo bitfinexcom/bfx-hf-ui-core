@@ -5,4 +5,4 @@ const path = REDUCER_PATHS.UI
 
 const EMP_OBJ = {}
 
-export default (state) => _get(state, `${path}.content`, EMP_OBJ)
+export default (state) => _get(state, `${path}.currentStrategy`, EMP_OBJ)

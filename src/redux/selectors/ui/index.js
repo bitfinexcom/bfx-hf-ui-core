@@ -28,7 +28,7 @@ import getIsAppSettingsModalVisible from './get_is_app_settings_modal_visible'
 import getSettingsActiveTab, { getSettingActiveSection } from './get_settings_active_tab'
 import getIsLoadingOrderHistData from './get_is_loading_order_hist_data'
 import getStrategyExecutionId from './get_strategy_execution_id'
-import getStrategyContent from './get_strategy_content'
+import getCurrentStrategy from './get_current_strategy'
 
 export * from './get_settings'
 export * from './get_core_settings'
@@ -66,5 +66,5 @@ export {
   getSettingActiveSection,
   getIsLoadingOrderHistData,
   getStrategyExecutionId,
-  getStrategyContent,
+  getCurrentStrategy,
 }

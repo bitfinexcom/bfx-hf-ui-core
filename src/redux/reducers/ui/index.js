@@ -85,7 +85,7 @@ function getInitialState() {
     isBadInternetConnection: false,
     closePositionModalData: {},
     isOrderExecuting: false,
-    content: {},
+    currentStrategy: {},
     unsavedLayout: null,
     layoutID: null,
     settingsActiveTab: DEFAULT_TAB,
@@ -362,33 +362,21 @@ function reducer(state = getInitialState(), action = {}) {
         [`${page}_GUIDE_ACTIVE`]: false,
       }
     }
-    case types.UPDATE_STRATEGY_CONTENT: {
-      const { content = {} } = payload
+    case types.SET_CURRENT_STRATEGY: {
+      const { strategy } = payload
 
       return {
         ...state,
-        content: {
-          id: state.content.id,
-          ...content,
-        },
+        currentStrategy: strategy,
       }
     }
-    case types.UPDATE_STRATEGY_ID: {
-      const { id } = payload
-      return {
-        ...state,
-        content: {
-          ...state.content,
-          id,
-        },
-      }
-    }
+
     case types.SET_STRATEGY_EXECUTION_ID: {
       const { executionId } = payload
       return {
         ...state,
-        content: {
-          ...state.content,
+        currentStrategy: {
+          ...state.currentStrategy,
           executionId,
         },
       }
@@ -396,7 +384,7 @@ function reducer(state = getInitialState(), action = {}) {
     case types.CLEAR_STRATEGIES: {
       return {
         ...state,
-        content: {},
+        currentStrategy: {},
       }
     }
     case types.SET_TRADING_MODE: {
