@@ -21,15 +21,18 @@ import {
 import { validateStrategyName } from '../Strategy.helpers'
 
 const CreateNewStrategyFromModalOpen = ({
-  onSubmit, onClose, isOpen, isStrategySelected,
+  onSubmit,
+  onClose,
+  isOpen,
+  currentStrategyLabel,
 }) => {
   const savedStrategies = useSelector(getSortedByTimeStrategies)
   const { t } = useTranslation()
 
   const savedStrategiesExists = !_isEmpty(savedStrategies)
   const tabs = useMemo(
-    () => getTabs(t, savedStrategiesExists, isStrategySelected),
-    [t, savedStrategiesExists, isStrategySelected],
+    () => getTabs(t, savedStrategiesExists, !!currentStrategyLabel),
+    [t, savedStrategiesExists, currentStrategyLabel],
   )
 
   const [label, setLabel] = useState('')
@@ -40,6 +43,7 @@ const CreateNewStrategyFromModalOpen = ({
   const [selectedStrategyLabel, setSelectedStrategyLabel] = useState(null)
 
   const isTemplatesTabSelected = tabs[1].value === activeTab
+  const isDraftTabSelected = tabs[2].value === activeTab
 
   const onSubmitHandler = useCallback(() => {
     const err = validateStrategyName(label, t)
@@ -81,11 +85,24 @@ const CreateNewStrategyFromModalOpen = ({
   useEffect(() => {
     if (isTemplatesTabSelected) {
       setLabel(template)
-    } else {
-      const newLabel = t('strategyEditor.copyOfStrategy', { strategyName: selectedStrategyLabel })
-      setLabel(newLabel)
+      return
     }
-  }, [t, isTemplatesTabSelected, template, selectedStrategyLabel, setLabel])
+
+    const newLabel = t('strategyEditor.copyOfStrategy', {
+      strategyName: isDraftTabSelected
+        ? selectedStrategyLabel
+        : currentStrategyLabel,
+    })
+    setLabel(newLabel)
+  }, [
+    t,
+    isTemplatesTabSelected,
+    template,
+    selectedStrategyLabel,
+    setLabel,
+    isDraftTabSelected,
+    currentStrategyLabel,
+  ])
 
   useEffect(() => {
     const firstEnabledTab = _find(tabs, (tab) => !tab.disabled)
@@ -108,14 +125,15 @@ const CreateNewStrategyFromModalOpen = ({
           value={label}
           onChange={setLabel}
         />
-        {isTemplatesTabSelected ? (
+        {isTemplatesTabSelected && (
           <Dropdown
             value={template}
             onChange={setTemplate}
             options={Templates}
             adapter={dropdownOptionsAdaptor}
           />
-        ) : (
+        )}
+        {isDraftTabSelected && (
           <Dropdown
             value={selectedStrategyLabel}
             onChange={setSelectedStrategyLabel}
@@ -123,7 +141,6 @@ const CreateNewStrategyFromModalOpen = ({
             adapter={dropdownOptionsAdaptor}
           />
         )}
-
         {!_isEmpty(error) && <p className='error'>{error}</p>}
       </div>
 
@@ -139,12 +156,13 @@ const CreateNewStrategyFromModalOpen = ({
 CreateNewStrategyFromModalOpen.propTypes = {
   onSubmit: PropTypes.func.isRequired,
   onClose: PropTypes.func.isRequired,
-  isStrategySelected: PropTypes.bool.isRequired,
+  currentStrategyLabel: PropTypes.string,
   isOpen: PropTypes.bool,
 }
 
 CreateNewStrategyFromModalOpen.defaultProps = {
   isOpen: true,
+  currentStrategyLabel: null,
 }
 
 export default CreateNewStrategyFromModalOpen
