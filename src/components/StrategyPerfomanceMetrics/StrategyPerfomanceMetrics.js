@@ -30,7 +30,7 @@ const StrategyPerfomanceMetrics = ({
   const [, quote] = activeMarket ? getPairParts(activeMarket) : []
   const getCurrencySymbol = useSelector(getCurrencySymbolMemo)
   const quoteCcy = getCurrencySymbol(quote)
-  const metrics = getMetrics(results, t, quoteCcy, false)
+  const metrics = getMetrics(results, t, quoteCcy, true)
 
   return (
     <Panel
