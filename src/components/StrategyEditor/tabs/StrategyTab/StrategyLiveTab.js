@@ -16,14 +16,24 @@ import {
 } from '../../components/StrategiesGridLayout.constants'
 import StrategyLiveChart from '../../../StrategyLiveChart'
 import StrategyTabWrapper from '../../components/StrategyTabWrapper'
+import useToggle from '../../../../hooks/useToggle'
 import StrategyOptionsPanelLive from '../../../StrategyOptionsPanel/StrategyOptionsPanel.Live'
 import { getCurrentStrategyExecutionState, getStrategyPositions } from '../../../../redux/selectors/ws'
 import { prepareChartTrades } from '../../StrategyEditor.helpers'
 
 const StrategyLiveTab = (props) => {
-  const { onCancelProcess, strategy } = props
+  const {
+    strategy,
+    markets,
+    indicators,
+    onOpenSaveStrategyAsModal,
+    openExecutionOptionsModal,
+    stopExecution,
+    saveStrategyOptions,
+    onCancelProcess,
+  } = props
   const [layoutConfig, setLayoutConfig] = useState()
-  const [fullscreenChart, setFullScreenChart] = useState(false)
+  const [fullscreenChart,, setFullScreenChart, unsetFullScreenChart] = useToggle(false)
 
   const executionState = useSelector(getCurrentStrategyExecutionState)
   const positions = useSelector(getStrategyPositions)
@@ -54,8 +64,13 @@ const StrategyLiveTab = (props) => {
         case COMPONENTS_KEYS.OPTIONS:
           return (
             <StrategyOptionsPanelLive
-              {...props}
-              setFullScreenChart={() => setFullScreenChart(true)}
+              strategy={strategy}
+              markets={markets}
+              onOpenSaveStrategyAsModal={onOpenSaveStrategyAsModal}
+              openExecutionOptionsModal={openExecutionOptionsModal}
+              stopExecution={stopExecution}
+              saveStrategyOptions={saveStrategyOptions}
+              setFullScreenChart={setFullScreenChart}
               isExecuting={executing}
               hasResults={hasResults}
             />
@@ -64,9 +79,11 @@ const StrategyLiveTab = (props) => {
         case COMPONENTS_KEYS.LIVE_CHART:
           return (
             <StrategyLiveChart
-              {...props}
+              indicators={indicators}
+              markets={markets}
+              strategy={strategy}
               fullscreenChart={fullscreenChart}
-              exitFullscreenChart={() => setFullScreenChart(false)}
+              exitFullscreenChart={unsetFullScreenChart}
               trades={trades}
             />
           )
@@ -95,7 +112,7 @@ const StrategyLiveTab = (props) => {
           return null
       }
     },
-    [props, executing, hasResults, fullscreenChart, trades, results, startedOn, positions, layoutConfig, strategy],
+    [markets, onOpenSaveStrategyAsModal, openExecutionOptionsModal, stopExecution, saveStrategyOptions, setFullScreenChart, executing, hasResults, indicators, strategy, fullscreenChart, unsetFullScreenChart, trades, results, startedOn, positions, layoutConfig],
   )
 
   return (
@@ -118,6 +135,18 @@ const StrategyLiveTab = (props) => {
 StrategyLiveTab.propTypes = {
   onCancelProcess: PropTypes.func.isRequired,
   strategy: PropTypes.object.isRequired, // eslint-disable-line
+  markets: PropTypes.objectOf(PropTypes.object).isRequired, // eslint-disable-line
+  onOpenSaveStrategyAsModal: PropTypes.func.isRequired,
+  saveStrategyOptions: PropTypes.func.isRequired,
+  openExecutionOptionsModal: PropTypes.func.isRequired,
+  stopExecution: PropTypes.func.isRequired,
+  indicators: PropTypes.arrayOf(
+    PropTypes.oneOfType([PropTypes.array, PropTypes.object]),
+  ), // eslint-disable-line
+}
+
+StrategyLiveTab.defaultProps = {
+  indicators: [],
 }
 
 export default StrategyLiveTab

@@ -16,7 +16,15 @@ import BacktestOptionsPanel from '../../BacktestOptionsPanel'
 import { prepareChartTrades } from '../StrategyEditor.helpers'
 
 const BacktestTab = (props) => {
-  const { results, onCancelProcess, strategy } = props
+  const {
+    results,
+    onCancelProcess,
+    strategy,
+    indicators,
+    markets,
+    onBacktestStart,
+    saveStrategyOptions,
+  } = props
   const { t } = useTranslation()
   const [layoutConfig, setLayoutConfig] = useState()
   const [fullscreenChart, setFullScreenChart] = useState(false)
@@ -40,7 +48,9 @@ const BacktestTab = (props) => {
         case COMPONENTS_KEYS.OPTIONS:
           return (
             <BacktestOptionsPanel
-              {...props}
+              strategy={strategy}
+              onBacktestStart={onBacktestStart}
+              saveStrategyOptions={saveStrategyOptions}
               setFullScreenChart={() => setFullScreenChart(true)}
               isFinished={finished}
             />
@@ -49,7 +59,9 @@ const BacktestTab = (props) => {
         case COMPONENTS_KEYS.LIVE_CHART:
           return (
             <StrategyLiveChart
-              {...props}
+              indicators={indicators}
+              markets={markets}
+              strategy={strategy}
               fullscreenChart={fullscreenChart}
               exitFullscreenChart={() => setFullScreenChart(false)}
               trades={trades}
@@ -80,7 +92,7 @@ const BacktestTab = (props) => {
           return null
       }
     },
-    [props, finished, fullscreenChart, trades, results, loading, positions, layoutConfig, strategy],
+    [strategy, onBacktestStart, saveStrategyOptions, finished, indicators, markets, fullscreenChart, trades, results, loading, positions, layoutConfig],
   )
 
   return (
@@ -108,6 +120,16 @@ BacktestTab.propTypes = {
   }).isRequired,
   onCancelProcess: PropTypes.func.isRequired,
   strategy: PropTypes.object.isRequired, // eslint-disable-line
+  markets: PropTypes.objectOf(PropTypes.object).isRequired, // eslint-disable-line
+  indicators: PropTypes.arrayOf(
+    PropTypes.oneOfType([PropTypes.array, PropTypes.object]),
+  ), // eslint-disable-line
+  onBacktestStart: PropTypes.func.isRequired,
+  saveStrategyOptions: PropTypes.func.isRequired,
+}
+
+BacktestTab.defaultProps = {
+  indicators: [],
 }
 
 export default BacktestTab

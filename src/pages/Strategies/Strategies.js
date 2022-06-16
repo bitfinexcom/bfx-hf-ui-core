@@ -1,5 +1,5 @@
 import React, {
-  lazy, Suspense, useState,
+  lazy, Suspense, useState, useCallback,
 } from 'react'
 import Debug from 'debug'
 import PropTypes from 'prop-types'
@@ -27,6 +27,7 @@ import { getDefaultStrategyOptions } from '../../components/StrategyEditor/Strat
 import ClearBacktestResultsModal from '../../modals/Strategy/ClearBacktestResultsModal'
 
 import './style.css'
+import useToggle from '../../hooks/useToggle'
 
 const debug = Debug('hfui-ui:p:strategy-editor')
 
@@ -48,14 +49,14 @@ const StrategiesPage = ({
   const [IDEcontent, setIDEcontent] = useState({})
 
   const [indicators, setIndicators] = useState([])
-  const [strategyDirty, setStrategyDirty] = useState(false)
   const [tourStep, setTourStep] = useState(0)
   const [sectionErrors, setSectionErrors] = useState({})
-  const [isUnsavedStrategyModalOpen, setIsUnsavedStrategyModalOpen] = useState(false)
-  const [isRemoveModalOpened, setIsRemoveModalOpened] = useState(false)
-  const [isSaveStrategyAsModalOpen, setIsSaveStrategyAsModalOpen] = useState(false)
-  const [isRenameStrategyModalOpen, setIsRenameStrategyModalOpen] = useState(false)
-  const [isClearBacktestResultsModalOpen, setIsClearBacktestResultsOpen] = useState(false)
+  const [strategyDirty, setStrategyDirty] = useState(false)
+  const [isUnsavedStrategyModalOpen, , openUnsavedStrategyModal, closeUnsavedStrategyModal] = useToggle(false)
+  const [isRemoveModalOpen, , openRemoveModal, closeRemoveModal] = useToggle(false)
+  const [isSaveStrategyAsModalOpen, , openSaveStrategyAsModal, closeSaveStrategyAsModal] = useToggle(false)
+  const [isRenameStrategyModalOpen, , openRenameStrategyModal, closeRenameStrategyModal] = useToggle(false)
+  const [isClearBacktestResultsModalOpen, , openClearBacktestResultsModal, closeClearBacktestResultsModal] = useToggle(false)
   const [actionStrategy, setActionStrategy] = useState({})
   const [nextStrategyToOpen, setNextStrategyToOpen] = useState(null)
 
@@ -71,7 +72,7 @@ const StrategiesPage = ({
   //   setIndicators(_remove(indicators, (el, id) => id !== index))
   // }
 
-  const onIndicatorsChange = (updatedIndicators) => {
+  const onIndicatorsChange = useCallback((updatedIndicators) => {
     const newIndicators = _map(_values(updatedIndicators), (ind) => {
       let colors = []
 
@@ -90,20 +91,20 @@ const StrategiesPage = ({
     })
 
     setIndicators(newIndicators)
-  }
+  }, [])
 
-  const setSectionError = (section, error) => {
+  const setSectionError = useCallback((section, error) => {
     setSectionErrors({
       ...sectionErrors,
       [section]: error,
     })
-  }
+  }, [sectionErrors])
 
-  const clearSectionError = (section) => {
+  const clearSectionError = useCallback((section) => {
     setSectionError(section, '')
-  }
+  }, [setSectionError])
 
-  const processSectionError = (section, e) => {
+  const processSectionError = useCallback((section, e) => {
     if (e.lineNumber && e.columnNumber) {
       // currently it's a non-standard property supported by Firefox only :(
       setSectionError(
@@ -113,9 +114,9 @@ const StrategiesPage = ({
     } else {
       setSectionError(section, e.message)
     }
-  }
+  }, [setSectionError])
 
-  const evalSectionContent = (section, providedContent) => {
+  const evalSectionContent = useCallback((section, providedContent) => {
     const content = providedContent || strategy[section] || ''
 
     if (section.substring(0, 6) === 'define') {
@@ -140,9 +141,9 @@ const StrategiesPage = ({
       debug('unrecognised section handler prefix: %s', section)
       return null
     }
-  }
+  }, [clearSectionError, processSectionError, strategy])
 
-  const onDefineIndicatorsChange = (content) => {
+  const onDefineIndicatorsChange = useCallback((content) => {
     const indicatorFunc = evalSectionContent('defineIndicators', content)
     let strategyIndicators = {}
 
@@ -159,9 +160,9 @@ const StrategiesPage = ({
     })
 
     onIndicatorsChange(strategyIndicators)
-  }
+  }, [evalSectionContent, onIndicatorsChange, processSectionError])
 
-  const onTourUpdate = (data) => {
+  const onTourUpdate = useCallback((data) => {
     const {
       status, action, index, type,
     } = data
@@ -176,19 +177,19 @@ const StrategiesPage = ({
     } else if (finishedStatuses.includes(status) || action === CLOSE) {
       finishGuide()
     }
-  }
+  }, [finishGuide])
 
-  const onLoadStrategy = (newStrategy, forcedLoad = false) => {
+  const onLoadStrategy = useCallback((newStrategy, forcedLoad = false) => {
     // const updated = { ...newStrategy, savedTs: Date.now() }
     const strategyToLoad = { ...newStrategy }
     if (strategyDirty && !forcedLoad) {
       setNextStrategyToOpen(strategyToLoad)
-      setIsUnsavedStrategyModalOpen(true)
+      openUnsavedStrategyModal()
       return
     }
     if (finished && !forcedLoad) {
       setNextStrategyToOpen(strategyToLoad)
-      setIsClearBacktestResultsOpen(true)
+      openClearBacktestResultsModal()
       return
     }
     if (!_isEmpty(strategyToLoad) && _isEmpty(strategyToLoad.strategyOptions)) {
@@ -203,51 +204,51 @@ const StrategiesPage = ({
     if (strategyToLoad?.strategyContent?.defineIndicators) {
       onDefineIndicatorsChange(strategyToLoad.strategyContent.defineIndicators)
     }
-  }
+  }, [finished, onDefineIndicatorsChange, openClearBacktestResultsModal, openUnsavedStrategyModal, setStrategy, strategyDirty])
 
-  const saveStrategy = (content) => {
-    onSave(authToken, { ...content, strategyContent: IDEcontent, savedTs: Date.now() })
-  }
+  const saveStrategy = useCallback((content) => {
+    onSave(authToken, { ...content, savedTs: Date.now() })
+  }, [authToken, onSave])
 
-  const onCloseModals = () => {
+  const onCloseModals = useCallback(() => {
     setActionStrategy({})
-    setIsRemoveModalOpened(false)
-    setIsSaveStrategyAsModalOpen(false)
-    setIsRenameStrategyModalOpen(false)
-    setIsClearBacktestResultsOpen(false)
-    setIsUnsavedStrategyModalOpen(false)
-  }
+    closeRemoveModal()
+    closeSaveStrategyAsModal()
+    closeRenameStrategyModal()
+    closeClearBacktestResultsModal()
+    closeUnsavedStrategyModal()
+  }, [closeClearBacktestResultsModal, closeRemoveModal, closeRenameStrategyModal, closeSaveStrategyAsModal, closeUnsavedStrategyModal])
 
-  const removeStrategy = () => {
+  const removeStrategy = useCallback(() => {
     const { id } = actionStrategy
     onRemove(authToken, id)
     onCloseModals()
-  }
+  }, [actionStrategy, authToken, onCloseModals, onRemove])
 
-  const saveAsStrategy = (updatedStrategy) => {
+  const saveAsStrategy = useCallback((updatedStrategy) => {
     onSave(authToken, { ...updatedStrategy, savedTs: Date.now() })
     onCloseModals()
-  }
+  }, [authToken, onCloseModals, onSave])
 
-  const renameStrategy = ({ label }) => {
+  const renameStrategy = useCallback(({ label }) => {
     onSave(authToken, { ...actionStrategy, label, savedTs: Date.now() })
     onCloseModals()
-  }
+  }, [actionStrategy, authToken, onCloseModals, onSave])
 
-  const saveAsHandler = (rowData) => {
+  const saveAsHandler = useCallback((rowData) => {
     setActionStrategy(rowData)
-    setIsSaveStrategyAsModalOpen(true)
-  }
+    openSaveStrategyAsModal()
+  }, [openSaveStrategyAsModal])
 
-  const renameStrategyHandler = (rowData) => {
+  const renameStrategyHandler = useCallback((rowData) => {
     setActionStrategy(rowData)
-    setIsRenameStrategyModalOpen(true)
-  }
+    openRenameStrategyModal()
+  }, [openRenameStrategyModal])
 
-  const strategyRemoveHandler = (rowData) => {
+  const strategyRemoveHandler = useCallback((rowData) => {
     setActionStrategy(rowData)
-    setIsRemoveModalOpened(true)
-  }
+    openRemoveModal()
+  }, [openRemoveModal])
 
   return (
     <Layout>
@@ -312,7 +313,7 @@ const StrategiesPage = ({
           onSubmit={renameStrategy}
         />
         <RemoveExistingStrategyModal
-          isOpen={isRemoveModalOpened}
+          isOpen={isRemoveModalOpen}
           onClose={onCloseModals}
           onRemoveStrategy={removeStrategy}
           strategy={actionStrategy}

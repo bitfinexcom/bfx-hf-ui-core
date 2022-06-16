@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { memo } from 'react'
 import PropTypes from 'prop-types'
 import _find from 'lodash/find'
 import _size from 'lodash/size'
@@ -146,4 +146,4 @@ StrategyOptionsPanelSandbox.propTypes = {
   onSaveStrategy: PropTypes.func.isRequired,
 }
 
-export default StrategyOptionsPanelSandbox
+export default memo(StrategyOptionsPanelSandbox)

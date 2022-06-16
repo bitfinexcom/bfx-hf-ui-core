@@ -1,4 +1,6 @@
-import React, { useEffect, useMemo, useState } from 'react'
+import React, {
+  useEffect, useMemo, useState, memo,
+} from 'react'
 import _map from 'lodash/map'
 import PropTypes from 'prop-types'
 import { useTranslation } from 'react-i18next'
@@ -176,4 +178,4 @@ StrategyTypeSelect.defaultProps = {
   isDisabled: false,
 }
 
-export default StrategyTypeSelect
+export default memo(StrategyTypeSelect)
