@@ -191,7 +191,7 @@ const StrategyEditor = (props) => {
   }, [onCreateNewStrategy])
 
   const onSaveStrategy = useCallback(() => {
-    saveStrategy(strategy)
+    saveStrategy({ ...strategy, strategyContent: IDEcontent })
     setStrategyDirty(false)
   }, [saveStrategy, setStrategyDirty, strategy])
 
@@ -567,8 +567,7 @@ StrategyEditor.propTypes = {
   onDefineIndicatorsChange: PropTypes.string.isRequired,
   evalSectionContent: PropTypes.string.isRequired,
   setSectionErrors: PropTypes.string.isRequired,
-  // eslint-disable-next-line react/forbid-prop-types
-  IDEcontent: PropTypes.object.isRequired,
+  IDEcontent: PropTypes.objectOf(PropTypes.string).isRequired,
   setIDEcontent: PropTypes.string.isRequired,
 }
 
