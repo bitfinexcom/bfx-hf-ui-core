@@ -152,6 +152,7 @@ const StrategyEditor = (props) => {
   )
 
   const strategyId = strategy?.id
+  const strategyLabel = strategy?.label
 
   const onCloseModals = useCallback(() => {
     closeOpenExistingStrategyModal()
@@ -183,8 +184,7 @@ const StrategyEditor = (props) => {
       gaCreateStrategy()
 
       const newStrategyContent = { ...content }
-      delete newStrategyContent.id
-      delete newStrategyContent.label
+
       const newStrategy = {
         label,
         id: v4(),
@@ -199,36 +199,46 @@ const StrategyEditor = (props) => {
     [gaCreateStrategy, onCloseModals, onLoadStrategy, saveStrategy],
   )
 
-  const onCreateStrategyFromExisted = useCallback((label, _newStrategy) => {
-    gaCreateStrategy()
+  const onCreateStrategyFromExisted = useCallback(
+    (label, _newStrategy) => {
+      gaCreateStrategy()
 
-    const newStrategy = {
-      ..._newStrategy,
-      label,
-      id: v4(),
-    }
+      const newStrategy = {
+        ..._newStrategy,
+        label,
+        id: v4(),
+      }
 
-    // Need to delete inherited execution data of parent strategy
-    delete newStrategy.executionId
-    delete newStrategy.results
+      // Need to delete inherited execution data of parent strategy
+      delete newStrategy.executionId
+      delete newStrategy.results
+      delete newStrategy.startedOn
+      delete newStrategy.stoppedOn
 
-    saveStrategy(newStrategy)
-    onLoadStrategy(newStrategy)
+      saveStrategy(newStrategy)
+      onLoadStrategy(newStrategy)
+      setStrategyDirty(false)
 
-    onCloseModals()
-  }, [gaCreateStrategy, onCloseModals, onLoadStrategy, saveStrategy])
+      onCloseModals()
+    },
+    [
+      gaCreateStrategy,
+      onCloseModals,
+      onLoadStrategy,
+      saveStrategy,
+      setStrategyDirty,
+    ],
+  )
 
-  const { id = strategyId } = strategy
   const onRemoveStrategy = useCallback(() => {
     onCloseModals()
-    onRemove(authToken, id)
+    onRemove(authToken, strategyId)
     onLoadStrategy({}, true)
-  }, [authToken, id, onCloseModals, onLoadStrategy, onRemove])
+  }, [authToken, strategyId, onCloseModals, onLoadStrategy, onRemove])
 
   const onExportStrategy = useCallback(() => {
-    const { label } = strategy
-    saveAsJSON(strategy, label)
-  }, [strategy])
+    saveAsJSON(strategy, strategyLabel)
+  }, [strategyLabel, strategy])
 
   const onImportStrategy = useCallback(async () => {
     try {
@@ -245,9 +255,29 @@ const StrategyEditor = (props) => {
   }, [onCreateNewStrategy])
 
   const onSaveStrategy = useCallback(() => {
+    if (executionId) {
+      const newLabel = t('strategyEditor.copyOfStrategy', {
+        strategyName: strategyLabel,
+      })
+      onCreateStrategyFromExisted(newLabel, {
+        ...strategy,
+        strategyContent: IDEcontent,
+      })
+      return
+    }
+
     saveStrategy({ ...strategy, strategyContent: IDEcontent })
     setStrategyDirty(false)
-  }, [IDEcontent, saveStrategy, setStrategyDirty, strategy])
+  }, [
+    IDEcontent,
+    executionId,
+    onCreateStrategyFromExisted,
+    saveStrategy,
+    setStrategyDirty,
+    strategy,
+    strategyLabel,
+    t,
+  ])
 
   const onSaveAsStrategy = useCallback(
     (_newStrategy) => {
@@ -255,11 +285,31 @@ const StrategyEditor = (props) => {
         ..._newStrategy,
         strategyContent: IDEcontent,
       }
+      if (executionId) {
+        const newLabel = t('strategyEditor.copyOfStrategy', {
+          strategyName: strategyLabel,
+        })
+        onCreateStrategyFromExisted(newLabel, {
+          ...newStrategy,
+          strategyContent: IDEcontent,
+        })
+        return
+      }
+
       setStrategy(newStrategy)
       saveStrategy(newStrategy)
       setStrategyDirty(false)
     },
-    [IDEcontent, saveStrategy, setStrategy, setStrategyDirty],
+    [
+      IDEcontent,
+      executionId,
+      onCreateStrategyFromExisted,
+      saveStrategy,
+      setStrategy,
+      setStrategyDirty,
+      strategyLabel,
+      t,
+    ],
   )
 
   const _cancelProcess = useCallback(() => {
@@ -597,7 +647,7 @@ const StrategyEditor = (props) => {
             isOpen={isSaveStrategyAsModalOpen}
             onClose={onCloseModals}
             strategy={strategy}
-            onSubmit={onSaveAsStrategy}
+            onSubmit={onCreateStrategyFromExisted}
           />
           <ExecutionOptionsModal
             isOpen={isExecutionOptionsModalOpen}
@@ -624,7 +674,7 @@ const StrategyEditor = (props) => {
         isOpen={createNewStrategyFromModalOpened}
         onClose={onCloseModals}
         onSubmit={onCreateStrategyFromExisted}
-        currentStrategyLabel={strategy?.label}
+        currentStrategyLabel={strategyLabel}
       />
       <CreateNewStrategyModal
         isOpen={createNewStrategyModalOpen}
