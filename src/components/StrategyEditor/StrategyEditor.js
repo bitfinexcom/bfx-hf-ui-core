@@ -84,6 +84,11 @@ const StrategyEditor = (props) => {
     changeTradingMode,
     currentMode,
     executionId,
+    onDefineIndicatorsChange,
+    evalSectionContent,
+    setSectionErrors,
+    IDEcontent,
+    setIDEcontent,
   } = props
   const { t } = useTranslation()
   const location = useLocation()
@@ -166,7 +171,7 @@ const StrategyEditor = (props) => {
     saveAsJSON(strategy, label)
   }, [strategy])
 
-  const onImportStrategy = async () => {
+  const onImportStrategy = useCallback(async () => {
     try {
       const newStrategy = await readJSONFile()
       if (
@@ -178,7 +183,7 @@ const StrategyEditor = (props) => {
     } catch (e) {
       debug('Error while importing strategy: %s', e)
     }
-  }
+  }, [onCreateNewStrategy])
 
   const onSaveStrategy = useCallback(() => {
     saveStrategy(strategy)
@@ -357,6 +362,42 @@ const StrategyEditor = (props) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [savedStrategies, executing, location])
 
+  const sbtitleStrategy = useCallback(({ selectedTab, sidebarOpened }) => (
+    <StrategyTabTitle
+      startExecution={onLaunchExecutionClick}
+      stopExecution={stopExecution}
+      onLoadStrategy={onLoadStrategy}
+      onExportStrategy={onExportStrategy}
+      onSaveStrategy={onSaveStrategy}
+      onOpenRemoveModal={openRemoveModal}
+      onOpenCreateStrategyModal={openCreateNewStrategyModal}
+      onOpenCreateStrategyFromModal={openCreateNewStrategyFromModal}
+      onOpenSaveStrategyAsModal={openSaveStrategyAsModal}
+      onImportStrategy={onImportStrategy}
+      strategy={strategy}
+      strategyId={strategyId}
+      selectedTab={selectedTab}
+      sidebarOpened={sidebarOpened}
+      strategyDirty={strategyDirty}
+      hasErrors={hasErrorsInIDE}
+      isMarketSelected={!_isEmpty(symbol)}
+    />
+  ), [hasErrorsInIDE, onExportStrategy, onImportStrategy, onLaunchExecutionClick, onLoadStrategy, onSaveStrategy, openCreateNewStrategyFromModal, openCreateNewStrategyModal, openRemoveModal, openSaveStrategyAsModal, stopExecution, strategy, strategyDirty, strategyId, symbol])
+
+  const sbtitleIDE = useCallback(({ sidebarOpened }) => (
+    <IDETabTitle sidebarOpened={sidebarOpened} />
+  ), [])
+
+  const sbtitleBacktest = useCallback(
+    ({ sidebarOpened }) => (
+      <BacktestTabTitle
+        results={backtestResults}
+        sidebarOpened={sidebarOpened}
+      />
+    ),
+    [backtestResults],
+  )
+
   return (
     <>
       {!strategy || _isEmpty(strategy) ? (
@@ -375,29 +416,7 @@ const StrategyEditor = (props) => {
             {(isBetaVersion || flags?.live_execution) && (
               <StrategyTab
                 htmlKey='strategy'
-                sbtitle={({ selectedTab, sidebarOpened }) => (
-                  <StrategyTabTitle
-                    startExecution={onLaunchExecutionClick}
-                    stopExecution={stopExecution}
-                    onLoadStrategy={onLoadStrategy}
-                    onExportStrategy={onExportStrategy}
-                    onSaveStrategy={onSaveStrategy}
-                    onOpenRemoveModal={openRemoveModal}
-                    onOpenCreateStrategyModal={openCreateNewStrategyModal}
-                    onOpenCreateStrategyFromModal={
-                      openCreateNewStrategyFromModal
-                    }
-                    onOpenSaveStrategyAsModal={openSaveStrategyAsModal}
-                    onImportStrategy={onImportStrategy}
-                    strategy={strategy}
-                    strategyId={strategyId}
-                    selectedTab={selectedTab}
-                    sidebarOpened={sidebarOpened}
-                    strategyDirty={strategyDirty}
-                    hasErrors={hasErrorsInIDE}
-                    isMarketSelected={!_isEmpty(symbol)}
-                  />
-                )}
+                sbtitle={sbtitleStrategy}
                 onOpenSaveStrategyAsModal={openSaveStrategyAsModal}
                 isPaperTrading={isPaperTrading}
                 stopExecution={stopExecution}
@@ -413,12 +432,7 @@ const StrategyEditor = (props) => {
             {isPaperTrading && (isBetaVersion || flags?.backtest) && (
               <BacktestTab
                 htmlKey='backtest'
-                sbtitle={({ sidebarOpened }) => (
-                  <BacktestTabTitle
-                    results={backtestResults}
-                    sidebarOpened={sidebarOpened}
-                  />
-                )}
+                sbtitle={sbtitleBacktest}
                 results={backtestResults}
                 onBacktestStart={onBacktestStart}
                 saveStrategyOptions={saveStrategyOptions}
@@ -433,10 +447,14 @@ const StrategyEditor = (props) => {
                 hasErrors={hasErrorsInIDE}
                 onSaveStrategy={onSaveStrategy}
                 onOpenSaveStrategyAsModal={openSaveStrategyAsModal}
-                sbtitle={({ sidebarOpened }) => (
-                  <IDETabTitle sidebarOpened={sidebarOpened} />
-                )}
-                {...props}
+                sbtitle={sbtitleIDE}
+                setStrategyDirty={setStrategyDirty}
+                onDefineIndicatorsChange={onDefineIndicatorsChange}
+                evalSectionContent={evalSectionContent}
+                setSectionErrors={setSectionErrors}
+                sectionErrors={sectionErrors}
+                IDEcontent={IDEcontent}
+                setIDEcontent={setIDEcontent}
               />
             )}
           </StrategyEditorPanel>
@@ -541,6 +559,12 @@ StrategyEditor.propTypes = {
   changeTradingMode: PropTypes.func.isRequired,
   currentMode: PropTypes.string.isRequired,
   executionId: PropTypes.string,
+  onDefineIndicatorsChange: PropTypes.string.isRequired,
+  evalSectionContent: PropTypes.string.isRequired,
+  setSectionErrors: PropTypes.string.isRequired,
+  // eslint-disable-next-line react/forbid-prop-types
+  IDEcontent: PropTypes.object.isRequired,
+  setIDEcontent: PropTypes.string.isRequired,
 }
 
 StrategyEditor.defaultProps = {
