@@ -1,9 +1,14 @@
 import csvExport from 'csv-export'
+import { preparePrice } from 'bfx-api-node-util'
 import { saveAs } from 'file-saver'
+
 import { getPairFromMarket } from '../../util/market'
+import { resultNumber } from '../Backtester/Results/Results.utils'
 import { getExportFilename } from '../StrategyTradesTable/StrategyTradesTable.helpers'
 
-const metricsExport = (results, t, getCurrencySymbol) => {
+const adjustPercentage = (value) => value * 100
+
+const getMetrics = (results, t, quoteCcy, postProcessing = false) => {
   const {
     nCandles = 0,
     nTrades = 0,
@@ -16,7 +21,6 @@ const metricsExport = (results, t, getCurrencySymbol) => {
     vol = 0,
     stdDeviation = 0,
     avgPL = 0,
-    backtestOptions: { activeMarket } = {},
     allocation = 0,
     positionSize = 0,
     currentAllocation = 0,
@@ -30,11 +34,46 @@ const metricsExport = (results, t, getCurrencySymbol) => {
     minPL = 0,
   } = results
 
-  const metrics = [{
+  if (postProcessing) {
+    return {
+      [t('strategyEditor.totalPL')]: resultNumber(preparePrice(pl), quoteCcy),
+      [t('strategyEditor.avgPL')]: resultNumber(avgPL, quoteCcy),
+      [t('strategyEditor.profitFactor')]: resultNumber(pf),
+      [t('strategyEditor.volatility')]: resultNumber(stdDeviation),
+      [t('strategyEditor.allocation')]: resultNumber(allocation, quoteCcy),
+      [t('strategyEditor.positionSize')]: resultNumber(positionSize),
+      [t('strategyEditor.currentAllocation')]: resultNumber(currentAllocation, quoteCcy),
+      [t('strategyEditor.availableFunds')]: resultNumber(availableFunds, quoteCcy),
+      [t('strategyEditor.equityCurve')]: resultNumber(equityCurve),
+      [t('strategyEditor.ret')]: resultNumber(ret, quoteCcy),
+      [t('strategyEditor.retPerc')]: resultNumber(adjustPercentage(retPerc)),
+      [t('strategyEditor.drawdown')]: resultNumber(adjustPercentage(drawdown)),
+      [t('strategyEditor.backtestCandles')]: nCandles,
+      [t('strategyEditor.backtestTrades')]: nTrades,
+      [t('strategyEditor.trades')]: nStrategyTrades,
+      [t('strategyEditor.positions')]: nOpens,
+      [t('strategyEditor.gains')]: nGains,
+      [t('strategyEditor.losses')]: nLosses,
+      [t('strategyEditor.fees')]: resultNumber(fees, quoteCcy),
+      [t('strategyEditor.volume')]: vol,
+      [t('strategyEditor.largestGain')]: resultNumber(maxPL, quoteCcy),
+      [t('strategyEditor.largestLoss')]: resultNumber(minPL, quoteCcy),
+    }
+  }
+
+  return {
     [t('strategyEditor.totalPL')]: pl,
     [t('strategyEditor.avgPL')]: avgPL,
     [t('strategyEditor.profitFactor')]: pf,
     [t('strategyEditor.volatility')]: stdDeviation,
+    [t('strategyEditor.allocation')]: allocation,
+    [t('strategyEditor.positionSize')]: positionSize,
+    [t('strategyEditor.currentAllocation')]: currentAllocation,
+    [t('strategyEditor.availableFunds')]: availableFunds,
+    [t('strategyEditor.equityCurve')]: equityCurve,
+    [t('strategyEditor.ret')]: ret,
+    [t('strategyEditor.retPerc')]: retPerc,
+    [t('strategyEditor.drawdown')]: drawdown,
     [t('strategyEditor.backtestCandles')]: nCandles,
     [t('strategyEditor.backtestTrades')]: nTrades,
     [t('strategyEditor.trades')]: nStrategyTrades,
@@ -42,19 +81,17 @@ const metricsExport = (results, t, getCurrencySymbol) => {
     [t('strategyEditor.gains')]: nGains,
     [t('strategyEditor.losses')]: nLosses,
     [t('strategyEditor.fees')]: fees,
-    [t('strategyEditor.profitLoss')]: pl,
     [t('strategyEditor.volume')]: vol,
     [t('strategyEditor.largestGain')]: maxPL,
     [t('strategyEditor.largestLoss')]: minPL,
-    [t('strategyEditor.drawdown')]: drawdown,
-    [t('strategyEditor.retPerc')]: retPerc,
-    [t('strategyEditor.equityCurve')]: equityCurve,
-    [t('strategyEditor.ret')]: ret,
-    [t('strategyEditor.allocation')]: allocation,
-    [t('strategyEditor.positionSize')]: positionSize,
-    [t('strategyEditor.currentAllocation')]: currentAllocation,
-    [t('strategyEditor.availableFunds')]: availableFunds,
-  }]
+  }
+}
+
+const metricsExport = (results, t, getCurrencySymbol) => {
+  const {
+    backtestOptions: { activeMarket } = {},
+  } = results
+  const metrics = [getMetrics(results, t)]
 
   const documents = {
     metrics,
@@ -70,5 +107,5 @@ const metricsExport = (results, t, getCurrencySymbol) => {
 }
 
 export {
-  metricsExport,
+  metricsExport, getMetrics,
 }
