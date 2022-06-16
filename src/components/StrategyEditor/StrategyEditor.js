@@ -139,6 +139,11 @@ const StrategyEditor = (props) => {
     closeExecutionOptionsModal()
     closeCancelProcessModal()
     closeLaunchStrategyModal()
+
+    // setTimeout is needed to prevent flickering when 'Save & Launch' execution options modal is closing
+    setTimeout(() => {
+      setExecutionOptionsModalType(null)
+    }, 500)
   }, [closeCancelProcessModal, closeCreateNewStrategyFromModal, closeCreateNewStrategyModal, closeExecutionOptionsModal, closeLaunchStrategyModal, closeOpenExistingStrategyModal, closeRemoveModal, closeSaveStrategyAsModal])
 
   const onCreateNewStrategy = useCallback((label, content = {}) => {
