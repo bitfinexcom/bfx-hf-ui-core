@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { memo } from 'react'
 import { reduxSelectors } from '@ufx-ui/bfx-containers'
 import { getPairParts } from '@ufx-ui/utils'
 import { preparePrice } from 'bfx-api-node-util'
@@ -189,4 +189,4 @@ StrategyPerfomanceMetrics.defaultProps = {
   isExecuting: false,
 }
 
-export default StrategyPerfomanceMetrics
+export default memo(StrategyPerfomanceMetrics)

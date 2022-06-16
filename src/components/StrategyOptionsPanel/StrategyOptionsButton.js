@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, memo } from 'react'
 import PropTypes from 'prop-types'
 import { useTranslation } from 'react-i18next'
 import NavbarButton from '../Navbar/Navbar.Button'
@@ -25,4 +25,4 @@ StrategyOptionsButton.propTypes = {
   onClick: PropTypes.func.isRequired,
 }
 
-export default StrategyOptionsButton
+export default memo(StrategyOptionsButton)

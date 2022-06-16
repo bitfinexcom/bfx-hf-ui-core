@@ -1,5 +1,6 @@
 import React, {
   memo, useEffect, useMemo, useState,
+  useCallback,
 } from 'react'
 import Debug from 'debug'
 import _isEmpty from 'lodash/isEmpty'
@@ -51,6 +52,7 @@ import { SETTINGS_TABS } from '../../modals/AppSettingsModal/AppSettingsModal.co
 
 import './style.css'
 import { getStrategyModeForSymbol } from '../../util/market'
+import useToggle from '../../hooks/useToggle'
 
 const debug = Debug('hfui-ui:c:strategy-editor')
 
@@ -87,14 +89,14 @@ const StrategyEditor = (props) => {
   const location = useLocation()
   const history = useHistory()
 
-  const [isRemoveModalOpened, setIsRemoveModalOpened] = useState(false)
-  const [createNewStrategyModalOpen, setCreateNewStrategyModalOpen] = useState(false)
-  const [createNewStrategyFromModalOpen, setCreateNewStrategyFromModalOpen] = useState(false)
-  const [openExistingStrategyModalOpen, setOpenExistingStrategyModalOpen] = useState(false)
-  const [isSaveStrategyAsModalOpen, setIsSaveStrategyModalOpen] = useState(false)
-  const [isCancelProcessModalOpen, setIsCancelProcessModalOpen] = useState(false)
-  const [isExecutionOptionsModalOpen, setIsExecutionOptionsModalOpen] = useState(false)
-  const [isLaunchStrategyModalOpen, setIsLaunchStrategyModalOpen] = useState(false)
+  const [isRemoveModalOpen, , openRemoveModal, closeRemoveModal] = useToggle(false)
+  const [createNewStrategyModalOpen, , openCreateNewStrategyModal, closeCreateNewStrategyModal] = useToggle(false)
+  const [createNewStrategyFromModalOpened, , openCreateNewStrategyFromModal, closeCreateNewStrategyFromModal] = useToggle(false)
+  const [isOpenExistingStrategyModalOpen, , , closeOpenExistingStrategyModal] = useToggle(false)
+  const [isSaveStrategyAsModalOpen, , openSaveStrategyAsModal, closeSaveStrategyAsModal] = useToggle(false)
+  const [isCancelProcessModalOpen, , openCancelProcessModal, closeCancelProcessModal] = useToggle(false)
+  const [isExecutionOptionsModalOpen, , openExecutionOptionsModal, closeExecutionOptionsModal] = useToggle(false)
+  const [isLaunchStrategyModalOpen, , openLaunchStrategyModal, closeLaunchStrategyModal] = useToggle(false)
   const [executionOptionsModalType, setExecutionOptionsModalType] = useState(null)
 
   const strategyOptions = _get(
@@ -123,18 +125,18 @@ const StrategyEditor = (props) => {
 
   const strategyId = strategy?.id
 
-  const onCloseModals = () => {
-    setOpenExistingStrategyModalOpen(false)
-    setCreateNewStrategyModalOpen(false)
-    setIsRemoveModalOpened(false)
-    setCreateNewStrategyFromModalOpen(false)
-    setIsSaveStrategyModalOpen(false)
-    setIsExecutionOptionsModalOpen(false)
-    setIsCancelProcessModalOpen(false)
-    setIsLaunchStrategyModalOpen(false)
-  }
+  const onCloseModals = useCallback(() => {
+    closeOpenExistingStrategyModal()
+    closeCreateNewStrategyModal()
+    closeRemoveModal()
+    closeCreateNewStrategyFromModal()
+    closeSaveStrategyAsModal()
+    closeExecutionOptionsModal()
+    closeCancelProcessModal()
+    closeLaunchStrategyModal()
+  }, [closeCancelProcessModal, closeCreateNewStrategyFromModal, closeCreateNewStrategyModal, closeExecutionOptionsModal, closeLaunchStrategyModal, closeOpenExistingStrategyModal, closeRemoveModal, closeSaveStrategyAsModal])
 
-  const onCreateNewStrategy = (label, content = {}) => {
+  const onCreateNewStrategy = useCallback((label, content = {}) => {
     gaCreateStrategy()
 
     const newStrategyContent = { ...content }
@@ -150,19 +152,19 @@ const StrategyEditor = (props) => {
     onLoadStrategy(newStrategy)
 
     onCloseModals()
-  }
+  }, [gaCreateStrategy, onCloseModals, onLoadStrategy, saveStrategy])
 
-  const onRemoveStrategy = () => {
-    const { id = strategyId } = strategy
+  const { id = strategyId } = strategy
+  const onRemoveStrategy = useCallback(() => {
     onCloseModals()
     onRemove(authToken, id)
     onLoadStrategy({}, true)
-  }
+  }, [authToken, id, onCloseModals, onLoadStrategy, onRemove])
 
-  const onExportStrategy = () => {
+  const onExportStrategy = useCallback(() => {
     const { label } = strategy
     saveAsJSON(strategy, label)
-  }
+  }, [strategy])
 
   const onImportStrategy = async () => {
     try {
@@ -178,40 +180,40 @@ const StrategyEditor = (props) => {
     }
   }
 
-  const onSaveStrategy = () => {
+  const onSaveStrategy = useCallback(() => {
     saveStrategy(strategy)
     setStrategyDirty(false)
-  }
+  }, [saveStrategy, setStrategyDirty, strategy])
 
-  const onSaveAsStrategy = (newStrategy) => {
+  const onSaveAsStrategy = useCallback((newStrategy) => {
     setStrategy(newStrategy)
     saveStrategy(newStrategy)
     setStrategyDirty(false)
-  }
+  }, [saveStrategy, setStrategy, setStrategyDirty])
 
-  const _cancelProcess = () => {
+  const _cancelProcess = useCallback(() => {
     const { gid } = backtestResults
 
     cancelProcess(authToken, isPaperTrading, gid, loadingGid)
-    setIsCancelProcessModalOpen(false)
-  }
+    closeCancelProcessModal()
+  }, [authToken, backtestResults, cancelProcess, closeCancelProcessModal, isPaperTrading, loadingGid])
 
-  const onCancelProcess = () => {
+  const onCancelProcess = useCallback(() => {
     if (isPaperTrading) {
       _cancelProcess()
     } else {
-      setIsCancelProcessModalOpen(true)
+      openCancelProcessModal()
     }
-  }
+  }, [_cancelProcess, isPaperTrading, openCancelProcessModal])
 
-  const saveStrategyOptions = (newOptions) => {
+  const saveStrategyOptions = useCallback((newOptions) => {
     onSaveAsStrategy({
       ...strategy,
       strategyOptions: { ...strategyOptions, ...newOptions },
     })
-  }
+  }, [onSaveAsStrategy, strategy, strategyOptions])
 
-  const onBacktestStart = () => {
+  const onBacktestStart = useCallback(() => {
     const backtestArgs = prepareStrategyBacktestingArgs(strategy)
     const { endNum, startNum } = backtestArgs
 
@@ -231,33 +233,33 @@ const StrategyEditor = (props) => {
     }
 
     if (!isFullFilled) {
-      setIsExecutionOptionsModalOpen(true)
+      openExecutionOptionsModal()
       setExecutionOptionsModalType(EXECUTION_TYPES.BACKTEST)
       return
     }
 
     dsExecuteBacktest(backtestArgs)
-  }
+  }, [candles, dsExecuteBacktest, isFullFilled, openExecutionOptionsModal, showError, strategy, t, timeframe, trades])
 
   const apiKeyStates = useSelector(getAPIKeyStates)
   const dispatch = useDispatch()
-  const openAppSettingsModal = () => dispatch(changeAppSettingsModalState(true))
-  const setAPIKeysTab = () => dispatch(
+  const openAppSettingsModal = useCallback(() => dispatch(changeAppSettingsModalState(true)), [dispatch])
+  const setAPIKeysTab = useCallback(() => dispatch(
     setSettingsTab(
       SETTINGS_TABS.Keys,
       getStrategyModeForSymbol(symbol),
     ),
-  )
-  const showAPIKeyError = () => dispatch(
+  ), [dispatch, symbol])
+  const showAPIKeyError = useCallback(() => dispatch(
     recvNotification({
       mts: Date.now(),
       status: 'error',
       text: t('notifications.strategyLaunchMissingAPIKey'),
       cid: v4(),
     }),
-  )
+  ), [dispatch, t])
 
-  const checkForAPIKeys = (strategyToRun) => {
+  const checkForAPIKeys = useCallback((strategyToRun) => {
     const mode = getStrategyModeForSymbol(strategyToRun?.strategyOptions?.symbol)
     const apiKeyState = apiKeyStates?.[mode]
     if (!apiKeyState?.configured || !apiKeyState?.valid) {
@@ -271,24 +273,24 @@ const StrategyEditor = (props) => {
     }
 
     return true
-  }
+  }, [apiKeyStates, openAppSettingsModal, setAPIKeysTab, showAPIKeyError])
 
-  const onLaunchExecutionClick = () => {
+  const onLaunchExecutionClick = useCallback(() => {
     if (isFullFilled) {
-      setIsLaunchStrategyModalOpen(true)
+      openLaunchStrategyModal()
       return
     }
     setExecutionOptionsModalType(EXECUTION_TYPES.LIVE)
-    setIsExecutionOptionsModalOpen(true)
-  }
+    openExecutionOptionsModal()
+  }, [isFullFilled, openExecutionOptionsModal, openLaunchStrategyModal])
 
-  const saveStrategyAndStartExecution = () => {
+  const saveStrategyAndStartExecution = useCallback(() => {
     if (!checkForAPIKeys(strategy)) {
       return
     }
 
     if (!isFullFilled) {
-      setIsExecutionOptionsModalOpen(true)
+      openExecutionOptionsModal()
       setExecutionOptionsModalType(EXECUTION_TYPES.LIVE)
       return
     }
@@ -305,9 +307,9 @@ const StrategyEditor = (props) => {
       authToken,
       ...executionArgs,
     })
-  }
+  }, [authToken, changeTradingMode, checkForAPIKeys, currentMode, dsExecuteLiveStrategy, isFullFilled, isPaperTrading, onSaveStrategy, openExecutionOptionsModal, strategy])
 
-  const loadStrategyAndStartExecution = (strategyToLoad) => {
+  const loadStrategyAndStartExecution = useCallback((strategyToLoad) => {
     if (!checkForAPIKeys(strategyToLoad)) {
       return
     }
@@ -321,39 +323,19 @@ const StrategyEditor = (props) => {
       history.push(routes.strategyEditor.path)
       removeStrategyToExecuteFromLS()
     }, 500)
-  }
+  }, [authToken, checkForAPIKeys, dsExecuteLiveStrategy, history, onLoadStrategy])
 
-  const stopExecution = () => {
+  const stopExecution = useCallback(() => {
     if (!executionId) {
       return
     }
     dsStopLiveStrategy(authToken, executionId)
-  }
+  }, [authToken, dsStopLiveStrategy, executionId])
 
   const hasErrorsInIDE = useMemo(
     () => _some(_values(sectionErrors), (e) => !!e),
     [sectionErrors],
   )
-
-  const openCreateNewStrategyModal = () => {
-    setCreateNewStrategyModalOpen(true)
-  }
-
-  const openCreateNewStrategyFromModal = () => {
-    setCreateNewStrategyFromModalOpen(true)
-  }
-
-  const openRemoveModal = () => {
-    setIsRemoveModalOpened(true)
-  }
-
-  const openSaveStrategyAsModal = () => {
-    setIsSaveStrategyModalOpen(true)
-  }
-
-  const openExecutionOptionsModal = () => {
-    setIsExecutionOptionsModalOpen(true)
-  }
 
   useEffect(() => {
     const { search } = location
@@ -459,7 +441,7 @@ const StrategyEditor = (props) => {
             )}
           </StrategyEditorPanel>
           <RemoveExistingStrategyModal
-            isOpen={isRemoveModalOpened}
+            isOpen={isRemoveModalOpen}
             onClose={onCloseModals}
             onRemoveStrategy={onRemoveStrategy}
             strategy={strategy}
@@ -492,7 +474,7 @@ const StrategyEditor = (props) => {
         </>
       )}
       <CreateNewStrategyFromModalOpen
-        isOpen={createNewStrategyFromModalOpen}
+        isOpen={createNewStrategyFromModalOpened}
         onClose={onCloseModals}
         onSubmit={onCreateNewStrategy}
       />
@@ -503,7 +485,7 @@ const StrategyEditor = (props) => {
         onImportStrategy={onImportStrategy}
       />
       <OpenExistingStrategyModal
-        isOpen={openExistingStrategyModalOpen}
+        isOpen={isOpenExistingStrategyModalOpen}
         onClose={onCloseModals}
         onOpen={onLoadStrategy}
       />
