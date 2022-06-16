@@ -31,7 +31,7 @@ export const STRATEGY_OPTIONS_KEYS = {
   END_DATE: 'endDate',
   MARGIN: 'margin',
   CAPITAL_ALLOCATION: 'capitalAllocation',
-  STOP_LESS_PERC: 'stopLossPerc',
+  STOP_LOSS_PERC: 'stopLossPerc',
   MAX_DRAWDOWN_PERC: 'maxDrawdownPerc',
   STRATEGY_TYPE: 'strategyType',
 }
@@ -47,7 +47,7 @@ export const getDefaultStrategyOptions = () => {
     [STRATEGY_OPTIONS_KEYS.END_DATE]: new Date(Date.now() - ONE_MIN * 15),
     [STRATEGY_OPTIONS_KEYS.MARGIN]: DEFAULT_USE_MARGIN,
     [STRATEGY_OPTIONS_KEYS.CAPITAL_ALLOCATION]: '',
-    [STRATEGY_OPTIONS_KEYS.STOP_LESS_PERC]: '',
+    [STRATEGY_OPTIONS_KEYS.STOP_LOSS_PERC]: '',
     [STRATEGY_OPTIONS_KEYS.MAX_DRAWDOWN_PERC]: '',
     [STRATEGY_OPTIONS_KEYS.STRATEGY_TYPE]: null,
   }
@@ -83,7 +83,7 @@ export const prepareStrategyExecutionArgs = (strategy) => {
     [STRATEGY_OPTIONS_KEYS.MARGIN]: margin,
     constraints: {
       [STRATEGY_OPTIONS_KEYS.CAPITAL_ALLOCATION]: Number(capitalAllocation),
-      [STRATEGY_OPTIONS_KEYS.STOP_LESS_PERC]: Number(stopLossPerc),
+      [STRATEGY_OPTIONS_KEYS.STOP_LOSS_PERC]: Number(stopLossPerc),
       [STRATEGY_OPTIONS_KEYS.MAX_DRAWDOWN_PERC]: Number(maxDrawdownPerc),
     },
   }
@@ -117,7 +117,7 @@ export const prepareStrategyBacktestingArgs = (strategy) => {
     [STRATEGY_OPTIONS_KEYS.CANDLE_SEED]: candleSeed,
     constraints: {
       [STRATEGY_OPTIONS_KEYS.CAPITAL_ALLOCATION]: Number(capitalAllocation),
-      [STRATEGY_OPTIONS_KEYS.STOP_LESS_PERC]: Number(stopLossPerc),
+      [STRATEGY_OPTIONS_KEYS.STOP_LOSS_PERC]: Number(stopLossPerc),
       [STRATEGY_OPTIONS_KEYS.MAX_DRAWDOWN_PERC]: Number(maxDrawdownPerc),
     },
   }
@@ -146,7 +146,7 @@ export const prepareStrategyToLoad = (strategyToLoad, markets, strategies) => {
       ...strategyToLoad.strategyOptions,
       [STRATEGY_OPTIONS_KEYS.SYMBOL]: _find(markets, (m) => m.wsID === symbol),
       [STRATEGY_OPTIONS_KEYS.CAPITAL_ALLOCATION]: String(capitalAllocation),
-      [STRATEGY_OPTIONS_KEYS.STOP_LESS_PERC]: String(stopLossPerc),
+      [STRATEGY_OPTIONS_KEYS.STOP_LOSS_PERC]: String(stopLossPerc),
       [STRATEGY_OPTIONS_KEYS.MAX_DRAWDOWN_PERC]: String(maxDrawdownPerc),
     },
   }
