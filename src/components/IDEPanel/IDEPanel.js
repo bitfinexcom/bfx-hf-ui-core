@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, memo } from 'react'
 import PropTypes from 'prop-types'
 import ClassNames from 'clsx'
 import _isEmpty from 'lodash/isEmpty'
@@ -155,4 +155,4 @@ IDEPanel.defaultProps = {
   sectionErrors: {},
 }
 
-export default IDEPanel
+export default memo(IDEPanel)
