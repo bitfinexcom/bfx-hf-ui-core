@@ -1,5 +1,5 @@
 import React, {
-  lazy, Suspense, useEffect, useState,
+  lazy, Suspense, useState,
 } from 'react'
 import Debug from 'debug'
 import PropTypes from 'prop-types'
@@ -198,8 +198,9 @@ const StrategiesPage = ({
     setSectionErrors({})
     setNextStrategyToOpen(null)
     setStrategyDirty(false)
+    setIDEcontent(strategyToLoad.strategyContent)
 
-    if (strategyToLoad.strategyContent.defineIndicators) {
+    if (strategyToLoad?.strategyContent?.defineIndicators) {
       onDefineIndicatorsChange(strategyToLoad.strategyContent.defineIndicators)
     }
   }
@@ -247,13 +248,6 @@ const StrategiesPage = ({
     setActionStrategy(rowData)
     setIsRemoveModalOpened(true)
   }
-
-  useEffect(() => {
-    if (_isEmpty(strategy.strategyContent)) {
-      return
-    }
-    setIDEcontent(strategy.strategyContent)
-  }, [strategy])
 
   return (
     <Layout>
