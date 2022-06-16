@@ -199,10 +199,10 @@ const StrategiesPage = ({
     setSectionErrors({})
     setNextStrategyToOpen(null)
     setStrategyDirty(false)
-    if (!_isEmpty(strategyToLoad?.strategyContent)) {
-      setIDEcontent(strategyToLoad.strategyContent)
-    } else {
+    if (_isEmpty(strategyToLoad?.strategyContent)) {
       setIDEcontent({})
+    } else {
+      setIDEcontent(strategyToLoad.strategyContent)
     }
 
     if (strategyToLoad?.strategyContent?.defineIndicators) {
