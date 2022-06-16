@@ -1,4 +1,4 @@
-import React, { useMemo, memo } from 'react'
+import React, { memo } from 'react'
 import { reduxSelectors } from '@ufx-ui/bfx-containers'
 import { getPairParts } from '@ufx-ui/utils'
 import PropTypes from 'prop-types'
@@ -30,7 +30,7 @@ const StrategyPerfomanceMetrics = ({
   const [, quote] = activeMarket ? getPairParts(activeMarket) : []
   const getCurrencySymbol = useSelector(getCurrencySymbolMemo)
   const quoteCcy = getCurrencySymbol(quote)
-  const metrics = useMemo(() => getMetrics(results, t, quoteCcy, false), [results, t, quoteCcy])
+  const metrics = getMetrics(results, t, quoteCcy, false)
 
   return (
     <Panel
