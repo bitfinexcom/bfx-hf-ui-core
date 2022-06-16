@@ -193,13 +193,17 @@ const StrategyEditor = (props) => {
   const onSaveStrategy = useCallback(() => {
     saveStrategy({ ...strategy, strategyContent: IDEcontent })
     setStrategyDirty(false)
-  }, [saveStrategy, setStrategyDirty, strategy])
+  }, [IDEcontent, saveStrategy, setStrategyDirty, strategy])
 
-  const onSaveAsStrategy = useCallback((newStrategy) => {
+  const onSaveAsStrategy = useCallback((_newStrategy) => {
+    const newStrategy = {
+      ..._newStrategy,
+      strategyContent: IDEcontent,
+    }
     setStrategy(newStrategy)
     saveStrategy(newStrategy)
     setStrategyDirty(false)
-  }, [saveStrategy, setStrategy, setStrategyDirty])
+  }, [IDEcontent, saveStrategy, setStrategy, setStrategyDirty])
 
   const _cancelProcess = useCallback(() => {
     const { gid } = backtestResults
