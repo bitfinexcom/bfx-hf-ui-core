@@ -14,19 +14,21 @@ import Templates from '../../../components/StrategyEditor/templates'
 import Tabs from '../../../ui/Tabs/Tabs'
 import { getSortedByTimeStrategies } from '../../../redux/selectors/ws'
 
-import { dropdownOptionsAdaptor, getTabs } from './CreateNewStrategyFromModal.helpers'
+import {
+  dropdownOptionsAdaptor,
+  getTabs,
+} from './CreateNewStrategyFromModal.helpers'
 import { validateStrategyName } from '../Strategy.helpers'
 
-const CreateNewStrategyFromModalOpen = ({
-  onSubmit,
-  onClose,
-  isOpen,
-}) => {
+const CreateNewStrategyFromModalOpen = ({ onSubmit, onClose, isOpen }) => {
   const savedStrategies = useSelector(getSortedByTimeStrategies)
   const { t } = useTranslation()
 
   const savedStrategiesExists = !_isEmpty(savedStrategies)
-  const tabs = useMemo(() => getTabs(t, savedStrategiesExists), [t, savedStrategiesExists])
+  const tabs = useMemo(
+    () => getTabs(t, savedStrategiesExists),
+    [t, savedStrategiesExists],
+  )
 
   const [label, setLabel] = useState('')
   const [activeTab, setActiveTab] = useState(tabs[0].value)
@@ -57,13 +59,31 @@ const CreateNewStrategyFromModalOpen = ({
 
     onSubmit(label, newStrategy)
     onClose()
-  }, [isTemplatesTabSelected, label, onClose, onSubmit, savedStrategies, selectedStrategyLabel, t, template])
+  }, [
+    isTemplatesTabSelected,
+    label,
+    onClose,
+    onSubmit,
+    savedStrategies,
+    selectedStrategyLabel,
+    t,
+    template,
+  ])
 
   useEffect(() => {
     if (savedStrategiesExists) {
       setSelectedStrategyLabel(savedStrategies[0].label)
     }
   }, [savedStrategies, savedStrategiesExists])
+
+  useEffect(() => {
+    if (isTemplatesTabSelected) {
+      setLabel(template)
+    } else {
+      const newLabel = t('strategyEditor.copyOfStrategy', { strategyName: selectedStrategyLabel })
+      setLabel(newLabel)
+    }
+  }, [t, isTemplatesTabSelected, template, selectedStrategyLabel, setLabel])
 
   return (
     <Modal

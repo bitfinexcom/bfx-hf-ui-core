@@ -199,6 +199,20 @@ const StrategyEditor = (props) => {
     [gaCreateStrategy, onCloseModals, onLoadStrategy, saveStrategy],
   )
 
+  const onCreateStrategyFromExisted = useCallback((label, _newStrategy) => {
+    gaCreateStrategy()
+
+    const newStrategy = {
+      ..._newStrategy,
+      label,
+      id: v4(),
+    }
+    saveStrategy(newStrategy)
+    onLoadStrategy(newStrategy)
+
+    onCloseModals()
+  }, [gaCreateStrategy, onCloseModals, onLoadStrategy, saveStrategy])
+
   const { id = strategyId } = strategy
   const onRemoveStrategy = useCallback(() => {
     onCloseModals()
@@ -383,7 +397,6 @@ const StrategyEditor = (props) => {
       setTimeout(() => window.location.replace("/index.html"), 500); // eslint-disable-line
       return
     }
-    onSaveStrategy()
 
     const executionArgs = prepareStrategyExecutionArgs(strategy)
     dsExecuteLiveStrategy({
@@ -398,7 +411,6 @@ const StrategyEditor = (props) => {
     dsExecuteLiveStrategy,
     isFullFilled,
     isPaperTrading,
-    onSaveStrategy,
     openExecutionOptionsModal,
     strategy,
   ])
@@ -606,7 +618,7 @@ const StrategyEditor = (props) => {
       <CreateNewStrategyFromModalOpen
         isOpen={createNewStrategyFromModalOpened}
         onClose={onCloseModals}
-        onSubmit={onCreateNewStrategy}
+        onSubmit={onCreateStrategyFromExisted}
       />
       <CreateNewStrategyModal
         isOpen={createNewStrategyModalOpen}

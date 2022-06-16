@@ -752,7 +752,8 @@
     },
     "IDEreadonlyNotice": "For you safety, strategy editing is disabled in the LIVE environment. To update your strategy, change to SANDBOX environment and reopen this strategy from your EXECUTED STRATEGIES tab",
     "strategyOptionsBtn": "Settings",
-    "saveAndLaunchBtn": "Save and Launch"
+    "saveAndLaunchBtn": "Save and Launch",
+    "copyOfStrategy": "Copy of {{strategyName}}"
   },
   "ui": {
     "ok": "Okay",
