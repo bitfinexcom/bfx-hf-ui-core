@@ -17,7 +17,7 @@ const StrategyLiveChart = ({
   markets,
   fullscreenChart,
   exitFullscreenChart,
-  strategy: { strategyOptions: { timeframe }, id, symbol },
+  strategy: { strategyOptions: { timeframe, symbol }, id },
   trades,
 }) => {
   const { t } = useTranslation()
@@ -25,7 +25,7 @@ const StrategyLiveChart = ({
   const chartIndicators = prepareTVIndicators(indicators)
   const interval = TIMEFRAME_INTERVAL_MAPPING[timeframe] || '15'
 
-  const activeMarketObject = _find(markets, (market) => market.wsID === symbol, null)
+  const activeMarketObject = _find(markets, (market) => market.wsID === symbol?.wsID, null)
 
   return (
     <Panel
@@ -76,7 +76,6 @@ StrategyLiveChart.propTypes = {
       timeframe: PropTypes.oneOf(timeFrames).isRequired,
     }),
     id: PropTypes.string.isRequired,
-    symbol: PropTypes.string.isRequired,
   }).isRequired,
   indicators: PropTypes.arrayOf(
     PropTypes.oneOfType([PropTypes.array, PropTypes.object]),

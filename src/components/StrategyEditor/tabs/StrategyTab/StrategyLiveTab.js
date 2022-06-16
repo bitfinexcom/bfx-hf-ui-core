@@ -64,6 +64,7 @@ const StrategyLiveTab = (props) => {
         case COMPONENTS_KEYS.OPTIONS:
           return (
             <StrategyOptionsPanelLive
+              strategy={strategy}
               markets={markets}
               onOpenSaveStrategyAsModal={onOpenSaveStrategyAsModal}
               openExecutionOptionsModal={openExecutionOptionsModal}
