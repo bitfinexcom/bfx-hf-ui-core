@@ -52,6 +52,8 @@ const mapDispatchToProps = (dispatch) => ({
   dsExecuteLiveStrategy: ({
     authToken,
     label,
+    id,
+    strategyType,
     symbol,
     timeframe,
     // trades,
@@ -66,11 +68,13 @@ const mapDispatchToProps = (dispatch) => ({
       WSActions.send([
         'strategy.execute_start',
         authToken,
+        id,
         label,
         symbol,
         timeframe,
         false, // trades
         processedStrategy,
+        strategyType,
         candleSeed,
         margin,
         constraints,

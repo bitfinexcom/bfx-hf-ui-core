@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react'
+import React, { useMemo, memo } from 'react'
 import { reduxSelectors } from '@ufx-ui/bfx-containers'
 import { getPairParts } from '@ufx-ui/utils'
 import PropTypes from 'prop-types'
@@ -116,4 +116,4 @@ StrategyPerfomanceMetrics.defaultProps = {
   isExecuting: false,
 }
 
-export default StrategyPerfomanceMetrics
+export default memo(StrategyPerfomanceMetrics)

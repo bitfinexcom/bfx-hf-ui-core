@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { memo } from 'react'
 import PropTypes from 'prop-types'
 import _size from 'lodash/size'
 import { Tooltip } from '@ufx-ui/core'
@@ -130,4 +130,4 @@ StrategyOptionsPanelLive.propTypes = {
   stopExecution: PropTypes.func.isRequired,
 }
 
-export default StrategyOptionsPanelLive
+export default memo(StrategyOptionsPanelLive)

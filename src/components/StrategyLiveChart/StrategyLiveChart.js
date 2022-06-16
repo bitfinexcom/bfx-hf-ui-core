@@ -13,7 +13,6 @@ import timeFrames, { TIMEFRAME_INTERVAL_MAPPING } from '../../util/time_frames'
 import './style.css'
 
 const StrategyLiveChart = ({
-  results,
   indicators,
   markets,
   fullscreenChart,
@@ -22,12 +21,11 @@ const StrategyLiveChart = ({
   trades,
 }) => {
   const { t } = useTranslation()
-  const { backtestOptions: { activeMarket } = {} } = results
   const settingsTheme = useSelector(getThemeSetting)
   const chartIndicators = prepareTVIndicators(indicators)
   const interval = TIMEFRAME_INTERVAL_MAPPING[timeframe] || '15'
 
-  const activeMarketObject = _find(markets, (market) => market.wsID === activeMarket, null) || symbol
+  const activeMarketObject = _find(markets, (market) => market.wsID === symbol?.wsID, null)
 
   return (
     <Panel
@@ -82,15 +80,6 @@ StrategyLiveChart.propTypes = {
   indicators: PropTypes.arrayOf(
     PropTypes.oneOfType([PropTypes.array, PropTypes.object]),
   ), // eslint-disable-line
-  results: PropTypes.objectOf(
-    PropTypes.oneOfType([
-      PropTypes.array,
-      PropTypes.bool,
-      PropTypes.object,
-      PropTypes.number,
-      PropTypes.string,
-    ]),
-  ),
   trades: PropTypes.array, // eslint-disable-line
   fullscreenChart: PropTypes.bool.isRequired,
   exitFullscreenChart: PropTypes.func.isRequired,
@@ -98,7 +87,6 @@ StrategyLiveChart.propTypes = {
 
 StrategyLiveChart.defaultProps = {
   indicators: [],
-  results: {},
 }
 
 export default memo(StrategyLiveChart)
