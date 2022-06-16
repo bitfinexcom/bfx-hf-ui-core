@@ -64,17 +64,21 @@ export const prepareStrategyExecutionArgs = (strategy) => {
       capitalAllocation,
       stopLossPerc,
       maxDrawdownPerc,
+      strategyType,
     },
     label,
     strategyContent,
+    id,
   } = strategy
 
   return {
     label,
     symbol: symbol?.wsID,
+    [STRATEGY_OPTIONS_KEYS.STRATEGY_TYPE]: strategyType,
     [STRATEGY_OPTIONS_KEYS.TIMEFRAME]: timeframe,
     [STRATEGY_OPTIONS_KEYS.TRADES]: trades,
     strategyContent,
+    id,
     [STRATEGY_OPTIONS_KEYS.CANDLE_SEED]: candleSeed,
     [STRATEGY_OPTIONS_KEYS.MARGIN]: margin,
     constraints: {
