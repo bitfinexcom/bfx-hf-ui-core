@@ -20,24 +20,26 @@ import {
 } from './CreateNewStrategyFromModal.helpers'
 import { validateStrategyName } from '../Strategy.helpers'
 
-const CreateNewStrategyFromModalOpen = ({ onSubmit, onClose, isOpen }) => {
+const CreateNewStrategyFromModalOpen = ({
+  onSubmit, onClose, isOpen, isStrategySelected,
+}) => {
   const savedStrategies = useSelector(getSortedByTimeStrategies)
   const { t } = useTranslation()
 
   const savedStrategiesExists = !_isEmpty(savedStrategies)
   const tabs = useMemo(
-    () => getTabs(t, savedStrategiesExists),
-    [t, savedStrategiesExists],
+    () => getTabs(t, savedStrategiesExists, isStrategySelected),
+    [t, savedStrategiesExists, isStrategySelected],
   )
 
   const [label, setLabel] = useState('')
-  const [activeTab, setActiveTab] = useState(tabs[0].value)
+  const [activeTab, setActiveTab] = useState('')
 
   const [error, setError] = useState('')
   const [template, setTemplate] = useState(MACD.label)
   const [selectedStrategyLabel, setSelectedStrategyLabel] = useState(null)
 
-  const isTemplatesTabSelected = tabs[0].value === activeTab
+  const isTemplatesTabSelected = tabs[1].value === activeTab
 
   const onSubmitHandler = useCallback(() => {
     const err = validateStrategyName(label, t)
@@ -84,6 +86,11 @@ const CreateNewStrategyFromModalOpen = ({ onSubmit, onClose, isOpen }) => {
       setLabel(newLabel)
     }
   }, [t, isTemplatesTabSelected, template, selectedStrategyLabel, setLabel])
+
+  useEffect(() => {
+    const firstEnabledTab = _find(tabs, (tab) => !tab.disabled)
+    setActiveTab(firstEnabledTab.value)
+  }, [tabs])
 
   return (
     <Modal
@@ -132,6 +139,7 @@ const CreateNewStrategyFromModalOpen = ({ onSubmit, onClose, isOpen }) => {
 CreateNewStrategyFromModalOpen.propTypes = {
   onSubmit: PropTypes.func.isRequired,
   onClose: PropTypes.func.isRequired,
+  isStrategySelected: PropTypes.bool.isRequired,
   isOpen: PropTypes.bool,
 }
 

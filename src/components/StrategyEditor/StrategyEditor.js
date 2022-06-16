@@ -619,6 +619,7 @@ const StrategyEditor = (props) => {
         isOpen={createNewStrategyFromModalOpened}
         onClose={onCloseModals}
         onSubmit={onCreateStrategyFromExisted}
+        isStrategySelected={!!strategyId}
       />
       <CreateNewStrategyModal
         isOpen={createNewStrategyModalOpen}
