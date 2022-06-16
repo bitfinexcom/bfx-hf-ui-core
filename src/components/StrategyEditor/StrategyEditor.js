@@ -207,6 +207,11 @@ const StrategyEditor = (props) => {
       label,
       id: v4(),
     }
+
+    // Need to delete inherited execution data of parent strategy
+    delete newStrategy.executionId
+    delete newStrategy.results
+
     saveStrategy(newStrategy)
     onLoadStrategy(newStrategy)
 
@@ -619,7 +624,7 @@ const StrategyEditor = (props) => {
         isOpen={createNewStrategyFromModalOpened}
         onClose={onCloseModals}
         onSubmit={onCreateStrategyFromExisted}
-        isStrategySelected={!!strategyId}
+        currentStrategyLabel={strategy?.label}
       />
       <CreateNewStrategyModal
         isOpen={createNewStrategyModalOpen}
