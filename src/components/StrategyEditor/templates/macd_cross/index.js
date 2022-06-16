@@ -5,7 +5,9 @@ import onPriceUpdate from './onPriceUpdate'
 
 export default {
   label: 'Basic MACD Cross',
-  defineIndicators,
-  defineMeta,
-  onPriceUpdate,
+  strategyContent: {
+    defineIndicators,
+    defineMeta,
+    onPriceUpdate,
+  },
 }

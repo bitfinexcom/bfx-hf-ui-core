@@ -15,17 +15,19 @@ import onPositionClose from './onPositionClose'
 export default {
   label: 'Blank',
 
-  defineIndicators,
+  strategyContent: {
+    defineIndicators,
 
-  onEnter,
-  onStart,
-  onStop,
-  onUpdate,
-  onUpdateLong,
-  onUpdateShort,
-  onUpdateClosing,
-  onPriceUpdate,
-  onPositionUpdate,
-  onPositionOpen,
-  onPositionClose,
+    onEnter,
+    onStart,
+    onStop,
+    onUpdate,
+    onUpdateLong,
+    onUpdateShort,
+    onUpdateClosing,
+    onPriceUpdate,
+    onPositionUpdate,
+    onPositionOpen,
+    onPositionClose,
+  },
 }

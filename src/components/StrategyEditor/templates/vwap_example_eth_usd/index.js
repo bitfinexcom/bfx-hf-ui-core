@@ -5,8 +5,9 @@ import onUpdateLong from './onUpdateLong'
 
 export default {
   label: 'VWAP ETH/USD Example',
-
-  defineIndicators,
-  onEnter,
-  onUpdateLong,
+  strategyContent: {
+    defineIndicators,
+    onEnter,
+    onUpdateLong,
+  },
 }
