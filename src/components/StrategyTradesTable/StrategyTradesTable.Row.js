@@ -17,7 +17,7 @@ const STYLES = {
 
 const MAIN_ROW = ((props) => {
   const {
-    selectedIndex, rowIndex, registerChild, measure, rowData, columns,
+    selectedIndex, rowIndex, registerChild, measure, rowData, columns, style,
   } = props
 
   useEffect(() => {
@@ -27,7 +27,7 @@ const MAIN_ROW = ((props) => {
   const showExpanedView = rowIndex === selectedIndex
 
   return (
-    <div registerChild={registerChild}>
+    <div registerChild={registerChild} style={style}>
       <div style={STYLES.VERTICAL}>
         <div
           style={STYLES.HORIZONTAL}
