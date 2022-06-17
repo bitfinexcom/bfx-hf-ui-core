@@ -7,7 +7,7 @@ import PropTypes from 'prop-types'
 import { useTranslation } from 'react-i18next'
 import Input from '../../../ui/Input'
 import Modal from '../../../ui/Modal'
-import { validateStrategyName } from '../Strategy.helpers'
+import { validateStrategyName } from '../../../components/StrategyEditor/StrategyEditor.helpers'
 
 const SaveStrategyAsModal = ({
   onSubmit, onClose, isOpen, strategy,

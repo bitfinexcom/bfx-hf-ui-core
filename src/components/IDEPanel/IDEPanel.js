@@ -7,21 +7,7 @@ import { useSelector } from 'react-redux'
 import MonacoEditor from '../StrategyEditor/components/MonacoEditor'
 import { getIsPaperTrading, getThemeSetting } from '../../redux/selectors/ui'
 import Panel from '../../ui/Panel'
-
-const STRATEGY_SECTIONS = [
-  'defineIndicators',
-  'onPriceUpdate',
-  'onEnter',
-  'onUpdate',
-  'onUpdateLong',
-  'onUpdateShort',
-  'onUpdateClosing',
-  'onPositionOpen',
-  'onPositionUpdate',
-  'onPositionClose',
-  'onStart',
-  'onStop',
-]
+import { STRATEGY_IDE_SECTIONS } from '../StrategyEditor/StrategyEditor.helpers'
 
 const IDEPanel = ({
   setStrategyDirty,
@@ -41,8 +27,8 @@ const IDEPanel = ({
   const processStrategy = (updatedStrategy) => {
     const updatedContent = {}
 
-    for (let i = 0; i < STRATEGY_SECTIONS.length; ++i) {
-      const section = STRATEGY_SECTIONS[i]
+    for (let i = 0; i < STRATEGY_IDE_SECTIONS.length; ++i) {
+      const section = STRATEGY_IDE_SECTIONS[i]
       const content = updatedStrategy[section]
 
       if (!_isEmpty(content)) {
@@ -89,7 +75,7 @@ const IDEPanel = ({
       <div className='hfui-strategyeditor__wrapper'>
         <ul className='hfui-strategyeditor__func-select'>
           {/* eslint-disable-next-line lodash/prefer-lodash-method */}
-          {STRATEGY_SECTIONS.map((section) => (
+          {STRATEGY_IDE_SECTIONS.map((section) => (
             <li
               key={section}
               onClick={() => setActiveContent(section)}
