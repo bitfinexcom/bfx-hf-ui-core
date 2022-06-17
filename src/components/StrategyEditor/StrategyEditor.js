@@ -529,6 +529,7 @@ const StrategyEditor = (props) => {
         onImportStrategy={onImportStrategy}
         strategy={strategy}
         strategyId={strategyId}
+        executionId={executionId}
         selectedTab={selectedTab}
         sidebarOpened={sidebarOpened}
         strategyDirty={strategyDirty}
@@ -537,6 +538,7 @@ const StrategyEditor = (props) => {
       />
     ),
     [
+      executionId,
       hasErrorsInIDE,
       onExportStrategy,
       onImportStrategy,

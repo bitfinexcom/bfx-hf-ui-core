@@ -17,12 +17,11 @@ const ParamsForSandbox = ({
   onExportStrategy,
   onOpenRemoveModal,
   strategyId,
+  executionId,
 }) => {
   const { t } = useTranslation()
   return (
-    <div
-      className='hfui-orderform__ao-settings__menu-buttons'
-    >
+    <div className='hfui-orderform__ao-settings__menu-buttons'>
       <SidebarParam onClick={startExecution} isDisabled={isExecutionDisabled}>
         <Icon name='play' />
         &nbsp;&nbsp;
@@ -47,9 +46,11 @@ const ParamsForSandbox = ({
       <SidebarParam onClick={onExportStrategy}>
         {t('strategyEditor.exportStrategy')}
       </SidebarParam>
-      <SidebarParam onClick={onOpenRemoveModal} isDisabled={!strategyId}>
-        {t('ui.removeBtn')}
-      </SidebarParam>
+      {!executionId && (
+        <SidebarParam onClick={onOpenRemoveModal} isDisabled={!strategyId}>
+          {t('ui.removeBtn')}
+        </SidebarParam>
+      )}
       <SidebarParam onClick={onClose}>
         {t('strategyEditor.closeStrategy')}
       </SidebarParam>
@@ -70,11 +71,12 @@ ParamsForSandbox.propTypes = {
   strategyDirty: PropTypes.bool.isRequired,
   isExecutionDisabled: PropTypes.bool.isRequired,
   onClose: PropTypes.func.isRequired,
-
+  executionId: PropTypes.string,
 }
 
 ParamsForSandbox.defaultProps = {
   strategyId: '',
+  executionId: null,
 }
 
 export default ParamsForSandbox
