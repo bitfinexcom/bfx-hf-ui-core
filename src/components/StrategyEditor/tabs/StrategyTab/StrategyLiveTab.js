@@ -3,7 +3,6 @@ import React, {
 } from 'react'
 import PropTypes from 'prop-types'
 import _isEmpty from 'lodash/isEmpty'
-import { useTranslation } from 'react-i18next'
 import { useSelector } from 'react-redux'
 import StrategyPerfomanceMetrics from '../../../StrategyPerfomanceMetrics'
 import StrategyTradesTable from '../../../StrategyTradesTable'
@@ -38,8 +37,6 @@ const StrategyLiveTab = (props) => {
   const executionState = useSelector(getCurrentStrategyExecutionState)
   const positions = useSelector(getStrategyPositions)
   const trades = useMemo(() => prepareChartTrades(positions), [positions])
-
-  const { t } = useTranslation()
 
   const {
     loading, executing, results, startedOn,
@@ -123,11 +120,6 @@ const StrategyLiveTab = (props) => {
         isLoading={loading}
         onCancelProcess={onCancelProcess}
       />
-      {_isEmpty(results) && !executing && !loading && (
-        <p className='hfui-strategyeditor__initial-message'>
-          {t('strategyEditor.liveExecution.initialMessage')}
-        </p>
-      )}
     </StrategyTabWrapper>
   )
 }
