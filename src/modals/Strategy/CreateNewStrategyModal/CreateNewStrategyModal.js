@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next'
 import Input from '../../../ui/Input'
 import Modal from '../../../ui/Modal'
 import blankTemplate from '../../../components/StrategyEditor/templates/blank'
-import { validateStrategyName } from '../Strategy.helpers'
+import { validateStrategyName } from '../../../components/StrategyEditor/StrategyEditor.helpers'
 
 import './style.css'
 

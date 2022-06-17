@@ -1,6 +1,9 @@
 import _find from 'lodash/find'
 import _map from 'lodash/map'
 import _reduce from 'lodash/reduce'
+import _isEmpty from 'lodash/isEmpty'
+import _size from 'lodash/size'
+import { MAX_STRATEGY_LABEL_LENGTH as MAX_LABEL_LENGTH } from '../../constants/variables'
 
 import { getTradeAmount, getTradePrice } from '../StrategyTradesTable/TradesTable/TradesTable.helpers'
 
@@ -203,4 +206,21 @@ export const prepareChartTrades = (positions) => {
       })),
     ]
   }, [])
+}
+
+export const validateStrategyName = (label, t) => {
+  const labelSize = _size(label)
+
+  if (_isEmpty(label)) {
+    return t('strategyEditor.newStrategyModalEmptyError')
+  }
+
+  if (labelSize > MAX_LABEL_LENGTH) {
+    return t('strategyEditor.newStrategyModalLongError', {
+      labelSize,
+      MAX_LABEL_LENGTH,
+    })
+  }
+
+  return ''
 }

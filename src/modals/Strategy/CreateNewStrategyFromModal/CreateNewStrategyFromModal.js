@@ -18,7 +18,7 @@ import {
   dropdownOptionsAdaptor,
   getTabs,
 } from './CreateNewStrategyFromModal.helpers'
-import { validateStrategyName } from '../Strategy.helpers'
+import { validateStrategyName } from '../../../components/StrategyEditor/StrategyEditor.helpers'
 
 const CreateNewStrategyFromModalOpen = ({
   onSubmit,
