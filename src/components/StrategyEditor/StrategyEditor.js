@@ -671,11 +671,11 @@ StrategyEditor.propTypes = {
   changeTradingMode: PropTypes.func.isRequired,
   currentMode: PropTypes.string.isRequired,
   executionId: PropTypes.string,
-  onDefineIndicatorsChange: PropTypes.string.isRequired,
-  evalSectionContent: PropTypes.string.isRequired,
-  setSectionErrors: PropTypes.string.isRequired,
+  onDefineIndicatorsChange: PropTypes.func.isRequired,
+  evalSectionContent: PropTypes.func.isRequired,
+  setSectionErrors: PropTypes.func.isRequired,
   IDEcontent: PropTypes.objectOf(PropTypes.string).isRequired,
-  setIDEcontent: PropTypes.string.isRequired,
+  setIDEcontent: PropTypes.func.isRequired,
 }
 
 StrategyEditor.defaultProps = {
