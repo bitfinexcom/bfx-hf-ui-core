@@ -124,6 +124,7 @@ const StrategyTradesTable = ({
           rowRenderer={rowRenderer}
           columns={columns}
           data={results || []}
+          scrollingResetTimeInterval={0}
         />
       )}
     </Panel>
