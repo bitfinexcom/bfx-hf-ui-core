@@ -18,7 +18,6 @@ const MAX_STRATEGY_LABEL_LENGTH = 25
 
 const StrategyOptionsPanelLive = ({
   strategy,
-  onOpenSaveStrategyAsModal,
   markets,
   isExecuting,
   hasResults,
@@ -35,7 +34,6 @@ const StrategyOptionsPanelLive = ({
       <div className='hfui-strategy-options__left-container'>
         <p
           className='hfui-strategy-options__strategy-name item'
-          onClick={onOpenSaveStrategyAsModal}
         >
           <>
             {_size(label) > MAX_STRATEGY_LABEL_LENGTH ? (
@@ -104,7 +102,6 @@ const StrategyOptionsPanelLive = ({
 
 StrategyOptionsPanelLive.propTypes = {
   markets: PropTypes.objectOf(PropTypes.object).isRequired, // eslint-disable-line
-  onOpenSaveStrategyAsModal: PropTypes.func.isRequired,
   strategy: PropTypes.shape({
     label: PropTypes.string,
     strategyOptions: PropTypes.shape({

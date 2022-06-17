@@ -719,8 +719,9 @@
     "candleSeedCount": "Candle seed count",
     "noStrategiesToDisplay": "There are no strategies to display",
     "saveWithDifferentName": "Save with different name",
+    "currentStrategyTab": "Current Strategy",
     "templatesTab": "Templates",
-    "savedStrategiesTab": "From saved",
+    "savedStrategiesTab": "Drafts",
     "selectMarketDescription": "This is the market in which the strategy will run",
     "selectMarketDescriptionDisabled": "Selected Market",
     "selectMarketPlaceholder": "Select a market",
@@ -752,7 +753,8 @@
     },
     "IDEreadonlyNotice": "For you safety, strategy editing is disabled in the LIVE environment. To update your strategy, change to SANDBOX environment and reopen this strategy from your EXECUTED STRATEGIES tab",
     "strategyOptionsBtn": "Settings",
-    "saveAndLaunchBtn": "Save and Launch"
+    "saveAndLaunchBtn": "Save and Launch",
+    "copyOfStrategy": "Copy of {{strategyName}}"
   },
   "ui": {
     "ok": "Okay",

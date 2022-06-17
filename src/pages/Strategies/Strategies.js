@@ -25,9 +25,9 @@ import RemoveExistingStrategyModal from '../../modals/Strategy/RemoveExistingStr
 import SaveStrategyAsModal from '../../modals/Strategy/SaveStrategyAsModal/SaveStrategyAsModal'
 import { getDefaultStrategyOptions } from '../../components/StrategyEditor/StrategyEditor.helpers'
 import ClearBacktestResultsModal from '../../modals/Strategy/ClearBacktestResultsModal'
+import useToggle from '../../hooks/useToggle'
 
 import './style.css'
-import useToggle from '../../hooks/useToggle'
 
 const debug = Debug('hfui-ui:p:strategy-editor')
 
@@ -303,6 +303,7 @@ const StrategiesPage = ({
           nextStrategy={nextStrategyToOpen}
           onLoadStrategy={onLoadStrategy}
           saveStrategy={saveStrategy}
+          IDEcontent={IDEcontent}
         />
         <SaveStrategyAsModal
           isOpen={isSaveStrategyAsModalOpen}

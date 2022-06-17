@@ -9,8 +9,13 @@ export const dropdownOptionsAdaptor = (options) => {
   }), {})
 }
 
-export const getTabs = (t, savedStrategiesExists) => {
+export const getTabs = (t, savedStrategiesExists, isStrategySelected) => {
   return [
+    {
+      label: t('strategyEditor.currentStrategyTab'),
+      value: 'current',
+      disabled: !isStrategySelected,
+    },
     {
       label: t('strategyEditor.templatesTab'),
       value: 'templates',

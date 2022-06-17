@@ -14,28 +14,36 @@ import Templates from '../../../components/StrategyEditor/templates'
 import Tabs from '../../../ui/Tabs/Tabs'
 import { getSortedByTimeStrategies } from '../../../redux/selectors/ws'
 
-import { dropdownOptionsAdaptor, getTabs } from './CreateNewStrategyFromModal.helpers'
+import {
+  dropdownOptionsAdaptor,
+  getTabs,
+} from './CreateNewStrategyFromModal.helpers'
 import { validateStrategyName } from '../Strategy.helpers'
 
 const CreateNewStrategyFromModalOpen = ({
   onSubmit,
   onClose,
   isOpen,
+  currentStrategyLabel,
 }) => {
   const savedStrategies = useSelector(getSortedByTimeStrategies)
   const { t } = useTranslation()
 
   const savedStrategiesExists = !_isEmpty(savedStrategies)
-  const tabs = useMemo(() => getTabs(t, savedStrategiesExists), [t, savedStrategiesExists])
+  const tabs = useMemo(
+    () => getTabs(t, savedStrategiesExists, !!currentStrategyLabel),
+    [t, savedStrategiesExists, currentStrategyLabel],
+  )
 
   const [label, setLabel] = useState('')
-  const [activeTab, setActiveTab] = useState(tabs[0].value)
+  const [activeTab, setActiveTab] = useState('')
 
   const [error, setError] = useState('')
   const [template, setTemplate] = useState(MACD.label)
   const [selectedStrategyLabel, setSelectedStrategyLabel] = useState(null)
 
-  const isTemplatesTabSelected = tabs[0].value === activeTab
+  const isTemplatesTabSelected = tabs[1].value === activeTab
+  const isDraftTabSelected = tabs[2].value === activeTab
 
   const onSubmitHandler = useCallback(() => {
     const err = validateStrategyName(label, t)
@@ -57,13 +65,49 @@ const CreateNewStrategyFromModalOpen = ({
 
     onSubmit(label, newStrategy)
     onClose()
-  }, [isTemplatesTabSelected, label, onClose, onSubmit, savedStrategies, selectedStrategyLabel, t, template])
+  }, [
+    isTemplatesTabSelected,
+    label,
+    onClose,
+    onSubmit,
+    savedStrategies,
+    selectedStrategyLabel,
+    t,
+    template,
+  ])
 
   useEffect(() => {
     if (savedStrategiesExists) {
       setSelectedStrategyLabel(savedStrategies[0].label)
     }
   }, [savedStrategies, savedStrategiesExists])
+
+  useEffect(() => {
+    if (isTemplatesTabSelected) {
+      setLabel(template)
+      return
+    }
+
+    const newLabel = t('strategyEditor.copyOfStrategy', {
+      strategyName: isDraftTabSelected
+        ? selectedStrategyLabel
+        : currentStrategyLabel,
+    })
+    setLabel(newLabel)
+  }, [
+    t,
+    isTemplatesTabSelected,
+    template,
+    selectedStrategyLabel,
+    setLabel,
+    isDraftTabSelected,
+    currentStrategyLabel,
+  ])
+
+  useEffect(() => {
+    const firstEnabledTab = _find(tabs, (tab) => !tab.disabled)
+    setActiveTab(firstEnabledTab.value)
+  }, [tabs])
 
   return (
     <Modal
@@ -81,14 +125,15 @@ const CreateNewStrategyFromModalOpen = ({
           value={label}
           onChange={setLabel}
         />
-        {isTemplatesTabSelected ? (
+        {isTemplatesTabSelected && (
           <Dropdown
             value={template}
             onChange={setTemplate}
             options={Templates}
             adapter={dropdownOptionsAdaptor}
           />
-        ) : (
+        )}
+        {isDraftTabSelected && (
           <Dropdown
             value={selectedStrategyLabel}
             onChange={setSelectedStrategyLabel}
@@ -96,7 +141,6 @@ const CreateNewStrategyFromModalOpen = ({
             adapter={dropdownOptionsAdaptor}
           />
         )}
-
         {!_isEmpty(error) && <p className='error'>{error}</p>}
       </div>
 
@@ -112,11 +156,13 @@ const CreateNewStrategyFromModalOpen = ({
 CreateNewStrategyFromModalOpen.propTypes = {
   onSubmit: PropTypes.func.isRequired,
   onClose: PropTypes.func.isRequired,
+  currentStrategyLabel: PropTypes.string,
   isOpen: PropTypes.bool,
 }
 
 CreateNewStrategyFromModalOpen.defaultProps = {
   isOpen: true,
+  currentStrategyLabel: null,
 }
 
 export default CreateNewStrategyFromModalOpen
