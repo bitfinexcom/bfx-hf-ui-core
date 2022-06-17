@@ -57,7 +57,7 @@ export default (t, selectedIndex, setSelectedIndex) => [
     headerStyle: STYLES.flexEnd,
     cellRenderer: ({ rowData = {} }) => defaultCellRenderer(
       <PrettyValue
-        value={rowData.price}
+        value={rowData.entryPrice}
         sigFig={PRICE_SIG_FIGS}
         fadeTrailingZeros
       />,
