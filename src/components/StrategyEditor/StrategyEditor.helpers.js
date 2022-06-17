@@ -16,6 +16,22 @@ const DEFAULT_CANDLES = true
 
 const LS_HF_UI_EXECUTE_STRATEGY = 'HF_UI_EXECUTE_STRATEGY'
 
+export const STRATEGY_IDE_SECTIONS = [
+  'defineIndicators',
+  'defineMeta',
+  'onPriceUpdate',
+  'onEnter',
+  'onUpdate',
+  'onUpdateLong',
+  'onUpdateShort',
+  'onUpdateClosing',
+  'onPositionOpen',
+  'onPositionUpdate',
+  'onPositionClose',
+  'onStart',
+  'onStop',
+]
+
 export const EXECUTION_TYPES = Object.freeze({
   LIVE: 'LIVE',
   BACKTEST: 'BACKTEST',
