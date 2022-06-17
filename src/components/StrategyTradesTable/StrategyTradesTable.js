@@ -67,7 +67,7 @@ const StrategyTradesTable = ({
       tableRef.current.recomputeRowHeights()
     }
   },
-  [tableRef, selectedIndex])
+  [tableRef, selectedIndex, isExpanded])
 
   const columns = StrategyTradesTableColumns(t, selectedIndex, setSelectedIndex)
 
@@ -125,6 +125,8 @@ const StrategyTradesTable = ({
           columns={columns}
           data={results || []}
           scrollingResetTimeInterval={0}
+          defaultSortBy='entryAt'
+          defaultSortDirection='DESC'
         />
       )}
     </Panel>
