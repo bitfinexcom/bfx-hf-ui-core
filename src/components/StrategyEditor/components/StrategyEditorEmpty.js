@@ -8,6 +8,7 @@ const EmptyContent = ({
   openCreateNewStrategyModal,
   openCreateNewStrategyFromModal,
   isPaperTrading,
+  onImportStrategy,
 }) => {
   const { t } = useTranslation()
 
@@ -51,6 +52,15 @@ const EmptyContent = ({
             <p key='text'>{t('strategyEditor.newStrategyFrom')}</p>,
           ]}
         />
+        <Button
+          green
+          className='hfui-strategy-button'
+          onClick={onImportStrategy}
+          label={[
+            <Icon name='file-code-o' key='icon' />,
+            <p key='text'>{t('strategyEditor.importStrategy')}</p>,
+          ]}
+        />
         <br />
         <div className='select-one-text'>{t('strategyEditor.orSelectOne')}</div>
       </div>
@@ -62,6 +72,7 @@ EmptyContent.propTypes = {
   openCreateNewStrategyModal: PropTypes.func.isRequired,
   openCreateNewStrategyFromModal: PropTypes.func.isRequired,
   isPaperTrading: PropTypes.bool.isRequired,
+  onImportStrategy: PropTypes.func.isRequired,
 }
 
 export default memo(EmptyContent)

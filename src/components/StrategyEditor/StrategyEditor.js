@@ -584,6 +584,7 @@ const StrategyEditor = (props) => {
         <EmptyContent
           openCreateNewStrategyModal={openCreateNewStrategyModal}
           openCreateNewStrategyFromModal={openCreateNewStrategyFromModal}
+          onImportStrategy={onImportStrategy}
           isPaperTrading={isPaperTrading}
         />
       ) : (
