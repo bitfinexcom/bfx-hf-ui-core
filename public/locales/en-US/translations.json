@@ -700,7 +700,7 @@
     "retPerc": "Returns %",
     "drawdown": "Drawdown %",
     "trades": "Trades",
-    "positions": "Positions",
+    "positions": "Open Positions",
     "gains": "Gains",
     "losses": "Losses",
     "fees": "Fees",
