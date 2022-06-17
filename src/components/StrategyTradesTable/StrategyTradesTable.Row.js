@@ -7,13 +7,15 @@ import TradesTable from './TradesTable'
 
 export const rowCache = new CellMeasurerCache({
   fixedWidth: true,
-  minHeight: 25,
+  minHeight: 27,
 })
 
 const STYLES = {
   VERTICAL: { display: 'flex', flexDirection: 'column' },
   HORIZONTAL: { display: 'flex', flexDirection: 'row' },
 }
+
+const ROW_HEIGHT_COLLAPSED = 27
 
 const MAIN_ROW = ((props) => {
   const {
@@ -25,9 +27,18 @@ const MAIN_ROW = ((props) => {
   }, [measure, selectedIndex])
 
   const showExpanedView = rowIndex === selectedIndex
+  const height = showExpanedView ? style.height : ROW_HEIGHT_COLLAPSED
+  const top = rowIndex > 0 && style?.top === 0 ? height * rowIndex : style?.top
 
   return (
-    <div registerChild={registerChild} style={style}>
+    <div
+      ref={registerChild}
+      style={{
+        ...style,
+        height,
+        top,
+      }}
+    >
       <div style={STYLES.VERTICAL}>
         <div
           style={STYLES.HORIZONTAL}
