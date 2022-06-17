@@ -1,7 +1,6 @@
 import csvExport from 'csv-export'
 import { saveAs } from 'file-saver'
 import _map from 'lodash/map'
-import _split from 'lodash/split'
 import _replace from 'lodash/replace'
 import { getPairFromMarket } from '../../util/market'
 import { getExportFilename } from '../StrategyTradesTable/StrategyTradesTable.helpers'
