@@ -217,17 +217,10 @@ const StrategyEditor = (props) => {
 
       saveStrategy(newStrategy)
       onLoadStrategy(newStrategy)
-      setStrategyDirty(false)
 
       onCloseModals()
     },
-    [
-      gaCreateStrategy,
-      onCloseModals,
-      onLoadStrategy,
-      saveStrategy,
-      setStrategyDirty,
-    ],
+    [gaCreateStrategy, onCloseModals, onLoadStrategy, saveStrategy],
   )
 
   const onRemoveStrategy = useCallback(() => {
@@ -647,7 +640,7 @@ const StrategyEditor = (props) => {
             isOpen={isSaveStrategyAsModalOpen}
             onClose={onCloseModals}
             strategy={strategy}
-            onSubmit={onCreateStrategyFromExisted}
+            onSubmit={onSaveAsStrategy}
           />
           <ExecutionOptionsModal
             isOpen={isExecutionOptionsModalOpen}

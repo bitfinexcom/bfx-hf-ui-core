@@ -303,6 +303,7 @@ const StrategiesPage = ({
           nextStrategy={nextStrategyToOpen}
           onLoadStrategy={onLoadStrategy}
           saveStrategy={saveStrategy}
+          IDEcontent={IDEcontent}
         />
         <SaveStrategyAsModal
           isOpen={isSaveStrategyAsModalOpen}

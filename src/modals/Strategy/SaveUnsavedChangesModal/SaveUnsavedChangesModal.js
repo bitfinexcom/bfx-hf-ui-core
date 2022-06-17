@@ -11,6 +11,7 @@ const SaveUnsavedChangesModal = ({
   nextStrategy,
   onLoadStrategy,
   saveStrategy,
+  IDEcontent,
 }) => {
   const { label } = strategy || {}
   const { t } = useTranslation()
@@ -21,7 +22,7 @@ const SaveUnsavedChangesModal = ({
   }
 
   const saveAndClose = () => {
-    saveStrategy(strategy)
+    saveStrategy({ ...strategy, strategyContent: IDEcontent })
     changeStrategyAndClose()
   }
 
@@ -60,6 +61,7 @@ SaveUnsavedChangesModal.propTypes = {
   }),
   onLoadStrategy: PropTypes.func.isRequired,
   saveStrategy: PropTypes.func.isRequired,
+  IDEcontent: PropTypes.objectOf(PropTypes.string).isRequired,
 }
 
 SaveUnsavedChangesModal.defaultProps = {
