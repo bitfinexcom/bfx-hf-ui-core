@@ -5,10 +5,10 @@ import _split from 'lodash/split'
 import _replace from 'lodash/replace'
 import { getPairFromMarket } from '../../util/market'
 
-const getExportFilename = (prefix) => {
+const getExportFilename = (prefix, extension = 'zip') => {
   // turn something like 2022-02-22T12:55:03.800Z into 2022-02-22T12-55-03
   const date = _replace(_split(new Date().toISOString(), '.')[0], /:/g, '-')
-  return `${prefix}-${date}.zip`
+  return `${prefix}-${date}.${extension}`
 }
 
 const onTradeExportClick = (rawTrades, results, activeMarket, t, getCurrencySymbol) => {
@@ -81,5 +81,5 @@ const onTradeExportClick = (rawTrades, results, activeMarket, t, getCurrencySymb
 }
 
 export {
-  onTradeExportClick,
+  onTradeExportClick, getExportFilename,
 }
