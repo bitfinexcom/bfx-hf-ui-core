@@ -5,7 +5,6 @@ import { useTranslation } from 'react-i18next'
 import { Spinner } from '@ufx-ui/core'
 import Modal from '../../../ui/Modal'
 import AmountInput from '../../../components/OrderForm/FieldComponents/input.amount'
-import PercentInput from '../../../components/OrderForm/FieldComponents/input.percent'
 
 import ExecutionOptionsBody from './ExecutionOptionsBody'
 import { getIsPaperTrading } from '../../../redux/selectors/ui'
@@ -16,6 +15,8 @@ import {
 } from '../../../components/StrategyEditor/StrategyEditor.helpers'
 
 import './style.scss'
+
+const getProcessedLocalState = (value) => String(AmountInput.processValue(value))
 
 const ExecutionOptionsModal = (props) => {
   const {
@@ -52,34 +53,35 @@ const ExecutionOptionsModal = (props) => {
 
   const capitalAllocationHandler = (v) => {
     const error = AmountInput.validateValue(v, t)
-    const processed = String(AmountInput.processValue(v))
 
     setCapitalAllocationError(error)
-    setCapitalAllocationValue(processed)
+    setCapitalAllocationValue(v)
   }
 
   const stopLossPercHandler = (v) => {
-    const error = PercentInput.validateValue(v, t)
-    const processed = String(AmountInput.processValue(v))
+    const error = AmountInput.validateValue(v, t)
 
     setStopLossError(error)
-    setStopLossPercValue(processed)
+    setStopLossPercValue(v)
   }
 
   const maxDrawdownHandler = (v) => {
-    const error = PercentInput.validateValue(v, t)
-    const processed = String(AmountInput.processValue(v))
+    const error = AmountInput.validateValue(v, t)
 
     setMaxDrawdownError(error)
-    setMaxDrawdownPercValue(processed)
+    setMaxDrawdownPercValue(v)
+  }
+
+  const saveStrategyOptionsHelper = () => {
+    saveStrategyOptions({
+      [STRATEGY_OPTIONS_KEYS.CAPITAL_ALLOCATION]: getProcessedLocalState(capitalAllocationValue),
+      [STRATEGY_OPTIONS_KEYS.STOP_LOSS_PERC]: getProcessedLocalState(stopLossPercValue),
+      [STRATEGY_OPTIONS_KEYS.MAX_DRAWDOWN_PERC]: getProcessedLocalState(maxDrawdownPercValue),
+    })
   }
 
   const onSave = () => {
-    saveStrategyOptions({
-      [STRATEGY_OPTIONS_KEYS.CAPITAL_ALLOCATION]: capitalAllocationValue,
-      [STRATEGY_OPTIONS_KEYS.STOP_LOSS_PERC]: stopLossPercValue,
-      [STRATEGY_OPTIONS_KEYS.MAX_DRAWDOWN_PERC]: maxDrawdownPercValue,
-    })
+    saveStrategyOptionsHelper()
     onClose()
   }
 
@@ -87,11 +89,7 @@ const ExecutionOptionsModal = (props) => {
     if (!isFullFilled) {
       return
     }
-    saveStrategyOptions({
-      [STRATEGY_OPTIONS_KEYS.CAPITAL_ALLOCATION]: capitalAllocationValue,
-      [STRATEGY_OPTIONS_KEYS.STOP_LOSS_PERC]: stopLossPercValue,
-      [STRATEGY_OPTIONS_KEYS.MAX_DRAWDOWN_PERC]: maxDrawdownPercValue,
-    })
+    saveStrategyOptionsHelper()
     // We need to wait until options be saved
     setPendingForSaveOptions(true)
   }
@@ -107,9 +105,9 @@ const ExecutionOptionsModal = (props) => {
   useEffect(() => {
     if (
       pendingForSaveOptions
-      && capitalAllocation === capitalAllocationValue
-      && maxDrawdownPerc === maxDrawdownPercValue
-      && stopLossPerc === stopLossPercValue
+      && capitalAllocation === getProcessedLocalState(capitalAllocationValue)
+      && maxDrawdownPerc === getProcessedLocalState(maxDrawdownPercValue)
+      && stopLossPerc === getProcessedLocalState(stopLossPercValue)
     ) {
       // Continue process (execute or backtest) after options was saved
       const isExecution = executionOptionsModalType === EXECUTION_TYPES.LIVE
