@@ -73,6 +73,7 @@ const BacktestTradesTable = ({
           <Button
             className='panel-button'
             onClick={() => onTradeExportClick(trades, results, symbol, t, getCurrencySymbol)}
+            disabled={_isEmpty(trades)}
           >
             <Icon name='file' />
             &nbsp;&nbsp;
