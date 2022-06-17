@@ -240,12 +240,18 @@ const StrategyEditor = (props) => {
         'label' in newStrategy
         && _size(newStrategy.label) < MAX_STRATEGY_LABEL_LENGTH
       ) {
-        onCreateNewStrategy(newStrategy.label, newStrategy)
+        const preparedStrategy = { ...newStrategy }
+        if (_isEmpty(preparedStrategy.strategyContent)) {
+          preparedStrategy.strategyContent = { ...preparedStrategy }
+          delete preparedStrategy.strategyContent.label
+          delete preparedStrategy.strategyContent.id
+        }
+        onCreateStrategyFromExisted(preparedStrategy.label, preparedStrategy)
       }
     } catch (e) {
       debug('Error while importing strategy: %s', e)
     }
-  }, [onCreateNewStrategy])
+  }, [onCreateStrategyFromExisted])
 
   const onSaveStrategy = useCallback(() => {
     if (executionId) {
