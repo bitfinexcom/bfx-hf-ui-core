@@ -16,6 +16,8 @@ import {
 
 import './style.scss'
 
+const getProcessedLocalState = (value) => String(AmountInput.processValue(value))
+
 const ExecutionOptionsModal = (props) => {
   const {
     isOpen,
@@ -72,9 +74,9 @@ const ExecutionOptionsModal = (props) => {
 
   const saveStrategyOptionsHelper = () => {
     saveStrategyOptions({
-      [STRATEGY_OPTIONS_KEYS.CAPITAL_ALLOCATION]: String(AmountInput.processValue(capitalAllocationValue)),
-      [STRATEGY_OPTIONS_KEYS.STOP_LOSS_PERC]: String(AmountInput.processValue(stopLossPercValue)),
-      [STRATEGY_OPTIONS_KEYS.MAX_DRAWDOWN_PERC]: String(AmountInput.processValue(maxDrawdownPercValue)),
+      [STRATEGY_OPTIONS_KEYS.CAPITAL_ALLOCATION]: getProcessedLocalState(capitalAllocationValue),
+      [STRATEGY_OPTIONS_KEYS.STOP_LOSS_PERC]: getProcessedLocalState(stopLossPercValue),
+      [STRATEGY_OPTIONS_KEYS.MAX_DRAWDOWN_PERC]: getProcessedLocalState(maxDrawdownPercValue),
     })
   }
 
@@ -103,9 +105,9 @@ const ExecutionOptionsModal = (props) => {
   useEffect(() => {
     if (
       pendingForSaveOptions
-      && capitalAllocation === capitalAllocationValue
-      && maxDrawdownPerc === maxDrawdownPercValue
-      && stopLossPerc === stopLossPercValue
+      && capitalAllocation === getProcessedLocalState(capitalAllocationValue)
+      && maxDrawdownPerc === getProcessedLocalState(maxDrawdownPercValue)
+      && stopLossPerc === getProcessedLocalState(stopLossPercValue)
     ) {
       // Continue process (execute or backtest) after options was saved
       const isExecution = executionOptionsModalType === EXECUTION_TYPES.LIVE
