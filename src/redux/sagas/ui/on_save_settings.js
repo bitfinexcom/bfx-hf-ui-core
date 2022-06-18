@@ -3,6 +3,7 @@ import { put, select } from 'redux-saga/effects'
 import WSActions from '../../actions/ws'
 import getSettings, { SETTINGS_KEYS } from '../../selectors/ui/get_settings'
 import { getAuthToken } from '../../selectors/ws'
+import { getScope } from "../../../util/scope"
 
 const {
   DMS, GA, SHOW_ALGO_PAUSE_INFO, SHOW_ONLY_FAVORITE_PAIRS,
@@ -26,5 +27,6 @@ export default function* onSaveSettings(action = {}) {
     settings[REBOOT_AUTOMATICALLY],
     settings[THEME],
     settings[JOIN_BETA_PROGRAM],
+    getScope()
   ]))
 }

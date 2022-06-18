@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 
-import UIActions from '../../redux/actions/ui'
+import WSActions from '../../redux/actions/ws'
 import { getIsPaperTrading, getIsTradingModeModalVisible, getThemeSetting } from '../../redux/selectors/ui'
 import SwitchMode from './SwitchMode'
 
@@ -12,7 +12,8 @@ const mapStateToProps = (state = {}) => ({
 
 const mapDispatchToProps = dispatch => ({
   openTradingModeModal: () => {
-    dispatch(UIActions.changeTradingModeModalState(true))
+    console.log('@ foobar')
+    dispatch(WSActions.changeMode())
   },
 })
 

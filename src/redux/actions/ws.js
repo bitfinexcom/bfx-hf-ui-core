@@ -3,6 +3,8 @@ import t from '../constants/ws'
 import ui from '../constants/ui'
 import { getScope } from '../../util/scope'
 
+let cMode = 'paper'
+
 const send = payload => ({
   type: t.BUFF_SEND,
   payload: _isString(payload)
@@ -359,4 +361,13 @@ export default {
       },
     },
   ]),
+
+  changeMode: () => {
+    cMode = cMode === 'paper' ? 'main' : 'paper'
+    return send([
+      'auth.change_mode',
+      cMode,
+      getScope(),
+    ])
+  },
 }
