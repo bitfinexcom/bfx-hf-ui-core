@@ -3,6 +3,8 @@ import { saveAs } from 'file-saver'
 import _map from 'lodash/map'
 import _split from 'lodash/split'
 import _replace from 'lodash/replace'
+import _isEmpty from 'lodash/isEmpty'
+import _reduce from 'lodash/reduce'
 import { getPairFromMarket } from '../../util/market'
 import { getMetrics } from '../StrategyPerfomanceMetrics/StrategyPerfomanceMetrics.helpers'
 
@@ -12,32 +14,68 @@ const getExportFilename = (prefix, extension = 'zip') => {
   return `${prefix}-${date}.${extension}`
 }
 
-const onTradeExportClick = (rawTrades, metrics, activeMarket, t, getCurrencySymbol) => {
+const onTradeExportClick = (rawPositions, rawMetrics, activeMarket, t, getCurrencySymbol) => {
   const tHeaders = {
-    price: t('table.price'),
+    id: t('table.id'),
+    action: t('table.action'),
+    type: t('table.type'),
+    timestamp: t('table.timestamp'),
+    executedAt: t('table.executedAt'),
+    orderPrice: t('table.orderPrice'),
+    tradePrice: t('table.tradePrice'),
+    amount: t('table.amount'),
+  }
+  const pHeaders = {
+    id: t('table.id'),
+    entryAt: t('table.entryAt'),
+    closedAt: t('table.leftAt'),
+    entryPrice: t('table.entryPrice'),
+    closingPrice: t('table.closingPrice'),
     amount: t('table.amount'),
     pl: t('table.pl'),
-    label: t('table.label'),
-    mts: t('table.time'),
-    fee: t('table.fee'),
   }
 
-  const trades = _map(rawTrades, ({
-    price, amount, pl: tPl, fee, label, mts,
+  const positions = _map(rawPositions, ({
+    amount, entryPrice, closingPrice, entryAt, closedAt, id, pl,
   }) => ({
-    [tHeaders.price]: price,
-    [tHeaders.amount]: amount,
-    [tHeaders.pl]: tPl,
-    [tHeaders.fee]: fee,
-    [tHeaders.label]: label,
-    [tHeaders.mts]: _replace(new Date(mts).toLocaleString(), ',', ''),
+    [pHeaders.id]: id,
+    [pHeaders.entryAt]: _replace(new Date(entryAt).toLocaleString(), ',', ''),
+    [pHeaders.closedAt]: _replace(new Date(closedAt).toLocaleString(), ',', ''),
+    [pHeaders.entryPrice]: entryPrice,
+    [pHeaders.closingPrice]: closingPrice,
+    [pHeaders.amount]: amount,
+    [pHeaders.pl]: pl,
   }))
 
-  const general = [getMetrics(metrics, t)]
+  const rawTrades = _reduce(rawPositions, (acc, position) => {
+    const { trades } = position
+
+    if (_isEmpty(trades)) {
+      return acc
+    }
+
+    return [...acc, ...trades]
+  }, [])
+
+  const trades = _map(rawTrades, ({
+    amount, order_id: orderID, order_js: order,
+  }) => ({
+    [tHeaders.id]: orderID,
+    [tHeaders.action]: amount < 0 ? 'SELL' : 'BUY',
+    [tHeaders.type]: order.type,
+    [tHeaders.timestamp]: new Date(order?.mtsCreate).toLocaleString(),
+    [tHeaders.executedAt]: new Date(order?.mtsUpdate).toLocaleString(),
+    [tHeaders.orderPrice]: order.price,
+    [tHeaders.tradePrice]: order.priceAvg,
+    [tHeaders.amount]: amount,
+  }))
+
+  const metrics = [getMetrics(rawMetrics, t)]
 
   const documents = {
+    positions,
     trades,
-    general,
+    metrics,
   }
 
   csvExport.export(documents, (buffer) => {
