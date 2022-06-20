@@ -216,7 +216,7 @@ const StrategyEditor = (props) => {
       delete newStrategy.stoppedOn
 
       saveStrategy(newStrategy)
-      onLoadStrategy(newStrategy)
+      onLoadStrategy(newStrategy, true)
 
       onCloseModals()
     },
