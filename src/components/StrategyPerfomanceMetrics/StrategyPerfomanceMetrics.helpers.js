@@ -54,7 +54,7 @@ const getMetrics = (results, t, quoteCcy, postProcessing = false) => {
       [t('strategyEditor.positions')]: nOpens,
       [t('strategyEditor.gains')]: nGains,
       [t('strategyEditor.losses')]: nLosses,
-      [t('strategyEditor.fees')]: resultNumber(fees, quoteCcy),
+      [t('strategyEditor.fees')]: resultNumber(fees, quoteCcy, false),
       [t('strategyEditor.volume')]: vol,
       [t('strategyEditor.largestGain')]: resultNumber(maxPL, quoteCcy),
       [t('strategyEditor.largestLoss')]: resultNumber(minPL, quoteCcy),
