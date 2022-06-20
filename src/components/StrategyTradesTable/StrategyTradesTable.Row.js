@@ -28,7 +28,7 @@ const MAIN_ROW = ((props) => {
 
   const showExpanedView = rowIndex === selectedIndex
   const height = showExpanedView ? style.height : ROW_HEIGHT_COLLAPSED
-  const top = rowIndex > 0 && style?.top === 0 ? height * rowIndex : style?.top
+  const top = (rowIndex > 0 && style?.top === 0) ? height + ((rowIndex - 1) * ROW_HEIGHT_COLLAPSED) : style?.top
 
   return (
     <div
