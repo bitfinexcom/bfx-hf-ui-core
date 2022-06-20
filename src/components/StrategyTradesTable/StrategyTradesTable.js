@@ -28,6 +28,7 @@ const { getCurrencySymbolMemo } = reduxSelectors
 
 const StrategyTradesTable = ({
   results,
+  metrics,
   setLayoutConfig,
   layoutConfig,
   strategy,
@@ -87,7 +88,7 @@ const StrategyTradesTable = ({
         <>
           <Button
             className='panel-button'
-            onClick={() => onTradeExportClick(results, results, symbol, t, getCurrencySymbol)}
+            onClick={() => onTradeExportClick(results, metrics, symbol, t, getCurrencySymbol)}
             disabled={_isEmpty(results)}
           >
             <Icon name='file' />
@@ -138,6 +139,55 @@ StrategyTradesTable.propTypes = {
   layoutConfig: PropTypes.arrayOf(PropTypes.object).isRequired, // eslint-disable-line
   setLayoutConfig: PropTypes.func.isRequired,
   strategy: PropTypes.object.isRequired, // eslint-disable-line
+  metrics: PropTypes.shape({
+    nCandles: PropTypes.number,
+    nTrades: PropTypes.number,
+    nGains: PropTypes.number,
+    nLosses: PropTypes.number,
+    nStrategyTrades: PropTypes.number,
+    nOpens: PropTypes.number,
+    pl: PropTypes.number,
+    pf: PropTypes.number,
+    maxPL: PropTypes.number,
+    minPL: PropTypes.number,
+    fees: PropTypes.number,
+    vol: PropTypes.number,
+    stdDeviation: PropTypes.number,
+    avgPL: PropTypes.number,
+    backtestOptions: PropTypes.shape({
+      activeMarket: PropTypes.string,
+    }),
+    allocation: PropTypes.string,
+    positionSize: PropTypes.string,
+    currentAllocation: PropTypes.string,
+    availableFunds: PropTypes.string,
+    equityCurve: PropTypes.string,
+    return: PropTypes.string,
+    returnPerc: PropTypes.string,
+    drawdown: PropTypes.string,
+  }),
+}
+
+StrategyTradesTable.defaultProps = {
+  metrics: {
+    nCandles: 0,
+    nTrades: 0,
+    nGains: 0,
+    nLosses: 0,
+    nStrategyTrades: 0,
+    nOpens: 0,
+    pl: 0,
+    pf: 0,
+    maxPL: 0,
+    minPL: 0,
+    fees: 0,
+    vol: 0,
+    stdDeviation: 0,
+    avgPL: 0,
+    backtestOptions: {
+      activeMarket: null,
+    },
+  },
 }
 
 export default memo(StrategyTradesTable)

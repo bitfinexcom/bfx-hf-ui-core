@@ -4,6 +4,7 @@ import _map from 'lodash/map'
 import _split from 'lodash/split'
 import _replace from 'lodash/replace'
 import { getPairFromMarket } from '../../util/market'
+import { getMetrics } from '../StrategyPerfomanceMetrics/StrategyPerfomanceMetrics.helpers'
 
 const getExportFilename = (prefix, extension = 'zip') => {
   // turn something like 2022-02-22T12:55:03.800Z into 2022-02-22T12-55-03
@@ -11,24 +12,7 @@ const getExportFilename = (prefix, extension = 'zip') => {
   return `${prefix}-${date}.${extension}`
 }
 
-const onTradeExportClick = (rawTrades, results, activeMarket, t, getCurrencySymbol) => {
-  const {
-    nCandles,
-    nTrades,
-    nGains,
-    nLosses,
-    nStrategyTrades,
-    nOpens,
-    pl,
-    pf,
-    maxPL,
-    minPL,
-    fees,
-    vol,
-    stdDeviation,
-    avgPL,
-  } = results
-
+const onTradeExportClick = (rawTrades, metrics, activeMarket, t, getCurrencySymbol) => {
   const tHeaders = {
     price: t('table.price'),
     amount: t('table.amount'),
@@ -49,23 +33,7 @@ const onTradeExportClick = (rawTrades, results, activeMarket, t, getCurrencySymb
     [tHeaders.mts]: _replace(new Date(mts).toLocaleString(), ',', ''),
   }))
 
-  const general = [{
-    [t('strategyEditor.totalPL')]: pl,
-    [t('strategyEditor.avgPL')]: avgPL || 0,
-    [t('strategyEditor.profitFactor')]: pf || 0,
-    [t('strategyEditor.volatility')]: stdDeviation,
-    [t('strategyEditor.backtestCandles')]: nCandles,
-    [t('strategyEditor.backtestTrades')]: nTrades,
-    [t('strategyEditor.trades')]: nStrategyTrades,
-    [t('strategyEditor.positions')]: nOpens,
-    [t('strategyEditor.gains')]: nGains,
-    [t('strategyEditor.losses')]: nLosses,
-    [t('strategyEditor.fees')]: fees,
-    [t('strategyEditor.profitLoss')]: pl,
-    [t('strategyEditor.volume')]: vol,
-    [t('strategyEditor.largestGain')]: maxPL || 0,
-    [t('strategyEditor.largestLoss')]: minPL || 0,
-  }]
+  const general = [getMetrics(metrics, t)]
 
   const documents = {
     trades,

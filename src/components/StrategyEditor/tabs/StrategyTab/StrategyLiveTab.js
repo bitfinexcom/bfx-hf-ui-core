@@ -98,6 +98,7 @@ const StrategyLiveTab = (props) => {
           return (
             <StrategyTradesTable
               results={positions}
+              metrics={results}
               setLayoutConfig={setLayoutConfig}
               layoutConfig={layoutConfig}
               onTradeClick={() => {}}
