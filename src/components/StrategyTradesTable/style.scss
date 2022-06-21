@@ -22,7 +22,7 @@
   .stratatey-main-row {
     padding: 5px 0;
     &.selected {
-      background-color: $background-color;
+      background-color: var(--lighter-background-color);
     }
   }
 
@@ -38,7 +38,7 @@
 
   .ufx-table {
     margin-top: 20px;
-    background-color: $background-color;
+    background-color: var(--lighter-background-color);
     font-size: 12px;
 
     thead {
