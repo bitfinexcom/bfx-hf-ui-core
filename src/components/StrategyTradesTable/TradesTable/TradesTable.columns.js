@@ -58,7 +58,7 @@ export default (t) => ([
     cellRenderer: ({ rowData }) => {
       return defaultCellRenderer(
         <PrettyValue
-          value={getTradeAmount(rowData)}
+          value={rowData?.amount}
           decimals={AMOUNT_DECIMALS}
           fadeTrailingZeros
         />,
