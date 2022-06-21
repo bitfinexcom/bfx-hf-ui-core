@@ -6,7 +6,6 @@ import _replace from 'lodash/replace'
 import _isEmpty from 'lodash/isEmpty'
 import _reduce from 'lodash/reduce'
 import { getPairFromMarket } from '../../util/market'
-import { getMetrics } from '../StrategyPerfomanceMetrics/StrategyPerfomanceMetrics.helpers'
 
 const getExportFilename = (prefix, extension = 'zip') => {
   // turn something like 2022-02-22T12:55:03.800Z into 2022-02-22T12-55-03
@@ -14,7 +13,7 @@ const getExportFilename = (prefix, extension = 'zip') => {
   return `${prefix}-${date}.${extension}`
 }
 
-const onTradeExportClick = (rawPositions, rawMetrics, activeMarket, t, getCurrencySymbol) => {
+const onTradeExportClick = (rawPositions, activeMarket, t, getCurrencySymbol) => {
   const tHeaders = {
     id: t('table.id'),
     action: t('table.action'),
@@ -70,12 +69,9 @@ const onTradeExportClick = (rawPositions, rawMetrics, activeMarket, t, getCurren
     [tHeaders.amount]: amount,
   }))
 
-  const metrics = [getMetrics(rawMetrics, t)]
-
   const documents = {
     positions,
     trades,
-    metrics,
   }
 
   csvExport.export(documents, (buffer) => {
