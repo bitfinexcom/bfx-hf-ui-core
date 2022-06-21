@@ -6,6 +6,7 @@ import _replace from 'lodash/replace'
 import _isEmpty from 'lodash/isEmpty'
 import _reduce from 'lodash/reduce'
 import { getPairFromMarket } from '../../util/market'
+import { getTradesHeaders, getPositionsHeaders } from './TradesTable/TradesTable.helpers'
 
 const getExportFilename = (prefix, extension = 'zip') => {
   // turn something like 2022-02-22T12:55:03.800Z into 2022-02-22T12-55-03
@@ -14,25 +15,8 @@ const getExportFilename = (prefix, extension = 'zip') => {
 }
 
 const onTradeExportClick = (rawPositions, activeMarket, t, getCurrencySymbol) => {
-  const tHeaders = {
-    id: t('table.id'),
-    action: t('table.action'),
-    type: t('table.type'),
-    timestamp: t('table.timestamp'),
-    executedAt: t('table.executedAt'),
-    orderPrice: t('table.orderPrice'),
-    tradePrice: t('table.tradePrice'),
-    amount: t('table.amount'),
-  }
-  const pHeaders = {
-    id: t('table.id'),
-    entryAt: t('table.entryAt'),
-    closedAt: t('table.leftAt'),
-    entryPrice: t('table.entryPrice'),
-    closingPrice: t('table.closingPrice'),
-    amount: t('table.amount'),
-    pl: t('table.pl'),
-  }
+  const tHeaders = getTradesHeaders(t)
+  const pHeaders = getPositionsHeaders(t)
 
   const positions = _map(rawPositions, ({
     amount, entryPrice, closingPrice, entryAt, closedAt, id, pl,
