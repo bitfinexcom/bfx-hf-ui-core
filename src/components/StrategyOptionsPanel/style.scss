@@ -11,6 +11,10 @@
     }
   }
 
+  .hfui-orderform__input-label {
+    white-space: nowrap;
+  }
+
   &__left-container {
     display: flex;
     width: 80%;
@@ -63,6 +67,10 @@
     font-size: 20px;
     font-weight: 700;
     cursor: pointer;
+    max-width: 25ch;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
 
     &:hover {
       text-decoration: underline;
@@ -122,7 +130,6 @@
     cursor: pointer;
     text-transform: uppercase;
     height: 32px;
-    width: 110px;
 
     .hfui-exchangeinfobar__button {
       &:hover,

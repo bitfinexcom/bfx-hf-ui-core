@@ -6,7 +6,6 @@ import { useTranslation } from 'react-i18next'
 
 import MarketSelect from '../MarketSelect'
 import Button from '../../ui/Button'
-import { makeShorterLongName } from '../../util/ui'
 import StrategyRunned from '../StrategyEditor/components/StrategyRunned'
 import StrategyStopped from '../StrategyEditor/components/StrategyStopped'
 import StrategyTypeSelect from './StrategyTypeSelect'
@@ -41,7 +40,7 @@ const StrategyOptionsPanelLive = ({
                 className='__react-tooltip __react_component_tooltip wide'
                 content={label}
               >
-                {makeShorterLongName(label, MAX_STRATEGY_LABEL_LENGTH)}
+                {label}
               </Tooltip>
             ) : (
               label
