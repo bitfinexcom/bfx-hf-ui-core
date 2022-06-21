@@ -4,7 +4,7 @@ import _toString from 'lodash/toString'
 import { defaultCellRenderer } from '../../../util/ui'
 import { AMOUNT_DECIMALS, PRICE_SIG_FIGS } from '../../../constants/precision'
 
-import { getTradeAmount, getTradePrice } from './TradesTable.helpers'
+import { getTradePrice } from './TradesTable.helpers'
 
 const STYLES = {
   RIGHT_ALIGN: { textAlign: 'right' },
