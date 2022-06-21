@@ -4,7 +4,7 @@ import _toString from 'lodash/toString'
 import { defaultCellRenderer } from '../../../util/ui'
 import { AMOUNT_DECIMALS, PRICE_SIG_FIGS } from '../../../constants/precision'
 
-import { getTradePrice } from './TradesTable.helpers'
+import { getTradeAmount, getTradePrice } from './TradesTable.helpers'
 
 const STYLES = {
   RIGHT_ALIGN: { textAlign: 'right' },
@@ -58,7 +58,7 @@ export default (t) => ([
     cellRenderer: ({ rowData }) => {
       return defaultCellRenderer(
         <PrettyValue
-          value={rowData?.amount}
+          value={getTradeAmount(rowData)}
           decimals={AMOUNT_DECIMALS}
           fadeTrailingZeros
         />,
