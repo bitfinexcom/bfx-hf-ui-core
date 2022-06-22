@@ -100,7 +100,6 @@ const StrategyLiveTab = (props) => {
               results={positions}
               setLayoutConfig={setLayoutConfig}
               layoutConfig={layoutConfig}
-              onTradeClick={() => {}}
               strategy={strategy}
             />
           )
