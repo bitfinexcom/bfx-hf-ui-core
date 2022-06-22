@@ -1,5 +1,9 @@
 import {
-  getMarkets, getMarketPair, getMarketsForExecution, getExecutionMarketPair,
+  getMarkets,
+  getMarketPair,
+  getMarketsForExecution,
+  getExecutionMarketPair,
+  getMarketsSortedByVolumeForExecution,
 } from './get_markets'
 import getMarketBySymbol from './get_market_by_symbol'
 import getTicker from './get_ticker'
@@ -11,6 +15,7 @@ export {
   getMarketPair,
   getExecutionMarketPair,
   getMarketsForExecution,
+  getMarketsSortedByVolumeForExecution,
   getMarketBySymbol,
   getTicker,
   getTickersArray,

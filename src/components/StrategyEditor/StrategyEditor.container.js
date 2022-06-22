@@ -22,7 +22,7 @@ import {
   getStrategyExecutionId,
 } from '../../redux/selectors/ui'
 import StrategyEditor from './StrategyEditor'
-import { getMarketsForExecution } from '../../redux/selectors/meta'
+import { getMarketsSortedByVolumeForExecution } from '../../redux/selectors/meta'
 
 const mapStateToProps = (state = {}) => {
   return {
@@ -36,7 +36,7 @@ const mapStateToProps = (state = {}) => {
     savedStrategies: getSavedStrategies(state),
     currentMode: getCurrentMode(state),
     executionId: getStrategyExecutionId(state),
-    markets: getMarketsForExecution(state),
+    markets: getMarketsSortedByVolumeForExecution(state),
   }
 }
 
