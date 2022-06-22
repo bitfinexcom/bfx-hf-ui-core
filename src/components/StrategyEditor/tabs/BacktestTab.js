@@ -83,7 +83,6 @@ const BacktestTab = (props) => {
               results={positions}
               setLayoutConfig={setLayoutConfig}
               layoutConfig={layoutConfig}
-              onTradeClick={() => {}}
               strategy={strategy}
             />
           )
