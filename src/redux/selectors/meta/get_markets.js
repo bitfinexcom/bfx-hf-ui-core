@@ -1,8 +1,15 @@
 import _get from 'lodash/get'
 import _reduce from 'lodash/reduce'
+import _orderBy from 'lodash/orderBy'
+import _keys from 'lodash/keys'
+import _map from 'lodash/map'
 import { createSelector } from 'reselect'
 import memoizeOne from 'memoize-one'
-import { reduxSelectors } from '@ufx-ui/bfx-containers'
+import {
+  prepareTickers,
+  reduxSelectors,
+  VOLUME_UNIT,
+} from '@ufx-ui/bfx-containers'
 import _isEmpty from 'lodash/isEmpty'
 
 import { getPairFromMarket } from '../../../util/market'
@@ -15,13 +22,14 @@ const {
   getIsSecuritiesPair,
   getIsTradingPair,
   getIsDerivativePair,
+  getTickers,
 } = reduxSelectors
 
 const path = REDUCER_PATHS.META
 
 const EMPTY_OBJ = {}
 
-const getMarketsObject = (state) => _get(state, `${path}.markets`, EMPTY_OBJ)
+export const getMarketsObject = (state) => _get(state, `${path}.markets`, EMPTY_OBJ)
 
 export const getMarkets = createSelector(
   [getIsPaperTrading, getMarketsObject],
@@ -68,6 +76,27 @@ export const getMarketsForExecution = createSelector(
       },
       {},
     )
+  },
+)
+
+export const getMarketsSortedByVolumeForExecution = createSelector(
+  [getMarketsForExecution, getTickers, getCurrencySymbolMemo],
+  (liveMarkets, tickers, getCurrencySymbol) => {
+    const tickersVolumeUnit = VOLUME_UNIT.USD
+
+    const tickersKeys = _keys(liveMarkets)
+    const prepared = prepareTickers(
+      tickersKeys,
+      tickers,
+      tickersVolumeUnit,
+      getCurrencySymbol,
+    )
+    const sortedByVolume = _orderBy(prepared, 'volumeConverted', 'desc')
+    return _map(sortedByVolume, (m) => {
+      const { id } = m
+
+      return { ...m, ...liveMarkets[id] }
+    })
   },
 )
 

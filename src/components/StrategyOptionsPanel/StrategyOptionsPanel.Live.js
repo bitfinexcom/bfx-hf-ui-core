@@ -100,7 +100,7 @@ const StrategyOptionsPanelLive = ({
 }
 
 StrategyOptionsPanelLive.propTypes = {
-  markets: PropTypes.objectOf(PropTypes.object).isRequired, // eslint-disable-line
+  markets: PropTypes.arrayOf(Object).isRequired,
   strategy: PropTypes.shape({
     label: PropTypes.string,
     strategyOptions: PropTypes.shape({
