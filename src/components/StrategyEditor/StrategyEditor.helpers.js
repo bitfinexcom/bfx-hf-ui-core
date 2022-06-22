@@ -94,7 +94,7 @@ export const prepareStrategyExecutionArgs = (strategy) => {
     label,
     symbol: symbol?.wsID,
     [STRATEGY_OPTIONS_KEYS.STRATEGY_TYPE]: strategyType,
-    [STRATEGY_OPTIONS_KEYS.TIMEFRAME]: timeframe,
+    [STRATEGY_OPTIONS_KEYS.TIMEFRAME]: DEFAULT_TIMEFRAME,
     [STRATEGY_OPTIONS_KEYS.TRADES]: trades,
     strategyContent,
     id,
