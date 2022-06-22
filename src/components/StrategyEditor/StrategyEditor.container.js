@@ -56,7 +56,7 @@ const mapDispatchToProps = (dispatch) => ({
     strategyType,
     symbol,
     timeframe,
-    // trades,
+    trades,
     strategyContent,
     candleSeed,
     margin,
@@ -72,7 +72,7 @@ const mapDispatchToProps = (dispatch) => ({
         label,
         symbol,
         timeframe,
-        false, // trades
+        trades,
         processedStrategy,
         strategyType,
         candleSeed,

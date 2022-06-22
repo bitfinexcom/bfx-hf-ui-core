@@ -76,10 +76,7 @@ export const prepareStrategyExecutionArgs = (strategy) => {
   const {
     strategyOptions: {
       symbol,
-      timeframe,
-      trades,
       candleSeed,
-      margin,
       capitalAllocation,
       stopLossPerc,
       maxDrawdownPerc,
@@ -95,11 +92,11 @@ export const prepareStrategyExecutionArgs = (strategy) => {
     symbol: symbol?.wsID,
     [STRATEGY_OPTIONS_KEYS.STRATEGY_TYPE]: strategyType,
     [STRATEGY_OPTIONS_KEYS.TIMEFRAME]: DEFAULT_TIMEFRAME,
-    [STRATEGY_OPTIONS_KEYS.TRADES]: trades,
+    [STRATEGY_OPTIONS_KEYS.TRADES]: DEFAULT_USE_TRADES,
     strategyContent,
     id,
     [STRATEGY_OPTIONS_KEYS.CANDLE_SEED]: candleSeed,
-    [STRATEGY_OPTIONS_KEYS.MARGIN]: margin,
+    [STRATEGY_OPTIONS_KEYS.MARGIN]: DEFAULT_USE_MARGIN,
     constraints: {
       [STRATEGY_OPTIONS_KEYS.CAPITAL_ALLOCATION]: Number(capitalAllocation),
       [STRATEGY_OPTIONS_KEYS.STOP_LOSS_PERC]: Number(stopLossPerc),
