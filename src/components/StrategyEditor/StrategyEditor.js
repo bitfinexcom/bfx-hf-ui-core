@@ -30,6 +30,7 @@ import StrategyTabTitle from './tabs/StrategyTab/StrategyTab.Title'
 import BacktestTabTitle from './tabs/BacktestTab.Title'
 import IDETabTitle from './tabs/IDETab.Title'
 import ExecutionOptionsModal from '../../modals/Strategy/ExecutionOptionsModal'
+import SaveUnsavedChangesLaunchModal from '../../modals/Strategy/SaveUnsavedChangesLaunchModal'
 import {
   getDefaultStrategyOptions,
   isExecutionInputsFullFilled,
@@ -111,6 +112,11 @@ const StrategyEditor = (props) => {
     closeSaveStrategyAsModal,
   ] = useToggle(false)
   const [
+    isSaveStrategyBeforeLaunchModalOpen,,
+    openSaveStrategyBeforeLaunchModal,
+    closeSaveStrategyBeforeLaunchModal,
+  ] = useToggle(false)
+  const [
     isCancelProcessModalOpen,,
     openCancelProcessModal,
     closeCancelProcessModal,
@@ -163,6 +169,7 @@ const StrategyEditor = (props) => {
     closeExecutionOptionsModal()
     closeCancelProcessModal()
     closeLaunchStrategyModal()
+    closeSaveStrategyBeforeLaunchModal()
 
     // setTimeout is needed to prevent flickering when 'Save & Launch' execution options modal is closing
     setTimeout(() => {
@@ -177,6 +184,7 @@ const StrategyEditor = (props) => {
     closeOpenExistingStrategyModal,
     closeRemoveModal,
     closeSaveStrategyAsModal,
+    closeSaveStrategyBeforeLaunchModal,
   ])
 
   const onCreateNewStrategy = useCallback(
@@ -426,14 +434,35 @@ const StrategyEditor = (props) => {
     [apiKeyStates, openAppSettingsModal, setAPIKeysTab, showAPIKeyError],
   )
 
-  const onLaunchExecutionClick = useCallback(() => {
+  const onLaunchExecutionClick = useCallback((forcedLaunch = false) => {
+    if (strategyDirty && !forcedLaunch) {
+      openSaveStrategyBeforeLaunchModal()
+      return
+    }
+
     if (isFullFilled) {
       openLaunchStrategyModal()
       return
     }
+
     setExecutionOptionsModalType(EXECUTION_TYPES.LIVE)
     openExecutionOptionsModal()
-  }, [isFullFilled, openExecutionOptionsModal, openLaunchStrategyModal])
+  }, [isFullFilled, openExecutionOptionsModal, openLaunchStrategyModal, openSaveStrategyBeforeLaunchModal, strategyDirty])
+
+  const launchWithoutSaving = () => {
+    onCloseModals()
+    setTimeout(() => {
+      onLaunchExecutionClick(true)
+    }, 500)
+  }
+
+  const saveAndLaunch = () => {
+    onSaveStrategy()
+    onCloseModals()
+    setTimeout(() => {
+      onLaunchExecutionClick(true)
+    }, 500)
+  }
 
   const saveStrategyAndStartExecution = useCallback(() => {
     if (!checkForAPIKeys(strategy)) {
@@ -693,6 +722,13 @@ const StrategyEditor = (props) => {
         isOpen={isCancelProcessModalOpen}
         onClose={onCloseModals}
         onSubmit={_cancelProcess}
+      />
+      <SaveUnsavedChangesLaunchModal
+        strategy={strategy}
+        isOpen={isSaveStrategyBeforeLaunchModalOpen}
+        onClose={onCloseModals}
+        saveAndLaunch={saveAndLaunch}
+        launchWithoutSaving={launchWithoutSaving}
       />
     </>
   )
