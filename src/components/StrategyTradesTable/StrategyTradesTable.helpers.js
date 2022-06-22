@@ -3,7 +3,10 @@ import { saveAs } from 'file-saver'
 import _map from 'lodash/map'
 import _split from 'lodash/split'
 import _replace from 'lodash/replace'
+import _isEmpty from 'lodash/isEmpty'
+import _reduce from 'lodash/reduce'
 import { getPairFromMarket } from '../../util/market'
+import { getTradesHeaders, getPositionsHeaders } from './TradesTable/TradesTable.helpers'
 
 const getExportFilename = (prefix, extension = 'zip') => {
   // turn something like 2022-02-22T12:55:03.800Z into 2022-02-22T12-55-03
@@ -11,65 +14,48 @@ const getExportFilename = (prefix, extension = 'zip') => {
   return `${prefix}-${date}.${extension}`
 }
 
-const onTradeExportClick = (rawTrades, results, activeMarket, t, getCurrencySymbol) => {
-  const {
-    nCandles,
-    nTrades,
-    nGains,
-    nLosses,
-    nStrategyTrades,
-    nOpens,
-    pl,
-    pf,
-    maxPL,
-    minPL,
-    fees,
-    vol,
-    stdDeviation,
-    avgPL,
-  } = results
+const onTradeExportClick = (rawPositions, activeMarket, t, getCurrencySymbol) => {
+  const tHeaders = getTradesHeaders(t)
+  const pHeaders = getPositionsHeaders(t)
 
-  const tHeaders = {
-    price: t('table.price'),
-    amount: t('table.amount'),
-    pl: t('table.pl'),
-    label: t('table.label'),
-    mts: t('table.time'),
-    fee: t('table.fee'),
-  }
-
-  const trades = _map(rawTrades, ({
-    price, amount, pl: tPl, fee, label, mts,
+  const positions = _map(rawPositions, ({
+    amount, entryPrice, closingPrice, entryAt, closedAt, id, pl,
   }) => ({
-    [tHeaders.price]: price,
-    [tHeaders.amount]: amount,
-    [tHeaders.pl]: tPl,
-    [tHeaders.fee]: fee,
-    [tHeaders.label]: label,
-    [tHeaders.mts]: _replace(new Date(mts).toLocaleString(), ',', ''),
+    [pHeaders.id]: id,
+    [pHeaders.entryAt]: _replace(new Date(entryAt).toLocaleString(), ',', ''),
+    [pHeaders.closedAt]: _replace(new Date(closedAt).toLocaleString(), ',', ''),
+    [pHeaders.entryPrice]: entryPrice,
+    [pHeaders.closingPrice]: closingPrice,
+    [pHeaders.amount]: amount,
+    [pHeaders.pl]: pl,
   }))
 
-  const general = [{
-    [t('strategyEditor.totalPL')]: pl,
-    [t('strategyEditor.avgPL')]: avgPL || 0,
-    [t('strategyEditor.profitFactor')]: pf || 0,
-    [t('strategyEditor.volatility')]: stdDeviation,
-    [t('strategyEditor.backtestCandles')]: nCandles,
-    [t('strategyEditor.backtestTrades')]: nTrades,
-    [t('strategyEditor.trades')]: nStrategyTrades,
-    [t('strategyEditor.positions')]: nOpens,
-    [t('strategyEditor.gains')]: nGains,
-    [t('strategyEditor.losses')]: nLosses,
-    [t('strategyEditor.fees')]: fees,
-    [t('strategyEditor.profitLoss')]: pl,
-    [t('strategyEditor.volume')]: vol,
-    [t('strategyEditor.largestGain')]: maxPL || 0,
-    [t('strategyEditor.largestLoss')]: minPL || 0,
-  }]
+  const rawTrades = _reduce(rawPositions, (acc, position) => {
+    const { trades } = position
+
+    if (_isEmpty(trades)) {
+      return acc
+    }
+
+    return [...acc, ...trades]
+  }, [])
+
+  const trades = _map(rawTrades, ({
+    amount, order_id: orderID, order_js: order,
+  }) => ({
+    [tHeaders.id]: orderID,
+    [tHeaders.action]: amount < 0 ? 'SELL' : 'BUY',
+    [tHeaders.type]: order.type,
+    [tHeaders.timestamp]: new Date(order?.mtsCreate).toLocaleString(),
+    [tHeaders.executedAt]: new Date(order?.mtsUpdate).toLocaleString(),
+    [tHeaders.orderPrice]: order.price,
+    [tHeaders.tradePrice]: order.priceAvg,
+    [tHeaders.amount]: amount,
+  }))
 
   const documents = {
+    positions,
     trades,
-    general,
   }
 
   csvExport.export(documents, (buffer) => {

@@ -87,7 +87,7 @@ const StrategyTradesTable = ({
         <>
           <Button
             className='panel-button'
-            onClick={() => onTradeExportClick(results, results, symbol, t, getCurrencySymbol)}
+            onClick={() => onTradeExportClick(results, symbol, t, getCurrencySymbol)}
             disabled={_isEmpty(results)}
           >
             <Icon name='file' />

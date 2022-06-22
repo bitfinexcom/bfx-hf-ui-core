@@ -4,66 +4,72 @@ import _toString from 'lodash/toString'
 import { defaultCellRenderer } from '../../../util/ui'
 import { AMOUNT_DECIMALS, PRICE_SIG_FIGS } from '../../../constants/precision'
 
-import { getTradeAmount, getTradePrice } from './TradesTable.helpers'
+import { getTradeAmount, getTradePrice, getTradesHeaders } from './TradesTable.helpers'
 
 const STYLES = {
   RIGHT_ALIGN: { textAlign: 'right' },
 }
 
-export default (t) => ([
-  {
-    label: t('table.id'),
-    dataKey: 'order_id',
-    cellRenderer: ({ rowData }) => defaultCellRenderer(`#${rowData?.order_id}`),
-  },
-  {
-    label: t('table.action'),
-    dataKey: 'amount',
-    cellRenderer: ({ rowData }) => (rowData?.amount < 0 ? 'SELL' : 'BUY'),
-  },
-  {
-    label: t('table.type'),
-    dataKey: 'type',
-    cellRenderer: ({ rowData }) => defaultCellRenderer(rowData?.order_js?.type),
-  },
-  {
-    label: t('table.timestamp'),
-    dataKey: 'mtsCreate',
-    cellRenderer: ({ rowData }) => defaultCellRenderer(new Date(rowData?.order_js?.mtsCreate).toLocaleString()),
-    style: STYLES.RIGHT_ALIGN,
-  },
-  {
-    label: t('table.executedAt'),
-    dataKey: 'mtsUpdate',
-    cellRenderer: ({ rowData }) => defaultCellRenderer(new Date(rowData?.order_js?.mtsUpdate).toLocaleString()),
-    style: STYLES.RIGHT_ALIGN,
-  },
-  {
-    label: t('table.orderPrice'),
-    dataKey: 'price',
-    cellRenderer: ({ rowData }) => defaultCellRenderer(<PrettyValue value={_toString(rowData?.order_js?.price)} sigFig={PRICE_SIG_FIGS} fadeTrailingZeros />),
-    style: STYLES.RIGHT_ALIGN,
-  },
-  {
-    label: t('table.tradePrice'),
-    dataKey: 'priceAvg',
-    cellRenderer: ({ rowData }) => defaultCellRenderer(
-      <PrettyValue value={_toString(getTradePrice(rowData))} sigFig={PRICE_SIG_FIGS} fadeTrailingZeros />,
-    ),
-    style: STYLES.RIGHT_ALIGN,
-  },
-  {
-    label: t('table.amount'),
-    dataKey: 'units',
-    cellRenderer: ({ rowData }) => {
-      return defaultCellRenderer(
-        <PrettyValue
-          value={getTradeAmount(rowData)}
-          decimals={AMOUNT_DECIMALS}
-          fadeTrailingZeros
-        />,
-      )
+export default (t) => {
+  const {
+    id, action, type, timestamp, executedAt, orderPrice, tradePrice, amount,
+  } = getTradesHeaders(t)
+
+  return [
+    {
+      label: id,
+      dataKey: 'order_id',
+      cellRenderer: ({ rowData }) => defaultCellRenderer(`#${rowData?.order_id}`),
     },
-    style: STYLES.RIGHT_ALIGN,
-  },
-])
+    {
+      label: action,
+      dataKey: 'amount',
+      cellRenderer: ({ rowData }) => (rowData?.amount < 0 ? 'SELL' : 'BUY'),
+    },
+    {
+      label: type,
+      dataKey: 'type',
+      cellRenderer: ({ rowData }) => defaultCellRenderer(rowData?.order_js?.type),
+    },
+    {
+      label: timestamp,
+      dataKey: 'mtsCreate',
+      cellRenderer: ({ rowData }) => defaultCellRenderer(new Date(rowData?.order_js?.mtsCreate).toLocaleString()),
+      style: STYLES.RIGHT_ALIGN,
+    },
+    {
+      label: executedAt,
+      dataKey: 'mtsUpdate',
+      cellRenderer: ({ rowData }) => defaultCellRenderer(new Date(rowData?.order_js?.mtsUpdate).toLocaleString()),
+      style: STYLES.RIGHT_ALIGN,
+    },
+    {
+      label: orderPrice,
+      dataKey: 'price',
+      cellRenderer: ({ rowData }) => defaultCellRenderer(<PrettyValue value={_toString(rowData?.order_js?.price)} sigFig={PRICE_SIG_FIGS} fadeTrailingZeros />),
+      style: STYLES.RIGHT_ALIGN,
+    },
+    {
+      label: tradePrice,
+      dataKey: 'priceAvg',
+      cellRenderer: ({ rowData }) => defaultCellRenderer(
+        <PrettyValue value={_toString(getTradePrice(rowData))} sigFig={PRICE_SIG_FIGS} fadeTrailingZeros />,
+      ),
+      style: STYLES.RIGHT_ALIGN,
+    },
+    {
+      label: amount,
+      dataKey: 'units',
+      cellRenderer: ({ rowData }) => {
+        return defaultCellRenderer(
+          <PrettyValue
+            value={getTradeAmount(rowData)}
+            decimals={AMOUNT_DECIMALS}
+            fadeTrailingZeros
+          />,
+        )
+      },
+      style: STYLES.RIGHT_ALIGN,
+    },
+  ]
+}
