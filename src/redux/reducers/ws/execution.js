@@ -143,6 +143,7 @@ function reducer(state = getInitialState(), action = {}) {
       return {
         ...state,
         results: {
+          ...state.results,
           [strategyId]: results,
         },
       }
