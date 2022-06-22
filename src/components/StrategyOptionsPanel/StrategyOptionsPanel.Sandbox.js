@@ -119,7 +119,7 @@ const StrategyOptionsPanelSandbox = ({
 }
 
 StrategyOptionsPanelSandbox.propTypes = {
-  markets: PropTypes.objectOf(PropTypes.object).isRequired, // eslint-disable-line
+  markets: PropTypes.arrayOf(Object).isRequired,
   saveStrategyOptions: PropTypes.func.isRequired,
   onOpenSaveStrategyAsModal: PropTypes.func.isRequired,
   strategy: PropTypes.shape({

@@ -126,7 +126,7 @@ const StrategyLiveTab = (props) => {
 StrategyLiveTab.propTypes = {
   onCancelProcess: PropTypes.func.isRequired,
   strategy: PropTypes.object.isRequired, // eslint-disable-line
-  markets: PropTypes.objectOf(PropTypes.object).isRequired, // eslint-disable-line
+  markets: PropTypes.arrayOf(Object).isRequired,
   onOpenSaveStrategyAsModal: PropTypes.func.isRequired,
   saveStrategyOptions: PropTypes.func.isRequired,
   openExecutionOptionsModal: PropTypes.func.isRequired,
