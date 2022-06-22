@@ -2,6 +2,7 @@ import React from 'react'
 
 import _toNumber from 'lodash/toNumber'
 import _isNaN from 'lodash/isNaN'
+import _isBoolean from 'lodash/isBoolean'
 import { isFiat, formatNumber } from '@ufx-ui/utils'
 import { Tooltip } from '@ufx-ui/core'
 import getQuotePrefix from '../../../util/quote_prefix'
@@ -20,14 +21,14 @@ const appendUnit = (value, unit, prefix) => {
 
 const getSmallestUnit = (isFiatValue) => (isFiatValue ? 0.01 : 0.00000001)
 
-export const resultNumber = (value, ccy) => {
+export const resultNumber = (value, ccy, isPositive) => {
   if (_isNaN(value)) {
     return '--'
   }
 
   const val = _toNumber(value)
   const isZero = val === 0
-  const isPositive = val > 0
+  const _isPositive = _isBoolean(isPositive) ? isPositive : val > 0
 
   let maxDecimals = FIAT_MAX_DECIMALS
   const isCcyFiat = isFiat(ccy)
@@ -47,7 +48,7 @@ export const resultNumber = (value, ccy) => {
     ? appendUnit(decimalNumberString, quotePrefix, isCcyFiat)
     : isZero
       ? appendUnit(0, quotePrefix, isCcyFiat)
-      : isPositive
+      : _isPositive
         ? appendUnit(
           `<${smallestUnit}`,
           quotePrefix,
@@ -55,7 +56,7 @@ export const resultNumber = (value, ccy) => {
         )
         : appendUnit(`>-${smallestUnit}`, quotePrefix, isCcyFiat)
 
-  const style = { color: isPositive ? 'green' : 'red' }
+  const style = { color: _isPositive ? 'green' : 'red' }
 
   return (
     <Tooltip
