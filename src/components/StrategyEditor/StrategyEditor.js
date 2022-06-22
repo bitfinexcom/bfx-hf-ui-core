@@ -451,17 +451,13 @@ const StrategyEditor = (props) => {
 
   const launchWithoutSaving = () => {
     onCloseModals()
-    setTimeout(() => {
-      onLaunchExecutionClick(true)
-    }, 500)
+    onLaunchExecutionClick(true)
   }
 
   const saveAndLaunch = () => {
     onSaveStrategy()
     onCloseModals()
-    setTimeout(() => {
-      onLaunchExecutionClick(true)
-    }, 500)
+    onLaunchExecutionClick(true)
   }
 
   const saveStrategyAndStartExecution = useCallback(() => {
