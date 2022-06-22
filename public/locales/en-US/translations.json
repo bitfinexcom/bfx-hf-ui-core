@@ -627,6 +627,7 @@
     "unsavedChanges": "Unsaved changes",
     "unsavedChangesModalTitle": "Do you need to save changes in the strategy before closing?",
     "cancelThisProcess": "Cancel this process",
+    "unsavedChangesLaunchModalTitle": "Do you need to save changes in the strategy before launching it?",
     "cancelAppProcessTitle": "Cancel application process",
     "cancelAppProcessSubmit": "Cancel process",
     "cancelAppProcessDescription": "If you feel this process is taking too long you can cancel it by clicking in the next button.\n\nTake into consideration that this might have unintended consequences in case you are operating in the LIVE environment.",
@@ -788,7 +789,9 @@
     "notSelected": "Not selected",
     "e.g.": "e.g. {{value}}",
     "required": "REQUIRED",
-    "proceed": "Proceed"
+    "proceed": "Proceed",
+    "saveAndLaunch": "Save & Launch",
+    "launchNoSave": "Launch without saving"
   },
   "crashHandler": {
     "text1": "An error occurred that caused the Bitfinex Honey UI to halt. Please, restart the application to proceed working with it",
