@@ -95,12 +95,12 @@ StrategyLiveChart.propTypes = {
         ]),
       ).isRequired,
       timeframe: PropTypes.oneOf(timeFrames).isRequired,
-      startDate: PropTypes.string,
-      endDate: PropTypes.string,
+      startDate: PropTypes.object, // eslint-disable-line
+      endDate: PropTypes.object, // eslint-disable-line
     }),
     id: PropTypes.string.isRequired,
     startedOn: PropTypes.number,
-    stoppedOn: PropTypes.string,
+    stoppedOn: PropTypes.number,
   }).isRequired,
   indicators: PropTypes.arrayOf(
     PropTypes.oneOfType([PropTypes.array, PropTypes.object]),

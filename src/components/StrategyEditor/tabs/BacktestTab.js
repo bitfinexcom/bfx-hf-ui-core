@@ -122,7 +122,7 @@ BacktestTab.propTypes = {
   }).isRequired,
   onCancelProcess: PropTypes.func.isRequired,
   strategy: PropTypes.object.isRequired, // eslint-disable-line
-  markets: PropTypes.objectOf(PropTypes.object).isRequired, // eslint-disable-line
+  markets: PropTypes.arrayOf(PropTypes.object).isRequired, // eslint-disable-line
   indicators: PropTypes.arrayOf(
     PropTypes.oneOfType([PropTypes.array, PropTypes.object]),
   ), // eslint-disable-line
