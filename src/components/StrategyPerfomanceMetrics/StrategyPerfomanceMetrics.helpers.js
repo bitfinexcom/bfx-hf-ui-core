@@ -38,7 +38,8 @@ const getMetrics = (results, t, quoteCcy, postProcessing = false) => {
     return {
       [t('strategyEditor.totalPL')]: resultNumber(preparePrice(pl), quoteCcy),
       [t('strategyEditor.avgPL')]: resultNumber(avgPL, quoteCcy),
-      [t('strategyEditor.profitFactor')]: resultNumber(pf),
+      // PF should be red if less then 1
+      [t('strategyEditor.profitFactor')]: resultNumber(pf, null, pf >= 1),
       [t('strategyEditor.volatility')]: resultNumber(stdDeviation),
       [t('strategyEditor.allocation')]: resultNumber(allocation, quoteCcy),
       [t('strategyEditor.positionSize')]: resultNumber(positionSize),
