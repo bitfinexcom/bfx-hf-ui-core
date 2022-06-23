@@ -94,7 +94,7 @@ const BacktestTab = (props) => {
           return null
       }
     },
-    [strategy, onBacktestStart, saveStrategyOptions, finished, indicators, markets, fullscreenChart, trades, results, loading, positions, layoutConfig],
+    [strategy, onBacktestStart, saveStrategyOptions, showFullscreenChart, finished, indicators, markets, fullscreenChart, hideFullscreenChart, trades, results, loading, positions, layoutConfig],
   )
 
   return (
