@@ -88,7 +88,6 @@
     "bfx-api-node-models": "^1.6.1",
     "bfx-api-node-util": "^1.0.11",
     "bfx-hf-algo": "git+https://github.com/bitfinexcom/bfx-hf-algo.git#v4.13.1",
-    "bfx-hf-chart": "git+https://github.com/bitfinexcom/bfx-hf-chart.git#v1.0.11",
     "bfx-hf-indicators": "git+https://github.com/bitfinexcom/bfx-hf-indicators.git#v2.1.1",
     "bfx-hf-strategy": "git+https://github.com/bitfinexcom/bfx-hf-strategy.git#v1.5.1",
     "bfx-hf-util": "git+https://github.com/bitfinexcom/bfx-hf-util.git#v1.0.12",
