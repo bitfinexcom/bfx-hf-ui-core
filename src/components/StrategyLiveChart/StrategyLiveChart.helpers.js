@@ -1,4 +1,6 @@
+import memoizeOne from 'memoize-one'
 import _map from 'lodash/map'
+import _find from 'lodash/find'
 
 export const prepareTVIndicators = (indicators) => {
   return _map(indicators, (i) => {
@@ -26,3 +28,12 @@ export const prepareTVIndicators = (indicators) => {
     return transformed
   })
 }
+
+export const getStrategyMarket = memoizeOne((markets, strategyWSID) => {
+  const {
+    wsID, uiID, base, quote,
+  } = _find(markets, (market) => market.wsID === strategyWSID, null) || {}
+  return {
+    wsID, uiID, base, quote,
+  }
+})

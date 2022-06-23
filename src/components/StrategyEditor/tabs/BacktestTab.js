@@ -3,7 +3,9 @@ import React, {
 } from 'react'
 import PropTypes from 'prop-types'
 import { useTranslation } from 'react-i18next'
+
 import StrategyPerfomanceMetrics from '../../StrategyPerfomanceMetrics'
+import useToggle from '../../../hooks/useToggle'
 import StrategyTradesTable from '../../StrategyTradesTable'
 import StrategiesGridLayout from '../components/StrategiesGridLayout'
 import {
@@ -27,7 +29,7 @@ const BacktestTab = (props) => {
   } = props
   const { t } = useTranslation()
   const [layoutConfig, setLayoutConfig] = useState()
-  const [fullscreenChart, setFullScreenChart] = useState(false)
+  const [fullscreenChart, , showFullscreenChart, hideFullscreenChart] = useToggle(false)
 
   const { finished = false, loading } = results
   const positions = results?.strategy?.closedPositions
@@ -51,7 +53,7 @@ const BacktestTab = (props) => {
               strategy={strategy}
               onBacktestStart={onBacktestStart}
               saveStrategyOptions={saveStrategyOptions}
-              setFullScreenChart={() => setFullScreenChart(true)}
+              setFullScreenChart={showFullscreenChart}
               isFinished={finished}
             />
           )
@@ -63,8 +65,9 @@ const BacktestTab = (props) => {
               markets={markets}
               strategy={strategy}
               fullscreenChart={fullscreenChart}
-              exitFullscreenChart={() => setFullScreenChart(false)}
+              exitFullscreenChart={hideFullscreenChart}
               trades={trades}
+              isBacktest
             />
           )
 
