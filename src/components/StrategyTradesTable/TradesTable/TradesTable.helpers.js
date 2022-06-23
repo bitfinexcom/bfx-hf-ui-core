@@ -2,6 +2,8 @@ export const getTradeAmount = (trade) => trade?.order_js?.amountOrig || trade?.o
 
 export const getTradePrice = (trade) => trade?.order_js?.priceAvg
 
+export const getTradeTime = (trade) => trade?.order_js?.mtsCreate
+
 export const getTradesHeaders = (t) => ({
   id: t('table.id'),
   action: t('table.action'),
