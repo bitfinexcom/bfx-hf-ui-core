@@ -52,7 +52,7 @@ export default (t, selectedIndex, setSelectedIndex) => {
       flexGrow: 1,
       style: STYLES.flexEnd,
       headerStyle: STYLES.flexEnd,
-      cellRenderer: ({ rowData = {} }) => formatDate(rowData.closedAt).toLocaleString(),
+      cellRenderer: ({ rowData = {} }) => formatDate(rowData?.closedAt),
     },
     {
       label: entryPrice,
