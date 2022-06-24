@@ -6,7 +6,10 @@ import _replace from 'lodash/replace'
 import _isEmpty from 'lodash/isEmpty'
 import _reduce from 'lodash/reduce'
 import { getPairFromMarket } from '../../util/market'
-import { getTradesHeaders, getPositionsHeaders } from './TradesTable/TradesTable.helpers'
+import {
+  getTradesHeaders, getPositionsHeaders, getTradeType, getTradePriceAvg,
+  getTradePrice, getTradeAmount, getOrderID, getTradeTimestamp, getTradeExecutedAt,
+} from './TradesTable/TradesTable.helpers'
 
 const getExportFilename = (prefix, extension = 'zip') => {
   // turn something like 2022-02-22T12:55:03.800Z into 2022-02-22T12-55-03
@@ -40,17 +43,18 @@ const onTradeExportClick = (rawPositions, activeMarket, t, getCurrencySymbol) =>
     return [...acc, ...trades]
   }, [])
 
-  const trades = _map(rawTrades, ({
-    amount, order_id: orderID, order_js: order,
-  }) => ({
-    [tHeaders.id]: orderID,
-    [tHeaders.action]: amount < 0 ? 'SELL' : 'BUY',
-    [tHeaders.type]: order.type,
-    [tHeaders.timestamp]: new Date(order?.mtsCreate).toLocaleString(),
-    [tHeaders.executedAt]: new Date(order?.mtsUpdate).toLocaleString(),
-    [tHeaders.orderPrice]: order.price,
-    [tHeaders.tradePrice]: order.priceAvg,
-    [tHeaders.amount]: amount,
+  // {
+  //   amount, order_id: orderID, order_js: order,
+  // }
+  const trades = _map(rawTrades, (trade) => ({
+    [tHeaders.id]: getOrderID(trade),
+    [tHeaders.action]: getTradeAmount(trade) < 0 ? 'SELL' : 'BUY',
+    [tHeaders.type]: getTradeType(trade),
+    [tHeaders.timestamp]: getTradeTimestamp(trade),
+    [tHeaders.executedAt]: getTradeExecutedAt(trade),
+    [tHeaders.orderPrice]: getTradePrice(trade),
+    [tHeaders.tradePrice]: getTradePriceAvg(trade),
+    [tHeaders.amount]: getTradeAmount(trade),
   }))
 
   const documents = {

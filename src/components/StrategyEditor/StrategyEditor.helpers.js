@@ -5,7 +5,7 @@ import _isEmpty from 'lodash/isEmpty'
 import _size from 'lodash/size'
 import { MAX_STRATEGY_LABEL_LENGTH as MAX_LABEL_LENGTH } from '../../constants/variables'
 
-import { getTradeAmount, getTradePrice } from '../StrategyTradesTable/TradesTable/TradesTable.helpers'
+import { getTradeAmount, getTradePriceAvg } from '../StrategyTradesTable/TradesTable/TradesTable.helpers'
 
 const ONE_MIN = 1000 * 60
 const ONE_HOUR = ONE_MIN * 60
@@ -198,7 +198,7 @@ export const prepareChartTrades = (positions) => {
       ...trades,
       ..._map(position?.trades, trade => ({
         ...trade,
-        price: getTradePrice(trade),
+        price: getTradePriceAvg(trade),
         amount: getTradeAmount(trade),
       })),
     ]
