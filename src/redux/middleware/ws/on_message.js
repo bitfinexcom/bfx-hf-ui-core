@@ -65,10 +65,13 @@ export default (alias, store) => (e = {}) => {
       }
 
       case 'info.auth_token': {
-        const [, token] = payload
+        const [, token, hasCredentials] = payload
         store.dispatch(WSActions.recvAuthToken(token))
         store.dispatch(AOActions.getActiveAlgoOrders())
         store.dispatch(WSActions.send(['strategy.execute_status', token]))
+        if (hasCredentials) {
+          store.dispatch(WSActions.send(['get.order_history', token]))
+        }
         break
       }
 
