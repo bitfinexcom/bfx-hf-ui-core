@@ -450,7 +450,7 @@
   },
   "tradingModeModal": {
     "title": "Switch Trade Mode",
-    "text": "The app will reboot after you press Okay. It's required for switching trading mode. Open algo orders are paused."
+    "text": "TODO: change this message"
   },
   "confirmDMSModal": {
     "title": "Enable Dead Man Switch",
