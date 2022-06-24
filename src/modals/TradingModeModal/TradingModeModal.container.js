@@ -20,9 +20,9 @@ const mapStateToProps = (state = {}) => ({
 
 const mapDispatchToProps = dispatch => ({
   changeTradingModeModalState: (isVisible) => dispatch(UIActions.changeTradingModeModalState(isVisible)),
-  changeTradingMode: (isPaperTrading, authToken, currentMode) => {
+  changeTradingMode: (isPaperTrading) => {
     dispatch(UIActions.setTradingMode(isPaperTrading))
-    dispatch(WSActions.send(['algo_order.pause', authToken, currentMode]))
+    dispatch(WSActions.changeMode())
   },
 })
 

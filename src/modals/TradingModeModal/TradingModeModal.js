@@ -4,8 +4,6 @@ import { useTranslation } from 'react-i18next'
 import Modal from '../../ui/Modal'
 
 const TradingModeModal = ({
-  authToken,
-  currentMode,
   isPaperTrading,
   changeTradingMode,
   changeTradingModeModalState,
@@ -16,8 +14,8 @@ const TradingModeModal = ({
   }
 
   const onTradingModeModalSubmit = () => {
-    changeTradingMode(!isPaperTrading, authToken, currentMode)
-    setTimeout(() => location.replace('/index.html'), 500); // eslint-disable-line
+    changeTradingModeModalState(false)
+    changeTradingMode(!isPaperTrading)
   }
 
   const { t } = useTranslation()
@@ -40,8 +38,6 @@ const TradingModeModal = ({
 }
 
 TradingModeModal.propTypes = {
-  authToken: PropTypes.string.isRequired,
-  currentMode: PropTypes.string.isRequired,
   changeTradingMode: PropTypes.func.isRequired,
   changeTradingModeModalState: PropTypes.func.isRequired,
   isPaperTrading: PropTypes.bool.isRequired,

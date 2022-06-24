@@ -153,9 +153,9 @@ const mapDispatchToProps = (dispatch) => ({
       )
     }
   },
-  changeTradingMode: (isPaperTrading, authToken, currentMode) => {
+  changeTradingMode: (isPaperTrading) => {
     dispatch(UIActions.setTradingMode(isPaperTrading))
-    dispatch(WSActions.send(['algo_order.pause', authToken, currentMode]))
+    dispatch(WSActions.changeMode())
   },
 })
 

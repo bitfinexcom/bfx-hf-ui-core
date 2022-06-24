@@ -82,7 +82,6 @@ const StrategyEditor = (props) => {
     savedStrategies,
     cancelProcess,
     changeTradingMode,
-    currentMode,
     executionId,
     onDefineIndicatorsChange,
     evalSectionContent,
@@ -471,9 +470,8 @@ const StrategyEditor = (props) => {
       return
     }
     if (isPaperTrading) {
-      changeTradingMode(!isPaperTrading, authToken, currentMode)
+      changeTradingMode(!isPaperTrading)
       saveStrategyToExecuteToLS(strategy)
-      setTimeout(() => window.location.replace("/index.html"), 500); // eslint-disable-line
       return
     }
 
@@ -486,7 +484,6 @@ const StrategyEditor = (props) => {
     authToken,
     changeTradingMode,
     checkForAPIKeys,
-    currentMode,
     dsExecuteLiveStrategy,
     isFullFilled,
     isPaperTrading,
@@ -771,7 +768,6 @@ StrategyEditor.propTypes = {
   sectionErrors: PropTypes.objectOf(PropTypes.string).isRequired,
   cancelProcess: PropTypes.func.isRequired,
   changeTradingMode: PropTypes.func.isRequired,
-  currentMode: PropTypes.string.isRequired,
   executionId: PropTypes.string,
   onDefineIndicatorsChange: PropTypes.func.isRequired,
   evalSectionContent: PropTypes.func.isRequired,
