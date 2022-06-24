@@ -69,7 +69,7 @@ const SubmitAPIKeysModal = ({
       ]}
       buttons={(
         <div className='row'>
-          <Button onClick={reset} label={t('ui.cancel')} disabled={isResetDisabled} red />
+          <Button onClick={reset} label={t('ui.reset')} disabled={isResetDisabled} red />
           <Button onClick={submitHandler} label={t('ui.submitBtn')} green />
         </div>
       )}
