@@ -18,7 +18,6 @@ import { getIsAnyModalOpen } from '../../util/document'
 
 import AOParamSettings from './Orderform.AlgoParams'
 import ConnectingModal from '../APIKeysConfigurateForm/ConnectingModal'
-import UnconfiguredModal from '../APIKeysConfigurateForm/UnconfiguredModal'
 import SubmitAPIKeysModal from '../APIKeysConfigurateForm/SubmitAPIKeysModal'
 import OrderFormMenu from './OrderFormMenu'
 import { getAOs, getAtomicOrders } from './OrderForm.orders.helpers'
@@ -42,7 +41,6 @@ class OrderForm extends React.Component {
     creationError: null,
     context: 'e',
     helpOpen: false,
-    configureModalOpen: false,
     isAlgoOrder: false,
   }
 
@@ -68,7 +66,6 @@ class OrderForm extends React.Component {
     this.onFieldChange = this.onFieldChange.bind(this)
     this.onSubmit = this.onSubmit.bind(this)
     this.onToggleHelp = this.onToggleHelp.bind(this)
-    this.onToggleConfigureModal = this.onToggleConfigureModal.bind(this)
     this.onSubmitAPIKeys = this.onSubmitAPIKeys.bind(this)
     this.onClearOrderLayout = this.onClearOrderLayout.bind(this)
     this.processAOData = this.processAOData.bind(this)
@@ -141,12 +138,6 @@ class OrderForm extends React.Component {
   onToggleHelp() {
     this.setState(({ helpOpen }) => ({
       helpOpen: !helpOpen,
-    }))
-  }
-
-  onToggleConfigureModal() {
-    this.setState(({ configureModalOpen }) => ({
-      configureModalOpen: !configureModalOpen,
     }))
   }
 
@@ -381,7 +372,7 @@ class OrderForm extends React.Component {
 
     const {
       fieldData, validationErrors, creationError, context, currentLayout,
-      helpOpen, configureModalOpen, currentMarket,
+      helpOpen, currentMarket,
     } = this.state
 
     const algoOrders = getAOs(t, showAdvancedAlgos)
@@ -449,22 +440,13 @@ class OrderForm extends React.Component {
                 <ConnectingModal key='connecting' />
               ),
 
-              !apiClientConfigured && !configureModalOpen && (
-                <UnconfiguredModal
-                  key='unconfigured'
-                  onClick={this.onToggleConfigureModal}
-                  isPaperTrading={isPaperTrading}
-                  keyExistButNotValid={apiCredentials?.configured && !apiCredentials?.valid}
-                />
-              ),
-
-              !apiClientConfigured && configureModalOpen && (
+              !apiClientConfigured && (
                 <SubmitAPIKeysModal
                   key='submit-api-keys'
-                  onClose={this.onToggleConfigureModal}
                   onSubmit={this.onSubmitAPIKeys}
                   apiClientConnecting={apiClientConnecting}
                   isPaperTrading={isPaperTrading}
+                  keyExistButNotValid={apiCredentials?.configured && !apiCredentials?.valid}
                 />
               ),
             ]}
