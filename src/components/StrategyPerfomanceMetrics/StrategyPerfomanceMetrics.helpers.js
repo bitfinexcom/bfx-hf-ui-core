@@ -38,7 +38,8 @@ const getMetrics = (results, t, quoteCcy, postProcessing = false) => {
     return {
       [t('strategyEditor.totalPL')]: resultNumber(preparePrice(pl), quoteCcy),
       [t('strategyEditor.avgPL')]: resultNumber(avgPL, quoteCcy),
-      [t('strategyEditor.profitFactor')]: resultNumber(pf),
+      // PF should be red if less then 1
+      [t('strategyEditor.profitFactor')]: resultNumber(pf, null, pf >= 1),
       [t('strategyEditor.volatility')]: resultNumber(stdDeviation),
       [t('strategyEditor.allocation')]: resultNumber(allocation, quoteCcy),
       [t('strategyEditor.positionSize')]: resultNumber(positionSize),
@@ -54,7 +55,7 @@ const getMetrics = (results, t, quoteCcy, postProcessing = false) => {
       [t('strategyEditor.positions')]: nOpens,
       [t('strategyEditor.gains')]: nGains,
       [t('strategyEditor.losses')]: nLosses,
-      [t('strategyEditor.fees')]: resultNumber(fees, quoteCcy),
+      [t('strategyEditor.fees')]: resultNumber(fees, quoteCcy, false),
       [t('strategyEditor.volume')]: vol,
       [t('strategyEditor.largestGain')]: resultNumber(maxPL, quoteCcy),
       [t('strategyEditor.largestLoss')]: resultNumber(minPL, quoteCcy),

@@ -67,7 +67,7 @@ const StrategyTradesTable = ({
       tableRef.current.recomputeRowHeights()
     }
   },
-  [tableRef, selectedIndex])
+  [tableRef, selectedIndex, isExpanded])
 
   const columns = StrategyTradesTableColumns(t, selectedIndex, setSelectedIndex)
 
@@ -87,7 +87,7 @@ const StrategyTradesTable = ({
         <>
           <Button
             className='panel-button'
-            onClick={() => onTradeExportClick(results, results, symbol, t, getCurrencySymbol)}
+            onClick={() => onTradeExportClick(results, symbol, t, getCurrencySymbol)}
             disabled={_isEmpty(results)}
           >
             <Icon name='file' />
@@ -124,6 +124,9 @@ const StrategyTradesTable = ({
           rowRenderer={rowRenderer}
           columns={columns}
           data={results || []}
+          scrollingResetTimeInterval={0}
+          defaultSortBy='entryAt'
+          defaultSortDirection='DESC'
         />
       )}
     </Panel>

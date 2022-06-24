@@ -62,7 +62,7 @@ const StrategyLiveChart = ({
 }
 
 StrategyLiveChart.propTypes = {
-  markets: PropTypes.objectOf(PropTypes.object).isRequired, // eslint-disable-line
+  markets: PropTypes.arrayOf(Object).isRequired,
   strategy: PropTypes.shape({
     strategyOptions: PropTypes.shape({
       symbol: PropTypes.objectOf(

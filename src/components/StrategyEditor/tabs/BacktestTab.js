@@ -4,7 +4,7 @@ import React, {
 import PropTypes from 'prop-types'
 import { useTranslation } from 'react-i18next'
 import StrategyPerfomanceMetrics from '../../StrategyPerfomanceMetrics'
-import BacktestTradesTable from '../../StrategyTradesTable'
+import StrategyTradesTable from '../../StrategyTradesTable'
 import StrategiesGridLayout from '../components/StrategiesGridLayout'
 import {
   COMPONENTS_KEYS,
@@ -79,11 +79,10 @@ const BacktestTab = (props) => {
 
         case COMPONENTS_KEYS.STRATEGY_TRADES:
           return (
-            <BacktestTradesTable
+            <StrategyTradesTable
               results={positions}
               setLayoutConfig={setLayoutConfig}
               layoutConfig={layoutConfig}
-              onTradeClick={() => {}}
               strategy={strategy}
             />
           )

@@ -20,9 +20,14 @@ const ParamsForSandbox = ({
   executionId,
 }) => {
   const { t } = useTranslation()
+
+  const _startExecution = () => {
+    startExecution(false)
+  }
+
   return (
     <div className='hfui-orderform__ao-settings__menu-buttons'>
-      <SidebarParam onClick={startExecution} isDisabled={isExecutionDisabled}>
+      <SidebarParam onClick={_startExecution} isDisabled={isExecutionDisabled}>
         <Icon name='play' />
         &nbsp;&nbsp;
         {t('strategyEditor.launchStrategy')}

@@ -30,6 +30,7 @@ import StrategyTabTitle from './tabs/StrategyTab/StrategyTab.Title'
 import BacktestTabTitle from './tabs/BacktestTab.Title'
 import IDETabTitle from './tabs/IDETab.Title'
 import ExecutionOptionsModal from '../../modals/Strategy/ExecutionOptionsModal'
+import SaveUnsavedChangesLaunchModal from '../../modals/Strategy/SaveUnsavedChangesLaunchModal'
 import {
   getDefaultStrategyOptions,
   isExecutionInputsFullFilled,
@@ -111,6 +112,11 @@ const StrategyEditor = (props) => {
     closeSaveStrategyAsModal,
   ] = useToggle(false)
   const [
+    isSaveStrategyBeforeLaunchModalOpen,,
+    openSaveStrategyBeforeLaunchModal,
+    closeSaveStrategyBeforeLaunchModal,
+  ] = useToggle(false)
+  const [
     isCancelProcessModalOpen,,
     openCancelProcessModal,
     closeCancelProcessModal,
@@ -163,6 +169,7 @@ const StrategyEditor = (props) => {
     closeExecutionOptionsModal()
     closeCancelProcessModal()
     closeLaunchStrategyModal()
+    closeSaveStrategyBeforeLaunchModal()
 
     // setTimeout is needed to prevent flickering when 'Save & Launch' execution options modal is closing
     setTimeout(() => {
@@ -177,6 +184,7 @@ const StrategyEditor = (props) => {
     closeOpenExistingStrategyModal,
     closeRemoveModal,
     closeSaveStrategyAsModal,
+    closeSaveStrategyBeforeLaunchModal,
   ])
 
   const onCreateNewStrategy = useCallback(
@@ -216,7 +224,7 @@ const StrategyEditor = (props) => {
       delete newStrategy.stoppedOn
 
       saveStrategy(newStrategy)
-      onLoadStrategy(newStrategy)
+      onLoadStrategy(newStrategy, true)
 
       onCloseModals()
     },
@@ -240,12 +248,18 @@ const StrategyEditor = (props) => {
         'label' in newStrategy
         && _size(newStrategy.label) < MAX_STRATEGY_LABEL_LENGTH
       ) {
-        onCreateNewStrategy(newStrategy.label, newStrategy)
+        const preparedStrategy = { ...newStrategy }
+        if (_isEmpty(preparedStrategy.strategyContent)) {
+          preparedStrategy.strategyContent = { ...preparedStrategy }
+          delete preparedStrategy.strategyContent.label
+          delete preparedStrategy.strategyContent.id
+        }
+        onCreateStrategyFromExisted(preparedStrategy.label, preparedStrategy)
       }
     } catch (e) {
       debug('Error while importing strategy: %s', e)
     }
-  }, [onCreateNewStrategy])
+  }, [onCreateStrategyFromExisted])
 
   const onSaveStrategy = useCallback(() => {
     if (executionId) {
@@ -420,14 +434,31 @@ const StrategyEditor = (props) => {
     [apiKeyStates, openAppSettingsModal, setAPIKeysTab, showAPIKeyError],
   )
 
-  const onLaunchExecutionClick = useCallback(() => {
+  const onLaunchExecutionClick = useCallback((forcedLaunch = false) => {
+    if (strategyDirty && !forcedLaunch) {
+      openSaveStrategyBeforeLaunchModal()
+      return
+    }
+
     if (isFullFilled) {
       openLaunchStrategyModal()
       return
     }
+
     setExecutionOptionsModalType(EXECUTION_TYPES.LIVE)
     openExecutionOptionsModal()
-  }, [isFullFilled, openExecutionOptionsModal, openLaunchStrategyModal])
+  }, [isFullFilled, openExecutionOptionsModal, openLaunchStrategyModal, openSaveStrategyBeforeLaunchModal, strategyDirty])
+
+  const launchWithoutSaving = () => {
+    onCloseModals()
+    onLaunchExecutionClick(true)
+  }
+
+  const saveAndLaunch = () => {
+    onSaveStrategy()
+    onCloseModals()
+    onLaunchExecutionClick(true)
+  }
 
   const saveStrategyAndStartExecution = useCallback(() => {
     if (!checkForAPIKeys(strategy)) {
@@ -578,6 +609,7 @@ const StrategyEditor = (props) => {
         <EmptyContent
           openCreateNewStrategyModal={openCreateNewStrategyModal}
           openCreateNewStrategyFromModal={openCreateNewStrategyFromModal}
+          onImportStrategy={onImportStrategy}
           isPaperTrading={isPaperTrading}
         />
       ) : (
@@ -686,6 +718,13 @@ const StrategyEditor = (props) => {
         isOpen={isCancelProcessModalOpen}
         onClose={onCloseModals}
         onSubmit={_cancelProcess}
+      />
+      <SaveUnsavedChangesLaunchModal
+        strategy={strategy}
+        isOpen={isSaveStrategyBeforeLaunchModalOpen}
+        onClose={onCloseModals}
+        saveAndLaunch={saveAndLaunch}
+        launchWithoutSaving={launchWithoutSaving}
       />
     </>
   )

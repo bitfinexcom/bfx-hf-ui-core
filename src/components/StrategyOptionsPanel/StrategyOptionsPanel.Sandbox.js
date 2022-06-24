@@ -11,7 +11,6 @@ import { Icon } from 'react-fa'
 import clsx from 'clsx'
 import MarketSelect from '../MarketSelect'
 import Button from '../../ui/Button'
-import { makeShorterLongName } from '../../util/ui'
 import StrategyTypeSelect from './StrategyTypeSelect'
 import { STRATEGY_OPTIONS_KEYS } from '../StrategyEditor/StrategyEditor.helpers'
 import StrategyOptionsButton from './StrategyOptionsButton'
@@ -58,7 +57,7 @@ const StrategyOptionsPanelSandbox = ({
                 className='__react-tooltip __react_component_tooltip wide'
                 content={label}
               >
-                {makeShorterLongName(label, MAX_STRATEGY_LABEL_LENGTH)}
+                {label}
               </Tooltip>
             ) : (
               label
@@ -120,7 +119,7 @@ const StrategyOptionsPanelSandbox = ({
 }
 
 StrategyOptionsPanelSandbox.propTypes = {
-  markets: PropTypes.objectOf(PropTypes.object).isRequired, // eslint-disable-line
+  markets: PropTypes.arrayOf(Object).isRequired,
   saveStrategyOptions: PropTypes.func.isRequired,
   onOpenSaveStrategyAsModal: PropTypes.func.isRequired,
   strategy: PropTypes.shape({
