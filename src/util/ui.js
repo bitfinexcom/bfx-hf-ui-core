@@ -79,3 +79,5 @@ export const readJSONFile = () => new Promise((resolve, reject) => {
   input.click()
   input.remove()
 })
+
+export const formatDate = (dateStr) => (dateStr ? defaultCellRenderer(new Date(dateStr).toLocaleString()) : '--')

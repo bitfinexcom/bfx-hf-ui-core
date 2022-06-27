@@ -4,7 +4,7 @@ import React from 'react'
 import { PrettyValue } from '@ufx-ui/core'
 import { Icon } from 'react-fa'
 
-import { defaultCellRenderer } from '../../util/ui'
+import { defaultCellRenderer, formatDate } from '../../util/ui'
 import { PRICE_SIG_FIGS } from '../../constants/precision'
 import { resultNumber } from '../Backtester/Results/Results.utils'
 import { getPositionsHeaders } from './TradesTable/TradesTable.helpers'
@@ -43,7 +43,7 @@ export default (t, selectedIndex, setSelectedIndex) => {
       flexGrow: 1,
       style: STYLES.flexEnd,
       headerStyle: STYLES.flexEnd,
-      cellRenderer: ({ rowData }) => defaultCellRenderer(new Date(rowData?.entryAt).toLocaleString()),
+      cellRenderer: ({ rowData }) => formatDate(rowData?.entryAt),
     },
     {
       label: closedAt,
@@ -52,7 +52,7 @@ export default (t, selectedIndex, setSelectedIndex) => {
       flexGrow: 1,
       style: STYLES.flexEnd,
       headerStyle: STYLES.flexEnd,
-      cellRenderer: ({ rowData = {} }) => (rowData.closedAt ? defaultCellRenderer(new Date(rowData.closedAt).toLocaleString()) : '--'),
+      cellRenderer: ({ rowData = {} }) => formatDate(rowData?.closedAt),
     },
     {
       label: entryPrice,
