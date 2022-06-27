@@ -9,17 +9,20 @@ import Button from '../../../ui/Button'
 import APIKeysConfigurateForm from '../APIKeysConfigurateForm'
 
 const SubmitAPIKeysModal = ({
-  onClose,
-  onSubmit,
-  apiClientConnecting,
-  isPaperTrading,
-  isModal,
+  onSubmit, apiClientConnecting, isPaperTrading, isModal, keyExistButNotValid,
 }) => {
+  const { t } = useTranslation()
   const [apiKey, setApiKey] = useState('')
   const [apiSecret, setApiSecret] = useState('')
   const [error, setError] = useState('')
 
-  const { t } = useTranslation()
+  const isResetDisabled = _isEmpty(apiKey) && _isEmpty(apiSecret)
+
+  const reset = () => {
+    setApiKey('')
+    setApiSecret('')
+    setError('')
+  }
 
   const submitHandler = () => {
     if (_isEmpty(apiKey)) {
@@ -28,7 +31,7 @@ const SubmitAPIKeysModal = ({
       setError(t('orderForm.apiSecretRequired'))
     } else {
       onSubmit({ apiKey, apiSecret })
-      onClose()
+      setError('')
     }
   }
 
@@ -39,6 +42,7 @@ const SubmitAPIKeysModal = ({
           mode: isPaperTrading ? t('main.sandbox') : '',
         }),
       )}
+      content={keyExistButNotValid && t('appSettings.apiNotValid')}
       icon='icon-api'
       isModal={isModal}
       apiClientConnecting={apiClientConnecting}
@@ -65,8 +69,8 @@ const SubmitAPIKeysModal = ({
       ]}
       buttons={(
         <div className='row'>
+          <Button onClick={reset} label={t('ui.reset')} disabled={isResetDisabled} red />
           <Button onClick={submitHandler} label={t('ui.submitBtn')} green />
-          <Button onClick={onClose} label={t('ui.cancel')} red />
         </div>
       )}
       showDescription
@@ -76,8 +80,8 @@ const SubmitAPIKeysModal = ({
 
 SubmitAPIKeysModal.propTypes = {
   onSubmit: PropTypes.func.isRequired,
-  onClose: PropTypes.func.isRequired,
   isPaperTrading: PropTypes.bool.isRequired,
+  keyExistButNotValid: PropTypes.bool.isRequired,
   apiClientConnecting: PropTypes.bool,
   isModal: PropTypes.bool,
 }
