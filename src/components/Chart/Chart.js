@@ -22,6 +22,7 @@ const Chart = ({
   trades,
   interval,
   hideResolutions,
+  chartRange,
 }) => {
   const {
     wsID, base, quote, isPerp, uiID: _uiID,
@@ -33,7 +34,7 @@ const Chart = ({
 
   const uiID = isPerp ? _uiID : getPairFromMarket(market, getCurrencySymbol)
   const iframeID = `hfui-chart-${layoutI}`
-  const sendMarketToChartIframe = useChartIframe(iframeID, wsID, indicators, trades, interval)
+  const sendMarketToChartIframe = useChartIframe(iframeID, wsID, indicators, trades, interval, chartRange)
 
   const queryString = new URLSearchParams({
     env,
@@ -74,6 +75,7 @@ Chart.propTypes = {
   trades: PropTypes.array, // eslint-disable-line react/forbid-prop-types
   interval: PropTypes.string,
   hideResolutions: PropTypes.bool,
+  chartRange: PropTypes.object, // eslint-disable-line react/forbid-prop-types
 }
 
 Chart.defaultProps = {
@@ -87,6 +89,7 @@ Chart.defaultProps = {
   trades: [],
   interval: '30',
   hideResolutions: false,
+  chartRange: null,
 }
 
 export default memo(Chart)

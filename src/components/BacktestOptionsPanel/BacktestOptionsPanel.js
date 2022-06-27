@@ -167,8 +167,8 @@ BacktestOptionsPanel.propTypes = {
       trades: PropTypes.bool.isRequired,
       candleSeed: PropTypes.number.isRequired,
       candles: PropTypes.bool.isRequired,
-      startDate: PropTypes.string.isRequired,
-      endDate: PropTypes.string.isRequired,
+      startDate: PropTypes.object.isRequired, // eslint-disable-line
+      endDate: PropTypes.object.isRequired, // eslint-disable-line
     }),
   }).isRequired,
   setFullScreenChart: PropTypes.func.isRequired,
