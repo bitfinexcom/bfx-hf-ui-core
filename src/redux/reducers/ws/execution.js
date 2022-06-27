@@ -1,4 +1,3 @@
-import _reduce from 'lodash/reduce'
 import types from '../../constants/ws'
 
 function getInitialState() {
@@ -58,28 +57,15 @@ function reducer(state = getInitialState(), action = {}) {
 
     case types.SET_PAST_STRATEGIES: {
       const { pastStrategies } = payload
-      const results = _reduce(
-        pastStrategies,
-        (acc, strategy) => {
-          const { results: execResults, id } = strategy
-          acc[id] = execResults
-          return acc
-        },
-        {},
-      )
 
       return {
         ...state,
         pastStrategies,
-        results: {
-          ...state.results,
-          ...results,
-        },
       }
     }
 
-    case types.SET_PAST_STRATEGY_RESULTS: {
-      const { results } = payload
+    case types.SET_PAST_STRATEGY_RESULT: {
+      const { id, results } = payload
       const { strategy } = results
       const { closedPositions, openPositions } = strategy
       const positions = { ...closedPositions, ...openPositions }
@@ -87,7 +73,7 @@ function reducer(state = getInitialState(), action = {}) {
       return {
         ...state,
         results: {
-          ...results,
+          [id]: results,
           positions,
         },
       }

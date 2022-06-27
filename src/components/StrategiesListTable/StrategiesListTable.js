@@ -57,8 +57,8 @@ const StrategiesListTable = ({
   }
 
   const onPastStrategyRowClick = ({ rowData: strategy }) => {
-    const { results } = strategy
-    dispatch(WSActions.setPastStrategyResults(results))
+    const { id, results } = strategy
+    dispatch(WSActions.setPastStrategyResults(id, results))
     return onStrategyRowClick(strategy)
   }
 

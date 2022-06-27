@@ -284,9 +284,10 @@ export default {
     },
   }),
 
-  setPastStrategyResults: (results) => ({
-    type: t.SET_PAST_STRATEGY_RESULTS,
+  setPastStrategyResults: (id, results) => ({
+    type: t.SET_PAST_STRATEGY_RESULT,
     payload: {
+      id,
       results,
     },
   }),
