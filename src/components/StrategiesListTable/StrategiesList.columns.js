@@ -88,7 +88,7 @@ const pastStrategiesColumns = (t, getMarketPair) => [
   },
   {
     label: t('table.pair'),
-    dataKey: 'pair',
+    dataKey: 'strategyOptions.symbol',
     style: STYLES.flexStart,
     headerStyle: STYLES.flexStart,
     width: 100,
@@ -124,7 +124,7 @@ const pastStrategiesColumns = (t, getMarketPair) => [
   // },
   {
     label: t('strategyEditor.profitFactor'),
-    dataKey: 'profitFactor',
+    dataKey: 'results.pf',
     style: STYLES.flexStart,
     headerStyle: STYLES.flexStart,
     width: 100,
@@ -142,7 +142,7 @@ const pastStrategiesColumns = (t, getMarketPair) => [
   // },
   {
     label: t('table.pl'),
-    dataKey: 'sharpeRatio',
+    dataKey: 'results.pl',
     style: STYLES.flexStart,
     headerStyle: STYLES.flexStart,
     width: 100,
