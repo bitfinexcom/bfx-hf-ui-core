@@ -78,6 +78,21 @@ function reducer(state = getInitialState(), action = {}) {
       }
     }
 
+    case types.SET_PAST_STRATEGY_RESULTS: {
+      const { results } = payload
+      const { strategy } = results
+      const { closedPositions, openPositions } = strategy
+      const positions = { ...closedPositions, ...openPositions }
+
+      return {
+        ...state,
+        results: {
+          ...results,
+          positions,
+        },
+      }
+    }
+
     case types.SET_STARTED_LIVE_STRATEGY: {
       const { strategyMapKey, executionResultsObj } = payload
 
