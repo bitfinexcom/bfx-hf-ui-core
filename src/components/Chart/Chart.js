@@ -9,6 +9,7 @@ import { THEMES } from '../../redux/selectors/ui'
 import { CHART_URL, env } from '../../redux/config'
 import useChartIframe from './useChartIframe'
 import { getPairFromMarket } from '../../util/market'
+import { INDICATORS_ARRAY_SHAPE, MARKET_SHAPE, TRADE_SHAPE } from '../../constants/prop-types-shapes'
 
 import './style.css'
 
@@ -62,17 +63,11 @@ const Chart = ({
 }
 
 Chart.propTypes = {
-  market: PropTypes.shape({
-    wsID: PropTypes.string,
-    base: PropTypes.string,
-    quote: PropTypes.string,
-    uiID: PropTypes.string,
-    isPerp: PropTypes.bool,
-  }),
+  market: PropTypes.shape(MARKET_SHAPE),
   theme: PropTypes.oneOf([THEMES.LIGHT, THEMES.DARK]).isRequired,
   layoutI: PropTypes.string.isRequired,
-  indicators: PropTypes.array, // eslint-disable-line react/forbid-prop-types
-  trades: PropTypes.array, // eslint-disable-line react/forbid-prop-types
+  indicators: INDICATORS_ARRAY_SHAPE,
+  trades: PropTypes.arrayOf(PropTypes.shape(TRADE_SHAPE)),
   interval: PropTypes.string,
   hideResolutions: PropTypes.bool,
   chartRange: PropTypes.object, // eslint-disable-line react/forbid-prop-types

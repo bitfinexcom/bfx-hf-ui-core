@@ -25,6 +25,7 @@ import {
   renderLayout, processFieldData, marketToQuoteBase, defaultDataForLayout, fixComponentContext,
   COMPONENTS_FOR_ID, validateAOData,
 } from './OrderForm.helpers'
+import { MARKET_SHAPE } from '../../constants/prop-types-shapes'
 
 import './style.css'
 
@@ -534,12 +535,7 @@ OrderForm.propTypes = {
   savedState: PropTypes.objectOf(PropTypes.oneOfType([
     PropTypes.string, PropTypes.bool, PropTypes.object,
   ])).isRequired,
-  activeMarket: PropTypes.objectOf(PropTypes.oneOfType([
-    PropTypes.array,
-    PropTypes.string,
-    PropTypes.number,
-    PropTypes.bool,
-  ])).isRequired,
+  activeMarket: PropTypes.shape(MARKET_SHAPE).isRequired,
   apiClientState: PropTypes.number.isRequired,
   apiCredentials: PropTypes.objectOf(PropTypes.bool),
   setIsOrderExecuting: PropTypes.func.isRequired,

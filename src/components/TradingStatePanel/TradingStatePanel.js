@@ -12,6 +12,7 @@ import AtomicOrdersTable from '../AtomicOrdersTable'
 import AlgoOrdersTable from '../AlgoOrdersTable'
 import BalancesTable from '../BalancesTable'
 import MarketSelect from '../MarketSelect'
+import { MARKET_SHAPE } from '../../constants/prop-types-shapes'
 
 import './style.css'
 
@@ -139,12 +140,9 @@ TradingStatePanel.propTypes = {
   getPositionsCount: PropTypes.func,
   getAtomicOrdersCount: PropTypes.func,
   getAlgoOrdersCount: PropTypes.func,
-  markets: PropTypes.objectOf(PropTypes.object).isRequired, // eslint-disable-line
+  markets: PropTypes.objectOf(PropTypes.shape(MARKET_SHAPE)).isRequired,
   savedState: PropTypes.shape({
-    currentMarket: PropTypes.shape({
-      base: PropTypes.string,
-      quote: PropTypes.string,
-    }),
+    currentMarket: PropTypes.shape(MARKET_SHAPE),
     tab: PropTypes.number,
   }),
   updateState: PropTypes.func.isRequired,

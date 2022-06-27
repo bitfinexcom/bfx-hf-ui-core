@@ -16,6 +16,7 @@ import {
 import StrategyLiveChart from '../../StrategyLiveChart'
 import BacktestOptionsPanel from '../../BacktestOptionsPanel'
 import { prepareChartTrades } from '../StrategyEditor.helpers'
+import { INDICATORS_ARRAY_SHAPE, MARKET_SHAPE, STRATEGY_SHAPE } from '../../../constants/prop-types-shapes'
 
 const BacktestTab = (props) => {
   const {
@@ -118,14 +119,14 @@ BacktestTab.propTypes = {
   results: PropTypes.shape({
     finished: PropTypes.bool,
     loading: PropTypes.bool,
-    strategy: PropTypes.object, // eslint-disable-line
+    strategy: PropTypes.shape({
+      closedPositions: PropTypes.arrayOf(PropTypes.string),
+    }),
   }).isRequired,
   onCancelProcess: PropTypes.func.isRequired,
-  strategy: PropTypes.object.isRequired, // eslint-disable-line
-  markets: PropTypes.arrayOf(PropTypes.object).isRequired, // eslint-disable-line
-  indicators: PropTypes.arrayOf(
-    PropTypes.oneOfType([PropTypes.array, PropTypes.object]),
-  ), // eslint-disable-line
+  strategy: PropTypes.shape(STRATEGY_SHAPE).isRequired,
+  markets: PropTypes.objectOf(PropTypes.shape(MARKET_SHAPE)).isRequired,
+  indicators: INDICATORS_ARRAY_SHAPE,
   onBacktestStart: PropTypes.func.isRequired,
   saveStrategyOptions: PropTypes.func.isRequired,
 }

@@ -32,6 +32,7 @@ import { generateLayout } from './Grid.layouts'
 import tradingTerminalLayout from './layouts/trading'
 import marketDataLayout from './layouts/marketData'
 import { marketData, strategyEditor, tradingTerminal } from '../../constants/routes'
+import { MARKET_SHAPE, ORDER_SHAPE } from '../../constants/prop-types-shapes'
 
 import './style.css'
 
@@ -148,21 +149,14 @@ const GridLayout = ({
 GridLayout.propTypes = {
   chartProps: PropTypes.shape({
     disableToolbar: PropTypes.bool,
-    activeMarket: PropTypes.objectOf(
-      PropTypes.oneOfType([
-        PropTypes.string,
-        PropTypes.array,
-        PropTypes.number,
-        PropTypes.bool,
-      ]),
-    ),
+    activeMarket: PropTypes.shape(MARKET_SHAPE),
   }),
   bookProps: PropTypes.shape({
     canChangeStacked: PropTypes.bool,
   }),
   tradesProps: PropTypes.objectOf(PropTypes.bool),
   orderFormProps: PropTypes.shape({
-    orders: PropTypes.arrayOf(PropTypes.object), // eslint-disable-line
+    orders: PropTypes.arrayOf(PropTypes.shape(ORDER_SHAPE)),
   }),
   sharedProps: PropTypes.objectOf(PropTypes.oneOfType(
     [PropTypes.bool, PropTypes.string],

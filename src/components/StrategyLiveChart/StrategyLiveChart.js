@@ -6,8 +6,12 @@ import { useTranslation } from 'react-i18next'
 import { getThemeSetting } from '../../redux/selectors/ui'
 import Panel from '../../ui/Panel'
 import Chart from '../Chart'
-import { prepareTVIndicators, getStrategyMarket } from './StrategyLiveChart.helpers'
-import timeFrames, { TIMEFRAME_INTERVAL_MAPPING } from '../../util/time_frames'
+import { getStrategyMarket, prepareTVIndicators } from './StrategyLiveChart.helpers'
+import { TIMEFRAME_INTERVAL_MAPPING } from '../../util/time_frames'
+import {
+  INDICATORS_ARRAY_SHAPE,
+  MARKET_SHAPE, STRATEGY_SHAPE, STRATEGY_TRADE_SHAPE,
+} from '../../constants/prop-types-shapes'
 
 import './style.css'
 
@@ -83,29 +87,10 @@ const StrategyLiveChart = ({
 }
 
 StrategyLiveChart.propTypes = {
-  markets: PropTypes.arrayOf(PropTypes.object).isRequired, // eslint-disable-line
-  strategy: PropTypes.shape({
-    strategyOptions: PropTypes.shape({
-      symbol: PropTypes.objectOf(
-        PropTypes.oneOfType([
-          PropTypes.string,
-          PropTypes.arrayOf(PropTypes.string),
-          PropTypes.bool,
-          PropTypes.number,
-        ]),
-      ).isRequired,
-      timeframe: PropTypes.oneOf(timeFrames).isRequired,
-      startDate: PropTypes.object, // eslint-disable-line
-      endDate: PropTypes.object, // eslint-disable-line
-    }),
-    id: PropTypes.string.isRequired,
-    startedOn: PropTypes.number,
-    stoppedOn: PropTypes.number,
-  }).isRequired,
-  indicators: PropTypes.arrayOf(
-    PropTypes.oneOfType([PropTypes.array, PropTypes.object]),
-  ), // eslint-disable-line
-  trades: PropTypes.array, // eslint-disable-line
+  markets: PropTypes.arrayOf(PropTypes.shape(MARKET_SHAPE)).isRequired,
+  strategy: PropTypes.shape(STRATEGY_SHAPE).isRequired,
+  indicators: INDICATORS_ARRAY_SHAPE,
+  trades: PropTypes.arrayOf(PropTypes.shape(STRATEGY_TRADE_SHAPE)).isRequired,
   fullscreenChart: PropTypes.bool.isRequired,
   exitFullscreenChart: PropTypes.func.isRequired,
   isBacktest: PropTypes.bool,

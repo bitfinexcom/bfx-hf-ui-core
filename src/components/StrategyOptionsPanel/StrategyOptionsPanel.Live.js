@@ -10,6 +10,7 @@ import StrategyRunned from '../StrategyEditor/components/StrategyRunned'
 import StrategyStopped from '../StrategyEditor/components/StrategyStopped'
 import StrategyTypeSelect from './StrategyTypeSelect'
 import StrategyOptionsButton from './StrategyOptionsButton'
+import { STRATEGY_SHAPE } from '../../constants/prop-types-shapes'
 
 import './style.css'
 
@@ -101,23 +102,7 @@ const StrategyOptionsPanelLive = ({
 
 StrategyOptionsPanelLive.propTypes = {
   markets: PropTypes.arrayOf(Object).isRequired,
-  strategy: PropTypes.shape({
-    label: PropTypes.string,
-    strategyOptions: PropTypes.shape({
-      symbol: PropTypes.objectOf(
-        PropTypes.oneOfType([
-          PropTypes.string,
-          PropTypes.arrayOf(PropTypes.string),
-          PropTypes.bool,
-          PropTypes.number,
-        ]),
-      ).isRequired,
-      strategyType: PropTypes.shape({
-        i18nKey: PropTypes.string,
-        customValue: PropTypes.string,
-      }),
-    }),
-  }).isRequired,
+  strategy: PropTypes.shape(STRATEGY_SHAPE).isRequired,
   isExecuting: PropTypes.bool.isRequired,
   hasResults: PropTypes.bool.isRequired,
   saveStrategyOptions: PropTypes.func.isRequired,

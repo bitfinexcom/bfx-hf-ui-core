@@ -26,6 +26,7 @@ import SaveStrategyAsModal from '../../modals/Strategy/SaveStrategyAsModal/SaveS
 import { getDefaultStrategyOptions } from '../../components/StrategyEditor/StrategyEditor.helpers'
 import ClearBacktestResultsModal from '../../modals/Strategy/ClearBacktestResultsModal'
 import useToggle from '../../hooks/useToggle'
+import { STRATEGY_SHAPE } from '../../constants/prop-types-shapes'
 
 import './style.css'
 
@@ -340,7 +341,7 @@ StrategiesPage.propTypes = {
   isGuideActive: PropTypes.bool,
   finishGuide: PropTypes.func.isRequired,
   setStrategy: PropTypes.func.isRequired,
-  strategy: PropTypes.objectOf(Object).isRequired,
+  strategy: PropTypes.shape(STRATEGY_SHAPE).isRequired,
   authToken: PropTypes.string.isRequired,
   onSave: PropTypes.func.isRequired,
   onRemove: PropTypes.func.isRequired,

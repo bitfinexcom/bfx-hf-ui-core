@@ -3,12 +3,12 @@ import PropTypes from 'prop-types'
 import _debounce from 'lodash/debounce'
 import { useTranslation } from 'react-i18next'
 import { Checkbox, Truncate } from '@ufx-ui/core'
-import timeFrames from '../../util/time_frames'
 import AmountInput from '../OrderForm/FieldComponents/input.amount'
 import DateInput from '../OrderForm/FieldComponents/input.date'
 import TimeFrameDropdown from '../TimeFrameDropdown'
 import Button from '../../ui/Button'
 import { STRATEGY_OPTIONS_KEYS } from '../StrategyEditor/StrategyEditor.helpers'
+import { STRATEGY_SHAPE } from '../../constants/prop-types-shapes'
 
 const MAX_DATE = new Date()
 
@@ -160,17 +160,7 @@ const BacktestOptionsPanel = ({
 }
 
 BacktestOptionsPanel.propTypes = {
-  strategy: PropTypes.shape({
-    label: PropTypes.string,
-    strategyOptions: PropTypes.shape({
-      timeframe: PropTypes.oneOf(timeFrames).isRequired,
-      trades: PropTypes.bool.isRequired,
-      candleSeed: PropTypes.number.isRequired,
-      candles: PropTypes.bool.isRequired,
-      startDate: PropTypes.object.isRequired, // eslint-disable-line
-      endDate: PropTypes.object.isRequired, // eslint-disable-line
-    }),
-  }).isRequired,
+  strategy: PropTypes.shape(STRATEGY_SHAPE).isRequired,
   setFullScreenChart: PropTypes.func.isRequired,
   onBacktestStart: PropTypes.func,
   isFinished: PropTypes.bool.isRequired,
