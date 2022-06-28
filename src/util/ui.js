@@ -81,12 +81,12 @@ export const readJSONFile = () => new Promise((resolve, reject) => {
   input.remove()
 })
 
-export const formatDate = (dateStr, returnDateString) => {
-  if (!dateStr) {
+export const formatDate = (rawDate, returnDateString) => {
+  if (!rawDate) {
     return '--'
   }
 
-  const date = new Date(dateStr).toLocaleString()
+  const date = new Date(rawDate).toLocaleString()
 
   // required for CSV compatibility
   if (returnDateString) {
