@@ -439,10 +439,6 @@
     "reboot_notify": "網路連線發生問題。重新加載應用程序...",
     "strategyLaunchMissingAPIKey": "請先設置API金鑰再重新啟動策略"
   },
-  "tradingModeModal": {
-    "title": "切換交易模式",
-    "text": "切換交易模式須重啟應用程序。按下「Okay」後將重新啟動，並暫停待執行演算法訂單。"
-  },
   "confirmDMSModal": {
     "title": "啟動「當關閉程式訂單將自動取消」功能",
     "text": "請注意：當開啟此設定時，一旦關閉APP，系統將會取消您在Bitfinex Honey、Bitfinex網頁及其它地方建立之所有訂單。\n\n此為建議設定，但您應了解設定後可能發生的狀況。",

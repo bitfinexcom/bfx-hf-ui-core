@@ -3,7 +3,6 @@ import getActiveMarket from './get_active_market'
 import getLayouts from './get_layouts'
 import getLayoutID from './get_layout_id'
 import getRemoteVersion from './get_remote_version'
-import getIsTradingModeModalVisible from './get_is_trading_mode_modal_visible'
 import getIsBadInternetConnection from './get_is_bad_internet_connection'
 import getIsAOPausedModalVisible from './get_is_ao_paused'
 import getOldFormatModalState from './get_old_modal_format_state'
@@ -40,7 +39,6 @@ export {
   getActiveMarket,
   getLayouts,
   getLayoutID,
-  getIsTradingModeModalVisible,
   getIsBadInternetConnection,
   getIsRefillBalanceModalVisible,
   getIsPaperTrading,

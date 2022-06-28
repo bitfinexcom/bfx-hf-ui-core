@@ -4,6 +4,7 @@ import { Checkbox, Button, Intent } from '@ufx-ui/core'
 import { useTranslation } from 'react-i18next'
 
 import UIActions from '../../redux/actions/ui'
+import WSActions from '../../redux/actions/ws'
 import { getIsPaperTrading } from '../../redux/selectors/ui'
 import useToggle from '../../hooks/useToggle'
 
@@ -19,7 +20,10 @@ const TradingMode = ({ onClose }) => {
 
   const onSave = () => {
     // open change trading mode modal after this modal closes
-    onClose(() => dispatch(UIActions.changeTradingModeModalState(true)))
+    onClose(() => {
+      dispatch(UIActions.setTradingMode(isPaperTrading))
+      dispatch(WSActions.changeMode())
+    })
   }
 
   return (

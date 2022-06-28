@@ -133,11 +133,6 @@ export const setMarketFromStore = (isPaperTrading) => ({
   payload: { isPaperTrading },
 })
 
-export const changeTradingModeModalState = (isVisible) => ({
-  type: types.CHANGE_TRADING_MODAL_STATE,
-  payload: { isVisible },
-})
-
 export const changeOldFormatModalState = (isVisible) => ({
   type: types.CHANGE_OLD_FORMAT_MODAL_STATE,
   payload: { isVisible },
@@ -249,7 +244,6 @@ export default {
   setStrategyExecutionId,
   setTradingMode,
   setMarketFromStore,
-  changeTradingModeModalState,
   changeReffilBalanceModalState,
   changeBadInternetConnectionState,
   setIsOrderExecuting,

@@ -16,23 +16,27 @@ const SWITCH_THEME = {
 }
 
 const SwitchMode = ({
-  isPaperTrading, isTradingModeModalVisible, openTradingModeModal, settingsTheme,
-}) => (
-  <ToggleSwitch
-    checked={isPaperTrading}
-    onChange={openTradingModeModal}
-    disabled={isTradingModeModalVisible}
-    onColor={SWITCH_THEME[settingsTheme].onColor}
-    offColor={SWITCH_THEME[settingsTheme].offColor}
-    className='toggle-switch'
-    aria-label='Switch Paper Trading mode'
-  />
-)
+  isPaperTrading, changeTradingMode, settingsTheme,
+}) => {
+  const onChangeTradingMode = () => {
+    changeTradingMode(!isPaperTrading)
+  }
+
+  return (
+    <ToggleSwitch
+      checked={isPaperTrading}
+      onChange={onChangeTradingMode}
+      onColor={SWITCH_THEME[settingsTheme].onColor}
+      offColor={SWITCH_THEME[settingsTheme].offColor}
+      className='toggle-switch'
+      aria-label='Switch Paper Trading mode'
+    />
+  )
+}
 
 SwitchMode.propTypes = {
-  openTradingModeModal: PropTypes.func.isRequired,
+  changeTradingMode: PropTypes.func.isRequired,
   isPaperTrading: PropTypes.bool.isRequired,
-  isTradingModeModalVisible: PropTypes.bool.isRequired,
   settingsTheme: PropTypes.oneOf([THEMES.LIGHT, THEMES.DARK]).isRequired,
 }
 

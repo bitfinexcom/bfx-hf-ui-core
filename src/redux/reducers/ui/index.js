@@ -77,7 +77,6 @@ function getInitialState() {
       isCcyInfoModalVisible: false,
       isConfirmDMSModalVisible: false,
       isEditOrderModalVisible: false,
-      isTradingModeModalVisible: false,
       isClosePositionModalVisible: false,
       isAppSettingsModalVisible: false,
     },
@@ -400,16 +399,6 @@ function reducer(state = getInitialState(), action = {}) {
         isPaperTrading,
         currentMode: mode,
         tickersVolumeUnit: isPaperTrading ? VOLUME_UNIT_PAPER.TESTUSD : VOLUME_UNIT.USD,
-      }
-    }
-    case types.CHANGE_TRADING_MODAL_STATE: {
-      const { isVisible } = payload
-      return {
-        ...state,
-        modals: {
-          ...state.modals,
-          isTradingModeModalVisible: isVisible,
-        },
       }
     }
     case types.CHANGE_BAD_INTERNET_STATE: {
