@@ -43,15 +43,12 @@ const onTradeExportClick = (rawPositions, activeMarket, t, getCurrencySymbol) =>
     return [...acc, ...trades]
   }, [])
 
-  // {
-  //   amount, order_id: orderID, order_js: order,
-  // }
   const trades = _map(rawTrades, (trade) => ({
     [tHeaders.id]: getOrderID(trade),
     [tHeaders.action]: getTradeAmount(trade) < 0 ? 'SELL' : 'BUY',
     [tHeaders.type]: getTradeType(trade),
-    [tHeaders.timestamp]: getTradeTimestamp(trade),
-    [tHeaders.executedAt]: getTradeExecutedAt(trade),
+    [tHeaders.timestamp]: getTradeTimestamp(trade, true),
+    [tHeaders.executedAt]: getTradeExecutedAt(trade, true),
     [tHeaders.orderPrice]: getTradePrice(trade),
     [tHeaders.tradePrice]: getTradePriceAvg(trade),
     [tHeaders.amount]: getTradeAmount(trade),
