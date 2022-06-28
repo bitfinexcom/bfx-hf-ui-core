@@ -6,7 +6,25 @@ import _replace from 'lodash/replace'
 import _isEmpty from 'lodash/isEmpty'
 import _reduce from 'lodash/reduce'
 import { getPairFromMarket } from '../../util/market'
-import { getTradesHeaders, getPositionsHeaders } from './TradesTable/TradesTable.helpers'
+import { formatDate } from '../../util/ui'
+import {
+  getTradesHeaders, getPositionsHeaders, getTradeType, getTradePriceAvg,
+  getTradePrice, getTradeAmount, getOrderID, getTradeTimestamp, getTradeExecutedAt,
+} from './TradesTable/TradesTable.helpers'
+
+export const getPositionEntryAt = (position, asRawString) => formatDate(position.entryAt, asRawString)
+
+export const getPositionClosedAt = (position, asRawString) => formatDate(position.closedAt, asRawString)
+
+export const getPositionEntryPrice = (position) => position.entryPrice
+
+export const getPositionClosingPrice = (position) => position.closingPrice
+
+export const getPositionAmount = (position) => position.amount
+
+export const getPositionId = (position) => position.id
+
+export const getPositionPl = (position) => position.pl
 
 const getExportFilename = (prefix, extension = 'zip') => {
   // turn something like 2022-02-22T12:55:03.800Z into 2022-02-22T12-55-03
@@ -17,17 +35,16 @@ const getExportFilename = (prefix, extension = 'zip') => {
 const onTradeExportClick = (rawPositions, activeMarket, t, getCurrencySymbol) => {
   const tHeaders = getTradesHeaders(t)
   const pHeaders = getPositionsHeaders(t)
+  console.log(rawPositions)
 
-  const positions = _map(rawPositions, ({
-    amount, entryPrice, closingPrice, entryAt, closedAt, id, pl,
-  }) => ({
-    [pHeaders.id]: id,
-    [pHeaders.entryAt]: _replace(new Date(entryAt).toLocaleString(), ',', ''),
-    [pHeaders.closedAt]: _replace(new Date(closedAt).toLocaleString(), ',', ''),
-    [pHeaders.entryPrice]: entryPrice,
-    [pHeaders.closingPrice]: closingPrice,
-    [pHeaders.amount]: amount,
-    [pHeaders.pl]: pl,
+  const positions = _map(rawPositions, (position) => ({
+    [pHeaders.id]: getPositionId(position),
+    [pHeaders.entryAt]: getPositionEntryAt(position, true),
+    [pHeaders.closedAt]: getPositionClosedAt(position, true),
+    [pHeaders.entryPrice]: getPositionEntryPrice(position),
+    [pHeaders.closingPrice]: getPositionClosingPrice(position),
+    [pHeaders.amount]: getPositionAmount(position),
+    [pHeaders.pl]: getPositionPl(position),
   }))
 
   const rawTrades = _reduce(rawPositions, (acc, position) => {
@@ -40,17 +57,15 @@ const onTradeExportClick = (rawPositions, activeMarket, t, getCurrencySymbol) =>
     return [...acc, ...trades]
   }, [])
 
-  const trades = _map(rawTrades, ({
-    amount, order_id: orderID, order_js: order,
-  }) => ({
-    [tHeaders.id]: orderID,
-    [tHeaders.action]: amount < 0 ? 'SELL' : 'BUY',
-    [tHeaders.type]: order.type,
-    [tHeaders.timestamp]: new Date(order?.mtsCreate).toLocaleString(),
-    [tHeaders.executedAt]: new Date(order?.mtsUpdate).toLocaleString(),
-    [tHeaders.orderPrice]: order.price,
-    [tHeaders.tradePrice]: order.priceAvg,
-    [tHeaders.amount]: amount,
+  const trades = _map(rawTrades, (trade) => ({
+    [tHeaders.id]: getOrderID(trade),
+    [tHeaders.action]: getTradeAmount(trade) < 0 ? 'SELL' : 'BUY',
+    [tHeaders.type]: getTradeType(trade),
+    [tHeaders.timestamp]: getTradeTimestamp(trade, true),
+    [tHeaders.executedAt]: getTradeExecutedAt(trade, true),
+    [tHeaders.orderPrice]: getTradePrice(trade),
+    [tHeaders.tradePrice]: getTradePriceAvg(trade),
+    [tHeaders.amount]: getTradeAmount(trade),
   }))
 
   const documents = {

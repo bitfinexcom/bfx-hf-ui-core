@@ -1,10 +1,13 @@
 import React from 'react'
 import { PrettyValue } from '@ufx-ui/core'
 import _toString from 'lodash/toString'
-import { defaultCellRenderer, formatDate } from '../../../util/ui'
+import { defaultCellRenderer } from '../../../util/ui'
 import { AMOUNT_DECIMALS, PRICE_SIG_FIGS } from '../../../constants/precision'
 
-import { getTradeAmount, getTradePrice, getTradesHeaders } from './TradesTable.helpers'
+import {
+  getTradeAmount, getTradePriceAvg, getTradesHeaders, getOrderID, getTradeType,
+  getTradePrice, getTradeTimestamp, getTradeExecutedAt,
+} from './TradesTable.helpers'
 
 const STYLES = {
   RIGHT_ALIGN: { textAlign: 'right' },
@@ -19,41 +22,41 @@ export default (t) => {
     {
       label: id,
       dataKey: 'order_id',
-      cellRenderer: ({ rowData }) => defaultCellRenderer(`#${rowData?.order_id}`),
+      cellRenderer: ({ rowData }) => defaultCellRenderer(`#${getOrderID(rowData)}`),
     },
     {
       label: action,
       dataKey: 'amount',
-      cellRenderer: ({ rowData }) => (rowData?.amount < 0 ? 'SELL' : 'BUY'),
+      cellRenderer: ({ rowData }) => (getTradeAmount(rowData) < 0 ? 'SELL' : 'BUY'),
     },
     {
       label: type,
       dataKey: 'type',
-      cellRenderer: ({ rowData }) => defaultCellRenderer(rowData?.order_js?.type),
+      cellRenderer: ({ rowData }) => defaultCellRenderer(getTradeType(rowData)),
     },
     {
       label: timestamp,
       dataKey: 'mtsCreate',
-      cellRenderer: ({ rowData }) => formatDate(rowData?.order_js?.mtsCreate),
+      cellRenderer: ({ rowData }) => defaultCellRenderer(getTradeTimestamp(rowData)),
       style: STYLES.RIGHT_ALIGN,
     },
     {
       label: executedAt,
       dataKey: 'mtsUpdate',
-      cellRenderer: ({ rowData }) => formatDate(rowData?.order_js?.mtsUpdate),
+      cellRenderer: ({ rowData }) => defaultCellRenderer(getTradeExecutedAt(rowData)),
       style: STYLES.RIGHT_ALIGN,
     },
     {
       label: orderPrice,
       dataKey: 'price',
-      cellRenderer: ({ rowData }) => defaultCellRenderer(<PrettyValue value={_toString(rowData?.order_js?.price)} sigFig={PRICE_SIG_FIGS} fadeTrailingZeros />),
+      cellRenderer: ({ rowData }) => defaultCellRenderer(<PrettyValue value={_toString(getTradePrice(rowData))} sigFig={PRICE_SIG_FIGS} fadeTrailingZeros />),
       style: STYLES.RIGHT_ALIGN,
     },
     {
       label: tradePrice,
       dataKey: 'priceAvg',
       cellRenderer: ({ rowData }) => defaultCellRenderer(
-        <PrettyValue value={_toString(getTradePrice(rowData))} sigFig={PRICE_SIG_FIGS} fadeTrailingZeros />,
+        <PrettyValue value={_toString(getTradePriceAvg(rowData))} sigFig={PRICE_SIG_FIGS} fadeTrailingZeros />,
       ),
       style: STYLES.RIGHT_ALIGN,
     },
