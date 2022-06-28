@@ -144,7 +144,6 @@
     "resolve": "^1.21.0",
     "sanitize-html": "^2.6.1",
     "thread-loader": "^3.0.4",
-    "universal-analytics": "^0.4.23",
     "uuid": "^8.3.2",
     "workbox-webpack-plugin": "^5.1.4",
     "worker-loader": "^3.0.8"
