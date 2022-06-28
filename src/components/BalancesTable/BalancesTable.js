@@ -6,6 +6,7 @@ import { VirtualTable } from '@ufx-ui/core'
 import { useTranslation } from 'react-i18next'
 
 import BalancesTableColumns from './BalancesTable.columns'
+import { BALANCE_SHAPE } from '../../constants/prop-types-shapes'
 
 // balance < 0.000000004 will be rounded and shown as 0.00000000, so hide at this threshold
 const DUST_THRESHOLD = 0.000000004
@@ -36,8 +37,8 @@ const BalancesTable = ({
 }
 
 BalancesTable.propTypes = {
-  balances: PropTypes.objectOf(PropTypes.object), // eslint-disable-line
-  filteredBalances: PropTypes.objectOf(PropTypes.object), // eslint-disable-line
+  balances: PropTypes.objectOf(PropTypes.shape(BALANCE_SHAPE)),
+  filteredBalances: PropTypes.objectOf(PropTypes.shape(BALANCE_SHAPE)),
   renderedInTradingState: PropTypes.bool,
   hideZeroBalances: PropTypes.bool,
 }

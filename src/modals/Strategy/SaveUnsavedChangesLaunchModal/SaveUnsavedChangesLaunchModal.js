@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import { useTranslation } from 'react-i18next'
 import { Intent } from '@ufx-ui/core'
 import Modal from '../../../ui/Modal'
+import { STRATEGY_SHAPE } from '../../../constants/prop-types-shapes'
 
 const SaveUnsavedChangesLaunchModal = ({
   onClose,
@@ -41,9 +42,7 @@ const SaveUnsavedChangesLaunchModal = ({
 SaveUnsavedChangesLaunchModal.propTypes = {
   onClose: PropTypes.func.isRequired,
   isOpen: PropTypes.bool.isRequired,
-  strategy: PropTypes.shape({
-    label: PropTypes.string,
-  }),
+  strategy: PropTypes.shape(STRATEGY_SHAPE),
   saveAndLaunch: PropTypes.func.isRequired,
   launchWithoutSaving: PropTypes.func.isRequired,
 }

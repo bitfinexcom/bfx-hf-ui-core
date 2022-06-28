@@ -8,6 +8,8 @@ import Panel from '../../ui/Panel'
 import Chart from '../Chart'
 import MarketSelect from '../MarketSelect'
 import { getPairFromMarket } from '../../util/market'
+import { MARKET_SHAPE } from '../../constants/prop-types-shapes'
+
 import './style.css'
 
 const ChartPanel = ({
@@ -79,11 +81,7 @@ ChartPanel.propTypes = {
   onRemove: PropTypes.func,
   moveable: PropTypes.bool,
   removeable: PropTypes.bool,
-  activeMarket: PropTypes.shape({
-    base: PropTypes.string,
-    quote: PropTypes.string,
-    restID: PropTypes.string,
-  }),
+  activeMarket: PropTypes.shape(MARKET_SHAPE),
   updateState: PropTypes.func,
   canChangeMarket: PropTypes.bool,
   showChartMarket: PropTypes.bool,
@@ -91,11 +89,9 @@ ChartPanel.propTypes = {
   layoutI: PropTypes.string.isRequired,
   layoutID: PropTypes.string,
   savedState: PropTypes.shape({
-    currentMarket: PropTypes.objectOf(PropTypes.oneOfType([
-      PropTypes.array, PropTypes.string, PropTypes.bool, PropTypes.number,
-    ])),
+    currentMarket: PropTypes.shape(MARKET_SHAPE),
   }),
-  markets: PropTypes.objectOf(PropTypes.object), // eslint-disable-line
+  markets: PropTypes.objectOf(PropTypes.shape(MARKET_SHAPE)),
   getCurrencySymbol: PropTypes.func.isRequired,
   settingsTheme: PropTypes.oneOf([THEMES.LIGHT, THEMES.DARK]),
 }

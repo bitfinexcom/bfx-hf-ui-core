@@ -18,9 +18,10 @@ import MarketSelect from '../MarketSelect'
 import OrderBook from '../OrderBook'
 import PanelSettings from '../../ui/PanelSettings'
 import Panel from '../../ui/Panel'
+import { getPairFromMarket } from '../../util/market'
+import { MARKET_SHAPE } from '../../constants/prop-types-shapes'
 
 import './style.css'
-import { getPairFromMarket } from '../../util/market'
 
 const { WSSubscribeChannel, WSUnsubscribeChannel } = reduxActions
 const { SUBSCRIPTION_CONFIG } = reduxConstants
@@ -210,17 +211,15 @@ OrderBookPanel.propTypes = {
   removeable: PropTypes.bool,
   savedState: PropTypes.object,
   dark: PropTypes.bool,
-  activeMarket: PropTypes.shape({
-    base: PropTypes.string,
-    quote: PropTypes.string,
-    uiID: PropTypes.string,
-  }),
-  markets: PropTypes.objectOf(PropTypes.object).isRequired, // eslint-disable-line
+  activeMarket: PropTypes.shape(MARKET_SHAPE),
+  markets: PropTypes.objectOf(PropTypes.shape(MARKET_SHAPE)).isRequired,
   canChangeMarket: PropTypes.bool.isRequired,
   layoutID: PropTypes.string,
   layoutI: PropTypes.string.isRequired,
   updateState: PropTypes.func.isRequired,
-  allMarketBooks: PropTypes.arrayOf(PropTypes.object), // eslint-disable-line
+  allMarketBooks: PropTypes.arrayOf(PropTypes.shape({
+    currentMarket: PropTypes.shape(MARKET_SHAPE),
+  })),
   getCurrencySymbol: PropTypes.func.isRequired,
 }
 
