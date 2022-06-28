@@ -1,4 +1,5 @@
 import ua from 'universal-analytics'
+import ga4 from 'react-ga4'
 import { v4 } from 'uuid'
 
 import {
@@ -20,7 +21,14 @@ if (!gaCustomerId) {
 }
 
 const ReactGA = ua(gaID, getGACustomerId())
+const ReactGA2 = ga4.initialize('G-BMYX9FMN4E', {
+  gaOptions: {
+    anonymizeIp: true,
+  },
+})
 ReactGA.set('aip', '1')
+
+// ReactGA2.event()
 
 export default () => {
   return store => next => (action = {}) => {
@@ -76,7 +84,8 @@ export default () => {
       case GA_PAGEVIEW: {
         const { page } = payload
         if (ga) {
-          ReactGA.pageview(page).send()
+          // ReactGA.pageview(page).send()
+          ReactGA2.pageview(page).send()
         }
         break
       }
