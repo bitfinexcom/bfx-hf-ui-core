@@ -31,11 +31,8 @@ const ipcHelpers = window.electronService
 const HFUI = (props) => {
   const {
     authToken,
-    getSettings,
     getCoreSettings,
-    getFeatureFlags,
     notificationsVisible,
-    getFavoritePairs,
     currentMode,
     GAPageview,
     onUnload,
@@ -45,7 +42,6 @@ const HFUI = (props) => {
     settingsTheme,
     isBfxConnected,
     showStrategies,
-    getPastStrategies,
   } = props
   useInjectBfxData()
 
@@ -117,13 +113,9 @@ const HFUI = (props) => {
 
   useEffect(() => {
     if (authToken) {
-      getSettings(authToken)
-      getFeatureFlags(authToken)
-      getFavoritePairs(authToken, currentMode)
-      getPastStrategies(authToken)
       subscribeAllTickers()
     }
-  }, [authToken, currentMode, getCoreSettings, getFavoritePairs, getFeatureFlags, getSettings, subscribeAllTickers, getPastStrategies])
+  }, [authToken, subscribeAllTickers])
 
   // fetch core-settings after bitfinex client is connected
   useEffect(() => {
@@ -160,11 +152,7 @@ const HFUI = (props) => {
 HFUI.propTypes = {
   authToken: PropTypes.string,
   currentMode: PropTypes.string.isRequired,
-  getSettings: PropTypes.func.isRequired,
-  getFeatureFlags: PropTypes.func.isRequired,
   getCoreSettings: PropTypes.func.isRequired,
-  getFavoritePairs: PropTypes.func.isRequired,
-  getPastStrategies: PropTypes.func.isRequired,
   onUnload: PropTypes.func.isRequired,
   notificationsVisible: PropTypes.bool.isRequired,
   GAPageview: PropTypes.func.isRequired,

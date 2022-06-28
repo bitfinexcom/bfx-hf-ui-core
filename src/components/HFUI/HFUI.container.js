@@ -27,24 +27,11 @@ const mapStateToProps = (state = {}) => {
 }
 
 const mapDispatchToProps = dispatch => ({
-  getSettings: (authToken) => {
-    dispatch(WSActions.send(['get.settings', authToken]))
-  },
-  getPastStrategies: (authToken) => {
-    dispatch(WSActions.send(['get.past_strategies', authToken]))
-  },
   getCoreSettings: (authToken) => {
     dispatch(WSActions.send(['get.core_settings', authToken, [MAX_ORDER_COUNT_SETTING]]))
   },
   GAPageview: (page) => {
     dispatch(GAActions.pageview(page))
-  },
-  getFavoritePairs: (authToken, mode) => {
-    dispatch(WSActions.send([
-      'get.favourite_trading_pairs',
-      authToken,
-      mode,
-    ]))
   },
   onUnload: (authToken, mode) => {
     dispatch(WSActions.onUnload(authToken, mode))
@@ -54,9 +41,6 @@ const mapDispatchToProps = dispatch => ({
   },
   shouldShowAOPauseModalState: () => {
     dispatch(WSActions.send(['get.show_algo_pause_info']))
-  },
-  getFeatureFlags: (authToken) => {
-    dispatch(WSActions.send(['feature_flags.get', authToken]))
   },
 })
 
