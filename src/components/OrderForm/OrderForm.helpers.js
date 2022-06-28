@@ -17,7 +17,7 @@ import _split from 'lodash/split'
 import _replace from 'lodash/replace'
 import _includes from 'lodash/includes'
 import {
-  Iceberg, TWAP, AccumulateDistribute, PingPong, MACrossover, OCOCO,
+  Iceberg, TWAP, AccumulateDistribute, PingPong, OCOCO,
 } from 'bfx-hf-algo'
 import Debug from 'debug'
 
@@ -223,12 +223,6 @@ const validateAOData = (data, currentLayout, currentMarket, atomicOrdersCount, a
           maxOrderCounts,
         )
       }
-      break
-    }
-
-    case MACrossover.id: {
-      const processedData = MACrossover.meta.processParams(data)
-      errors = MACrossover.meta.validateParams(processedData)
       break
     }
 
