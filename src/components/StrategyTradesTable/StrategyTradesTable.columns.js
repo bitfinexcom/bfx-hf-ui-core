@@ -4,10 +4,14 @@ import React from 'react'
 import { PrettyValue } from '@ufx-ui/core'
 import { Icon } from 'react-fa'
 
-import { defaultCellRenderer, formatDate } from '../../util/ui'
+import { defaultCellRenderer } from '../../util/ui'
 import { PRICE_SIG_FIGS } from '../../constants/precision'
 import { resultNumber } from '../Backtester/Results/Results.utils'
 import { getPositionsHeaders } from './TradesTable/TradesTable.helpers'
+import {
+  getPositionEntryAt, getPositionClosedAt, getPositionEntryPrice, getPositionClosingPrice,
+  getPositionAmount, getPositionPl, getPositionId,
+} from './StrategyTradesTable.helpers'
 
 const STYLES = {
   flexStart: { justifyContent: 'flex-start' },
@@ -32,7 +36,7 @@ export default (t, selectedIndex, setSelectedIndex) => {
       dataKey: 'id',
       width: 50,
       flexGrow: 1,
-      cellRenderer: ({ rowData }) => defaultCellRenderer(`#${rowData?.id}`),
+      cellRenderer: ({ rowData }) => defaultCellRenderer(`#${getPositionId(rowData)}`),
       style: STYLES.flexStart,
       headerStyle: STYLES.flexStart,
     },
@@ -43,7 +47,7 @@ export default (t, selectedIndex, setSelectedIndex) => {
       flexGrow: 1,
       style: STYLES.flexEnd,
       headerStyle: STYLES.flexEnd,
-      cellRenderer: ({ rowData }) => formatDate(rowData?.entryAt),
+      cellRenderer: ({ rowData }) => getPositionEntryAt(rowData),
     },
     {
       label: closedAt,
@@ -52,7 +56,7 @@ export default (t, selectedIndex, setSelectedIndex) => {
       flexGrow: 1,
       style: STYLES.flexEnd,
       headerStyle: STYLES.flexEnd,
-      cellRenderer: ({ rowData = {} }) => formatDate(rowData?.closedAt),
+      cellRenderer: ({ rowData = {} }) => getPositionClosedAt(rowData),
     },
     {
       label: entryPrice,
@@ -63,7 +67,7 @@ export default (t, selectedIndex, setSelectedIndex) => {
       headerStyle: STYLES.flexEnd,
       cellRenderer: ({ rowData = {} }) => defaultCellRenderer(
         <PrettyValue
-          value={rowData.entryPrice}
+          value={getPositionEntryPrice(rowData)}
           sigFig={PRICE_SIG_FIGS}
           fadeTrailingZeros
         />,
@@ -76,10 +80,10 @@ export default (t, selectedIndex, setSelectedIndex) => {
       flexGrow: 1,
       style: STYLES.flexEnd,
       headerStyle: STYLES.flexEnd,
-      cellRenderer: ({ rowData = {} }) => (rowData.closingPrice
+      cellRenderer: ({ rowData = {} }) => (getPositionClosingPrice(rowData)
         ? defaultCellRenderer(
           <PrettyValue
-            value={rowData.closingPrice}
+            value={getPositionClosingPrice(rowData)}
             sigFig={PRICE_SIG_FIGS}
             fadeTrailingZeros
           />,
@@ -94,7 +98,7 @@ export default (t, selectedIndex, setSelectedIndex) => {
       headerStyle: STYLES.flexEnd,
       cellRenderer: ({ rowData }) => defaultCellRenderer(
         <PrettyValue
-          value={rowData?.amount}
+          value={getPositionAmount(rowData)}
           sigFig={PRICE_SIG_FIGS}
           fadeTrailingZeros
         />,
@@ -107,7 +111,7 @@ export default (t, selectedIndex, setSelectedIndex) => {
       flexGrow: 1,
       style: STYLES.flexEnd,
       headerStyle: STYLES.flexEnd,
-      cellRenderer: ({ rowData }) => resultNumber(rowData?.pl),
+      cellRenderer: ({ rowData }) => resultNumber(getPositionPl(rowData)),
     },
     // {
     //   label: t('table.drawdown'),

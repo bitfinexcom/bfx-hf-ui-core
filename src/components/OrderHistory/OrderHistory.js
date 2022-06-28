@@ -10,6 +10,8 @@ import Panel from '../../ui/Panel'
 import useSize from '../../hooks/useSize'
 import { rowMapping } from './OrderHistory.colunms'
 import { getNextEndDate } from './OrderHistory.helpers'
+import { ORDER_SHAPE } from '../../constants/prop-types-shapes'
+
 import './style.css'
 
 const OrderHistory = ({
@@ -54,7 +56,7 @@ const OrderHistory = ({
 }
 
 OrderHistory.propTypes = {
-  orders: PropTypes.arrayOf(PropTypes.object), // eslint-disable-line
+  orders: PropTypes.arrayOf(PropTypes.shape(ORDER_SHAPE)),
   dark: PropTypes.bool,
   onRemove: PropTypes.func,
   fetchOrderHistory: PropTypes.func.isRequired,

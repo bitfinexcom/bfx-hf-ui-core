@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import _size from 'lodash/size'
 import { useTranslation } from 'react-i18next'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import Panel from '../../ui/Panel'
 import {
   getSortedByTimeActiveStrategies,
@@ -19,6 +19,7 @@ import ActiveStrategiesList from './ActiveStrategiesList'
 import SavedStrategiesList from './SavedStrategiesList'
 import { prepareStrategyToLoad } from '../StrategyEditor/StrategyEditor.helpers'
 import { getIsPaperTrading } from '../../redux/selectors/ui'
+import WSActions from '../../redux/actions/ws'
 
 import './style.css'
 
@@ -28,6 +29,7 @@ const StrategiesListTable = ({
   saveAsHandler,
   renameStrategy,
 }) => {
+  const dispatch = useDispatch()
   const { t } = useTranslation()
   const _getMarketPair = useSelector(getExecutionMarketPair)
   const activeStrategies = useSelector(getSortedByTimeActiveStrategies())
@@ -41,13 +43,23 @@ const StrategiesListTable = ({
     onLoadStrategy(rowData)
   }
 
-  const onActiveOrPastStrategyRowClick = ({ rowData: strategy }) => {
+  const onStrategyRowClick = (strategy) => {
     const newStrategyObject = prepareStrategyToLoad(
       strategy,
       markets,
       savedStrategies,
     )
     onLoadStrategy(newStrategyObject)
+  }
+
+  const onActiveStrategyRowClick = ({ rowData: strategy }) => {
+    return onStrategyRowClick(strategy)
+  }
+
+  const onPastStrategyRowClick = ({ rowData: strategy }) => {
+    const { id, results } = strategy
+    dispatch(WSActions.setPastStrategyResults(id, results))
+    return onStrategyRowClick(strategy)
   }
 
   return (
@@ -59,7 +71,7 @@ const StrategiesListTable = ({
     >
       {!isPaperTrading && (
         <ActiveStrategiesList
-          onRowClick={onActiveOrPastStrategyRowClick}
+          onRowClick={onActiveStrategyRowClick}
           getMarketPair={_getMarketPair}
           strategies={activeStrategies}
           tabtitle={t('strategyEditor.activeStrategies')}
@@ -71,7 +83,7 @@ const StrategiesListTable = ({
         getMarketPair={_getMarketPair}
         tabtitle={t('strategyEditor.pastStrategies')}
         count={_size(pastStrategies)}
-        onRowClick={onActiveOrPastStrategyRowClick}
+        onRowClick={onPastStrategyRowClick}
       />
       {isPaperTrading && (
         <SavedStrategiesList

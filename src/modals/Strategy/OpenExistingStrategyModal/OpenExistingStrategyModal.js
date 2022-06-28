@@ -9,6 +9,7 @@ import { useTranslation } from 'react-i18next'
 import Modal from '../../../ui/Modal'
 import { makeShorterLongName } from '../../../util/ui'
 import Dropdown from '../../../ui/Dropdown'
+import { STRATEGY_SHAPE } from '../../../constants/prop-types-shapes'
 
 import './style.css'
 
@@ -78,7 +79,7 @@ const OpenExistingStrategyModal = ({
 OpenExistingStrategyModal.propTypes = {
   onClose: PropTypes.func.isRequired,
   onOpen: PropTypes.func.isRequired,
-  strategies: PropTypes.arrayOf(PropTypes.object).isRequired, // eslint-disable-line
+  strategies: PropTypes.arrayOf(PropTypes.shape(STRATEGY_SHAPE)).isRequired,
   isOpen: PropTypes.bool,
 }
 

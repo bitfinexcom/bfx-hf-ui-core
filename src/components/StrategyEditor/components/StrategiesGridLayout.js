@@ -6,6 +6,7 @@ import ReactGridLayout from 'react-grid-layout'
 import ClassNames from 'clsx'
 import { Spinner } from '@ufx-ui/core'
 import { useTranslation } from 'react-i18next'
+import { STRATEGY_LAYOUT_CONFIG_SHAPE } from '../../../constants/prop-types-shapes'
 
 const GRID_LAYOUT_MIN_HEIGHT = 530
 
@@ -57,7 +58,7 @@ const StrategiesGridLayout = ({
 
 StrategiesGridLayout.propTypes = {
   renderGridComponents: PropTypes.func.isRequired,
-  layoutConfig: PropTypes.arrayOf(PropTypes.object), // eslint-disable-line
+  layoutConfig: PropTypes.arrayOf(PropTypes.shape(STRATEGY_LAYOUT_CONFIG_SHAPE)),
   isLoading: PropTypes.bool,
   onCancelProcess: PropTypes.func,
 }

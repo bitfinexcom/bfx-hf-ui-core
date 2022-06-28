@@ -54,7 +54,7 @@ const activeStrategiesColumns = (t, getMarketPair) => [
     headerStyle: STYLES.flexStart,
     width: 100,
     flexGrow: 1,
-    cellRenderer: ({ rowData = {} }) => resultNumber(rowData.results?.pf),
+    cellRenderer: ({ rowData = {} }) => resultNumber(rowData.results?.pf, null, rowData.results?.pf >= 1),
   },
   // {
   //   label: t('table.sharpeRatio'),
@@ -129,7 +129,7 @@ const pastStrategiesColumns = (t, getMarketPair) => [
     headerStyle: STYLES.flexStart,
     width: 100,
     flexGrow: 1,
-    cellRenderer: ({ rowData = {} }) => resultNumber(rowData.results?.pf),
+    cellRenderer: ({ rowData = {} }) => resultNumber(rowData.results?.pf, null, rowData.results?.pf >= 1),
   },
   // {
   //   label: t('table.sharpeRatio'),

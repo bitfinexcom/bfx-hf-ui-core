@@ -1,5 +1,5 @@
 import {
-  Iceberg, TWAP, AccumulateDistribute, PingPong, MACrossover, OCOCO,
+  Iceberg, TWAP, AccumulateDistribute, PingPong, OCOCO,
 } from 'bfx-hf-algo'
 import memoizeOne from 'memoize-one'
 import _values from 'lodash/values'
@@ -11,7 +11,6 @@ import timeFrames from '../../util/time_frames'
 import rawOrders from '../../orders'
 
 const DEV_ONLY_ALGO_ORDERS = [
-  MACrossover,
   AccumulateDistribute,
 ]
 

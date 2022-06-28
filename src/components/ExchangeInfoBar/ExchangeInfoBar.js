@@ -13,6 +13,7 @@ import { getTickerDataMapping, getTickerListMapping } from './ExchangeInforBar.c
 import { getCorrectIconNameOfPerpCcy } from '../../util/market'
 import { MAIN_MODE } from '../../redux/reducers/ui'
 import CCYIcon from './CCYIcon'
+import { MARKET_SHAPE, TICKER_SHAPE } from '../../constants/prop-types-shapes'
 
 import './style.css'
 
@@ -126,24 +127,11 @@ const ExchangeInfoBar = ({
 }
 
 ExchangeInfoBar.propTypes = {
-  activeMarket: PropTypes.shape({
-    base: PropTypes.string,
-    quote: PropTypes.string,
-    uiID: PropTypes.string,
-    isPerp: PropTypes.bool,
-  }).isRequired,
+  activeMarket: PropTypes.shape(MARKET_SHAPE).isRequired,
   onChangeMarket: PropTypes.func.isRequired,
-  activeMarketTicker: PropTypes.shape({
-    low: PropTypes.number,
-    high: PropTypes.number,
-    volume: PropTypes.number,
-    lastPrice: PropTypes.number,
-    change: PropTypes.number,
-    changePerc: PropTypes.number,
-    volumeConverted: PropTypes.number,
-  }).isRequired,
-  markets: PropTypes.objectOf(PropTypes.object), // eslint-disable-line
-  allTickersArray: PropTypes.arrayOf(PropTypes.object).isRequired, // eslint-disable-line
+  activeMarketTicker: PropTypes.shape(TICKER_SHAPE).isRequired,
+  markets: PropTypes.objectOf(PropTypes.shape(MARKET_SHAPE)),
+  allTickersArray: PropTypes.arrayOf(PropTypes.shape(TICKER_SHAPE)).isRequired,
   favoritePairs: PropTypes.objectOf(PropTypes.bool).isRequired,
   updateFavorites: PropTypes.func.isRequired,
   authToken: PropTypes.string.isRequired,

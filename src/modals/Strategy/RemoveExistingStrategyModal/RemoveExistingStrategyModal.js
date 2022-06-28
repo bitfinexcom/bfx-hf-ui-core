@@ -6,6 +6,7 @@ import PropTypes from 'prop-types'
 import _size from 'lodash/size'
 import Input from '../../../ui/Input'
 import Modal from '../../../ui/Modal'
+import { STRATEGY_SHAPE } from '../../../constants/prop-types-shapes'
 
 import './style.css'
 
@@ -86,9 +87,7 @@ const RemoveExistingStrategyModal = ({
 }
 
 RemoveExistingStrategyModal.propTypes = {
-  strategy: PropTypes.shape({
-    label: PropTypes.string,
-  }),
+  strategy: PropTypes.shape(STRATEGY_SHAPE),
   isOpen: PropTypes.bool,
   onClose: PropTypes.func.isRequired,
   onRemoveStrategy: PropTypes.func.isRequired,

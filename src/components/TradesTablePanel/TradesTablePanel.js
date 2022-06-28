@@ -16,6 +16,7 @@ import MarketSelect from '../MarketSelect'
 import Panel from '../../ui/Panel'
 import './style.css'
 import { getPairFromMarket } from '../../util/market'
+import { MARKET_SHAPE, TRADE_SHAPE } from '../../constants/prop-types-shapes'
 
 const { trades } = reduxConstants
 const { SUBSCRIPTION_CONFIG } = trades
@@ -137,14 +138,9 @@ TradesTablePanel.propTypes = {
   moveable: PropTypes.bool,
   removeable: PropTypes.bool,
   showMarket: PropTypes.bool,
-  savedState: PropTypes.shape({
-    currentMarket: PropTypes.shape({
-      base: PropTypes.string,
-      quote: PropTypes.string,
-    }),
-  }),
+  savedState: PropTypes.shape(MARKET_SHAPE),
   canChangeMarket: PropTypes.bool,
-  allMarketTrades: PropTypes.arrayOf(PropTypes.object), // eslint-disable-line
+  allMarketTrades: PropTypes.arrayOf(PropTypes.shape(TRADE_SHAPE)),
   onRemove: PropTypes.func.isRequired,
   layoutI: PropTypes.string.isRequired,
   layoutID: PropTypes.string,

@@ -4,9 +4,13 @@ import { VirtualTable } from '@ufx-ui/core'
 import _isEmpty from 'lodash/isEmpty'
 import { useTranslation } from 'react-i18next'
 import PositionsTableColumns from './PositionsTable.columns'
+import { POSITION_SHAPE } from '../../constants/prop-types-shapes'
 
 const PositionsTable = ({
-  setClosePositionModal, filteredPositions, positions, renderedInTradingState,
+  setClosePositionModal,
+  filteredPositions,
+  positions,
+  renderedInTradingState,
   getMarketPair,
 }) => {
   const { t } = useTranslation()
@@ -32,8 +36,8 @@ const PositionsTable = ({
 
 PositionsTable.propTypes = {
   setClosePositionModal: PropTypes.func.isRequired,
-  filteredPositions: PropTypes.objectOf(PropTypes.object), // eslint-disable-line
-  positions: PropTypes.objectOf(PropTypes.object), // eslint-disable-line
+  filteredPositions: PropTypes.objectOf(PropTypes.shape(POSITION_SHAPE)),
+  positions: PropTypes.objectOf(PropTypes.shape(POSITION_SHAPE)),
   renderedInTradingState: PropTypes.bool,
   getMarketPair: PropTypes.func.isRequired,
 }

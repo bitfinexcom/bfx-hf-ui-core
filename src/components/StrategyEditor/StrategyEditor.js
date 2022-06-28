@@ -53,6 +53,7 @@ import { SETTINGS_TABS } from '../../modals/AppSettingsModal/AppSettingsModal.co
 import './style.css'
 import { getStrategyModeForSymbol } from '../../util/market'
 import useToggle from '../../hooks/useToggle'
+import { INDICATORS_ARRAY_SHAPE, STRATEGY_SHAPE } from '../../constants/prop-types-shapes'
 
 const debug = Debug('hfui-ui:c:strategy-editor')
 
@@ -733,19 +734,14 @@ StrategyEditor.propTypes = {
   onRemove: PropTypes.func.isRequired,
   authToken: PropTypes.string.isRequired,
   setStrategy: PropTypes.func,
-  backtestResults: PropTypes.objectOf(PropTypes.any).isRequired, // eslint-disable-line
-  strategy: PropTypes.shape({
-    id: PropTypes.string,
-    label: PropTypes.string,
-    // eslint-disable-next-line react/forbid-prop-types
-    strategyOptions: PropTypes.object,
-  }),
+  backtestResults: PropTypes.shape({
+    gid: PropTypes.string,
+  }).isRequired,
+  strategy: PropTypes.shape(STRATEGY_SHAPE),
   dsStopLiveStrategy: PropTypes.func.isRequired,
   dsExecuteLiveStrategy: PropTypes.func.isRequired,
   onLoadStrategy: PropTypes.func.isRequired,
-  indicators: PropTypes.arrayOf(
-    PropTypes.oneOfType([PropTypes.array, PropTypes.object]),
-  ), // eslint-disable-line
+  indicators: INDICATORS_ARRAY_SHAPE,
   strategyDirty: PropTypes.bool.isRequired,
   setStrategyDirty: PropTypes.func.isRequired,
   gaCreateStrategy: PropTypes.func.isRequired,
@@ -754,7 +750,7 @@ StrategyEditor.propTypes = {
     loading: PropTypes.bool,
     loadingGid: PropTypes.string,
   }).isRequired,
-  savedStrategies: PropTypes.objectOf(PropTypes.object), // eslint-disable-line
+  savedStrategies: PropTypes.objectOf(PropTypes.shape(STRATEGY_SHAPE)), // eslint-disable-line
   saveStrategy: PropTypes.func.isRequired,
   isPaperTrading: PropTypes.bool.isRequired,
   dsExecuteBacktest: PropTypes.func.isRequired,

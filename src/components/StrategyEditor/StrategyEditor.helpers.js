@@ -5,7 +5,9 @@ import _isEmpty from 'lodash/isEmpty'
 import _size from 'lodash/size'
 import { MAX_STRATEGY_LABEL_LENGTH as MAX_LABEL_LENGTH } from '../../constants/variables'
 
-import { getTradeAmount, getTradePrice, getTradeTime } from '../StrategyTradesTable/TradesTable/TradesTable.helpers'
+import {
+  getTradeAmount, getTradePrice, getTradeTime,
+} from '../StrategyTradesTable/TradesTable/TradesTable.helpers'
 
 const ONE_MIN = 1000 * 60
 const ONE_HOUR = ONE_MIN * 60

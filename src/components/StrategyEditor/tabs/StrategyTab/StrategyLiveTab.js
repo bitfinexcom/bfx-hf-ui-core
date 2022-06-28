@@ -19,6 +19,7 @@ import useToggle from '../../../../hooks/useToggle'
 import StrategyOptionsPanelLive from '../../../StrategyOptionsPanel/StrategyOptionsPanel.Live'
 import { getCurrentStrategyExecutionState, getStrategyPositions } from '../../../../redux/selectors/ws'
 import { prepareChartTrades } from '../../StrategyEditor.helpers'
+import { INDICATORS_ARRAY_SHAPE, MARKET_SHAPE, STRATEGY_SHAPE } from '../../../../constants/prop-types-shapes'
 
 const StrategyLiveTab = (props) => {
   const {
@@ -125,15 +126,14 @@ const StrategyLiveTab = (props) => {
 
 StrategyLiveTab.propTypes = {
   onCancelProcess: PropTypes.func.isRequired,
-  strategy: PropTypes.object.isRequired, // eslint-disable-line
-  markets: PropTypes.arrayOf(Object).isRequired,
+  strategy: PropTypes.shape(STRATEGY_SHAPE).isRequired,
+  markets: PropTypes.arrayOf(PropTypes.shape(MARKET_SHAPE)).isRequired,
   onOpenSaveStrategyAsModal: PropTypes.func.isRequired,
   saveStrategyOptions: PropTypes.func.isRequired,
   openExecutionOptionsModal: PropTypes.func.isRequired,
   stopExecution: PropTypes.func.isRequired,
-  indicators: PropTypes.arrayOf(
-    PropTypes.oneOfType([PropTypes.array, PropTypes.object]),
-  ), // eslint-disable-line
+  indicators: INDICATORS_ARRAY_SHAPE,
+
 }
 
 StrategyLiveTab.defaultProps = {

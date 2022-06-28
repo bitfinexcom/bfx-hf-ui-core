@@ -69,6 +69,7 @@ function reducer(state = getInitialState(), action = {}) {
       }
     }
 
+    case types.DISCONNECTED:
     case types.RESET_DATA_BACKTEST: {
       return getInitialState()
     }
