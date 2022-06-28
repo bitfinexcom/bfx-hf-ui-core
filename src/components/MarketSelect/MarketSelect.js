@@ -15,6 +15,7 @@ import FavoriteIcon from '../../ui/Icons/FavoriteIcon'
 import { THEMES } from '../../redux/selectors/ui'
 import { getPairFromMarket } from '../../util/market'
 import './style.css'
+import { MARKET_SHAPE } from '../../constants/prop-types-shapes'
 
 const favIconColourMapping = {
   [THEMES.DARK]: {
@@ -151,15 +152,15 @@ MarketSelect.propTypes = {
   value: PropTypes.instanceOf(Object),
   onChange: PropTypes.func.isRequired,
   markets: PropTypes.oneOfType([
-    PropTypes.objectOf(PropTypes.object),
-    PropTypes.arrayOf(PropTypes.object),
+    PropTypes.objectOf(PropTypes.shape(MARKET_SHAPE)),
+    PropTypes.arrayOf(PropTypes.shape(MARKET_SHAPE)),
   ]).isRequired,
   renderLabel: PropTypes.bool,
   className: PropTypes.instanceOf(Object),
   currentMode: PropTypes.string,
   savePairs: PropTypes.func.isRequired,
   authToken: PropTypes.string.isRequired,
-  favoritePairs: PropTypes.instanceOf(Array),
+  favoritePairs: PropTypes.arrayOf(PropTypes.string),
   renderWithFavorites: PropTypes.bool,
   getCurrencySymbol: PropTypes.func.isRequired,
   settingsTheme: PropTypes.oneOf([THEMES.LIGHT, THEMES.DARK]),

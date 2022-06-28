@@ -14,6 +14,8 @@ export const getTradeExecutedAt = (trade) => _replace(new Date(trade?.order_js?.
 
 export const getOrderID = (trade) => trade?.order_id
 
+export const getTradeTime = (trade) => trade?.order_js?.mtsCreate
+
 export const getTradesHeaders = (t) => ({
   id: t('table.id'),
   action: t('table.action'),

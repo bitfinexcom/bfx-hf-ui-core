@@ -3,7 +3,9 @@ import React, {
 } from 'react'
 import PropTypes from 'prop-types'
 import { useTranslation } from 'react-i18next'
+
 import StrategyPerfomanceMetrics from '../../StrategyPerfomanceMetrics'
+import useToggle from '../../../hooks/useToggle'
 import StrategyTradesTable from '../../StrategyTradesTable'
 import StrategiesGridLayout from '../components/StrategiesGridLayout'
 import {
@@ -14,6 +16,7 @@ import {
 import StrategyLiveChart from '../../StrategyLiveChart'
 import BacktestOptionsPanel from '../../BacktestOptionsPanel'
 import { prepareChartTrades } from '../StrategyEditor.helpers'
+import { INDICATORS_ARRAY_SHAPE, MARKET_SHAPE, STRATEGY_SHAPE } from '../../../constants/prop-types-shapes'
 
 const BacktestTab = (props) => {
   const {
@@ -27,7 +30,7 @@ const BacktestTab = (props) => {
   } = props
   const { t } = useTranslation()
   const [layoutConfig, setLayoutConfig] = useState()
-  const [fullscreenChart, setFullScreenChart] = useState(false)
+  const [fullscreenChart, , showFullscreenChart, hideFullscreenChart] = useToggle(false)
 
   const { finished = false, loading } = results
   const positions = results?.strategy?.closedPositions
@@ -51,7 +54,7 @@ const BacktestTab = (props) => {
               strategy={strategy}
               onBacktestStart={onBacktestStart}
               saveStrategyOptions={saveStrategyOptions}
-              setFullScreenChart={() => setFullScreenChart(true)}
+              setFullScreenChart={showFullscreenChart}
               isFinished={finished}
             />
           )
@@ -63,8 +66,9 @@ const BacktestTab = (props) => {
               markets={markets}
               strategy={strategy}
               fullscreenChart={fullscreenChart}
-              exitFullscreenChart={() => setFullScreenChart(false)}
+              exitFullscreenChart={hideFullscreenChart}
               trades={trades}
+              isBacktest
             />
           )
 
@@ -91,7 +95,7 @@ const BacktestTab = (props) => {
           return null
       }
     },
-    [strategy, onBacktestStart, saveStrategyOptions, finished, indicators, markets, fullscreenChart, trades, results, loading, positions, layoutConfig],
+    [strategy, onBacktestStart, saveStrategyOptions, showFullscreenChart, finished, indicators, markets, fullscreenChart, hideFullscreenChart, trades, results, loading, positions, layoutConfig],
   )
 
   return (
@@ -115,14 +119,14 @@ BacktestTab.propTypes = {
   results: PropTypes.shape({
     finished: PropTypes.bool,
     loading: PropTypes.bool,
-    strategy: PropTypes.object, // eslint-disable-line
+    strategy: PropTypes.shape({
+      closedPositions: PropTypes.arrayOf(PropTypes.string),
+    }),
   }).isRequired,
   onCancelProcess: PropTypes.func.isRequired,
-  strategy: PropTypes.object.isRequired, // eslint-disable-line
-  markets: PropTypes.objectOf(PropTypes.object).isRequired, // eslint-disable-line
-  indicators: PropTypes.arrayOf(
-    PropTypes.oneOfType([PropTypes.array, PropTypes.object]),
-  ), // eslint-disable-line
+  strategy: PropTypes.shape(STRATEGY_SHAPE).isRequired,
+  markets: PropTypes.objectOf(PropTypes.shape(MARKET_SHAPE)).isRequired,
+  indicators: INDICATORS_ARRAY_SHAPE,
   onBacktestStart: PropTypes.func.isRequired,
   saveStrategyOptions: PropTypes.func.isRequired,
 }

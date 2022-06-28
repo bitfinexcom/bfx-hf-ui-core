@@ -1,14 +1,17 @@
-import React, { memo } from 'react'
+import React, { memo, useMemo } from 'react'
 import { useSelector } from 'react-redux'
-import _find from 'lodash/find'
 import PropTypes from 'prop-types'
 import { useTranslation } from 'react-i18next'
 
 import { getThemeSetting } from '../../redux/selectors/ui'
 import Panel from '../../ui/Panel'
 import Chart from '../Chart'
-import { prepareTVIndicators } from './StrategyLiveChart.helpers'
-import timeFrames, { TIMEFRAME_INTERVAL_MAPPING } from '../../util/time_frames'
+import { getStrategyMarket, prepareTVIndicators } from './StrategyLiveChart.helpers'
+import { TIMEFRAME_INTERVAL_MAPPING } from '../../util/time_frames'
+import {
+  INDICATORS_ARRAY_SHAPE,
+  MARKET_SHAPE, STRATEGY_SHAPE, STRATEGY_TRADE_SHAPE,
+} from '../../constants/prop-types-shapes'
 
 import './style.css'
 
@@ -17,15 +20,36 @@ const StrategyLiveChart = ({
   markets,
   fullscreenChart,
   exitFullscreenChart,
-  strategy: { strategyOptions: { timeframe, symbol }, id },
+  strategy,
   trades,
+  isBacktest,
 }) => {
+  const {
+    strategyOptions: {
+      timeframe, symbol, startDate, endDate,
+    },
+    id, startedOn, stoppedOn,
+  } = strategy
+  const start = isBacktest ? new Date(startDate).getTime() : startedOn
+  const end = isBacktest ? new Date(endDate).getTime() : stoppedOn
+  const chartRange = useMemo(() => ({
+    start,
+    end,
+  }), [end, start])
   const { t } = useTranslation()
   const settingsTheme = useSelector(getThemeSetting)
-  const chartIndicators = prepareTVIndicators(indicators)
+  const chartIndicators = useMemo(() => prepareTVIndicators(indicators), [indicators])
   const interval = TIMEFRAME_INTERVAL_MAPPING[timeframe] || '15'
 
-  const activeMarketObject = _find(markets, (market) => market.wsID === symbol?.wsID, null)
+  const {
+    wsID, uiID, base, quote,
+  } = getStrategyMarket(markets, symbol?.wsID)
+  const chartMarket = useMemo(() => ({
+    wsID,
+    uiID,
+    base,
+    quote,
+  }), [base, quote, uiID, wsID])
 
   return (
     <Panel
@@ -46,15 +70,16 @@ const StrategyLiveChart = ({
       fullscreen={fullscreenChart}
       onExitFullscreen={exitFullscreenChart}
     >
-      {activeMarketObject && (
+      {chartMarket && (
         <Chart
-          market={activeMarketObject}
+          market={chartMarket}
           theme={settingsTheme}
           layoutI={`strategy-editor-${id}`}
           indicators={chartIndicators}
           interval={interval}
           trades={trades}
           hideResolutions
+          chartRange={chartRange}
         />
       )}
     </Panel>
@@ -62,31 +87,18 @@ const StrategyLiveChart = ({
 }
 
 StrategyLiveChart.propTypes = {
-  markets: PropTypes.arrayOf(Object).isRequired,
-  strategy: PropTypes.shape({
-    strategyOptions: PropTypes.shape({
-      symbol: PropTypes.objectOf(
-        PropTypes.oneOfType([
-          PropTypes.string,
-          PropTypes.arrayOf(PropTypes.string),
-          PropTypes.bool,
-          PropTypes.number,
-        ]),
-      ).isRequired,
-      timeframe: PropTypes.oneOf(timeFrames).isRequired,
-    }),
-    id: PropTypes.string.isRequired,
-  }).isRequired,
-  indicators: PropTypes.arrayOf(
-    PropTypes.oneOfType([PropTypes.array, PropTypes.object]),
-  ), // eslint-disable-line
-  trades: PropTypes.array, // eslint-disable-line
+  markets: PropTypes.arrayOf(PropTypes.shape(MARKET_SHAPE)).isRequired,
+  strategy: PropTypes.shape(STRATEGY_SHAPE).isRequired,
+  indicators: INDICATORS_ARRAY_SHAPE,
+  trades: PropTypes.arrayOf(PropTypes.shape(STRATEGY_TRADE_SHAPE)).isRequired,
   fullscreenChart: PropTypes.bool.isRequired,
   exitFullscreenChart: PropTypes.func.isRequired,
+  isBacktest: PropTypes.bool,
 }
 
 StrategyLiveChart.defaultProps = {
   indicators: [],
+  isBacktest: false,
 }
 
 export default memo(StrategyLiveChart)

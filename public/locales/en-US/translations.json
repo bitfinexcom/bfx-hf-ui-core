@@ -760,6 +760,7 @@
   "ui": {
     "ok": "Okay",
     "cancel": "Cancel",
+    "reset": "Reset",
     "dontShowAgain": "I understood. Don't show me again!",
     "dropdown": "Select an option",
     "backBtn": "Back",

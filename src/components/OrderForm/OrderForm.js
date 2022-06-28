@@ -18,7 +18,6 @@ import { getIsAnyModalOpen } from '../../util/document'
 
 import AOParamSettings from './Orderform.AlgoParams'
 import ConnectingModal from '../APIKeysConfigurateForm/ConnectingModal'
-import UnconfiguredModal from '../APIKeysConfigurateForm/UnconfiguredModal'
 import SubmitAPIKeysModal from '../APIKeysConfigurateForm/SubmitAPIKeysModal'
 import OrderFormMenu from './OrderFormMenu'
 import { getAOs, getAtomicOrders } from './OrderForm.orders.helpers'
@@ -26,6 +25,7 @@ import {
   renderLayout, processFieldData, marketToQuoteBase, defaultDataForLayout, fixComponentContext,
   COMPONENTS_FOR_ID, validateAOData,
 } from './OrderForm.helpers'
+import { MARKET_SHAPE } from '../../constants/prop-types-shapes'
 
 import './style.css'
 
@@ -42,7 +42,6 @@ class OrderForm extends React.Component {
     creationError: null,
     context: 'e',
     helpOpen: false,
-    configureModalOpen: false,
     isAlgoOrder: false,
   }
 
@@ -68,7 +67,6 @@ class OrderForm extends React.Component {
     this.onFieldChange = this.onFieldChange.bind(this)
     this.onSubmit = this.onSubmit.bind(this)
     this.onToggleHelp = this.onToggleHelp.bind(this)
-    this.onToggleConfigureModal = this.onToggleConfigureModal.bind(this)
     this.onSubmitAPIKeys = this.onSubmitAPIKeys.bind(this)
     this.onClearOrderLayout = this.onClearOrderLayout.bind(this)
     this.processAOData = this.processAOData.bind(this)
@@ -141,12 +139,6 @@ class OrderForm extends React.Component {
   onToggleHelp() {
     this.setState(({ helpOpen }) => ({
       helpOpen: !helpOpen,
-    }))
-  }
-
-  onToggleConfigureModal() {
-    this.setState(({ configureModalOpen }) => ({
-      configureModalOpen: !configureModalOpen,
     }))
   }
 
@@ -381,7 +373,7 @@ class OrderForm extends React.Component {
 
     const {
       fieldData, validationErrors, creationError, context, currentLayout,
-      helpOpen, configureModalOpen, currentMarket,
+      helpOpen, currentMarket,
     } = this.state
 
     const algoOrders = getAOs(t, showAdvancedAlgos)
@@ -449,22 +441,13 @@ class OrderForm extends React.Component {
                 <ConnectingModal key='connecting' />
               ),
 
-              !apiClientConfigured && !configureModalOpen && (
-                <UnconfiguredModal
-                  key='unconfigured'
-                  onClick={this.onToggleConfigureModal}
-                  isPaperTrading={isPaperTrading}
-                  keyExistButNotValid={apiCredentials?.configured && !apiCredentials?.valid}
-                />
-              ),
-
-              !apiClientConfigured && configureModalOpen && (
+              !apiClientConfigured && (
                 <SubmitAPIKeysModal
                   key='submit-api-keys'
-                  onClose={this.onToggleConfigureModal}
                   onSubmit={this.onSubmitAPIKeys}
                   apiClientConnecting={apiClientConnecting}
                   isPaperTrading={isPaperTrading}
+                  keyExistButNotValid={apiCredentials?.configured && !apiCredentials?.valid}
                 />
               ),
             ]}
@@ -552,12 +535,7 @@ OrderForm.propTypes = {
   savedState: PropTypes.objectOf(PropTypes.oneOfType([
     PropTypes.string, PropTypes.bool, PropTypes.object,
   ])).isRequired,
-  activeMarket: PropTypes.objectOf(PropTypes.oneOfType([
-    PropTypes.array,
-    PropTypes.string,
-    PropTypes.number,
-    PropTypes.bool,
-  ])).isRequired,
+  activeMarket: PropTypes.shape(MARKET_SHAPE).isRequired,
   apiClientState: PropTypes.number.isRequired,
   apiCredentials: PropTypes.objectOf(PropTypes.bool),
   setIsOrderExecuting: PropTypes.func.isRequired,

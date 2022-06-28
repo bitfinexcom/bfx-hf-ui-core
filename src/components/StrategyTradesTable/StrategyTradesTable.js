@@ -21,6 +21,7 @@ import {
 import { getRowRenderer, rowCache } from './StrategyTradesTable.Row'
 
 import { onTradeExportClick } from './StrategyTradesTable.helpers'
+import { STRATEGY_LAYOUT_CONFIG_SHAPE, STRATEGY_SHAPE, STRATEGY_TRADE_SHAPE } from '../../constants/prop-types-shapes'
 
 import './style.css'
 
@@ -134,10 +135,10 @@ const StrategyTradesTable = ({
 }
 
 StrategyTradesTable.propTypes = {
-  results: PropTypes.object,  // eslint-disable-line
-  layoutConfig: PropTypes.arrayOf(PropTypes.object).isRequired, // eslint-disable-line
+  results: PropTypes.shape(STRATEGY_TRADE_SHAPE).isRequired,
+  layoutConfig: PropTypes.arrayOf(PropTypes.shape(STRATEGY_LAYOUT_CONFIG_SHAPE)).isRequired,
   setLayoutConfig: PropTypes.func.isRequired,
-  strategy: PropTypes.object.isRequired, // eslint-disable-line
+  strategy: PropTypes.shape(STRATEGY_SHAPE).isRequired,
 }
 
 export default memo(StrategyTradesTable)

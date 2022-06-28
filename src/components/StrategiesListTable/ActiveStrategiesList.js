@@ -4,6 +4,7 @@ import _isEmpty from 'lodash/isEmpty'
 import { VirtualTable } from '@ufx-ui/core'
 import { useTranslation } from 'react-i18next'
 import { activeStrategiesColumns } from './StrategiesList.columns'
+import { STRATEGY_SHAPE } from '../../constants/prop-types-shapes'
 
 const ActiveStrategiesList = ({ onRowClick, strategies, getMarketPair }) => {
   const { t } = useTranslation()
@@ -31,7 +32,7 @@ const ActiveStrategiesList = ({ onRowClick, strategies, getMarketPair }) => {
 
 ActiveStrategiesList.propTypes = {
   onRowClick: PropTypes.func.isRequired,
-  strategies: PropTypes.arrayOf(PropTypes.object).isRequired, // eslint-disable-line
+  strategies: PropTypes.arrayOf(PropTypes.shape(STRATEGY_SHAPE)).isRequired,
   getMarketPair: PropTypes.func.isRequired,
 }
 

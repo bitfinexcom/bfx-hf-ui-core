@@ -14,6 +14,7 @@ import Button from '../../ui/Button'
 import StrategyTypeSelect from './StrategyTypeSelect'
 import { STRATEGY_OPTIONS_KEYS } from '../StrategyEditor/StrategyEditor.helpers'
 import StrategyOptionsButton from './StrategyOptionsButton'
+import { STRATEGY_SHAPE } from '../../constants/prop-types-shapes'
 
 import './style.css'
 
@@ -122,23 +123,7 @@ StrategyOptionsPanelSandbox.propTypes = {
   markets: PropTypes.arrayOf(Object).isRequired,
   saveStrategyOptions: PropTypes.func.isRequired,
   onOpenSaveStrategyAsModal: PropTypes.func.isRequired,
-  strategy: PropTypes.shape({
-    label: PropTypes.string,
-    strategyOptions: PropTypes.shape({
-      symbol: PropTypes.objectOf(
-        PropTypes.oneOfType([
-          PropTypes.string,
-          PropTypes.arrayOf(PropTypes.string),
-          PropTypes.bool,
-          PropTypes.number,
-        ]),
-      ),
-      strategyType: PropTypes.shape({
-        i18nKey: PropTypes.string,
-        customValue: PropTypes.string,
-      }),
-    }).isRequired,
-  }).isRequired,
+  strategy: PropTypes.shape(STRATEGY_SHAPE).isRequired,
   openExecutionOptionsModal: PropTypes.func.isRequired,
   strategyDirty: PropTypes.bool.isRequired,
   hasErrors: PropTypes.bool.isRequired,

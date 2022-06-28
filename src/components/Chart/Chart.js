@@ -9,6 +9,7 @@ import { THEMES } from '../../redux/selectors/ui'
 import { CHART_URL, env } from '../../redux/config'
 import useChartIframe from './useChartIframe'
 import { getPairFromMarket } from '../../util/market'
+import { INDICATORS_ARRAY_SHAPE, MARKET_SHAPE, TRADE_SHAPE } from '../../constants/prop-types-shapes'
 
 import './style.css'
 
@@ -22,6 +23,7 @@ const Chart = ({
   trades,
   interval,
   hideResolutions,
+  chartRange,
 }) => {
   const {
     wsID, base, quote, isPerp, uiID: _uiID,
@@ -33,7 +35,7 @@ const Chart = ({
 
   const uiID = isPerp ? _uiID : getPairFromMarket(market, getCurrencySymbol)
   const iframeID = `hfui-chart-${layoutI}`
-  const sendMarketToChartIframe = useChartIframe(iframeID, wsID, indicators, trades, interval)
+  const sendMarketToChartIframe = useChartIframe(iframeID, wsID, indicators, trades, interval, chartRange)
 
   const queryString = new URLSearchParams({
     env,
@@ -61,19 +63,14 @@ const Chart = ({
 }
 
 Chart.propTypes = {
-  market: PropTypes.shape({
-    wsID: PropTypes.string,
-    base: PropTypes.string,
-    quote: PropTypes.string,
-    uiID: PropTypes.string,
-    isPerp: PropTypes.bool,
-  }),
+  market: PropTypes.shape(MARKET_SHAPE),
   theme: PropTypes.oneOf([THEMES.LIGHT, THEMES.DARK]).isRequired,
   layoutI: PropTypes.string.isRequired,
-  indicators: PropTypes.array, // eslint-disable-line react/forbid-prop-types
-  trades: PropTypes.array, // eslint-disable-line react/forbid-prop-types
+  indicators: INDICATORS_ARRAY_SHAPE,
+  trades: PropTypes.arrayOf(PropTypes.shape(TRADE_SHAPE)),
   interval: PropTypes.string,
   hideResolutions: PropTypes.bool,
+  chartRange: PropTypes.object, // eslint-disable-line react/forbid-prop-types
 }
 
 Chart.defaultProps = {
@@ -87,6 +84,7 @@ Chart.defaultProps = {
   trades: [],
   interval: '30',
   hideResolutions: false,
+  chartRange: null,
 }
 
 export default memo(Chart)
