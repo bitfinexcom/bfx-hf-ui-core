@@ -284,6 +284,14 @@ export default {
     },
   }),
 
+  setPastStrategyResults: (id, results) => ({
+    type: t.SET_PAST_STRATEGY_RESULT,
+    payload: {
+      id,
+      results,
+    },
+  }),
+
   setStartedLiveStrategy: (strategyMapKey, executionResultsObj) => ({
     type: t.SET_STARTED_LIVE_STRATEGY,
     payload: {
