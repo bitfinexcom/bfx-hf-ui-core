@@ -73,6 +73,7 @@ function reducer(state = getInitialState(), action = {}) {
       return {
         ...state,
         results: {
+          ...state.results,
           [id]: results,
           positions,
         },
