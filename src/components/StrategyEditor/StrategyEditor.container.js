@@ -140,6 +140,9 @@ const mapDispatchToProps = (dispatch) => ({
   cancelProcess: (authToken, isPaperTrading, backtestGid, liveExecGid) => {
     if (isPaperTrading) {
       // stopping backtesting
+      if (!backtestGid) {
+        return
+      }
       dispatch(
         WSActions.send({
           alias: WSTypes.ALIAS_DATA_SERVER,
@@ -147,6 +150,9 @@ const mapDispatchToProps = (dispatch) => ({
         }),
       )
     } else {
+      if (!liveExecGid) {
+        return
+      }
       // stopping live execution
       dispatch(
         WSActions.send(['strategy.execute_stop', authToken, liveExecGid]),
