@@ -11,7 +11,7 @@ import { getGACustomerId, storeGACustomerId } from '../../../util/ga'
 const GA_ID_ELECTRON_APP = 'UA-163797164-1'
 const GA_ID_HOSTED_WEB = 'UA-212993021-1'
 
-const gaID = 'G-PLWRWXVMF8' // isElectronApp ? GA_ID_ELECTRON_APP : GA_ID_HOSTED_WEB
+const gaID = isElectronApp ? GA_ID_ELECTRON_APP : GA_ID_HOSTED_WEB
 
 if (!getGACustomerId()) {
   storeGACustomerId(v4())
