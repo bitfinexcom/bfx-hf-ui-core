@@ -32,10 +32,14 @@ const StrategyLiveChart = ({
   } = strategy
   const start = isBacktest ? new Date(startDate).getTime() : startedOn
   const end = isBacktest ? new Date(endDate).getTime() : stoppedOn
-  const chartRange = useMemo(() => ({
-    start,
-    end,
-  }), [end, start])
+  const chartRange = useMemo(() => {
+    if (start && end) {
+      return {
+        start, end,
+      }
+    }
+    return { }
+  }, [end, start])
   const { t } = useTranslation()
   const settingsTheme = useSelector(getThemeSetting)
   const chartIndicators = useMemo(() => prepareTVIndicators(indicators), [indicators])
