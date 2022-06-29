@@ -1,7 +1,8 @@
 export const getTradingModes = (t) => [
   {
-    target: '.hfui-navbar__layout-settings .hfui-exchangeinfobar__button',
+    target: '.hfui-navbar__layout-settings .hfui-exchangeinfobar__button svg',
     content: t('joyride.trading1'),
+    disableBeacon: true,
   },
   {
     target: '.icon-notifications',
@@ -19,8 +20,9 @@ export const getTradingModes = (t) => [
 
 export const getMarketModes = (t) => [
   {
-    target: '.hfui-navbar__layout-settings .hfui-exchangeinfobar__button',
+    target: '.hfui-navbar__layout-settings .hfui-exchangeinfobar__button svg',
     content: t('joyride.market'),
+    disableBeacon: true,
   },
 ]
 
@@ -28,6 +30,7 @@ export const getStrategyEditorModes = (t) => [
   {
     target: '.hfui-create-strategy__btn',
     content: t('joyride.strategyEditor1'),
+    disableBeacon: true,
   },
   {
     target: '.hfui-open-strategy__btn',
