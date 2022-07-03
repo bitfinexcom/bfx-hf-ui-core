@@ -738,7 +738,8 @@ StrategyEditor.propTypes = {
   authToken: PropTypes.string.isRequired,
   setStrategy: PropTypes.func,
   backtestResults: PropTypes.shape({
-    gid: PropTypes.string,
+    gid: PropTypes.number,
+    strategy: PropTypes.object, // eslint-disable-line
   }).isRequired,
   strategy: PropTypes.shape(STRATEGY_SHAPE),
   dsStopLiveStrategy: PropTypes.func.isRequired,
