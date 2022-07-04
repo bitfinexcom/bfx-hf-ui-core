@@ -32,11 +32,10 @@ export default function* () {
 
     // check if greater than current app version
     const hasNewRelease = semver.gt(name, appVersion)
-    if (!hasNewRelease) {
-      return
+    if (hasNewRelease) {
+      yield put(UIActions.saveRemoteVersion(name))
     }
 
-    yield put(UIActions.saveRemoteVersion(name))
     yield delay(CHECK_INTERVAL_MS)
   }
 }
