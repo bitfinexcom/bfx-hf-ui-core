@@ -26,7 +26,6 @@ const AppUpdate = () => {
   }
 
   useEffect(() => {
-    onUpdateDownloaded()
     if (ipcHelpers && isElectronApp) {
       ipcHelpers.addAppUpdateAvailableEventListener(onUpdateAvailable)
       ipcHelpers.addAppUpdateDownloadedEventListener(onUpdateDownloaded)
