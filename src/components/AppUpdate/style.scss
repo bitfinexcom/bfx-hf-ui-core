@@ -1,3 +1,9 @@
+body.Light {
+  .hfui-app-update__notification {
+    background-color: var(--background-color);
+  }
+}
+
 .hfui-app-update__notification {
   position: fixed;
   bottom: 40px;
