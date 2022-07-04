@@ -36,8 +36,6 @@ import {
   isExecutionInputsFullFilled,
   prepareStrategyBacktestingArgs,
   prepareStrategyExecutionArgs,
-  removeStrategyToExecuteFromLS,
-  saveStrategyToExecuteToLS,
   EXECUTION_TYPES,
 } from './StrategyEditor.helpers'
 import LaunchStrategyModal from '../../modals/Strategy/LaunchStrategyModal'
@@ -83,6 +81,9 @@ const StrategyEditor = (props) => {
     savedStrategies,
     cancelProcess,
     changeTradingMode,
+    saveStrategyToExecuteToLS,
+    removeStrategyToExecuteFromLS,
+    pendingLiveStrategy,
     executionId,
     onDefineIndicatorsChange,
     evalSectionContent,
@@ -490,6 +491,7 @@ const StrategyEditor = (props) => {
     isPaperTrading,
     openExecutionOptionsModal,
     strategy,
+    saveStrategyToExecuteToLS,
   ])
 
   const loadStrategyAndStartExecution = useCallback(
@@ -508,7 +510,14 @@ const StrategyEditor = (props) => {
         removeStrategyToExecuteFromLS()
       }, 500)
     },
-    [authToken, checkForAPIKeys, dsExecuteLiveStrategy, history, onLoadStrategy],
+    [
+      authToken,
+      checkForAPIKeys,
+      dsExecuteLiveStrategy,
+      history,
+      onLoadStrategy,
+      removeStrategyToExecuteFromLS,
+    ],
   )
 
   const stopExecution = useCallback(() => {
@@ -765,6 +774,9 @@ StrategyEditor.propTypes = {
   sectionErrors: PropTypes.objectOf(PropTypes.string).isRequired,
   cancelProcess: PropTypes.func.isRequired,
   changeTradingMode: PropTypes.func.isRequired,
+  saveStrategyToExecuteToLS: PropTypes.func.isRequired,
+  removeStrategyToExecuteFromLS: PropTypes.func.isRequired,
+  pendingLiveStrategy: PropTypes.string,
   executionId: PropTypes.string,
   onDefineIndicatorsChange: PropTypes.func.isRequired,
   evalSectionContent: PropTypes.func.isRequired,
@@ -783,6 +795,7 @@ StrategyEditor.defaultProps = {
   },
   indicators: [],
   executionId: null,
+  pendingLiveStrategy: null,
 }
 
 export default memo(StrategyEditor)

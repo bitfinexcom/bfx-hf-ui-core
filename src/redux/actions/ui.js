@@ -229,6 +229,16 @@ export const setIsLoadingOrderHistData = (flag) => ({
   payload: flag,
 })
 
+export const setPendingLiveStrategy = (strategyId) => ({
+  type: types.SET_PENDING_LIVE_STRATEGY,
+  payload: { strategyId },
+})
+
+export const removePendingLiveStrategy = () => ({
+  type: types.REMOVE_PENDING_LIVE_STRATEGY,
+  payload: null,
+})
+
 export default {
   saveLayout,
   storeUnsavedLayout,
@@ -267,4 +277,6 @@ export default {
   setIsLoadingOrderHistData,
   setCurrentStrategy,
   updateCurrentStrategy,
+  setPendingLiveStrategy,
+  removePendingLiveStrategy,
 }

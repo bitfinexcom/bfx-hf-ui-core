@@ -19,8 +19,6 @@ const DEFAULT_USE_MARGIN = false
 const DEFAULT_SEED_COUNT = 10
 const DEFAULT_CANDLES = true
 
-const LS_HF_UI_EXECUTE_STRATEGY = 'HF_UI_EXECUTE_STRATEGY'
-
 export const STRATEGY_IDE_SECTIONS = [
   'defineIndicators',
   'defineMeta',
@@ -168,22 +166,6 @@ export const prepareStrategyToLoad = (strategyToLoad, markets, strategies) => {
       [STRATEGY_OPTIONS_KEYS.MAX_DRAWDOWN_PERC]: String(maxDrawdownPerc),
     },
   }
-}
-
-export const saveStrategyToExecuteToLS = (strategyToExecute) => {
-  localStorage.setItem(LS_HF_UI_EXECUTE_STRATEGY, strategyToExecute.id)
-}
-
-export const parseStrategyToExecuteFromLS = () => {
-  const strategyId = localStorage.getItem(LS_HF_UI_EXECUTE_STRATEGY)
-  if (strategyId) {
-    localStorage.removeItem(LS_HF_UI_EXECUTE_STRATEGY)
-  }
-  return strategyId
-}
-
-export const removeStrategyToExecuteFromLS = () => {
-  localStorage.removeItem(LS_HF_UI_EXECUTE_STRATEGY)
 }
 
 export const isExecutionInputsFullFilled = (

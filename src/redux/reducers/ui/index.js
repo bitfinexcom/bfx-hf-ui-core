@@ -645,6 +645,22 @@ function reducer(state = getInitialState(), action = {}) {
       }
     }
 
+    case types.SET_PENDING_LIVE_STRATEGY: {
+      const { strategyId } = payload
+
+      return {
+        ...state,
+        pendingLiveStrategy: strategyId,
+      }
+    }
+
+    case types.REMOVE_PENDING_LIVE_STRATEGY: {
+      return {
+        ...state,
+        pendingLiveStrategy: null,
+      }
+    }
+
     default: {
       return state
     }
