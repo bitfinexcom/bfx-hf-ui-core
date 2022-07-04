@@ -22,7 +22,7 @@ const TradingMode = ({ onClose }) => {
     // open change trading mode modal after this modal closes
     onClose(() => {
       dispatch(UIActions.setTradingMode(isPaperTrading))
-      dispatch(WSActions.changeMode())
+      dispatch(WSActions.changeMode(isPaperTrading))
     })
   }
 

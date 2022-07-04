@@ -368,9 +368,11 @@ export default {
     },
   ]),
 
-  changeMode: () => {
+  changeMode: (isPaperTrading) => {
+    const mode = isPaperTrading ? 'paper' : 'main'
     return send([
       'auth.change_mode',
+      mode,
       getScope(),
     ])
   },
