@@ -125,7 +125,7 @@ BacktestTab.propTypes = {
   }).isRequired,
   onCancelProcess: PropTypes.func.isRequired,
   strategy: PropTypes.shape(STRATEGY_SHAPE).isRequired,
-  markets: PropTypes.objectOf(PropTypes.shape(MARKET_SHAPE)).isRequired,
+  markets: PropTypes.arrayOf(PropTypes.shape(MARKET_SHAPE)).isRequired,
   indicators: INDICATORS_ARRAY_SHAPE,
   onBacktestStart: PropTypes.func.isRequired,
   saveStrategyOptions: PropTypes.func.isRequired,

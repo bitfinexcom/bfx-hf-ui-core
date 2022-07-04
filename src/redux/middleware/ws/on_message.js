@@ -425,8 +425,10 @@ export default (alias, store) => (e = {}) => {
       // emitted when the strategy execution is started
       case 'strategy.live_execution_started': {
         const [, strategyMapKey, executionResultsObj] = payload
+        const { startedOn } = executionResultsObj
         store.dispatch(WSActions.setStartedLiveStrategy(strategyMapKey, executionResultsObj))
         store.dispatch(UIActions.setStrategyExecutionId(strategyMapKey))
+        store.dispatch(UIActions.updateCurrentStrategy({ startedOn }))
 
         break
       }
@@ -447,6 +449,7 @@ export default (alias, store) => (e = {}) => {
       case 'strategy.live_execution_stopped': {
         const [, strategyMapKey, executionResultsObj] = payload
         store.dispatch(WSActions.setStoppedLiveStrategy(strategyMapKey, executionResultsObj))
+        store.dispatch(UIActions.updateCurrentStrategy({ stoppedOn: new Date().getTime() }))
 
         break
       }

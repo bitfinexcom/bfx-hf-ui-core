@@ -114,6 +114,11 @@ export const setCurrentStrategy = (strategy) => ({
   payload: { strategy },
 })
 
+export const updateCurrentStrategy = (payload) => ({
+  type: types.UPDATE_CURRENT_STRATEGY,
+  payload,
+})
+
 export const setStrategyExecutionId = (execId) => ({
   type: types.SET_STRATEGY_EXECUTION_ID,
   payload: { executionId: execId },
@@ -261,4 +266,5 @@ export default {
   setSettingsTab,
   setIsLoadingOrderHistData,
   setCurrentStrategy,
+  updateCurrentStrategy,
 }

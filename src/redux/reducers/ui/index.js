@@ -361,12 +361,23 @@ function reducer(state = getInitialState(), action = {}) {
         [`${page}_GUIDE_ACTIVE`]: false,
       }
     }
+
     case types.SET_CURRENT_STRATEGY: {
       const { strategy } = payload
 
       return {
         ...state,
         currentStrategy: strategy,
+      }
+    }
+
+    case types.UPDATE_CURRENT_STRATEGY: {
+      return {
+        ...state,
+        currentStrategy: {
+          ...state.currentStrategy,
+          ...payload,
+        },
       }
     }
 
