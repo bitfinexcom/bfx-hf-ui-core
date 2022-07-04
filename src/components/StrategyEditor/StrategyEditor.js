@@ -3,7 +3,6 @@ import React, {
 } from 'react'
 import Debug from 'debug'
 import _isEmpty from 'lodash/isEmpty'
-import { useHistory, useLocation } from 'react-router'
 import _size from 'lodash/size'
 import _some from 'lodash/some'
 import _values from 'lodash/values'
@@ -39,7 +38,6 @@ import {
   EXECUTION_TYPES,
 } from './StrategyEditor.helpers'
 import LaunchStrategyModal from '../../modals/Strategy/LaunchStrategyModal'
-import routes from '../../constants/routes'
 import { getAPIKeyStates } from '../../redux/selectors/ws'
 import {
   changeAppSettingsModalState,
@@ -92,8 +90,6 @@ const StrategyEditor = (props) => {
     setIDEcontent,
   } = props
   const { t } = useTranslation()
-  const location = useLocation()
-  const history = useHistory()
 
   const [isRemoveModalOpen, , openRemoveModal, closeRemoveModal] = useToggle(false)
   const [
@@ -506,7 +502,6 @@ const StrategyEditor = (props) => {
           authToken,
           ...executionArgs,
         })
-        history.push(routes.strategyEditor.path)
         removeStrategyToExecuteFromLS()
       }, 500)
     },
@@ -514,7 +509,6 @@ const StrategyEditor = (props) => {
       authToken,
       checkForAPIKeys,
       dsExecuteLiveStrategy,
-      history,
       onLoadStrategy,
       removeStrategyToExecuteFromLS,
     ],
@@ -533,24 +527,18 @@ const StrategyEditor = (props) => {
   )
 
   useEffect(() => {
-    const { search } = location
-    if (executing || !search || _isEmpty(savedStrategies) || isPaperTrading) {
-      return
-    }
-    const execute = new URLSearchParams(location.search).get('execute')
-
-    if (!execute) {
+    if (isPaperTrading || !pendingLiveStrategy || executing || _isEmpty(savedStrategies)) {
       return
     }
 
-    const strategyToLoad = savedStrategies[execute]
-
+    const strategyToLoad = savedStrategies[pendingLiveStrategy]
     if (_isEmpty(strategyToLoad)) {
       return
     }
+
     loadStrategyAndStartExecution(strategyToLoad)
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [savedStrategies, executing, location])
+  }, [savedStrategies, executing, pendingLiveStrategy])
 
   const sbtitleStrategy = useCallback(
     ({ selectedTab, sidebarOpened }) => (
