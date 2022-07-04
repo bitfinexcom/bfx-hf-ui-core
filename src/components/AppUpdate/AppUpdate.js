@@ -1,30 +1,32 @@
 import React, { useState, useEffect } from 'react'
 import cx from 'clsx'
+import { useTranslation } from 'react-i18next'
 import { isElectronApp } from '../../redux/config'
-
 import './style.css'
 
 const ipcHelpers = window.electronService
 
-// @TODO: i18n
-function AppUpdate() {
+const AppUpdate = () => {
+  const { t } = useTranslation()
+
   const [hideNotification, setHideNotification] = useState(true)
   const [hideRestart, setHideRestart] = useState(true)
   const [message, setMessage] = useState('')
 
   const onUpdateAvailable = () => {
-    setMessage('A new update is available. Downloading now...')
+    setMessage(t('appUpdate.available'))
     setHideNotification(false)
   }
 
   // eslint-disable-next-line
   const onUpdateDownloaded = (_event, releaseNotes, releaseName) => {
-    setMessage('Update Downloaded. It will be installed on restart. Restart now?')
+    setMessage(t('appUpdate.downloaded'))
     setHideRestart(false)
     setHideNotification(false)
   }
 
   useEffect(() => {
+    onUpdateDownloaded()
     if (ipcHelpers && isElectronApp) {
       ipcHelpers.addAppUpdateAvailableEventListener(onUpdateAvailable)
       ipcHelpers.addAppUpdateDownloadedEventListener(onUpdateDownloaded)
@@ -36,7 +38,7 @@ function AppUpdate() {
     }
 
     return () => {} // consistent-return
-  }, [])
+  }, [t]) // eslint-disable-line
 
   const closeNotification = () => {
     setHideNotification(true)
@@ -62,7 +64,7 @@ function AppUpdate() {
           type='button'
           onClick={closeNotification}
         >
-          Close
+          {t('ui.closeBtn')}
         </button>
         <button
           className={cx('restart', {
@@ -71,13 +73,11 @@ function AppUpdate() {
           type='button'
           onClick={restartApp}
         >
-          Restart
+          {t('ui.restartBtn')}
         </button>
       </div>
     </div>
   )
 }
-
-AppUpdate.propTypes = { }
 
 export default AppUpdate
