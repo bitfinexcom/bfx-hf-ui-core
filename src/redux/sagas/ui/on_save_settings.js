@@ -6,7 +6,7 @@ import { getAuthToken } from '../../selectors/ws'
 
 const {
   DMS, GA, SHOW_ALGO_PAUSE_INFO, SHOW_ONLY_FAVORITE_PAIRS,
-  REBOOT_AUTOMATICALLY, THEME, JOIN_BETA_PROGRAM,
+  THEME, JOIN_BETA_PROGRAM,
 } = SETTINGS_KEYS
 
 export default function* onSaveSettings(action = {}) {
@@ -23,7 +23,7 @@ export default function* onSaveSettings(action = {}) {
     settings[GA],
     settings[SHOW_ALGO_PAUSE_INFO],
     settings[SHOW_ONLY_FAVORITE_PAIRS],
-    settings[REBOOT_AUTOMATICALLY],
+    false, // @TODO: remove this setting on the backend side
     settings[THEME],
     settings[JOIN_BETA_PROGRAM],
   ]))

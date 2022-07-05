@@ -336,8 +336,6 @@
     "usageReportingCheckbox": "Usage reporting",
     "showPauseInfoCheckbox": "Show Algo Orders pause info",
     "showPauseInfoText": "If checked, the modal with explanations will be displayed when you close the app with active Algo Orders.",
-    "rebootCheckbox": "Reboot automatically on bad connection",
-    "rebootText": " When you experience a poor internet connection, the modal window that notifies you of this will not be displayed and the app will restart automatically.",
     "howToCreate": "How to create an API Key in Bitfinex?",
     "howToCreateDesc": "This is required to operate in the Live Environment",
     "howToCreatePaper": "How to create a Paper Sub-Account?",

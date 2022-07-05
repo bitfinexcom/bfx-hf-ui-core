@@ -16,7 +16,6 @@ import {
   getDMSSetting,
   getGASetting,
   getShowAlgoPauseInfoSetting,
-  getRebootSetting,
   getIsBetaVersion,
 } from '../../redux/selectors/ui'
 import { DONT_SHOW_DMS_MODAL_KEY } from '../../constants/variables'
@@ -33,13 +32,11 @@ const General = () => {
   const settingsDms = useSelector(getDMSSetting)
   const settingsGa = useSelector(getGASetting)
   const settingsShowAlgoPauseInfo = useSelector(getShowAlgoPauseInfoSetting)
-  const settingsRebootAutomatically = useSelector(getRebootSetting)
   const isBetaVersion = useSelector(getIsBetaVersion)
 
   const [isAutoLoginChecked, setIsAutoLoginChecked] = useState(INITIAL_AUTO_LOGIN)
   const [isDmsChecked, setIsDmsChecked] = useState(settingsDms)
   const [isGaChecked, setIsGaChecked] = useState(settingsGa)
-  const [isRebootChecked, setIsRebootChecked] = useState(settingsRebootAutomatically)
   const [isShowAlgoPauseInfoChecked, setIsShowAlgoPauseInfoChecked] = useState(settingsShowAlgoPauseInfo)
 
   useEffect(() => {
@@ -77,12 +74,6 @@ const General = () => {
     dispatch(
       WSActions.saveSettings(SETTINGS_KEYS.SHOW_ALGO_PAUSE_INFO, nextAOPause),
     )
-    dispatch(GAActions.updateSettings())
-  }
-
-  const updateReboot = (nextReboot) => {
-    setIsRebootChecked(nextReboot)
-    dispatch(WSActions.saveSettings(SETTINGS_KEYS.REBOOT_AUTOMATICALLY, nextReboot))
     dispatch(GAActions.updateSettings())
   }
 
@@ -178,17 +169,6 @@ const General = () => {
         />
         <div className='appsettings-modal__description'>
           {t('appSettings.showPauseInfoText')}
-        </div>
-      </div>
-      <div className='appsettings-modal__setting'>
-        <Checkbox
-          onChange={updateReboot}
-          label={t('appSettings.rebootCheckbox')}
-          checked={isRebootChecked}
-          className='appsettings-modal__checkbox'
-        />
-        <div className='appsettings-modal__description'>
-          {t('appSettings.rebootText')}
         </div>
       </div>
       {isDevEnv() && (
