@@ -8,8 +8,8 @@ import {
 import { isElectronApp } from '../../config'
 import { getGACustomerId, storeGACustomerId } from '../../../util/ga'
 
-const GA_ID_ELECTRON_APP = 'UA-163797164-1'
-const GA_ID_HOSTED_WEB = 'UA-212993021-1'
+const GA_ID_ELECTRON_APP = 'G-YRD2QPKP8G'
+const GA_ID_HOSTED_WEB = 'G-XC213WGP9N'
 
 const gaID = isElectronApp ? GA_ID_ELECTRON_APP : GA_ID_HOSTED_WEB
 
