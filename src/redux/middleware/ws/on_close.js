@@ -7,7 +7,7 @@ import { isElectronApp } from '../../config'
 export default (alias, store) => () => {
   const state = store.getState()
   const socket = getSocket(state, alias)
-  const isLoggedIn = !!getAuthToken(state)
+  const isLoggedIn = getAuthToken(state)
 
   // do not show bad-connection-modal when connecting first time and it fails i.e. when lastActivity = null
   // do not show in hosted mode since it re-attepmpts new connection
