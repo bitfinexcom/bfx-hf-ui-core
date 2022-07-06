@@ -107,7 +107,7 @@ const HFUI = (props) => {
       getSettings(authToken)
       getFeatureFlags(authToken)
     }
-  }, [authToken, currentMode, getSettings, getFeatureFlags])
+  }, [authToken, getSettings, getFeatureFlags])
 
   // fetch on every mode change
   useEffect(() => {
