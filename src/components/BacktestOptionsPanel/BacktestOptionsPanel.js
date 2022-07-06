@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next'
 import {
   Checkbox, Button, Spinner, Intent,
 } from '@ufx-ui/core'
+import clsx from 'clsx'
 import AmountInput from '../OrderForm/FieldComponents/input.amount'
 import DateInput from '../OrderForm/FieldComponents/input.date'
 import TimeFrameDropdown from '../TimeFrameDropdown'
@@ -81,6 +82,7 @@ const BacktestOptionsPanel = ({
             def={{ label: t('strategyEditor.startDate') }}
             value={startDate}
             maxDate={endDate}
+            disabled={isLoading}
           />
         </div>
         <div className='item'>
@@ -90,6 +92,7 @@ const BacktestOptionsPanel = ({
             value={endDate}
             maxDate={MAX_DATE}
             minDate={startDate}
+            disabled={isLoading}
           />
         </div>
         <div className='item'>
@@ -97,16 +100,21 @@ const BacktestOptionsPanel = ({
             label={t('strategyEditor.useCandlesCheckbox')}
             checked={candles}
             onChange={setCandles}
+            disabled={isLoading}
           />
-          <div className='hfui-orderform__input-label'>
+          <div className={clsx('hfui-orderform__input-label', { disabled: isLoading })}>
             {t('strategyEditor.useCandlesCheckboxDescription')}
           </div>
         </div>
         {candles && (
           <>
             <div className='item'>
-              <TimeFrameDropdown tf={timeframe} onChange={setTimeframe} />
-              <p className='hfui-orderform__input-label'>
+              <TimeFrameDropdown
+                disabled={isLoading}
+                tf={timeframe}
+                onChange={setTimeframe}
+              />
+              <p className={clsx('hfui-orderform__input-label', { disabled: isLoading })}>
                 {t('strategyEditor.selectCandleDurationDescription')}
               </p>
             </div>
@@ -116,6 +124,7 @@ const BacktestOptionsPanel = ({
               validationError={seedError}
               value={candleSeedValue}
               onChange={updateSeed}
+              disabled={isLoading}
             />
           </>
         )}
@@ -134,8 +143,9 @@ const BacktestOptionsPanel = ({
             label={t('strategyEditor.useTradesCheckbox')}
             checked={trades}
             onChange={setTrades}
+            disabled={isLoading}
           />
-          <div className='hfui-orderform__input-label'>
+          <div className={clsx('hfui-orderform__input-label', { disabled: isLoading })}>
             {t('strategyEditor.useTradesCheckboxDescription')}
           </div>
         </div>
