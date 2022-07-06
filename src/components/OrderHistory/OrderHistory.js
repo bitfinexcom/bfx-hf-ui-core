@@ -16,7 +16,7 @@ import './style.css'
 
 const OrderHistory = ({
   onRemove, dark, orders, fetchOrderHistory, authToken, setIsLoadingOrderHistFlag,
-  isLoadingOrderHistData, apiCredentials,
+  isLoadingOrderHistData, apiCredentials, currentMode,
 }) => {
   const [ref, { width }] = useSize()
   const { t } = useTranslation()
@@ -32,11 +32,12 @@ const OrderHistory = ({
 
   const apiClientConfigured = apiCredentials?.configured && apiCredentials?.valid
 
+  // fetch on change of currentMode or apiClientConfigured
   useEffect(() => {
     if (apiClientConfigured) {
       fetchOrderHistory(authToken)
     }
-  }, [apiClientConfigured, authToken, fetchOrderHistory])
+  }, [apiClientConfigured, authToken, fetchOrderHistory, currentMode])
 
   return (
     <Panel
@@ -72,6 +73,7 @@ OrderHistory.propTypes = {
   authToken: PropTypes.string,
   isLoadingOrderHistData: PropTypes.bool,
   apiCredentials: PropTypes.objectOf(PropTypes.bool),
+  currentMode: PropTypes.string.isRequired,
 }
 
 OrderHistory.defaultProps = {

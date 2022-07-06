@@ -8,6 +8,10 @@ export default (state = getInitialState(), action = {}) => {
   const { type, payload = [] } = action
 
   switch (type) {
+    case types.RESET_ORDER_HIST: {
+      return { }
+    }
+
     case types.SET_ORDER_HIST: {
       const { orderHist } = payload
 
