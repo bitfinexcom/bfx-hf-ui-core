@@ -7,6 +7,7 @@ import randomColor from 'randomcolor'
 import _ from 'lodash'
 import _values from 'lodash/values'
 import _map from 'lodash/map'
+import _get from 'lodash/get'
 // import _remove from 'lodash/remove'
 import _forEach from 'lodash/forEach'
 import _isEmpty from 'lodash/isEmpty'
@@ -47,7 +48,7 @@ const StrategiesPage = ({
   strategy,
   setStrategy,
 }) => {
-  const [IDEcontent, setIDEcontent] = useState({})
+  const [IDEcontent, setIDEcontent] = useState(_get(strategy, 'strategyContent', {}))
 
   const [indicators, setIndicators] = useState([])
   const [tourStep, setTourStep] = useState(0)
