@@ -2,23 +2,26 @@ import React, { useCallback, useState } from 'react'
 import PropTypes from 'prop-types'
 import _debounce from 'lodash/debounce'
 import { useTranslation } from 'react-i18next'
-import { Checkbox, Truncate } from '@ufx-ui/core'
+import {
+  Checkbox, Button, Spinner, Intent,
+} from '@ufx-ui/core'
 import AmountInput from '../OrderForm/FieldComponents/input.amount'
 import DateInput from '../OrderForm/FieldComponents/input.date'
 import TimeFrameDropdown from '../TimeFrameDropdown'
-import Button from '../../ui/Button'
 import { STRATEGY_OPTIONS_KEYS } from '../StrategyEditor/StrategyEditor.helpers'
 import { STRATEGY_SHAPE } from '../../constants/prop-types-shapes'
+import Panel from '../../ui/Panel'
+
+import './style.css'
 
 const MAX_DATE = new Date()
 
 const BacktestOptionsPanel = ({
-  // margin,
-  setFullScreenChart,
   onBacktestStart,
-  isFinished,
   strategy,
   saveStrategyOptions,
+  isLoading,
+  onCancelProcess,
 }) => {
   const {
     strategyOptions: {
@@ -70,37 +73,53 @@ const BacktestOptionsPanel = ({
   }
 
   return (
-    <div className='hfui-strategy-options hfui-strategy-options'>
-      <div className='hfui-strategy-options__amount-input item'>
-        <Checkbox
-          label={t('strategyEditor.useCandlesCheckbox')}
-          checked={candles}
-          onChange={setCandles}
-        />
-        <div className='hfui-orderform__input-label'>
-          <Truncate>
-            {t('strategyEditor.useCandlesCheckboxDescription')}
-          </Truncate>
-        </div>
-      </div>
-      {candles && (
-        <>
-          <div className='hfui-strategy-options__input item'>
-            <TimeFrameDropdown tf={timeframe} onChange={setTimeframe} />
-            <p className='hfui-orderform__input-label'>
-              {t('strategyEditor.selectCandleDurationDescription')}
-            </p>
-          </div>
-          <AmountInput
-            className='hfui-strategy-options__amount-input item'
-            def={{ label: t('strategyEditor.candleSeedCount') }}
-            validationError={seedError}
-            value={candleSeedValue}
-            onChange={updateSeed}
+    <Panel removeable={false} moveable={false} dark darkHeader>
+      <div className='hfui-strategy-backtest-options'>
+        <div className='item'>
+          <DateInput
+            onChange={setStartDate}
+            def={{ label: t('strategyEditor.startDate') }}
+            value={startDate}
+            maxDate={endDate}
           />
-        </>
-      )}
-      {/* {!isPaperTrading && _includes(symbol?.contexts, 'm') && (
+        </div>
+        <div className='item'>
+          <DateInput
+            onChange={setEndDate}
+            def={{ label: t('strategyEditor.endDate') }}
+            value={endDate}
+            maxDate={MAX_DATE}
+            minDate={startDate}
+          />
+        </div>
+        <div className='item'>
+          <Checkbox
+            label={t('strategyEditor.useCandlesCheckbox')}
+            checked={candles}
+            onChange={setCandles}
+          />
+          <div className='hfui-orderform__input-label'>
+            {t('strategyEditor.useCandlesCheckboxDescription')}
+          </div>
+        </div>
+        {candles && (
+          <>
+            <div className='item'>
+              <TimeFrameDropdown tf={timeframe} onChange={setTimeframe} />
+              <p className='hfui-orderform__input-label'>
+                {t('strategyEditor.selectCandleDurationDescription')}
+              </p>
+            </div>
+            <AmountInput
+              className='item'
+              def={{ label: t('strategyEditor.candleSeedCount') }}
+              validationError={seedError}
+              value={candleSeedValue}
+              onChange={updateSeed}
+            />
+          </>
+        )}
+        {/* {!isPaperTrading && _includes(symbol?.contexts, 'm') && (
         <div className='hfui-strategy-options__amount-input item'>
           <Checkbox
             label={t('strategyEditor.useMarginCheckbox')}
@@ -110,60 +129,68 @@ const BacktestOptionsPanel = ({
           <p className='hfui-orderform__input-label'>{t('strategyEditor.useMarginCheckboxDescription')}</p>
         </div>
       )} */}
-      <div className='hfui-strategy-options__amount-input item'>
-        <Checkbox
-          label={t('strategyEditor.useTradesCheckbox')}
-          checked={trades}
-          onChange={setTrades}
-        />
-        <div className='hfui-orderform__input-label'>
-          <Truncate>
+        <div className='item'>
+          <Checkbox
+            label={t('strategyEditor.useTradesCheckbox')}
+            checked={trades}
+            onChange={setTrades}
+          />
+          <div className='hfui-orderform__input-label'>
             {t('strategyEditor.useTradesCheckboxDescription')}
-          </Truncate>
+          </div>
+        </div>
+
+        {isLoading && (
+          <div className='item'>
+            <Button
+              intent={Intent.NONE}
+              onClick={onCancelProcess}
+              className='hfui-strategy-backtest-options__start-btn'
+            >
+              {t('strategyEditor.cancelThisProcess')}
+            </Button>
+
+          </div>
+        )}
+        <div className='item'>
+          {/* {isFinished && (
+            <Button
+              className='hfui-strategy-options__option-btn item'
+              label={t('strategyEditor.fullscreenChartBtn')}
+              onClick={setFullScreenChart}
+              green
+            />
+          )} */}
+          {isLoading ? (
+            <Button
+              className='hfui-strategy-backtest-options__start-btn'
+              onClick={onBacktestStart}
+              intent={Intent.INFO}
+              disabled
+            >
+              <Spinner className='hfui-strategy-backtest-options__spinner' />
+              {t('strategyEditor.calculating')}
+            </Button>
+          ) : (
+            <Button
+              className='hfui-strategy-backtest-options__start-btn'
+              onClick={onBacktestStart}
+              intent={Intent.PRIMARY}
+            >
+              {t('ui.startBtn')}
+            </Button>
+          )}
         </div>
       </div>
-      <div className='hfui-strategy-options__input item'>
-        <DateInput
-          onChange={setStartDate}
-          def={{ label: t('strategyEditor.startDate') }}
-          value={startDate}
-          maxDate={endDate}
-        />
-      </div>
-      <div className='hfui-strategy-options__input item'>
-        <DateInput
-          onChange={setEndDate}
-          def={{ label: t('strategyEditor.endDate') }}
-          value={endDate}
-          maxDate={MAX_DATE}
-          minDate={startDate}
-        />
-      </div>
-      <div className='hfui-strategy-options__buttons-container item'>
-        {isFinished && (
-          <Button
-            className='hfui-strategy-options__option-btn item'
-            label={t('strategyEditor.fullscreenChartBtn')}
-            onClick={setFullScreenChart}
-            green
-          />
-        )}
-        <Button
-          className='hfui-strategy-options__option-btn item'
-          label={t('ui.startBtn')}
-          onClick={onBacktestStart}
-          green
-        />
-      </div>
-    </div>
+    </Panel>
   )
 }
 
 BacktestOptionsPanel.propTypes = {
   strategy: PropTypes.shape(STRATEGY_SHAPE).isRequired,
-  setFullScreenChart: PropTypes.func.isRequired,
+  onCancelProcess: PropTypes.func.isRequired,
   onBacktestStart: PropTypes.func,
-  isFinished: PropTypes.bool.isRequired,
+  isLoading: PropTypes.bool.isRequired,
   saveStrategyOptions: PropTypes.func.isRequired,
 }
 

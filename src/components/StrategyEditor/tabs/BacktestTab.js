@@ -4,19 +4,24 @@ import React, {
 import PropTypes from 'prop-types'
 import { useTranslation } from 'react-i18next'
 
+import clsx from 'clsx'
 import StrategyPerfomanceMetrics from '../../StrategyPerfomanceMetrics'
 import useToggle from '../../../hooks/useToggle'
 import StrategyTradesTable from '../../StrategyTradesTable'
 import StrategiesGridLayout from '../components/StrategiesGridLayout'
 import {
+  BACKTEST_LAYOUT_CONFIG_NO_DATA,
   COMPONENTS_KEYS,
   LAYOUT_CONFIG,
-  LAYOUT_CONFIG_NO_DATA,
 } from '../components/StrategiesGridLayout.constants'
 import StrategyLiveChart from '../../StrategyLiveChart'
 import BacktestOptionsPanel from '../../BacktestOptionsPanel'
 import { prepareChartTrades } from '../StrategyEditor.helpers'
-import { INDICATORS_ARRAY_SHAPE, MARKET_SHAPE, STRATEGY_SHAPE } from '../../../constants/prop-types-shapes'
+import {
+  INDICATORS_ARRAY_SHAPE,
+  MARKET_SHAPE,
+  STRATEGY_SHAPE,
+} from '../../../constants/prop-types-shapes'
 
 const BacktestTab = (props) => {
   const {
@@ -39,7 +44,7 @@ const BacktestTab = (props) => {
 
   useEffect(() => {
     if (!finished) {
-      setLayoutConfig(LAYOUT_CONFIG_NO_DATA)
+      setLayoutConfig(BACKTEST_LAYOUT_CONFIG_NO_DATA)
       return
     }
     setLayoutConfig(LAYOUT_CONFIG)
@@ -54,8 +59,8 @@ const BacktestTab = (props) => {
               strategy={strategy}
               onBacktestStart={onBacktestStart}
               saveStrategyOptions={saveStrategyOptions}
-              setFullScreenChart={showFullscreenChart}
-              isFinished={finished}
+              isLoading={loading}
+              onCancelProcess={onCancelProcess}
             />
           )
 
@@ -95,7 +100,21 @@ const BacktestTab = (props) => {
           return null
       }
     },
-    [strategy, onBacktestStart, saveStrategyOptions, showFullscreenChart, finished, indicators, markets, fullscreenChart, hideFullscreenChart, trades, results, loading, positions, layoutConfig],
+    [
+      strategy,
+      onBacktestStart,
+      saveStrategyOptions,
+      loading,
+      onCancelProcess,
+      indicators,
+      markets,
+      fullscreenChart,
+      hideFullscreenChart,
+      trades,
+      results,
+      positions,
+      layoutConfig,
+    ],
   )
 
   return (
@@ -103,11 +122,13 @@ const BacktestTab = (props) => {
       <StrategiesGridLayout
         layoutConfig={layoutConfig}
         renderGridComponents={renderGridComponents}
-        isLoading={loading}
-        onCancelProcess={onCancelProcess}
       />
-      {!finished && !loading && (
-        <p className='hfui-strategyeditor__initial-message'>
+      {!finished && (
+        <p
+          className={clsx('hfui-strategyeditor__initial-message', {
+            blur: loading,
+          })}
+        >
           {t('strategyEditor.backtestingStartingMessage')}
         </p>
       )}
