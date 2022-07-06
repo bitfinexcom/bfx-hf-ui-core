@@ -367,7 +367,7 @@
   },
   "noConnectionActionModal": {
     "title": "Connection issue",
-    "description": "This action can't be run because we the app is encountering connection issues.\nWe are trying to reconnect automatically.\nTry again once you see 'WS connected'."
+    "description": "This action can't be run because we the app is encountering connection issues.\nWe are trying to reconnect automatically.\nTry again once you see 'WS connected' present on the status bar at the bottom right-corner."
   },
   "balancesTableModal": {
     "title": "Balances",
