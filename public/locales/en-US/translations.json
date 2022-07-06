@@ -756,7 +756,9 @@
     "strategyOptionsBtn": "Settings",
     "saveAndLaunchBtn": "Save and Launch",
     "copyOfStrategy": "Copy of {{strategyName}}",
-    "calculating": "Calculating..."
+    "calculating": "Calculating...",
+    "backtestSuccessful": "Backtest successful!",
+    "newTest": "New Test"
   },
   "ui": {
     "ok": "Okay",

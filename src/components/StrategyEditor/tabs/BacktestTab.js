@@ -22,6 +22,7 @@ import {
   MARKET_SHAPE,
   STRATEGY_SHAPE,
 } from '../../../constants/prop-types-shapes'
+import BacktestResultsOptionsPanel from '../../BacktestOptionsPanel/BacktestResultsOptionsPanel'
 
 const BacktestTab = (props) => {
   const {
@@ -32,6 +33,7 @@ const BacktestTab = (props) => {
     markets,
     onBacktestStart,
     saveStrategyOptions,
+    openNewTest,
   } = props
   const { t } = useTranslation()
   const [layoutConfig, setLayoutConfig] = useState()
@@ -54,7 +56,12 @@ const BacktestTab = (props) => {
     (i) => {
       switch (i) {
         case COMPONENTS_KEYS.OPTIONS:
-          return (
+          return finished ? (
+            <BacktestResultsOptionsPanel
+              showFullscreenChart={showFullscreenChart}
+              openNewTest={openNewTest}
+            />
+          ) : (
             <BacktestOptionsPanel
               strategy={strategy}
               onBacktestStart={onBacktestStart}
@@ -101,6 +108,9 @@ const BacktestTab = (props) => {
       }
     },
     [
+      finished,
+      showFullscreenChart,
+      openNewTest,
       strategy,
       onBacktestStart,
       saveStrategyOptions,
@@ -150,6 +160,7 @@ BacktestTab.propTypes = {
   indicators: INDICATORS_ARRAY_SHAPE,
   onBacktestStart: PropTypes.func.isRequired,
   saveStrategyOptions: PropTypes.func.isRequired,
+  openNewTest: PropTypes.func.isRequired,
 }
 
 BacktestTab.defaultProps = {

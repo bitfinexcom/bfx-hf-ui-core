@@ -163,18 +163,9 @@ const BacktestOptionsPanel = ({
           </div>
         )}
         <div className='item'>
-          {/* {isFinished && (
-            <Button
-              className='hfui-strategy-options__option-btn item'
-              label={t('strategyEditor.fullscreenChartBtn')}
-              onClick={setFullScreenChart}
-              green
-            />
-          )} */}
           {isLoading ? (
             <Button
               className='hfui-strategy-backtest-options__start-btn'
-              onClick={onBacktestStart}
               intent={Intent.INFO}
               disabled
             >
