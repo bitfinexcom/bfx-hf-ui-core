@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react'
+import React, { useEffect, useCallback } from 'react'
 import PropTypes from 'prop-types'
 
 import _isEmpty from 'lodash/isEmpty'
@@ -16,7 +16,7 @@ import './style.css'
 
 const OrderHistory = ({
   onRemove, dark, orders, fetchOrderHistory, authToken, setIsLoadingOrderHistFlag,
-  isLoadingOrderHistData,
+  isLoadingOrderHistData, apiCredentials, currentMode,
 }) => {
   const [ref, { width }] = useSize()
   const { t } = useTranslation()
@@ -29,6 +29,15 @@ const OrderHistory = ({
     setIsLoadingOrderHistFlag(true)
     fetchMoreItems()
   }
+
+  const apiClientConfigured = apiCredentials?.configured && apiCredentials?.valid
+
+  // fetch on change of currentMode or apiClientConfigured
+  useEffect(() => {
+    if (apiClientConfigured) {
+      fetchOrderHistory(authToken)
+    }
+  }, [apiClientConfigured, authToken, fetchOrderHistory, currentMode])
 
   return (
     <Panel
@@ -63,6 +72,8 @@ OrderHistory.propTypes = {
   setIsLoadingOrderHistFlag: PropTypes.func.isRequired,
   authToken: PropTypes.string,
   isLoadingOrderHistData: PropTypes.bool,
+  apiCredentials: PropTypes.objectOf(PropTypes.bool),
+  currentMode: PropTypes.string.isRequired,
 }
 
 OrderHistory.defaultProps = {
@@ -71,6 +82,7 @@ OrderHistory.defaultProps = {
   orders: [],
   authToken: '',
   isLoadingOrderHistData: false,
+  apiCredentials: {},
 }
 
 export default OrderHistory

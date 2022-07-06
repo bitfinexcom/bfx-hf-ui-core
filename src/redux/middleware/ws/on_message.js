@@ -65,20 +65,16 @@ export default (alias, store) => (e = {}) => {
       }
 
       case 'info.auth_token': {
-        const [, token, mode, hasCredentials] = payload
+        const [, token, mode] = payload
         const isPaperTrading = mode === PAPER_MODE
 
+        // reset order history
+        store.dispatch(WSActions.resetOrderHist())
         store.dispatch(UIActions.setTradingMode(isPaperTrading))
+        store.dispatch(UIActions.setMarketFromStore(isPaperTrading))
         store.dispatch(WSActions.recvAuthToken(token))
         store.dispatch(AOActions.getActiveAlgoOrders())
         store.dispatch(WSActions.send(['strategy.execute_status', token]))
-        store.dispatch(WSActions.send(['get.settings', token]))
-        store.dispatch(WSActions.send(['get.past_strategies', token]))
-        store.dispatch(WSActions.send(['feature_flags.get', token]))
-        store.dispatch(WSActions.send(['get.favourite_trading_pairs', token, mode]))
-        if (hasCredentials) {
-          store.dispatch(WSActions.send(['get.order_history', token]))
-        }
         break
       }
 
