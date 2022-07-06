@@ -115,15 +115,26 @@ const HFUI = (props) => {
     GAPageview(pathname)
   }, [GAPageview, pathname])
 
+  // fetch after successful log in
   useEffect(() => {
     if (authToken) {
       getSettings(authToken)
       getFeatureFlags(authToken)
+    }
+  }, [authToken, currentMode, getSettings, getFeatureFlags])
+
+  // fetch on every mode change
+  useEffect(() => {
+    if (authToken) {
       getFavoritePairs(authToken, currentMode)
       getPastStrategies(authToken)
-      subscribeAllTickers()
     }
-  }, [authToken, currentMode, getCoreSettings, getFavoritePairs, getFeatureFlags, getSettings, subscribeAllTickers, getPastStrategies])
+  }, [authToken, currentMode, getFavoritePairs, getPastStrategies])
+
+  // subscribe to tickers
+  useEffect(() => {
+    subscribeAllTickers()
+  }, [subscribeAllTickers])
 
   // fetch core-settings after bitfinex client is connected
   useEffect(() => {
