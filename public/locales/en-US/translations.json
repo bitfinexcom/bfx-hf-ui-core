@@ -9,6 +9,10 @@
     "startingUp": "Starting up app...",
     "craftedBy": "Crafted by Bitfinex"
   },
+  "appUpdate": {
+    "available": "A new update is available. Downloading now...",
+    "downloaded": "Update downloaded. It will be installed on a restart. Restart now?"
+  },
   "auth": {
     "enterPsw": "Enter your password to unlock",
     "password": "Password",
@@ -763,6 +767,7 @@
     "export": "Export",
     "import": "Import",
     "closeBtn": "Close",
+    "restartBtn": "Restart",
     "closeWithoutSaving": "Close without saving",
     "lastBtn": "Finish",
     "nextBtn": "Next",
