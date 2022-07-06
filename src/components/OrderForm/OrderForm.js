@@ -128,11 +128,14 @@ class OrderForm extends React.Component {
   }
 
   onSubmitAPIKeys({ apiKey, apiSecret }) {
-    const { submitAPIKeys, authToken, mode } = this.props
+    const {
+      submitAPIKeys, authToken, mode, wsConnected,
+    } = this.props
     submitAPIKeys({
       authToken,
       apiKey,
       apiSecret,
+      wsConnected,
     }, mode)
   }
 
@@ -244,7 +247,9 @@ class OrderForm extends React.Component {
       currentLayout, fieldData, context, currentMarket,
     } = this.state
 
-    const { submitOrder, authToken, gaSubmitOrder } = this.props
+    const {
+      submitOrder, authToken, gaSubmitOrder, wsConnected,
+    } = this.props
     const { generateOrder } = currentLayout
     const data = processFieldData({
       layout: currentLayout,
@@ -257,6 +262,7 @@ class OrderForm extends React.Component {
       submitOrder({
         authToken,
         packet,
+        wsConnected,
       })
       gaSubmitOrder()
     } catch (e) {
@@ -267,7 +273,7 @@ class OrderForm extends React.Component {
 
   onSubmitAlgoOrder() {
     const {
-      submitAlgoOrder, authToken, gaSubmitAO, setIsOrderExecuting, t,
+      submitAlgoOrder, authToken, gaSubmitAO, setIsOrderExecuting, t, wsConnected,
     } = this.props
     const {
       currentMarket, currentLayout, fieldData, context,
@@ -289,6 +295,7 @@ class OrderForm extends React.Component {
         context,
         authToken,
         market: currentMarket,
+        wsConnected,
       })
     } else {
       setIsOrderExecuting(false)
@@ -561,6 +568,7 @@ OrderForm.propTypes = {
   atomicOrdersCount: PropTypes.number.isRequired,
   atomicOrdersCountActiveMarket: PropTypes.number.isRequired,
   maxOrderCounts: PropTypes.objectOf(PropTypes.number).isRequired,
+  wsConnected: PropTypes.bool.isRequired,
 }
 
 OrderForm.defaultProps = {

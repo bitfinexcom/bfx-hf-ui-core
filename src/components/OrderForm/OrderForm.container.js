@@ -12,7 +12,7 @@ import GAActions from '../../redux/actions/google_analytics'
 import AOActions from '../../redux/actions/ao'
 import { getAOParams } from '../../redux/selectors/ao'
 import {
-  getAPIClientState, getAuthToken, getCurrentModeAPIKeyState, getFilteredAtomicOrdersCount, getAtomicOrders,
+  getAPIClientState, getAuthToken, getCurrentModeAPIKeyState, getFilteredAtomicOrdersCount, getAtomicOrders, isSocketConnected,
 } from '../../redux/selectors/ws'
 import {
   getComponentState, getActiveMarket, getCurrentMode, getIsPaperTrading, getIsOrderExecuting, getMaxOrderCounts, getIsBetaVersion, getIsStrategiesLiveExecVisible,
@@ -29,6 +29,7 @@ const mapStateToProps = (state = {}, ownProps = {}) => {
   const activeMarket = getActiveMarket(state)
   return {
     activeMarket,
+    wsConnected: isSocketConnected(state),
     atomicOrdersCount: _size(getAtomicOrders(state)),
     atomicOrdersCountActiveMarket: getFilteredAtomicOrdersCount(state)(activeMarket),
     apiClientState: getAPIClientState(state),
@@ -62,9 +63,14 @@ const mapDispatchToProps = dispatch => ({
     }))
   },
 
-  submitOrder: ({ authToken, packet }) => {
-    debug('submitting order %j', packet)
+  submitOrder: ({ authToken, packet, wsConnected }) => {
+    if (!wsConnected) {
+      dispatch(UIActions.changeIsNoConnectionModalState(true))
+      dispatch(UIActions.setIsOrderExecuting(false))
+      return
+    }
 
+    debug('submitting order %j', packet)
     dispatch(WSActions.submitOrder(authToken, {
       symbol: packet.symbol.w,
       ...packet,
@@ -77,10 +83,15 @@ const mapDispatchToProps = dispatch => ({
     dispatch(GAActions.submitAO())
   },
   submitAlgoOrder: ({
-    authToken, id, market, context, data,
+    authToken, id, market, context, data, wsConnected,
   }) => {
-    debug('submitting algo order %s on %s [%s]', id, market.uiID, context)
+    if (!wsConnected) {
+      dispatch(UIActions.changeIsNoConnectionModalState(true))
+      dispatch(UIActions.setIsOrderExecuting(false))
+      return
+    }
 
+    debug('submitting algo order %s on %s [%s]', id, market.uiID, context)
     dispatch(WSActions.submitAlgoOrder(authToken, id, {
       ...data,
       _symbol: market.wsID,
@@ -90,8 +101,13 @@ const mapDispatchToProps = dispatch => ({
   },
 
   submitAPIKeys: ({
-    authToken, apiKey, apiSecret,
+    authToken, apiKey, apiSecret, wsConnected,
   }, mode) => {
+    if (!wsConnected) {
+      dispatch(UIActions.changeIsNoConnectionModalState(true))
+      return
+    }
+
     dispatch(WSActions.updatingApiKey(mode, true))
     dispatch(WSActions.send([
       'api_credentials.save',
