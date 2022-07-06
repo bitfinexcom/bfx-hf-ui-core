@@ -11,7 +11,6 @@ import DateInput from '../OrderForm/FieldComponents/input.date'
 import TimeFrameDropdown from '../TimeFrameDropdown'
 import { STRATEGY_OPTIONS_KEYS } from '../StrategyEditor/StrategyEditor.helpers'
 import { STRATEGY_SHAPE } from '../../constants/prop-types-shapes'
-import Panel from '../../ui/Panel'
 
 import './style.css'
 
@@ -74,61 +73,60 @@ const BacktestOptionsPanel = ({
   }
 
   return (
-    <Panel removeable={false} moveable={false} dark darkHeader>
-      <div className='hfui-strategy-backtest-options'>
-        <div className='item'>
-          <DateInput
-            onChange={setStartDate}
-            def={{ label: t('strategyEditor.startDate') }}
-            value={startDate}
-            maxDate={endDate}
-            disabled={isLoading}
-          />
+    <div className='hfui-strategy-backtest-options'>
+      <div className='item'>
+        <DateInput
+          onChange={setStartDate}
+          def={{ label: t('strategyEditor.startDate') }}
+          value={startDate}
+          maxDate={endDate}
+          disabled={isLoading}
+        />
+      </div>
+      <div className='item'>
+        <DateInput
+          onChange={setEndDate}
+          def={{ label: t('strategyEditor.endDate') }}
+          value={endDate}
+          maxDate={MAX_DATE}
+          minDate={startDate}
+          disabled={isLoading}
+        />
+      </div>
+      <div className='item'>
+        <Checkbox
+          label={t('strategyEditor.useCandlesCheckbox')}
+          checked={candles}
+          onChange={setCandles}
+          disabled={isLoading}
+        />
+        <div className={clsx('hfui-orderform__input-label', { disabled: isLoading })}>
+          {t('strategyEditor.useCandlesCheckboxDescription')}
         </div>
+      </div>
+      {candles && (
+      <>
         <div className='item'>
-          <DateInput
-            onChange={setEndDate}
-            def={{ label: t('strategyEditor.endDate') }}
-            value={endDate}
-            maxDate={MAX_DATE}
-            minDate={startDate}
+          <TimeFrameDropdown
             disabled={isLoading}
+            tf={timeframe}
+            onChange={setTimeframe}
           />
+          <p className={clsx('hfui-orderform__input-label', { disabled: isLoading })}>
+            {t('strategyEditor.selectCandleDurationDescription')}
+          </p>
         </div>
-        <div className='item'>
-          <Checkbox
-            label={t('strategyEditor.useCandlesCheckbox')}
-            checked={candles}
-            onChange={setCandles}
-            disabled={isLoading}
-          />
-          <div className={clsx('hfui-orderform__input-label', { disabled: isLoading })}>
-            {t('strategyEditor.useCandlesCheckboxDescription')}
-          </div>
-        </div>
-        {candles && (
-          <>
-            <div className='item'>
-              <TimeFrameDropdown
-                disabled={isLoading}
-                tf={timeframe}
-                onChange={setTimeframe}
-              />
-              <p className={clsx('hfui-orderform__input-label', { disabled: isLoading })}>
-                {t('strategyEditor.selectCandleDurationDescription')}
-              </p>
-            </div>
-            <AmountInput
-              className='item'
-              def={{ label: t('strategyEditor.candleSeedCount') }}
-              validationError={seedError}
-              value={candleSeedValue}
-              onChange={updateSeed}
-              disabled={isLoading}
-            />
-          </>
-        )}
-        {/* {!isPaperTrading && _includes(symbol?.contexts, 'm') && (
+        <AmountInput
+          className='item'
+          def={{ label: t('strategyEditor.candleSeedCount') }}
+          validationError={seedError}
+          value={candleSeedValue}
+          onChange={updateSeed}
+          disabled={isLoading}
+        />
+      </>
+      )}
+      {/* {!isPaperTrading && _includes(symbol?.contexts, 'm') && (
         <div className='hfui-strategy-options__amount-input item'>
           <Checkbox
             label={t('strategyEditor.useMarginCheckbox')}
@@ -138,52 +136,51 @@ const BacktestOptionsPanel = ({
           <p className='hfui-orderform__input-label'>{t('strategyEditor.useMarginCheckboxDescription')}</p>
         </div>
       )} */}
-        <div className='item'>
-          <Checkbox
-            label={t('strategyEditor.useTradesCheckbox')}
-            checked={trades}
-            onChange={setTrades}
-            disabled={isLoading}
-          />
-          <div className={clsx('hfui-orderform__input-label', { disabled: isLoading })}>
-            {t('strategyEditor.useTradesCheckboxDescription')}
-          </div>
-        </div>
-
-        {isLoading && (
-          <div className='item'>
-            <Button
-              intent={Intent.NONE}
-              onClick={onCancelProcess}
-              className='hfui-strategy-backtest-options__start-btn'
-            >
-              {t('strategyEditor.cancelThisProcess')}
-            </Button>
-
-          </div>
-        )}
-        <div className='item'>
-          {isLoading ? (
-            <Button
-              className='hfui-strategy-backtest-options__start-btn'
-              intent={Intent.INFO}
-              disabled
-            >
-              <Spinner className='hfui-strategy-backtest-options__spinner' />
-              {t('strategyEditor.calculating')}
-            </Button>
-          ) : (
-            <Button
-              className='hfui-strategy-backtest-options__start-btn'
-              onClick={onBacktestStart}
-              intent={Intent.PRIMARY}
-            >
-              {t('ui.startBtn')}
-            </Button>
-          )}
+      <div className='item'>
+        <Checkbox
+          label={t('strategyEditor.useTradesCheckbox')}
+          checked={trades}
+          onChange={setTrades}
+          disabled={isLoading}
+        />
+        <div className={clsx('hfui-orderform__input-label', { disabled: isLoading })}>
+          {t('strategyEditor.useTradesCheckboxDescription')}
         </div>
       </div>
-    </Panel>
+
+      {isLoading && (
+      <div className='item'>
+        <Button
+          intent={Intent.NONE}
+          onClick={onCancelProcess}
+          className='hfui-strategy-backtest-options__start-btn'
+        >
+          {t('strategyEditor.cancelThisProcess')}
+        </Button>
+
+      </div>
+      )}
+      <div className='item'>
+        {isLoading ? (
+          <Button
+            className='hfui-strategy-backtest-options__start-btn'
+            intent={Intent.INFO}
+            disabled
+          >
+            <Spinner className='hfui-strategy-backtest-options__spinner' />
+            {t('strategyEditor.calculating')}
+          </Button>
+        ) : (
+          <Button
+            className='hfui-strategy-backtest-options__start-btn'
+            onClick={onBacktestStart}
+            intent={Intent.PRIMARY}
+          >
+            {t('ui.startBtn')}
+          </Button>
+        )}
+      </div>
+    </div>
   )
 }
 
