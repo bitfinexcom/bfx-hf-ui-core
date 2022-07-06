@@ -361,12 +361,23 @@ function reducer(state = getInitialState(), action = {}) {
         [`${page}_GUIDE_ACTIVE`]: false,
       }
     }
+
     case types.SET_CURRENT_STRATEGY: {
       const { strategy } = payload
 
       return {
         ...state,
         currentStrategy: strategy,
+      }
+    }
+
+    case types.UPDATE_CURRENT_STRATEGY: {
+      return {
+        ...state,
+        currentStrategy: {
+          ...state.currentStrategy,
+          ...payload,
+        },
       }
     }
 
@@ -631,6 +642,22 @@ function reducer(state = getInitialState(), action = {}) {
       return {
         ...state,
         featureFlags: payload,
+      }
+    }
+
+    case types.SET_PENDING_LIVE_STRATEGY: {
+      const { strategyId } = payload
+
+      return {
+        ...state,
+        pendingLiveStrategy: strategyId,
+      }
+    }
+
+    case types.REMOVE_PENDING_LIVE_STRATEGY: {
+      return {
+        ...state,
+        pendingLiveStrategy: null,
       }
     }
 

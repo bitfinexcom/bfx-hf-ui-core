@@ -20,6 +20,7 @@ import {
   getIsBetaVersion,
   getCurrentMode,
   getStrategyExecutionId,
+  getPendingLiveStrategy,
 } from '../../redux/selectors/ui'
 import StrategyEditor from './StrategyEditor'
 import { getMarketsSortedByVolumeForExecution } from '../../redux/selectors/meta'
@@ -36,6 +37,7 @@ const mapStateToProps = (state = {}) => {
     savedStrategies: getSavedStrategies(state),
     currentMode: getCurrentMode(state),
     executionId: getStrategyExecutionId(state),
+    pendingLiveStrategy: getPendingLiveStrategy(state),
     markets: getMarketsSortedByVolumeForExecution(state),
   }
 }
@@ -160,8 +162,13 @@ const mapDispatchToProps = (dispatch) => ({
     }
   },
   changeTradingMode: (isPaperTrading) => {
-    dispatch(UIActions.setTradingMode(isPaperTrading))
-    dispatch(WSActions.changeMode())
+    dispatch(WSActions.changeMode(isPaperTrading))
+  },
+  saveStrategyToExecuteToLS: (strategyToExecute) => {
+    dispatch(UIActions.setPendingLiveStrategy(strategyToExecute.id))
+  },
+  removeStrategyToExecuteFromLS: () => {
+    dispatch(UIActions.removePendingLiveStrategy())
   },
 })
 

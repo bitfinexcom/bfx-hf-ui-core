@@ -100,7 +100,7 @@ const ExecutionOptionsModal = (props) => {
     setStopLossPercValue(stopLossPerc)
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [strategyId])
+  }, [strategyId, isOpen])
 
   useEffect(() => {
     if (

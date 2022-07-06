@@ -28,6 +28,7 @@ import getSettingsActiveTab, { getSettingActiveSection } from './get_settings_ac
 import getIsLoadingOrderHistData from './get_is_loading_order_hist_data'
 import getStrategyExecutionId from './get_strategy_execution_id'
 import getCurrentStrategy from './get_current_strategy'
+import getPendingLiveStrategy from './get_pending_live_strategy'
 
 export * from './get_settings'
 export * from './get_core_settings'
@@ -65,4 +66,5 @@ export {
   getIsLoadingOrderHistData,
   getStrategyExecutionId,
   getCurrentStrategy,
+  getPendingLiveStrategy,
 }

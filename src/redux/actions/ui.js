@@ -114,6 +114,11 @@ export const setCurrentStrategy = (strategy) => ({
   payload: { strategy },
 })
 
+export const updateCurrentStrategy = (payload) => ({
+  type: types.UPDATE_CURRENT_STRATEGY,
+  payload,
+})
+
 export const setStrategyExecutionId = (execId) => ({
   type: types.SET_STRATEGY_EXECUTION_ID,
   payload: { executionId: execId },
@@ -224,6 +229,16 @@ export const setIsLoadingOrderHistData = (flag) => ({
   payload: flag,
 })
 
+export const setPendingLiveStrategy = (strategyId) => ({
+  type: types.SET_PENDING_LIVE_STRATEGY,
+  payload: { strategyId },
+})
+
+export const removePendingLiveStrategy = () => ({
+  type: types.REMOVE_PENDING_LIVE_STRATEGY,
+  payload: null,
+})
+
 export default {
   saveLayout,
   storeUnsavedLayout,
@@ -261,4 +276,7 @@ export default {
   setSettingsTab,
   setIsLoadingOrderHistData,
   setCurrentStrategy,
+  updateCurrentStrategy,
+  setPendingLiveStrategy,
+  removePendingLiveStrategy,
 }

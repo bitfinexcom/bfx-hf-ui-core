@@ -91,7 +91,9 @@ export const STRATEGY_TRADE_SHAPE = {
 
 export const ORDER_SHAPE = {
   id: PropTypes.number,
-  gid: PropTypes.number,
+  gid: PropTypes.oneOfType([
+    PropTypes.string, PropTypes.number,
+  ]),
   cid: PropTypes.number,
   symbol: PropTypes.string,
   created: PropTypes.number,

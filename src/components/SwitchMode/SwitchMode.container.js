@@ -1,6 +1,5 @@
 import { connect } from 'react-redux'
 
-import UIActions from '../../redux/actions/ui'
 import WSActions from '../../redux/actions/ws'
 import { getIsPaperTrading, getThemeSetting } from '../../redux/selectors/ui'
 import SwitchMode from './SwitchMode'
@@ -12,8 +11,7 @@ const mapStateToProps = (state = {}) => ({
 
 const mapDispatchToProps = dispatch => ({
   changeTradingMode: (isPaperTrading) => {
-    dispatch(UIActions.setTradingMode(isPaperTrading))
-    dispatch(WSActions.changeMode())
+    dispatch(WSActions.changeMode(isPaperTrading))
   },
 })
 
