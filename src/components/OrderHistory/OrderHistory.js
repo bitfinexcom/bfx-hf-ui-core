@@ -27,7 +27,7 @@ const OrderHistory = ({
 
   const handleLoadMoreRows = () => {
     setIsLoadingOrderHistFlag(true)
-    fetchMoreItems({ fetchMoreItems: true })
+    fetchMoreItems()
   }
 
   const apiClientConfigured = apiCredentials?.configured && apiCredentials?.valid
