@@ -161,16 +161,3 @@
     }
   }
 }
-
-// Remove after make BacktestOptionsPanel verical
-@media screen and (max-width: 1800px) {
-  .hfui-strategy-options {
-    .item {
-      margin-right: 10px;
-    }
-
-    &__left-container {
-      justify-content: space-between;
-    }
-  }
-}
