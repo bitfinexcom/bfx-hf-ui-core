@@ -69,6 +69,7 @@ export default (alias, store) => (e = {}) => {
         const isPaperTrading = mode === PAPER_MODE
 
         store.dispatch(UIActions.setTradingMode(isPaperTrading))
+        store.dispatch(UIActions.setMarketFromStore(isPaperTrading))
         store.dispatch(WSActions.recvAuthToken(token))
         store.dispatch(AOActions.getActiveAlgoOrders())
         store.dispatch(WSActions.send(['strategy.execute_status', token]))
