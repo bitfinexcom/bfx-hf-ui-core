@@ -26,7 +26,7 @@ import {
   GET_RANGE_EVENT,
 } from './events'
 
-const useChartIframe = (iframeID, wsID, customIndicators, trades, interval, range) => {
+const useChartIframe = (iframeID, wsID, customIndicators, trades, interval, isSetInterval, range) => {
   const [isIframeReady, setIsIframeReady] = useState(false)
   const { t } = useTranslation()
   const dispatch = useDispatch()
@@ -52,13 +52,15 @@ const useChartIframe = (iframeID, wsID, customIndicators, trades, interval, rang
       sendMessageToIframe(iframeChart, GET_ORDERS_EVENT, orders)
       sendMessageToIframe(iframeChart, GET_POSITION_EVENT, position || {})
       sendMessageToIframe(iframeChart, GET_TRADES_EVENT, trades || [])
-      sendMessageToIframe(iframeChart, GET_INTERVAL_EVENT, interval || '')
+      if (isSetInterval) {
+        sendMessageToIframe(iframeChart, GET_INTERVAL_EVENT, interval || '')
+      }
       sendMessageToIframe(iframeChart, GET_RANGE_EVENT, range || {})
       if (!_isEmpty(customIndicators)) {
         sendMessageToIframe(iframeChart, GET_INDICATORS_EVENT, customIndicators || [])
       }
     }
-  }, [orders, iframeID, isIframeReady, position, customIndicators, trades, interval, range])
+  }, [orders, iframeID, isIframeReady, position, customIndicators, trades, interval, range, isSetInterval])
 
   const sendMarketToChartIframe = useCallback((market) => {
     const marketOrders = getChartOrders(market?.wsID, t)
