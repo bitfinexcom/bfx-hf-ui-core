@@ -29,6 +29,7 @@ import getSettingsActiveTab, { getSettingActiveSection } from './get_settings_ac
 import getIsLoadingOrderHistData from './get_is_loading_order_hist_data'
 import getStrategyExecutionId from './get_strategy_execution_id'
 import getCurrentStrategy from './get_current_strategy'
+import getIsNoConnectionModalVisible from './get_is_no_connection_modal_visible'
 
 export * from './get_settings'
 export * from './get_core_settings'
@@ -67,4 +68,5 @@ export {
   getIsLoadingOrderHistData,
   getStrategyExecutionId,
   getCurrentStrategy,
+  getIsNoConnectionModalVisible,
 }

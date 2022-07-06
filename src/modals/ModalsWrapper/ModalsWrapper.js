@@ -4,6 +4,7 @@ import AppSettingsModal from '../AppSettingsModal'
 
 const TradingModeModal = lazy(() => import('../TradingModeModal'))
 const BadConnectionModal = lazy(() => import('../BadConnectionModal'))
+const NoConnectionActionModal = lazy(() => import('../NoConnectionActionModal'))
 const OldFormatModal = lazy(() => import('../OldFormatModal'))
 const AOPauseModal = lazy(() => import('../AOPauseModal'))
 const CcyInfoModal = lazy(() => import('../CcyInfoModal'))
@@ -23,6 +24,7 @@ const ModalsWrapper = ({ isElectronApp }) => {
         <AppSettingsModal />
       </>
       )}
+      <NoConnectionActionModal />
       <BadConnectionModal />
       <CcyInfoModal />
       <EditOrderModal />
