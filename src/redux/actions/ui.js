@@ -239,6 +239,14 @@ export const removePendingLiveStrategy = () => ({
   payload: null,
 })
 
+export const updateServiceStatus = (mode, serviceStatus) => ({
+  type: types.UPDATE_SERVICE_STATUS,
+  payload: {
+    mode,
+    serviceStatus,
+  },
+})
+
 export default {
   saveLayout,
   storeUnsavedLayout,
@@ -279,4 +287,5 @@ export default {
   updateCurrentStrategy,
   setPendingLiveStrategy,
   removePendingLiveStrategy,
+  updateServiceStatus,
 }

@@ -21,6 +21,7 @@ import {
   getCurrentMode,
   getStrategyExecutionId,
   getPendingLiveStrategy,
+  getServicesStatus,
 } from '../../redux/selectors/ui'
 import StrategyEditor from './StrategyEditor'
 import { getMarketsSortedByVolumeForExecution } from '../../redux/selectors/meta'
@@ -38,6 +39,7 @@ const mapStateToProps = (state = {}) => {
     currentMode: getCurrentMode(state),
     executionId: getStrategyExecutionId(state),
     pendingLiveStrategy: getPendingLiveStrategy(state),
+    serviceStatus: getServicesStatus(state),
     markets: getMarketsSortedByVolumeForExecution(state),
   }
 }

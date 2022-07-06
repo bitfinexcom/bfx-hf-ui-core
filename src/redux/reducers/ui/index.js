@@ -661,6 +661,16 @@ function reducer(state = getInitialState(), action = {}) {
       }
     }
 
+    case types.UPDATE_SERVICE_STATUS: {
+      const { mode, serviceStatus } = payload
+      return {
+        ...state,
+        serviceStatus: {
+          [mode]: serviceStatus,
+        },
+      }
+    }
+
     default: {
       return state
     }

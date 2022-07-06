@@ -88,6 +88,7 @@ const StrategyEditor = (props) => {
     setSectionErrors,
     IDEcontent,
     setIDEcontent,
+    serviceStatus,
   } = props
   const { t } = useTranslation()
 
@@ -147,6 +148,8 @@ const StrategyEditor = (props) => {
   } = strategyOptions
 
   const { executing, loadingGid } = executionState
+
+  const { strategyManager: isStrategyManagerRunning } = serviceStatus
 
   const isFullFilled = isExecutionInputsFullFilled(
     capitalAllocation,
@@ -527,7 +530,7 @@ const StrategyEditor = (props) => {
   )
 
   useEffect(() => {
-    if (isPaperTrading || !pendingLiveStrategy || executing || _isEmpty(savedStrategies)) {
+    if (isPaperTrading || !pendingLiveStrategy || !isStrategyManagerRunning || executing || _isEmpty(savedStrategies)) {
       return
     }
 
@@ -538,7 +541,7 @@ const StrategyEditor = (props) => {
 
     loadStrategyAndStartExecution(strategyToLoad)
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [savedStrategies, executing, pendingLiveStrategy])
+  }, [savedStrategies, executing, pendingLiveStrategy, isStrategyManagerRunning])
 
   const sbtitleStrategy = useCallback(
     ({ selectedTab, sidebarOpened }) => (
@@ -771,6 +774,12 @@ StrategyEditor.propTypes = {
   setSectionErrors: PropTypes.func.isRequired,
   IDEcontent: PropTypes.objectOf(PropTypes.string).isRequired,
   setIDEcontent: PropTypes.func.isRequired,
+  serviceStatus: PropTypes.shape({
+    dmsControl: PropTypes.bool,
+    algoWorker: PropTypes.bool,
+    bfxClient: PropTypes.bool,
+    strategyManager: PropTypes.bool,
+  }).isRequired,
 }
 
 StrategyEditor.defaultProps = {

@@ -498,6 +498,12 @@ export default (alias, store) => (e = {}) => {
         break
       }
 
+      case 'info.services.status': {
+        const [, mode, serviceStatus] = payload
+        store.dispatch(UIActions.updateServiceStatus(mode, serviceStatus))
+        break
+      }
+
       default: {
         break
       }
