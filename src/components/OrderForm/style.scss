@@ -389,6 +389,11 @@
   flex-shrink: 0;
   justify-content: space-between;
 
+  &.disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
   &.error {
     color: $red-color;
   }

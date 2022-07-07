@@ -66,7 +66,7 @@ StrategiesGridLayout.propTypes = {
 StrategiesGridLayout.defaultProps = {
   isLoading: false,
   layoutConfig: [],
-  onCancelProcess: null,
+  onCancelProcess: () => {},
 }
 
 export default StrategiesGridLayout

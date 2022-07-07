@@ -73,6 +73,16 @@ export const LAYOUT_CONFIG_NO_DATA = [
   },
 ]
 
+export const BACKTEST_LAYOUT_CONFIG_NO_DATA = [
+  {
+    i: COMPONENTS_KEYS.OPTIONS,
+    x: 0,
+    y: 0,
+    w: 20,
+    h: 9,
+  },
+]
+
 export const IDE_LAYOUT_CONFIG = [
   {
     i: COMPONENTS_KEYS.IDE,

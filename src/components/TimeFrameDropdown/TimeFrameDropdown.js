@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next'
 import Dropdown from '../../ui/Dropdown'
 import timeFrames from '../../util/time_frames'
 
-const TimeFrameDropdown = ({ tf, onChange }) => {
+const TimeFrameDropdown = ({ tf, onChange, disabled }) => {
   const { t } = useTranslation()
   const options = useMemo(() => {
     return _map(timeFrames, (time) => ({
@@ -22,6 +22,7 @@ const TimeFrameDropdown = ({ tf, onChange }) => {
       onChange={onChange}
       value={tf}
       options={options}
+      disabled={disabled}
     />
   )
 }
@@ -29,6 +30,11 @@ const TimeFrameDropdown = ({ tf, onChange }) => {
 TimeFrameDropdown.propTypes = {
   onChange: PropTypes.func.isRequired,
   tf: PropTypes.string.isRequired,
+  disabled: PropTypes.bool,
+}
+
+TimeFrameDropdown.defaultProps = {
+  disabled: false,
 }
 
 export default memo(TimeFrameDropdown)

@@ -521,6 +521,8 @@ const StrategyEditor = (props) => {
     dsStopLiveStrategy(authToken, executionId)
   }, [authToken, dsStopLiveStrategy, executionId])
 
+  const openNewTest = () => onLoadStrategy(strategy)
+
   const hasErrorsInIDE = useMemo(
     () => _some(_values(sectionErrors), (e) => !!e),
     [sectionErrors],
@@ -644,6 +646,7 @@ const StrategyEditor = (props) => {
                 onBacktestStart={onBacktestStart}
                 saveStrategyOptions={saveStrategyOptions}
                 onCancelProcess={onCancelProcess}
+                openNewTest={openNewTest}
                 {...props}
               />
             )}
