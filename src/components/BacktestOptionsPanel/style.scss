@@ -26,5 +26,12 @@
   &__spinner {
     margin-top: 0;
     margin-right: 5px !important;
+    color: inherit;
+  }
+
+  &__calculating-btn {
+    @extend .hfui-strategy-backtest-options__start-btn;
+    background-color: #bfccda;
+    color: #152330;
   }
 }

@@ -163,8 +163,7 @@ const BacktestOptionsPanel = ({
       <div className='item'>
         {isLoading ? (
           <Button
-            className='hfui-strategy-backtest-options__start-btn'
-            intent={Intent.INFO}
+            className='hfui-strategy-backtest-options__calculating-btn'
             disabled
           >
             <Spinner className='hfui-strategy-backtest-options__spinner' />
