@@ -103,12 +103,11 @@ const StatusBar = ({
           })}
         />
         <p>
-          {`WS/API ${
+          {`WS ${
             wsConnected && !wsConnInterrupted
               ? t('statusbar.connected')
               : t('statusbar.disconnected')
           }`}
-
         </p>
       </div>
     </div>
