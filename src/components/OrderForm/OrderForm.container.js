@@ -64,17 +64,15 @@ const mapDispatchToProps = dispatch => ({
   },
 
   submitOrder: ({ authToken, packet, wsConnected }) => {
-    if (!wsConnected) {
-      dispatch(UIActions.changeIsNoConnectionModalState(true))
-      dispatch(UIActions.setIsOrderExecuting(false))
-      return
-    }
-
     debug('submitting order %j', packet)
     dispatch(WSActions.submitOrder(authToken, {
       symbol: packet.symbol.w,
       ...packet,
     }))
+
+    if (!wsConnected) {
+      dispatch(UIActions.setIsOrderExecuting(false))
+    }
   },
   gaSubmitOrder: () => {
     dispatch(GAActions.submitAtomicOrder())
@@ -85,12 +83,6 @@ const mapDispatchToProps = dispatch => ({
   submitAlgoOrder: ({
     authToken, id, market, context, data, wsConnected,
   }) => {
-    if (!wsConnected) {
-      dispatch(UIActions.changeIsNoConnectionModalState(true))
-      dispatch(UIActions.setIsOrderExecuting(false))
-      return
-    }
-
     debug('submitting algo order %s on %s [%s]', id, market.uiID, context)
     dispatch(WSActions.submitAlgoOrder(authToken, id, {
       ...data,
@@ -98,16 +90,15 @@ const mapDispatchToProps = dispatch => ({
       _margin: context === 'm',
       _futures: context === 'f',
     }))
+
+    if (!wsConnected) {
+      dispatch(UIActions.setIsOrderExecuting(false))
+    }
   },
 
   submitAPIKeys: ({
-    authToken, apiKey, apiSecret, wsConnected,
+    authToken, apiKey, apiSecret,
   }, mode) => {
-    if (!wsConnected) {
-      dispatch(UIActions.changeIsNoConnectionModalState(true))
-      return
-    }
-
     dispatch(WSActions.updatingApiKey(mode, true))
     dispatch(WSActions.send([
       'api_credentials.save',

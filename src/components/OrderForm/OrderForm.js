@@ -129,13 +129,12 @@ class OrderForm extends React.Component {
 
   onSubmitAPIKeys({ apiKey, apiSecret }) {
     const {
-      submitAPIKeys, authToken, mode, wsConnected,
+      submitAPIKeys, authToken, mode,
     } = this.props
     submitAPIKeys({
       authToken,
       apiKey,
       apiSecret,
-      wsConnected,
     }, mode)
   }
 
