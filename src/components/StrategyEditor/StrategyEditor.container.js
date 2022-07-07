@@ -145,6 +145,7 @@ const mapDispatchToProps = (dispatch) => ({
     if (isPaperTrading) {
       // stopping backtesting
       if (!backtestGid) {
+        dispatch(WSActions.purgeBacktestData())
         return
       }
       dispatch(
@@ -155,6 +156,7 @@ const mapDispatchToProps = (dispatch) => ({
       )
     } else {
       if (!liveExecGid) {
+        dispatch(WSActions.resetExecutionData())
         return
       }
       // stopping live execution

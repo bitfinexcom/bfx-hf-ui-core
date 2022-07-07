@@ -151,17 +151,14 @@ function reducer(state = getInitialState(), action = {}) {
       }
     }
 
-    case types.DISCONNECTED: {
+    case types.DISCONNECTED:
+    case types.RESET_DATA_EXECUTION: {
       return {
         ...state,
         loading: false,
         loadingGid: null,
         activeStrategies: {},
       }
-    }
-
-    case types.RESET_DATA_EXECUTION: {
-      return getInitialState()
     }
 
     default: {
