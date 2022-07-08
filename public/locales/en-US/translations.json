@@ -148,13 +148,13 @@
     "longEmaTimeFrame": "Long EMA Time Frame",
     "orderPrice": "Order Price",
     "ococo": {
-      "title": "Order Creates OcO",
+      "title": "Bracket Order",
       "help": "Creates a standard LIMIT or MARKET order, and schedules an OcO order to be submitted after the initial order fills. All of the normal LIMIT/MARKET parameters are available on both orders."
     },
     "ocoSettings": "OcO Settings",
     "initialOrderAmount": "Initial Order amount",
     "ocoOrderAmount": "OcO Order amount",
-    "initialOrderPrice": "Initial Order Price",
+    "initialOrderPrice": "Primary Order Price",
     "ocoLimitPrice": "OcO Limit Price",
     "ocoStopPrice": "OcO Stop Price",
     "hidden": "HIDDEN",
