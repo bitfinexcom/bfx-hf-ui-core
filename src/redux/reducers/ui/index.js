@@ -666,6 +666,7 @@ function reducer(state = getInitialState(), action = {}) {
       return {
         ...state,
         serviceStatus: {
+          ...state.serviceStatus,
           [mode]: serviceStatus,
         },
       }
