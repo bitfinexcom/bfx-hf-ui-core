@@ -6,11 +6,16 @@ import { useTranslation } from 'react-i18next'
 import { getThemeSetting } from '../../redux/selectors/ui'
 import Panel from '../../ui/Panel'
 import Chart from '../Chart'
-import { getStrategyMarket, prepareTVIndicators } from './StrategyLiveChart.helpers'
+import {
+  getStrategyMarket,
+  prepareTVIndicators,
+} from './StrategyLiveChart.helpers'
 import { TIMEFRAME_INTERVAL_MAPPING } from '../../util/time_frames'
 import {
   INDICATORS_ARRAY_SHAPE,
-  MARKET_SHAPE, STRATEGY_SHAPE, STRATEGY_TRADE_SHAPE,
+  MARKET_SHAPE,
+  STRATEGY_SHAPE,
+  STRATEGY_TRADE_SHAPE,
 } from '../../constants/prop-types-shapes'
 
 import './style.css'
@@ -28,32 +33,42 @@ const StrategyLiveChart = ({
     strategyOptions: {
       timeframe, symbol, startDate, endDate,
     },
-    id, startedOn, stoppedOn,
+    id,
+    executionId = id,
+    startedOn,
+    stoppedOn,
   } = strategy
   const start = isBacktest ? new Date(startDate).getTime() : startedOn
   const end = isBacktest ? new Date(endDate).getTime() : stoppedOn
   const chartRange = useMemo(() => {
     if (start && end) {
       return {
-        start, end,
+        start,
+        end,
       }
     }
-    return { }
+    return {}
   }, [end, start])
   const { t } = useTranslation()
   const settingsTheme = useSelector(getThemeSetting)
-  const chartIndicators = useMemo(() => prepareTVIndicators(indicators), [indicators])
+  const chartIndicators = useMemo(
+    () => prepareTVIndicators(indicators),
+    [indicators],
+  )
   const interval = TIMEFRAME_INTERVAL_MAPPING[timeframe] || '15'
 
   const {
     wsID, uiID, base, quote,
   } = getStrategyMarket(markets, symbol?.wsID)
-  const chartMarket = useMemo(() => ({
-    wsID,
-    uiID,
-    base,
-    quote,
-  }), [base, quote, uiID, wsID])
+  const chartMarket = useMemo(
+    () => ({
+      wsID,
+      uiID,
+      base,
+      quote,
+    }),
+    [base, quote, uiID, wsID],
+  )
 
   return (
     <Panel
@@ -74,18 +89,20 @@ const StrategyLiveChart = ({
       fullscreen={fullscreenChart}
       onExitFullscreen={exitFullscreenChart}
     >
-      {chartMarket && (
+      {/* We have to use array + key prop for correct Chart rerender when strategy changed */}
+      {chartMarket && [
         <Chart
           market={chartMarket}
           theme={settingsTheme}
-          layoutI={`strategy-editor-${id}`}
+          layoutI={`strategy-editor-${executionId}`}
           indicators={chartIndicators}
           interval={interval}
           trades={trades}
           hideResolutions
           chartRange={chartRange}
-        />
-      )}
+          key={executionId}
+        />,
+      ]}
     </Panel>
   )
 }
