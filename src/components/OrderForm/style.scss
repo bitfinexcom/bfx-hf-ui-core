@@ -52,6 +52,11 @@
 }
 
 .hfui-orderform__panel {
+  .ao-submit-action {
+    justify-content: center !important;
+    margin-top: 15px;
+  }
+
   .hfui-panel__footer {
     width: 100%;
     background: var(--background-color);
