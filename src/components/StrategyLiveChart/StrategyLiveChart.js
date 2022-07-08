@@ -89,8 +89,10 @@ const StrategyLiveChart = ({
       fullscreen={fullscreenChart}
       onExitFullscreen={exitFullscreenChart}
     >
-      {/* We have to use array + key prop for correct Chart rerender when strategy changed */}
-      {chartMarket && [
+      {/* We have to use key prop for correct Chart rerender when strategy changed
+          https://medium.com/@albertogasparin/forcing-state-reset-on-a-react-component-by-using-the-key-prop-14b36cd7448e
+      */}
+      {chartMarket && (
         <Chart
           market={chartMarket}
           theme={settingsTheme}
@@ -101,8 +103,8 @@ const StrategyLiveChart = ({
           hideResolutions
           chartRange={chartRange}
           key={executionId}
-        />,
-      ]}
+        />
+      )}
     </Panel>
   )
 }
