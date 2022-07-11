@@ -740,7 +740,7 @@
       "runTime": "Strategy Run Time"
     },
     "IDEreadonlyNotice": "Strategy editing is disabled while the strategy is being executed. To update your strategy, change to SANDBOX environment and reopen this strategy from your ACTIVE STRATEGIES tab",
-    "strategyOptionsBtn": "Settings"
+    "strategyOptionsBtn": "设置"
   },
   "ui": {
     "ok": "确定",
@@ -773,7 +773,7 @@
     "name": "名称",
     "notSelected": "未选取",
     "e.g.": "例如：{{value}}",
-    "required": "REQUIRED"
+    "required": "必填"
   },
   "crashHandler": {
     "text1": "错误发生，Bitfinex Honey介面停止运作。请重启应用程式以继续使用。",
