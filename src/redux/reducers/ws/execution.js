@@ -122,7 +122,7 @@ function reducer(state = getInitialState(), action = {}) {
       const positions = results?.strategy
       const targetPositions = positions[isOpened ? 'openPositions' : 'closedPositions']
 
-      const currentPosition = { ...targetPositions[id] || {}, ...positionData }
+      const currentPosition = { ...targetPositions?.[id] || {}, ...positionData }
 
       const newState = {
         ...state.results,
