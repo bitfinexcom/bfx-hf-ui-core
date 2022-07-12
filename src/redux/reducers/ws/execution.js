@@ -64,22 +64,6 @@ function reducer(state = getInitialState(), action = {}) {
       }
     }
 
-    case types.SET_PAST_STRATEGY_RESULT: {
-      const { id, results } = payload
-      const { strategy } = results
-      const { closedPositions, openPositions } = strategy
-      const positions = { ...closedPositions, ...openPositions }
-
-      return {
-        ...state,
-        results: {
-          ...state.results,
-          [id]: results,
-          positions,
-        },
-      }
-    }
-
     case types.SET_STARTED_LIVE_STRATEGY: {
       const { strategyMapKey, executionResultsObj } = payload
 
@@ -103,10 +87,7 @@ function reducer(state = getInitialState(), action = {}) {
       const stoppedStrategy = activeStrategies[strategyMapKey]
       stoppedStrategy.stoppedOn = Date.now()
 
-      const pastStrategies = [
-        ...state.pastStrategies,
-        stoppedStrategy,
-      ]
+      const pastStrategies = [...state.pastStrategies, stoppedStrategy]
 
       delete activeStrategies[strategyMapKey]
 
@@ -119,16 +100,23 @@ function reducer(state = getInitialState(), action = {}) {
     }
 
     case types.SET_LIVE_EXECUTION_TRADES: {
-      const { positionData } = payload
+      const { positionData, strategyMapKey, isOpened } = payload
       const { id } = positionData
-      const currentState = state.results?.positions || {}
+      const positions = state.results[strategyMapKey]?.strategy[
+        isOpened ? 'openPositions' : 'closedPositions'
+      ]
+
+      const currentPosition = { ...positions[id] = {}, ...positionData }
+
       const newState = {
         ...state.results,
-        positions: {
-          ...currentState,
-          [id]: {
-            ...(currentState?.[id] || {}),
-            ...positionData,
+        [strategyMapKey]: {
+          ...state.results[strategyMapKey],
+          strategy: {
+            [isOpened ? 'openPositions' : 'closedPositions']: {
+              ...positions,
+              [id]: currentPosition,
+            },
           },
         },
       }

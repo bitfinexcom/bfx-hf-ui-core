@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import _size from 'lodash/size'
 import { useTranslation } from 'react-i18next'
-import { useDispatch, useSelector } from 'react-redux'
+import { useSelector } from 'react-redux'
 import Panel from '../../ui/Panel'
 import {
   getSortedByTimeActiveStrategies,
@@ -19,7 +19,6 @@ import ActiveStrategiesList from './ActiveStrategiesList'
 import SavedStrategiesList from './SavedStrategiesList'
 import { prepareStrategyToLoad } from '../StrategyEditor/StrategyEditor.helpers'
 import { getIsPaperTrading } from '../../redux/selectors/ui'
-import WSActions from '../../redux/actions/ws'
 
 import './style.css'
 
@@ -29,7 +28,6 @@ const StrategiesListTable = ({
   saveAsHandler,
   renameStrategy,
 }) => {
-  const dispatch = useDispatch()
   const { t } = useTranslation()
   const _getMarketPair = useSelector(getExecutionMarketPair)
   const activeStrategies = useSelector(getSortedByTimeActiveStrategies())
@@ -57,8 +55,6 @@ const StrategiesListTable = ({
   }
 
   const onPastStrategyRowClick = ({ rowData: strategy }) => {
-    const { id, results } = strategy
-    dispatch(WSActions.setPastStrategyResults(id, results))
     return onStrategyRowClick(strategy)
   }
 
