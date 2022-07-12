@@ -19,7 +19,11 @@ import useToggle from '../../../../hooks/useToggle'
 import StrategyOptionsPanelLive from '../../../StrategyOptionsPanel/StrategyOptionsPanel.Live'
 import { getCurrentStrategyExecutionState } from '../../../../redux/selectors/ws'
 import { prepareChartTrades } from '../../StrategyEditor.helpers'
-import { INDICATORS_ARRAY_SHAPE, MARKET_SHAPE, STRATEGY_SHAPE } from '../../../../constants/prop-types-shapes'
+import {
+  INDICATORS_ARRAY_SHAPE,
+  MARKET_SHAPE,
+  STRATEGY_SHAPE,
+} from '../../../../constants/prop-types-shapes'
 
 const StrategyLiveTab = (props) => {
   const {
@@ -33,16 +37,13 @@ const StrategyLiveTab = (props) => {
     onCancelProcess,
   } = props
   const [layoutConfig, setLayoutConfig] = useState()
-  const [fullscreenChart,, setFullScreenChart, unsetFullScreenChart] = useToggle(false)
+  const [fullscreenChart, , setFullScreenChart, unsetFullScreenChart] = useToggle(false)
 
   const executionState = useSelector(getCurrentStrategyExecutionState)
 
   const {
-    loading, executing, results, startedOn,
+    loading, executing, results, startedOn, positions,
   } = executionState
-
-  const { closedPositions = {}, openPositions = {} } = results?.strategy || {}
-  const positions = { ...closedPositions, ...openPositions }
 
   const trades = useMemo(() => prepareChartTrades(positions), [positions])
 
@@ -112,7 +113,25 @@ const StrategyLiveTab = (props) => {
           return null
       }
     },
-    [markets, onOpenSaveStrategyAsModal, openExecutionOptionsModal, stopExecution, saveStrategyOptions, setFullScreenChart, executing, hasResults, indicators, strategy, fullscreenChart, unsetFullScreenChart, trades, results, startedOn, positions, layoutConfig],
+    [
+      markets,
+      onOpenSaveStrategyAsModal,
+      openExecutionOptionsModal,
+      stopExecution,
+      saveStrategyOptions,
+      setFullScreenChart,
+      executing,
+      hasResults,
+      indicators,
+      strategy,
+      fullscreenChart,
+      unsetFullScreenChart,
+      trades,
+      results,
+      startedOn,
+      positions,
+      layoutConfig,
+    ],
   )
 
   return (
@@ -136,7 +155,6 @@ StrategyLiveTab.propTypes = {
   openExecutionOptionsModal: PropTypes.func.isRequired,
   stopExecution: PropTypes.func.isRequired,
   indicators: INDICATORS_ARRAY_SHAPE,
-
 }
 
 StrategyLiveTab.defaultProps = {
