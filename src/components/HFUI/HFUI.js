@@ -44,6 +44,7 @@ const HFUI = (props) => {
     isBfxConnected,
     showStrategies,
     getPastStrategies,
+    getActiveAlgoOrders,
   } = props
   useInjectBfxData()
 
@@ -106,8 +107,9 @@ const HFUI = (props) => {
     if (authToken) {
       getSettings(authToken)
       getFeatureFlags(authToken)
+      getActiveAlgoOrders()
     }
-  }, [authToken, getSettings, getFeatureFlags])
+  }, [authToken, getSettings, getFeatureFlags, getActiveAlgoOrders])
 
   // fetch on every mode change
   useEffect(() => {
@@ -162,6 +164,7 @@ HFUI.propTypes = {
   getCoreSettings: PropTypes.func.isRequired,
   getFavoritePairs: PropTypes.func.isRequired,
   getPastStrategies: PropTypes.func.isRequired,
+  getActiveAlgoOrders: PropTypes.func.isRequired,
   onUnload: PropTypes.func.isRequired,
   notificationsVisible: PropTypes.bool.isRequired,
   GAPageview: PropTypes.func.isRequired,

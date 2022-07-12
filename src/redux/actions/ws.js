@@ -191,7 +191,7 @@ export default {
     payload: { gid },
   }),
 
-  recvDataAlgoOrders: ({ aos }) => ({
+  recvDataAlgoOrders: (aos) => ({
     type: t.DATA_ALGO_ORDERS,
     payload: { aos },
   }),

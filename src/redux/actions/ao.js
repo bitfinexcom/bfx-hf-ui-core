@@ -1,8 +1,11 @@
 import types from '../constants/ao'
 
-export function getActiveAlgoOrders() {
+export function getActiveAlgoOrders({ initialFetch = false } = {}) {
   return {
     type: types.GET_ACTIVE_AOS,
+    payload: {
+      initialFetch,
+    },
   }
 }
 

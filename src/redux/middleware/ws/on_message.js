@@ -336,7 +336,7 @@ export default (alias, store) => (e = {}) => {
       case 'data.aos': {
         const [, , aos] = payload
         const adapted = _map(aos, ao => (_isArray(ao) ? AOAdapter(ao) : ao))
-        store.dispatch(WSActions.recvDataAlgoOrders({ aos: adapted }))
+        store.dispatch(WSActions.recvDataAlgoOrders(adapted))
         break
       }
 
@@ -403,9 +403,15 @@ export default (alias, store) => (e = {}) => {
       }
 
       case 'algo.active_orders': {
-        const [, activeAlgoOrders] = payload
-        store.dispatch(AOActions.setActiveAlgoOrders(activeAlgoOrders))
-        store.dispatch(AOActions.showActiveOrdersModal(true))
+        const [, initialFetch, activeAlgoOrders] = payload
+
+        if (initialFetch) {
+          store.dispatch(AOActions.setActiveAlgoOrders(activeAlgoOrders))
+          store.dispatch(AOActions.showActiveOrdersModal(true))
+        } else {
+          store.dispatch(WSActions.recvDataAlgoOrders(activeAlgoOrders))
+        }
+
         break
       }
 
