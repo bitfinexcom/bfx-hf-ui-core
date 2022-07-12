@@ -17,7 +17,7 @@ import StrategyLiveChart from '../../../StrategyLiveChart'
 import StrategyTabWrapper from '../../components/StrategyTabWrapper'
 import useToggle from '../../../../hooks/useToggle'
 import StrategyOptionsPanelLive from '../../../StrategyOptionsPanel/StrategyOptionsPanel.Live'
-import { getCurrentStrategyExecutionState } from '../../../../redux/selectors/ws'
+import { getCurrentStrategyExecutionState, getCurrentStrategyPositions } from '../../../../redux/selectors/ws'
 import { prepareChartTrades } from '../../StrategyEditor.helpers'
 import {
   INDICATORS_ARRAY_SHAPE,
@@ -40,9 +40,10 @@ const StrategyLiveTab = (props) => {
   const [fullscreenChart, , setFullScreenChart, unsetFullScreenChart] = useToggle(false)
 
   const executionState = useSelector(getCurrentStrategyExecutionState)
+  const positions = useSelector(getCurrentStrategyPositions)
 
   const {
-    loading, executing, results, startedOn, positions,
+    loading, executing, results, startedOn,
   } = executionState
 
   const trades = useMemo(() => prepareChartTrades(positions), [positions])

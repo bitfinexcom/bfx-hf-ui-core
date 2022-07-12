@@ -41,6 +41,7 @@ import getSavedStrategies from './get_saved_strategies'
 import getIsExecutionLoading from './get_is_execution_loading'
 import getActiveStrategies from './get_active_strategies'
 import getCurrentStrategyExecutionState from './get_current_strategy_execution_state'
+import getCurrentStrategyPositions from './get_current_strategy_positions'
 import getDraftStrategies from './get_draft_strategies'
 
 export {
@@ -95,4 +96,5 @@ export {
   getIsExecutionLoading,
   getActiveStrategies,
   getCurrentStrategyExecutionState,
+  getCurrentStrategyPositions,
 }
