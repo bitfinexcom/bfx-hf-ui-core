@@ -139,15 +139,15 @@
     "longEmaTimeFrame": "长期EMA期间",
     "orderPrice": "订单价格",
     "ococo": {
-      "title": "条件性订单：二择一委托订单",
+      "title": "Bracket Order",
       "help": "创建一般现价单或市价单并预定单笔二择一委托订单，当初始订单执行后，即会提交二择一委托订单。所有限价单/市价单参数将适用于两种订单。"
     },
     "ocoSettings": "二择一委托订单设置",
     "initialOrderAmount": "初始订单数量",
     "ocoOrderAmount": "二择一委托订单数量",
-    "initialOrderPrice": "初始订单价格",
-    "ocoLimitPrice": "OcO限价价格",
-    "ocoStopPrice": "OcO止损价",
+    "initialOrderPrice": "Primary Order Price",
+    "ocoLimitPrice": "Higher Bracket Price",
+    "ocoStopPrice": "Lower Bracket Price",
     "hidden": "隐藏订单",
     "hiddenHelp": "利用此选项，您可以在订单簿中下单，但不会向其他交易者显示。价格/时间优先级与显示单相同，隐藏单始终会支付“吃单”手续费，而交易隐藏单的人将支付“挂单”手续费。",
     "postOnly": "仅限提交订单",
@@ -736,7 +736,7 @@
       "runTime": "Strategy Run Time"
     },
     "IDEreadonlyNotice": "Strategy editing is disabled while the strategy is being executed. To update your strategy, change to SANDBOX environment and reopen this strategy from your ACTIVE STRATEGIES tab",
-    "strategyOptionsBtn": "Settings"
+    "strategyOptionsBtn": "设置"
   },
   "ui": {
     "ok": "确定",
@@ -769,7 +769,7 @@
     "name": "名称",
     "notSelected": "未选取",
     "e.g.": "例如：{{value}}",
-    "required": "REQUIRED"
+    "required": "必填"
   },
   "crashHandler": {
     "text1": "错误发生，Bitfinex Honey介面停止运作。请重启应用程式以继续使用。",

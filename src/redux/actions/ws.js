@@ -274,10 +274,10 @@ export default {
     },
   }),
 
-  setLiveExecutionTrades: (strategyMapKey, positionData) => ({
+  setLiveExecutionTrades: (strategyMapKey, positionData, isOpened) => ({
     type: t.SET_LIVE_EXECUTION_TRADES,
     payload: {
-      strategyMapKey, positionData,
+      strategyMapKey, positionData, isOpened,
     },
   }),
 
@@ -285,14 +285,6 @@ export default {
     type: t.SET_PAST_STRATEGIES,
     payload: {
       pastStrategies,
-    },
-  }),
-
-  setPastStrategyResults: (id, results) => ({
-    type: t.SET_PAST_STRATEGY_RESULT,
-    payload: {
-      id,
-      results,
     },
   }),
 
