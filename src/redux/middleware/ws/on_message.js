@@ -459,7 +459,7 @@ export default (alias, store) => (e = {}) => {
       case 'strategy.opened_position_data': {
         const [, strategyMapKey, openedPositionDetails] = payload
 
-        store.dispatch(WSActions.setLiveExecutionTrades(strategyMapKey, openedPositionDetails))
+        store.dispatch(WSActions.setLiveExecutionTrades(strategyMapKey, openedPositionDetails, true))
 
         break
       }
@@ -468,7 +468,7 @@ export default (alias, store) => (e = {}) => {
       case 'strategy.closed_position_data': {
         const [, strategyMapKey, closedPositionDetails] = payload
 
-        store.dispatch(WSActions.setLiveExecutionTrades(strategyMapKey, closedPositionDetails))
+        store.dispatch(WSActions.setLiveExecutionTrades(strategyMapKey, closedPositionDetails, false))
 
         break
       }
