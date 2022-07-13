@@ -26,15 +26,12 @@ import { isElectronApp } from '../../redux/config'
 const INITIAL_AUTO_LOGIN = getAutoLoginState()
 
 const General = () => {
-  const [isBetaModalOpen, setIsBetaModalOpen] = useState(false)
-
   const dispatch = useDispatch()
   const { t } = useTranslation()
   const settingsDms = useSelector(getDMSSetting)
   const settingsGa = useSelector(getGASetting)
   const settingsShowAlgoPauseInfo = useSelector(getShowAlgoPauseInfoSetting)
   const settingsRebootAutomatically = useSelector(getRebootSetting)
-  const isBetaVersion = useSelector(getIsBetaVersion)
 
   const [isAutoLoginChecked, setIsAutoLoginChecked] = useState(INITIAL_AUTO_LOGIN)
   const [isDmsChecked, setIsDmsChecked] = useState(settingsDms)
@@ -86,65 +83,11 @@ const General = () => {
     dispatch(GAActions.updateSettings())
   }
 
-  const closeBetaModal = () => setIsBetaModalOpen(false)
-
-  const openBetaModal = () => setIsBetaModalOpen(true)
-
-  const onBetaCheckboxClickHandler = (isChecked) => {
-    if (isChecked) {
-      openBetaModal()
-      return
-    }
-    dispatch(WSActions.saveSettings(SETTINGS_KEYS.JOIN_BETA_PROGRAM, false))
-    dispatch(GAActions.updateSettings())
-  }
-
-  const updateBetaProgram = (e) => {
-    e.stopPropagation()
-    dispatch(WSActions.saveSettings(SETTINGS_KEYS.JOIN_BETA_PROGRAM, true))
-    dispatch(GAActions.updateSettings())
-    closeBetaModal()
-  }
-
   return (
     <div>
       <div className='appsettings-modal__title'>
         {t('appSettings.generalTab')}
       </div>
-      {isElectronApp && (
-        <div className='appsettings-modal__setting appsettings-modal__setting--beta'>
-          <Checkbox
-            onChange={onBetaCheckboxClickHandler}
-            label={t('appSettings.betaProgramCheckbox')}
-            checked={isBetaVersion}
-            className='appsettings-modal__checkbox'
-          />
-          <div className='appsettings-modal__description'>
-            {t('appSettings.betaProgramText')}
-          </div>
-          {isBetaModalOpen && (
-            <InnerModal
-              title={(
-                <span className='beta-modal__title'>
-                  {t('appSettings.betaModalTitle')}
-                </span>
-              )}
-              onClose={closeBetaModal}
-              className='beta-modal'
-            >
-              <div>
-                <div className='beta-modal__content'>{t('appSettings.betaDesclaimer')}</div>
-                <Button
-                  onClick={updateBetaProgram}
-                  className='beta-modal__button'
-                >
-                  {t('appSettings.betaProgramCheckbox')}
-                </Button>
-              </div>
-            </InnerModal>
-          )}
-        </div>
-      )}
 
       <div className='appsettings-modal__setting'>
         <Checkbox

@@ -303,6 +303,7 @@
   },
   "appSettings": {
     "title": "Settings",
+    "betaTab": "Beta Program",
     "generalTab": "General",
     "tradingModeTab": "Trading Mode",
     "appearanceTab": "Appearance",

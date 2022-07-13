@@ -1,6 +1,7 @@
 import { isElectronApp } from '../../redux/config'
 
 export const SETTINGS_TABS = {
+  Beta: 'appSettings.betaTab',
   General: 'appSettings.generalTab',
   TradingMode: 'appSettings.tradingModeTab',
   Keys: 'appSettings.apiKeys',
