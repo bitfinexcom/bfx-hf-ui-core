@@ -48,30 +48,32 @@ const Beta = () => {
         <div className='appsettings-modal__description'>
           {t('appSettings.betaProgramText')}
         </div>
-        {isBetaModalOpen && (
-          <InnerModal
-            title={(
-              <span className='beta-modal__title'>
-                {t('appSettings.betaModalTitle')}
-              </span>
-            )}
-            onClose={closeBetaModal}
-            className='beta-modal'
-          >
-            <div>
-              <div className='beta-modal__content'>
-                {t('appSettings.betaDesclaimer')}
-              </div>
-              <Button
-                onClick={updateBetaProgram}
-                className='beta-modal__button'
-              >
-                {t('appSettings.betaProgramCheckbox')}
-              </Button>
-            </div>
-          </InnerModal>
-        )}
       </div>
+      {isBetaVersion && (
+        <div className='appsettings-modal__api-configuration-message is-success'>
+          {t('appSettings.betaDesclaimer')}
+        </div>
+      )}
+      {isBetaModalOpen && (
+        <InnerModal
+          title={(
+            <span className='beta-modal__title'>
+              {t('appSettings.betaModalTitle')}
+            </span>
+          )}
+          onClose={closeBetaModal}
+          className='beta-modal'
+        >
+          <div>
+            <div className='beta-modal__content'>
+              {t('appSettings.betaDesclaimer')}
+            </div>
+            <Button onClick={updateBetaProgram} className='beta-modal__button'>
+              {t('appSettings.betaProgramCheckbox')}
+            </Button>
+          </div>
+        </InnerModal>
+      )}
     </div>
   )
 }
