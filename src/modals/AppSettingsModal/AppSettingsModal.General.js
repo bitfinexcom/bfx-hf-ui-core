@@ -1,6 +1,6 @@
 import React, { memo, useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { Button, Checkbox } from '@ufx-ui/core'
+import { Checkbox } from '@ufx-ui/core'
 import { useTranslation } from 'react-i18next'
 
 import WSActions from '../../redux/actions/ws'
@@ -14,14 +14,10 @@ import {
 import {
   SETTINGS_KEYS,
   getDMSSetting,
-  getGASetting,
   getShowAlgoPauseInfoSetting,
   getRebootSetting,
-  getIsBetaVersion,
 } from '../../redux/selectors/ui'
 import { DONT_SHOW_DMS_MODAL_KEY } from '../../constants/variables'
-import InnerModal from '../../ui/InnerModal/InnerModal'
-import { isElectronApp } from '../../redux/config'
 
 const INITIAL_AUTO_LOGIN = getAutoLoginState()
 
@@ -29,23 +25,17 @@ const General = () => {
   const dispatch = useDispatch()
   const { t } = useTranslation()
   const settingsDms = useSelector(getDMSSetting)
-  const settingsGa = useSelector(getGASetting)
   const settingsShowAlgoPauseInfo = useSelector(getShowAlgoPauseInfoSetting)
   const settingsRebootAutomatically = useSelector(getRebootSetting)
 
   const [isAutoLoginChecked, setIsAutoLoginChecked] = useState(INITIAL_AUTO_LOGIN)
   const [isDmsChecked, setIsDmsChecked] = useState(settingsDms)
-  const [isGaChecked, setIsGaChecked] = useState(settingsGa)
   const [isRebootChecked, setIsRebootChecked] = useState(settingsRebootAutomatically)
   const [isShowAlgoPauseInfoChecked, setIsShowAlgoPauseInfoChecked] = useState(settingsShowAlgoPauseInfo)
 
   useEffect(() => {
     setIsDmsChecked(settingsDms)
   }, [settingsDms])
-
-  useEffect(() => {
-    setIsGaChecked(settingsGa)
-  }, [settingsGa])
 
   useEffect(() => {
     setIsShowAlgoPauseInfoChecked(settingsShowAlgoPauseInfo)
@@ -61,12 +51,6 @@ const General = () => {
       dispatch(WSActions.saveSettings(SETTINGS_KEYS.DMS, nextDms))
       dispatch(GAActions.updateSettings())
     }
-  }
-
-  const updateGa = (nextGa) => {
-    setIsGaChecked(nextGa)
-    dispatch(WSActions.saveSettings(SETTINGS_KEYS.GA, nextGa))
-    dispatch(GAActions.updateSettings())
   }
 
   const updateAOPause = (nextAOPause) => {
@@ -99,14 +83,6 @@ const General = () => {
             {t('appSettings.deadManWarning')}
           </div>
         </div>
-      </div>
-      <div className='appsettings-modal__setting'>
-        <Checkbox
-          onChange={updateGa}
-          label={t('appSettings.usageReportingCheckbox')}
-          checked={isGaChecked}
-          className='appsettings-modal__checkbox'
-        />
       </div>
       <div className='appsettings-modal__setting'>
         <Checkbox
