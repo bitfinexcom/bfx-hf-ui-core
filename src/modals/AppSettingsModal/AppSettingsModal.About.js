@@ -13,9 +13,6 @@ const About = () => {
 
   return (
     <div>
-      <div className='appsettings-modal__title'>
-        {t('appSettings.aboutTab')}
-      </div>
       <div className='appsettings-modal__setting'>
         <a
           href={RELEASE_URL}

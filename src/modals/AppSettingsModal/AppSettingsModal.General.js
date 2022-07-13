@@ -85,10 +85,6 @@ const General = () => {
 
   return (
     <div>
-      <div className='appsettings-modal__title'>
-        {t('appSettings.generalTab')}
-      </div>
-
       <div className='appsettings-modal__setting'>
         <Checkbox
           onChange={updateDms}

@@ -38,9 +38,6 @@ const TradingMode = () => {
 
   return (
     <div className='appsettings-modal__appearance_setting'>
-      <div className='appsettings-modal__title'>
-        {t('appSettings.appearanceTab')}
-      </div>
       <div className='appsettings-modal__setting'>
         <p>
           {t('appSettings.language')}
