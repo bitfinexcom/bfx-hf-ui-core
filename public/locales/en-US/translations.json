@@ -358,7 +358,10 @@
     "betaDesclaimer": "Features included in 'beta release' mode are still in development, may have bugs or errors, may be incomplete, may materially change prior to a stable release, or may never be considered stable at all. Users of 'beta release' mode use this mode at their own risk. In no event shall Bitfinex be liable for any damages whatsover (including, without limitation, damages for loss of profit, business interruption, loss of information or otherwise) arising out of the use of, or inability to use, 'beta release' mode, even if Bitfinex has been advised of the possibility of such damages.",
     "betaProgramCheckbox": "Join the Beta Program",
     "betaProgramText": "Stay up-to-date with every new feature and be one of the first to try it as soon as it’s released.",
-    "betaModalTitle": "BETA PROGRAM DISCLAIMER"
+    "betaModalTitle": "BETA PROGRAM DISCLAIMER",
+    "privacyDisclaimer1": "<p>By using this application you accept that Bitfinex collects <bold>anonymous basic information</bold> to improve the product performance including, but not limited to, error crash reports, app session times, order characteristics or strategy metadata. This app also uses third-party integrations, which allow us to better understand, enrich and improve your customer experience.</p>",
+    "privacyDisclaimer2": "<p><bold>We do not store any private information related to your account (for example, your strategy algorithms, signals, triggers, parameters or personal trading patterns).</bold></p>",
+    "privacyDisclaimer3": "<p>You can opt out of this entirely by modifying your application directly from the source code published on Github, under the conditions of the licensing. Bitfinex's privacy policy can be found <url>here</url>.</p>"
   },
   "atomicOrdersTableModal": {
     "title": "Atomic Orders",

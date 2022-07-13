@@ -185,15 +185,14 @@
       margin-right: spacing(0.5);
     }
   }
-  &__links {
+  &__legal {
+    margin-top: 40px;
     display: flex;
     flex-direction: column;
-    & > * {
-      margin-bottom: spacing(0.5);
-      &:last-child {
-        margin-bottom: 0;
-      }
-    }
+  }
+
+  &__legal-disclaimer {
+    font-size: 11px;
   }
 
   &__beta-disclaimer {

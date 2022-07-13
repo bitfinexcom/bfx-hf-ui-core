@@ -4,9 +4,17 @@ import { useTranslation, Trans } from 'react-i18next'
 import NavbarLink from '../../components/Navbar/Navbar.Link'
 
 import {
-  appVersion, RELEASE_URL, API_DOCS_URL, SOURCE_CODE_URL, LICENCE_URL, HF_DESC_URL,
+  appVersion,
+  RELEASE_URL,
+  API_DOCS_URL,
+  SOURCE_CODE_URL,
+  LICENCE_URL,
+  HF_DESC_URL,
 } from '../../redux/config'
-import { PRIVACY_POLICY_URL, TERMS_CONDITIONS_URL } from './AppSettingsModal.constants'
+import {
+  PRIVACY_POLICY_URL,
+  TERMS_CONDITIONS_URL,
+} from './AppSettingsModal.constants'
 
 const About = () => {
   const { t } = useTranslation()
@@ -14,11 +22,7 @@ const About = () => {
   return (
     <div>
       <div className='appsettings-modal__setting'>
-        <a
-          href={RELEASE_URL}
-          target='_blank'
-          rel='noopener noreferrer'
-        >
+        <a href={RELEASE_URL} target='_blank' rel='noopener noreferrer'>
           {t('appSettings.appVersion', { version: appVersion })}
         </a>
       </div>
@@ -27,7 +31,13 @@ const About = () => {
           t={t}
           i18nKey='appSettings.description'
           components={{
-            url: <a href={API_DOCS_URL} target='_blank' rel='noopener noreferrer' />,
+            url: (
+              <a
+                href={API_DOCS_URL}
+                target='_blank'
+                rel='noopener noreferrer'
+              />
+            ),
           }}
         />
       </div>
@@ -36,7 +46,9 @@ const About = () => {
           t={t}
           i18nKey='appSettings.licence'
           components={{
-            url: <a href={LICENCE_URL} target='_blank' rel='noopener noreferrer' />,
+            url: (
+              <a href={LICENCE_URL} target='_blank' rel='noopener noreferrer' />
+            ),
           }}
         />
         <br />
@@ -44,7 +56,13 @@ const About = () => {
           t={t}
           i18nKey='appSettings.sourceCode'
           components={{
-            url: <a href={SOURCE_CODE_URL} target='_blank' rel='noopener noreferrer' />,
+            url: (
+              <a
+                href={SOURCE_CODE_URL}
+                target='_blank'
+                rel='noopener noreferrer'
+              />
+            ),
           }}
         />
       </div>
@@ -53,13 +71,51 @@ const About = () => {
           t={t}
           i18nKey='appSettings.moreInfo'
           components={{
-            url: <a href={HF_DESC_URL} target='_blank' rel='noopener noreferrer' />,
+            url: (
+              <a href={HF_DESC_URL} target='_blank' rel='noopener noreferrer' />
+            ),
           }}
         />
       </div>
-      <div className='appsettings-modal__links'>
-        <NavbarLink external={TERMS_CONDITIONS_URL} label={t('appSettings.termsConditions')} />
-        <NavbarLink external={PRIVACY_POLICY_URL} label={t('appSettings.privacyPolicy')} />
+      <div className='appsettings-modal__legal'>
+        <p>
+          <NavbarLink
+            external={TERMS_CONDITIONS_URL}
+            label={t('appSettings.termsConditions')}
+          />
+        </p>
+        <div className='appsettings-modal__legal-disclaimer'>
+          <Trans
+            t={t}
+            i18nKey='appSettings.privacyDisclaimer1'
+            components={{
+              p: <p />,
+              bold: <b />,
+            }}
+          />
+          <Trans
+            t={t}
+            i18nKey='appSettings.privacyDisclaimer2'
+            components={{
+              p: <p />,
+              bold: <b />,
+            }}
+          />
+          <Trans
+            t={t}
+            i18nKey='appSettings.privacyDisclaimer3'
+            components={{
+              p: <p />,
+              url: (
+                <a
+                  href={PRIVACY_POLICY_URL}
+                  target='_blank'
+                  rel='noopener noreferrer'
+                />
+              ),
+            }}
+          />
+        </div>
       </div>
     </div>
   )
