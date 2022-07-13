@@ -49,11 +49,9 @@ const Beta = () => {
           {t('appSettings.betaProgramText')}
         </div>
       </div>
-      {isBetaVersion && (
-        <div className='appsettings-modal__api-configuration-message is-success'>
-          {t('appSettings.betaDesclaimer')}
-        </div>
-      )}
+      <div className='appsettings-modal__api-configuration-message is-success'>
+        {t('appSettings.betaDesclaimer')}
+      </div>
       {isBetaModalOpen && (
         <InnerModal
           title={(
