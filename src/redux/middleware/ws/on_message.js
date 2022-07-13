@@ -73,7 +73,6 @@ export default (alias, store) => (e = {}) => {
         store.dispatch(UIActions.setTradingMode(isPaperTrading))
         store.dispatch(UIActions.setMarketFromStore(isPaperTrading))
         store.dispatch(WSActions.recvAuthToken(token))
-        store.dispatch(AOActions.getActiveAlgoOrders())
         store.dispatch(WSActions.send(['strategy.execute_status', token]))
         break
       }
@@ -403,10 +402,10 @@ export default (alias, store) => (e = {}) => {
       }
 
       case 'algo.active_orders': {
-        const [, initialFetch, activeAlgoOrders] = payload
+        const [, initialFetch, mode, activeAlgoOrders] = payload
 
         if (initialFetch) {
-          store.dispatch(AOActions.setActiveAlgoOrders(activeAlgoOrders))
+          store.dispatch(AOActions.setActiveAlgoOrders(activeAlgoOrders, mode))
           store.dispatch(AOActions.showActiveOrdersModal(true))
         } else {
           store.dispatch(WSActions.recvDataAlgoOrders(activeAlgoOrders))

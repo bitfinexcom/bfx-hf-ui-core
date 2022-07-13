@@ -9,10 +9,13 @@ export function getActiveAlgoOrders({ initialFetch = false } = {}) {
   }
 }
 
-export function setActiveAlgoOrders(activeAlgoOrders) {
+export function setActiveAlgoOrders(activeAlgoOrders, mode) {
   return {
     type: types.SET_ACTIVE_AOS,
-    payload: activeAlgoOrders,
+    payload: {
+      activeAlgoOrders,
+      mode,
+    },
   }
 }
 

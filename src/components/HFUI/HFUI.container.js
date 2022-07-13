@@ -1,7 +1,6 @@
 import { connect } from 'react-redux'
 import { reduxActions } from '@ufx-ui/bfx-containers'
 
-import AOActions from '../../redux/actions/ao'
 import WSActions from '../../redux/actions/ws'
 import GAActions from '../../redux/actions/google_analytics'
 import {
@@ -58,9 +57,6 @@ const mapDispatchToProps = dispatch => ({
   },
   getFeatureFlags: (authToken) => {
     dispatch(WSActions.send(['feature_flags.get', authToken]))
-  },
-  getActiveAlgoOrders: () => {
-    dispatch(AOActions.getActiveAlgoOrders({ initialFetch: true }))
   },
 })
 
