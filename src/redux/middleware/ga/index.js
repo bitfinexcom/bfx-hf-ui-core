@@ -2,7 +2,14 @@ import ReactGA from 'react-ga4'
 import { v4 } from 'uuid'
 
 import {
-  GA_CANCEL_AO, GA_PAGEVIEW, GA_CANCEL_ATOMIC_ORDER, GA_CREATE_STRATEGY, GA_SUBMIT_ATOMIC_ORDER, GA_SUBMIT_AO, GA_UPDATE_SETTINGS, GA_EDIT_AO,
+  GA_CANCEL_AO,
+  GA_PAGEVIEW,
+  GA_CANCEL_ATOMIC_ORDER,
+  GA_CREATE_STRATEGY,
+  GA_SUBMIT_ATOMIC_ORDER,
+  GA_SUBMIT_AO,
+  GA_UPDATE_SETTINGS,
+  GA_EDIT_AO,
 } from '../../constants/ga'
 
 import { isElectronApp } from '../../config'
@@ -25,17 +32,8 @@ ReactGA.initialize(gaID, {
 })
 
 export default () => {
-  return store => next => (action = {}) => {
+  return () => (next) => (action = {}) => {
     const { type, payload = {} } = action
-    const state = store.getState()
-    const { ui = {} } = state
-    const { settings = {} } = ui
-    const ga = isElectronApp ? settings?.ga : true
-
-    if (!ga) {
-      next(action)
-      return
-    }
 
     switch (type) {
       case GA_SUBMIT_ATOMIC_ORDER: {

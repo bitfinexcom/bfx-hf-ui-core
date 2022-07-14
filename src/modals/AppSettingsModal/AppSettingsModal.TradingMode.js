@@ -26,9 +26,6 @@ const TradingMode = ({ onClose }) => {
 
   return (
     <div>
-      <div className='appsettings-modal__title'>
-        {t('appSettings.tradingModeTab')}
-      </div>
       <div className='appsettings-modal__setting'>
         <Checkbox
           onChange={togglePaperTrading}

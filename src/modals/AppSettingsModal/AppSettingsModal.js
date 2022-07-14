@@ -14,6 +14,7 @@ import ApiKeysTab from './AppSettingsModal.ApiKeys'
 import TradingModeTab from './AppSettingsModal.TradingMode'
 import AppearanceTab from './AppSettingsModal.Appearance'
 import AboutTab from './AppSettingsModal.About'
+import BetaTab from './AppSettingsModal.Beta'
 import { getIsAppSettingsModalVisible, getSettingsActiveTab } from '../../redux/selectors/ui'
 import { changeAppSettingsModalState, setSettingsTab } from '../../redux/actions/ui'
 import { DEFAULT_TAB, SETTINGS_TABS, WEB_SETTINGS_TABS } from './AppSettingsModal.constants'
@@ -69,6 +70,7 @@ const AppSettingsModal = () => {
       <div className={activeTab === SETTINGS_TABS.Keys ? '' : 'appsettings-modal__content'}>
         {isElectronApp && (
           <>
+            {activeTab === SETTINGS_TABS.Beta && <BetaTab />}
             {activeTab === SETTINGS_TABS.General && <GeneralTab />}
             {activeTab === SETTINGS_TABS.Keys && <ApiKeysTab />}
             {activeTab === SETTINGS_TABS.TradingMode && <TradingModeTab onClose={onClose} />}
