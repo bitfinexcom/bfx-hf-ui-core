@@ -9,7 +9,6 @@ const EMPTY_OBJ = {}
 
 export const SETTINGS_KEYS = {
   DMS: 'dms',
-  GA: 'ga',
   SHOW_ALGO_PAUSE_INFO: 'showAlgoPauseInfo',
   SHOW_ONLY_FAVORITE_PAIRS: 'showOnlyFavoritePairs',
   REBOOT_AUTOMATICALLY: 'rebootAutomatically',
@@ -47,11 +46,6 @@ export const getShowAlgoPauseInfoSetting = createSelector(
 export const getDMSSetting = createSelector(
   getSettings,
   (settings) => _get(settings, SETTINGS_KEYS.DMS, false),
-)
-
-export const getGASetting = createSelector(
-  getSettings,
-  (settings) => _get(settings, SETTINGS_KEYS.GA, true),
 )
 
 export const getThemeSetting = createSelector(

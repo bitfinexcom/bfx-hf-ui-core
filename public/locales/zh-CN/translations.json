@@ -324,7 +324,6 @@
     "deadManText1": "启用失能开关将于关闭应用程式时，自动取消所有待执行订单。",
     "deadManText2": "关闭应用程式将取消演算法订单。如无启用失能开关，则不会取消演算法订单。于重启应用程式时，如提示说明订单则有可能会消失。",
     "deadManWarning": "禁用此设置将收到相关提醒！",
-    "usageReportingCheckbox": "使用报告",
     "showPauseInfoCheckbox": "显示演算法订单暂停信息",
     "showPauseInfoText": "如已勾选，当仍持有待执行演算法订单且欲关闭应用程式，即会跳出此模式的信息说明。",
     "rebootCheckbox": "连接不良，自动重启应用",
