@@ -438,10 +438,6 @@
     "reboot_notify": "已注意到数次网路连接问题。重启应用程式...",
     "strategyLaunchMissingAPIKey": "Please configure API keys first and relaunch strategy"
   },
-  "tradingModeModal": {
-    "title": "切换交易模式",
-    "text": "切换至交易模式。点击Okay后将重启应用程式，并暂停待执行演算法订单。"
-  },
   "confirmDMSModal": {
     "title": "启用失能开关",
     "text": "请了解启用此设置后，关闭应用程式将会取消所有于Bitfinex Honey、Bitfinex平台或其他地方所创建的待成交订单。\n\n此仅为建议设置，应了解启用时其相关影响。",

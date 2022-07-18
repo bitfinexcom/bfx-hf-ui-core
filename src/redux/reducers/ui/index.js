@@ -77,7 +77,6 @@ function getInitialState() {
       isCcyInfoModalVisible: false,
       isConfirmDMSModalVisible: false,
       isEditOrderModalVisible: false,
-      isTradingModeModalVisible: false,
       isClosePositionModalVisible: false,
       isAppSettingsModalVisible: false,
     },
@@ -413,16 +412,6 @@ function reducer(state = getInitialState(), action = {}) {
         tickersVolumeUnit: isPaperTrading ? VOLUME_UNIT_PAPER.TESTUSD : VOLUME_UNIT.USD,
       }
     }
-    case types.CHANGE_TRADING_MODAL_STATE: {
-      const { isVisible } = payload
-      return {
-        ...state,
-        modals: {
-          ...state.modals,
-          isTradingModeModalVisible: isVisible,
-        },
-      }
-    }
     case types.CHANGE_BAD_INTERNET_STATE: {
       const { isVisible } = payload
       return {
@@ -653,6 +642,33 @@ function reducer(state = getInitialState(), action = {}) {
       return {
         ...state,
         featureFlags: payload,
+      }
+    }
+
+    case types.SET_PENDING_LIVE_STRATEGY: {
+      const { strategyId } = payload
+
+      return {
+        ...state,
+        pendingLiveStrategy: strategyId,
+      }
+    }
+
+    case types.REMOVE_PENDING_LIVE_STRATEGY: {
+      return {
+        ...state,
+        pendingLiveStrategy: null,
+      }
+    }
+
+    case types.UPDATE_SERVICE_STATUS: {
+      const { mode, serviceStatus } = payload
+      return {
+        ...state,
+        serviceStatus: {
+          ...state.serviceStatus,
+          [mode]: serviceStatus,
+        },
       }
     }
 

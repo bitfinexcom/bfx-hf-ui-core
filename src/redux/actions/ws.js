@@ -177,6 +177,10 @@ export default {
     payload: { orderHist },
   }),
 
+  resetOrderHist: () => ({
+    type: t.RESET_ORDER_HIST,
+  }),
+
   recvDataAlgoOrder: ({ ao }) => ({
     type: t.DATA_ALGO_ORDER,
     payload: { ao },
@@ -187,7 +191,7 @@ export default {
     payload: { gid },
   }),
 
-  recvDataAlgoOrders: ({ aos }) => ({
+  recvDataAlgoOrders: (aos) => ({
     type: t.DATA_ALGO_ORDERS,
     payload: { aos },
   }),
@@ -359,4 +363,13 @@ export default {
       },
     },
   ]),
+
+  changeMode: (isPaperTrading) => {
+    const mode = isPaperTrading ? 'paper' : 'main'
+    return send([
+      'auth.change_mode',
+      mode,
+      getScope(),
+    ])
+  },
 }

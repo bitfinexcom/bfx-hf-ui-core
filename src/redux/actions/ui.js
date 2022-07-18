@@ -138,11 +138,6 @@ export const setMarketFromStore = (isPaperTrading) => ({
   payload: { isPaperTrading },
 })
 
-export const changeTradingModeModalState = (isVisible) => ({
-  type: types.CHANGE_TRADING_MODAL_STATE,
-  payload: { isVisible },
-})
-
 export const changeOldFormatModalState = (isVisible) => ({
   type: types.CHANGE_OLD_FORMAT_MODAL_STATE,
   payload: { isVisible },
@@ -234,6 +229,24 @@ export const setIsLoadingOrderHistData = (flag) => ({
   payload: flag,
 })
 
+export const setPendingLiveStrategy = (strategyId) => ({
+  type: types.SET_PENDING_LIVE_STRATEGY,
+  payload: { strategyId },
+})
+
+export const removePendingLiveStrategy = () => ({
+  type: types.REMOVE_PENDING_LIVE_STRATEGY,
+  payload: null,
+})
+
+export const updateServiceStatus = (mode, serviceStatus) => ({
+  type: types.UPDATE_SERVICE_STATUS,
+  payload: {
+    mode,
+    serviceStatus,
+  },
+})
+
 export default {
   saveLayout,
   storeUnsavedLayout,
@@ -254,7 +267,6 @@ export default {
   setStrategyExecutionId,
   setTradingMode,
   setMarketFromStore,
-  changeTradingModeModalState,
   changeReffilBalanceModalState,
   changeBadInternetConnectionState,
   setIsOrderExecuting,
@@ -273,4 +285,7 @@ export default {
   setIsLoadingOrderHistData,
   setCurrentStrategy,
   updateCurrentStrategy,
+  setPendingLiveStrategy,
+  removePendingLiveStrategy,
+  updateServiceStatus,
 }

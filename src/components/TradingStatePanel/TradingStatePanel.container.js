@@ -5,14 +5,20 @@ import {
   getFilteredPositionsCount,
   getFilteredAtomicOrdersCount,
   getFilteredAlgoOrdersCount,
+  getAuthToken,
 } from '../../redux/selectors/ws'
 import { getMarkets } from '../../redux/selectors/meta'
 import UIActions from '../../redux/actions/ui'
-import { getComponentState } from '../../redux/selectors/ui'
+import AOActions from '../../redux/actions/ao'
+import { getComponentState, getCurrentMode } from '../../redux/selectors/ui'
+import { getIsInitialAlgoOrderFetch } from '../../redux/selectors/ao'
 
 import TradingStatePanel from './TradingStatePanel'
 
 const mapStateToProps = (state = {}, { layoutID, layoutI: id } = {}) => ({
+  authToken: getAuthToken(state),
+  currentMode: getCurrentMode(state),
+  isInitialAlgoOrderFetch: getIsInitialAlgoOrderFetch(state),
   getPositionsCount: getFilteredPositionsCount(state),
   getAtomicOrdersCount: getFilteredAtomicOrdersCount(state),
   getAlgoOrdersCount: getFilteredAlgoOrdersCount(state),
@@ -28,6 +34,9 @@ const mapDispatchToProps = dispatch => ({
       layoutID,
       componentID,
     }))
+  },
+  getActiveAlgoOrders: (initialFetch) => {
+    dispatch(AOActions.getActiveAlgoOrders({ initialFetch }))
   },
 })
 

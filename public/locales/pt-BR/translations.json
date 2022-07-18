@@ -438,10 +438,6 @@
     "reboot_notify": "Vários problemas de conexão com a internet observados. Reiniciando aplicativo...",
     "strategyLaunchMissingAPIKey": "Por favor configure suas chaves API antes e depois relance a estratégia"
   },
-  "tradingModeModal": {
-    "title": "Trocar modo de trade",
-    "text": "Depois de você pressionar Ok, o aplicativo será reiniciado. Isso é necessário para alternar o modo de negociação. Ordens algo abertas estão pausadas."
-  },
   "confirmDMSModal": {
     "title": "Habilitar interruptor automático",
     "text": "Esteja ciente de que, quando esta configuração estiver habilitada, fechar o aplicativo não apenas cancelará todas as ordens que foram criadas pelo Bitfinex Honey, mas também cancelará todas as outras ordens, incluindo aquelas que foram abertas no site da Bitfinex ou em outro lugar.\n\nEsta é uma configuração recomendada, mas você deve estar ciente das possíveis consequências.",

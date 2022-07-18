@@ -3,7 +3,6 @@ import getActiveMarket from './get_active_market'
 import getLayouts from './get_layouts'
 import getLayoutID from './get_layout_id'
 import getRemoteVersion from './get_remote_version'
-import getIsTradingModeModalVisible from './get_is_trading_mode_modal_visible'
 import getIsBadInternetConnection from './get_is_bad_internet_connection'
 import getIsAOPausedModalVisible from './get_is_ao_paused'
 import getOldFormatModalState from './get_old_modal_format_state'
@@ -29,6 +28,8 @@ import getSettingsActiveTab, { getSettingActiveSection } from './get_settings_ac
 import getIsLoadingOrderHistData from './get_is_loading_order_hist_data'
 import getStrategyExecutionId from './get_strategy_execution_id'
 import getCurrentStrategy from './get_current_strategy'
+import getPendingLiveStrategy from './get_pending_live_strategy'
+import getServicesStatus from './get_services_status'
 
 export * from './get_settings'
 export * from './get_core_settings'
@@ -40,7 +41,6 @@ export {
   getActiveMarket,
   getLayouts,
   getLayoutID,
-  getIsTradingModeModalVisible,
   getIsBadInternetConnection,
   getIsRefillBalanceModalVisible,
   getIsPaperTrading,
@@ -67,4 +67,6 @@ export {
   getIsLoadingOrderHistData,
   getStrategyExecutionId,
   getCurrentStrategy,
+  getPendingLiveStrategy,
+  getServicesStatus,
 }

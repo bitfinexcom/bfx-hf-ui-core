@@ -3,7 +3,6 @@ import React, {
 } from 'react'
 import Debug from 'debug'
 import _isEmpty from 'lodash/isEmpty'
-import { useHistory, useLocation } from 'react-router'
 import _size from 'lodash/size'
 import _some from 'lodash/some'
 import _values from 'lodash/values'
@@ -36,12 +35,9 @@ import {
   isExecutionInputsFullFilled,
   prepareStrategyBacktestingArgs,
   prepareStrategyExecutionArgs,
-  removeStrategyToExecuteFromLS,
-  saveStrategyToExecuteToLS,
   EXECUTION_TYPES,
 } from './StrategyEditor.helpers'
 import LaunchStrategyModal from '../../modals/Strategy/LaunchStrategyModal'
-import routes from '../../constants/routes'
 import { getAPIKeyStates } from '../../redux/selectors/ws'
 import {
   changeAppSettingsModalState,
@@ -83,17 +79,18 @@ const StrategyEditor = (props) => {
     savedStrategies,
     cancelProcess,
     changeTradingMode,
-    currentMode,
+    saveStrategyToExecuteToLS,
+    removeStrategyToExecuteFromLS,
+    pendingLiveStrategy,
     executionId,
     onDefineIndicatorsChange,
     evalSectionContent,
     setSectionErrors,
     IDEcontent,
     setIDEcontent,
+    serviceStatus,
   } = props
   const { t } = useTranslation()
-  const location = useLocation()
-  const history = useHistory()
 
   const [isRemoveModalOpen, , openRemoveModal, closeRemoveModal] = useToggle(false)
   const [
@@ -151,6 +148,8 @@ const StrategyEditor = (props) => {
   } = strategyOptions
 
   const { executing, loadingGid } = executionState
+
+  const { strategyManager: isStrategyManagerRunning } = serviceStatus
 
   const isFullFilled = isExecutionInputsFullFilled(
     capitalAllocation,
@@ -472,9 +471,8 @@ const StrategyEditor = (props) => {
       return
     }
     if (isPaperTrading) {
-      changeTradingMode(!isPaperTrading, authToken, currentMode)
+      changeTradingMode(!isPaperTrading)
       saveStrategyToExecuteToLS(strategy)
-      setTimeout(() => window.location.replace("/index.html"), 500); // eslint-disable-line
       return
     }
 
@@ -487,12 +485,12 @@ const StrategyEditor = (props) => {
     authToken,
     changeTradingMode,
     checkForAPIKeys,
-    currentMode,
     dsExecuteLiveStrategy,
     isFullFilled,
     isPaperTrading,
     openExecutionOptionsModal,
     strategy,
+    saveStrategyToExecuteToLS,
   ])
 
   const loadStrategyAndStartExecution = useCallback(
@@ -507,11 +505,16 @@ const StrategyEditor = (props) => {
           authToken,
           ...executionArgs,
         })
-        history.push(routes.strategyEditor.path)
         removeStrategyToExecuteFromLS()
       }, 500)
     },
-    [authToken, checkForAPIKeys, dsExecuteLiveStrategy, history, onLoadStrategy],
+    [
+      authToken,
+      checkForAPIKeys,
+      dsExecuteLiveStrategy,
+      onLoadStrategy,
+      removeStrategyToExecuteFromLS,
+    ],
   )
 
   const stopExecution = useCallback(() => {
@@ -529,24 +532,18 @@ const StrategyEditor = (props) => {
   )
 
   useEffect(() => {
-    const { search } = location
-    if (executing || !search || _isEmpty(savedStrategies) || isPaperTrading) {
-      return
-    }
-    const execute = new URLSearchParams(location.search).get('execute')
-
-    if (!execute) {
+    if (isPaperTrading || !pendingLiveStrategy || !isStrategyManagerRunning || executing || _isEmpty(savedStrategies)) {
       return
     }
 
-    const strategyToLoad = savedStrategies[execute]
-
+    const strategyToLoad = savedStrategies[pendingLiveStrategy]
     if (_isEmpty(strategyToLoad)) {
       return
     }
+
     loadStrategyAndStartExecution(strategyToLoad)
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [savedStrategies, executing, location])
+  }, [savedStrategies, executing, pendingLiveStrategy, isStrategyManagerRunning])
 
   const sbtitleStrategy = useCallback(
     ({ selectedTab, sidebarOpened }) => (
@@ -771,13 +768,21 @@ StrategyEditor.propTypes = {
   sectionErrors: PropTypes.objectOf(PropTypes.string).isRequired,
   cancelProcess: PropTypes.func.isRequired,
   changeTradingMode: PropTypes.func.isRequired,
-  currentMode: PropTypes.string.isRequired,
+  saveStrategyToExecuteToLS: PropTypes.func.isRequired,
+  removeStrategyToExecuteFromLS: PropTypes.func.isRequired,
+  pendingLiveStrategy: PropTypes.string,
   executionId: PropTypes.string,
   onDefineIndicatorsChange: PropTypes.func.isRequired,
   evalSectionContent: PropTypes.func.isRequired,
   setSectionErrors: PropTypes.func.isRequired,
   IDEcontent: PropTypes.objectOf(PropTypes.string).isRequired,
   setIDEcontent: PropTypes.func.isRequired,
+  serviceStatus: PropTypes.shape({
+    dmsControl: PropTypes.bool,
+    algoWorker: PropTypes.bool,
+    bfxClient: PropTypes.bool,
+    strategyManager: PropTypes.bool,
+  }).isRequired,
 }
 
 StrategyEditor.defaultProps = {
@@ -790,6 +795,7 @@ StrategyEditor.defaultProps = {
   },
   indicators: [],
   executionId: null,
+  pendingLiveStrategy: null,
 }
 
 export default memo(StrategyEditor)
