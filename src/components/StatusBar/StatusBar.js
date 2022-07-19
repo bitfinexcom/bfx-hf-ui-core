@@ -108,7 +108,6 @@ const StatusBar = ({
               ? t('statusbar.connected')
               : t('statusbar.disconnected')
           }`}
-
         </p>
       </div>
     </div>

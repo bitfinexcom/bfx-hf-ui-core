@@ -1,0 +1,12 @@
+.hfui-no-conn-modal__wrapper {
+  .modal__body {
+    white-space: pre-line;
+
+    .modal__footer {
+      display: flex;
+      justify-content: flex-end;
+      align-items: baseline;
+      margin-left: 0;
+    }
+  }
+}
