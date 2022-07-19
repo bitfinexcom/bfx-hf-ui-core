@@ -37,7 +37,7 @@ const StatusBar = ({
   const dispatch = useDispatch()
 
   const onVersionTypeClickHandler = () => {
-    dispatch(setSettingsTab(SETTINGS_TABS.About))
+    dispatch(setSettingsTab(SETTINGS_TABS.Beta))
     dispatch(changeAppSettingsModalState(true))
   }
 
