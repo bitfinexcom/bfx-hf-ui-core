@@ -5,8 +5,8 @@ import _isNaN from 'lodash/isNaN'
 import _isBoolean from 'lodash/isBoolean'
 import { isFiat, formatNumber } from '@ufx-ui/utils'
 import { Tooltip } from '@ufx-ui/core'
-import getQuotePrefix from '../../../util/quote_prefix'
-import numberExponentToLarge from '../../../util/numberExponentToLarge'
+import getQuotePrefix from './quote_prefix'
+import numberExponentToLarge from './numberExponentToLarge'
 
 const FIAT_MAX_DECIMALS = 2
 const CRYPTO_MAX_DECIMALS = 8
@@ -21,7 +21,7 @@ const appendUnit = (value, unit, prefix) => {
 
 const getSmallestUnit = (isFiatValue) => (isFiatValue ? 0.01 : 0.00000001)
 
-export const resultNumber = (value, ccy, isPositive) => {
+const resultNumber = (value, ccy, isPositive) => {
   if (_isNaN(value)) {
     return '--'
   }
@@ -69,3 +69,5 @@ export const resultNumber = (value, ccy, isPositive) => {
     </Tooltip>
   )
 }
+
+export default resultNumber

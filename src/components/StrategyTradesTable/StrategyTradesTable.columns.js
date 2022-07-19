@@ -6,7 +6,7 @@ import { Icon } from 'react-fa'
 
 import { defaultCellRenderer } from '../../util/ui'
 import { PRICE_SIG_FIGS } from '../../constants/precision'
-import { resultNumber } from '../Backtester/Results/Results.utils'
+import resultNumber from '../../util/resultNumber'
 import { getPositionsHeaders } from './TradesTable/TradesTable.helpers'
 import {
   getPositionEntryAt, getPositionClosedAt, getPositionEntryPrice, getPositionClosingPrice,
