@@ -3,6 +3,7 @@
 .hfui-strategy-options {
   display: flex;
   justify-content: space-between;
+  height: 100%;
 
   .item {
     margin-right: 30px;
@@ -13,6 +14,16 @@
 
   .hfui-orderform__input-label {
     white-space: nowrap;
+  }
+
+  &__results-container {
+    background-color: var(--darker-background-color);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 250px;
+    border-radius: 5px;
+    padding: 10px;
   }
 
   &__left-container {
@@ -108,6 +119,12 @@
     }
   }
 
+  &__backtest-result-btn {
+    height: 34px;
+    min-width: 70px;
+    align-self: center;
+  }
+
   &__option-btn {
     height: 34px;
     min-width: 70px;
@@ -140,19 +157,6 @@
 
     &:hover {
       color: $green-color;
-      justify-content: space-between;
-    }
-  }
-}
-
-// Remove after make BacktestOptionsPanel verical
-@media screen and (max-width: 1800px) {
-  .hfui-strategy-options {
-    .item {
-      margin-right: 10px;
-    }
-
-    &__left-container {
       justify-content: space-between;
     }
   }

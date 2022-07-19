@@ -324,7 +324,6 @@
     "deadManText1": "Enabling the Dead Man switch will automatically cancel all active orders when the application closes.",
     "deadManText2": "Algorithmic orders are cancelled on application close; without the Dead Man switch, any atomic orders created by an AO will remain open, and state may be lost when the application is started up again.",
     "deadManWarning": "Disabling this should be done with caution!",
-    "usageReportingCheckbox": "Usage reporting",
     "showPauseInfoCheckbox": "Show Algo Orders pause info",
     "showPauseInfoText": "If checked, the modal with explanations will be displayed when you close the app with active Algo Orders.",
     "rebootCheckbox": "Reboot automatically on bad connection",
@@ -438,10 +437,6 @@
     "decryptedCredentialsFor": "Decrypted credentials for {{target}} ({{mode}})",
     "reboot_notify": "Birkaç internet bağlantısı sorunu fark ettik. Uygulama yeniden başlatılıyor...",
     "strategyLaunchMissingAPIKey": "Please configure API keys first and relaunch strategy"
-  },
-  "tradingModeModal": {
-    "title": "Switch Trade Mode",
-    "text": "The app will reboot after you press Okay. It's required for switching trading mode. Open algo orders are paused."
   },
   "confirmDMSModal": {
     "title": "Enable Dead Man Switch",

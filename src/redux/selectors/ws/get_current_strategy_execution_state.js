@@ -1,8 +1,5 @@
 import { createSelector } from 'reselect'
-import {
-  getIsExecutionLoading,
-  getLiveExecutionResults,
-} from '.'
+import { getIsExecutionLoading, getLiveExecutionResults } from '.'
 import { getStrategyExecutionId } from '../ui'
 import getActiveStrategies from './get_active_strategies'
 

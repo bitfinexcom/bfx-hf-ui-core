@@ -2,7 +2,6 @@ import React, { lazy, memo } from 'react'
 import PropTypes from 'prop-types'
 import AppSettingsModal from '../AppSettingsModal'
 
-const TradingModeModal = lazy(() => import('../TradingModeModal'))
 const BadConnectionModal = lazy(() => import('../BadConnectionModal'))
 const NoConnectionActionModal = lazy(() => import('../NoConnectionActionModal'))
 const OldFormatModal = lazy(() => import('../OldFormatModal'))
@@ -17,7 +16,6 @@ const ModalsWrapper = ({ isElectronApp }) => {
     <>
       {isElectronApp && (
       <>
-        <TradingModeModal />
         <OldFormatModal />
         <ConfirmDMSModal />
         <AOPauseModal />

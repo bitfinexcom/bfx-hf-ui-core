@@ -177,6 +177,10 @@ export default {
     payload: { orderHist },
   }),
 
+  resetOrderHist: () => ({
+    type: t.RESET_ORDER_HIST,
+  }),
+
   recvDataAlgoOrder: ({ ao }) => ({
     type: t.DATA_ALGO_ORDER,
     payload: { ao },
@@ -187,7 +191,7 @@ export default {
     payload: { gid },
   }),
 
-  recvDataAlgoOrders: ({ aos }) => ({
+  recvDataAlgoOrders: (aos) => ({
     type: t.DATA_ALGO_ORDERS,
     payload: { aos },
   }),
@@ -270,10 +274,10 @@ export default {
     },
   }),
 
-  setLiveExecutionTrades: (strategyMapKey, positionData) => ({
+  setLiveExecutionTrades: (strategyMapKey, positionData, isOpened) => ({
     type: t.SET_LIVE_EXECUTION_TRADES,
     payload: {
-      strategyMapKey, positionData,
+      strategyMapKey, positionData, isOpened,
     },
   }),
 
@@ -281,14 +285,6 @@ export default {
     type: t.SET_PAST_STRATEGIES,
     payload: {
       pastStrategies,
-    },
-  }),
-
-  setPastStrategyResults: (id, results) => ({
-    type: t.SET_PAST_STRATEGY_RESULT,
-    payload: {
-      id,
-      results,
     },
   }),
 
@@ -367,4 +363,13 @@ export default {
       },
     },
   ]),
+
+  changeMode: (isPaperTrading) => {
+    const mode = isPaperTrading ? 'paper' : 'main'
+    return send([
+      'auth.change_mode',
+      mode,
+      getScope(),
+    ])
+  },
 }

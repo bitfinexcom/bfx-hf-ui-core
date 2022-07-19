@@ -324,7 +324,6 @@
     "deadManText1": "Habilitar el interruptor Dead Man cancelará automáticamente todas las órdenes activas cuando se cierre la aplicación.",
     "deadManText2": "Las órdenes algorítmicas se cancelan al cerrar la aplicación; sin el interruptor Dead Man, cualquier orden atómica creada por una AO permanecerá abierta y el estado puede perderse cuando la aplicación se inicie nuevamente.",
     "deadManWarning": "¡Deshabilitar esto debe hacerse con precaución!",
-    "usageReportingCheckbox": "Informes de uso",
     "showPauseInfoCheckbox": "Mostrar información de pausa de las Órdenes de Algoritmo",
     "showPauseInfoText": "Si está marcada, el modal con explicaciones se mostrará cuando cierres la aplicación con Órdenes de Algoritmo activas.",
     "rebootCheckbox": "Reiniciar automáticamente en caso de mala conexión",
@@ -438,10 +437,6 @@
     "decryptedCredentialsFor": "Credenciales descifradas para {{target}} ({{mode}})",
     "reboot_notify": "Se han observado varios problemas de conexión a Internet. Reiniciando la aplicación...",
     "strategyLaunchMissingAPIKey": "Por favor configura tus llaves API y relanza la estrategia"
-  },
-  "tradingModeModal": {
-    "title": "Cambiar Modo de Trade",
-    "text": "La aplicación se reiniciará después de presionar Aceptar. Es necesario para cambiar el modo de trading. Las órdenes de algoritmo abiertas están en pausa."
   },
   "confirmDMSModal": {
     "title": "Habilitar Interruptor de Dead Man",

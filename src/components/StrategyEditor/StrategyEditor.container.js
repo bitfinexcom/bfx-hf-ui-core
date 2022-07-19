@@ -20,6 +20,8 @@ import {
   getIsBetaVersion,
   getCurrentMode,
   getStrategyExecutionId,
+  getPendingLiveStrategy,
+  getServicesStatus,
 } from '../../redux/selectors/ui'
 import StrategyEditor from './StrategyEditor'
 import { getMarketsSortedByVolumeForExecution } from '../../redux/selectors/meta'
@@ -36,6 +38,8 @@ const mapStateToProps = (state = {}) => {
     savedStrategies: getSavedStrategies(state),
     currentMode: getCurrentMode(state),
     executionId: getStrategyExecutionId(state),
+    pendingLiveStrategy: getPendingLiveStrategy(state),
+    serviceStatus: getServicesStatus(state),
     markets: getMarketsSortedByVolumeForExecution(state),
   }
 }
@@ -141,6 +145,7 @@ const mapDispatchToProps = (dispatch) => ({
     if (isPaperTrading) {
       // stopping backtesting
       if (!backtestGid) {
+        dispatch(WSActions.purgeBacktestData())
         return
       }
       dispatch(
@@ -151,6 +156,7 @@ const mapDispatchToProps = (dispatch) => ({
       )
     } else {
       if (!liveExecGid) {
+        dispatch(WSActions.resetExecutionData())
         return
       }
       // stopping live execution
@@ -159,9 +165,14 @@ const mapDispatchToProps = (dispatch) => ({
       )
     }
   },
-  changeTradingMode: (isPaperTrading, authToken, currentMode) => {
-    dispatch(UIActions.setTradingMode(isPaperTrading))
-    dispatch(WSActions.send(['algo_order.pause', authToken, currentMode]))
+  changeTradingMode: (isPaperTrading) => {
+    dispatch(WSActions.changeMode(isPaperTrading))
+  },
+  saveStrategyToExecuteToLS: (strategyToExecute) => {
+    dispatch(UIActions.setPendingLiveStrategy(strategyToExecute.id))
+  },
+  removeStrategyToExecuteFromLS: () => {
+    dispatch(UIActions.removePendingLiveStrategy())
   },
 })
 

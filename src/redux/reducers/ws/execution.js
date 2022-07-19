@@ -1,3 +1,4 @@
+import _reduce from 'lodash/reduce'
 import types from '../../constants/ws'
 
 function getInitialState() {
@@ -58,24 +59,22 @@ function reducer(state = getInitialState(), action = {}) {
     case types.SET_PAST_STRATEGIES: {
       const { pastStrategies } = payload
 
+      const results = _reduce(
+        pastStrategies,
+        (acc, strategy) => {
+          const { results: execResults, id } = strategy
+          acc[id] = execResults
+          return acc
+        },
+        {},
+      )
+
       return {
         ...state,
         pastStrategies,
-      }
-    }
-
-    case types.SET_PAST_STRATEGY_RESULT: {
-      const { id, results } = payload
-      const { strategy } = results
-      const { closedPositions, openPositions } = strategy
-      const positions = { ...closedPositions, ...openPositions }
-
-      return {
-        ...state,
         results: {
           ...state.results,
-          [id]: results,
-          positions,
+          ...results,
         },
       }
     }
@@ -103,10 +102,7 @@ function reducer(state = getInitialState(), action = {}) {
       const stoppedStrategy = activeStrategies[strategyMapKey]
       stoppedStrategy.stoppedOn = Date.now()
 
-      const pastStrategies = [
-        ...state.pastStrategies,
-        stoppedStrategy,
-      ]
+      const pastStrategies = [...state.pastStrategies, stoppedStrategy]
 
       delete activeStrategies[strategyMapKey]
 
@@ -119,16 +115,25 @@ function reducer(state = getInitialState(), action = {}) {
     }
 
     case types.SET_LIVE_EXECUTION_TRADES: {
-      const { positionData } = payload
+      const { positionData, strategyMapKey, isOpened } = payload
       const { id } = positionData
-      const currentState = state.results?.positions || {}
+
+      const results = state.results[strategyMapKey]
+      const positions = results?.strategy
+      const targetPositions = positions[isOpened ? 'openPositions' : 'closedPositions']
+
+      const currentPosition = { ...targetPositions?.[id] || {}, ...positionData }
+
       const newState = {
         ...state.results,
-        positions: {
-          ...currentState,
-          [id]: {
-            ...(currentState?.[id] || {}),
-            ...positionData,
+        [strategyMapKey]: {
+          ...results,
+          strategy: {
+            ...positions,
+            [isOpened ? 'openPositions' : 'closedPositions']: {
+              ...targetPositions,
+              [id]: currentPosition,
+            },
           },
         },
       }
@@ -151,17 +156,14 @@ function reducer(state = getInitialState(), action = {}) {
       }
     }
 
-    case types.DISCONNECTED: {
+    case types.DISCONNECTED:
+    case types.RESET_DATA_EXECUTION: {
       return {
         ...state,
         loading: false,
         loadingGid: null,
         activeStrategies: {},
       }
-    }
-
-    case types.RESET_DATA_EXECUTION: {
-      return getInitialState()
     }
 
     default: {

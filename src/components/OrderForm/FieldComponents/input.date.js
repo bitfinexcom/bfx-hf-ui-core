@@ -3,12 +3,20 @@ import DatePicker from 'react-datepicker'
 import PropTypes from 'prop-types'
 
 import { useTranslation } from 'react-i18next'
+import clsx from 'clsx'
 import { renderString, CONVERT_LABELS_TO_PLACEHOLDERS } from './fields.helpers'
 import { LANGUAGES } from '../../../locales/i18n'
 import { getLocalDateFormat } from '../../../util/date'
 
 const DateInput = ({
-  value, minDate, maxDate, onChange, def, renderData, validationError,
+  value,
+  minDate,
+  maxDate,
+  onChange,
+  def,
+  renderData,
+  validationError,
+  disabled,
 }) => {
   const { label, minDate: MIN_DATE } = def
   const renderedLabel = renderString(label, renderData)
@@ -18,7 +26,7 @@ const DateInput = ({
   const i18nMappedKey = i18n.getMappedLanguageKey()
 
   return (
-    <div className='hfui-orderform__input fullWidth hfui-input'>
+    <div className={clsx('hfui-orderform__input fullWidth hfui-input', { disabled })}>
       <DatePicker
         width='100%'
         popperPlacement='bottom-start'
@@ -37,18 +45,15 @@ const DateInput = ({
         placeholder={CONVERT_LABELS_TO_PLACEHOLDERS ? renderedLabel : undefined}
         locale={LANGUAGES[i18nMappedKey]}
         calendarClassName='hfui-datepicker'
+        disabled={disabled}
       />
 
       {!CONVERT_LABELS_TO_PLACEHOLDERS && (
-        <p className='hfui-orderform__input-label'>
-          {renderedLabel}
-        </p>
+        <p className='hfui-orderform__input-label'>{renderedLabel}</p>
       )}
 
       {validationError && (
-        <p className='hfui-orderform__input-error-label'>
-          {validationError}
-        </p>
+        <p className='hfui-orderform__input-error-label'>{validationError}</p>
       )}
     </div>
   )
@@ -56,12 +61,13 @@ const DateInput = ({
 
 DateInput.displayName = 'DateInput'
 
-DateInput.processValue = v => +v
+DateInput.processValue = (v) => +v
 
 DateInput.validateValue = (v, t) => {
   if (`${new Date(+v)}` === 'Invalid Date') {
     return t('orderForm.invalidDateMessage')
-  } if (v === '') {
+  }
+  if (v === '') {
     return t('orderForm.dateRequiredMessage')
   }
 
@@ -69,19 +75,23 @@ DateInput.validateValue = (v, t) => {
 }
 
 DateInput.propTypes = {
-  def: PropTypes.objectOf(PropTypes.oneOfType([
-    PropTypes.string, PropTypes.number, PropTypes.bool, PropTypes.instanceOf(Date),
-  ])),
-  renderData: PropTypes.objectOf(PropTypes.oneOfType([
-    PropTypes.string, PropTypes.number, PropTypes.bool,
-  ])),
+  def: PropTypes.objectOf(
+    PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.number,
+      PropTypes.bool,
+      PropTypes.instanceOf(Date),
+    ]),
+  ),
+  renderData: PropTypes.objectOf(
+    PropTypes.oneOfType([PropTypes.string, PropTypes.number, PropTypes.bool]),
+  ),
   value: PropTypes.instanceOf(Date),
   onChange: PropTypes.func.isRequired,
-  validationError: PropTypes.oneOfType([
-    PropTypes.string, PropTypes.bool,
-  ]),
+  validationError: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
   minDate: PropTypes.instanceOf(Date),
   maxDate: PropTypes.instanceOf(Date),
+  disabled: PropTypes.bool,
 }
 
 DateInput.defaultProps = {
@@ -91,6 +101,7 @@ DateInput.defaultProps = {
   validationError: '',
   value: new Date(),
   def: {},
+  disabled: false,
 }
 
 export default memo(DateInput)

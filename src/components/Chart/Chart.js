@@ -2,6 +2,7 @@ import React, { memo, useEffect } from 'react'
 import { useSelector } from 'react-redux'
 import { reduxSelectors } from '@ufx-ui/bfx-containers'
 import PropTypes from 'prop-types'
+import _isUndefined from 'lodash/isUndefined'
 
 import { useTranslation } from 'react-i18next'
 import { LANGUAGES_CHART_TABLE } from '../../locales/i18n'
@@ -25,6 +26,7 @@ const Chart = ({
   hideResolutions,
   chartRange,
 }) => {
+  const isSetInterval = !_isUndefined(interval)
   const {
     wsID, base, quote, isPerp, uiID: _uiID,
   } = market
@@ -35,7 +37,7 @@ const Chart = ({
 
   const uiID = isPerp ? _uiID : getPairFromMarket(market, getCurrencySymbol)
   const iframeID = `hfui-chart-${layoutI}`
-  const sendMarketToChartIframe = useChartIframe(iframeID, wsID, indicators, trades, interval, chartRange)
+  const sendMarketToChartIframe = useChartIframe(iframeID, wsID, indicators, trades, interval, isSetInterval, chartRange)
 
   const queryString = new URLSearchParams({
     env,
@@ -82,7 +84,7 @@ Chart.defaultProps = {
   },
   indicators: [],
   trades: [],
-  interval: '30',
+  interval: undefined,
   hideResolutions: false,
   chartRange: null,
 }

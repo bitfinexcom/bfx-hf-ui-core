@@ -89,11 +89,6 @@ const ApiKeys = () => {
 
   return (
     <div>
-      <div className='appsettings-modal__content'>
-        <div className='appsettings-modal__title'>
-          {t('appSettings.apiKeys')}
-        </div>
-      </div>
       <div className={getClasses(MAIN_MODE)}>
         <div className='appsettings-modal__content'>
           <p>

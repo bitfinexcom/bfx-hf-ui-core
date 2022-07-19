@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import WSActions from '../../redux/actions/ws'
 import UIActions from '../../redux/actions/ui'
 import { getAuthToken, getOrderHistory, getCurrentModeAPIKeyState } from '../../redux/selectors/ws'
-import { getIsLoadingOrderHistData } from '../../redux/selectors/ui'
+import { getIsLoadingOrderHistData, getCurrentMode } from '../../redux/selectors/ui'
 import OrderHistory from './OrderHistory'
 
 const mapStateToProps = (state) => ({
@@ -11,6 +11,7 @@ const mapStateToProps = (state) => ({
   authToken: getAuthToken(state),
   isLoadingOrderHistData: getIsLoadingOrderHistData(state),
   apiCredentials: getCurrentModeAPIKeyState(state),
+  currentMode: getCurrentMode(state),
 })
 
 const mapDispatchToProps = dispatch => ({

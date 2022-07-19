@@ -1,15 +1,21 @@
 import types from '../constants/ao'
 
-export function getActiveAlgoOrders() {
+export function getActiveAlgoOrders({ initialFetch = false } = {}) {
   return {
     type: types.GET_ACTIVE_AOS,
+    payload: {
+      initialFetch,
+    },
   }
 }
 
-export function setActiveAlgoOrders(activeAlgoOrders) {
+export function setActiveAlgoOrders(activeAlgoOrders, mode) {
   return {
     type: types.SET_ACTIVE_AOS,
-    payload: activeAlgoOrders,
+    payload: {
+      activeAlgoOrders,
+      mode,
+    },
   }
 }
 

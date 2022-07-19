@@ -1,5 +1,5 @@
 import React, {
-  memo, useRef, useMemo, useCallback, Fragment,
+  memo, useRef, useMemo, useCallback, Fragment, useEffect,
 } from 'react'
 import PropTypes from 'prop-types'
 import _isEmpty from 'lodash/isEmpty'
@@ -17,7 +17,23 @@ import { MARKET_SHAPE } from '../../constants/prop-types-shapes'
 import './style.css'
 
 const TradingStatePanel = ({
-  dark, onRemove, moveable, removeable, getPositionsCount, getAtomicOrdersCount, getAlgoOrdersCount, markets, savedState, updateState, layoutID, layoutI, getCurrencySymbol,
+  dark,
+  onRemove,
+  moveable,
+  removeable,
+  getPositionsCount,
+  getAtomicOrdersCount,
+  getAlgoOrdersCount,
+  markets,
+  savedState,
+  updateState,
+  layoutID,
+  layoutI,
+  getCurrencySymbol,
+  authToken,
+  currentMode,
+  getActiveAlgoOrders,
+  isInitialAlgoOrderFetch,
 }) => {
   const { currentMarket: activeFilter = {} } = savedState
   const positionsCount = getPositionsCount(activeFilter)
@@ -34,6 +50,13 @@ const TradingStatePanel = ({
   const onTabChange = useCallback((tab) => {
     saveState('tab', tab)
   }, [saveState])
+
+  useEffect(() => {
+    if (authToken) {
+      getActiveAlgoOrders(isInitialAlgoOrderFetch)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [authToken, currentMode, getActiveAlgoOrders])
 
   const setActiveFilter = (market) => {
     saveState('currentMarket', market)
@@ -149,6 +172,10 @@ TradingStatePanel.propTypes = {
   layoutI: PropTypes.string.isRequired,
   layoutID: PropTypes.string,
   getCurrencySymbol: PropTypes.func.isRequired,
+  authToken: PropTypes.string,
+  currentMode: PropTypes.string.isRequired,
+  isInitialAlgoOrderFetch: PropTypes.bool.isRequired,
+  getActiveAlgoOrders: PropTypes.func.isRequired,
 }
 
 TradingStatePanel.defaultProps = {
@@ -161,6 +188,7 @@ TradingStatePanel.defaultProps = {
   onRemove: () => { },
   savedState: {},
   layoutID: '',
+  authToken: '',
 }
 
 export default memo(TradingStatePanel)

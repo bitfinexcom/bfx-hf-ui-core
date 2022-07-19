@@ -65,9 +65,14 @@ export default (alias, store) => (e = {}) => {
       }
 
       case 'info.auth_token': {
-        const [, token] = payload
+        const [, token, mode] = payload
+        const isPaperTrading = mode === PAPER_MODE
+
+        // reset order history
+        store.dispatch(WSActions.resetOrderHist())
+        store.dispatch(UIActions.setTradingMode(isPaperTrading))
+        store.dispatch(UIActions.setMarketFromStore(isPaperTrading))
         store.dispatch(WSActions.recvAuthToken(token))
-        store.dispatch(AOActions.getActiveAlgoOrders())
         store.dispatch(WSActions.send(['strategy.execute_status', token]))
         break
       }
@@ -330,7 +335,7 @@ export default (alias, store) => (e = {}) => {
       case 'data.aos': {
         const [, , aos] = payload
         const adapted = _map(aos, ao => (_isArray(ao) ? AOAdapter(ao) : ao))
-        store.dispatch(WSActions.recvDataAlgoOrders({ aos: adapted }))
+        store.dispatch(WSActions.recvDataAlgoOrders(adapted))
         break
       }
 
@@ -397,9 +402,15 @@ export default (alias, store) => (e = {}) => {
       }
 
       case 'algo.active_orders': {
-        const [, activeAlgoOrders] = payload
-        store.dispatch(AOActions.setActiveAlgoOrders(activeAlgoOrders))
-        store.dispatch(AOActions.showActiveOrdersModal(true))
+        const [, initialFetch, mode, activeAlgoOrders] = payload
+
+        if (initialFetch) {
+          store.dispatch(AOActions.setActiveAlgoOrders(activeAlgoOrders, mode))
+          store.dispatch(AOActions.showActiveOrdersModal(true))
+        } else {
+          store.dispatch(WSActions.recvDataAlgoOrders(activeAlgoOrders))
+        }
+
         break
       }
 
@@ -459,7 +470,7 @@ export default (alias, store) => (e = {}) => {
       case 'strategy.opened_position_data': {
         const [, strategyMapKey, openedPositionDetails] = payload
 
-        store.dispatch(WSActions.setLiveExecutionTrades(strategyMapKey, openedPositionDetails))
+        store.dispatch(WSActions.setLiveExecutionTrades(strategyMapKey, openedPositionDetails, true))
 
         break
       }
@@ -468,7 +479,7 @@ export default (alias, store) => (e = {}) => {
       case 'strategy.closed_position_data': {
         const [, strategyMapKey, closedPositionDetails] = payload
 
-        store.dispatch(WSActions.setLiveExecutionTrades(strategyMapKey, closedPositionDetails))
+        store.dispatch(WSActions.setLiveExecutionTrades(strategyMapKey, closedPositionDetails, false))
 
         break
       }
@@ -489,6 +500,12 @@ export default (alias, store) => (e = {}) => {
 
       case 'refresh': {
         window.location.reload()
+        break
+      }
+
+      case 'info.services.status': {
+        const [, mode, serviceStatus] = payload
+        store.dispatch(UIActions.updateServiceStatus(mode, serviceStatus))
         break
       }
 

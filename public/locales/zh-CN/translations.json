@@ -324,7 +324,6 @@
     "deadManText1": "启用失能开关将于关闭应用程式时，自动取消所有待执行订单。",
     "deadManText2": "关闭应用程式将取消演算法订单。如无启用失能开关，则不会取消演算法订单。于重启应用程式时，如提示说明订单则有可能会消失。",
     "deadManWarning": "禁用此设置将收到相关提醒！",
-    "usageReportingCheckbox": "使用报告",
     "showPauseInfoCheckbox": "显示演算法订单暂停信息",
     "showPauseInfoText": "如已勾选，当仍持有待执行演算法订单且欲关闭应用程式，即会跳出此模式的信息说明。",
     "rebootCheckbox": "连接不良，自动重启应用",
@@ -438,10 +437,6 @@
     "decryptedCredentialsFor": "已解除{{target}}({{mode}}) 的加密凭证",
     "reboot_notify": "已注意到数次网路连接问题。重启应用程式...",
     "strategyLaunchMissingAPIKey": "Please configure API keys first and relaunch strategy"
-  },
-  "tradingModeModal": {
-    "title": "切换交易模式",
-    "text": "切换至交易模式。点击Okay后将重启应用程式，并暂停待执行演算法订单。"
   },
   "confirmDMSModal": {
     "title": "启用失能开关",
@@ -740,7 +735,7 @@
       "runTime": "Strategy Run Time"
     },
     "IDEreadonlyNotice": "Strategy editing is disabled while the strategy is being executed. To update your strategy, change to SANDBOX environment and reopen this strategy from your ACTIVE STRATEGIES tab",
-    "strategyOptionsBtn": "Settings"
+    "strategyOptionsBtn": "设置"
   },
   "ui": {
     "ok": "确定",
@@ -773,7 +768,7 @@
     "name": "名称",
     "notSelected": "未选取",
     "e.g.": "例如：{{value}}",
-    "required": "REQUIRED"
+    "required": "必填"
   },
   "crashHandler": {
     "text1": "错误发生，Bitfinex Honey介面停止运作。请重启应用程式以继续使用。",
