@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { Icon } from 'react-fa'
 import { preparePrice } from 'bfx-api-node-util'
 import { defaultCellRenderer } from '../../util/ui'
-import { resultNumber } from '../Backtester/Results/Results.utils'
+import resultNumber from '../../util/resultNumber'
 
 const STYLES = {
   flexStart: { justifyContent: 'flex-start' },

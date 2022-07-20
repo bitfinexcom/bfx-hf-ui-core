@@ -3,7 +3,7 @@ import { preparePrice } from 'bfx-api-node-util'
 import { saveAs } from 'file-saver'
 
 import { getPairFromMarket } from '../../util/market'
-import { resultNumber } from '../Backtester/Results/Results.utils'
+import resultNumber from '../../util/resultNumber'
 import { getExportFilename } from '../StrategyTradesTable/StrategyTradesTable.helpers'
 
 const adjustPercentage = (value) => value * 100
