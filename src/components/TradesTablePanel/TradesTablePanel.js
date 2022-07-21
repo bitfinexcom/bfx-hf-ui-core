@@ -14,9 +14,11 @@ import { useTranslation } from 'react-i18next'
 
 import MarketSelect from '../MarketSelect'
 import Panel from '../../ui/Panel'
-import './style.css'
+import useWidgetMarket from '../../hooks/useWidgetMarket'
 import { getPairFromMarket } from '../../util/market'
 import { MARKET_SHAPE, TRADE_SHAPE } from '../../constants/prop-types-shapes'
+
+import './style.css'
 
 const { trades } = reduxConstants
 const { SUBSCRIPTION_CONFIG } = trades
@@ -41,7 +43,8 @@ const TradesTablePanel = (props) => {
     getCurrencySymbol,
   } = props
 
-  const { currentMarket = activeMarket } = savedState
+  const { currentMarket: savedMarket } = savedState
+  const currentMarket = useWidgetMarket(savedMarket, activeMarket)
   const {
     base, quote, isPerp, uiID,
   } = currentMarket
