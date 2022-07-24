@@ -7,7 +7,7 @@
 @media screen and (max-width: 940px) {
   .hfui-authenticationpage__inner {
     flex-direction: column !important;
-  
+
     > * {
       width: 100% !important;
     }
@@ -233,17 +233,6 @@
     .input-field-container .arrow-icon {
       background-color: var(--darker-background-color) !important;
     }
-  }
-}
-.hfui-authenticationpage__mode-select {
-  .hfui-select__control,
-  .hfui-select__control--is-focused {
-    height: 100%;
-  }
-
-  p {
-    padding-top: 10px;
-    margin-bottom: -1px;
   }
 }
 
