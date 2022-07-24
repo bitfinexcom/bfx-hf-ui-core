@@ -18,3 +18,5 @@ export const getCorrectIconNameOfPerpCcy = (perpCcy) => {
 }
 
 export const getStrategyModeForSymbol = (symbol) => (_includes(ALLOWED_PAPER_PAIRS, symbol?.wsID) ? PAPER_MODE : MAIN_MODE)
+
+export const getIsPaperPair = (symbol) => _includes(ALLOWED_PAPER_PAIRS, symbol?.wsID)

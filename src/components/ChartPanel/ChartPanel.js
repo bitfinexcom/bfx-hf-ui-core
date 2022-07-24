@@ -1,6 +1,5 @@
-import React, { useState, useEffect, memo } from 'react'
+import React, { memo } from 'react'
 import PropTypes from 'prop-types'
-import _isEmpty from 'lodash/isEmpty'
 import { useTranslation } from 'react-i18next'
 
 import { THEMES } from '../../redux/selectors/ui'
@@ -11,33 +10,22 @@ import { getPairFromMarket } from '../../util/market'
 import { MARKET_SHAPE } from '../../constants/prop-types-shapes'
 
 import './style.css'
+import useWidgetMarket from '../../hooks/useWidgetMarket'
 
 const ChartPanel = ({
   dark, label, onRemove, moveable, removeable, showChartMarket, markets, canChangeMarket, activeMarket,
-  savedState: { currentMarket: _currentMarket }, updateState, layoutID, layoutI, showMarket, getCurrencySymbol, settingsTheme,
+  savedState: { currentMarket: savedMarket }, updateState, layoutID, layoutI, showMarket, getCurrencySymbol, settingsTheme,
 }) => {
-  const [currentMarket, setCurrentMarket] = useState(_currentMarket || activeMarket)
+  const currentMarket = useWidgetMarket(savedMarket, activeMarket)
   const currentPair = getPairFromMarket(currentMarket, getCurrencySymbol)
   const { isPerp, uiID } = currentMarket
-
-  useEffect(() => {
-    if (_isEmpty(_currentMarket) && activeMarket.restID !== currentMarket.restID) {
-      setCurrentMarket(activeMarket)
-    }
-  }, [_currentMarket, activeMarket, currentMarket.restID])
-
-  useEffect(() => {
-    if (!_isEmpty(_currentMarket)) {
-      setCurrentMarket(_currentMarket)
-    }
-  }, [_currentMarket])
 
   const onChangeMarket = (market) => {
     if (market.restID === currentMarket.restID) {
       return
     }
 
-    setCurrentMarket(market)
+    // setCurrentMarket(market)
     updateState(layoutID, layoutI, {
       currentMarket: market,
     })
