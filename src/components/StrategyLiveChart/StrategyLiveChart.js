@@ -101,6 +101,7 @@ const StrategyLiveChart = ({
           interval={interval}
           trades={trades}
           hideResolutions
+          hideIndicators
           chartRange={chartRange}
           key={executionId}
         />
