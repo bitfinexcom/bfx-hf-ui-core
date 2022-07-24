@@ -24,6 +24,7 @@ const Chart = ({
   trades,
   interval,
   hideResolutions,
+  hideIndicators,
   chartRange,
 }) => {
   const isSetInterval = !_isUndefined(interval)
@@ -45,6 +46,7 @@ const Chart = ({
     locale: LANGUAGES_CHART_TABLE[i18nMappedKey] || LANGUAGES_CHART_TABLE.en,
     iframeID,
     hideResolutions,
+    hideIndicators,
   }).toString()
 
   useEffect(() => {
@@ -72,6 +74,7 @@ Chart.propTypes = {
   trades: PropTypes.arrayOf(PropTypes.shape(TRADE_SHAPE)),
   interval: PropTypes.string,
   hideResolutions: PropTypes.bool,
+  hideIndicators: PropTypes.bool,
   chartRange: PropTypes.object, // eslint-disable-line react/forbid-prop-types
 }
 
@@ -86,6 +89,7 @@ Chart.defaultProps = {
   trades: [],
   interval: undefined,
   hideResolutions: false,
+  hideIndicators: false,
   chartRange: null,
 }
 
