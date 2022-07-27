@@ -7,7 +7,7 @@ import { useSelector } from 'react-redux'
 import Indicator from '../../../../ui/Indicator'
 import useHover from '../../../../hooks/useHover'
 import SidebarParams from '../../components/SidebarParams/SidebarParams'
-import { getCurrentStrategyExecutionState } from '../../../../redux/selectors/ws'
+import { getCurrentStrategyExecutionState, getExecutionConnectionState } from '../../../../redux/selectors/ws'
 import { getIsPaperTrading } from '../../../../redux/selectors/ui'
 
 const StrategyTabTitle = (props) => {
@@ -16,6 +16,7 @@ const StrategyTabTitle = (props) => {
   } = props
 
   const executionState = useSelector(getCurrentStrategyExecutionState)
+  const isExecutionConnected = useSelector(getExecutionConnectionState)
   const isPaperTrading = useSelector(getIsPaperTrading)
   const { results, executing, loading } = executionState
 
@@ -39,6 +40,9 @@ const StrategyTabTitle = (props) => {
     if (loading) {
       return <Indicator white blinking className={indicatorClassName} />
     }
+    if (!isExecutionConnected) {
+      return <Indicator grey />
+    }
     if (executing) {
       return (
         <Indicator
@@ -48,7 +52,7 @@ const StrategyTabTitle = (props) => {
         />
       )
     }
-    if (!_isEmpty(results)) {
+    if (!isPaperTrading && !_isEmpty(results)) {
       return <Indicator green className={indicatorClassName} />
     }
     return null

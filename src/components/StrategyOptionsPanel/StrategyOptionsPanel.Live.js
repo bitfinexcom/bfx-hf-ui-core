@@ -96,7 +96,7 @@ const StrategyOptionsPanelLive = ({
             green
           />
         )}
-        {isExecuting && (
+        {isExecuting && isExecutionConnected && (
           <Button
             className='hfui-strategy-options__option-btn item'
             label={t('ui.stopBtn')}

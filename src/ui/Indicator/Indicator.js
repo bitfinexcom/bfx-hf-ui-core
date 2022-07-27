@@ -5,7 +5,7 @@ import clsx from 'clsx'
 import './style.css'
 
 const Indicator = ({
-  blinking, green, red, white, className,
+  blinking, green, red, white, grey, className,
 }) => {
   return (
     <span
@@ -14,6 +14,7 @@ const Indicator = ({
         green,
         red,
         white,
+        grey,
       })}
     />
   )
@@ -24,6 +25,7 @@ Indicator.propTypes = {
   green: PropTypes.bool,
   red: PropTypes.bool,
   white: PropTypes.bool,
+  grey: PropTypes.bool,
   className: PropTypes.string,
 }
 Indicator.defaultProps = {
@@ -31,6 +33,7 @@ Indicator.defaultProps = {
   green: false,
   red: false,
   white: false,
+  grey: false,
   className: null,
 }
 
