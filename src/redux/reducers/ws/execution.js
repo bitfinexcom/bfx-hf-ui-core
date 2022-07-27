@@ -4,6 +4,7 @@ import types from '../../constants/ws'
 function getInitialState() {
   return {
     loading: false,
+    isConnected: true,
     loadingGid: null,
     results: {
       // 'strategy-map-key': { /* results */ }
@@ -163,6 +164,14 @@ function reducer(state = getInitialState(), action = {}) {
         loading: false,
         loadingGid: null,
         activeStrategies: {},
+      }
+    }
+
+    case types.EXECUTION_CONNECTION_LOST: {
+      const { isConnectionLost } = payload
+      return {
+        ...state,
+        isConnected: !isConnectionLost,
       }
     }
 

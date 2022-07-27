@@ -1,16 +1,19 @@
-import React, { memo } from 'react'
+import React, { memo, useCallback } from 'react'
 import PropTypes from 'prop-types'
 import _size from 'lodash/size'
 import { Tooltip } from '@ufx-ui/core'
 import { useTranslation } from 'react-i18next'
 
+import { useSelector } from 'react-redux'
 import MarketSelect from '../MarketSelect'
 import Button from '../../ui/Button'
 import StrategyRunned from '../StrategyEditor/components/StrategyRunned'
 import StrategyStopped from '../StrategyEditor/components/StrategyStopped'
+import StrategyPaused from '../StrategyEditor/components/StrategyPaused'
 import StrategyTypeSelect from './StrategyTypeSelect'
 import StrategyOptionsButton from './StrategyOptionsButton'
 import { STRATEGY_SHAPE } from '../../constants/prop-types-shapes'
+import { getExecutionConnectionState } from '../../redux/selectors/ws'
 
 import './style.css'
 
@@ -29,12 +32,25 @@ const StrategyOptionsPanelLive = ({
   const { label, strategyOptions: { symbol, strategyType } = {} } = strategy || {}
   const { t } = useTranslation()
 
+  const isExecutionConnected = useSelector(getExecutionConnectionState)
+
+  const getIndicator = useCallback(() => {
+    if (!isExecutionConnected) {
+      return <StrategyPaused />
+    }
+    if (isExecuting) {
+      return <StrategyRunned />
+    }
+    if (!isExecuting && hasResults) {
+      return <StrategyStopped />
+    }
+    return null
+  }, [hasResults, isExecuting, isExecutionConnected])
+
   return (
     <div className='hfui-strategy-options'>
       <div className='hfui-strategy-options__left-container'>
-        <p
-          className='hfui-strategy-options__strategy-name item'
-        >
+        <p className='hfui-strategy-options__strategy-name item'>
           <>
             {_size(label) > MAX_STRATEGY_LABEL_LENGTH ? (
               <Tooltip
@@ -48,16 +64,9 @@ const StrategyOptionsPanelLive = ({
             )}
           </>
         </p>
-        {isExecuting && (
-          <div className='hfui-strategy-options__option item'>
-            <StrategyRunned />
-          </div>
-        )}
-        {!isExecuting && hasResults && (
-          <div className='hfui-strategy-options__option item'>
-            <StrategyStopped />
-          </div>
-        )}
+        <div className='hfui-strategy-options__option item'>
+          {getIndicator()}
+        </div>
         <div className='hfui-strategy-options__input item'>
           <MarketSelect
             value={symbol}

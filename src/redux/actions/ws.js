@@ -302,6 +302,13 @@ export default {
     },
   }),
 
+  setExecutionConnectionStatus: (isConnectionLost) => ({
+    type: t.EXECUTION_CONNECTION_LOST,
+    payload: {
+      isConnectionLost,
+    },
+  }),
+
   resetExecutionData: () => ({
     type: t.RESET_DATA_EXECUTION,
   }),

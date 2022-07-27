@@ -498,6 +498,13 @@ export default (alias, store) => (e = {}) => {
         break
       }
 
+      case 'strategy.connection_lost': {
+        const [, isConnectionLost] = payload
+        store.dispatch(WSActions.setExecutionConnectionStatus(isConnectionLost))
+
+        break
+      }
+
       case 'refresh': {
         window.location.reload()
         break

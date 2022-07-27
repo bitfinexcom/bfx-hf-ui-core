@@ -39,6 +39,7 @@ import getIsPaperModeApiKeyUpdating from './get_is_paper_mode_api_key_updating'
 
 import getSavedStrategies from './get_saved_strategies'
 import getIsExecutionLoading from './get_is_execution_loading'
+import getExecutionConnectionState from './get_execution_connection_state'
 import getActiveStrategies from './get_active_strategies'
 import getCurrentStrategyExecutionState from './get_current_strategy_execution_state'
 import getCurrentStrategyPositions from './get_current_strategy_positions'
@@ -94,6 +95,7 @@ export {
 
   getSavedStrategies,
   getIsExecutionLoading,
+  getExecutionConnectionState,
   getActiveStrategies,
   getCurrentStrategyExecutionState,
   getCurrentStrategyPositions,
