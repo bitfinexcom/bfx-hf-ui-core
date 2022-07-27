@@ -70,7 +70,6 @@ export default (alias, store) => (e = {}) => {
 
         // reset order history
         store.dispatch(WSActions.resetOrderHist())
-        store.dispatch(UIActions.setTradingMode(isPaperTrading))
         store.dispatch(UIActions.setMarketFromStore(isPaperTrading))
         store.dispatch(WSActions.recvAuthToken(token))
         store.dispatch(WSActions.send(['strategy.execute_status', token]))
