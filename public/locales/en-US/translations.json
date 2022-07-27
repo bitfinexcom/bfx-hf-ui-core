@@ -649,6 +649,7 @@
     "running": "Running",
     "paused": "Paused",
     "stopped": "Stopped",
+    "connectionLost": "Connecting lost",
     "recent": "Recent",
     "strategyTab": "Strategy",
     "backtestTab": "Backtest",

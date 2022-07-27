@@ -76,6 +76,10 @@ body.hosted {
   &.running {
     color: $red-color;
   }
+
+  &.paused {
+    color: $grey-color;
+  }
 }
 
 .hfui-strategy-editor_cancel-process-btn {
