@@ -16,7 +16,7 @@ const StrategyTabTitle = (props) => {
   } = props
 
   const executionState = useSelector(getCurrentStrategyExecutionState)
-  const isExecutionConnected = useSelector(getExecutionConnectionState)
+  const { isExecutionConnected } = useSelector(getExecutionConnectionState)
   const isPaperTrading = useSelector(getIsPaperTrading)
   const { results, executing, loading } = executionState
 

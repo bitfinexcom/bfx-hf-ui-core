@@ -11,6 +11,7 @@ import Panel from '../../ui/Panel'
 import MetricRow from './MetricRow'
 import ExecutionTimer from './ExecutionTimer'
 import { metricsExport, getMetrics } from './StrategyPerfomanceMetrics.helpers'
+import { getExecutionConnectionState } from '../../redux/selectors/ws'
 
 import './style.css'
 
@@ -23,12 +24,13 @@ const StrategyPerfomanceMetrics = ({
   isBacktest,
 }) => {
   const { t } = useTranslation()
-  const {
-    backtestOptions: { activeMarket } = {},
-  } = results
+  const { backtestOptions: { activeMarket } = {} } = results
 
   const [, quote] = activeMarket ? getPairParts(activeMarket) : []
   const getCurrencySymbol = useSelector(getCurrencySymbolMemo)
+  const { isExecutionConnected, connectionLostDurationMs } = useSelector(
+    getExecutionConnectionState,
+  )
   const quoteCcy = getCurrencySymbol(quote)
   const metrics = getMetrics(results, t, quoteCcy, true)
 
@@ -39,19 +41,23 @@ const StrategyPerfomanceMetrics = ({
       darkHeader
       label={t('strategyEditor.perfomanceMetrics.title')}
       extraIcons={(
-        <Icon onClick={() => metricsExport(results, t, getCurrencySymbol)} name='download' />
+        <Icon
+          onClick={() => metricsExport(results, t, getCurrencySymbol)}
+          name='download'
+        />
       )}
     >
       <ul>
         {!isBacktest && startedOn && (
-          <ExecutionTimer isExecuting={isExecuting} startedOn={startedOn} />
+          <ExecutionTimer
+            isExecuting={isExecuting}
+            startedOn={startedOn}
+            isPaused={!isExecutionConnected}
+            delay={connectionLostDurationMs}
+          />
         )}
         {_map(metrics, (value, label) => (
-          <MetricRow
-            key={label}
-            label={label}
-            value={value}
-          />
+          <MetricRow key={label} label={label} value={value} />
         ))}
       </ul>
     </Panel>

@@ -24,7 +24,7 @@ const NavbarButton = ({
   const { executing, loading, results } = useSelector(
     getCurrentStrategyExecutionState,
   )
-  const isExecutionConnected = useSelector(getExecutionConnectionState)
+  const { isExecutionConnected } = useSelector(getExecutionConnectionState)
 
   const { loading: btLoading, finished } = useSelector(getBacktestResults)
 

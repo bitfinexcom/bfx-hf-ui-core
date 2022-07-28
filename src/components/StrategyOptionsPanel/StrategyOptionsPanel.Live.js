@@ -32,7 +32,7 @@ const StrategyOptionsPanelLive = ({
   const { label, strategyOptions: { symbol, strategyType } = {} } = strategy || {}
   const { t } = useTranslation()
 
-  const isExecutionConnected = useSelector(getExecutionConnectionState)
+  const { isExecutionConnected } = useSelector(getExecutionConnectionState)
 
   const getIndicator = useCallback(() => {
     if (!isExecutionConnected) {
