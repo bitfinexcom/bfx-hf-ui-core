@@ -13,6 +13,7 @@ const mapStateToProps = (state = {}) => ({
 const mapDispatchToProps = dispatch => ({
   changeTradingMode: (isPaperTrading) => {
     dispatch(UIActions.setTradingMode(isPaperTrading))
+    dispatch(UIActions.setMarketFromStore(isPaperTrading))
     dispatch(WSActions.recvBalances({ balances: [] }))
     dispatch(WSActions.recvPositions({ positions: [] }))
     dispatch(WSActions.recvOrders({ orders: [] }))

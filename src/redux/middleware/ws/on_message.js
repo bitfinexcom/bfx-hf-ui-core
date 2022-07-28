@@ -65,12 +65,10 @@ export default (alias, store) => (e = {}) => {
       }
 
       case 'info.auth_token': {
-        const [, token, mode] = payload
-        const isPaperTrading = mode === PAPER_MODE
+        const [, token] = payload
 
         // reset order history
         store.dispatch(WSActions.resetOrderHist())
-        store.dispatch(UIActions.setMarketFromStore(isPaperTrading))
         store.dispatch(WSActions.recvAuthToken(token))
         store.dispatch(WSActions.send(['strategy.execute_status', token]))
         break
