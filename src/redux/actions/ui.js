@@ -247,6 +247,13 @@ export const updateServiceStatus = (mode, serviceStatus) => ({
   },
 })
 
+export const changeMode = (isPaperTrading) => ({
+  type: types.CHANGE_MODE,
+  payload: {
+    isPaperTrading,
+  },
+})
+
 export default {
   saveLayout,
   storeUnsavedLayout,
@@ -288,4 +295,5 @@ export default {
   setPendingLiveStrategy,
   removePendingLiveStrategy,
   updateServiceStatus,
+  changeMode,
 }
