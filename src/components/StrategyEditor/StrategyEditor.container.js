@@ -166,8 +166,7 @@ const mapDispatchToProps = (dispatch) => ({
     }
   },
   changeTradingMode: (isPaperTrading) => {
-    dispatch(UIActions.setTradingMode(isPaperTrading))
-    dispatch(WSActions.changeMode(isPaperTrading))
+    dispatch(UIActions.changeMode(isPaperTrading))
   },
   saveStrategyToExecuteToLS: (strategyToExecute) => {
     dispatch(UIActions.setPendingLiveStrategy(strategyToExecute.id))
