@@ -22,7 +22,7 @@ const MAX_STRATEGY_LABEL_LENGTH = 25
 
 const StrategyOptionsPanelSandbox = ({
   strategy,
-  onOpenSaveStrategyAsModal,
+  onOpenEditStrategyLabelModal,
   markets,
   openExecutionOptionsModal,
   strategyDirty,
@@ -53,7 +53,7 @@ const StrategyOptionsPanelSandbox = ({
     if (executionId) {
       return
     }
-    onOpenSaveStrategyAsModal()
+    onOpenEditStrategyLabelModal()
   }
 
   return (
@@ -135,12 +135,12 @@ const StrategyOptionsPanelSandbox = ({
 StrategyOptionsPanelSandbox.propTypes = {
   markets: PropTypes.arrayOf(Object).isRequired,
   saveStrategyOptions: PropTypes.func.isRequired,
-  onOpenSaveStrategyAsModal: PropTypes.func.isRequired,
   strategy: PropTypes.shape(STRATEGY_SHAPE).isRequired,
   openExecutionOptionsModal: PropTypes.func.isRequired,
   strategyDirty: PropTypes.bool.isRequired,
   hasErrors: PropTypes.bool.isRequired,
   onSaveStrategy: PropTypes.func.isRequired,
+  onOpenEditStrategyLabelModal: PropTypes.func.isRequired,
 }
 
 export default memo(StrategyOptionsPanelSandbox)

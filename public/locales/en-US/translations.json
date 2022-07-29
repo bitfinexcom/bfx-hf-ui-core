@@ -666,6 +666,7 @@
     "selectStrategy": "Please select a strategy from the list below or head to the SANDBOX mode to begin drafting a new one",
     "newStrategyModalTitle": "Create a New Strategy",
     "saveStrategyAsModalTitle": "Save strategy as...",
+    "editStrategyLabelModalTitle": "Change your strategy's name",
     "newStrategyFromModalTitle": "Create a New Strategy from...",
     "newStrategyModalEmptyError": "Label is empty",
     "newStrategyModalLongError": "Strategy name is too long ({{labelSize}}/{{MAX_LABEL_LENGTH}} characters)",

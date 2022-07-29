@@ -50,6 +50,7 @@ import './style.css'
 import { getStrategyModeForSymbol } from '../../util/market'
 import useToggle from '../../hooks/useToggle'
 import { INDICATORS_ARRAY_SHAPE, STRATEGY_SHAPE } from '../../constants/prop-types-shapes'
+import EditStrategyLabelModal from '../../modals/Strategy/EditStrategyLabelModal'
 
 const debug = Debug('hfui-ui:c:strategy-editor')
 
@@ -108,6 +109,11 @@ const StrategyEditor = (props) => {
     isSaveStrategyAsModalOpen,,
     openSaveStrategyAsModal,
     closeSaveStrategyAsModal,
+  ] = useToggle(false)
+  const [
+    isEditStrategyLabelModalOpen,,
+    openEditStrategyLabelModal,
+    closeEditStrategyLabelModal,
   ] = useToggle(false)
   const [
     isSaveStrategyBeforeLaunchModalOpen,,
@@ -170,6 +176,7 @@ const StrategyEditor = (props) => {
     closeCancelProcessModal()
     closeLaunchStrategyModal()
     closeSaveStrategyBeforeLaunchModal()
+    closeEditStrategyLabelModal()
 
     // setTimeout is needed to prevent flickering when 'Save & Launch' execution options modal is closing
     setTimeout(() => {
@@ -185,6 +192,7 @@ const StrategyEditor = (props) => {
     closeRemoveModal,
     closeSaveStrategyAsModal,
     closeSaveStrategyBeforeLaunchModal,
+    closeEditStrategyLabelModal,
   ])
 
   const onCreateNewStrategy = useCallback(
@@ -624,6 +632,7 @@ const StrategyEditor = (props) => {
                 htmlKey='strategy'
                 sbtitle={sbtitleStrategy}
                 onOpenSaveStrategyAsModal={openSaveStrategyAsModal}
+                onOpenEditStrategyLabelModal={openEditStrategyLabelModal}
                 isPaperTrading={isPaperTrading}
                 stopExecution={stopExecution}
                 onSaveStrategy={onSaveStrategy}
@@ -695,6 +704,12 @@ const StrategyEditor = (props) => {
             isOpen={isLaunchStrategyModalOpen}
             onClose={onCloseModals}
             strategyId={strategyId}
+          />
+          <EditStrategyLabelModal
+            isOpen={isEditStrategyLabelModalOpen}
+            onClose={onCloseModals}
+            strategy={strategy}
+            onSubmit={onSaveAsStrategy}
           />
         </>
       )}

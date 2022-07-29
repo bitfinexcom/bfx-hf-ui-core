@@ -17,7 +17,10 @@ import StrategyLiveChart from '../../../StrategyLiveChart'
 import StrategyTabWrapper from '../../components/StrategyTabWrapper'
 import useToggle from '../../../../hooks/useToggle'
 import StrategyOptionsPanelLive from '../../../StrategyOptionsPanel/StrategyOptionsPanel.Live'
-import { getCurrentStrategyExecutionState, getCurrentStrategyPositions } from '../../../../redux/selectors/ws'
+import {
+  getCurrentStrategyExecutionState,
+  getCurrentStrategyPositions,
+} from '../../../../redux/selectors/ws'
 import { prepareChartTrades } from '../../StrategyEditor.helpers'
 import {
   INDICATORS_ARRAY_SHAPE,
@@ -30,7 +33,6 @@ const StrategyLiveTab = (props) => {
     strategy,
     markets,
     indicators,
-    onOpenSaveStrategyAsModal,
     openExecutionOptionsModal,
     stopExecution,
     saveStrategyOptions,
@@ -69,7 +71,6 @@ const StrategyLiveTab = (props) => {
             <StrategyOptionsPanelLive
               strategy={strategy}
               markets={markets}
-              onOpenSaveStrategyAsModal={onOpenSaveStrategyAsModal}
               openExecutionOptionsModal={openExecutionOptionsModal}
               stopExecution={stopExecution}
               saveStrategyOptions={saveStrategyOptions}
@@ -116,7 +117,6 @@ const StrategyLiveTab = (props) => {
     },
     [
       markets,
-      onOpenSaveStrategyAsModal,
       openExecutionOptionsModal,
       stopExecution,
       saveStrategyOptions,
@@ -151,7 +151,6 @@ StrategyLiveTab.propTypes = {
   onCancelProcess: PropTypes.func.isRequired,
   strategy: PropTypes.shape(STRATEGY_SHAPE).isRequired,
   markets: PropTypes.arrayOf(PropTypes.shape(MARKET_SHAPE)).isRequired,
-  onOpenSaveStrategyAsModal: PropTypes.func.isRequired,
   saveStrategyOptions: PropTypes.func.isRequired,
   openExecutionOptionsModal: PropTypes.func.isRequired,
   stopExecution: PropTypes.func.isRequired,
