@@ -8,6 +8,7 @@ import { useLocation } from 'react-router'
 import {
   getBacktestResults,
   getCurrentStrategyExecutionState,
+  getExecutionConnectionState,
 } from '../../redux/selectors/ws'
 import { strategyEditor } from '../../constants/routes'
 import Indicator from '../../ui/Indicator'
@@ -23,6 +24,8 @@ const NavbarButton = ({
   const { executing, loading, results } = useSelector(
     getCurrentStrategyExecutionState,
   )
+  const { isExecutionConnected } = useSelector(getExecutionConnectionState)
+
   const { loading: btLoading, finished } = useSelector(getBacktestResults)
 
   const getIndicator = () => {
@@ -31,6 +34,9 @@ const NavbarButton = ({
     }
     if (loading || btLoading) {
       return <Indicator white blinking />
+    }
+    if (!isExecutionConnected) {
+      return <Indicator grey />
     }
     if (executing) {
       return <Indicator red blinking />

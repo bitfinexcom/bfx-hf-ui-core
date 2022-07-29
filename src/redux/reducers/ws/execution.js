@@ -4,6 +4,8 @@ import types from '../../constants/ws'
 function getInitialState() {
   return {
     loading: false,
+    isConnected: true,
+    connectionLostDurationMs: 0,
     loadingGid: null,
     results: {
       // 'strategy-map-key': { /* results */ }
@@ -164,6 +166,24 @@ function reducer(state = getInitialState(), action = {}) {
         loadingGid: null,
         activeStrategies: {},
       }
+    }
+
+    case types.EXECUTION_CONNECTION_LOST: {
+      const { isConnectionLost } = payload
+
+      const newState = {
+        ...state,
+        isConnected: !isConnectionLost,
+      }
+
+      if (isConnectionLost) {
+        newState.lostConnectionAt = Date.now()
+      } else if (state.lostConnectionAt) {
+        const diff = Date.now() - state.lostConnectionAt
+        newState.connectionLostDurationMs = state.connectionLostDurationMs + diff
+        delete newState.lostConnectionAt
+      }
+      return newState
     }
 
     default: {

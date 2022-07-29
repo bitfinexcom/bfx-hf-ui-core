@@ -4,31 +4,34 @@ import { useTranslation } from 'react-i18next'
 import { useStopwatch } from 'react-timer-hook'
 import { pad2 } from '@ufx-ui/utils'
 
-const ExecutionTimer = ({ startedOn, isExecuting }) => {
+const ExecutionTimer = ({
+  startedOn, isExecuting, isPaused, delay,
+}) => {
   const { t } = useTranslation()
 
   const stopWatchParams = useMemo(() => {
     const stopwatchOffset = new Date()
     stopwatchOffset.setMilliseconds(
-      stopwatchOffset.getMilliseconds() + (Date.now() - startedOn),
+      stopwatchOffset.getMilliseconds() + (Date.now() - startedOn - delay),
     )
+
     return {
       offsetTimestamp: stopwatchOffset,
     }
-  }, [startedOn])
+  }, [startedOn, delay])
 
   const {
     days, hours, minutes, seconds, pause, isRunning, start,
   } = useStopwatch(stopWatchParams)
 
   useEffect(() => {
-    if (isExecuting && !isRunning) {
+    if (!isPaused && isExecuting && !isRunning) {
       start()
     }
-    if (!isExecuting && isRunning) {
+    if (isPaused || (!isExecuting && isRunning)) {
       pause()
     }
-  }, [isExecuting, isRunning, pause, start])
+  }, [isExecuting, isRunning, isPaused, pause, start])
 
   const runnedForValue = `${days}:${pad2(hours)}:${pad2(minutes)}:${pad2(
     seconds,
@@ -45,6 +48,8 @@ const ExecutionTimer = ({ startedOn, isExecuting }) => {
 ExecutionTimer.propTypes = {
   isExecuting: PropTypes.bool.isRequired,
   startedOn: PropTypes.number.isRequired,
+  isPaused: PropTypes.bool.isRequired,
+  delay: PropTypes.number.isRequired,
 }
 
 export default ExecutionTimer
