@@ -27,7 +27,7 @@ const RowExpandCell = ({ children, index, setSelectedIndex }) => (
 
 export default (t, selectedIndex, setSelectedIndex) => {
   const {
-    id, entryAt, closedAt, entryPrice, closingPrice, amount, pl,
+    id, entryAt, closedAt, entryPrice, closingPrice, amount, realizedPnl,
   } = getPositionsHeaders(t)
 
   return [
@@ -105,7 +105,7 @@ export default (t, selectedIndex, setSelectedIndex) => {
       ),
     },
     {
-      label: pl,
+      label: realizedPnl,
       dataKey: 'pl',
       width: 150,
       flexGrow: 1,

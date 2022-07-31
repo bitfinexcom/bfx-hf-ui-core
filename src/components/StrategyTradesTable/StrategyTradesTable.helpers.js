@@ -24,7 +24,7 @@ export const getPositionAmount = (position) => position.amount
 
 export const getPositionId = (position) => position.id
 
-export const getPositionPl = (position) => position.pl
+export const getPositionPl = (position) => position.realizedPnl
 
 const getExportFilename = (prefix, extension = 'zip') => {
   // turn something like 2022-02-22T12:55:03.800Z into 2022-02-22T12-55-03
