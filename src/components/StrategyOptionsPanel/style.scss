@@ -77,14 +77,16 @@
     @extend .hfui-strategy-options__option;
     font-size: 20px;
     font-weight: 700;
-    cursor: pointer;
     max-width: 25ch;
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
 
-    &:hover {
-      text-decoration: underline;
+    &.edited {
+      cursor: pointer;
+      &:hover {
+        text-decoration: underline;
+      }
     }
   }
 

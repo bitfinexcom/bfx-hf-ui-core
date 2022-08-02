@@ -22,7 +22,7 @@ const MAX_STRATEGY_LABEL_LENGTH = 25
 
 const StrategyOptionsPanelSandbox = ({
   strategy,
-  onOpenSaveStrategyAsModal,
+  onOpenEditStrategyLabelModal,
   markets,
   openExecutionOptionsModal,
   strategyDirty,
@@ -30,7 +30,11 @@ const StrategyOptionsPanelSandbox = ({
   onSaveStrategy,
   saveStrategyOptions,
 }) => {
-  const { label, strategyOptions: { symbol, strategyType } = {} } = strategy || {}
+  const {
+    label,
+    executionId,
+    strategyOptions: { symbol, strategyType } = {},
+  } = strategy || {}
   const { t } = useTranslation()
 
   const onMarketSelectChange = (selection) => {
@@ -45,12 +49,21 @@ const StrategyOptionsPanelSandbox = ({
     saveStrategyOptions(options)
   }
 
+  const onStrategyNameClick = () => {
+    if (executionId) {
+      return
+    }
+    onOpenEditStrategyLabelModal()
+  }
+
   return (
     <div className='hfui-strategy-options'>
       <div className='hfui-strategy-options__left-container'>
         <p
-          className='hfui-strategy-options__strategy-name item'
-          onClick={onOpenSaveStrategyAsModal}
+          className={clsx('hfui-strategy-options__strategy-name item', {
+            edited: !executionId,
+          })}
+          onClick={onStrategyNameClick}
         >
           <>
             {_size(label) > MAX_STRATEGY_LABEL_LENGTH ? (
@@ -122,12 +135,12 @@ const StrategyOptionsPanelSandbox = ({
 StrategyOptionsPanelSandbox.propTypes = {
   markets: PropTypes.arrayOf(Object).isRequired,
   saveStrategyOptions: PropTypes.func.isRequired,
-  onOpenSaveStrategyAsModal: PropTypes.func.isRequired,
   strategy: PropTypes.shape(STRATEGY_SHAPE).isRequired,
   openExecutionOptionsModal: PropTypes.func.isRequired,
   strategyDirty: PropTypes.bool.isRequired,
   hasErrors: PropTypes.bool.isRequired,
   onSaveStrategy: PropTypes.func.isRequired,
+  onOpenEditStrategyLabelModal: PropTypes.func.isRequired,
 }
 
 export default memo(StrategyOptionsPanelSandbox)
