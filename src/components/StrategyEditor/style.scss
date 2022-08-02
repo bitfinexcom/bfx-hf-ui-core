@@ -36,6 +36,7 @@ body.hosted {
 .hfui-strategyeditor__wrapper {
   display: flex;
   height: 100%;
+  min-height: 530px;
   background-color: var(--background-color);
   position: relative;
 
@@ -296,7 +297,8 @@ body.hosted {
   background-color: $green-color;
   color: $darker-background-color;
 
-  &:after, &:before {
+  &:after,
+  &:before {
     bottom: 100%;
     left: 80%;
     border: solid transparent;

@@ -8,8 +8,6 @@ import { Spinner } from '@ufx-ui/core'
 import { useTranslation } from 'react-i18next'
 import { STRATEGY_LAYOUT_CONFIG_SHAPE } from '../../../constants/prop-types-shapes'
 
-const GRID_LAYOUT_MIN_HEIGHT = 530
-
 const StrategiesGridLayout = ({
   renderGridComponents, layoutConfig, isLoading, onCancelProcess,
 }) => {
@@ -18,12 +16,11 @@ const StrategiesGridLayout = ({
   return (
     <AutoSizer>
       {({ width, height }) => {
-        const _height = height > GRID_LAYOUT_MIN_HEIGHT ? height : GRID_LAYOUT_MIN_HEIGHT
         return (
           <>
             <ReactGridLayout
               cols={100}
-              rowHeight={_height / 11}
+              rowHeight={height / 11}
               width={width}
               layout={layoutConfig}
               margin={[10, 10]}

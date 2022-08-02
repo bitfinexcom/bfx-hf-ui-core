@@ -46,10 +46,11 @@ import {
 } from '../../redux/actions/ui'
 import { SETTINGS_TABS } from '../../modals/AppSettingsModal/AppSettingsModal.constants'
 
-import './style.css'
 import { getStrategyModeForSymbol } from '../../util/market'
 import useToggle from '../../hooks/useToggle'
 import { INDICATORS_ARRAY_SHAPE, STRATEGY_SHAPE } from '../../constants/prop-types-shapes'
+
+import './style.css'
 
 const debug = Debug('hfui-ui:c:strategy-editor')
 
