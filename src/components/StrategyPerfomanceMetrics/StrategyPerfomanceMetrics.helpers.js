@@ -16,11 +16,10 @@ const getMetrics = (results, t, quoteCcy, postProcessing = false) => {
     nLosses = 0,
     nStrategyTrades = 0,
     nOpens = 0,
-    pl = 0,
-    pf = 0,
+    profitFactor = 0,
     vol = 0,
-    stdDeviation = 0,
-    avgPL = 0,
+    pnlStdDeviation = 0,
+    averageTradePnl = 0,
     allocation = 0,
     positionSize = 0,
     currentAllocation = 0,
@@ -29,18 +28,20 @@ const getMetrics = (results, t, quoteCcy, postProcessing = false) => {
     return: ret = 0,
     returnPerc: retPerc = 0,
     drawdown = 0,
-    fees = 0,
-    maxPL = 0,
-    minPL = 0,
+    largestGain = 0,
+    largestLoss = 0,
+    realizedStrategyPnl = 0,
+    unrealizedStrategyPnl = 0,
   } = results
 
   if (postProcessing) {
     return {
-      [t('strategyEditor.totalPL')]: resultNumber(preparePrice(pl), quoteCcy),
-      [t('strategyEditor.avgPL')]: resultNumber(avgPL, quoteCcy),
-      // PF should be red if less then 1
-      [t('strategyEditor.profitFactor')]: resultNumber(pf, null, pf >= 1),
-      [t('strategyEditor.volatility')]: resultNumber(stdDeviation),
+      [t('strategyEditor.totalPL')]: resultNumber(preparePrice(realizedStrategyPnl), quoteCcy),
+      [t('strategyEditor.unrealizedStrategyPnl')]: resultNumber(preparePrice(unrealizedStrategyPnl), quoteCcy),
+      [t('strategyEditor.avgPL')]: resultNumber(averageTradePnl, quoteCcy),
+      // profitFactor should be red if less than 1
+      [t('strategyEditor.profitFactor')]: resultNumber(profitFactor, null, profitFactor >= 1),
+      [t('strategyEditor.volatility')]: resultNumber(pnlStdDeviation),
       [t('strategyEditor.allocation')]: resultNumber(allocation, quoteCcy),
       [t('strategyEditor.positionSize')]: resultNumber(positionSize),
       [t('strategyEditor.currentAllocation')]: resultNumber(currentAllocation, quoteCcy),
@@ -55,18 +56,18 @@ const getMetrics = (results, t, quoteCcy, postProcessing = false) => {
       [t('strategyEditor.positions')]: nOpens,
       [t('strategyEditor.gains')]: nGains,
       [t('strategyEditor.losses')]: nLosses,
-      [t('strategyEditor.fees')]: resultNumber(fees, quoteCcy, false),
       [t('strategyEditor.volume')]: vol,
-      [t('strategyEditor.largestGain')]: resultNumber(maxPL, quoteCcy),
-      [t('strategyEditor.largestLoss')]: resultNumber(minPL, quoteCcy),
+      [t('strategyEditor.largestGain')]: resultNumber(largestGain, quoteCcy),
+      [t('strategyEditor.largestLoss')]: resultNumber(largestLoss, quoteCcy),
     }
   }
 
   return {
-    [t('strategyEditor.totalPL')]: pl,
-    [t('strategyEditor.avgPL')]: avgPL,
-    [t('strategyEditor.profitFactor')]: pf,
-    [t('strategyEditor.volatility')]: stdDeviation,
+    [t('strategyEditor.totalPL')]: realizedStrategyPnl,
+    [t('strategyEditor.unrealizedStrategyPnl')]: unrealizedStrategyPnl,
+    [t('strategyEditor.avgPL')]: averageTradePnl,
+    [t('strategyEditor.profitFactor')]: profitFactor,
+    [t('strategyEditor.volatility')]: pnlStdDeviation,
     [t('strategyEditor.allocation')]: allocation,
     [t('strategyEditor.positionSize')]: positionSize,
     [t('strategyEditor.currentAllocation')]: currentAllocation,
@@ -81,10 +82,9 @@ const getMetrics = (results, t, quoteCcy, postProcessing = false) => {
     [t('strategyEditor.positions')]: nOpens,
     [t('strategyEditor.gains')]: nGains,
     [t('strategyEditor.losses')]: nLosses,
-    [t('strategyEditor.fees')]: fees,
     [t('strategyEditor.volume')]: vol,
-    [t('strategyEditor.largestGain')]: maxPL,
-    [t('strategyEditor.largestLoss')]: minPL,
+    [t('strategyEditor.largestGain')]: largestGain,
+    [t('strategyEditor.largestLoss')]: largestLoss,
   }
 }
 

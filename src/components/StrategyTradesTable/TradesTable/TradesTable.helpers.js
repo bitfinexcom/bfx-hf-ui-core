@@ -34,5 +34,5 @@ export const getPositionsHeaders = (t) => ({
   entryPrice: t('table.entryPrice'),
   closingPrice: t('table.closingPrice'),
   amount: t('table.amount'),
-  pl: t('table.pl'),
+  realizedPnl: t('table.pl'),
 })
