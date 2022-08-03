@@ -35,7 +35,6 @@ const getExportFilename = (prefix, extension = 'zip') => {
 const onTradeExportClick = (rawPositions, activeMarket, t, getCurrencySymbol) => {
   const tHeaders = getTradesHeaders(t)
   const pHeaders = getPositionsHeaders(t)
-  console.log(rawPositions)
 
   const positions = _map(rawPositions, (position) => ({
     [pHeaders.id]: getPositionId(position),
@@ -44,7 +43,7 @@ const onTradeExportClick = (rawPositions, activeMarket, t, getCurrencySymbol) =>
     [pHeaders.entryPrice]: getPositionEntryPrice(position),
     [pHeaders.closingPrice]: getPositionClosingPrice(position),
     [pHeaders.amount]: getPositionAmount(position),
-    [pHeaders.pl]: getPositionPl(position),
+    [pHeaders.realizedPnl]: getPositionPl(position),
   }))
 
   const rawTrades = _reduce(rawPositions, (acc, position) => {
