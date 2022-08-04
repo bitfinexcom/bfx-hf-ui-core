@@ -179,11 +179,6 @@ export const setIsOrderExecuting = (executing) => ({
   payload: { executing },
 })
 
-export const changeReffilBalanceModalState = (isVisible) => ({
-  type: types.CHANGE_REFILL_BALANCE_MODAL_STATE,
-  payload: { isVisible },
-})
-
 export const setLayoutID = (layoutID) => ({
   type: types.SET_LAYOUT_ID,
   payload: { layoutID },
@@ -279,7 +274,6 @@ export default {
   setStrategyExecutionId,
   setTradingMode,
   setMarketFromStore,
-  changeReffilBalanceModalState,
   changeBadInternetConnectionState,
   setIsOrderExecuting,
   clearStrategies,
