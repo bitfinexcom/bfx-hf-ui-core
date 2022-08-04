@@ -613,7 +613,7 @@ function reducer(state = getInitialState(), action = {}) {
         ...state,
         modals: {
           ...state.modals,
-          [key]: isOpen,
+          [`is${key}Open`]: isOpen,
         },
       }
     }
