@@ -112,10 +112,11 @@ const EditOrderModal = ({
 
   const onClose = () => {
     changeVisibilityState(false)
-    setTimeout(() => { // clearing order data after modal close amination ends
-      setLayout({})
-      setArgs({})
-    }, 600)
+    // TODO: enable this block
+    // setTimeout(() => { // clearing order data after modal close amination ends
+    //   setLayout({})
+    //   setArgs({})
+    // }, 600)
   }
 
   const onSubmitAO = () => {

@@ -139,7 +139,6 @@ export const setMarketFromStore = (isPaperTrading) => ({
 })
 
 export const changeEditOrderModalData = (order = {}) => {
-  console.log('changeEditOrderModalData order: ', order)
   return ({
     type: types.CHANGE_EDIT_ORDER_MODAL_DATA,
     payload: { order },

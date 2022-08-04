@@ -445,7 +445,6 @@ function reducer(state = getInitialState(), action = {}) {
     }
     case types.CHANGE_EDIT_ORDER_MODAL_DATA: {
       const { order } = payload
-      console.log('order: ', order)
 
       return {
         ...state,

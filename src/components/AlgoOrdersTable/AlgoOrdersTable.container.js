@@ -31,7 +31,6 @@ const mapDispatchToProps = dispatch => ({
     dispatch(GAActions.cancelAO())
   },
   editOrder: (order) => {
-    console.log('order: ', order)
     dispatch(UIActions.changeEditOrderModalData(order))
     dispatch(UIActions.changeUIModalState(UI_MODAL_KEYS.EDIT_ORDER_MODAL, true))
   },
