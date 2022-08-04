@@ -7,7 +7,7 @@ import { getUIModalStateForKey } from '../../redux/selectors/ui'
 import OldFormatModal from './OldFormatModal'
 
 const mapStateToProps = (state = {}) => ({
-  visible: getUIModalStateForKey(state)(UI_MODAL_KEYS.OLD_FORMAT_MODAL),
+  visible: getUIModalStateForKey(state, UI_MODAL_KEYS.OLD_FORMAT_MODAL),
 })
 
 const mapDispatchToProps = {

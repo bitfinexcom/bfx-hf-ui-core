@@ -4,7 +4,6 @@ import getLayouts from './get_layouts'
 import getLayoutID from './get_layout_id'
 import getRemoteVersion from './get_remote_version'
 import getIsBadInternetConnection from './get_is_bad_internet_connection'
-import getIsAOPausedModalVisible from './get_is_ao_paused'
 import getIsRefillBalanceModalVisible from './get_is_refill_balance_modal_visible'
 import getIsPaperTrading from './get_is_paper_trading'
 import getIsOrderExecuting from './get_is_order_executing'
@@ -52,7 +51,6 @@ export {
   getIsOrderExecuting,
   getCurrentUnsavedLayout,
   getTickersVolumeUnit,
-  getIsAOPausedModalVisible,
   getIsCcyInfoModalVisible,
   getIsEditOrderModalShown,
   getOrderToEdit,

@@ -70,8 +70,7 @@ function getInitialState() {
     firstLogin: false,
     isPaperTrading: false,
     TRADING_PAGE_IS_GUIDE_ACTIVE: true,
-    modals: {
-      isRefillBalanceModalVisible: false,
+    modals: { // TODO:
       isOldFormatModalVisible: false,
       isAOPauseModalVisible: false,
       isCcyInfoModalVisible: false,
@@ -464,17 +463,6 @@ function reducer(state = getInitialState(), action = {}) {
         modals: {
           ...state.modals,
           isEditOrderModalVisible: isVisible,
-        },
-      }
-    }
-    case types.CHANGE_AO_PAUSE_MODAL_STATE: {
-      const { isVisible } = payload
-
-      return {
-        ...state,
-        modals: {
-          ...state.modals,
-          isAOPauseModalVisible: isVisible,
         },
       }
     }

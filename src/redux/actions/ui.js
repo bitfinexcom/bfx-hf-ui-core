@@ -138,11 +138,6 @@ export const setMarketFromStore = (isPaperTrading) => ({
   payload: { isPaperTrading },
 })
 
-export const changeAOPauseModalState = (isVisible) => ({
-  type: types.CHANGE_AO_PAUSE_MODAL_STATE,
-  payload: { isVisible },
-})
-
 export const changeEditOrderModalState = (isVisible, order = {}) => ({
   type: types.CHANGE_EDIT_ORDER_MODAL_STATE,
   payload: { isVisible, order },
@@ -275,7 +270,6 @@ export default {
   switchNotifcationPanel,
   setLayoutID,
   changeTickersVolumeUnit,
-  changeAOPauseModalState,
   changeCcyInfoModalState,
   changeConfirmDMSModalState,
   changeEditOrderModalState,
@@ -289,4 +283,5 @@ export default {
   removePendingLiveStrategy,
   updateServiceStatus,
   changeMode,
+  changeUIModalState,
 }

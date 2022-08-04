@@ -17,6 +17,7 @@ import { MAIN_MODE, PAPER_MODE } from '../../reducers/ui'
 import tokenStore from '../../../util/token_store'
 import { AOAdapter } from '../../adapters/ws'
 import { isElectronApp, HONEY_AUTH_URL } from '../../config'
+import { UI_MODAL_KEYS } from '../../constants/modals'
 
 const debug = Debug('hfui:rx:m:ws-hfui-server:msg')
 
@@ -204,7 +205,10 @@ export default (alias, store) => (e = {}) => {
         const [, visible] = payload
 
         if (visible) {
-          store.dispatch(UIActions.changeAOPauseModalState(visible))
+          store.dispatch(UIActions.changeUIModalState(
+            UI_MODAL_KEYS.AO_PAUSE_MODAL,
+            visible,
+          ))
         } else {
           closeElectronApp()
         }
