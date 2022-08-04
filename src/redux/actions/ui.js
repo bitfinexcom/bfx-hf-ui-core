@@ -138,11 +138,6 @@ export const setMarketFromStore = (isPaperTrading) => ({
   payload: { isPaperTrading },
 })
 
-export const changeOldFormatModalState = (isVisible) => ({
-  type: types.CHANGE_OLD_FORMAT_MODAL_STATE,
-  payload: { isVisible },
-})
-
 export const changeAOPauseModalState = (isVisible) => ({
   type: types.CHANGE_AO_PAUSE_MODAL_STATE,
   payload: { isVisible },
@@ -280,7 +275,6 @@ export default {
   switchNotifcationPanel,
   setLayoutID,
   changeTickersVolumeUnit,
-  changeOldFormatModalState,
   changeAOPauseModalState,
   changeCcyInfoModalState,
   changeConfirmDMSModalState,

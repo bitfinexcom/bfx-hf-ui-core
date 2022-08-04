@@ -444,17 +444,6 @@ function reducer(state = getInitialState(), action = {}) {
         isLoadingOrderHistData: payload,
       }
     }
-    case types.CHANGE_OLD_FORMAT_MODAL_STATE: {
-      const { isVisible } = payload
-
-      return {
-        ...state,
-        modals: {
-          ...state.modals,
-          isOldFormatModalVisible: isVisible,
-        },
-      }
-    }
     case types.CHANGE_CONFIRM_DMS_MODAL_VISIBLE: {
       const { isVisible } = payload
 

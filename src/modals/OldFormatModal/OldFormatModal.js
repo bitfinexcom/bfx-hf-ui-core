@@ -3,10 +3,11 @@ import PropTypes from 'prop-types'
 
 import { useTranslation } from 'react-i18next'
 import Modal from '../../ui/Modal'
+import { UI_MODAL_KEYS } from '../../redux/constants/modals'
 
-const OldFormatModal = ({ changeOldFormatModalState, visible }) => {
+const OldFormatModal = ({ changeUIModalState, visible }) => {
   const onSubmit = () => {
-    changeOldFormatModalState(false)
+    changeUIModalState(UI_MODAL_KEYS.OLD_FORMAT_MODAL, false)
   }
 
   const { t } = useTranslation()
@@ -35,7 +36,7 @@ const OldFormatModal = ({ changeOldFormatModalState, visible }) => {
 }
 
 OldFormatModal.propTypes = {
-  changeOldFormatModalState: PropTypes.func.isRequired,
+  changeUIModalState: PropTypes.func.isRequired,
   visible: PropTypes.bool.isRequired,
 }
 

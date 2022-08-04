@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 
-import { changeOldFormatModalState } from '../../redux/actions/ui'
+import { changeUIModalState } from '../../redux/actions/ui'
 import { getOldFormatModalState } from '../../redux/selectors/ui'
 
 import OldFormatModal from './OldFormatModal'
@@ -10,7 +10,7 @@ const mapStateToProps = (state = {}) => ({
 })
 
 const mapDispatchToProps = {
-  changeOldFormatModalState,
+  changeUIModalState,
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(OldFormatModal)
