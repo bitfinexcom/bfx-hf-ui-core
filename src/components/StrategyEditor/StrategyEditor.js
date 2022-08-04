@@ -40,7 +40,7 @@ import {
 import LaunchStrategyModal from '../../modals/Strategy/LaunchStrategyModal'
 import { getAPIKeyStates } from '../../redux/selectors/ws'
 import {
-  changeAppSettingsModalState,
+  changeUIModalState,
   recvNotification,
   setSettingsTab,
 } from '../../redux/actions/ui'
@@ -52,6 +52,7 @@ import { INDICATORS_ARRAY_SHAPE, STRATEGY_SHAPE } from '../../constants/prop-typ
 import EditStrategyLabelModal from '../../modals/Strategy/EditStrategyLabelModal'
 
 import './style.css'
+import { UI_MODAL_KEYS } from '../../redux/constants/modals'
 
 const debug = Debug('hfui-ui:c:strategy-editor')
 
@@ -401,7 +402,7 @@ const StrategyEditor = (props) => {
   const apiKeyStates = useSelector(getAPIKeyStates)
   const dispatch = useDispatch()
   const openAppSettingsModal = useCallback(
-    () => dispatch(changeAppSettingsModalState(true)),
+    () => dispatch(changeUIModalState(UI_MODAL_KEYS.APP_SETTINGS_MODAL, true)),
     [dispatch],
   )
   const setAPIKeysTab = useCallback(

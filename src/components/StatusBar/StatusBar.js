@@ -9,12 +9,13 @@ import {
   appVersion,
   RELEASE_URL,
 } from '../../redux/config'
-import { changeAppSettingsModalState, setSettingsTab } from '../../redux/actions/ui'
+import { changeUIModalState, setSettingsTab } from '../../redux/actions/ui'
 
 import NavbarButton from '../Navbar/Navbar.Link'
 import { SETTINGS_TABS } from '../../modals/AppSettingsModal/AppSettingsModal.constants'
 
 import './style.css'
+import { UI_MODAL_KEYS } from '../../redux/constants/modals'
 
 const StatusBar = ({
   wsConnected,
@@ -38,7 +39,7 @@ const StatusBar = ({
 
   const onVersionTypeClickHandler = () => {
     dispatch(setSettingsTab(SETTINGS_TABS.Beta))
-    dispatch(changeAppSettingsModalState(true))
+    dispatch(changeUIModalState(UI_MODAL_KEYS.APP_SETTINGS_MODAL, true))
   }
 
   useEffect(() => {

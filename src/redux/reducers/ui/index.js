@@ -466,17 +466,6 @@ function reducer(state = getInitialState(), action = {}) {
         },
       }
     }
-    case types.CHANGE_APP_SETTINGS_MODAL_STATE: {
-      const { isVisible } = payload
-
-      return {
-        ...state,
-        modals: {
-          ...state.modals,
-          isAppSettingsModalVisible: isVisible,
-        },
-      }
-    }
     case types.ADD_COMPONENT: {
       const { component } = payload
       const layoutDef = getActiveLayoutDef(state)
@@ -596,6 +585,7 @@ function reducer(state = getInitialState(), action = {}) {
     }
     case types.CHANGE_UI_MODAL_STATE: {
       const { key, isOpen } = payload
+      console.log('payload: ', payload)
 
       return {
         ...state,

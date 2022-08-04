@@ -199,11 +199,6 @@ export const changeCcyInfoModalState = (isVisible) => ({
   payload: { isVisible },
 })
 
-export const changeAppSettingsModalState = (isVisible) => ({
-  type: types.CHANGE_APP_SETTINGS_MODAL_STATE,
-  payload: { isVisible },
-})
-
 export const setSettingsTab = (tab, section) => ({
   type: types.SET_SETTINGS_TAB,
   payload: { tab, section },
@@ -274,7 +269,6 @@ export default {
   changeConfirmDMSModalState,
   changeEditOrderModalState,
   changeClosePositionModalState,
-  changeAppSettingsModalState,
   setSettingsTab,
   setIsLoadingOrderHistData,
   setCurrentStrategy,

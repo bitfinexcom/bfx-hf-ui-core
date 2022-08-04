@@ -9,7 +9,7 @@ const getUIModalsState = (state) => _get(state, `${path}.modals`)
 const getUIModalStateForKey = createSelector(
   getUIModalsState,
   (_, modalKey) => modalKey,
-  (modals, modalKey) => _get(modals, `is${modalKey}Visible`),
+  (modals, modalKey) => _get(modals, `is${modalKey}Open`),
 )
 
 export default getUIModalStateForKey
