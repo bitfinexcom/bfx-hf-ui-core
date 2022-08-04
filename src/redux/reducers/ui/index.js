@@ -75,9 +75,9 @@ function getInitialState() {
       isAOPauseModalVisible: false,
       isCcyInfoModalVisible: false,
       isConfirmDMSModalVisible: false,
+      isAppSettingsModalVisible: false,
       isEditOrderModalVisible: false,
       isClosePositionModalVisible: false,
-      isAppSettingsModalVisible: false,
     },
     orderToEdit: {},
     isBadInternetConnection: false,
@@ -443,16 +443,13 @@ function reducer(state = getInitialState(), action = {}) {
         isLoadingOrderHistData: payload,
       }
     }
-    case types.CHANGE_EDIT_ORDER_MODAL_STATE: {
-      const { isVisible, order } = payload
+    case types.CHANGE_EDIT_ORDER_MODAL_DATA: {
+      const { order } = payload
+      console.log('order: ', order)
 
       return {
         ...state,
         orderToEdit: order,
-        modals: {
-          ...state.modals,
-          isEditOrderModalVisible: isVisible,
-        },
       }
     }
     case types.ADD_COMPONENT: {

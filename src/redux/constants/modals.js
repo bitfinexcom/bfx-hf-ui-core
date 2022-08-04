@@ -4,4 +4,5 @@ export const UI_MODAL_KEYS = {
   APP_SETTINGS_MODAL: 'AppSettingsModal',
   CCY_INFO_MODAL: 'CcyInfoModal',
   CONFIRM_DMS_MODAL: 'ConfirmDMSModal',
+  EDIT_ORDER_MODAL: 'EditOrderModal',
 }

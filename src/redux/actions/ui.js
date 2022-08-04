@@ -138,10 +138,13 @@ export const setMarketFromStore = (isPaperTrading) => ({
   payload: { isPaperTrading },
 })
 
-export const changeEditOrderModalState = (isVisible, order = {}) => ({
-  type: types.CHANGE_EDIT_ORDER_MODAL_STATE,
-  payload: { isVisible, order },
-})
+export const changeEditOrderModalData = (order = {}) => {
+  console.log('changeEditOrderModalData order: ', order)
+  return ({
+    type: types.CHANGE_EDIT_ORDER_MODAL_DATA,
+    payload: { order },
+  })
+}
 
 export const changeBadInternetConnectionState = (isVisible) => ({
   type: types.CHANGE_BAD_INTERNET_STATE,
@@ -255,7 +258,7 @@ export default {
   switchNotifcationPanel,
   setLayoutID,
   changeTickersVolumeUnit,
-  changeEditOrderModalState,
+  changeEditOrderModalData,
   changeClosePositionModalState,
   setSettingsTab,
   setIsLoadingOrderHistData,
