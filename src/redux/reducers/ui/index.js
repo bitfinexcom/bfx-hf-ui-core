@@ -418,16 +418,12 @@ function reducer(state = getInitialState(), action = {}) {
         isBadInternetConnection: isVisible,
       }
     }
-    case types.CHANGE_CLOSE_POSITION_MODAL_STATE: {
-      const { isVisible, rowData } = payload
+    case types.CHANGE_CLOSE_POSITION_MODAL_DATA: {
+      const { rowData } = payload
 
       return {
         ...state,
         closePositionModalData: rowData,
-        modals: {
-          ...state.modals,
-          isClosePositionModalVisible: isVisible,
-        },
       }
     }
     case types.SET_IS_ORDER_EXECUTING: {

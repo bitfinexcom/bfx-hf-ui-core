@@ -5,4 +5,5 @@ export const UI_MODAL_KEYS = {
   CCY_INFO_MODAL: 'CcyInfoModal',
   CONFIRM_DMS_MODAL: 'ConfirmDMSModal',
   EDIT_ORDER_MODAL: 'EditOrderModal',
+  CLOSE_POSITION_MODAL: 'ClosePositionModal',
 }

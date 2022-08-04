@@ -150,9 +150,9 @@ export const changeBadInternetConnectionState = (isVisible) => ({
   payload: { isVisible },
 })
 
-export const changeClosePositionModalState = (isVisible, rowData = {}) => ({
-  type: types.CHANGE_CLOSE_POSITION_MODAL_STATE,
-  payload: { isVisible, rowData },
+export const changeClosePositionModalData = (rowData = {}) => ({
+  type: types.CHANGE_CLOSE_POSITION_MODAL_DATA,
+  payload: { rowData },
 })
 
 /**
@@ -258,7 +258,7 @@ export default {
   setLayoutID,
   changeTickersVolumeUnit,
   changeEditOrderModalData,
-  changeClosePositionModalState,
+  changeClosePositionModalData,
   setSettingsTab,
   setIsLoadingOrderHistData,
   setCurrentStrategy,
