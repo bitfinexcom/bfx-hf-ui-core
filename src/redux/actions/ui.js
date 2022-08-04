@@ -254,6 +254,11 @@ export const changeMode = (isPaperTrading) => ({
   },
 })
 
+export const changeUIModalState = (key, isOpen) => ({
+  type: types.CHANGE_UI_MODAL_STATE,
+  payload: { key, isOpen },
+})
+
 export default {
   saveLayout,
   storeUnsavedLayout,

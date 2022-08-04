@@ -628,6 +628,17 @@ function reducer(state = getInitialState(), action = {}) {
         },
       }
     }
+    case types.CHANGE_UI_MODAL_STATE: {
+      const { key, isOpen } = payload
+
+      return {
+        ...state,
+        modals: {
+          ...state.modals,
+          [key]: isOpen,
+        },
+      }
+    }
     case types.SET_SETTINGS_TAB: {
       const { tab, section } = payload
 
