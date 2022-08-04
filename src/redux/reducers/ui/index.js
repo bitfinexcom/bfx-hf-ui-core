@@ -443,17 +443,6 @@ function reducer(state = getInitialState(), action = {}) {
         isLoadingOrderHistData: payload,
       }
     }
-    case types.CHANGE_CONFIRM_DMS_MODAL_VISIBLE: {
-      const { isVisible } = payload
-
-      return {
-        ...state,
-        modals: {
-          ...state.modals,
-          isConfirmDMSModalVisible: isVisible,
-        },
-      }
-    }
     case types.CHANGE_EDIT_ORDER_MODAL_STATE: {
       const { isVisible, order } = payload
 
