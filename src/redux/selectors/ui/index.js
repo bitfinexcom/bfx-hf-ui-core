@@ -5,7 +5,6 @@ import getLayoutID from './get_layout_id'
 import getRemoteVersion from './get_remote_version'
 import getIsBadInternetConnection from './get_is_bad_internet_connection'
 import getIsAOPausedModalVisible from './get_is_ao_paused'
-import getOldFormatModalState from './get_old_modal_format_state'
 import getIsRefillBalanceModalVisible from './get_is_refill_balance_modal_visible'
 import getIsPaperTrading from './get_is_paper_trading'
 import getIsOrderExecuting from './get_is_order_executing'
@@ -30,6 +29,7 @@ import getStrategyExecutionId from './get_strategy_execution_id'
 import getCurrentStrategy from './get_current_strategy'
 import getPendingLiveStrategy from './get_pending_live_strategy'
 import getServicesStatus from './get_services_status'
+import getUIModalStateForKey from './get_ui_modal_state'
 
 export * from './get_settings'
 export * from './get_core_settings'
@@ -52,7 +52,6 @@ export {
   getIsOrderExecuting,
   getCurrentUnsavedLayout,
   getTickersVolumeUnit,
-  getOldFormatModalState,
   getIsAOPausedModalVisible,
   getIsCcyInfoModalVisible,
   getIsEditOrderModalShown,
@@ -69,4 +68,5 @@ export {
   getCurrentStrategy,
   getPendingLiveStrategy,
   getServicesStatus,
+  getUIModalStateForKey,
 }
