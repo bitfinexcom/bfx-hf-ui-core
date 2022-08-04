@@ -24,7 +24,6 @@ import './style.css'
 
 const AppSettingsModal = () => {
   const isOpen = useSelector(state => getUIModalStateForKey(state, UI_MODAL_KEYS.APP_SETTINGS_MODAL))
-  console.log('isOpen: ', isOpen)
   const activeTab = useSelector(getSettingsActiveTab)
 
   const dispatch = useDispatch()
