@@ -194,11 +194,6 @@ export const changeTickersVolumeUnit = (key) => ({
   payload: { key },
 })
 
-export const changeCcyInfoModalState = (isVisible) => ({
-  type: types.CHANGE_CCY_INFO_MODAL_STATE,
-  payload: { isVisible },
-})
-
 export const setSettingsTab = (tab, section) => ({
   type: types.SET_SETTINGS_TAB,
   payload: { tab, section },
@@ -265,7 +260,6 @@ export default {
   switchNotifcationPanel,
   setLayoutID,
   changeTickersVolumeUnit,
-  changeCcyInfoModalState,
   changeConfirmDMSModalState,
   changeEditOrderModalState,
   changeClosePositionModalState,

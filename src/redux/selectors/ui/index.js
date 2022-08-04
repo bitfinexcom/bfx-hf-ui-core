@@ -14,7 +14,6 @@ import getStrategyId from './get_strategy_id'
 import getMarketComponents from './get_market_components'
 import getCurrentUnsavedLayout from './get_current_unsaved_layout'
 import getTickersVolumeUnit from './get_tickers_volume_unit'
-import getIsCcyInfoModalVisible from './get_is_ccy_info_modal_visible'
 import getIsConfirmDMSModalVisible from './get_confirm_dms_modal_visible'
 import getIsEditOrderModalShown from './get_is_edit_order_modal_shown'
 import getIsClosePositionModalVisible from './get_close_position_modal_visible'
@@ -50,7 +49,6 @@ export {
   getIsOrderExecuting,
   getCurrentUnsavedLayout,
   getTickersVolumeUnit,
-  getIsCcyInfoModalVisible,
   getIsEditOrderModalShown,
   getOrderToEdit,
   getIsConfirmDMSModalVisible,

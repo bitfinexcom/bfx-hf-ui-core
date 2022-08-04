@@ -572,17 +572,6 @@ function reducer(state = getInitialState(), action = {}) {
 
       return { ...state, tickersVolumeUnit: unit || 'SELF' }
     }
-    case types.CHANGE_CCY_INFO_MODAL_STATE: {
-      const { isVisible } = payload
-
-      return {
-        ...state,
-        modals: {
-          ...state.modals,
-          isCcyInfoModalVisible: isVisible,
-        },
-      }
-    }
     case types.CHANGE_UI_MODAL_STATE: {
       const { key, isOpen } = payload
 

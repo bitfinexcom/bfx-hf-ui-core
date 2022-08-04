@@ -7,6 +7,7 @@ import i18next from '../../../locales/i18n'
 import UIActions from '../../actions/ui'
 import { getActiveMarketCcyId } from '../../selectors/zendesk'
 import zendeskActions from '../../actions/zendesk'
+import { UI_MODAL_KEYS } from '../../constants/modals'
 
 const debug = Debug('hfui:rx:s:market-hfui:getting ccy article')
 
@@ -24,7 +25,7 @@ export default function* fetchCcyArticle() {
     yield put(zendeskActions.setCcyArticle(result[0]))
   } catch (err) {
     debug('failed to fetch ccy article: %s', err.message)
-    yield put(UIActions.changeCcyInfoModalState(false))
+    yield put(UIActions.changeUIModalState(UI_MODAL_KEYS.CCY_INFO_MODAL, false))
     yield put(UIActions.recvNotification({
       mts: Date.now(),
       status: 'error',
