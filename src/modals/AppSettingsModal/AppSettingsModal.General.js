@@ -15,7 +15,6 @@ import {
   SETTINGS_KEYS,
   getDMSSetting,
   getShowAlgoPauseInfoSetting,
-  getRebootSetting,
 } from '../../redux/selectors/ui'
 import { DONT_SHOW_DMS_MODAL_KEY } from '../../constants/variables'
 

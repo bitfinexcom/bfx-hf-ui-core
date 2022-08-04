@@ -1,4 +1,4 @@
-import React, { memo, useState, useEffect } from 'react'
+import React, { memo } from 'react'
 import ClassNames from 'clsx'
 import PropTypes from 'prop-types'
 import { useTranslation } from 'react-i18next'
@@ -27,7 +27,6 @@ const StatusBar = ({
   isPaperTrading,
   isBetaVersion,
 }) => {
-  const [wsConnInterrupted, setWsConnInterrupted] = useState(false)
   const isWrongAPIKey = !currentModeApiKeyState.valid
   const apiClientDisconnected = isWrongAPIKey || _apiClientDisconnected
   const apiClientConnecting = !isWrongAPIKey && _apiClientConnecting
@@ -40,12 +39,6 @@ const StatusBar = ({
     dispatch(setSettingsTab(SETTINGS_TABS.About))
     dispatch(changeAppSettingsModalState(true))
   }
-
-  useEffect(() => {
-    if (wsInterrupted && !wsConnInterrupted) {
-      setWsConnInterrupted(true)
-    }
-  }, [wsConnInterrupted, wsInterrupted])
 
   return (
     <div className='hfui-statusbar__wrapper'>
@@ -98,13 +91,13 @@ const StatusBar = ({
 
         <span
           className={ClassNames('hfui-statusbar__statuscircle', {
-            green: wsConnected && !wsConnInterrupted,
-            red: !wsConnected || wsConnInterrupted,
+            green: wsConnected && !wsInterrupted,
+            red: !wsConnected || wsInterrupted,
           })}
         />
         <p>
           {`WS ${
-            wsConnected && !wsConnInterrupted
+            wsConnected && !wsInterrupted
               ? t('statusbar.connected')
               : t('statusbar.disconnected')
           }`}
