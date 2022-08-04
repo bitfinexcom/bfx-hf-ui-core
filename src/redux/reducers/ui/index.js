@@ -35,6 +35,7 @@ import { isElectronApp } from '../../config'
 
 import { storeLastUsedLayoutID } from '../../../util/layout'
 import { DEFAULT_TAB } from '../../../modals/AppSettingsModal/AppSettingsModal.constants'
+import { UI_MODAL_KEYS } from '../../constants/modals'
 
 const debug = Debug('hfui:rx:r:ui')
 const LAYOUTS_KEY = 'HF_UI_LAYOUTS'
@@ -70,15 +71,7 @@ function getInitialState() {
     firstLogin: false,
     isPaperTrading: false,
     TRADING_PAGE_IS_GUIDE_ACTIVE: true,
-    modals: { // TODO:
-      isOldFormatModalVisible: false,
-      isAOPauseModalVisible: false,
-      isCcyInfoModalVisible: false,
-      isConfirmDMSModalVisible: false,
-      isAppSettingsModalVisible: false,
-      isEditOrderModalVisible: false,
-      isClosePositionModalVisible: false,
-    },
+    modals: { },
     orderToEdit: {},
     isBadInternetConnection: false,
     closePositionModalData: {},
@@ -89,6 +82,10 @@ function getInitialState() {
     settingsActiveTab: DEFAULT_TAB,
     tickersVolumeUnit: null,
   }
+
+  _map(_values(UI_MODAL_KEYS), (modalKey) => {
+    defaultState.modals[`is${modalKey}Open`] = false
+  })
 
   if (!localStorage) {
     return defaultState
