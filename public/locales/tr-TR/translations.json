@@ -9,6 +9,10 @@
     "startingUp": "Uygulama başlatılıyor...",
     "craftedBy": "Bitfinex tarafından hazırlandı"
   },
+  "appUpdate": {
+    "available": "A new update is available. Downloading now...",
+    "downloaded": "Update downloaded. It will be installed on a restart. Restart now?"
+  },
   "auth": {
     "enterPsw": "Kilidi açmak için şifrenizi girin",
     "password": "Parola",
@@ -18,7 +22,16 @@
     "resetBtn": "Verileri Temizle ve Sıfırla",
     "unlockBtn": "Kilidi aç",
     "initMsg": "API kimlik bilgilerinizi ve stratejilerinizi şifrelemek için bir parola oluşturun. Tüm veriler yerel olarak depolanır ve şifreniz hashlenir",
-    "saveCredentsBtn": "Kimlik Bilgilerini Kaydet"
+    "saveCredentsBtn": "Kimlik Bilgilerini Kaydet",
+    "passwordValidation": {
+      "atLeastXChars": "Password must be at least {{amount}} characters long.",
+      "lessThanX": "Password must be less than {{amount}} characters long.",
+      "uppercase": "Password must have at least one Uppercase letter.",
+      "lowercase": "Password must have at least one Lowercase letter.",
+      "numbers": "Password must have at least one number.",
+      "specialChars": "Password must have at least one valid special character."
+    },
+    "strongPassword": "For your security, we require you to use a strong password."
   },
   "activeAlgoOrdersModal": {
     "title": "Aktif Emirler",
@@ -324,6 +337,7 @@
     "deadManText1": "Enabling the Dead Man switch will automatically cancel all active orders when the application closes.",
     "deadManText2": "Algorithmic orders are cancelled on application close; without the Dead Man switch, any atomic orders created by an AO will remain open, and state may be lost when the application is started up again.",
     "deadManWarning": "Disabling this should be done with caution!",
+    "usageReportingCheckbox": "Usage reporting",
     "showPauseInfoCheckbox": "Show Algo Orders pause info",
     "showPauseInfoText": "If checked, the modal with explanations will be displayed when you close the app with active Algo Orders.",
     "rebootCheckbox": "Reboot automatically on bad connection",
@@ -437,6 +451,10 @@
     "decryptedCredentialsFor": "Decrypted credentials for {{target}} ({{mode}})",
     "reboot_notify": "Birkaç internet bağlantısı sorunu fark ettik. Uygulama yeniden başlatılıyor...",
     "strategyLaunchMissingAPIKey": "Please configure API keys first and relaunch strategy"
+  },
+  "tradingModeModal": {
+    "title": "Switch Trade Mode",
+    "text": "The app will reboot after you press Okay. It's required for switching trading mode. Open algo orders are paused."
   },
   "confirmDMSModal": {
     "title": "Enable Dead Man Switch",
@@ -608,9 +626,12 @@
     "disconnected": "Bağlantı kesildi"
   },
   "strategyEditor": {
+    "clearBacktestResultsModalTitle": "Confirmation Required",
+    "clearBacktestResultsModalText": "If you choose to continue, the current backtest results will be cleared. Do you wish to proceed?",
     "unsavedChanges": "You have unsaved changes",
     "unsavedChangesModalTitle": "Do you need to save changes in the strategy before closing?",
     "cancelThisProcess": "Cancel this process",
+    "unsavedChangesLaunchModalTitle": "Do you need to save changes in the strategy before launching it?",
     "cancelAppProcessTitle": "Cancel application process",
     "cancelAppProcessSubmit": "Cancel process",
     "cancelAppProcessDescription": "If you feel this process is taking too long you can cancel it by clicking in the next button.\n\nTake into consideration that this might have unintended consequences in case you are operating in the LIVE environment.",
@@ -684,7 +705,7 @@
     "retPerc": "Returns %",
     "drawdown": "Drawdown %",
     "trades": "Alım-Satımlar",
-    "positions": "Pozisyonlar",
+    "positions": "Open Positions",
     "gains": "Kazançlar",
     "losses": "Kayıplar",
     "fees": "Ücretler",
@@ -703,8 +724,9 @@
     "candleSeedCount": "Candle seed count",
     "noStrategiesToDisplay": "There are no strategies to display",
     "saveWithDifferentName": "Save with different name",
+    "currentStrategyTab": "Current Strategy",
     "templatesTab": "Templates",
-    "savedStrategiesTab": "From saved",
+    "savedStrategiesTab": "Drafts",
     "selectMarketDescription": "Select market",
     "selectMarketDescriptionDisabled": "Selected Market",
     "selectMarketPlaceholder": "Select a market",
@@ -734,18 +756,25 @@
       "title": "Perfomance metrics",
       "runTime": "Strategy Run Time"
     },
-    "IDEreadonlyNotice": "Strategy editing is disabled while the strategy is being executed. To update your strategy, change to SANDBOX environment and reopen this strategy from your ACTIVE STRATEGIES tab",
-    "strategyOptionsBtn": "Settings"
+    "IDEreadonlyNotice": "For you safety, strategy editing is disabled in the LIVE environment. To update your strategy, change to SANDBOX environment and reopen this strategy from your EXECUTED STRATEGIES tab",
+    "strategyOptionsBtn": "Settings",
+    "saveAndLaunchBtn": "Save and Launch",
+    "copyOfStrategy": "Copy of {{strategyName}}",
+    "calculating": "Calculating...",
+    "backtestSuccessful": "Backtest successful!",
+    "newTest": "New Test"
   },
   "ui": {
     "ok": "Tamam",
     "cancel": "İptal Et",
+    "reset": "Reset",
     "dontShowAgain": "Anladım. Tekrar gösterme!",
     "dropdown": "Select an option",
     "backBtn": "Geri",
     "export": "Dışa aktar",
     "import": "İçe aktar",
     "closeBtn": "Kapat",
+    "restartBtn": "Restart",
     "closeWithoutSaving": "Close without saving",
     "lastBtn": "Bitir",
     "nextBtn": "İleri",
@@ -768,7 +797,10 @@
     "name": "Name",
     "notSelected": "Not selected",
     "e.g.": "e.g. {{value}}",
-    "required": "REQUIRED"
+    "required": "REQUIRED",
+    "proceed": "Proceed",
+    "saveAndLaunch": "Save & Launch",
+    "launchNoSave": "Launch without saving"
   },
   "crashHandler": {
     "text1": "An error occurred that caused the Bitfinex Honey UI to halt. Please, restart the application to proceed working with it",

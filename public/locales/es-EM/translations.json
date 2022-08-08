@@ -9,6 +9,10 @@
     "startingUp": "Iniciando aplicación...",
     "craftedBy": "Elaborado por Bitfinex"
   },
+  "appUpdate": {
+    "available": "Hay una nueva actualización disponible. Descargando ahora...",
+    "downloaded": "Actualización descargada. Se instalará al reinicio. ¿Reiniciar ahora?"
+  },
   "auth": {
     "enterPsw": "Ingresa tu contraseña para desbloquear",
     "password": "Contraseña",
@@ -18,7 +22,16 @@
     "resetBtn": "Borrar Datos & Restablecer",
     "unlockBtn": "Desbloquear",
     "initMsg": "Crea una contraseña para cifrar tus credenciales y estrategias de API. Todos los datos se almacenan localmente y tu contraseña tiene la función criptográfica hash",
-    "saveCredentsBtn": "Guardar Credenciales"
+    "saveCredentsBtn": "Guardar Credenciales",
+    "passwordValidation": {
+      "atLeastXChars": "La contraseña debe tener por lo menos {{amount}} caracteres.",
+      "lessThanX": "La contraseña debe tener menos de {{amount}} caracteres.",
+      "uppercase": "La contraseña debe tener por lo menos una letra Mayúscula.",
+      "lowercase": "La contraseña debe tener por lo menos una letra Minúscula.",
+      "numbers": "La contraseña debe tener por lo menos un número.",
+      "specialChars": "La contraseña debe tener por lo menos un carácter especial válido."
+    },
+    "strongPassword": "Para tu seguridad, necesitamos que uses una contraseña fuerte."
   },
   "activeAlgoOrdersModal": {
     "title": "Órdenes Activas",
@@ -324,6 +337,7 @@
     "deadManText1": "Habilitar el interruptor Dead Man cancelará automáticamente todas las órdenes activas cuando se cierre la aplicación.",
     "deadManText2": "Las órdenes algorítmicas se cancelan al cerrar la aplicación; sin el interruptor Dead Man, cualquier orden atómica creada por una AO permanecerá abierta y el estado puede perderse cuando la aplicación se inicie nuevamente.",
     "deadManWarning": "¡Deshabilitar esto debe hacerse con precaución!",
+    "usageReportingCheckbox": "Informes de uso",
     "showPauseInfoCheckbox": "Mostrar información de pausa de las Órdenes de Algoritmo",
     "showPauseInfoText": "Si está marcada, el modal con explicaciones se mostrará cuando cierres la aplicación con Órdenes de Algoritmo activas.",
     "rebootCheckbox": "Reiniciar automáticamente en caso de mala conexión",
@@ -437,6 +451,10 @@
     "decryptedCredentialsFor": "Credenciales descifradas para {{target}} ({{mode}})",
     "reboot_notify": "Se han observado varios problemas de conexión a Internet. Reiniciando la aplicación...",
     "strategyLaunchMissingAPIKey": "Por favor configura tus llaves API y relanza la estrategia"
+  },
+  "tradingModeModal": {
+    "title": "Cambiar Modo de Trade",
+    "text": "La aplicación se reiniciará después de presionar Aceptar. Es necesario para cambiar el modo de trading. Las órdenes de algoritmo abiertas están en pausa."
   },
   "confirmDMSModal": {
     "title": "Habilitar Interruptor de Dead Man",
@@ -608,9 +626,12 @@
     "disconnected": "Desconectado"
   },
   "strategyEditor": {
+    "clearBacktestResultsModalTitle": "Confirmación Requerida",
+    "clearBacktestResultsModalText": "Si eliges continuar, los resultados del backtesting serán eliminados. ¿Deseas continuar?",
     "unsavedChanges": "Tienes cambios sin guardar",
     "unsavedChangesModalTitle": "¿Necesitas guardar cambios en la estrategia antes de cerrar?",
     "cancelThisProcess": "Cancelar este proceso",
+    "unsavedChangesLaunchModalTitle": "¿Necesitas guardar cambios en la estrategia antes de ejecutarla?",
     "cancelAppProcessTitle": "Cancelar el proceso de aplicación",
     "cancelAppProcessSubmit": "Cancelar proceso",
     "cancelAppProcessDescription": "Si sientes que este proceso se está tardando mucho lo puedes cancelar haciendo click en el siguiente botón. \n\nToma en consideración que esto podría tener consecuencias no deseadas en caso de que estés operando en un ambiente EN VIVO.",
@@ -684,7 +705,7 @@
     "retPerc": "% de Retornos",
     "drawdown": "% de Drawdown",
     "trades": "Trades",
-    "positions": "Posiciones",
+    "positions": "Posiciones Abiertas",
     "gains": "Ganancias",
     "losses": "Pérdidas",
     "fees": "Comisiones",
@@ -703,8 +724,9 @@
     "candleSeedCount": "Conteo semilla de Vela",
     "noStrategiesToDisplay": "No hay estrategias que mostrar",
     "saveWithDifferentName": "Guardar con nombre diferente",
+    "currentStrategyTab": "Estrategia Actual",
     "templatesTab": "Plantillas",
-    "savedStrategiesTab": "De guardados",
+    "savedStrategiesTab": "Borradores",
     "selectMarketDescription": "Seleccionar mercado",
     "selectMarketDescriptionDisabled": "Mercado seleccionado",
     "selectMarketPlaceholder": "Seleciona un mercado",
@@ -734,18 +756,25 @@
       "title": "Métricas de desempeño",
       "runTime": "Tiempo de ejecución de la estrategia"
     },
-    "IDEreadonlyNotice": "La edición de estrategias está deshabilitada cuando la estrategia está siendo ejecutada. Para actualizar tu estrategia, cambia al modo SANDBOX y reabre esta estrategia desde la pestaña de ESTRATEGIAS ACTIVAS",
-    "strategyOptionsBtn": "Configuraciones"
+    "IDEreadonlyNotice": "Para tu seguridad, la edición de estratégias está deshabilitada mientras en modo EN VIVO. Para actualizar tu estrategia, cambia al modo SANDBOX y reabre esta estrategia desde la pestaña de ESTRATEGIAS EJECUTADAS",
+    "strategyOptionsBtn": "Configuraciones",
+    "saveAndLaunchBtn": "Guardar y Ejecutar",
+    "copyOfStrategy": "Copia de {{strategyName}}",
+    "calculating": "Calculando...",
+    "backtestSuccessful": "¡Backtest exitoso!",
+    "newTest": "Nueva Prueba"
   },
   "ui": {
     "ok": "Ok",
     "cancel": "Cancelar",
+    "reset": "Restablecer",
     "dontShowAgain": "Entendí. ¡No me lo vuelvas a mostrar!",
     "dropdown": "Selecciona una opción",
     "backBtn": "Volver",
     "export": "Exportar",
     "import": "Importar",
     "closeBtn": "Cerrar",
+    "restartBtn": "Reiniciar",
     "closeWithoutSaving": "Cerrar sin guardar",
     "lastBtn": "Terminar",
     "nextBtn": "Siguiente",
@@ -768,7 +797,10 @@
     "name": "Nombre",
     "notSelected": "No selecionado",
     "e.g.": "ej. {{value}}",
-    "required": "REQUERIDO"
+    "required": "REQUERIDO",
+    "proceed": "Continuar",
+    "saveAndLaunch": "Guardar & Ejecutar",
+    "launchNoSave": "Ejecutar sin guardar"
   },
   "crashHandler": {
     "text1": "Se produjo un error que hizo que se detuviera la interfaz de usuario de Bitfinex Honey. Por favor, reinicia la aplicación para continuar trabajando con ella",

@@ -9,6 +9,10 @@
     "startingUp": "正在啟動APP中...",
     "craftedBy": "由Bitfinex建構"
   },
+  "appUpdate": {
+    "available": "現有可用的軟體更新。 下載中．．．",
+    "downloaded": "已下載更新軟體。系統將於重啟後更新，請問是否現在重啟？"
+  },
   "auth": {
     "enterPsw": "輸入您的密碼以解鎖",
     "password": "密碼",
@@ -18,7 +22,16 @@
     "resetBtn": "清除數據和重設",
     "unlockBtn": "解鎖",
     "initMsg": "建立密碼以加密您的API憑證和策略。所有數據儲存於本地裝置，您的密碼已經雜湊處理。",
-    "saveCredentsBtn": "儲存憑證"
+    "saveCredentsBtn": "儲存憑證",
+    "passwordValidation": {
+      "atLeastXChars": "密碼長度不得少於 {{amount}} 個字符。",
+      "lessThanX": "密碼長度不得超過 {{amount}} 個字符。",
+      "uppercase": "密碼必須包含至少一個大寫英文字母。",
+      "lowercase": "密碼必須包含至少一個小寫英文字母。",
+      "numbers": "密碼必須包含至少一個數字。",
+      "specialChars": "密碼必須包含至少一個有效的特殊符號。"
+    },
+    "strongPassword": "為了您的帳戶安全，請使用高強度密碼。"
   },
   "activeAlgoOrdersModal": {
     "title": "待成交訂單",
@@ -324,6 +337,7 @@
     "deadManText1": "啟用 Dead Man switch （自動關閉），所有待執行訂單將在應用程序關閉時自動取消。",
     "deadManText2": "演算法訂單將於應用程序關閉時取消；如關閉 Dead Man switch （自動關閉），任何透過演算法訂單建立的自動訂單仍有效，但重新啟動應用程序時將重置其狀態。",
     "deadManWarning": "謹慎決定是否取消此選項！",
+    "usageReportingCheckbox": "使用報告",
     "showPauseInfoCheckbox": "顯示演算法訂單暫停訊息",
     "showPauseInfoText": "勾選後，在演算法訂單待成交的情況下關閉應用程序，將顯示此說明視窗。",
     "rebootCheckbox": "網路連線不穩時自動重啟",
@@ -437,6 +451,10 @@
     "decryptedCredentialsFor": "解除{{target}} ({{mode}}) 加密憑證",
     "reboot_notify": "網路連線發生問題。重新加載應用程序...",
     "strategyLaunchMissingAPIKey": "請先設置API金鑰再重新啟動策略"
+  },
+  "tradingModeModal": {
+    "title": "切換交易模式",
+    "text": "切換交易模式須重啟應用程序。按下「Okay」後將重新啟動，並暫停待執行演算法訂單。"
   },
   "confirmDMSModal": {
     "title": "啟動「當關閉程式訂單將自動取消」功能",
@@ -608,9 +626,12 @@
     "disconnected": "連線中斷"
   },
   "strategyEditor": {
+    "clearBacktestResultsModalTitle": "請確認",
+    "clearBacktestResultsModalText": "若您繼續此操作，當前的回測結果將被清除。 請問是否繼續？",
     "unsavedChanges": "您有未儲存的變更",
     "unsavedChangesModalTitle": "關閉前是否儲存策略中的變更？",
     "cancelThisProcess": "取消此程序",
+    "unsavedChangesLaunchModalTitle": "啟動策略前是否儲存策略中的變更？",
     "cancelAppProcessTitle": "取消應用程序執行",
     "cancelAppProcessSubmit": "取消程序",
     "cancelAppProcessDescription": "若該程序耗時過久，您可通過點擊「下一步」按鈕取消程序。\n\n提醒您：在正式環境中進行此操作可能產生不可預料之結果。",
@@ -684,7 +705,7 @@
     "retPerc": "收益 %",
     "drawdown": "回撤 %",
     "trades": "交易",
-    "positions": "倉位",
+    "positions": "未平倉位",
     "gains": "收益",
     "losses": "虧損",
     "fees": "費用",
@@ -703,8 +724,9 @@
     "candleSeedCount": "candle seed數量",
     "noStrategiesToDisplay": "沒有策略可顯示",
     "saveWithDifferentName": "另存新檔",
+    "currentStrategyTab": "目前的策略",
     "templatesTab": "模板",
-    "savedStrategiesTab": "開啟舊檔",
+    "savedStrategiesTab": "草稿",
     "selectMarketDescription": "選取市況",
     "selectMarketDescriptionDisabled": "已選取市況",
     "selectMarketPlaceholder": "選取市場",
@@ -734,18 +756,25 @@
       "title": "表現指標",
       "runTime": "策略執行時間"
     },
-    "IDEreadonlyNotice": "您無法在策略執行過程中進行編輯。欲更新策略，請換成擬真測試環境，並於「運行中策略」選項中重新開始此策略",
-    "strategyOptionsBtn": "設定"
+    "IDEreadonlyNotice": "為了安全起見，正式環境中無法編輯策略。 欲更新策略，請至擬真測試環境，並從「已執行策略」選項中重啟此策略",
+    "strategyOptionsBtn": "設定",
+    "saveAndLaunchBtn": "儲存並執行",
+    "copyOfStrategy": "{{strategyName}} 的副本",
+    "calculating": "計算中．．．",
+    "backtestSuccessful": "回測成功！",
+    "newTest": "新測試"
   },
   "ui": {
     "ok": "Okay",
     "cancel": "取消",
+    "reset": "重設",
     "dontShowAgain": "了解！不要再顯示此訊息。",
     "dropdown": "點選以下選項",
     "backBtn": "返回",
     "export": "匯出",
     "import": "導入",
     "closeBtn": "關閉",
+    "restartBtn": "重新啟動",
     "closeWithoutSaving": "退出而不儲存",
     "lastBtn": "結束",
     "nextBtn": "下一步",
@@ -768,7 +797,10 @@
     "name": "名稱",
     "notSelected": "未選取",
     "e.g.": "例如：{{value}}",
-    "required": "必填項"
+    "required": "必填項",
+    "proceed": "繼續",
+    "saveAndLaunch": "儲存並執行",
+    "launchNoSave": "執行而不儲存"
   },
   "crashHandler": {
     "text1": "發生導致Bitfinex Honey UI停止運作的錯誤。請重啟應用程式以恢復運作。",
