@@ -10,7 +10,7 @@ export const getSocket = createSelector(
     getSockets,
     (_, alias) => alias,
   ],
-  (sockets, alias = t.ALIAS_API_SERVER) => sockets?.[alias] || EMPTY_OBJ,
+  (sockets, alias = t.ALIAS_DATA_SERVER) => sockets?.[alias] || EMPTY_OBJ,
 )
 
 export const isSocketConnected = createSelector(

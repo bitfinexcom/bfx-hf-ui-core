@@ -67,7 +67,7 @@ export default (setClosePositionModal, t, getMarketPair) => [{
   style: STYLES.rightAlign,
   cellRenderer: ({ rowData = {} }) => defaultCellRenderer(
     <PrettyValue
-      value={rowData?.realizedPnl}
+      value={rowData?.pl}
       decimals={3}
       fadeTrailingZeros
       strike={0}

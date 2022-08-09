@@ -340,8 +340,6 @@
     "deadManWarning": "Disabling this should be done with caution!",
     "showPauseInfoCheckbox": "Show Algo Orders pause info",
     "showPauseInfoText": "If checked, the modal with explanations will be displayed when you close the app with active Algo Orders.",
-    "rebootCheckbox": "Reboot automatically on bad connection",
-    "rebootText": " When you experience a poor internet connection, the modal window that notifies you of this will not be displayed and the app will restart automatically.",
     "howToCreate": "How to create an API Key in Bitfinex?",
     "howToCreateDesc": "This is required to operate in the Live Environment",
     "howToCreatePaper": "How to create a Paper Sub-Account?",
@@ -369,13 +367,14 @@
   },
   "badConnectionModal": {
     "title": "Connection issue",
-    "text1": "We've noticed several internet connection issues. It's required to {{action}} the app to continue normal operation.",
-    "text2": "Please make sure you have stable and good internet connection.",
-    "text3": "The Bitfinex Honey will {{action}} after you press 'Okay'.",
-    "text4": "The app will {{action}} automatically in {{countdown}} seconds.",
+    "description": "There has been a connection issue, all running strategies and algorithmic orders have been cancelled.",
     "checkbox": "{{action}} automatically",
-    "reboot": "reboot",
+    "reboot": "Reboot",
     "restart": "Restart"
+  },
+  "noConnectionActionModal": {
+    "title": "Connection issue",
+    "description": "This action can't be run because the app is encountering connection issues.\nWe are trying to reconnect automatically.\nTry again once you see 'WS connected' present on the status bar at the bottom right-corner."
   },
   "balancesTableModal": {
     "title": "Balances",

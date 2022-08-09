@@ -11,7 +11,6 @@ export const SETTINGS_KEYS = {
   DMS: 'dms',
   SHOW_ALGO_PAUSE_INFO: 'showAlgoPauseInfo',
   SHOW_ONLY_FAVORITE_PAIRS: 'showOnlyFavoritePairs',
-  REBOOT_AUTOMATICALLY: 'rebootAutomatically',
   THEME: 'theme',
   JOIN_BETA_PROGRAM: 'joinBetaProgram',
 }
@@ -51,11 +50,6 @@ export const getDMSSetting = createSelector(
 export const getThemeSetting = createSelector(
   getSettings,
   (settings) => _get(settings, SETTINGS_KEYS.THEME, getDefaultTheme()),
-)
-
-export const getRebootSetting = createSelector(
-  getSettings,
-  (settings) => _get(settings, SETTINGS_KEYS.REBOOT_AUTOMATICALLY, false),
 )
 
 export const getIsBetaVersion = createSelector(
