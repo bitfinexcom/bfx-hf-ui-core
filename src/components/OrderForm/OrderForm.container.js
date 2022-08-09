@@ -40,7 +40,7 @@ const mapStateToProps = (state = {}, ownProps = {}) => {
     favoritePairs,
     mode: getCurrentMode(state),
     isPaperTrading: getIsPaperTrading(state),
-    isOrderExecuting: getUIState(state, UI_KEYS.isOrderExecuting),
+    isOrderExecuting: getUIState(state, UI_KEYS.isOrderExecuting, false),
     aoParams: getAOParams(state),
     maxOrderCounts: getMaxOrderCounts(state),
     isBetaVersion: getIsBetaVersion(state),

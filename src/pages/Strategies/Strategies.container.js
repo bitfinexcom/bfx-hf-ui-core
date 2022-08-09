@@ -15,7 +15,7 @@ const EMP_OBJ = {}
 
 const mapStateToProps = (state) => ({
   authToken: getAuthToken(state),
-  firstLogin: getUIState(state, UI_KEYS.firstLogin),
+  firstLogin: getUIState(state, UI_KEYS.firstLogin, false),
   isGuideActive: getGuideStatusForPage(state, STRATEGY_PAGE),
   strategy: getUIState(state, UI_KEYS.currentStrategy, EMP_OBJ),
   backtestResults: getBacktestResults(state),

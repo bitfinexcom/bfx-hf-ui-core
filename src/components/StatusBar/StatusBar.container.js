@@ -15,7 +15,7 @@ const mapStateToProps = (state) => ({
   apiClientDisconnected: apiClientDisconnected(state),
   apiClientConnecting: apiClientConnecting(state),
   apiClientConnected: apiClientConnected(state),
-  wsInterrupted: getUIState(state, UI_KEYS.isBadInternetConnection),
+  wsInterrupted: getUIState(state, UI_KEYS.isBadInternetConnection, false),
   currentModeApiKeyState: getCurrentModeAPIKeyState(state),
   isPaperTrading: getIsPaperTrading(state),
   isBetaVersion: getIsBetaVersion(state),

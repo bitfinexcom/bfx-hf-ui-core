@@ -6,7 +6,7 @@ import { getUIState } from '../../redux/selectors/ui'
 import BadConnectionModal from './BadConnectionModal'
 
 const mapStateToProps = (state = {}) => ({
-  visible: getUIState(state, UI_KEYS.isBadInternetConnection),
+  visible: getUIState(state, UI_KEYS.isBadInternetConnection, false),
 })
 
 const mapDispatchToProps = dispatch => ({

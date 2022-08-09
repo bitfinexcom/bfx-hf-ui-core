@@ -10,7 +10,7 @@ import { UI_KEYS } from '../../redux/constants/ui_keys'
 const mapStateToProps = (state) => ({
   orders: getOrderHistory(state),
   authToken: getAuthToken(state),
-  isLoadingOrderHistData: getUIState(state, UI_KEYS.isLoadingOrderHistData),
+  isLoadingOrderHistData: getUIState(state, UI_KEYS.isLoadingOrderHistData, false),
   apiCredentials: getCurrentModeAPIKeyState(state),
   currentMode: getCurrentMode(state),
 })

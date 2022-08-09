@@ -13,12 +13,12 @@ import Trading from './Trading'
 import { UI_KEYS } from '../../redux/constants/ui_keys'
 
 const mapStateToProps = (state = {}) => ({
-  firstLogin: getUIState(state, UI_KEYS.firstLogin),
+  firstLogin: getUIState(state, UI_KEYS.firstLogin, false),
   showAlgoModal: getShowActiveAlgoModal(state),
   apiClientConnected: apiClientConnected(state),
   hasActiveAlgoOrders: getHasActiveAlgoOrders(state),
   isGuideActive: getGuideStatusForPage(state, TRADING_PAGE),
-  isBadConnection: getUIState(state, UI_KEYS.isBadInternetConnection),
+  isBadConnection: getUIState(state, UI_KEYS.isBadInternetConnection, false),
 })
 
 const mapDispatchToProps = dispatch => ({
