@@ -4,7 +4,6 @@ import getActiveMarket from './get_active_market'
 import getLayouts from './get_layouts'
 import getLayoutID from './get_layout_id'
 import getRemoteVersion from './get_remote_version'
-import getIsRefillBalanceModalVisible from './get_is_refill_balance_modal_visible'
 import getIsPaperTrading from './get_is_paper_trading'
 import getCurrentMode from './get_current_mode'
 import getGuideStatusForPage from './get_guide_status_for_page'
@@ -33,7 +32,6 @@ export {
   getActiveMarket,
   getLayouts,
   getLayoutID,
-  getIsRefillBalanceModalVisible,
   getIsPaperTrading,
   getCurrentMode,
   getGuideStatusForPage,
