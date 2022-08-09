@@ -349,16 +349,6 @@ function reducer(state = getInitialState(), action = {}) {
       }
     }
 
-    case types.UPDATE_CURRENT_STRATEGY: {
-      return {
-        ...state,
-        currentStrategy: {
-          ...state.currentStrategy,
-          ...payload,
-        },
-      }
-    }
-
     case types.SET_STRATEGY_EXECUTION_ID: {
       const { executionId } = payload
       return {
