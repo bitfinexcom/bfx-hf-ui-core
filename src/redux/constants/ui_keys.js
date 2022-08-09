@@ -8,4 +8,9 @@ export const UI_KEYS = {
   layoutID: 'layoutID',
   orderToEdit: 'orderToEdit',
   closePositionModalData: 'closePositionModalData',
+  featureFlags: 'featureFlags',
+  coreSettings: 'coreSettings',
+  settings: 'settings',
+  unsavedLayout: 'unsavedLayout',
+  remoteVersion: 'remoteVersion',
 }

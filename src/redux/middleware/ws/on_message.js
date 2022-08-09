@@ -231,13 +231,13 @@ export default (alias, store) => (e = {}) => {
 
       case 'data.settings.updated': {
         const [, settings] = payload
-        store.dispatch(WSActions.recvUpdatedSettings(settings))
+        store.dispatch(UIActions.setUIValue(UI_KEYS.settings, settings))
         break
       }
 
       case 'data.feature_flags': {
         const [, featureFlags] = payload
-        store.dispatch(WSActions.setFeatureFlags(featureFlags))
+        store.dispatch(UIActions.setUIValue(UI_KEYS.featureFlags, featureFlags))
         break
       }
 
@@ -269,7 +269,7 @@ export default (alias, store) => (e = {}) => {
           }
         }, {})
 
-        store.dispatch(WSActions.recvCoreSettings(transformed))
+        store.dispatch(UIActions.setUIValue(UI_KEYS.coreSettings, transformed))
         break
       }
 

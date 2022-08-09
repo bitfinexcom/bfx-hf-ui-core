@@ -35,27 +35,12 @@ export default {
     payload: { markets },
   }),
 
-  recvUpdatedSettings: settings => ({
-    type: ui.UPDATE_SETTINGS,
-    payload: settings,
-  }),
-
-  setFeatureFlags: flags => ({
-    type: ui.SET_FEATURE_FLAGS,
-    payload: flags,
-  }),
-
   saveSettings: (key, value) => ({
     type: ui.SAVE_SETTINGS,
     payload: {
       key,
       value,
     },
-  }),
-
-  recvCoreSettings: settings => ({
-    type: ui.RECEIVE_CORE_SETTINGS,
-    payload: settings,
   }),
 
   bufferDataFromExchange: (

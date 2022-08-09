@@ -214,29 +214,6 @@ function reducer(state = getInitialState(), action = {}) {
       }
     }
 
-    case types.STORE_UNSAVED_LAYOUT: {
-      const { layout } = payload
-
-      return {
-        ...state,
-        unsavedLayout: layout,
-      }
-    }
-
-    case types.UPDATE_SETTINGS: {
-      return {
-        ...state,
-        settings: payload,
-      }
-    }
-
-    case types.RECEIVE_CORE_SETTINGS: {
-      return {
-        ...state,
-        coreSettings: payload,
-      }
-    }
-
     case types.CREATE_LAYOUT: {
       const { id } = payload
       const layoutDef = getActiveLayoutDef(state)
@@ -478,6 +455,7 @@ function reducer(state = getInitialState(), action = {}) {
 
       return { ...state, tickersVolumeUnit: unit || 'SELF' }
     }
+
     case types.CHANGE_UI_MODAL_STATE: {
       const { key, isOpen } = payload
 
@@ -511,13 +489,6 @@ function reducer(state = getInitialState(), action = {}) {
         ...state,
         settingsActiveTab: tab,
         settingsActiveSection: section,
-      }
-    }
-
-    case types.SET_FEATURE_FLAGS: {
-      return {
-        ...state,
-        featureFlags: payload,
       }
     }
 

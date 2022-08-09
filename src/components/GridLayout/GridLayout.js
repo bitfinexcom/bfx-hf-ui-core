@@ -12,7 +12,7 @@ import { Spinner } from '@ufx-ui/core'
 
 import { useLocation } from 'react-router'
 import {
-  removeComponent, changeLayout, setUIValue, storeUnsavedLayout,
+  removeComponent, changeLayout, setUIValue,
 } from '../../redux/actions/ui'
 import { renderLayoutElement } from './GridLayout.helpers'
 import {
@@ -91,7 +91,7 @@ const GridLayout = ({
   useEffect(() => {
     // discard unsaved layout changes
     if (!isMatchingUnsavedLayout) {
-      dispatch(storeUnsavedLayout(layoutDef))
+      dispatch(setUIValue(UI_KEYS.unsavedLayout, layoutDef))
     }
   }, [dispatch, isMatchingUnsavedLayout, layoutDef])
 

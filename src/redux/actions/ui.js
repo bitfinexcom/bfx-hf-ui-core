@@ -14,22 +14,8 @@ export const updateUIValue = (key, value) => ({
   },
 })
 
-export const saveRemoteVersion = (version) => ({
-  type: types.SAVE_REMOTE_VERSION,
-  payload: {
-    version,
-  },
-})
-
 export const saveLayout = () => ({
   type: types.SAVE_LAYOUT,
-})
-
-export const storeUnsavedLayout = (layout) => ({
-  type: types.STORE_UNSAVED_LAYOUT,
-  payload: {
-    layout,
-  },
 })
 
 export const selectLayout = (id, routePath) => ({
@@ -176,13 +162,11 @@ export default {
   setUIValue,
   updateUIValue,
   saveLayout,
-  storeUnsavedLayout,
   createLayout,
   deleteLayout,
   setActiveMarket,
   saveComponentState,
   updateComponentState,
-  saveRemoteVersion,
   removeNotification,
   removeNotifications,
   clearNotifications,

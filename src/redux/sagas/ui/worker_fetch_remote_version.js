@@ -6,6 +6,7 @@ import Debug from 'debug'
 
 import UIActions from '../../actions/ui'
 import { isElectronApp, appVersion } from '../../config'
+import { UI_KEYS } from '../../constants/ui_keys'
 
 const CHECK_INTERVAL_MS = 60 * 60 * 1000 // 1hr
 const REMOTE_MANIFEST_URL = 'https://api.github.com/repos/bitfinexcom/bfx-hf-ui/releases'
@@ -33,7 +34,7 @@ export default function* () {
     // check if greater than current app version
     const hasNewRelease = semver.gt(name, appVersion)
     if (hasNewRelease) {
-      yield put(UIActions.saveRemoteVersion(name))
+      yield put(UIActions.setUIValue(UI_KEYS.remoteVersion, name))
     }
 
     yield delay(CHECK_INTERVAL_MS)
