@@ -65,13 +65,17 @@ const getActiveLayoutDef = state => (!_isEmpty(state.unsavedLayout)
 function getInitialState() {
   const defaultState = {
     activeMarket: DEFAULT_MARKET,
+    notificationsVisible: false,
     previousMarket: null,
     remoteVersion: null,
     isPaperTrading: false,
     TRADING_PAGE_IS_GUIDE_ACTIVE: true,
     modals: { },
     orderToEdit: {},
+    isBadInternetConnection: false,
+    isNoConnectionModalVisible: false,
     closePositionModalData: {},
+    isOrderExecuting: false,
     currentStrategy: {},
     unsavedLayout: null,
     layoutID: null,
