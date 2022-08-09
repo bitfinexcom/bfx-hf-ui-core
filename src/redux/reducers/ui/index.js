@@ -65,7 +65,6 @@ const getActiveLayoutDef = state => (!_isEmpty(state.unsavedLayout)
 function getInitialState() {
   const defaultState = {
     activeMarket: DEFAULT_MARKET,
-    notificationsVisible: false,
     previousMarket: null,
     remoteVersion: null,
     firstLogin: false,
@@ -74,7 +73,6 @@ function getInitialState() {
     modals: { },
     orderToEdit: {},
     isBadInternetConnection: false,
-    isNoConnectionModalVisible: false,
     closePositionModalData: {},
     isOrderExecuting: false,
     currentStrategy: {},
