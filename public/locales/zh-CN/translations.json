@@ -9,6 +9,10 @@
     "startingUp": "启动app中……",
     "craftedBy": "由Bitfinex创建"
   },
+  "appUpdate": {
+    "available": "更新版本已释出。下载中...",
+    "downloaded": "更新档已完成下载。重启将进行安装。是否现在重启？"
+  },
   "auth": {
     "enterPsw": "输入密码以解锁",
     "password": "密码",
@@ -18,7 +22,16 @@
     "resetBtn": "清除数据并重置",
     "unlockBtn": "解锁",
     "initMsg": "创建密码以保护您的API凭证与交易策略。所有数据保存于此应用程式并杂凑您的密码。",
-    "saveCredentsBtn": "保存凭证"
+    "saveCredentsBtn": "保存凭证",
+    "passwordValidation": {
+      "atLeastXChars": "密码至少应为{{amount}} 个字符。",
+      "lessThanX": "密码应少于{{amount}} 个字符。",
+      "uppercase": "密码须包含一个大写字母。",
+      "lowercase": "密码须包含一个小写字母。",
+      "numbers": "密码至少须包含一个数字。",
+      "specialChars": "密码至少须包含一个特殊字符。"
+    },
+    "strongPassword": "欲保护账号安全，请设置一组高强度的密码。"
   },
   "activeAlgoOrdersModal": {
     "title": "有效订单",
@@ -324,6 +337,7 @@
     "deadManText1": "启用失能开关将于关闭应用程式时，自动取消所有待执行订单。",
     "deadManText2": "关闭应用程式将取消演算法订单。如无启用失能开关，则不会取消演算法订单。于重启应用程式时，如提示说明订单则有可能会消失。",
     "deadManWarning": "禁用此设置将收到相关提醒！",
+    "usageReportingCheckbox": "使用报告",
     "showPauseInfoCheckbox": "显示演算法订单暂停信息",
     "showPauseInfoText": "如已勾选，当仍持有待执行演算法订单且欲关闭应用程式，即会跳出此模式的信息说明。",
     "rebootCheckbox": "连接不良，自动重启应用",
@@ -437,6 +451,10 @@
     "decryptedCredentialsFor": "已解除{{target}}({{mode}}) 的加密凭证",
     "reboot_notify": "已注意到数次网路连接问题。重启应用程式...",
     "strategyLaunchMissingAPIKey": "Please configure API keys first and relaunch strategy"
+  },
+  "tradingModeModal": {
+    "title": "切换交易模式",
+    "text": "切换至交易模式。点击Okay后将重启应用程式，并暂停待执行演算法订单。"
   },
   "confirmDMSModal": {
     "title": "启用失能开关",
@@ -564,11 +582,11 @@
     "leverage": "杠杆",
     "sharpeRatio": "夏普比率",
     "action": "Action",
-    "timestamp": "Timestamp",
+    "timestamp": "时间戳",
     "executedAt": "Executed At",
-    "orderPrice": "Order Price",
-    "tradePrice": "Trade Price",
-    "viewTrades": "View Trades"
+    "orderPrice": "订单价格",
+    "tradePrice": "成交价",
+    "viewTrades": "查看交易"
   },
   "tickersPanel": {
     "title": "牌价"
@@ -608,9 +626,12 @@
     "disconnected": "已断开"
   },
   "strategyEditor": {
+    "clearBacktestResultsModalTitle": "请确认",
+    "clearBacktestResultsModalText": "如选择继续，现有回测结果将被删除。请问是否继续？",
     "unsavedChanges": "变更尚未保存",
     "unsavedChangesModalTitle": "是否于关闭前保存此策略的变更设置？",
-    "cancelThisProcess": "Cancel this process",
+    "cancelThisProcess": "取消此程序",
+    "unsavedChangesLaunchModalTitle": "是否于启用前保存此策略的变更设置？",
     "cancelAppProcessTitle": "Cancel application process",
     "cancelAppProcessSubmit": "Cancel process",
     "cancelAppProcessDescription": "If you feel this process is taking too long you can cancel it by clicking in the next button.\n\nTake into consideration that this might have unintended consequences in case you are operating in the LIVE environment.",
@@ -625,7 +646,7 @@
     "newStrategy2": "新交易策略",
     "newStrategyFrom2": "从模板或储存档案建立新策略",
     "useSandboxTooltip": "Click the toggle to move to the SANDBOX environment where you can create, edit and backtest strategies and much more",
-    "nothingToDisplay": "Nothing to display",
+    "nothingToDisplay": "无符合内容",
     "running": "执行",
     "paused": "已暂停",
     "stopped": "已停止",
@@ -636,13 +657,13 @@
     "activeStrategies": "运行中的策略",
     "pastStrategies": "过去的策略",
     "savedStrategies": "已保存的策略",
-    "copyStrategy": "Copy draft strategy",
-    "renameStrategy": "Rename draft strategy",
-    "deleteStrategy": "Delete draft strategy",
+    "copyStrategy": "复制策略草稿",
+    "renameStrategy": "重新命名策略草稿",
+    "deleteStrategy": "删除策略草稿",
     "more": "更多",
     "importStrategy": "从JSON导入策略",
     "orSelectOne": "或从下方列表选取",
-    "selectStrategy": "Please select a strategy from the list below or head to the SANDBOX mode to begin drafting a new one",
+    "selectStrategy": "请从下方列表选取策略，或转换为模拟测试模式，以开始创建新的策略。",
     "newStrategyModalTitle": "创建新的策略",
     "saveStrategyAsModalTitle": "另存策略为",
     "newStrategyFromModalTitle": "创建新的策略从...",
@@ -675,16 +696,16 @@
     "volatility": "波动",
     "backtestCandles": "回测K线",
     "backtestTrades": "回测交易",
-    "allocation": "Capital Allocation",
-    "positionSize": "Position Size",
-    "currentAllocation": "Current Capital Allocation",
-    "availableFunds": "Available Funds",
-    "equityCurve": "Equity Curve",
-    "ret": "Returns",
-    "retPerc": "Returns %",
-    "drawdown": "Drawdown %",
+    "allocation": "资金配置",
+    "positionSize": "仓位大小",
+    "currentAllocation": "当前资金配置",
+    "availableFunds": "可用资金",
+    "equityCurve": "权益曲线",
+    "ret": "收益",
+    "retPerc": "收益 %",
+    "drawdown": "回撤 %",
     "trades": "交易",
-    "positions": "仓位",
+    "positions": "未平仓位",
     "gains": "利润",
     "losses": "损失",
     "fees": "费用",
@@ -701,18 +722,19 @@
       "createStrategy": "创建策略开始回测."
     },
     "candleSeedCount": "Candle Seed数量",
-    "noStrategiesToDisplay": "There are no strategies to display",
+    "noStrategiesToDisplay": "无可用的策略",
     "saveWithDifferentName": "另存新档",
+    "currentStrategyTab": "现有交易策略",
     "templatesTab": "模板",
-    "savedStrategiesTab": "开启旧档",
+    "savedStrategiesTab": "草稿",
     "selectMarketDescription": "选择市场",
     "selectMarketDescriptionDisabled": "已选择市场",
-    "selectMarketPlaceholder": "Select a market",
+    "selectMarketPlaceholder": "选择市场",
     "selectCandleDurationDescription": "选择K线期间",
     "fullscreenChartBtn": "全屏图表",
     "exitFullscreenChartBtn": "退出全屏",
     "strategyTypeDescription": "选取策略类型",
-    "strategyTypePlaceholder": "Select a strategy type",
+    "strategyTypePlaceholder": "选取策略类型",
     "strategyTypeDescriptionDisabled": "已选取策略类型",
     "customStrategyTypeInputPlaceholder": "输入自定义类型...",
     "strategyTypes": {
@@ -725,27 +747,34 @@
     "closeStrategy": "关闭策略",
     "executionOptionsModal": {
       "title": "执行前，请选择执行参数",
-      "disabledTitle": "Execution parameters",
+      "disabledTitle": "执行参数",
       "capitalAllocationLabel": "资金配置",
       "stopLoss": "停损",
       "maxDrawdown": "最大回撤"
     },
     "perfomanceMetrics": {
-      "title": "Perfomance metrics",
-      "runTime": "Strategy Run Time"
+      "title": "绩效指标",
+      "runTime": "策略运行时间"
     },
-    "IDEreadonlyNotice": "Strategy editing is disabled while the strategy is being executed. To update your strategy, change to SANDBOX environment and reopen this strategy from your ACTIVE STRATEGIES tab",
-    "strategyOptionsBtn": "设置"
+    "IDEreadonlyNotice": "为保护账号的资金，真实交易模式禁用策略编辑器。请先转换为模拟测试模式，至已执行策略的分页，重新开启此策略进行变更。",
+    "strategyOptionsBtn": "设置",
+    "saveAndLaunchBtn": "保存并启用",
+    "copyOfStrategy": "{{strategyName}} 的副本",
+    "calculating": "计算中...",
+    "backtestSuccessful": "回测成功！",
+    "newTest": "新测试"
   },
   "ui": {
     "ok": "确定",
     "cancel": "取消",
+    "reset": "重置",
     "dontShowAgain": "我已了解，请勿再次显示！",
     "dropdown": "选择一个项目",
     "backBtn": "返回",
     "export": "导出",
     "import": "导入",
     "closeBtn": "关闭",
+    "restartBtn": "重新开始",
     "closeWithoutSaving": "关闭且不保存",
     "lastBtn": "结束",
     "nextBtn": "下一步",
@@ -768,7 +797,10 @@
     "name": "名称",
     "notSelected": "未选取",
     "e.g.": "例如：{{value}}",
-    "required": "必填"
+    "required": "必填",
+    "proceed": "继续",
+    "saveAndLaunch": "保存并启用",
+    "launchNoSave": "启用且不保存"
   },
   "crashHandler": {
     "text1": "错误发生，Bitfinex Honey介面停止运作。请重启应用程式以继续使用。",
