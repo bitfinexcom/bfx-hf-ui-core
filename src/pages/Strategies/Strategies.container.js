@@ -1,7 +1,5 @@
 import { connect } from 'react-redux'
-import { STRATEGY_PAGE } from '../../redux/constants/ui'
 import {
-  getGuideStatusForPage,
   getUIState,
 } from '../../redux/selectors/ui'
 import UIActions from '../../redux/actions/ui'
@@ -15,16 +13,11 @@ const EMP_OBJ = {}
 
 const mapStateToProps = (state) => ({
   authToken: getAuthToken(state),
-  firstLogin: getUIState(state, UI_KEYS.firstLogin, false),
-  isGuideActive: getGuideStatusForPage(state, STRATEGY_PAGE),
   strategy: getUIState(state, UI_KEYS.currentStrategy, EMP_OBJ),
   backtestResults: getBacktestResults(state),
 })
 
 const mapDispatchToProps = (dispatch) => ({
-  finishGuide() {
-    dispatch(UIActions.finishGuide(STRATEGY_PAGE))
-  },
   setStrategy(strategy) {
     dispatch(UIActions.setUIValue(UI_KEYS.currentStrategy, strategy))
   },
