@@ -1,17 +1,16 @@
 import { connect } from 'react-redux'
 import UIActions from '../../redux/actions/ui'
-import {
-  getIsNoConnectionModalVisible,
-} from '../../redux/selectors/ui'
+import { UI_MODAL_KEYS } from '../../redux/constants/modals'
+import { getUIModalStateForKey } from '../../redux/selectors/ui'
 
 import NoConnectionActionModal from './NoConnectionActionModal'
 
 const mapStateToProps = (state = {}) => ({
-  visible: getIsNoConnectionModalVisible(state),
+  visible: getUIModalStateForKey(state, UI_MODAL_KEYS.NO_CONNECTION_MODAL),
 })
 
 const mapDispatchToProps = dispatch => ({
-  changeIsNoConnectionModalState: (visible) => dispatch(UIActions.changeIsNoConnectionModalState(visible)),
+  changeIsNoConnectionModalState: (isOpen) => dispatch(UIActions.changeUIModalState(UI_MODAL_KEYS.NO_CONNECTION_MODAL, isOpen)),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(NoConnectionActionModal)

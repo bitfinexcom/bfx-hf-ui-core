@@ -65,10 +65,6 @@ export const updateComponentState = ({ layoutID, componentID, state }) => ({
   },
 })
 
-export const closeNotificationPanel = () => ({
-  type: types.CLOSE_NOTIFICATIONS,
-})
-
 export const removeNotification = (cid) => ({
   type: types.REMOVE_NOTIFICATION,
   payload: {
@@ -85,14 +81,6 @@ export const removeNotifications = (cids) => ({
 
 export const clearNotifications = () => ({
   type: types.CLEAR_NOTIFICATIONS,
-})
-
-export const openNotifcationPanel = () => ({
-  type: types.OPEN_NOTIFICATIONS,
-})
-
-export const switchNotifcationPanel = () => ({
-  type: types.SWITCH_NOTIFICATIONS,
 })
 
 export const firstLogin = () => ({
@@ -147,11 +135,6 @@ export const changeEditOrderModalData = (order = {}) => {
 
 export const changeBadInternetConnectionState = (isVisible) => ({
   type: types.CHANGE_BAD_INTERNET_STATE,
-  payload: { isVisible },
-})
-
-export const changeIsNoConnectionModalState = (isVisible) => ({
-  type: types.CHANGE_IS_NO_CONNECTION_MODAL_STATE,
   payload: { isVisible },
 })
 
@@ -236,6 +219,11 @@ export const changeUIModalState = (key, isOpen) => ({
   payload: { key, isOpen },
 })
 
+export const toggleUIModalState = (key) => ({
+  type: types.TOGGLE_UI_MODAL_STATE,
+  payload: { key },
+})
+
 export default {
   saveLayout,
   storeUnsavedLayout,
@@ -245,11 +233,9 @@ export default {
   saveComponentState,
   updateComponentState,
   saveRemoteVersion,
-  closeNotificationPanel,
   removeNotification,
   removeNotifications,
   clearNotifications,
-  openNotifcationPanel,
   firstLogin,
   finishGuide,
   recvNotification,
@@ -259,7 +245,6 @@ export default {
   changeBadInternetConnectionState,
   setIsOrderExecuting,
   clearStrategies,
-  switchNotifcationPanel,
   setLayoutID,
   changeTickersVolumeUnit,
   changeEditOrderModalData,
@@ -268,10 +253,10 @@ export default {
   setIsLoadingOrderHistData,
   setCurrentStrategy,
   updateCurrentStrategy,
-  changeIsNoConnectionModalState,
   setPendingLiveStrategy,
   removePendingLiveStrategy,
   updateServiceStatus,
   changeMode,
   changeUIModalState,
+  toggleUIModalState,
 }

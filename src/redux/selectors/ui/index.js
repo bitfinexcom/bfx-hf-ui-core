@@ -21,7 +21,6 @@ import getSettingsActiveTab, { getSettingActiveSection } from './get_settings_ac
 import getIsLoadingOrderHistData from './get_is_loading_order_hist_data'
 import getStrategyExecutionId from './get_strategy_execution_id'
 import getCurrentStrategy from './get_current_strategy'
-import getIsNoConnectionModalVisible from './get_is_no_connection_modal_visible'
 import getPendingLiveStrategy from './get_pending_live_strategy'
 import getServicesStatus from './get_services_status'
 import getUIModalStateForKey from './get_ui_modal_state'
@@ -55,7 +54,6 @@ export {
   getIsLoadingOrderHistData,
   getStrategyExecutionId,
   getCurrentStrategy,
-  getIsNoConnectionModalVisible,
   getPendingLiveStrategy,
   getServicesStatus,
   getUIModalStateForKey,

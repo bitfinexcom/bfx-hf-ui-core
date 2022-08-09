@@ -65,7 +65,6 @@ const getActiveLayoutDef = state => (!_isEmpty(state.unsavedLayout)
 function getInitialState() {
   const defaultState = {
     activeMarket: DEFAULT_MARKET,
-    notificationsVisible: false,
     previousMarket: null,
     remoteVersion: null,
     firstLogin: false,
@@ -74,7 +73,6 @@ function getInitialState() {
     modals: { },
     orderToEdit: {},
     isBadInternetConnection: false,
-    isNoConnectionModalVisible: false,
     closePositionModalData: {},
     isOrderExecuting: false,
     currentStrategy: {},
@@ -218,27 +216,6 @@ function reducer(state = getInitialState(), action = {}) {
       return {
         ...state,
         coreSettings: payload,
-      }
-    }
-
-    case types.OPEN_NOTIFICATIONS: {
-      return {
-        ...state,
-        notificationsVisible: true,
-      }
-    }
-
-    case types.CLOSE_NOTIFICATIONS: {
-      return {
-        ...state,
-        notificationsVisible: false,
-      }
-    }
-
-    case types.SWITCH_NOTIFICATIONS: {
-      return {
-        ...state,
-        notificationsVisible: !state.notificationsVisible,
       }
     }
 
@@ -422,14 +399,6 @@ function reducer(state = getInitialState(), action = {}) {
       }
     }
 
-    case types.CHANGE_IS_NO_CONNECTION_MODAL_STATE: {
-      const { isVisible } = payload
-      return {
-        ...state,
-        isNoConnectionModalVisible: isVisible,
-      }
-    }
-
     case types.CHANGE_CLOSE_POSITION_MODAL_DATA: {
       const { rowData } = payload
 
@@ -581,6 +550,20 @@ function reducer(state = getInitialState(), action = {}) {
         modals: {
           ...state.modals,
           [`is${key}Open`]: isOpen,
+        },
+      }
+    }
+
+    case types.TOGGLE_UI_MODAL_STATE: {
+      const { key } = payload
+      const modalKey = `is${key}Open`
+      const currModalState = state.modals?.[modalKey]
+
+      return {
+        ...state,
+        modals: {
+          ...state.modals,
+          [modalKey]: !currModalState,
         },
       }
     }
