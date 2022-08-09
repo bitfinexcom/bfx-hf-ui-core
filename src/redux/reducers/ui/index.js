@@ -177,6 +177,18 @@ function reducer(state = getInitialState(), action = {}) {
       }
     }
 
+    case types.UPDATE_UI_VALUE: {
+      const { key, value } = payload
+
+      return {
+        ...state,
+        [key]: {
+          ...(state?.[key] || {}),
+          ...value,
+        },
+      }
+    }
+
     case types.SAVE_REMOTE_VERSION: {
       const { version } = payload
 
@@ -337,15 +349,6 @@ function reducer(state = getInitialState(), action = {}) {
       }
     }
 
-    case types.SET_CURRENT_STRATEGY: {
-      const { strategy } = payload
-
-      return {
-        ...state,
-        currentStrategy: strategy,
-      }
-    }
-
     case types.UPDATE_CURRENT_STRATEGY: {
       return {
         ...state,
@@ -353,13 +356,6 @@ function reducer(state = getInitialState(), action = {}) {
           ...state.currentStrategy,
           ...payload,
         },
-      }
-    }
-
-    case types.CLEAR_STRATEGIES: {
-      return {
-        ...state,
-        currentStrategy: {},
       }
     }
 

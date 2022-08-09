@@ -15,7 +15,7 @@ import {
   getAPIClientState, getAuthToken, getCurrentModeAPIKeyState, getFilteredAtomicOrdersCount, getAtomicOrders, isSocketConnected,
 } from '../../redux/selectors/ws'
 import {
-  getComponentState, getActiveMarket, getCurrentMode, getIsPaperTrading, getIsOrderExecuting, getMaxOrderCounts, getIsBetaVersion, getIsStrategiesLiveExecVisible, getUIState,
+  getComponentState, getActiveMarket, getCurrentMode, getIsPaperTrading, getMaxOrderCounts, getIsBetaVersion, getIsStrategiesLiveExecVisible, getUIState,
 } from '../../redux/selectors/ui'
 import { getScope } from '../../util/scope'
 import { UI_KEYS } from '../../redux/constants/ui_keys'

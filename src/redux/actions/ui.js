@@ -7,6 +7,13 @@ export const setUIValue = (key, value) => ({
   },
 })
 
+export const updateUIValue = (key, value) => ({
+  type: types.UI_UPDATE_UI_VALUE,
+  payload: {
+    key, value,
+  },
+})
+
 export const saveRemoteVersion = (version) => ({
   type: types.SAVE_REMOTE_VERSION,
   payload: {
@@ -100,23 +107,9 @@ export const recvNotification = (notification) => ({
   payload: { notification },
 })
 
-export const setCurrentStrategy = (strategy) => ({
-  type: types.SET_CURRENT_STRATEGY,
-  payload: { strategy },
-})
-
-export const updateCurrentStrategy = (payload) => ({
-  type: types.UPDATE_CURRENT_STRATEGY,
-  payload,
-})
-
 export const setStrategyExecutionId = (execId) => ({
   type: types.SET_STRATEGY_EXECUTION_ID,
   payload: { executionId: execId },
-})
-
-export const clearStrategies = () => ({
-  type: types.CLEAR_STRATEGIES,
 })
 
 export const setTradingMode = (isPaperTrading) => ({
@@ -198,6 +191,7 @@ export const toggleUIModalState = (key) => ({
 
 export default {
   setUIValue,
+  updateUIValue,
   saveLayout,
   storeUnsavedLayout,
   createLayout,
@@ -214,14 +208,11 @@ export default {
   setStrategyExecutionId,
   setTradingMode,
   setMarketFromStore,
-  clearStrategies,
   setLayoutID,
   changeTickersVolumeUnit,
   changeEditOrderModalData,
   changeClosePositionModalData,
   setSettingsTab,
-  setCurrentStrategy,
-  updateCurrentStrategy,
   updateServiceStatus,
   changeMode,
   changeUIModalState,

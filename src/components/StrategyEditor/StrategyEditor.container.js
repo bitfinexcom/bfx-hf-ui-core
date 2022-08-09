@@ -49,7 +49,7 @@ const mapDispatchToProps = (dispatch) => ({
   onRemove: (authToken, id) => {
     dispatch(WSActions.send(['strategy.remove', authToken, id]))
     dispatch(WSActions.resetBacktestData())
-    dispatch(UIActions.clearStrategies())
+    dispatch(UIActions.setUIValue(UI_KEYS.currentStrategy, {}))
   },
   gaCreateStrategy: () => {
     dispatch(GAActions.createStrategy())

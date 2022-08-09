@@ -1,7 +1,6 @@
 import { connect } from 'react-redux'
 import { STRATEGY_PAGE } from '../../redux/constants/ui'
 import {
-  getCurrentStrategy,
   getGuideStatusForPage,
   getUIState,
 } from '../../redux/selectors/ui'
@@ -16,7 +15,7 @@ const mapStateToProps = (state) => ({
   authToken: getAuthToken(state),
   firstLogin: getUIState(state, UI_KEYS.firstLogin),
   isGuideActive: getGuideStatusForPage(state, STRATEGY_PAGE),
-  strategy: getCurrentStrategy(state),
+  strategy: getUIState(state, UI_KEYS.currentStrategy),
   backtestResults: getBacktestResults(state),
 })
 
@@ -25,7 +24,7 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch(UIActions.finishGuide(STRATEGY_PAGE))
   },
   setStrategy(strategy) {
-    dispatch(UIActions.setCurrentStrategy(strategy))
+    dispatch(UIActions.setUIValue(UI_KEYS.currentStrategy, strategy))
   },
   onSave: (authToken, strategy = {}) => {
     dispatch(WSActions.send(['strategy.save', authToken, strategy]))
@@ -33,7 +32,7 @@ const mapDispatchToProps = (dispatch) => ({
   onRemove: (authToken, id) => {
     dispatch(WSActions.send(['strategy.remove', authToken, id]))
     dispatch(WSActions.resetBacktestData())
-    dispatch(UIActions.clearStrategies())
+    dispatch(UIActions.setUIValue(UI_KEYS.currentStrategy, {}))
   },
 })
 

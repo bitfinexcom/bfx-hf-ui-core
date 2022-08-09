@@ -4,4 +4,5 @@ export const UI_KEYS = {
   firstLogin: 'firstLogin',
   isOrderExecuting: 'isOrderExecuting',
   pendingLiveStrategy: 'pendingLiveStrategy',
+  currentStrategy: 'currentStrategy',
 }

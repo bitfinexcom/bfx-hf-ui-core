@@ -434,7 +434,7 @@ export default (alias, store) => (e = {}) => {
         const { startedOn } = executionResultsObj
         store.dispatch(WSActions.setStartedLiveStrategy(strategyMapKey, executionResultsObj))
         store.dispatch(UIActions.setStrategyExecutionId(strategyMapKey))
-        store.dispatch(UIActions.updateCurrentStrategy({ startedOn }))
+        store.dispatch(UIActions.updateUI({ startedOn }))
 
         break
       }
@@ -455,7 +455,10 @@ export default (alias, store) => (e = {}) => {
       case 'strategy.live_execution_stopped': {
         const [, strategyMapKey, executionResultsObj] = payload
         store.dispatch(WSActions.setStoppedLiveStrategy(strategyMapKey, executionResultsObj))
-        store.dispatch(UIActions.updateCurrentStrategy({ stoppedOn: new Date().getTime() }))
+        store.dispatch(UIActions.updateUIValue(
+          UI_KEYS.currentStrategy,
+          { stoppedOn: new Date().getTime() },
+        ))
 
         break
       }
