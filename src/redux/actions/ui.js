@@ -231,6 +231,11 @@ export const changeUIModalState = (key, isOpen) => ({
   payload: { key, isOpen },
 })
 
+export const toggleUIModalState = (key) => ({
+  type: types.TOGGLE_UI_MODAL_STATE,
+  payload: { key },
+})
+
 export default {
   saveLayout,
   storeUnsavedLayout,
@@ -268,4 +273,5 @@ export default {
   updateServiceStatus,
   changeMode,
   changeUIModalState,
+  toggleUIModalState,
 }

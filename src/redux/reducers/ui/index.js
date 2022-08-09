@@ -577,6 +577,20 @@ function reducer(state = getInitialState(), action = {}) {
       }
     }
 
+    case types.TOGGLE_UI_MODAL_STATE: {
+      const { key } = payload
+      const modalKey = `is${key}Open`
+      const currModalState = state.modals?.[modalKey]
+
+      return {
+        ...state,
+        modals: {
+          ...state.modals,
+          [modalKey]: !currModalState,
+        },
+      }
+    }
+
     case types.SET_SETTINGS_TAB: {
       const { tab, section } = payload
 
