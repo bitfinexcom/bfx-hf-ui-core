@@ -171,16 +171,6 @@ export const setSettingsTab = (tab, section) => ({
   payload: { tab, section },
 })
 
-export const setPendingLiveStrategy = (strategyId) => ({
-  type: types.SET_PENDING_LIVE_STRATEGY,
-  payload: { strategyId },
-})
-
-export const removePendingLiveStrategy = () => ({
-  type: types.REMOVE_PENDING_LIVE_STRATEGY,
-  payload: null,
-})
-
 export const updateServiceStatus = (mode, serviceStatus) => ({
   type: types.UPDATE_SERVICE_STATUS,
   payload: {
@@ -232,8 +222,6 @@ export default {
   setSettingsTab,
   setCurrentStrategy,
   updateCurrentStrategy,
-  setPendingLiveStrategy,
-  removePendingLiveStrategy,
   updateServiceStatus,
   changeMode,
   changeUIModalState,

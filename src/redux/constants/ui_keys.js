@@ -3,4 +3,5 @@ export const UI_KEYS = {
   isLoadingOrderHistData: 'isLoadingOrderHistData',
   firstLogin: 'firstLogin',
   isOrderExecuting: 'isOrderExecuting',
+  pendingLiveStrategy: 'pendingLiveStrategy',
 }

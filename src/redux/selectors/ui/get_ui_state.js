@@ -3,4 +3,4 @@ import { REDUCER_PATHS } from '../../config'
 
 const path = REDUCER_PATHS.UI
 
-export default (state, key) => _get(state, `${path}.${key}`)
+export default (state, key, defaultValue = '') => _get(state, `${path}.${key}`, defaultValue)

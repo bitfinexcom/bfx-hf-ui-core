@@ -17,7 +17,6 @@ import getLayoutForRoute from './layouts/get_layout_for_route'
 import getSettingsActiveTab, { getSettingActiveSection } from './get_settings_active_tab'
 import getStrategyExecutionId from './get_strategy_execution_id'
 import getCurrentStrategy from './get_current_strategy'
-import getPendingLiveStrategy from './get_pending_live_strategy'
 import getServicesStatus from './get_services_status'
 import getUIModalStateForKey from './get_ui_modal_state'
 
@@ -46,7 +45,6 @@ export {
   getSettingActiveSection,
   getStrategyExecutionId,
   getCurrentStrategy,
-  getPendingLiveStrategy,
   getServicesStatus,
   getUIModalStateForKey,
 }
