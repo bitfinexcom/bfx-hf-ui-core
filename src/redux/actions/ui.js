@@ -87,10 +87,6 @@ export const clearNotifications = () => ({
   type: types.CLEAR_NOTIFICATIONS,
 })
 
-export const openNotifcationPanel = () => ({
-  type: types.OPEN_NOTIFICATIONS,
-})
-
 export const switchNotifcationPanel = () => ({
   type: types.SWITCH_NOTIFICATIONS,
 })
@@ -249,7 +245,6 @@ export default {
   removeNotification,
   removeNotifications,
   clearNotifications,
-  openNotifcationPanel,
   firstLogin,
   finishGuide,
   recvNotification,
