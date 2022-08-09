@@ -11,8 +11,8 @@ const mapStateToProps = (state = {}) => ({
 
 const mapDispatchToProps = dispatch => ({
   closeNotificationPanel: () => dispatch(changeUIModalState(UI_MODAL_KEYS.NOTIFICATIONS_PANEL, false)),
-  removeNotifications,
-  clearNotifications,
+  removeNotifications: (cids) => dispatch(removeNotifications(cids)),
+  clearNotifications: () => dispatch(clearNotifications()),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(NotificationsSidebar)

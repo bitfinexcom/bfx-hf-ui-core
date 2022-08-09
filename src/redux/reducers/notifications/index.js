@@ -25,6 +25,8 @@ function reducer(state = getInitialState(), action = {}) {
 
     case UITypes.REMOVE_NOTIFICATION: {
       const { cid } = payload
+      console.log('state: ', state)
+      console.log('_filter(state, n => n.cid !== cid): ', _filter(state, n => n.cid !== cid))
       return _filter(state, n => n.cid !== cid)
     }
 
