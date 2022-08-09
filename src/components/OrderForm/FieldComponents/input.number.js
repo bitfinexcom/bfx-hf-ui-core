@@ -19,6 +19,7 @@ const NumberInput = memo(
     renderData,
     className,
     placeholder,
+    indicator,
   }) => {
     const renderedLabel = renderString(label, renderData)
 
@@ -45,6 +46,7 @@ const NumberInput = memo(
           placeholder={_placeholder}
           percentage={percentage}
           max={max}
+          indicator={indicator}
         />
 
         {!CONVERT_LABELS_TO_PLACEHOLDERS && (
@@ -98,6 +100,7 @@ NumberInput.propTypes = {
   max: PropTypes.number,
   className: PropTypes.string,
   placeholder: PropTypes.string,
+  indicator: PropTypes.string,
 }
 
 NumberInput.defaultProps = {
@@ -109,6 +112,7 @@ NumberInput.defaultProps = {
   max: Number.MAX_SAFE_INTEGER,
   className: '',
   placeholder: null,
+  indicator: null,
 }
 
 export default NumberInput

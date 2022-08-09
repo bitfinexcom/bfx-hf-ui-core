@@ -41,6 +41,7 @@ const StrategyOptionsPanelSandbox = ({
     const sel = _find(markets, (m) => m.wsID === selection.wsID)
     const options = {
       [STRATEGY_OPTIONS_KEYS.SYMBOL]: sel,
+      [STRATEGY_OPTIONS_KEYS.CAPITAL_ALLOCATION]: 0,
     }
 
     if (!_includes(sel?.contexts, 'm')) {

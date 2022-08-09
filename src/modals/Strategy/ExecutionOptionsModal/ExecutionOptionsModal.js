@@ -5,7 +5,6 @@ import { useTranslation } from 'react-i18next'
 import { Spinner } from '@ufx-ui/core'
 import Modal from '../../../ui/Modal'
 import AmountInput from '../../../components/OrderForm/FieldComponents/input.amount'
-
 import ExecutionOptionsBody from './ExecutionOptionsBody'
 import { getIsPaperTrading } from '../../../redux/selectors/ui'
 import {
@@ -30,6 +29,7 @@ const ExecutionOptionsModal = (props) => {
     stopLossPerc,
     maxDrawdownPerc,
     strategyId,
+    strategyQuote,
   } = props
   const [capitalAllocationValue, setCapitalAllocationValue] = useState('')
   const [stopLossPercValue, setStopLossPercValue] = useState('')
@@ -103,6 +103,14 @@ const ExecutionOptionsModal = (props) => {
   }, [strategyId, isOpen])
 
   useEffect(() => {
+    if (strategyQuote) {
+      setCapitalAllocationError('')
+    } else {
+      setCapitalAllocationError(t('strategyEditor.executionOptionsModal.noMarketSelected'))
+    }
+  }, [strategyQuote])
+
+  useEffect(() => {
     if (
       pendingForSaveOptions
       && capitalAllocation === getProcessedLocalState(capitalAllocationValue)
@@ -143,6 +151,7 @@ const ExecutionOptionsModal = (props) => {
           : t('strategyEditor.executionOptionsModal.disabledTitle')
       }
       onSubmit={onSubmit}
+      className='hfui-execution-options-modal-container'
     >
       {pendingForSaveOptions ? <Spinner />
         : (
@@ -192,10 +201,12 @@ ExecutionOptionsModal.propTypes = {
   strategyId: PropTypes.string.isRequired,
   startBacktest: PropTypes.func.isRequired,
   executionOptionsModalType: PropTypes.string,
+  strategyQuote: PropTypes.string,
 }
 
 ExecutionOptionsModal.defaultProps = {
   executionOptionsModalType: null,
+  strategyQuote: null,
 }
 
 export default ExecutionOptionsModal

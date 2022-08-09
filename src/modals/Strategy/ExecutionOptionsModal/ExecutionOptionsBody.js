@@ -16,62 +16,75 @@ const ExecutionOptionsBody = ({
   stopLossPerc,
   stopLossPercError,
   setStopLossPerc,
+  strategyQuote,
   t,
 }) => (
   <div className='hfui-execution-options-modal'>
     <div className='hfui-execution-options-modal__option'>
       <p className='title'>
         {t('strategyEditor.executionOptionsModal.capitalAllocationLabel')}
-        <Tooltip
-          className='__react-tooltip __react-tooltip-break-line'
-          content={t('strategyEditor.capitalAllocationHelp')}
-        >
-          <i className='fa fa-info-circle __react_component_tooltip title-tooltip' />
-        </Tooltip>
       </p>
-      <AmountInput
-        placeholder={t('ui.e.g.', { value: 3000.0 })}
-        onChange={setCapitalAllocation}
-        value={capitalAllocation}
-        validationError={capitalAllocationError}
-        disabled={!isPaperTrading}
-      />
+      <div className='hfui-execution-options-modal-selection'>
+        <p>
+          {t('strategyEditor.capitalAllocationHelp')}
+        </p>
+        <AmountInput
+          placeholder={t('ui.e.g.', { value: 3000.0 })}
+          onChange={setCapitalAllocation}
+          value={capitalAllocation}
+          validationError={capitalAllocationError}
+          disabled={!isPaperTrading || !strategyQuote}
+          indicator={strategyQuote}
+        />
+      </div>
     </div>
     <div className='hfui-execution-options-modal__option'>
       <p className='title'>
         {`${t('strategyEditor.executionOptionsModal.stopLoss')}, %`}
         <Tooltip
           className='__react-tooltip __react-tooltip-break-line'
-          content={t('strategyEditor.stopLossHelp')}
+          content={t('strategyEditor.strategyStop')}
         >
           <i className='fa fa-info-circle __react_component_tooltip title-tooltip' />
         </Tooltip>
       </p>
-      <PercentInput
-        placeholder={t('ui.e.g.', { value: '45%' })}
-        value={stopLossPerc}
-        onChange={setStopLossPerc}
-        disabled={!isPaperTrading}
-        validationError={stopLossPercError}
-      />
+      <div className='hfui-execution-options-modal-selection'>
+        <p>
+          {t('strategyEditor.stopLossHelp')}
+        </p>
+        <PercentInput
+          placeholder={t('ui.e.g.', { value: '45%' })}
+          value={stopLossPerc}
+          onChange={setStopLossPerc}
+          disabled={!isPaperTrading}
+          validationError={stopLossPercError}
+          indicator='%'
+        />
+      </div>
     </div>
     <div className='hfui-execution-options-modal__option'>
       <p className='title'>
         {`${t('strategyEditor.executionOptionsModal.maxDrawdown')}, %`}
         <Tooltip
           className='__react-tooltip __react-tooltip-break-line'
-          content={t('strategyEditor.maximumDrawdownHelp')}
+          content={t('strategyEditor.strategyStop')}
         >
           <i className='fa fa-info-circle __react_component_tooltip title-tooltip' />
         </Tooltip>
       </p>
-      <PercentInput
-        placeholder={t('ui.e.g.', { value: '45%' })}
-        value={maxDrawdownPerc}
-        onChange={setMaxDrawdownPerc}
-        disabled={!isPaperTrading}
-        validationError={maxDrawdownError}
-      />
+      <div className='hfui-execution-options-modal-selection'>
+        <p>
+          {t('strategyEditor.maximumDrawdownHelp')}
+        </p>
+        <PercentInput
+          placeholder={t('ui.e.g.', { value: '45%' })}
+          value={maxDrawdownPerc}
+          onChange={setMaxDrawdownPerc}
+          disabled={!isPaperTrading}
+          validationError={maxDrawdownError}
+          indicator='%'
+        />
+      </div>
     </div>
   </div>
 )
@@ -88,12 +101,14 @@ ExecutionOptionsBody.propTypes = {
   setCapitalAllocation: PropTypes.func.isRequired,
   t: PropTypes.func.isRequired,
   isPaperTrading: PropTypes.bool.isRequired,
+  strategyQuote: PropTypes.string,
 }
 
 ExecutionOptionsBody.defaultProps = {
   stopLossPercError: '',
   maxDrawdownError: '',
   capitalAllocationError: '',
+  strategyQuote: null,
 }
 
 export default ExecutionOptionsBody
