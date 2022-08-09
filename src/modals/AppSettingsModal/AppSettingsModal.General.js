@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next'
 
 import WSActions from '../../redux/actions/ws'
 import GAActions from '../../redux/actions/google_analytics'
-import { changeConfirmDMSModalState } from '../../redux/actions/ui'
+import { changeUIModalState } from '../../redux/actions/ui'
 import {
   isDevEnv,
   getAutoLoginState,
@@ -17,6 +17,7 @@ import {
   getShowAlgoPauseInfoSetting,
 } from '../../redux/selectors/ui'
 import { DONT_SHOW_DMS_MODAL_KEY } from '../../constants/variables'
+import { UI_MODAL_KEYS } from '../../redux/constants/modals'
 
 const INITIAL_AUTO_LOGIN = getAutoLoginState()
 
@@ -42,7 +43,7 @@ const General = () => {
     const dontShowDMSModal = localStorage.getItem(DONT_SHOW_DMS_MODAL_KEY)
 
     if (nextDms === true && dontShowDMSModal !== 'true') {
-      dispatch(changeConfirmDMSModalState(true))
+      dispatch(changeUIModalState(UI_MODAL_KEYS.CONFIRM_DMS_MODAL, true))
     } else {
       setIsDmsChecked(nextDms)
       dispatch(WSActions.saveSettings(SETTINGS_KEYS.DMS, nextDms))

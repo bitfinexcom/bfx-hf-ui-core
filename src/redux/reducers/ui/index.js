@@ -35,6 +35,7 @@ import { isElectronApp } from '../../config'
 
 import { storeLastUsedLayoutID } from '../../../util/layout'
 import { DEFAULT_TAB } from '../../../modals/AppSettingsModal/AppSettingsModal.constants'
+import { UI_MODAL_KEYS } from '../../constants/modals'
 
 const debug = Debug('hfui:rx:r:ui')
 const LAYOUTS_KEY = 'HF_UI_LAYOUTS'
@@ -70,16 +71,7 @@ function getInitialState() {
     firstLogin: false,
     isPaperTrading: false,
     TRADING_PAGE_IS_GUIDE_ACTIVE: true,
-    modals: {
-      isRefillBalanceModalVisible: false,
-      isOldFormatModalVisible: false,
-      isAOPauseModalVisible: false,
-      isCcyInfoModalVisible: false,
-      isConfirmDMSModalVisible: false,
-      isEditOrderModalVisible: false,
-      isClosePositionModalVisible: false,
-      isAppSettingsModalVisible: false,
-    },
+    modals: { },
     orderToEdit: {},
     isBadInternetConnection: false,
     isNoConnectionModalVisible: false,
@@ -91,6 +83,10 @@ function getInitialState() {
     settingsActiveTab: DEFAULT_TAB,
     tickersVolumeUnit: null,
   }
+
+  _map(_values(UI_MODAL_KEYS), (modalKey) => {
+    defaultState.modals[`is${modalKey}Open`] = false
+  })
 
   if (!localStorage) {
     return defaultState
@@ -434,16 +430,12 @@ function reducer(state = getInitialState(), action = {}) {
       }
     }
 
-    case types.CHANGE_CLOSE_POSITION_MODAL_STATE: {
-      const { isVisible, rowData } = payload
+    case types.CHANGE_CLOSE_POSITION_MODAL_DATA: {
+      const { rowData } = payload
 
       return {
         ...state,
         closePositionModalData: rowData,
-        modals: {
-          ...state.modals,
-          isClosePositionModalVisible: isVisible,
-        },
       }
     }
 
@@ -461,77 +453,12 @@ function reducer(state = getInitialState(), action = {}) {
         isLoadingOrderHistData: payload,
       }
     }
-
-    case types.CHANGE_REFILL_BALANCE_MODAL_STATE: {
-      const { isVisible } = payload
-
-      return {
-        ...state,
-        modals: {
-          ...state.modals,
-          isRefillBalanceModalVisible: isVisible,
-        },
-      }
-    }
-
-    case types.CHANGE_OLD_FORMAT_MODAL_STATE: {
-      const { isVisible } = payload
-
-      return {
-        ...state,
-        modals: {
-          ...state.modals,
-          isOldFormatModalVisible: isVisible,
-        },
-      }
-    }
-
-    case types.CHANGE_CONFIRM_DMS_MODAL_VISIBLE: {
-      const { isVisible } = payload
-
-      return {
-        ...state,
-        modals: {
-          ...state.modals,
-          isConfirmDMSModalVisible: isVisible,
-        },
-      }
-    }
-
-    case types.CHANGE_EDIT_ORDER_MODAL_STATE: {
-      const { isVisible, order } = payload
+    case types.CHANGE_EDIT_ORDER_MODAL_DATA: {
+      const { order } = payload
 
       return {
         ...state,
         orderToEdit: order,
-        modals: {
-          ...state.modals,
-          isEditOrderModalVisible: isVisible,
-        },
-      }
-    }
-
-    case types.CHANGE_AO_PAUSE_MODAL_STATE: {
-      const { isVisible } = payload
-
-      return {
-        ...state,
-        modals: {
-          ...state.modals,
-          isAOPauseModalVisible: isVisible,
-        },
-      }
-    }
-
-    case types.CHANGE_APP_SETTINGS_MODAL_STATE: {
-      const { isVisible } = payload
-
-      return {
-        ...state,
-        modals: {
-          ...state.modals,
-          isAppSettingsModalVisible: isVisible,
-        },
       }
     }
 
@@ -646,15 +573,14 @@ function reducer(state = getInitialState(), action = {}) {
 
       return { ...state, tickersVolumeUnit: unit || 'SELF' }
     }
-
-    case types.CHANGE_CCY_INFO_MODAL_STATE: {
-      const { isVisible } = payload
+    case types.CHANGE_UI_MODAL_STATE: {
+      const { key, isOpen } = payload
 
       return {
         ...state,
         modals: {
           ...state.modals,
-          isCcyInfoModalVisible: isVisible,
+          [`is${key}Open`]: isOpen,
         },
       }
     }

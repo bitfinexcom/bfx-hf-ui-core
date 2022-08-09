@@ -15,14 +15,15 @@ import TradingModeTab from './AppSettingsModal.TradingMode'
 import AppearanceTab from './AppSettingsModal.Appearance'
 import AboutTab from './AppSettingsModal.About'
 import BetaTab from './AppSettingsModal.Beta'
-import { getIsAppSettingsModalVisible, getSettingsActiveTab } from '../../redux/selectors/ui'
-import { changeAppSettingsModalState, setSettingsTab } from '../../redux/actions/ui'
+import { getUIModalStateForKey, getSettingsActiveTab } from '../../redux/selectors/ui'
+import { changeUIModalState, setSettingsTab } from '../../redux/actions/ui'
+import { UI_MODAL_KEYS } from '../../redux/constants/modals'
 import { DEFAULT_TAB, SETTINGS_TABS, WEB_SETTINGS_TABS } from './AppSettingsModal.constants'
 
 import './style.css'
 
 const AppSettingsModal = () => {
-  const isOpen = useSelector(getIsAppSettingsModalVisible)
+  const isOpen = useSelector(state => getUIModalStateForKey(state, UI_MODAL_KEYS.APP_SETTINGS_MODAL))
   const activeTab = useSelector(getSettingsActiveTab)
 
   const dispatch = useDispatch()
@@ -30,7 +31,7 @@ const AppSettingsModal = () => {
   const setActiveTab = (tab) => dispatch(setSettingsTab(tab))
 
   const onClose = (callback) => {
-    dispatch(changeAppSettingsModalState(false))
+    dispatch(changeUIModalState(UI_MODAL_KEYS.APP_SETTINGS_MODAL, false))
 
     // reset to default tab, but wait for transition out
     setTimeout(() => {

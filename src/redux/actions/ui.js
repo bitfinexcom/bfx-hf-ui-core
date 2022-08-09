@@ -138,25 +138,12 @@ export const setMarketFromStore = (isPaperTrading) => ({
   payload: { isPaperTrading },
 })
 
-export const changeOldFormatModalState = (isVisible) => ({
-  type: types.CHANGE_OLD_FORMAT_MODAL_STATE,
-  payload: { isVisible },
-})
-
-export const changeAOPauseModalState = (isVisible) => ({
-  type: types.CHANGE_AO_PAUSE_MODAL_STATE,
-  payload: { isVisible },
-})
-
-export const changeEditOrderModalState = (isVisible, order = {}) => ({
-  type: types.CHANGE_EDIT_ORDER_MODAL_STATE,
-  payload: { isVisible, order },
-})
-
-export const changeConfirmDMSModalState = (isVisible) => ({
-  type: types.CHANGE_CONFIRM_DMS_MODAL_VISIBLE,
-  payload: { isVisible },
-})
+export const changeEditOrderModalData = (order = {}) => {
+  return ({
+    type: types.CHANGE_EDIT_ORDER_MODAL_DATA,
+    payload: { order },
+  })
+}
 
 export const changeBadInternetConnectionState = (isVisible) => ({
   type: types.CHANGE_BAD_INTERNET_STATE,
@@ -168,9 +155,9 @@ export const changeIsNoConnectionModalState = (isVisible) => ({
   payload: { isVisible },
 })
 
-export const changeClosePositionModalState = (isVisible, rowData = {}) => ({
-  type: types.CHANGE_CLOSE_POSITION_MODAL_STATE,
-  payload: { isVisible, rowData },
+export const changeClosePositionModalData = (rowData = {}) => ({
+  type: types.CHANGE_CLOSE_POSITION_MODAL_DATA,
+  payload: { rowData },
 })
 
 /**
@@ -182,11 +169,6 @@ export const changeClosePositionModalState = (isVisible, rowData = {}) => ({
 export const setIsOrderExecuting = (executing) => ({
   type: types.SET_IS_ORDER_EXECUTING,
   payload: { executing },
-})
-
-export const changeReffilBalanceModalState = (isVisible) => ({
-  type: types.CHANGE_REFILL_BALANCE_MODAL_STATE,
-  payload: { isVisible },
 })
 
 export const setLayoutID = (layoutID) => ({
@@ -212,16 +194,6 @@ export const changeLayout = (incomingLayout) => ({
 export const changeTickersVolumeUnit = (key) => ({
   type: types.CHANGE_TICKERS_VOLUME_UNIT,
   payload: { key },
-})
-
-export const changeCcyInfoModalState = (isVisible) => ({
-  type: types.CHANGE_CCY_INFO_MODAL_STATE,
-  payload: { isVisible },
-})
-
-export const changeAppSettingsModalState = (isVisible) => ({
-  type: types.CHANGE_APP_SETTINGS_MODAL_STATE,
-  payload: { isVisible },
 })
 
 export const setSettingsTab = (tab, section) => ({
@@ -259,6 +231,11 @@ export const changeMode = (isPaperTrading) => ({
   },
 })
 
+export const changeUIModalState = (key, isOpen) => ({
+  type: types.CHANGE_UI_MODAL_STATE,
+  payload: { key, isOpen },
+})
+
 export default {
   saveLayout,
   storeUnsavedLayout,
@@ -279,20 +256,14 @@ export default {
   setStrategyExecutionId,
   setTradingMode,
   setMarketFromStore,
-  changeReffilBalanceModalState,
   changeBadInternetConnectionState,
   setIsOrderExecuting,
   clearStrategies,
   switchNotifcationPanel,
   setLayoutID,
   changeTickersVolumeUnit,
-  changeOldFormatModalState,
-  changeAOPauseModalState,
-  changeCcyInfoModalState,
-  changeConfirmDMSModalState,
-  changeEditOrderModalState,
-  changeClosePositionModalState,
-  changeAppSettingsModalState,
+  changeEditOrderModalData,
+  changeClosePositionModalData,
   setSettingsTab,
   setIsLoadingOrderHistData,
   setCurrentStrategy,
@@ -302,4 +273,5 @@ export default {
   removePendingLiveStrategy,
   updateServiceStatus,
   changeMode,
+  changeUIModalState,
 }
