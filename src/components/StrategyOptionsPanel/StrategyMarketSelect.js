@@ -48,14 +48,17 @@ const StrategyMarketSelect = ({
           disabled={isDisabled}
         />
         {isDisabled ? (
-          <p className='hfui-orderform__input-label'>
+          <p className='hfui-orderform__input-label hfui-strategy-options__description'>
             {t('strategyEditor.selectMarketDescriptionDisabled')}
           </p>
         ) : (
           <p
-            className={clsx('hfui-orderform__input-label', {
-              error: _isEmpty(symbol),
-            })}
+            className={clsx(
+              'hfui-orderform__input-label hfui-strategy-options__description',
+              {
+                error: _isEmpty(symbol),
+              },
+            )}
           >
             <b>{t('ui.required')}</b>
           </p>

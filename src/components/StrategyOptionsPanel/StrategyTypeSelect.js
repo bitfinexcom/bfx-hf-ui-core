@@ -143,7 +143,7 @@ const StrategyTypeSelect = ({
           }
           />
           {(isExecuting || isDisabled) && (
-          <p className='hfui-orderform__input-label'>
+          <p className='hfui-orderform__input-label hfui-strategy-options__description'>
             {t('strategyEditor.strategyTypeDescriptionDisabled')}
           </p>
           )}
