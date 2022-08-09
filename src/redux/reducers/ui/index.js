@@ -468,15 +468,6 @@ function reducer(state = getInitialState(), action = {}) {
       }
     }
 
-    case types.SET_LAYOUT_ID: {
-      const { layoutID } = payload
-
-      return {
-        ...state,
-        layoutID,
-      }
-    }
-
     case types.SELECT_LAYOUT: {
       const { id, routePath } = payload
 
