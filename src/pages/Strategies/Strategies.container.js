@@ -11,11 +11,13 @@ import StrategiesPage from './Strategies'
 import { getAuthToken, getBacktestResults } from '../../redux/selectors/ws'
 import { UI_KEYS } from '../../redux/constants/ui_keys'
 
+const EMP_OBJ = {}
+
 const mapStateToProps = (state) => ({
   authToken: getAuthToken(state),
   firstLogin: getUIState(state, UI_KEYS.firstLogin),
   isGuideActive: getGuideStatusForPage(state, STRATEGY_PAGE),
-  strategy: getUIState(state, UI_KEYS.currentStrategy),
+  strategy: getUIState(state, UI_KEYS.currentStrategy, EMP_OBJ),
   backtestResults: getBacktestResults(state),
 })
 

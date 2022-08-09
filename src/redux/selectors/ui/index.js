@@ -15,7 +15,6 @@ import getOrderToEdit from './get_order_to_edit'
 import getLayoutForRoute from './layouts/get_layout_for_route'
 import getSettingsActiveTab, { getSettingActiveSection } from './get_settings_active_tab'
 import getStrategyExecutionId from './get_strategy_execution_id'
-import getCurrentStrategy from './get_current_strategy'
 import getServicesStatus from './get_services_status'
 import getUIModalStateForKey from './get_ui_modal_state'
 
@@ -42,7 +41,6 @@ export {
   getSettingsActiveTab,
   getSettingActiveSection,
   getStrategyExecutionId,
-  getCurrentStrategy,
   getServicesStatus,
   getUIModalStateForKey,
 }
