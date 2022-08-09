@@ -5,7 +5,7 @@ import UIActions from '../../redux/actions/ui'
 import WSActions from '../../redux/actions/ws'
 import GAActions from '../../redux/actions/google_analytics'
 import {
-  getOrderToEdit, getMaxOrderCounts, getUIModalStateForKey,
+  getMaxOrderCounts, getUIModalStateForKey, getUIState,
 } from '../../redux/selectors/ui'
 import {
   getAuthToken, getFilteredAtomicOrdersCount, getAtomicOrders,
@@ -14,10 +14,11 @@ import { getMarkets } from '../../redux/selectors/meta'
 
 import EditOrderModal from './EditOrderModal'
 import { UI_MODAL_KEYS } from '../../redux/constants/modals'
+import { UI_KEYS } from '../../redux/constants/ui_keys'
 
 const mapStateToProps = (state = {}) => ({
   visible: getUIModalStateForKey(state, UI_MODAL_KEYS.EDIT_ORDER_MODAL),
-  order: getOrderToEdit(state),
+  order: getUIState(state, UI_KEYS.orderToEdit),
   authToken: getAuthToken(state),
   atomicOrdersCount: _size(getAtomicOrders(state)),
   countFilterAtomicOrdersByMarket: getFilteredAtomicOrdersCount(state),

@@ -122,18 +122,6 @@ export const setMarketFromStore = (isPaperTrading) => ({
   payload: { isPaperTrading },
 })
 
-export const changeEditOrderModalData = (order = {}) => {
-  return ({
-    type: types.CHANGE_EDIT_ORDER_MODAL_DATA,
-    payload: { order },
-  })
-}
-
-export const changeClosePositionModalData = (rowData = {}) => ({
-  type: types.CHANGE_CLOSE_POSITION_MODAL_DATA,
-  payload: { rowData },
-})
-
 export const addComponent = (component) => ({
   type: types.ADD_COMPONENT,
   payload: { component },
@@ -204,8 +192,6 @@ export default {
   setTradingMode,
   setMarketFromStore,
   changeTickersVolumeUnit,
-  changeEditOrderModalData,
-  changeClosePositionModalData,
   setSettingsTab,
   updateServiceStatus,
   changeMode,

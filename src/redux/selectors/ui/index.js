@@ -10,8 +10,6 @@ import getStrategyId from './get_strategy_id'
 import getMarketComponents from './get_market_components'
 import getCurrentUnsavedLayout from './get_current_unsaved_layout'
 import getTickersVolumeUnit from './get_tickers_volume_unit'
-import getClosePositionModalData from './get_close_position_modal_data'
-import getOrderToEdit from './get_order_to_edit'
 import getLayoutForRoute from './layouts/get_layout_for_route'
 import getSettingsActiveTab, { getSettingActiveSection } from './get_settings_active_tab'
 import getStrategyExecutionId from './get_strategy_execution_id'
@@ -35,9 +33,7 @@ export {
   getMarketComponents,
   getCurrentUnsavedLayout,
   getTickersVolumeUnit,
-  getOrderToEdit,
   getLayoutForRoute,
-  getClosePositionModalData,
   getSettingsActiveTab,
   getSettingActiveSection,
   getStrategyExecutionId,

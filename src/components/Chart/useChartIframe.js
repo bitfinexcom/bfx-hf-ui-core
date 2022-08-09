@@ -26,6 +26,7 @@ import {
   GET_RANGE_EVENT,
 } from './events'
 import { UI_MODAL_KEYS } from '../../redux/constants/modals'
+import { UI_KEYS } from '../../redux/constants/ui_keys'
 
 const useChartIframe = (iframeID, wsID, customIndicators, trades, interval, isSetInterval, range) => {
   const [isIframeReady, setIsIframeReady] = useState(false)
@@ -44,7 +45,7 @@ const useChartIframe = (iframeID, wsID, customIndicators, trades, interval, isSe
   }, [allOrders, authToken, dispatch])
 
   const closePosition = useCallback((args) => {
-    dispatch(UIActions.changeClosePositionModalData(args))
+    dispatch(UIActions.setUIValue(UI_KEYS.closePositionModalData, args))
     dispatch(UIActions.changeUIModalState(UI_MODAL_KEYS.CLOSE_POSITION_MODAL, true))
   }, [dispatch])
 

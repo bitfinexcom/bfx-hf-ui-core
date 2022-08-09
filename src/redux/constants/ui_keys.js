@@ -6,4 +6,6 @@ export const UI_KEYS = {
   pendingLiveStrategy: 'pendingLiveStrategy',
   currentStrategy: 'currentStrategy',
   layoutID: 'layoutID',
+  orderToEdit: 'orderToEdit',
+  closePositionModalData: 'closePositionModalData',
 }

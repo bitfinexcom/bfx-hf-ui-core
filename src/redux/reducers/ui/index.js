@@ -386,24 +386,6 @@ function reducer(state = getInitialState(), action = {}) {
       }
     }
 
-    case types.CHANGE_CLOSE_POSITION_MODAL_DATA: {
-      const { rowData } = payload
-
-      return {
-        ...state,
-        closePositionModalData: rowData,
-      }
-    }
-
-    case types.CHANGE_EDIT_ORDER_MODAL_DATA: {
-      const { order } = payload
-
-      return {
-        ...state,
-        orderToEdit: order,
-      }
-    }
-
     case types.ADD_COMPONENT: {
       const { component } = payload
       const layoutDef = getActiveLayoutDef(state)
