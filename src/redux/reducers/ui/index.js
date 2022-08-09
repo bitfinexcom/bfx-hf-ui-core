@@ -72,7 +72,6 @@ function getInitialState() {
     modals: { },
     orderToEdit: {},
     closePositionModalData: {},
-    isOrderExecuting: false,
     currentStrategy: {},
     unsavedLayout: null,
     layoutID: null,
@@ -397,14 +396,6 @@ function reducer(state = getInitialState(), action = {}) {
       return {
         ...state,
         closePositionModalData: rowData,
-      }
-    }
-
-    case types.SET_IS_ORDER_EXECUTING: {
-      const { executing } = payload
-      return {
-        ...state,
-        isOrderExecuting: executing,
       }
     }
 

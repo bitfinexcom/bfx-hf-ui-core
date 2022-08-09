@@ -162,7 +162,7 @@ export default (alias, store) => (e = {}) => {
 
       case 'data.algo_order.submit_status':
       case 'data.order.submit_status':
-        store.dispatch(UIActions.setIsOrderExecuting(false))
+        store.dispatch(UIActions.setUIValue(UI_KEYS.isOrderExecuting, false))
         break
 
       case 'error': {

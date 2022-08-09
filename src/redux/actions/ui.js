@@ -141,17 +141,6 @@ export const changeClosePositionModalData = (rowData = {}) => ({
   payload: { rowData },
 })
 
-/**
- * options: {
- *   authToken, name, symbol, tf, includeTrades, strategy, seedCandleCount, margin,
- * }
- */
-
-export const setIsOrderExecuting = (executing) => ({
-  type: types.SET_IS_ORDER_EXECUTING,
-  payload: { executing },
-})
-
 export const setLayoutID = (layoutID) => ({
   type: types.SET_LAYOUT_ID,
   payload: { layoutID },
@@ -235,7 +224,6 @@ export default {
   setStrategyExecutionId,
   setTradingMode,
   setMarketFromStore,
-  setIsOrderExecuting,
   clearStrategies,
   setLayoutID,
   changeTickersVolumeUnit,

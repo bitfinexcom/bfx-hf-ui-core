@@ -6,7 +6,6 @@ import getLayoutID from './get_layout_id'
 import getRemoteVersion from './get_remote_version'
 import getIsRefillBalanceModalVisible from './get_is_refill_balance_modal_visible'
 import getIsPaperTrading from './get_is_paper_trading'
-import getIsOrderExecuting from './get_is_order_executing'
 import getCurrentMode from './get_current_mode'
 import getGuideStatusForPage from './get_guide_status_for_page'
 import getStrategyId from './get_strategy_id'
@@ -40,7 +39,6 @@ export {
   getGuideStatusForPage,
   getStrategyId,
   getMarketComponents,
-  getIsOrderExecuting,
   getCurrentUnsavedLayout,
   getTickersVolumeUnit,
   getOrderToEdit,
