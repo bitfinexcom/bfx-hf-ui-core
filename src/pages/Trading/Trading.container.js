@@ -7,10 +7,11 @@ import { getHasActiveAlgoOrders, getShowActiveAlgoModal } from '../../redux/sele
 import {
   getFirstLogin,
   getGuideStatusForPage,
-  getIsBadInternetConnection,
+  getUIState,
 } from '../../redux/selectors/ui'
 
 import Trading from './Trading'
+import { UI_KEYS } from '../../redux/constants/ui_keys'
 
 const mapStateToProps = (state = {}) => ({
   firstLogin: getFirstLogin(state),
@@ -18,7 +19,7 @@ const mapStateToProps = (state = {}) => ({
   apiClientConnected: apiClientConnected(state),
   hasActiveAlgoOrders: getHasActiveAlgoOrders(state),
   isGuideActive: getGuideStatusForPage(state, TRADING_PAGE),
-  isBadConnection: getIsBadInternetConnection(state),
+  isBadConnection: getUIState(state, UI_KEYS.isBadInternetConnection),
 })
 
 const mapDispatchToProps = dispatch => ({

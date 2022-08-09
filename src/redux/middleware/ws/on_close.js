@@ -3,6 +3,7 @@ import WSActions from '../../actions/ws'
 import UIActions from '../../actions/ui'
 import { getAuthToken, getSocket } from '../../selectors/ws'
 import { isElectronApp } from '../../config'
+import { UI_KEYS } from '../../constants/ui_keys'
 
 export default (alias, store) => () => {
   const state = store.getState()
@@ -13,7 +14,7 @@ export default (alias, store) => () => {
   // do not show in hosted mode since it re-attepmpts new connection
   // do not mark bad connection if user is still on login screen and ws onClose is triggered
   if (!_isNil(socket?.lastActivity) && isElectronApp && isLoggedIn) {
-    store.dispatch(UIActions.changeBadInternetConnectionState(true))
+    store.dispatch(UIActions.setUIValue(UI_KEYS.isBadInternetConnection, true))
   }
 
   store.dispatch(WSActions.disconnected(alias))

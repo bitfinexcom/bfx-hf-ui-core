@@ -72,7 +72,6 @@ function getInitialState() {
     TRADING_PAGE_IS_GUIDE_ACTIVE: true,
     modals: { },
     orderToEdit: {},
-    isBadInternetConnection: false,
     closePositionModalData: {},
     isOrderExecuting: false,
     currentStrategy: {},
@@ -397,14 +396,6 @@ function reducer(state = getInitialState(), action = {}) {
         isPaperTrading,
         currentMode: mode,
         tickersVolumeUnit: isPaperTrading ? VOLUME_UNIT_PAPER.TESTUSD : VOLUME_UNIT.USD,
-      }
-    }
-
-    case types.CHANGE_BAD_INTERNET_STATE: {
-      const { isVisible } = payload
-      return {
-        ...state,
-        isBadInternetConnection: isVisible,
       }
     }
 

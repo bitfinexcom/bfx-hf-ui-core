@@ -140,11 +140,6 @@ export const changeEditOrderModalData = (order = {}) => {
   })
 }
 
-export const changeBadInternetConnectionState = (isVisible) => ({
-  type: types.CHANGE_BAD_INTERNET_STATE,
-  payload: { isVisible },
-})
-
 export const changeClosePositionModalData = (rowData = {}) => ({
   type: types.CHANGE_CLOSE_POSITION_MODAL_DATA,
   payload: { rowData },
@@ -250,7 +245,6 @@ export default {
   setStrategyExecutionId,
   setTradingMode,
   setMarketFromStore,
-  changeBadInternetConnectionState,
   setIsOrderExecuting,
   clearStrategies,
   setLayoutID,
