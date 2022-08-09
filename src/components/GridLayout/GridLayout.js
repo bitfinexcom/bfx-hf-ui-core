@@ -12,7 +12,7 @@ import { Spinner } from '@ufx-ui/core'
 
 import { useLocation } from 'react-router'
 import {
-  removeComponent, changeLayout, setLayoutID, storeUnsavedLayout,
+  removeComponent, changeLayout, setUIValue, storeUnsavedLayout,
 } from '../../redux/actions/ui'
 import { renderLayoutElement } from './GridLayout.helpers'
 import {
@@ -24,8 +24,8 @@ import {
 } from './Grid.constants'
 
 import {
-  getLayoutID,
   getLayoutForRoute,
+  getUIState,
 } from '../../redux/selectors/ui'
 
 import { generateLayout } from './Grid.layouts'
@@ -35,6 +35,7 @@ import { marketData, strategyEditor, tradingTerminal } from '../../constants/rou
 import { MARKET_SHAPE, ORDER_SHAPE } from '../../constants/prop-types-shapes'
 
 import './style.css'
+import { UI_KEYS } from '../../redux/constants/ui_keys'
 
 const ReactGridLayout = WidthProvider(RGL)
 
@@ -60,7 +61,7 @@ const GridLayout = ({
   const isAbleToSaveLayout = !pathname === strategyEditor.path
 
   const layoutConfig = useMemo(() => getLayoutConfig(pathname), [pathname])
-  const layoutID = useSelector(getLayoutID)
+  const layoutID = useSelector(state => getUIState(state, UI_KEYS.layoutID))
 
   const layoutIsDirty = useSelector(state => state.ui.layoutIsDirty)
   const [lastLayoutID, layoutDef, isMatchingUnsavedLayout, isMatchingSavedLayout] = useSelector(state => getLayoutForRoute(state, pathname))
@@ -83,7 +84,7 @@ const GridLayout = ({
     // set active layout id when there’s none selected (on initial load)
     // or when switching routes
     if (!layoutID || !isMatchingSavedLayout) {
-      dispatch(setLayoutID(lastLayoutID))
+      dispatch(setUIValue(UI_KEYS.layoutID, lastLayoutID))
     }
   }, [pathname, layoutID, lastLayoutID, isMatchingSavedLayout, dispatch])
 

@@ -134,11 +134,6 @@ export const changeClosePositionModalData = (rowData = {}) => ({
   payload: { rowData },
 })
 
-export const setLayoutID = (layoutID) => ({
-  type: types.SET_LAYOUT_ID,
-  payload: { layoutID },
-})
-
 export const addComponent = (component) => ({
   type: types.ADD_COMPONENT,
   payload: { component },
@@ -208,7 +203,6 @@ export default {
   setStrategyExecutionId,
   setTradingMode,
   setMarketFromStore,
-  setLayoutID,
   changeTickersVolumeUnit,
   changeEditOrderModalData,
   changeClosePositionModalData,

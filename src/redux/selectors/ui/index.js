@@ -2,7 +2,6 @@ import getUIState from './get_ui_state'
 import getComponentState from './get_component_state'
 import getActiveMarket from './get_active_market'
 import getLayouts from './get_layouts'
-import getLayoutID from './get_layout_id'
 import getRemoteVersion from './get_remote_version'
 import getIsPaperTrading from './get_is_paper_trading'
 import getCurrentMode from './get_current_mode'
@@ -30,7 +29,6 @@ export {
   getComponentState,
   getActiveMarket,
   getLayouts,
-  getLayoutID,
   getIsPaperTrading,
   getCurrentMode,
   getGuideStatusForPage,
