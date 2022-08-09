@@ -90,10 +90,6 @@ export const clearNotifications = () => ({
   type: types.CLEAR_NOTIFICATIONS,
 })
 
-export const firstLogin = () => ({
-  type: types.FIRST_LOGIN,
-})
-
 export const finishGuide = (page) => ({
   type: types.FINISH_GUIDE,
   payload: page,
@@ -234,7 +230,6 @@ export default {
   removeNotification,
   removeNotifications,
   clearNotifications,
-  firstLogin,
   finishGuide,
   recvNotification,
   setStrategyExecutionId,

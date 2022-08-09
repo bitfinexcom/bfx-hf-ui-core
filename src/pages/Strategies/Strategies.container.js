@@ -2,18 +2,19 @@ import { connect } from 'react-redux'
 import { STRATEGY_PAGE } from '../../redux/constants/ui'
 import {
   getCurrentStrategy,
-  getFirstLogin,
   getGuideStatusForPage,
+  getUIState,
 } from '../../redux/selectors/ui'
 import UIActions from '../../redux/actions/ui'
 import WSActions from '../../redux/actions/ws'
 
 import StrategiesPage from './Strategies'
 import { getAuthToken, getBacktestResults } from '../../redux/selectors/ws'
+import { UI_KEYS } from '../../redux/constants/ui_keys'
 
 const mapStateToProps = (state) => ({
   authToken: getAuthToken(state),
-  firstLogin: getFirstLogin(state),
+  firstLogin: getUIState(state, UI_KEYS.firstLogin),
   isGuideActive: getGuideStatusForPage(state, STRATEGY_PAGE),
   strategy: getCurrentStrategy(state),
   backtestResults: getBacktestResults(state),

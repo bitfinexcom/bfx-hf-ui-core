@@ -7,7 +7,6 @@ import getRemoteVersion from './get_remote_version'
 import getIsRefillBalanceModalVisible from './get_is_refill_balance_modal_visible'
 import getIsPaperTrading from './get_is_paper_trading'
 import getIsOrderExecuting from './get_is_order_executing'
-import getFirstLogin from './get_first_login'
 import getCurrentMode from './get_current_mode'
 import getGuideStatusForPage from './get_guide_status_for_page'
 import getStrategyId from './get_strategy_id'
@@ -37,7 +36,6 @@ export {
   getLayoutID,
   getIsRefillBalanceModalVisible,
   getIsPaperTrading,
-  getFirstLogin,
   getCurrentMode,
   getGuideStatusForPage,
   getStrategyId,

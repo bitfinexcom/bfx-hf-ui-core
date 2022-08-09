@@ -67,7 +67,6 @@ function getInitialState() {
     activeMarket: DEFAULT_MARKET,
     previousMarket: null,
     remoteVersion: null,
-    firstLogin: false,
     isPaperTrading: false,
     TRADING_PAGE_IS_GUIDE_ACTIVE: true,
     modals: { },
@@ -328,13 +327,6 @@ function reducer(state = getInitialState(), action = {}) {
         previousMarket: state.activeMarket,
         currentMode: mode,
         activeMarket,
-      }
-    }
-
-    case types.FIRST_LOGIN: {
-      return {
-        ...state,
-        firstLogin: true,
       }
     }
 
