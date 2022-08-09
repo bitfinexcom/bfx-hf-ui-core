@@ -112,26 +112,7 @@ const StrategyTypeSelect = ({
 
   return (
     <div className='hfui-strategy-options__dropdown-wrapper item'>
-      <div className='hfui-strategy-options__input'>
-        <Dropdown
-          value={strategyTypeDropdownValue}
-          options={strategyTypesOptionsMemo}
-          onChange={onSelectStrategyType}
-          disabled={isDisabled || isExecuting || showCustomStrategyTypeInput}
-          placeholder={
-            isExecuting || isDisabled
-              ? t('ui.notSelected')
-              : t('strategyEditor.strategyTypePlaceholder')
-          }
-        />
-        {(isExecuting || isDisabled) && (
-          <p className='hfui-orderform__input-label'>
-            {t('strategyEditor.strategyTypeDescriptionDisabled')}
-          </p>
-        )}
-      </div>
-
-      {showCustomStrategyTypeInput && (
+      {showCustomStrategyTypeInput ? (
         <form
           className='hfui-strategy-options__strategy-type-input'
           onSubmit={saveCustomStrategyType}
@@ -148,6 +129,25 @@ const StrategyTypeSelect = ({
             className='hfui-strategy-options__ok-btn'
           />
         </form>
+      ) : (
+        <div className='hfui-strategy-options__input'>
+          <Dropdown
+            value={strategyTypeDropdownValue}
+            options={strategyTypesOptionsMemo}
+            onChange={onSelectStrategyType}
+            disabled={isDisabled || isExecuting}
+            placeholder={
+            isExecuting || isDisabled
+              ? t('ui.notSelected')
+              : t('strategyEditor.strategyTypePlaceholder')
+          }
+          />
+          {(isExecuting || isDisabled) && (
+          <p className='hfui-orderform__input-label'>
+            {t('strategyEditor.strategyTypeDescriptionDisabled')}
+          </p>
+          )}
+        </div>
       )}
 
       {strategyTypeDropdownValue && !isExecuting && !isDisabled && (
