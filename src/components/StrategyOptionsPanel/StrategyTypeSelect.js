@@ -168,7 +168,7 @@ StrategyTypeSelect.propTypes = {
     i18nKey: PropTypes.string,
     customValue: PropTypes.string,
   }),
-  saveStrategyOptions: PropTypes.func.isRequired,
+  saveStrategyOptions: PropTypes.func,
   isExecuting: PropTypes.bool.isRequired,
   isDisabled: PropTypes.bool,
 }
@@ -176,6 +176,7 @@ StrategyTypeSelect.propTypes = {
 StrategyTypeSelect.defaultProps = {
   strategyType: null,
   isDisabled: false,
+  saveStrategyOptions: () => {},
 }
 
 export default memo(StrategyTypeSelect)

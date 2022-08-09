@@ -5,7 +5,6 @@ import { Tooltip } from '@ufx-ui/core'
 import { useTranslation } from 'react-i18next'
 
 import { useSelector } from 'react-redux'
-import MarketSelect from '../MarketSelect'
 import Button from '../../ui/Button'
 import StrategyRunned from '../StrategyEditor/components/StrategyRunned'
 import StrategyStopped from '../StrategyEditor/components/StrategyStopped'
@@ -14,6 +13,7 @@ import StrategyTypeSelect from './StrategyTypeSelect'
 import StrategyOptionsButton from './StrategyOptionsButton'
 import { STRATEGY_SHAPE } from '../../constants/prop-types-shapes'
 import { getExecutionConnectionState } from '../../redux/selectors/ws'
+import StrategyMarketSelect from './StrategyMarketSelect'
 
 import './style.css'
 
@@ -27,7 +27,6 @@ const StrategyOptionsPanelLive = ({
   openExecutionOptionsModal,
   setFullScreenChart,
   stopExecution,
-  saveStrategyOptions,
 }) => {
   const { label, strategyOptions: { symbol, strategyType } = {} } = strategy || {}
   const { t } = useTranslation()
@@ -67,20 +66,12 @@ const StrategyOptionsPanelLive = ({
         <div className='hfui-strategy-options__option item'>
           {getIndicator()}
         </div>
-        <div className='hfui-strategy-options__input item'>
-          <MarketSelect
-            value={symbol}
-            markets={markets}
-            onChange={() => {}}
-            disabled
-            renderWithFavorites
-          />
-          <p className='hfui-orderform__input-label'>
-            {t('strategyEditor.selectMarketDescriptionDisabled')}
-          </p>
-        </div>
+        <StrategyMarketSelect
+          markets={markets}
+          symbol={symbol}
+          isDisabled
+        />
         <StrategyTypeSelect
-          saveStrategyOptions={saveStrategyOptions}
           strategyType={strategyType}
           isExecuting={isExecuting}
           isDisabled
@@ -114,7 +105,6 @@ StrategyOptionsPanelLive.propTypes = {
   strategy: PropTypes.shape(STRATEGY_SHAPE).isRequired,
   isExecuting: PropTypes.bool.isRequired,
   hasResults: PropTypes.bool.isRequired,
-  saveStrategyOptions: PropTypes.func.isRequired,
   openExecutionOptionsModal: PropTypes.func.isRequired,
   setFullScreenChart: PropTypes.func.isRequired,
   stopExecution: PropTypes.func.isRequired,
