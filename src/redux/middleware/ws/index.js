@@ -6,6 +6,7 @@ import _isArray from 'lodash/isArray'
 import Debug from 'debug'
 
 import WSTypes from '../../constants/ws'
+import AOActions from '../../actions/ao'
 
 import onWSOpen from './on_open'
 import onWSClose from './on_close'
@@ -51,6 +52,13 @@ export default () => {
 
       case WSTypes.CONNECTED: {
         debug('connected')
+        next(action)
+        break
+      }
+
+      case WSTypes.RECONNECTED: {
+        store.dispatch(AOActions.showActiveOrdersModal(true))
+        debug('reconnected')
         next(action)
         break
       }

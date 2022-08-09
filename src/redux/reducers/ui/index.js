@@ -82,6 +82,7 @@ function getInitialState() {
     },
     orderToEdit: {},
     isBadInternetConnection: false,
+    isNoConnectionModalVisible: false,
     closePositionModalData: {},
     isOrderExecuting: false,
     currentStrategy: {},
@@ -333,6 +334,7 @@ function reducer(state = getInitialState(), action = {}) {
         activeMarket: market,
       }
     }
+
     case types.SET_MARKET_FROM_STORE: {
       const { isPaperTrading } = payload
       const mode = isPaperTrading ? PAPER_MODE : MAIN_MODE
@@ -354,6 +356,7 @@ function reducer(state = getInitialState(), action = {}) {
         firstLogin: true,
       }
     }
+
     case types.FINISH_GUIDE: {
       const page = payload
       return {
@@ -391,12 +394,14 @@ function reducer(state = getInitialState(), action = {}) {
         },
       }
     }
+
     case types.CLEAR_STRATEGIES: {
       return {
         ...state,
         currentStrategy: {},
       }
     }
+
     case types.SET_TRADING_MODE: {
       const { isPaperTrading } = payload
       const mode = isPaperTrading ? PAPER_MODE : MAIN_MODE
@@ -412,6 +417,7 @@ function reducer(state = getInitialState(), action = {}) {
         tickersVolumeUnit: isPaperTrading ? VOLUME_UNIT_PAPER.TESTUSD : VOLUME_UNIT.USD,
       }
     }
+
     case types.CHANGE_BAD_INTERNET_STATE: {
       const { isVisible } = payload
       return {
@@ -419,6 +425,15 @@ function reducer(state = getInitialState(), action = {}) {
         isBadInternetConnection: isVisible,
       }
     }
+
+    case types.CHANGE_IS_NO_CONNECTION_MODAL_STATE: {
+      const { isVisible } = payload
+      return {
+        ...state,
+        isNoConnectionModalVisible: isVisible,
+      }
+    }
+
     case types.CHANGE_CLOSE_POSITION_MODAL_STATE: {
       const { isVisible, rowData } = payload
 
@@ -431,6 +446,7 @@ function reducer(state = getInitialState(), action = {}) {
         },
       }
     }
+
     case types.SET_IS_ORDER_EXECUTING: {
       const { executing } = payload
       return {
@@ -438,12 +454,14 @@ function reducer(state = getInitialState(), action = {}) {
         isOrderExecuting: executing,
       }
     }
+
     case types.SET_IS_LOADING_ORDER_HIST_DATA: {
       return {
         ...state,
         isLoadingOrderHistData: payload,
       }
     }
+
     case types.CHANGE_REFILL_BALANCE_MODAL_STATE: {
       const { isVisible } = payload
 
@@ -455,6 +473,7 @@ function reducer(state = getInitialState(), action = {}) {
         },
       }
     }
+
     case types.CHANGE_OLD_FORMAT_MODAL_STATE: {
       const { isVisible } = payload
 
@@ -466,6 +485,7 @@ function reducer(state = getInitialState(), action = {}) {
         },
       }
     }
+
     case types.CHANGE_CONFIRM_DMS_MODAL_VISIBLE: {
       const { isVisible } = payload
 
@@ -477,6 +497,7 @@ function reducer(state = getInitialState(), action = {}) {
         },
       }
     }
+
     case types.CHANGE_EDIT_ORDER_MODAL_STATE: {
       const { isVisible, order } = payload
 
@@ -489,6 +510,7 @@ function reducer(state = getInitialState(), action = {}) {
         },
       }
     }
+
     case types.CHANGE_AO_PAUSE_MODAL_STATE: {
       const { isVisible } = payload
 
@@ -500,6 +522,7 @@ function reducer(state = getInitialState(), action = {}) {
         },
       }
     }
+
     case types.CHANGE_APP_SETTINGS_MODAL_STATE: {
       const { isVisible } = payload
 
@@ -511,6 +534,7 @@ function reducer(state = getInitialState(), action = {}) {
         },
       }
     }
+
     case types.ADD_COMPONENT: {
       const { component } = payload
       const layoutDef = getActiveLayoutDef(state)
@@ -547,6 +571,7 @@ function reducer(state = getInitialState(), action = {}) {
         },
       }
     }
+
     case types.REMOVE_COMPONENT: {
       const { i } = payload
       const newLayoutDef = _cloneDeep(getActiveLayoutDef(state))
@@ -562,6 +587,7 @@ function reducer(state = getInitialState(), action = {}) {
         unsavedLayout: newLayoutDef,
       }
     }
+
     case types.CHANGE_LAYOUT: {
       const { incomingLayout } = payload
       const layoutDef = getActiveLayoutDef(state)
@@ -590,6 +616,7 @@ function reducer(state = getInitialState(), action = {}) {
         unsavedLayout: updated,
       }
     }
+
     case types.SET_LAYOUT_ID: {
       const { layoutID } = payload
 
@@ -598,6 +625,7 @@ function reducer(state = getInitialState(), action = {}) {
         layoutID,
       }
     }
+
     case types.SELECT_LAYOUT: {
       const { id, routePath } = payload
 
@@ -610,6 +638,7 @@ function reducer(state = getInitialState(), action = {}) {
         layoutID: id,
       }
     }
+
     case types.CHANGE_TICKERS_VOLUME_UNIT: {
       const { key } = payload
       const { isPaperTrading } = state
@@ -617,6 +646,7 @@ function reducer(state = getInitialState(), action = {}) {
 
       return { ...state, tickersVolumeUnit: unit || 'SELF' }
     }
+
     case types.CHANGE_CCY_INFO_MODAL_STATE: {
       const { isVisible } = payload
 
@@ -628,6 +658,7 @@ function reducer(state = getInitialState(), action = {}) {
         },
       }
     }
+
     case types.SET_SETTINGS_TAB: {
       const { tab, section } = payload
 
@@ -697,6 +728,7 @@ function reducerWithStorage(state = getInitialState(), action = {}) {
         localStorage.setItem(LAYOUTS_STATE_KEY, JSON.stringify(layoutComponentState))
         break
       }
+
       case types.UPDATE_COMPONENT_STATE: {
         const { layoutComponentState } = newState
         localStorage.setItem(LAYOUTS_STATE_KEY, JSON.stringify(layoutComponentState))
