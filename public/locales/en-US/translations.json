@@ -637,9 +637,10 @@
     "saved": "Saved",
     "errorsInIDE": "Resolve code errors and save",
     "newStrategy": "Create a new strategy",
-    "capitalAllocationHelp": "This is the maximum amount of capital you want to deploy to this strategy, in quote currency (or equivalent)\nNOTE: you must have enough funds in the corresponding wallet to launch the strategy",
-    "stopLossHelp": "This is the maximum amount of capital you are willing to lose, as a percentage of the capital allocation\nIMPORTANT: the strategy will automatically stop if this level is reached",
-    "maximumDrawdownHelp": "This is the maximum drawdown allowed for this strategy in percentage\nIMPORTANT: the strategy will automatically stop if this level is reached",
+    "capitalAllocationHelp": "This is the maximum amount of capital you want to deploy to this strategy, in quote currency (or equivalent)",
+    "stopLossHelp": "This is the maximum amount of capital you are willing to lose, as a percentage of the capital allocation",
+    "strategyStop": "IMPORTANT: the strategy will automatically stop when this value is reached",
+    "maximumDrawdownHelp": "This is the maximum drawdown allowed for this strategy in percentage",
     "newStrategyFrom": "Create a new strategy from...",
     "newStrategy2": "New strategy",
     "newStrategyFrom2": "New strategy from...",
@@ -751,7 +752,8 @@
       "disabledTitle": "Execution parameters",
       "capitalAllocationLabel": "Capital Allocation",
       "stopLoss": "Stop-Loss",
-      "maxDrawdown": "Maximum Drawdown"
+      "maxDrawdown": "Maximum Drawdown",
+      "noMarketSelected": "You must first set a market for this strategy"
     },
     "perfomanceMetrics": {
       "title": "Perfomance metrics",
