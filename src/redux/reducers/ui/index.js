@@ -422,14 +422,6 @@ function reducer(state = getInitialState(), action = {}) {
       }
     }
 
-    case types.CHANGE_IS_NO_CONNECTION_MODAL_STATE: {
-      const { isVisible } = payload
-      return {
-        ...state,
-        isNoConnectionModalVisible: isVisible,
-      }
-    }
-
     case types.CHANGE_CLOSE_POSITION_MODAL_DATA: {
       const { rowData } = payload
 

@@ -150,11 +150,6 @@ export const changeBadInternetConnectionState = (isVisible) => ({
   payload: { isVisible },
 })
 
-export const changeIsNoConnectionModalState = (isVisible) => ({
-  type: types.CHANGE_IS_NO_CONNECTION_MODAL_STATE,
-  payload: { isVisible },
-})
-
 export const changeClosePositionModalData = (rowData = {}) => ({
   type: types.CHANGE_CLOSE_POSITION_MODAL_DATA,
   payload: { rowData },
@@ -268,7 +263,6 @@ export default {
   setIsLoadingOrderHistData,
   setCurrentStrategy,
   updateCurrentStrategy,
-  changeIsNoConnectionModalState,
   setPendingLiveStrategy,
   removePendingLiveStrategy,
   updateServiceStatus,
