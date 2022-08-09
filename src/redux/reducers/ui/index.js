@@ -416,12 +416,6 @@ function reducer(state = getInitialState(), action = {}) {
       }
     }
 
-    case types.SET_IS_LOADING_ORDER_HIST_DATA: {
-      return {
-        ...state,
-        isLoadingOrderHistData: payload,
-      }
-    }
     case types.CHANGE_EDIT_ORDER_MODAL_DATA: {
       const { order } = payload
 

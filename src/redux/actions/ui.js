@@ -186,11 +186,6 @@ export const setSettingsTab = (tab, section) => ({
   payload: { tab, section },
 })
 
-export const setIsLoadingOrderHistData = (flag) => ({
-  type: types.SET_IS_LOADING_ORDER_HIST_DATA,
-  payload: flag,
-})
-
 export const setPendingLiveStrategy = (strategyId) => ({
   type: types.SET_PENDING_LIVE_STRATEGY,
   payload: { strategyId },
@@ -252,7 +247,6 @@ export default {
   changeEditOrderModalData,
   changeClosePositionModalData,
   setSettingsTab,
-  setIsLoadingOrderHistData,
   setCurrentStrategy,
   updateCurrentStrategy,
   setPendingLiveStrategy,

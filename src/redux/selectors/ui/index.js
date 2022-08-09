@@ -18,7 +18,6 @@ import getClosePositionModalData from './get_close_position_modal_data'
 import getOrderToEdit from './get_order_to_edit'
 import getLayoutForRoute from './layouts/get_layout_for_route'
 import getSettingsActiveTab, { getSettingActiveSection } from './get_settings_active_tab'
-import getIsLoadingOrderHistData from './get_is_loading_order_hist_data'
 import getStrategyExecutionId from './get_strategy_execution_id'
 import getCurrentStrategy from './get_current_strategy'
 import getPendingLiveStrategy from './get_pending_live_strategy'
@@ -51,7 +50,6 @@ export {
   getClosePositionModalData,
   getSettingsActiveTab,
   getSettingActiveSection,
-  getIsLoadingOrderHistData,
   getStrategyExecutionId,
   getCurrentStrategy,
   getPendingLiveStrategy,

@@ -18,6 +18,7 @@ import tokenStore from '../../../util/token_store'
 import { AOAdapter } from '../../adapters/ws'
 import { isElectronApp, HONEY_AUTH_URL } from '../../config'
 import { UI_MODAL_KEYS } from '../../constants/modals'
+import { UI_KEYS } from '../../constants/ui_keys'
 
 const debug = Debug('hfui:rx:m:ws-hfui-server:msg')
 
@@ -328,7 +329,7 @@ export default (alias, store) => (e = {}) => {
 
       case 'data.order_history': {
         const [, orderHist] = payload
-        store.dispatch(UIActions.setIsLoadingOrderHistData(false))
+        store.dispatch(UIActions.setUIValue(UI_KEYS.isLoadingOrderHistData, false))
         store.dispatch(WSActions.recvOrderHist({ orderHist }))
         break
       }
