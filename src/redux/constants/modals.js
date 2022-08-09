@@ -7,4 +7,5 @@ export const UI_MODAL_KEYS = {
   EDIT_ORDER_MODAL: 'EditOrderModal',
   CLOSE_POSITION_MODAL: 'ClosePositionModal',
   NO_CONNECTION_MODAL: 'NoConnectionModal',
+  NOTIFICATIONS_PANEL: 'NotificationsPanel',
 }

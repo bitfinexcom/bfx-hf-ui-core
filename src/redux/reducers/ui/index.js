@@ -221,27 +221,6 @@ function reducer(state = getInitialState(), action = {}) {
       }
     }
 
-    case types.OPEN_NOTIFICATIONS: {
-      return {
-        ...state,
-        notificationsVisible: true,
-      }
-    }
-
-    case types.CLOSE_NOTIFICATIONS: {
-      return {
-        ...state,
-        notificationsVisible: false,
-      }
-    }
-
-    case types.SWITCH_NOTIFICATIONS: {
-      return {
-        ...state,
-        notificationsVisible: !state.notificationsVisible,
-      }
-    }
-
     case types.CREATE_LAYOUT: {
       const { id } = payload
       const layoutDef = getActiveLayoutDef(state)

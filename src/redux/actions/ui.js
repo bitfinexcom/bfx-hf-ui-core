@@ -65,10 +65,6 @@ export const updateComponentState = ({ layoutID, componentID, state }) => ({
   },
 })
 
-export const closeNotificationPanel = () => ({
-  type: types.CLOSE_NOTIFICATIONS,
-})
-
 export const removeNotification = (cid) => ({
   type: types.REMOVE_NOTIFICATION,
   payload: {
@@ -85,10 +81,6 @@ export const removeNotifications = (cids) => ({
 
 export const clearNotifications = () => ({
   type: types.CLEAR_NOTIFICATIONS,
-})
-
-export const switchNotifcationPanel = () => ({
-  type: types.SWITCH_NOTIFICATIONS,
 })
 
 export const firstLogin = () => ({
@@ -241,7 +233,6 @@ export default {
   saveComponentState,
   updateComponentState,
   saveRemoteVersion,
-  closeNotificationPanel,
   removeNotification,
   removeNotifications,
   clearNotifications,
@@ -254,7 +245,6 @@ export default {
   changeBadInternetConnectionState,
   setIsOrderExecuting,
   clearStrategies,
-  switchNotifcationPanel,
   setLayoutID,
   changeTickersVolumeUnit,
   changeEditOrderModalData,

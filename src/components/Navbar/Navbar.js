@@ -21,6 +21,7 @@ import {
 } from '../../redux/selectors/ui'
 
 import './style.css'
+import { UI_MODAL_KEYS } from '../../redux/constants/modals'
 
 const Navbar = () => {
   const dispatch = useDispatch()
@@ -54,7 +55,7 @@ const Navbar = () => {
           <NavbarButton
             alt={t('notifications.title')}
             icon='notifications'
-            onClick={() => dispatch(UIActions.switchNotifcationPanel())}
+            onClick={() => dispatch(UIActions.toggleUIModalState(UI_MODAL_KEYS.NOTIFICATIONS_PANEL))}
           />
           <AppSettings />
           {!isElectronApp && (

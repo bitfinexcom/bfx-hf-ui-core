@@ -13,11 +13,11 @@ import HFUI from './HFUI'
 
 const mapStateToProps = (state = {}) => {
   const { ui } = state
-  const { notificationsVisible } = ui
+  const { isNotificationsPanelOpen } = ui?.modals
 
   return {
     authToken: getAuthToken(state),
-    notificationsVisible,
+    notificationsVisible: isNotificationsPanelOpen,
     currentMode: getCurrentMode(state),
     settingsShowAlgoPauseInfo: getShowAlgoPauseInfoSetting(state),
     settingsTheme: getThemeSetting(state),
