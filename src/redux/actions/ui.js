@@ -1,5 +1,12 @@
 import types from '../constants/ui'
 
+export const setUIValue = (key, value) => ({
+  type: types.SET_UI_VALUE,
+  payload: {
+    key, value,
+  },
+})
+
 export const saveRemoteVersion = (version) => ({
   type: types.SAVE_REMOTE_VERSION,
   payload: {
@@ -225,6 +232,7 @@ export const toggleUIModalState = (key) => ({
 })
 
 export default {
+  setUIValue,
   saveLayout,
   storeUnsavedLayout,
   createLayout,

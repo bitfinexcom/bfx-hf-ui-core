@@ -171,6 +171,15 @@ function reducer(state = getInitialState(), action = {}) {
   const { type, payload = {} } = action
 
   switch (type) {
+    case types.SET_UI_VALUE: {
+      const { key, value } = payload
+
+      return {
+        ...state,
+        [key]: value,
+      }
+    }
+
     case types.SAVE_REMOTE_VERSION: {
       const { version } = payload
 

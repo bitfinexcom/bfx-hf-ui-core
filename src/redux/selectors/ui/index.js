@@ -1,3 +1,4 @@
+import getUIState from './get_ui_state'
 import getComponentState from './get_component_state'
 import getActiveMarket from './get_active_market'
 import getLayouts from './get_layouts'
@@ -30,6 +31,7 @@ export * from './get_core_settings'
 export * from './get_feature_flags'
 
 export {
+  getUIState,
   getRemoteVersion,
   getComponentState,
   getActiveMarket,
