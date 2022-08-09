@@ -108,7 +108,7 @@ const ExecutionOptionsModal = (props) => {
     } else {
       setCapitalAllocationError(t('strategyEditor.executionOptionsModal.noMarketSelected'))
     }
-  }, [strategyQuote])
+  }, [strategyQuote, t])
 
   useEffect(() => {
     if (
