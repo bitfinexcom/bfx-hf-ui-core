@@ -5,7 +5,7 @@ import _map from 'lodash/map'
 import PropTypes from 'prop-types'
 import { useTranslation } from 'react-i18next'
 import { Icon } from 'react-fa'
-import { Button as UfxButton } from '@ufx-ui/core'
+import { Button as UfxButton, Tooltip } from '@ufx-ui/core'
 import Dropdown from '../../ui/Dropdown'
 import Input from '../../ui/Input'
 import Button from '../../ui/Button'
@@ -111,8 +111,8 @@ const StrategyTypeSelect = ({
   }, [strategyType])
 
   return (
-    <div className='hfui-strategy-options__type-selection item'>
-      <div className='hfui-strategy-options__input hfui-strategy-options__input--unlimited'>
+    <div className='hfui-strategy-options__dropdown-wrapper item'>
+      <div className='hfui-strategy-options__input'>
         <Dropdown
           value={strategyTypeDropdownValue}
           options={strategyTypesOptionsMemo}
@@ -124,11 +124,11 @@ const StrategyTypeSelect = ({
               : t('strategyEditor.strategyTypePlaceholder')
           }
         />
-        <p className='hfui-orderform__input-label'>
-          {isExecuting || isDisabled
-            ? t('strategyEditor.strategyTypeDescriptionDisabled')
-            : t('strategyEditor.strategyTypeDescription')}
-        </p>
+        {(isExecuting || isDisabled) && (
+          <p className='hfui-orderform__input-label'>
+            {t('strategyEditor.strategyTypeDescriptionDisabled')}
+          </p>
+        )}
       </div>
 
       {showCustomStrategyTypeInput && (
@@ -159,6 +159,12 @@ const StrategyTypeSelect = ({
           <Icon name='times' className='search-icon' />
         </UfxButton>
       )}
+      <Tooltip
+        className='__react-tooltip __react-tooltip-break-line'
+        content={t('strategyEditor.strategyTypeDescription')}
+      >
+        <i className='fa fa-info-circle __react_component_tooltip' />
+      </Tooltip>
     </div>
   )
 }

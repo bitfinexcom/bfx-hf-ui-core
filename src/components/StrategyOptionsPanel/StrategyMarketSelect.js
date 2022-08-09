@@ -37,8 +37,8 @@ const StrategyMarketSelect = ({
   const { t } = useTranslation()
 
   return (
-    <>
-      <div className='hfui-strategy-options__input hfui-strategy-options__input--unlimited item'>
+    <div className='hfui-strategy-options__dropdown-wrapper item'>
+      <div className='hfui-strategy-options__input'>
         <MarketSelect
           value={symbol}
           onChange={onMarketSelectChange}
@@ -57,21 +57,23 @@ const StrategyMarketSelect = ({
               error: _isEmpty(symbol),
             })}
           >
-            <span>
-              <b>{t('ui.required')}</b>
-              .&nbsp;
-              {t('strategyEditor.selectMarketDescription')}
-            </span>
+            <b>{t('ui.required')}</b>
           </p>
         )}
       </div>
       <Tooltip
         className='__react-tooltip __react-tooltip-break-line'
-        content={t('strategyEditor.capitalAllocationHelp')}
+        content={(
+          <span>
+            <b>{t('ui.required')}</b>
+            .&nbsp;
+            {t('strategyEditor.selectMarketDescription')}
+          </span>
+        )}
       >
-        <i className='fa fa-info-circle __react_component_tooltip title-tooltip' />
+        <i className='fa fa-info-circle __react_component_tooltip' />
       </Tooltip>
-    </>
+    </div>
   )
 }
 

@@ -78,6 +78,7 @@
     font-size: 20px;
     font-weight: 700;
     max-width: 25ch;
+    min-width: 12ch;
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
@@ -91,33 +92,29 @@
   }
 
   &__input {
-    display: flex;
-    flex-direction: column;
-    max-width: 250px;
     margin-bottom: 0;
-
-    &--unlimited {
-      max-width: none;
-    }
   }
 
   &__amount-input {
-    @extend .hfui-strategy-options__input;
     padding: 8 16px;
   }
 
   &__strategy-type-input {
-    @extend .hfui-strategy-options__input;
+    display: flex;
     flex-direction: row;
   }
 
-  &__type-selection {
+  &__dropdown-wrapper {
     display: flex;
     justify-content: space-between;
     align-items: baseline;
 
-    .hfui-strategy-options__input:not(:last-child) {
+    & > *:not(:last-child) {
       margin-right: 10px;
+    }
+
+    .__react_component_tooltip {
+      cursor: pointer;
     }
   }
 
