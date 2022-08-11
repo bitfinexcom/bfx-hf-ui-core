@@ -38,7 +38,8 @@
     "lodash/prefer-lodash-method": "warn",
     "react-hooks/rules-of-hooks": "error", // Checks rules of Hooks
     "react-hooks/exhaustive-deps": "warn", // Checks effect dependencie
-    "func-names": "off"
+    "func-names": "off",
+    "no-unsafe-optional-chaining": "off" // Need to be resolved in codebase and removed
   },
   "settings": {
     "import/resolver": {

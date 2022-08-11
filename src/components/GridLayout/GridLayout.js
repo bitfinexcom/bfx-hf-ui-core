@@ -70,7 +70,6 @@ const GridLayout = ({
     const nextLayout = generateLayout(layoutConfig)
     if (layoutDef?.layout && (layoutIsDirty || !layoutDef.isDefault)) {
       _forEach(_keys(nextLayout), (bp) => {
-        // eslint-disable-next-line no-unsafe-optional-chaining
         nextLayout[bp] = [...layoutDef?.layout]
       })
     }
