@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react'
+import React, { useMemo, useState } from 'react'
 import PropTypes from 'prop-types'
 import _debounce from 'lodash/debounce'
 import { useTranslation } from 'react-i18next'
@@ -42,8 +42,10 @@ const BacktestOptionsPanel = ({
   const { t } = useTranslation()
 
   const setTimeframe = (value) => saveStrategyOptions({ [STRATEGY_OPTIONS_KEYS.TIMEFRAME]: value })
-  const setCandleSeed = useCallback(
-    _debounce(
+
+  // https://kyleshevlin.com/debounce-and-throttle-callbacks-with-react-hooks
+  const setCandleSeed = useMemo(
+    () => _debounce(
       (value) => saveStrategyOptions({ [STRATEGY_OPTIONS_KEYS.CANDLE_SEED]: value }),
       1000,
     ),
@@ -100,31 +102,39 @@ const BacktestOptionsPanel = ({
           onChange={setCandles}
           disabled={isLoading}
         />
-        <div className={clsx('hfui-orderform__input-label', { disabled: isLoading })}>
+        <div
+          className={clsx('hfui-orderform__input-label', {
+            disabled: isLoading,
+          })}
+        >
           {t('strategyEditor.useCandlesCheckboxDescription')}
         </div>
       </div>
       {candles && (
-      <>
-        <div className='item'>
-          <TimeFrameDropdown
+        <>
+          <div className='item'>
+            <TimeFrameDropdown
+              disabled={isLoading}
+              tf={timeframe}
+              onChange={setTimeframe}
+            />
+            <p
+              className={clsx('hfui-orderform__input-label', {
+                disabled: isLoading,
+              })}
+            >
+              {t('strategyEditor.selectCandleDurationDescription')}
+            </p>
+          </div>
+          <AmountInput
+            className='item'
+            def={{ label: t('strategyEditor.candleSeedCount') }}
+            validationError={seedError}
+            value={candleSeedValue}
+            onChange={updateSeed}
             disabled={isLoading}
-            tf={timeframe}
-            onChange={setTimeframe}
           />
-          <p className={clsx('hfui-orderform__input-label', { disabled: isLoading })}>
-            {t('strategyEditor.selectCandleDurationDescription')}
-          </p>
-        </div>
-        <AmountInput
-          className='item'
-          def={{ label: t('strategyEditor.candleSeedCount') }}
-          validationError={seedError}
-          value={candleSeedValue}
-          onChange={updateSeed}
-          disabled={isLoading}
-        />
-      </>
+        </>
       )}
       {/* {!isPaperTrading && _includes(symbol?.contexts, 'm') && (
         <div className='hfui-strategy-options__amount-input item'>
@@ -143,22 +153,25 @@ const BacktestOptionsPanel = ({
           onChange={setTrades}
           disabled={isLoading}
         />
-        <div className={clsx('hfui-orderform__input-label', { disabled: isLoading })}>
+        <div
+          className={clsx('hfui-orderform__input-label', {
+            disabled: isLoading,
+          })}
+        >
           {t('strategyEditor.useTradesCheckboxDescription')}
         </div>
       </div>
 
       {isLoading && (
-      <div className='item'>
-        <Button
-          intent={Intent.NONE}
-          onClick={onCancelProcess}
-          className='hfui-strategy-backtest-options__start-btn'
-        >
-          {t('strategyEditor.cancelThisProcess')}
-        </Button>
-
-      </div>
+        <div className='item'>
+          <Button
+            intent={Intent.NONE}
+            onClick={onCancelProcess}
+            className='hfui-strategy-backtest-options__start-btn'
+          >
+            {t('strategyEditor.cancelThisProcess')}
+          </Button>
+        </div>
       )}
       <div className='item'>
         {isLoading ? (
