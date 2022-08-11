@@ -19,7 +19,7 @@
     "build:staging": "GENERATE_SOURCEMAP=false cross-env npm run build-css && env-cmd -e staging node scripts/build.js",
     "build:production": "GENERATE_SOURCEMAP=false cross-env npm run build-css && env-cmd -e production node scripts/build.js",
     "test": "cross-env npm run lint",
-    "lint": "cross-env eslint src"
+    "lint": "cross-env eslint --fix src"
   },
   "author": "Bitfinex",
   "license": "Apache-2.0",
