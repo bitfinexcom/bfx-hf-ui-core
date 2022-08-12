@@ -14,7 +14,7 @@ import {
   SETTINGS_KEYS, getThemeSetting, THEMES,
 } from '../../redux/selectors/ui'
 
-const TradingMode = () => {
+const Appearance = () => {
   const { t } = useTranslation()
   const dispatch = useDispatch()
   const settingsTheme = useSelector(getThemeSetting)
@@ -56,4 +56,4 @@ const TradingMode = () => {
   )
 }
 
-export default memo(TradingMode)
+export default memo(Appearance)
