@@ -1,20 +1,16 @@
 import React, { memo } from 'react'
 import PropTypes from 'prop-types'
-import _find from 'lodash/find'
 import _size from 'lodash/size'
-import _isEmpty from 'lodash/isEmpty'
 import { Tooltip } from '@ufx-ui/core'
-import _includes from 'lodash/includes'
 import { useTranslation } from 'react-i18next'
 
 import { Icon } from 'react-fa'
 import clsx from 'clsx'
-import MarketSelect from '../MarketSelect'
 import Button from '../../ui/Button'
 import StrategyTypeSelect from './StrategyTypeSelect'
-import { STRATEGY_OPTIONS_KEYS } from '../StrategyEditor/StrategyEditor.helpers'
 import StrategyOptionsButton from './StrategyOptionsButton'
-import { STRATEGY_SHAPE } from '../../constants/prop-types-shapes'
+import { MARKET_SHAPE, STRATEGY_SHAPE } from '../../constants/prop-types-shapes'
+import StrategyMarketSelect from './StrategyMarketSelect'
 
 import './style.css'
 
@@ -36,18 +32,6 @@ const StrategyOptionsPanelSandbox = ({
     strategyOptions: { symbol, strategyType } = {},
   } = strategy || {}
   const { t } = useTranslation()
-
-  const onMarketSelectChange = (selection) => {
-    const sel = _find(markets, (m) => m.wsID === selection.wsID)
-    const options = {
-      [STRATEGY_OPTIONS_KEYS.SYMBOL]: sel,
-    }
-
-    if (!_includes(sel?.contexts, 'm')) {
-      options[STRATEGY_OPTIONS_KEYS.MARGIN] = false
-    }
-    saveStrategyOptions(options)
-  }
 
   const onStrategyNameClick = () => {
     if (executionId) {
@@ -78,26 +62,11 @@ const StrategyOptionsPanelSandbox = ({
             )}
           </>
         </p>
-        <div className='hfui-strategy-options__input hfui-strategy-options__input--unlimited item'>
-          <MarketSelect
-            value={symbol}
-            onChange={onMarketSelectChange}
-            markets={markets}
-            placeholder={t('strategyEditor.selectMarketPlaceholder')}
-            renderWithFavorites
-          />
-          <p
-            className={clsx('hfui-orderform__input-label', {
-              error: _isEmpty(symbol),
-            })}
-          >
-            <span>
-              <b>{t('ui.required')}</b>
-              .&nbsp;
-              {t('strategyEditor.selectMarketDescription')}
-            </span>
-          </p>
-        </div>
+        <StrategyMarketSelect
+          saveStrategyOptions={saveStrategyOptions}
+          markets={markets}
+          symbol={symbol}
+        />
         <StrategyTypeSelect
           saveStrategyOptions={saveStrategyOptions}
           strategyType={strategyType}
@@ -133,7 +102,7 @@ const StrategyOptionsPanelSandbox = ({
 }
 
 StrategyOptionsPanelSandbox.propTypes = {
-  markets: PropTypes.arrayOf(Object).isRequired,
+  markets: PropTypes.arrayOf(PropTypes.shape(MARKET_SHAPE)).isRequired,
   saveStrategyOptions: PropTypes.func.isRequired,
   strategy: PropTypes.shape(STRATEGY_SHAPE).isRequired,
   openExecutionOptionsModal: PropTypes.func.isRequired,
