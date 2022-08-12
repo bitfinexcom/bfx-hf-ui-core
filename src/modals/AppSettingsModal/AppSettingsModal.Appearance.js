@@ -44,7 +44,7 @@ const Appearance = () => {
         </p>
         <LanguageSettings />
       </div>
-      <div className='appsettings-modal__setting appsettings-modal__dropdown'>
+      <div className='appsettings-modal__setting'>
         <Dropdown
           label={t('appSettings.themeSetting')}
           onChange={updateTheme}

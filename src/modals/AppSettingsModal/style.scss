@@ -46,7 +46,7 @@
   }
 
   p {
-    margin-bottom: spacing();
+    margin-bottom: 5px;
   }
 
   &__tabs {
@@ -133,20 +133,6 @@
     font-weight: 600;
     color: var(--shade-8);
     margin-bottom: spacing(0.5);
-  }
-
-  &__dropdown {
-    .hfui-dropdown__wrapper {
-      p {
-        margin-bottom: 10px;
-      }
-    }
-  }
-
-  &__appearance_setting {
-    .hfui-dropdown__wrapper p {
-      margin-bottom: 16px !important;
-    }
   }
 
   &__input {
