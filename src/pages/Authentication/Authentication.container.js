@@ -24,7 +24,6 @@ const mapDispatchToProps = dispatch => ({ // eslint-disable-line
     removeStoredPassword(password)
     updateAutoLoginState()
     dispatch(WSActions.initAuth(password))
-    dispatch(UIActions.setUIValue(UI_KEYS.firstLogin, true))
   },
 
   onUnlock: (password, mode) => {

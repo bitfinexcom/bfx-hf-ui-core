@@ -5,7 +5,6 @@ import getLayouts from './get_layouts'
 import getRemoteVersion from './get_remote_version'
 import getIsPaperTrading from './get_is_paper_trading'
 import getCurrentMode from './get_current_mode'
-import getGuideStatusForPage from './get_guide_status_for_page'
 import getStrategyId from './get_strategy_id'
 import getMarketComponents from './get_market_components'
 import getCurrentUnsavedLayout from './get_current_unsaved_layout'
@@ -28,7 +27,6 @@ export {
   getLayouts,
   getIsPaperTrading,
   getCurrentMode,
-  getGuideStatusForPage,
   getStrategyId,
   getMarketComponents,
   getCurrentUnsavedLayout,
