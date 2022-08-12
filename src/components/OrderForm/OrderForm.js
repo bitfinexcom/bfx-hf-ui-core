@@ -36,15 +36,6 @@ const CONTEXT_LABELS = {
 }
 
 class OrderForm extends React.Component {
-  state = {
-    fieldData: {},
-    validationErrors: {},
-    creationError: null,
-    context: 'e',
-    helpOpen: false,
-    isAlgoOrder: false,
-  }
-
   constructor(props) {
     super(props)
 
@@ -56,6 +47,10 @@ class OrderForm extends React.Component {
 
     this.state = {
       ...this.state,
+      validationErrors: {},
+      creationError: null,
+      helpOpen: false,
+      isAlgoOrder: false,
       currentMarket,
       marketDirty,
       fieldData: {},
