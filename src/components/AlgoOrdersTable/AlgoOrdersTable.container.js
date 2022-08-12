@@ -9,6 +9,7 @@ import GAActions from '../../redux/actions/google_analytics'
 import AlgoOrdersTable from './AlgoOrdersTable'
 import { getMarketPair } from '../../redux/selectors/meta'
 import { UI_MODAL_KEYS } from '../../redux/constants/modals'
+import { UI_KEYS } from '../../redux/constants/ui_keys'
 
 const debug = Debug('hfui:c:algo-orders-table')
 
@@ -31,7 +32,7 @@ const mapDispatchToProps = dispatch => ({
     dispatch(GAActions.cancelAO())
   },
   editOrder: (order) => {
-    dispatch(UIActions.changeEditOrderModalData(order))
+    dispatch(UIActions.setUIValue(UI_KEYS.orderToEdit, order))
     dispatch(UIActions.changeUIModalState(UI_MODAL_KEYS.EDIT_ORDER_MODAL, true))
   },
 })

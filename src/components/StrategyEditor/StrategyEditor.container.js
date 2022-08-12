@@ -21,11 +21,12 @@ import {
   getIsBetaVersion,
   getCurrentMode,
   getStrategyExecutionId,
-  getPendingLiveStrategy,
   getServicesStatus,
+  getUIState,
 } from '../../redux/selectors/ui'
 import StrategyEditor from './StrategyEditor'
 import { getMarketsSortedByVolumeForExecution } from '../../redux/selectors/meta'
+import { UI_KEYS } from '../../redux/constants/ui_keys'
 
 const mapStateToProps = (state = {}) => {
   return {
@@ -39,7 +40,7 @@ const mapStateToProps = (state = {}) => {
     savedStrategies: getSavedStrategies(state),
     currentMode: getCurrentMode(state),
     executionId: getStrategyExecutionId(state),
-    pendingLiveStrategy: getPendingLiveStrategy(state),
+    pendingLiveStrategy: getUIState(state, UI_KEYS.pendingLiveStrategy, null),
     serviceStatus: getServicesStatus(state),
     markets: getMarketsSortedByVolumeForExecution(state),
     getCurrencySymbol: reduxSelectors.getCurrencySymbolMemo(state),
@@ -50,7 +51,7 @@ const mapDispatchToProps = (dispatch) => ({
   onRemove: (authToken, id) => {
     dispatch(WSActions.send(['strategy.remove', authToken, id]))
     dispatch(WSActions.resetBacktestData())
-    dispatch(UIActions.clearStrategies())
+    dispatch(UIActions.setUIValue(UI_KEYS.currentStrategy, {}))
   },
   gaCreateStrategy: () => {
     dispatch(GAActions.createStrategy())
@@ -171,10 +172,10 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch(UIActions.changeMode(isPaperTrading))
   },
   saveStrategyToExecuteToLS: (strategyToExecute) => {
-    dispatch(UIActions.setPendingLiveStrategy(strategyToExecute.id))
+    dispatch(UIActions.setUIValue(UI_KEYS.pendingLiveStrategy, strategyToExecute.id))
   },
   removeStrategyToExecuteFromLS: () => {
-    dispatch(UIActions.removePendingLiveStrategy())
+    dispatch(UIActions.setUIValue(UI_KEYS.pendingLiveStrategy, null))
   },
 })
 

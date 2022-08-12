@@ -68,7 +68,6 @@ function getInitialState() {
     notificationsVisible: false,
     previousMarket: null,
     remoteVersion: null,
-    firstLogin: false,
     isPaperTrading: false,
     TRADING_PAGE_IS_GUIDE_ACTIVE: true,
     modals: { },
@@ -173,6 +172,27 @@ function reducer(state = getInitialState(), action = {}) {
   const { type, payload = {} } = action
 
   switch (type) {
+    case types.SET_UI_VALUE: {
+      const { key, value } = payload
+
+      return {
+        ...state,
+        [key]: value,
+      }
+    }
+
+    case types.UPDATE_UI_VALUE: {
+      const { key, value } = payload
+
+      return {
+        ...state,
+        [key]: {
+          ...(state?.[key] || {}),
+          ...value,
+        },
+      }
+    }
+
     case types.SAVE_REMOTE_VERSION: {
       const { version } = payload
 
@@ -195,50 +215,6 @@ function reducer(state = getInitialState(), action = {}) {
             savedAt: Date.now(),
           },
         },
-      }
-    }
-
-    case types.STORE_UNSAVED_LAYOUT: {
-      const { layout } = payload
-
-      return {
-        ...state,
-        unsavedLayout: layout,
-      }
-    }
-
-    case types.UPDATE_SETTINGS: {
-      return {
-        ...state,
-        settings: payload,
-      }
-    }
-
-    case types.RECEIVE_CORE_SETTINGS: {
-      return {
-        ...state,
-        coreSettings: payload,
-      }
-    }
-
-    case types.OPEN_NOTIFICATIONS: {
-      return {
-        ...state,
-        notificationsVisible: true,
-      }
-    }
-
-    case types.CLOSE_NOTIFICATIONS: {
-      return {
-        ...state,
-        notificationsVisible: false,
-      }
-    }
-
-    case types.SWITCH_NOTIFICATIONS: {
-      return {
-        ...state,
-        notificationsVisible: !state.notificationsVisible,
       }
     }
 
@@ -346,37 +322,11 @@ function reducer(state = getInitialState(), action = {}) {
       }
     }
 
-    case types.FIRST_LOGIN: {
-      return {
-        ...state,
-        firstLogin: true,
-      }
-    }
-
     case types.FINISH_GUIDE: {
       const page = payload
       return {
         ...state,
         [`${page}_GUIDE_ACTIVE`]: false,
-      }
-    }
-
-    case types.SET_CURRENT_STRATEGY: {
-      const { strategy } = payload
-
-      return {
-        ...state,
-        currentStrategy: strategy,
-      }
-    }
-
-    case types.UPDATE_CURRENT_STRATEGY: {
-      return {
-        ...state,
-        currentStrategy: {
-          ...state.currentStrategy,
-          ...payload,
-        },
       }
     }
 
@@ -388,13 +338,6 @@ function reducer(state = getInitialState(), action = {}) {
           ...state.currentStrategy,
           executionId,
         },
-      }
-    }
-
-    case types.CLEAR_STRATEGIES: {
-      return {
-        ...state,
-        currentStrategy: {},
       }
     }
 
@@ -411,54 +354,6 @@ function reducer(state = getInitialState(), action = {}) {
         isPaperTrading,
         currentMode: mode,
         tickersVolumeUnit: isPaperTrading ? VOLUME_UNIT_PAPER.TESTUSD : VOLUME_UNIT.USD,
-      }
-    }
-
-    case types.CHANGE_BAD_INTERNET_STATE: {
-      const { isVisible } = payload
-      return {
-        ...state,
-        isBadInternetConnection: isVisible,
-      }
-    }
-
-    case types.CHANGE_IS_NO_CONNECTION_MODAL_STATE: {
-      const { isVisible } = payload
-      return {
-        ...state,
-        isNoConnectionModalVisible: isVisible,
-      }
-    }
-
-    case types.CHANGE_CLOSE_POSITION_MODAL_DATA: {
-      const { rowData } = payload
-
-      return {
-        ...state,
-        closePositionModalData: rowData,
-      }
-    }
-
-    case types.SET_IS_ORDER_EXECUTING: {
-      const { executing } = payload
-      return {
-        ...state,
-        isOrderExecuting: executing,
-      }
-    }
-
-    case types.SET_IS_LOADING_ORDER_HIST_DATA: {
-      return {
-        ...state,
-        isLoadingOrderHistData: payload,
-      }
-    }
-    case types.CHANGE_EDIT_ORDER_MODAL_DATA: {
-      const { order } = payload
-
-      return {
-        ...state,
-        orderToEdit: order,
       }
     }
 
@@ -544,15 +439,6 @@ function reducer(state = getInitialState(), action = {}) {
       }
     }
 
-    case types.SET_LAYOUT_ID: {
-      const { layoutID } = payload
-
-      return {
-        ...state,
-        layoutID,
-      }
-    }
-
     case types.SELECT_LAYOUT: {
       const { id, routePath } = payload
 
@@ -573,6 +459,7 @@ function reducer(state = getInitialState(), action = {}) {
 
       return { ...state, tickersVolumeUnit: unit || 'SELF' }
     }
+
     case types.CHANGE_UI_MODAL_STATE: {
       const { key, isOpen } = payload
 
@@ -585,6 +472,20 @@ function reducer(state = getInitialState(), action = {}) {
       }
     }
 
+    case types.TOGGLE_UI_MODAL_STATE: {
+      const { key } = payload
+      const modalKey = `is${key}Open`
+      const currModalState = state.modals?.[modalKey]
+
+      return {
+        ...state,
+        modals: {
+          ...state.modals,
+          [modalKey]: !currModalState,
+        },
+      }
+    }
+
     case types.SET_SETTINGS_TAB: {
       const { tab, section } = payload
 
@@ -592,29 +493,6 @@ function reducer(state = getInitialState(), action = {}) {
         ...state,
         settingsActiveTab: tab,
         settingsActiveSection: section,
-      }
-    }
-
-    case types.SET_FEATURE_FLAGS: {
-      return {
-        ...state,
-        featureFlags: payload,
-      }
-    }
-
-    case types.SET_PENDING_LIVE_STRATEGY: {
-      const { strategyId } = payload
-
-      return {
-        ...state,
-        pendingLiveStrategy: strategyId,
-      }
-    }
-
-    case types.REMOVE_PENDING_LIVE_STRATEGY: {
-      return {
-        ...state,
-        pendingLiveStrategy: null,
       }
     }
 

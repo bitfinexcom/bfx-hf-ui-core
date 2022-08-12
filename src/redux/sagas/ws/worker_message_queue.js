@@ -7,6 +7,7 @@ import Debug from 'debug'
 import { getSockets } from '../../selectors/ws'
 import WSTypes, { SOCKET_STATUS_MAP } from '../../constants/ws'
 import UIActions from '../../actions/ui'
+import { UI_MODAL_KEYS } from '../../constants/modals'
 
 const debug = Debug('hfui:rx:s:ws-hfui:msg-q')
 const ONLINE_ONLY_MESSAGES = ['order.submit', 'algo_order.submit', 'api_credentials.save', 'strategy.execute_start', 'settings.update']
@@ -18,7 +19,7 @@ export default function* (action = {}) {
   const offline = _some(_keys(sockets), s => sockets[s].status !== SOCKET_STATUS_MAP.ONLINE)
 
   if (offline && _some(ONLINE_ONLY_MESSAGES, m => _includes(action.payload, m))) {
-    yield put(UIActions.changeIsNoConnectionModalState(true))
+    yield put(UIActions.changeUIModalState(UI_MODAL_KEYS.NO_CONNECTION_MODAL, true))
     return
   }
 

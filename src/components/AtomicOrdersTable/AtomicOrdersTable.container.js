@@ -8,6 +8,7 @@ import UIActions from '../../redux/actions/ui'
 import AtomicOrdersTable from './AtomicOrdersTable'
 import { cancelOrder } from './AtomicOrdersTable.helpers'
 import { UI_MODAL_KEYS } from '../../redux/constants/modals'
+import { UI_KEYS } from '../../redux/constants/ui_keys'
 
 const { getIsDerivativePair } = reduxSelectors
 
@@ -22,7 +23,7 @@ const mapStateToProps = (state = {}, { activeFilter }) => ({
 const mapDispatchToProps = dispatch => ({
   cancelOrder: (authToken, order) => cancelOrder(authToken, order, dispatch),
   editOrder: (order) => {
-    dispatch(UIActions.changeEditOrderModalData(order))
+    dispatch(UIActions.setUIValue(UI_KEYS.orderToEdit, order))
     dispatch(UIActions.changeUIModalState(UI_MODAL_KEYS.EDIT_ORDER_MODAL, true))
   },
 })
