@@ -5,20 +5,20 @@ import { TRADING_PAGE } from '../../redux/constants/ui'
 import { apiClientConnected } from '../../redux/selectors/ws'
 import { getHasActiveAlgoOrders, getShowActiveAlgoModal } from '../../redux/selectors/ao'
 import {
-  getFirstLogin,
   getGuideStatusForPage,
-  getIsBadInternetConnection,
+  getUIState,
 } from '../../redux/selectors/ui'
 
 import Trading from './Trading'
+import { UI_KEYS } from '../../redux/constants/ui_keys'
 
 const mapStateToProps = (state = {}) => ({
-  firstLogin: getFirstLogin(state),
+  firstLogin: getUIState(state, UI_KEYS.firstLogin, false),
   showAlgoModal: getShowActiveAlgoModal(state),
   apiClientConnected: apiClientConnected(state),
   hasActiveAlgoOrders: getHasActiveAlgoOrders(state),
   isGuideActive: getGuideStatusForPage(state, TRADING_PAGE),
-  isBadConnection: getIsBadInternetConnection(state),
+  isBadConnection: getUIState(state, UI_KEYS.isBadInternetConnection, false),
 })
 
 const mapDispatchToProps = dispatch => ({

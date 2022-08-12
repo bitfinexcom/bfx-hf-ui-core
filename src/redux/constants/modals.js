@@ -8,4 +8,5 @@ export const UI_MODAL_KEYS = {
   CLOSE_POSITION_MODAL: 'ClosePositionModal',
   NO_CONNECTION_MODAL: 'NoConnectionModal',
   NOTIFICATIONS_PANEL: 'NotificationsPanel',
+  REFILL_BALANCE_MODAL: 'RefillBalanceModal',
 }

@@ -15,9 +15,10 @@ import {
   getAPIClientState, getAuthToken, getCurrentModeAPIKeyState, getFilteredAtomicOrdersCount, getAtomicOrders, isSocketConnected,
 } from '../../redux/selectors/ws'
 import {
-  getComponentState, getActiveMarket, getCurrentMode, getIsPaperTrading, getIsOrderExecuting, getMaxOrderCounts, getIsBetaVersion, getIsStrategiesLiveExecVisible,
+  getComponentState, getActiveMarket, getCurrentMode, getIsPaperTrading, getMaxOrderCounts, getIsBetaVersion, getIsStrategiesLiveExecVisible, getUIState,
 } from '../../redux/selectors/ui'
 import { getScope } from '../../util/scope'
+import { UI_KEYS } from '../../redux/constants/ui_keys'
 
 const debug = Debug('hfui:c:order-form')
 
@@ -39,7 +40,7 @@ const mapStateToProps = (state = {}, ownProps = {}) => {
     favoritePairs,
     mode: getCurrentMode(state),
     isPaperTrading: getIsPaperTrading(state),
-    isOrderExecuting: getIsOrderExecuting(state),
+    isOrderExecuting: getUIState(state, UI_KEYS.isOrderExecuting, false),
     aoParams: getAOParams(state),
     maxOrderCounts: getMaxOrderCounts(state),
     isBetaVersion: getIsBetaVersion(state),
@@ -53,7 +54,7 @@ const mapDispatchToProps = dispatch => ({
   },
 
   setIsOrderExecuting: (executing) => {
-    dispatch(UIActions.setIsOrderExecuting(executing))
+    dispatch(UIActions.setUIValue(UI_KEYS.isOrderExecuting, executing))
   },
 
   saveState: (componentID, state) => {
@@ -71,7 +72,7 @@ const mapDispatchToProps = dispatch => ({
     }))
 
     if (!wsConnected) {
-      dispatch(UIActions.setIsOrderExecuting(false))
+      dispatch(UIActions.setUIValue(UI_KEYS.isOrderExecuting, false))
     }
   },
   gaSubmitOrder: () => {
@@ -92,7 +93,7 @@ const mapDispatchToProps = dispatch => ({
     }))
 
     if (!wsConnected) {
-      dispatch(UIActions.setIsOrderExecuting(false))
+      dispatch(UIActions.setUIValue(UI_KEYS.isOrderExecuting, false))
     }
   },
 

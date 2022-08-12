@@ -7,7 +7,8 @@ import { COMPONENT_TYPES } from '../../../components/GridLayout/GridLayout.helpe
 import getCurrUnsavedLayout from './get_current_unsaved_layout'
 import { getLayoutState } from './get_component_state'
 import getDefaultStateForComponentType from './default_state_for_component_type'
-import getLayoutID from './get_layout_id'
+import getUIValue from './get_ui_state'
+import { UI_KEYS } from '../../constants/ui_keys'
 
 const EMPTY_ARR = []
 
@@ -20,7 +21,7 @@ const getMarketComponents = createSelector(
   [
     getCurrUnsavedLayout,
     (state, componentType) => getDefaultStateForComponentType(state, componentType),
-    (state) => getLayoutState(state, getLayoutID(state)),
+    (state) => getLayoutState(state, getUIValue(state, UI_KEYS.layoutID)),
     (_, componentType) => componentType,
   ],
   (currUnsavedLayout, defComponentState, layoutState, componentType) => {

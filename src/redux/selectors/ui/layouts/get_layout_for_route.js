@@ -5,16 +5,17 @@ import _entries from 'lodash/entries'
 import _find from 'lodash/find'
 import _last from 'lodash/last'
 
-import getLayoutID from '../get_layout_id'
+import getUIValue from '../get_ui_state'
 import getLayouts from '../get_layouts'
 import getCurrentUnsavedLayout from '../get_current_unsaved_layout'
 import { getLastUsedLayoutID } from '../../../../util/layout'
+import { UI_KEYS } from '../../../constants/ui_keys'
 
 const EMPTY_OBJ = {}
 
 const getLayoutForRoute = createSelector(
   getLayouts,
-  getLayoutID,
+  (state) => getUIValue(state, UI_KEYS.layoutID),
   getCurrentUnsavedLayout,
   (state, pathname) => pathname,
   (layouts, layoutID, unsavedLayoutDef, pathname) => {

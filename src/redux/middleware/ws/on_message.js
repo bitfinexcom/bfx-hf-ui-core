@@ -18,6 +18,7 @@ import tokenStore from '../../../util/token_store'
 import { AOAdapter } from '../../adapters/ws'
 import { isElectronApp, HONEY_AUTH_URL } from '../../config'
 import { UI_MODAL_KEYS } from '../../constants/modals'
+import { UI_KEYS } from '../../constants/ui_keys'
 
 const debug = Debug('hfui:rx:m:ws-hfui-server:msg')
 
@@ -161,7 +162,7 @@ export default (alias, store) => (e = {}) => {
 
       case 'data.algo_order.submit_status':
       case 'data.order.submit_status':
-        store.dispatch(UIActions.setIsOrderExecuting(false))
+        store.dispatch(UIActions.setUIValue(UI_KEYS.isOrderExecuting, false))
         break
 
       case 'error': {
@@ -230,13 +231,13 @@ export default (alias, store) => (e = {}) => {
 
       case 'data.settings.updated': {
         const [, settings] = payload
-        store.dispatch(WSActions.recvUpdatedSettings(settings))
+        store.dispatch(UIActions.setUIValue(UI_KEYS.settings, settings))
         break
       }
 
       case 'data.feature_flags': {
         const [, featureFlags] = payload
-        store.dispatch(WSActions.setFeatureFlags(featureFlags))
+        store.dispatch(UIActions.setUIValue(UI_KEYS.featureFlags, featureFlags))
         break
       }
 
@@ -268,7 +269,7 @@ export default (alias, store) => (e = {}) => {
           }
         }, {})
 
-        store.dispatch(WSActions.recvCoreSettings(transformed))
+        store.dispatch(UIActions.setUIValue(UI_KEYS.coreSettings, transformed))
         break
       }
 
@@ -328,7 +329,7 @@ export default (alias, store) => (e = {}) => {
 
       case 'data.order_history': {
         const [, orderHist] = payload
-        store.dispatch(UIActions.setIsLoadingOrderHistData(false))
+        store.dispatch(UIActions.setUIValue(UI_KEYS.isLoadingOrderHistData, false))
         store.dispatch(WSActions.recvOrderHist({ orderHist }))
         break
       }
@@ -433,7 +434,7 @@ export default (alias, store) => (e = {}) => {
         const { startedOn } = executionResultsObj
         store.dispatch(WSActions.setStartedLiveStrategy(strategyMapKey, executionResultsObj))
         store.dispatch(UIActions.setStrategyExecutionId(strategyMapKey))
-        store.dispatch(UIActions.updateCurrentStrategy({ startedOn }))
+        store.dispatch(UIActions.updateUI({ startedOn }))
 
         break
       }
@@ -454,7 +455,10 @@ export default (alias, store) => (e = {}) => {
       case 'strategy.live_execution_stopped': {
         const [, strategyMapKey, executionResultsObj] = payload
         store.dispatch(WSActions.setStoppedLiveStrategy(strategyMapKey, executionResultsObj))
-        store.dispatch(UIActions.updateCurrentStrategy({ stoppedOn: new Date().getTime() }))
+        store.dispatch(UIActions.updateUIValue(
+          UI_KEYS.currentStrategy,
+          { stoppedOn: new Date().getTime() },
+        ))
 
         break
       }

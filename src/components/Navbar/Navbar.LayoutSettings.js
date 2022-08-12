@@ -12,7 +12,7 @@ import OutsideClickHandler from 'react-outside-click-handler'
 import { useTranslation } from 'react-i18next'
 import { useLocation } from 'react-router'
 import { selectLayout, deleteLayout, saveLayout } from '../../redux/actions/ui'
-import { getLayouts, getLayoutID } from '../../redux/selectors/ui'
+import { getLayouts, getUIState } from '../../redux/selectors/ui'
 
 import { ReactComponent as LayoutIcon } from './layout-icon.svg'
 import NavbarButton from './Navbar.Button'
@@ -22,6 +22,7 @@ import useToggle from '../../hooks/useToggle'
 import AddLayoutComponentModal from '../../modals/Layout/AddLayoutComponentModal'
 import CreateNewLayoutModal from '../../modals/Layout/CreateNewLayoutModal'
 import { makeShorterLongName } from '../../util/ui'
+import { UI_KEYS } from '../../redux/constants/ui_keys'
 
 const MAX_ID_LENGTH = 30
 
@@ -55,7 +56,7 @@ const LayoutSettings = () => {
   const [isAddComponentModalOpen, toggleAddComponentModal] = useToggle(false)
 
   const layouts = useSelector(getLayouts)
-  const layoutID = useSelector(getLayoutID)
+  const layoutID = useSelector(state => getUIState(state, UI_KEYS.layoutID))
   const layoutIsDirty = useSelector(state => state.ui.layoutIsDirty)
   const layout = _get(layouts, layoutID, {})
   const { pathname } = useLocation()
