@@ -69,7 +69,6 @@ function getInitialState() {
     previousMarket: null,
     remoteVersion: null,
     isPaperTrading: false,
-    TRADING_PAGE_IS_GUIDE_ACTIVE: true,
     modals: { },
     orderToEdit: {},
     isBadInternetConnection: false,
@@ -319,14 +318,6 @@ function reducer(state = getInitialState(), action = {}) {
         previousMarket: state.activeMarket,
         currentMode: mode,
         activeMarket,
-      }
-    }
-
-    case types.FINISH_GUIDE: {
-      const page = payload
-      return {
-        ...state,
-        [`${page}_GUIDE_ACTIVE`]: false,
       }
     }
 

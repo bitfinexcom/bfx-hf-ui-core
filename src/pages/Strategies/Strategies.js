@@ -15,12 +15,7 @@ import Indicators from 'bfx-hf-indicators'
 import { nonce } from 'bfx-api-node-util'
 import HFS from 'bfx-hf-strategy'
 import HFU from 'bfx-hf-util'
-import { useTranslation } from 'react-i18next'
-import {
-  STEPS, ACTIONS, EVENTS, STATUS,
-} from '../../components/Joyride'
 import Layout from '../../components/Layout'
-import useTourGuide from '../../hooks/useTourGuide'
 import SaveUnsavedChangesModal from '../../modals/Strategy/SaveUnsavedChangesModal'
 import RemoveExistingStrategyModal from '../../modals/Strategy/RemoveExistingStrategyModal'
 import SaveStrategyAsModal from '../../modals/Strategy/SaveStrategyAsModal/SaveStrategyAsModal'
@@ -34,13 +29,9 @@ import './style.css'
 const debug = Debug('hfui-ui:p:strategy-editor')
 
 const StrategyEditor = lazy(() => import('../../components/StrategyEditor'))
-const Joyride = lazy(() => import('../../components/Joyride'))
 const StrategiesListTable = lazy(() => import('../../components/StrategiesListTable'))
 
 const StrategiesPage = ({
-  finishGuide,
-  firstLogin,
-  isGuideActive,
   authToken,
   onSave,
   onRemove,
@@ -51,7 +42,6 @@ const StrategiesPage = ({
   const [IDEcontent, setIDEcontent] = useState(_get(strategy, 'strategyContent', {}))
 
   const [indicators, setIndicators] = useState([])
-  const [tourStep, setTourStep] = useState(0)
   const [sectionErrors, setSectionErrors] = useState({})
   const [strategyDirty, setStrategyDirty] = useState(false)
   const [isUnsavedStrategyModalOpen, , openUnsavedStrategyModal, closeUnsavedStrategyModal] = useToggle(false)
@@ -61,10 +51,6 @@ const StrategiesPage = ({
   const [isClearBacktestResultsModalOpen, , openClearBacktestResultsModal, closeClearBacktestResultsModal] = useToggle(false)
   const [actionStrategy, setActionStrategy] = useState({})
   const [nextStrategyToOpen, setNextStrategyToOpen] = useState(null)
-
-  const showGuide = useTourGuide(isGuideActive)
-
-  const { t } = useTranslation()
 
   // const onAddIndicator = (indicator) => {
   //   setIndicators([...indicators, indicator])
@@ -163,23 +149,6 @@ const StrategiesPage = ({
 
     onIndicatorsChange(strategyIndicators)
   }, [evalSectionContent, onIndicatorsChange, processSectionError])
-
-  const onTourUpdate = useCallback((data) => {
-    const {
-      status, action, index, type,
-    } = data
-    const finishedStatuses = [STATUS.FINISHED, STATUS.SKIPPED]
-    const CLOSE = 'close'
-
-    // eslint-disable-next-line lodash/prefer-lodash-method
-    if ([EVENTS.STEP_AFTER, EVENTS.TARGET_NOT_FOUND].includes(type)) {
-      // Update state to advance the tour
-      setTourStep(index + (action === ACTIONS.PREV ? -1 : 1))
-      // eslint-disable-next-line lodash/prefer-lodash-method
-    } else if (finishedStatuses.includes(status) || action === CLOSE) {
-      finishGuide()
-    }
-  }, [finishGuide])
 
   const onLoadStrategy = useCallback((newStrategy, forcedLoad = false) => {
     // const updated = { ...newStrategy, savedTs: Date.now() }
@@ -282,16 +251,6 @@ const StrategiesPage = ({
             setIDEcontent={setIDEcontent}
           />
         </Suspense>
-        {firstLogin && (
-          <Suspense fallback={<></>}>
-            <Joyride
-              steps={STEPS.getStrategyEditorModes(t)}
-              callback={onTourUpdate}
-              run={showGuide}
-              stepIndex={tourStep}
-            />
-          </Suspense>
-        )}
         <StrategiesListTable
           onLoadStrategy={onLoadStrategy}
           onStrategyRemove={strategyRemoveHandler}
@@ -338,9 +297,6 @@ const StrategiesPage = ({
 }
 
 StrategiesPage.propTypes = {
-  firstLogin: PropTypes.bool,
-  isGuideActive: PropTypes.bool,
-  finishGuide: PropTypes.func.isRequired,
   setStrategy: PropTypes.func.isRequired,
   strategy: PropTypes.shape(STRATEGY_SHAPE).isRequired,
   authToken: PropTypes.string.isRequired,
@@ -352,8 +308,6 @@ StrategiesPage.propTypes = {
 }
 
 StrategiesPage.defaultProps = {
-  firstLogin: false,
-  isGuideActive: true,
 }
 
 export default StrategiesPage

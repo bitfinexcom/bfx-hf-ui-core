@@ -83,11 +83,6 @@ export const clearNotifications = () => ({
   type: types.CLEAR_NOTIFICATIONS,
 })
 
-export const finishGuide = (page) => ({
-  type: types.FINISH_GUIDE,
-  payload: page,
-})
-
 export const recvNotification = (notification) => ({
   type: types.DATA_NOTIFICATION,
   payload: { notification },
@@ -170,7 +165,6 @@ export default {
   removeNotification,
   removeNotifications,
   clearNotifications,
-  finishGuide,
   recvNotification,
   setStrategyExecutionId,
   setTradingMode,
