@@ -643,6 +643,7 @@
     "strategyTab": "Strategy",
     "backtestTab": "Backtest",
     "viewInIDETab": "View in IDE",
+    "editInSandbox": "Edit in Sandbox",
     "activeStrategies": "Active strategies",
     "pastStrategies": "Executed strategies",
     "savedStrategies": "Draft strategies",

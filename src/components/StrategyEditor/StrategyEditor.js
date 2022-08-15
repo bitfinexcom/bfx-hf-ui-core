@@ -534,6 +534,11 @@ const StrategyEditor = (props) => {
     dsStopLiveStrategy(authToken, executionId)
   }, [authToken, dsStopLiveStrategy, executionId])
 
+  const editInSandbox = () => {
+    stopExecution()
+    changeTradingMode(!isPaperTrading)
+  }
+
   const openNewTest = () => onLoadStrategy(strategy)
 
   const hasErrorsInIDE = useMemo(
@@ -575,6 +580,7 @@ const StrategyEditor = (props) => {
         sidebarOpened={sidebarOpened}
         strategyDirty={strategyDirty}
         hasErrors={hasErrorsInIDE}
+        editInSandbox={editInSandbox}
         isMarketSelected={!_isEmpty(symbol)}
       />
     ),

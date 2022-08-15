@@ -8,6 +8,7 @@ const ParamsForLive = ({
   executing,
   stopExecution,
   onClose,
+  editInSandbox,
 }) => {
   const { t } = useTranslation()
   return (
@@ -18,6 +19,11 @@ const ParamsForLive = ({
         {t('strategyEditor.stopExec')}
       </SidebarParam>
       <div className='hfui-navbar__layout-settings__separator' />
+      <SidebarParam onClick={editInSandbox}>
+        <Icon name='edit' />
+        &nbsp;&nbsp;
+        {t('strategyEditor.editInSandbox')}
+      </SidebarParam>
       <SidebarParam onClick={onClose}>
         {t('strategyEditor.closeStrategy')}
       </SidebarParam>
@@ -29,5 +35,6 @@ ParamsForLive.propTypes = {
   executing: PropTypes.bool.isRequired,
   stopExecution: PropTypes.func.isRequired,
   onClose: PropTypes.func.isRequired,
+  editInSandbox: PropTypes.func.isRequired,
 }
 export default ParamsForLive
