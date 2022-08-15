@@ -3,6 +3,7 @@ import { reduxActions } from '@ufx-ui/bfx-containers'
 
 import WSActions from '../../redux/actions/ws'
 import GAActions from '../../redux/actions/google_analytics'
+import UIActions from '../../redux/actions/ui'
 import {
   getCurrentMode, getShowAlgoPauseInfoSetting, getThemeSetting, getIsBetaVersion, getIsStrategiesTabVisible,
 } from '../../redux/selectors/ui'
@@ -10,6 +11,7 @@ import { MAX_ORDER_COUNT_SETTING } from '../../redux/selectors/ui/get_core_setti
 import { getAuthToken, getIsBitfinexConnected } from '../../redux/selectors/ws'
 
 import HFUI from './HFUI'
+import { UI_MODAL_KEYS } from '../../redux/constants/modals'
 
 const mapStateToProps = (state = {}) => {
   const { ui } = state
@@ -57,6 +59,9 @@ const mapDispatchToProps = dispatch => ({
   },
   getFeatureFlags: (authToken) => {
     dispatch(WSActions.send(['feature_flags.get', authToken]))
+  },
+  openAppSettingsModal: () => {
+    dispatch(UIActions.changeUIModalState(UI_MODAL_KEYS.APP_SETTINGS_MODAL, true))
   },
 })
 

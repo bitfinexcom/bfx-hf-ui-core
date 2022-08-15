@@ -44,6 +44,7 @@ const HFUI = (props) => {
     isBfxConnected,
     showStrategies,
     getPastStrategies,
+    openAppSettingsModal,
   } = props
   useInjectBfxData()
 
@@ -75,12 +76,19 @@ const HFUI = (props) => {
     // if running in the electron environment
     if (ipcHelpers && isElectronApp) {
       ipcHelpers.addAppCloseEventListener(onElectronAppClose)
+      ipcHelpers.addOpenSettingsModalListener(openAppSettingsModal)
 
       return () => {
         ipcHelpers.removeAppCloseEventListener(onElectronAppClose)
+        ipcHelpers.removeOpenSettingsModalListener(openAppSettingsModal)
       }
     }
-  }, [authToken, onElectronAppClose, settingsShowAlgoPauseInfo])
+  }, [
+    authToken,
+    onElectronAppClose,
+    openAppSettingsModal,
+    settingsShowAlgoPauseInfo,
+  ])
 
   useEffect(() => {
     const { body } = document
@@ -135,18 +143,26 @@ const HFUI = (props) => {
         <>
           <Switch>
             <Redirect from='/index.html' to='/' exact />
-            <Route path={Routes.tradingTerminal.path} render={() => <TradingPage />} exact />
-            {showStrategies && Routes.strategyEditor && <Route path={Routes.strategyEditor.path} render={() => <StrategiesPage />} />}
-            <Route path={Routes.marketData.path} render={() => <MarketDataPage />} />
+            <Route
+              path={Routes.tradingTerminal.path}
+              render={() => <TradingPage />}
+              exact
+            />
+            {showStrategies && Routes.strategyEditor && (
+              <Route
+                path={Routes.strategyEditor.path}
+                render={() => <StrategiesPage />}
+              />
+            )}
+            <Route
+              path={Routes.marketData.path}
+              render={() => <MarketDataPage />}
+            />
           </Switch>
           <ModalsWrapper isElectronApp={isElectronApp} />
         </>
       ) : (
-        <>
-          {isElectronApp && (
-            <AuthenticationPage />
-          )}
-        </>
+        <>{isElectronApp && <AuthenticationPage />}</>
       )}
       <NotificationsSidebar notificationsVisible={notificationsVisible} />
       {isElectronApp && <AppUpdate />}
@@ -171,6 +187,7 @@ HFUI.propTypes = {
   settingsTheme: PropTypes.oneOf([THEMES.LIGHT, THEMES.DARK]),
   isBfxConnected: PropTypes.bool,
   showStrategies: PropTypes.bool,
+  openAppSettingsModal: PropTypes.func.isRequired,
 }
 
 HFUI.defaultProps = {
