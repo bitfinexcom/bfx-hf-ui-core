@@ -434,7 +434,7 @@ export default (alias, store) => (e = {}) => {
         const { startedOn } = executionResultsObj
         store.dispatch(WSActions.setStartedLiveStrategy(strategyMapKey, executionResultsObj))
         store.dispatch(UIActions.setStrategyExecutionId(strategyMapKey))
-        store.dispatch(UIActions.updateUI({ startedOn }))
+        store.dispatch(UIActions.updateUIValue({ startedOn }))
 
         break
       }
