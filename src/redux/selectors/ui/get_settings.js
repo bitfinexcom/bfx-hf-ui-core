@@ -13,6 +13,7 @@ export const SETTINGS_KEYS = {
   SHOW_ONLY_FAVORITE_PAIRS: 'showOnlyFavoritePairs',
   THEME: 'theme',
   JOIN_BETA_PROGRAM: 'joinBetaProgram',
+  HIDE_ON_CLOSE: 'hideOnClose',
 }
 
 export const THEMES = {
@@ -55,6 +56,11 @@ export const getThemeSetting = createSelector(
 export const getIsBetaVersion = createSelector(
   getSettings,
   (settings) => _get(settings, SETTINGS_KEYS.JOIN_BETA_PROGRAM, false),
+)
+
+export const getShouldHideOnClose = createSelector(
+  getSettings,
+  (settings) => _get(settings, SETTINGS_KEYS.HIDE_ON_CLOSE, false),
 )
 
 export default getSettings

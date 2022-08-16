@@ -15,6 +15,7 @@ import {
   SETTINGS_KEYS,
   getThemeSetting,
   THEMES,
+  getShouldHideOnClose,
 } from '../../redux/selectors/ui'
 import { isElectronApp } from '../../redux/config'
 
@@ -22,8 +23,9 @@ const Appearance = () => {
   const { t } = useTranslation()
   const dispatch = useDispatch()
   const settingsTheme = useSelector(getThemeSetting)
+  const shouldHideOnClose = useSelector(getShouldHideOnClose)
   const [currentTheme, setCurrentTheme] = useState(settingsTheme)
-  const [isMinimiseToTrayChecked, setIsMinimiseToTrayChecked] = useState()
+  const [hideOnCloseChecked, setHideOnCloseChecked] = useState(shouldHideOnClose)
 
   const themes = useMemo(
     () => _map(_values(THEMES), (value) => ({
@@ -42,6 +44,12 @@ const Appearance = () => {
     dispatch(WSActions.saveSettings(SETTINGS_KEYS.THEME, nextTheme))
     dispatch(GAActions.updateSettings())
     localStorage.setItem(SETTINGS_KEYS.THEME, nextTheme)
+  }
+
+  const hideOnCloseHandler = (shouldHide) => {
+    setHideOnCloseChecked(shouldHide)
+    dispatch(WSActions.saveSettings(SETTINGS_KEYS.HIDE_ON_CLOSE, shouldHide))
+    dispatch(GAActions.updateSettings())
   }
 
   return (
@@ -64,9 +72,9 @@ const Appearance = () => {
           <br />
           <div className='appsettings-modal__setting'>
             <Checkbox
-              onChange={() => {}}
+              onChange={hideOnCloseHandler}
               label={t('appSettings.minimizeToTrayCheckbox')}
-              checked
+              checked={hideOnCloseChecked}
               className='appsettings-modal__checkbox'
             />
             <div className='appsettings-modal__description'>

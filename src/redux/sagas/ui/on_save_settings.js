@@ -11,6 +11,7 @@ const {
   SHOW_ONLY_FAVORITE_PAIRS,
   THEME,
   JOIN_BETA_PROGRAM,
+  HIDE_ON_CLOSE,
 } = SETTINGS_KEYS
 
 export default function* onSaveSettings(action = {}) {
@@ -30,6 +31,8 @@ export default function* onSaveSettings(action = {}) {
       false, // @TODO: remove this setting on the backend side
       settings[THEME],
       settings[JOIN_BETA_PROGRAM],
+      settings[HIDE_ON_CLOSE],
+      true,
       getScope(),
     ]),
   )
