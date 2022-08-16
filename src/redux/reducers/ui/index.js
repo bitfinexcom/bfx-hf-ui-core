@@ -69,7 +69,7 @@ function getInitialState() {
     previousMarket: null,
     remoteVersion: null,
     isPaperTrading: false,
-    modals: { },
+    modals: {},
     orderToEdit: {},
     isBadInternetConnection: false,
     isNoConnectionModalVisible: false,
@@ -80,6 +80,7 @@ function getInitialState() {
     layoutID: null,
     settingsActiveTab: DEFAULT_TAB,
     tickersVolumeUnit: null,
+    isApplicationHidden: false,
   }
 
   _map(_values(UI_MODAL_KEYS), (modalKey) => {

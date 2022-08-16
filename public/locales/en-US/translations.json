@@ -308,6 +308,8 @@
     "tradingModeTab": "Trading Mode",
     "appearanceTab": "Appearance",
     "language": "Language",
+    "minimizeToTrayCheckbox": "Minimize window to tray",
+    "minimizeToTrayText": "When you close application window, it will be minizied to tray and continue work in background",
     "aboutTab": "About",
     "appVersion": "Version {{version}}",
     "description": "Official free algorithmic trading app based on the <url>Bitfinex API</url>, created by the Bitfinex team.",
@@ -394,6 +396,7 @@
   },
   "notifications": {
     "title": "Notifications",
+    "backgroundMode": "Bitfinex Honey is now running in the background",
     "clearAllBtn": "Clear all",
     "noNotifications": "There are no new notifications yet!",
     "layoutSaved": "Successfully saved layout",

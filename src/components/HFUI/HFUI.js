@@ -7,6 +7,7 @@ import {
 } from 'react-router'
 import PropTypes from 'prop-types'
 
+import { useTranslation } from 'react-i18next'
 import { THEMES, SETTINGS_KEYS } from '../../redux/selectors/ui'
 import useInjectBfxData from '../../hooks/useInjectBfxData'
 import NotificationsSidebar from '../NotificationsSidebar'
@@ -44,8 +45,12 @@ const HFUI = (props) => {
     isBfxConnected,
     showStrategies,
     getPastStrategies,
+    openAppSettingsModal,
+    setApplicationHiddenStatus,
   } = props
   useInjectBfxData()
+
+  const { t } = useTranslation()
 
   const unloadHandler = useCallback(() => {
     if (authToken !== null) {
@@ -74,13 +79,24 @@ const HFUI = (props) => {
   useEffect(() => {
     // if running in the electron environment
     if (ipcHelpers && isElectronApp) {
+      const notificationOnAppHide = t('notifications.backgroundMode')
       ipcHelpers.addAppCloseEventListener(onElectronAppClose)
+      ipcHelpers.addOpenSettingsModalListener(openAppSettingsModal)
+      ipcHelpers.addAppHiddenListener(() => setApplicationHiddenStatus(true, notificationOnAppHide))
+      ipcHelpers.addAppRestoredListener(() => setApplicationHiddenStatus(false))
 
       return () => {
-        ipcHelpers.removeAppCloseEventListener(onElectronAppClose)
+        ipcHelpers.removeAllGlobalListeners()
       }
     }
-  }, [authToken, onElectronAppClose, settingsShowAlgoPauseInfo])
+  }, [
+    authToken,
+    onElectronAppClose,
+    openAppSettingsModal,
+    setApplicationHiddenStatus,
+    settingsShowAlgoPauseInfo,
+    t,
+  ])
 
   useEffect(() => {
     const { body } = document
@@ -135,18 +151,26 @@ const HFUI = (props) => {
         <>
           <Switch>
             <Redirect from='/index.html' to='/' exact />
-            <Route path={Routes.tradingTerminal.path} render={() => <TradingPage />} exact />
-            {showStrategies && Routes.strategyEditor && <Route path={Routes.strategyEditor.path} render={() => <StrategiesPage />} />}
-            <Route path={Routes.marketData.path} render={() => <MarketDataPage />} />
+            <Route
+              path={Routes.tradingTerminal.path}
+              render={() => <TradingPage />}
+              exact
+            />
+            {showStrategies && Routes.strategyEditor && (
+              <Route
+                path={Routes.strategyEditor.path}
+                render={() => <StrategiesPage />}
+              />
+            )}
+            <Route
+              path={Routes.marketData.path}
+              render={() => <MarketDataPage />}
+            />
           </Switch>
           <ModalsWrapper isElectronApp={isElectronApp} />
         </>
       ) : (
-        <>
-          {isElectronApp && (
-            <AuthenticationPage />
-          )}
-        </>
+        <>{isElectronApp && <AuthenticationPage />}</>
       )}
       <NotificationsSidebar notificationsVisible={notificationsVisible} />
       {isElectronApp && <AppUpdate />}
@@ -171,6 +195,8 @@ HFUI.propTypes = {
   settingsTheme: PropTypes.oneOf([THEMES.LIGHT, THEMES.DARK]),
   isBfxConnected: PropTypes.bool,
   showStrategies: PropTypes.bool,
+  openAppSettingsModal: PropTypes.func.isRequired,
+  setApplicationHiddenStatus: PropTypes.func.isRequired,
 }
 
 HFUI.defaultProps = {

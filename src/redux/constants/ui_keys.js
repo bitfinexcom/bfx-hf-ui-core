@@ -12,4 +12,5 @@ export const UI_KEYS = {
   settings: 'settings',
   unsavedLayout: 'unsavedLayout',
   remoteVersion: 'remoteVersion',
+  isApplicationHidden: 'isApplicationHidden',
 }
