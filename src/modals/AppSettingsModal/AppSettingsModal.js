@@ -11,7 +11,6 @@ import { isElectronApp } from '../../redux/config'
 import Modal from '../../ui/Modal'
 import GeneralTab from './AppSettingsModal.General'
 import ApiKeysTab from './AppSettingsModal.ApiKeys'
-import TradingModeTab from './AppSettingsModal.TradingMode'
 import AppearanceTab from './AppSettingsModal.Appearance'
 import AboutTab from './AppSettingsModal.About'
 import BetaTab from './AppSettingsModal.Beta'
@@ -74,7 +73,6 @@ const AppSettingsModal = () => {
             {activeTab === SETTINGS_TABS.Beta && <BetaTab />}
             {activeTab === SETTINGS_TABS.General && <GeneralTab />}
             {activeTab === SETTINGS_TABS.Keys && <ApiKeysTab />}
-            {activeTab === SETTINGS_TABS.TradingMode && <TradingModeTab onClose={onClose} />}
           </>
         )}
         {activeTab === SETTINGS_TABS.Appearance && <AppearanceTab />}

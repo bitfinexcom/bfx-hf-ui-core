@@ -1,7 +1,9 @@
 import React, { memo } from 'react'
 import PropTypes from 'prop-types'
 import { ToggleSwitch } from 'react-dragswitch'
+import { useTranslation } from 'react-i18next'
 
+import { Tooltip } from '@ufx-ui/core'
 import { THEMES } from '../../redux/selectors/ui'
 
 const SWITCH_THEME = {
@@ -18,19 +20,24 @@ const SWITCH_THEME = {
 const SwitchMode = ({
   isPaperTrading, changeTradingMode, settingsTheme,
 }) => {
+  const { t } = useTranslation()
   const onChangeTradingMode = () => {
     changeTradingMode(!isPaperTrading)
   }
 
+  const content = isPaperTrading ? 'productionTradingText' : 'paperTradingText'
+
   return (
-    <ToggleSwitch
-      checked={isPaperTrading}
-      onChange={onChangeTradingMode}
-      onColor={SWITCH_THEME[settingsTheme].onColor}
-      offColor={SWITCH_THEME[settingsTheme].offColor}
-      className='toggle-switch'
-      aria-label='Switch Paper Trading mode'
-    />
+    <Tooltip content={t(`appSettings.${content}`)}>
+      <ToggleSwitch
+        checked={isPaperTrading}
+        onChange={onChangeTradingMode}
+        onColor={SWITCH_THEME[settingsTheme].onColor}
+        offColor={SWITCH_THEME[settingsTheme].offColor}
+        className='toggle-switch'
+        aria-label='Switch Sandbox mode'
+      />
+    </Tooltip>
   )
 }
 
