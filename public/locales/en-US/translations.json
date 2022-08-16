@@ -394,6 +394,7 @@
   },
   "notifications": {
     "title": "Notifications",
+    "backgroundMode": "Bitfinex Honey is now running in the background",
     "clearAllBtn": "Clear all",
     "noNotifications": "There are no new notifications yet!",
     "layoutSaved": "Successfully saved layout",

@@ -1,5 +1,6 @@
 import { connect } from 'react-redux'
 import { reduxActions } from '@ufx-ui/bfx-containers'
+import { v4 as uuidv4 } from 'uuid'
 
 import WSActions from '../../redux/actions/ws'
 import GAActions from '../../redux/actions/google_analytics'
@@ -64,8 +65,16 @@ const mapDispatchToProps = dispatch => ({
   openAppSettingsModal: () => {
     dispatch(UIActions.changeUIModalState(UI_MODAL_KEYS.APP_SETTINGS_MODAL, true))
   },
-  setApplicationHiddenStatus: (isHidden) => {
+  setApplicationHiddenStatus: (isHidden, message = '') => {
     dispatch(UIActions.setUIValue(UI_KEYS.isApplicationHidden, isHidden))
+    if (isHidden) {
+      dispatch(UIActions.recvNotification({
+        mts: Date.now(),
+        status: 'info',
+        text: message,
+        cid: uuidv4(),
+      }))
+    }
   },
 })
 

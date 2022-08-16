@@ -7,6 +7,7 @@ import {
 } from 'react-router'
 import PropTypes from 'prop-types'
 
+import { useTranslation } from 'react-i18next'
 import { THEMES, SETTINGS_KEYS } from '../../redux/selectors/ui'
 import useInjectBfxData from '../../hooks/useInjectBfxData'
 import NotificationsSidebar from '../NotificationsSidebar'
@@ -49,6 +50,8 @@ const HFUI = (props) => {
   } = props
   useInjectBfxData()
 
+  const { t } = useTranslation()
+
   const unloadHandler = useCallback(() => {
     if (authToken !== null) {
       onUnload(authToken, currentMode)
@@ -76,9 +79,10 @@ const HFUI = (props) => {
   useEffect(() => {
     // if running in the electron environment
     if (ipcHelpers && isElectronApp) {
+      const notificationOnAppHide = t('notifications.backgroundMode')
       ipcHelpers.addAppCloseEventListener(onElectronAppClose)
       ipcHelpers.addOpenSettingsModalListener(openAppSettingsModal)
-      ipcHelpers.addAppHiddenListener(() => setApplicationHiddenStatus(true))
+      ipcHelpers.addAppHiddenListener(() => setApplicationHiddenStatus(true, notificationOnAppHide))
       ipcHelpers.addAppRestoredListener(() => setApplicationHiddenStatus(false))
 
       return () => {
@@ -91,6 +95,7 @@ const HFUI = (props) => {
     openAppSettingsModal,
     setApplicationHiddenStatus,
     settingsShowAlgoPauseInfo,
+    t,
   ])
 
   useEffect(() => {
