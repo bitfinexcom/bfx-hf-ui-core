@@ -12,6 +12,7 @@ import { getAuthToken, getIsBitfinexConnected } from '../../redux/selectors/ws'
 
 import HFUI from './HFUI'
 import { UI_MODAL_KEYS } from '../../redux/constants/modals'
+import { UI_KEYS } from '../../redux/constants/ui_keys'
 
 const mapStateToProps = (state = {}) => {
   const { ui } = state
@@ -62,6 +63,9 @@ const mapDispatchToProps = dispatch => ({
   },
   openAppSettingsModal: () => {
     dispatch(UIActions.changeUIModalState(UI_MODAL_KEYS.APP_SETTINGS_MODAL, true))
+  },
+  setApplicationHiddenStatus: (isHidden) => {
+    dispatch(UIActions.setUIValue(UI_KEYS.isApplicationHidden, isHidden))
   },
 })
 

@@ -45,6 +45,7 @@ const HFUI = (props) => {
     showStrategies,
     getPastStrategies,
     openAppSettingsModal,
+    setApplicationHiddenStatus,
   } = props
   useInjectBfxData()
 
@@ -77,16 +78,18 @@ const HFUI = (props) => {
     if (ipcHelpers && isElectronApp) {
       ipcHelpers.addAppCloseEventListener(onElectronAppClose)
       ipcHelpers.addOpenSettingsModalListener(openAppSettingsModal)
+      ipcHelpers.addAppHiddenListener(() => setApplicationHiddenStatus(true))
+      ipcHelpers.addAppRestoredListener(() => setApplicationHiddenStatus(false))
 
       return () => {
-        ipcHelpers.removeAppCloseEventListener(onElectronAppClose)
-        ipcHelpers.removeOpenSettingsModalListener(openAppSettingsModal)
+        ipcHelpers.removeAllGlobalListeners()
       }
     }
   }, [
     authToken,
     onElectronAppClose,
     openAppSettingsModal,
+    setApplicationHiddenStatus,
     settingsShowAlgoPauseInfo,
   ])
 
@@ -188,6 +191,7 @@ HFUI.propTypes = {
   isBfxConnected: PropTypes.bool,
   showStrategies: PropTypes.bool,
   openAppSettingsModal: PropTypes.func.isRequired,
+  setApplicationHiddenStatus: PropTypes.func.isRequired,
 }
 
 HFUI.defaultProps = {
