@@ -1,6 +1,16 @@
 .hfui-execution-options-modal {
   &__option {
-    max-width: 200px;
+    .hfui-execution-options-modal-selection {
+      display: flex;
+      flex: 0 50%;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+
+      > p, > div {
+        flex: 0 50%;
+      }
+    }
 
     &:not(:last-child) {
       margin-bottom: 10px;
@@ -17,4 +27,8 @@
       }
     }
   }
+}
+
+.hfui-execution-options-modal-container {
+  max-width: 600px !important;
 }
