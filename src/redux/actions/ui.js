@@ -8,7 +8,7 @@ export const setUIValue = (key, value) => ({
 })
 
 export const updateUIValue = (key, value) => ({
-  type: types.UI_UPDATE_UI_VALUE,
+  type: types.UPDATE_UI_VALUE,
   payload: {
     key, value,
   },
