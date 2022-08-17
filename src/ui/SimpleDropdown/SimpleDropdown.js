@@ -21,7 +21,7 @@ const SimpleDropdown = ({
 
 SimpleDropdown.propTypes = {
   label: PropTypes.oneOfType([PropTypes.string, PropTypes.node]).isRequired,
-  options: PropTypes.arrayOf([PropTypes.node]).isRequired,
+  options: PropTypes.arrayOf(PropTypes.node).isRequired,
   className: PropTypes.string,
 }
 
