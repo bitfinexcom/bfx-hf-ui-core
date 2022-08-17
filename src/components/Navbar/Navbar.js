@@ -1,4 +1,4 @@
-import React, { memo } from 'react'
+import React, { memo, useMemo } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import _values from 'lodash/values'
 import _map from 'lodash/map'
@@ -49,7 +49,7 @@ const Navbar = () => {
   const isBetaVersion = useSelector(getIsBetaVersion)
   const isStrategiesTabVisible = useSelector(getIsStrategiesTabVisible)
   const showStrategies = isBetaVersion || isStrategiesTabVisible
-  const leafOptions = getLeafDropdownOptions(settingsTheme)
+  const leafOptions = useMemo(() => getLeafDropdownOptions(settingsTheme), [settingsTheme])
 
   return (
     <div className='hfui-navbar__wrapper'>
