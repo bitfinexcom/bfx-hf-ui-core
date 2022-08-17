@@ -364,3 +364,7 @@ body.hosted {
     }
   }
 }
+
+.hfui-strategyeditor__panel ~ .hfui-strategies-list__wrapper {
+  flex: 1 1 230px;
+}
