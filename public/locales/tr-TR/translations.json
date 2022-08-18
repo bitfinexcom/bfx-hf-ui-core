@@ -438,7 +438,7 @@
     "unrecognisedExchange": "Unrecognised exchange, cannot submit order",
     "submittingOrderTo": "Submitting order to {{target}}",
     "strategyRemovedSuccessfully": "The strategy has been removed successfully",
-    "encryptedApiCredentialsSavedFor": "Encrypted API credentials saved for {{exID}}",
+    "encryptedApiCredentialsSavedFor": "Encrypted API credentials saved for {{target}}",
     "reconnectingWithNewCredentials": "Reconnecting with new credentials...",
     "requestedAlgoOrderNotRunningCannotStop": "Requested algo order not running, cannot stop",
     "favouriteTradingPairsSuccessfullySaved": "Favourite trading pairs successfully saved",

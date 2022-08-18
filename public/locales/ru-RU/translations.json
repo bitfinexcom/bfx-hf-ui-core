@@ -438,7 +438,7 @@
     "unrecognisedExchange": "Неизвестная платформа, невозможно разместить ордер",
     "submittingOrderTo": "Размещаем ордер на {{target}}",
     "strategyRemovedSuccessfully": "Стратегия была успешно удалена",
-    "encryptedApiCredentialsSavedFor": "Зашифрованные учетные данные API сохранены для {{exID}}",
+    "encryptedApiCredentialsSavedFor": "Зашифрованные учетные данные API сохранены для {{target}}",
     "reconnectingWithNewCredentials": "Подключаемся с новыми учетными данными...",
     "requestedAlgoOrderNotRunningCannotStop": "Запрошенный алгоритмический ордер не запускается, остановка невозможна",
     "favouriteTradingPairsSuccessfullySaved": "Избранные торговые пары успешно сохранены",
