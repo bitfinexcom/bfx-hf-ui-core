@@ -6,21 +6,26 @@ import './style.css'
 
 const ipcHelpers = window.electronService
 
+const UPDATE_STATES = {
+  UPDATE_AVAILABLE: 'UPDATE_AVAILABLE',
+  UPDATE_DOWNLOADED: 'UPDATE_DOWNLOADED',
+}
+
 const AppUpdate = () => {
   const { t } = useTranslation()
 
   const [hideNotification, setHideNotification] = useState(true)
   const [hideRestart, setHideRestart] = useState(true)
-  const [message, setMessage] = useState('')
+  const [updateState, setUpdateState] = useState(null)
 
   const onUpdateAvailable = () => {
-    setMessage(t('appUpdate.available'))
+    setUpdateState(UPDATE_STATES.UPDATE_AVAILABLE)
     setHideNotification(false)
   }
 
   // eslint-disable-next-line
   const onUpdateDownloaded = (_event, releaseNotes, releaseName) => {
-    setMessage(t('appUpdate.downloaded'))
+    setUpdateState(UPDATE_STATES.UPDATE_DOWNLOADED)
     setHideRestart(false)
     setHideNotification(false)
   }
@@ -37,7 +42,7 @@ const AppUpdate = () => {
     }
 
     return () => {} // consistent-return
-  }, [t]) // eslint-disable-line
+  }, [])
 
   const closeNotification = () => {
     setHideNotification(true)
@@ -56,7 +61,10 @@ const AppUpdate = () => {
     <div
       className={cx('hfui-app-update__notification', { hidden: hideNotification })}
     >
-      <p className='message'>{message}</p>
+      <p className='message'>
+        {updateState === UPDATE_STATES.UPDATE_AVAILABLE && t('appUpdate.available')}
+        {updateState === UPDATE_STATES.UPDATE_DOWNLOADED && t('appUpdate.downloaded')}
+      </p>
       <div className='btn-group'>
         <button
           className='close-button'
