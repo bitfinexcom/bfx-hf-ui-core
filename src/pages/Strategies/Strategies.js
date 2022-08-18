@@ -295,6 +295,14 @@ const StrategiesPage = ({
     [openRemoveModal],
   )
 
+  useEffect(() => {
+    if (strategy?.strategyContent) {
+      const content = _get(strategy, 'strategyContent', {})
+      setIDEcontent(content)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [strategy.id])
+
   return (
     <Layout>
       <Layout.Header />
