@@ -6,6 +6,7 @@ body.Light {
 
 .hfui-app-update__notification {
   position: fixed;
+  z-index: 99999;
   bottom: 40px;
   left: 15px;
   width: 240px;
