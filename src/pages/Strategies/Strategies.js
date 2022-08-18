@@ -1,5 +1,5 @@
 import React, {
-  lazy, Suspense, useState, useCallback,
+  lazy, Suspense, useState, useCallback, useEffect,
 } from 'react'
 import Debug from 'debug'
 import PropTypes from 'prop-types'
@@ -39,16 +39,32 @@ const StrategiesPage = ({
   strategy,
   setStrategy,
 }) => {
-  const [IDEcontent, setIDEcontent] = useState(_get(strategy, 'strategyContent', {}))
+  const [IDEcontent, setIDEcontent] = useState({})
 
   const [indicators, setIndicators] = useState([])
   const [sectionErrors, setSectionErrors] = useState({})
   const [strategyDirty, setStrategyDirty] = useState(false)
-  const [isUnsavedStrategyModalOpen, , openUnsavedStrategyModal, closeUnsavedStrategyModal] = useToggle(false)
+  const [
+    isUnsavedStrategyModalOpen,,
+    openUnsavedStrategyModal,
+    closeUnsavedStrategyModal,
+  ] = useToggle(false)
   const [isRemoveModalOpen, , openRemoveModal, closeRemoveModal] = useToggle(false)
-  const [isSaveStrategyAsModalOpen, , openSaveStrategyAsModal, closeSaveStrategyAsModal] = useToggle(false)
-  const [isRenameStrategyModalOpen, , openRenameStrategyModal, closeRenameStrategyModal] = useToggle(false)
-  const [isClearBacktestResultsModalOpen, , openClearBacktestResultsModal, closeClearBacktestResultsModal] = useToggle(false)
+  const [
+    isSaveStrategyAsModalOpen,,
+    openSaveStrategyAsModal,
+    closeSaveStrategyAsModal,
+  ] = useToggle(false)
+  const [
+    isRenameStrategyModalOpen,,
+    openRenameStrategyModal,
+    closeRenameStrategyModal,
+  ] = useToggle(false)
+  const [
+    isClearBacktestResultsModalOpen,,
+    openClearBacktestResultsModal,
+    closeClearBacktestResultsModal,
+  ] = useToggle(false)
   const [actionStrategy, setActionStrategy] = useState({})
   const [nextStrategyToOpen, setNextStrategyToOpen] = useState(null)
 
@@ -81,109 +97,142 @@ const StrategiesPage = ({
     setIndicators(newIndicators)
   }, [])
 
-  const setSectionError = useCallback((section, error) => {
-    setSectionErrors({
-      ...sectionErrors,
-      [section]: error,
-    })
-  }, [sectionErrors])
+  const setSectionError = useCallback(
+    (section, error) => {
+      setSectionErrors({
+        ...sectionErrors,
+        [section]: error,
+      })
+    },
+    [sectionErrors],
+  )
 
-  const clearSectionError = useCallback((section) => {
-    setSectionError(section, '')
-  }, [setSectionError])
+  const clearSectionError = useCallback(
+    (section) => {
+      setSectionError(section, '')
+    },
+    [setSectionError],
+  )
 
-  const processSectionError = useCallback((section, e) => {
-    if (e.lineNumber && e.columnNumber) {
-      // currently it's a non-standard property supported by Firefox only :(
-      setSectionError(
-        section,
-        `Line ${e.lineNumber}:${e.columnNumber}: ${e.message}`,
-      )
-    } else {
-      setSectionError(section, e.message)
-    }
-  }, [setSectionError])
+  const processSectionError = useCallback(
+    (section, e) => {
+      if (e.lineNumber && e.columnNumber) {
+        // currently it's a non-standard property supported by Firefox only :(
+        setSectionError(
+          section,
+          `Line ${e.lineNumber}:${e.columnNumber}: ${e.message}`,
+        )
+      } else {
+        setSectionError(section, e.message)
+      }
+    },
+    [setSectionError],
+  )
 
-  const evalSectionContent = useCallback((section, providedContent) => {
-    const content = providedContent || strategy[section] || ''
+  const evalSectionContent = useCallback(
+    (section, providedContent) => {
+      const content = providedContent || strategy[section] || ''
 
-    if (section.substring(0, 6) === 'define') {
-      try {
-        const func = eval(content); // eslint-disable-line
-        clearSectionError(section)
-        return func
-      } catch (e) {
-        processSectionError(section, e)
+      if (section.substring(0, 6) === 'define') {
+        try {
+          const func = eval(content); // eslint-disable-line
+          clearSectionError(section)
+          return func
+        } catch (e) {
+          processSectionError(section, e)
+          return null
+        }
+      } else if (section.substring(0, 2) === 'on') {
+        try {
+          const func = eval(content)({ HFS, HFU, _ }); // eslint-disable-line
+          clearSectionError(section)
+          return func
+        } catch (e) {
+          processSectionError(section, e)
+          return null
+        }
+      } else {
+        debug('unrecognised section handler prefix: %s', section)
         return null
       }
-    } else if (section.substring(0, 2) === 'on') {
-      try {
-        const func = eval(content)({ HFS, HFU, _ }); // eslint-disable-line
-        clearSectionError(section)
-        return func
-      } catch (e) {
-        processSectionError(section, e)
-        return null
+    },
+    [clearSectionError, processSectionError, strategy],
+  )
+
+  const onDefineIndicatorsChange = useCallback(
+    (content) => {
+      const indicatorFunc = evalSectionContent('defineIndicators', content)
+      let strategyIndicators = {}
+
+      if (indicatorFunc) {
+        try {
+          strategyIndicators = indicatorFunc(Indicators)
+        } catch (e) {
+          processSectionError('defineIndicators', e)
+        }
       }
-    } else {
-      debug('unrecognised section handler prefix: %s', section)
-      return null
-    }
-  }, [clearSectionError, processSectionError, strategy])
 
-  const onDefineIndicatorsChange = useCallback((content) => {
-    const indicatorFunc = evalSectionContent('defineIndicators', content)
-    let strategyIndicators = {}
+      _forEach(_values(strategyIndicators), (i) => {
+        i.key = `${nonce()}`; // eslint-disable-line
+      })
 
-    if (indicatorFunc) {
-      try {
-        strategyIndicators = indicatorFunc(Indicators)
-      } catch (e) {
-        processSectionError('defineIndicators', e)
+      onIndicatorsChange(strategyIndicators)
+    },
+    [evalSectionContent, onIndicatorsChange, processSectionError],
+  )
+
+  const onLoadStrategy = useCallback(
+    (newStrategy, forcedLoad = false) => {
+      // const updated = { ...newStrategy, savedTs: Date.now() }
+      const strategyToLoad = { ...newStrategy }
+      if (strategyDirty && !forcedLoad) {
+        setNextStrategyToOpen(strategyToLoad)
+        openUnsavedStrategyModal()
+        return
       }
-    }
+      if (finished && !forcedLoad) {
+        setNextStrategyToOpen(strategyToLoad)
+        openClearBacktestResultsModal()
+        return
+      }
+      if (
+        !_isEmpty(strategyToLoad)
+        && _isEmpty(strategyToLoad.strategyOptions)
+      ) {
+        strategyToLoad.strategyOptions = getDefaultStrategyOptions()
+      }
+      setStrategy(strategyToLoad)
+      setSectionErrors({})
+      setNextStrategyToOpen(null)
+      setStrategyDirty(false)
+      if (_isEmpty(strategyToLoad?.strategyContent)) {
+        setIDEcontent({})
+      } else {
+        setIDEcontent(strategyToLoad.strategyContent)
+      }
 
-    _forEach(_values(strategyIndicators), (i) => {
-      i.key = `${nonce()}`; // eslint-disable-line
-    })
+      if (strategyToLoad?.strategyContent?.defineIndicators) {
+        onDefineIndicatorsChange(
+          strategyToLoad.strategyContent.defineIndicators,
+        )
+      }
+    },
+    [
+      finished,
+      onDefineIndicatorsChange,
+      openClearBacktestResultsModal,
+      openUnsavedStrategyModal,
+      setStrategy,
+      strategyDirty,
+    ],
+  )
 
-    onIndicatorsChange(strategyIndicators)
-  }, [evalSectionContent, onIndicatorsChange, processSectionError])
-
-  const onLoadStrategy = useCallback((newStrategy, forcedLoad = false) => {
-    // const updated = { ...newStrategy, savedTs: Date.now() }
-    const strategyToLoad = { ...newStrategy }
-    if (strategyDirty && !forcedLoad) {
-      setNextStrategyToOpen(strategyToLoad)
-      openUnsavedStrategyModal()
-      return
-    }
-    if (finished && !forcedLoad) {
-      setNextStrategyToOpen(strategyToLoad)
-      openClearBacktestResultsModal()
-      return
-    }
-    if (!_isEmpty(strategyToLoad) && _isEmpty(strategyToLoad.strategyOptions)) {
-      strategyToLoad.strategyOptions = getDefaultStrategyOptions()
-    }
-    setStrategy(strategyToLoad)
-    setSectionErrors({})
-    setNextStrategyToOpen(null)
-    setStrategyDirty(false)
-    if (_isEmpty(strategyToLoad?.strategyContent)) {
-      setIDEcontent({})
-    } else {
-      setIDEcontent(strategyToLoad.strategyContent)
-    }
-
-    if (strategyToLoad?.strategyContent?.defineIndicators) {
-      onDefineIndicatorsChange(strategyToLoad.strategyContent.defineIndicators)
-    }
-  }, [finished, onDefineIndicatorsChange, openClearBacktestResultsModal, openUnsavedStrategyModal, setStrategy, strategyDirty])
-
-  const saveStrategy = useCallback((content) => {
-    onSave(authToken, { ...content, savedTs: Date.now() })
-  }, [authToken, onSave])
+  const saveStrategy = useCallback(
+    (content) => {
+      onSave(authToken, { ...content, savedTs: Date.now() })
+    },
+    [authToken, onSave],
+  )
 
   const onCloseModals = useCallback(() => {
     setActionStrategy({})
@@ -192,7 +241,13 @@ const StrategiesPage = ({
     closeRenameStrategyModal()
     closeClearBacktestResultsModal()
     closeUnsavedStrategyModal()
-  }, [closeClearBacktestResultsModal, closeRemoveModal, closeRenameStrategyModal, closeSaveStrategyAsModal, closeUnsavedStrategyModal])
+  }, [
+    closeClearBacktestResultsModal,
+    closeRemoveModal,
+    closeRenameStrategyModal,
+    closeSaveStrategyAsModal,
+    closeUnsavedStrategyModal,
+  ])
 
   const removeStrategy = useCallback(() => {
     const { id } = actionStrategy
@@ -200,30 +255,45 @@ const StrategiesPage = ({
     onCloseModals()
   }, [actionStrategy, authToken, onCloseModals, onRemove])
 
-  const saveAsStrategy = useCallback((updatedStrategy) => {
-    onSave(authToken, { ...updatedStrategy, savedTs: Date.now() })
-    onCloseModals()
-  }, [authToken, onCloseModals, onSave])
+  const saveAsStrategy = useCallback(
+    (updatedStrategy) => {
+      onSave(authToken, { ...updatedStrategy, savedTs: Date.now() })
+      onCloseModals()
+    },
+    [authToken, onCloseModals, onSave],
+  )
 
-  const renameStrategy = useCallback(({ label }) => {
-    onSave(authToken, { ...actionStrategy, label, savedTs: Date.now() })
-    onCloseModals()
-  }, [actionStrategy, authToken, onCloseModals, onSave])
+  const renameStrategy = useCallback(
+    ({ label }) => {
+      onSave(authToken, { ...actionStrategy, label, savedTs: Date.now() })
+      onCloseModals()
+    },
+    [actionStrategy, authToken, onCloseModals, onSave],
+  )
 
-  const saveAsHandler = useCallback((rowData) => {
-    setActionStrategy(rowData)
-    openSaveStrategyAsModal()
-  }, [openSaveStrategyAsModal])
+  const saveAsHandler = useCallback(
+    (rowData) => {
+      setActionStrategy(rowData)
+      openSaveStrategyAsModal()
+    },
+    [openSaveStrategyAsModal],
+  )
 
-  const renameStrategyHandler = useCallback((rowData) => {
-    setActionStrategy(rowData)
-    openRenameStrategyModal()
-  }, [openRenameStrategyModal])
+  const renameStrategyHandler = useCallback(
+    (rowData) => {
+      setActionStrategy(rowData)
+      openRenameStrategyModal()
+    },
+    [openRenameStrategyModal],
+  )
 
-  const strategyRemoveHandler = useCallback((rowData) => {
-    setActionStrategy(rowData)
-    openRemoveModal()
-  }, [openRemoveModal])
+  const strategyRemoveHandler = useCallback(
+    (rowData) => {
+      setActionStrategy(rowData)
+      openRemoveModal()
+    },
+    [openRemoveModal],
+  )
 
   return (
     <Layout>
@@ -307,7 +377,6 @@ StrategiesPage.propTypes = {
   }).isRequired,
 }
 
-StrategiesPage.defaultProps = {
-}
+StrategiesPage.defaultProps = {}
 
 export default StrategiesPage
