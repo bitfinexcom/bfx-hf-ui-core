@@ -867,5 +867,14 @@
     "warning_2": "This action can not be undone!",
     "strategyName": "the strategy name",
     "input_placeholder": "Type {{label}} to delete it"
+  },
+  "closeSessionModal": {
+    "title": "Close Session",
+    "submitButton": "Yes, close session",
+    "closeButton": "No, return to application",
+    "text_1": "You have the following active operations running. If you close the session now, these will be cancelled:",
+    "text_2": "Do you want to proceed?",
+    "strategy": "Strategy",
+    "startedOn": "started on: {{time}}"
   }
 }

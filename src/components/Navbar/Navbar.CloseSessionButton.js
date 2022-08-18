@@ -3,9 +3,11 @@ import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { useDispatch } from 'react-redux'
 import { BFX_TOKEN_COOKIE } from '../../constants/cookies'
+import { changeUIModalState } from '../../redux/actions/ui'
 
 import WSActions from '../../redux/actions/ws'
 import { isElectronApp } from '../../redux/config'
+import { UI_MODAL_KEYS } from '../../redux/constants/modals'
 import { removeCookie } from '../../util/cookies'
 
 const homeUrl = process.env.REACT_APP_ENVIRONMENT === 'staging'
@@ -26,7 +28,9 @@ const CloseSessionButton = () => {
     }, 1000)
   }
 
-  const openCloseSessionModal = () => {}
+  const openCloseSessionModal = () => {
+    dispatch(changeUIModalState(UI_MODAL_KEYS.CLOSE_SESSION_MODAL, true))
+  }
 
   const buttonHandler = () => (isElectronApp ? openCloseSessionModal() : logout())
 

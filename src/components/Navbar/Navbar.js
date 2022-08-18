@@ -2,7 +2,6 @@ import React, { memo, useMemo } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import _values from 'lodash/values'
 import _map from 'lodash/map'
-import cx from 'clsx'
 
 import { useTranslation } from 'react-i18next'
 import HFIcon from '../../ui/HFIcon'
