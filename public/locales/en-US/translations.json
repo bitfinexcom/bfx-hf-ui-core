@@ -618,7 +618,10 @@
   },
   "navbar": {
     "logout": "Logout",
-    "closeSession": "Close Session"
+    "closeSession": "Close Session",
+    "signInTo": "Sign in to",
+    "loggedInAs": "Logged in as",
+    "updateCreds": "Update credentials"
   },
   "strategyEditor": {
     "clearBacktestResultsModalTitle": "Confirmation Required",

@@ -13,6 +13,7 @@ import NavbarButton from './Navbar.Button'
 import SwitchMode from '../SwitchMode'
 import CloseSessionButton from './Navbar.CloseSessionButton'
 import LayoutSettings from './Navbar.LayoutSettings'
+import APIBanner from './Navbar.APIBanner'
 import AppSettings from './Navbar.AppSettings'
 import Routes, { strategyEditor } from '../../constants/routes'
 import { isElectronApp } from '../../redux/config'
@@ -91,6 +92,7 @@ const Navbar = () => {
             </div>
           </div>
         )}
+        <APIBanner />
         <CloseSessionButton />
       </div>
     </div>

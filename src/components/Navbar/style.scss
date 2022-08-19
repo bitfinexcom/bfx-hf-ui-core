@@ -312,7 +312,7 @@ body.hosted {
   display: flex;
   border-right: 1px solid var(--darker-background-color);
   flex-direction: row;
-  margin-right: 16px;
+  margin-right: spacing();
 
   .hfui-tradingpaper__control-toggle {
     p {
@@ -337,4 +337,35 @@ body.hosted {
   padding: 0 spacing(0.75);
   background: none;
   border: 1px solid var(--text-color);
+}
+
+.hfui-navbar__api {
+  margin-right: spacing();
+
+  .logged-in-bar {
+    display: flex;
+    height: 34px;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: center;
+
+    * {
+      line-height: 16px;
+    }
+
+    &__text {
+      font-weight: 700;
+    }
+
+    &__username {
+      color: $green-color;
+    }
+
+    &__update-creds {
+      text-transform: uppercase;
+      text-decoration: underline;
+      font-size: 10px;
+      cursor: pointer;
+    }
+  }
 }
