@@ -40,7 +40,7 @@ const CloseSessionButton = () => {
       className='hfui-navbar__close-session hfui-exchangeinfobar__button'
       onClick={buttonHandler}
     >
-      {t(isElectronApp ? 'ui.closeSession' : 'ui.logout')}
+      {t(isElectronApp ? 'navbar.closeSession' : 'navbar.logout')}
     </button>
   )
 }

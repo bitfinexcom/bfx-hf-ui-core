@@ -616,6 +616,10 @@
     "connecting": "Connecting",
     "disconnected": "Disconnected"
   },
+  "navbar": {
+    "logout": "Logout",
+    "closeSession": "Close Session"
+  },
   "strategyEditor": {
     "clearBacktestResultsModalTitle": "Confirmation Required",
     "clearBacktestResultsModalText": "If you choose to continue, the current backtest results will be cleared. Do you wish to proceed?",
@@ -797,9 +801,7 @@
     "required": "REQUIRED",
     "proceed": "Proceed",
     "saveAndLaunch": "Save & Launch",
-    "launchNoSave": "Launch without saving",
-    "logout": "Logout",
-    "closeSession": "Close Session"
+    "launchNoSave": "Launch without saving"
   },
   "crashHandler": {
     "text1": "An error occurred that caused the Bitfinex Honey UI to halt. Please, restart the application to proceed working with it",
