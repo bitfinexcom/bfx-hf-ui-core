@@ -85,14 +85,16 @@ const Navbar = () => {
           />
         </div>
         {isElectronApp && (
-          <div className='hfui-tradingpaper__control'>
-            <div className='hfui-tradingpaper__control-toggle'>
-              <p>{t('main.sandbox')}</p>
-              <SwitchMode />
+          <>
+            <div className='hfui-tradingpaper__control'>
+              <div className='hfui-tradingpaper__control-toggle'>
+                <p>{t('main.sandbox')}</p>
+                <SwitchMode />
+              </div>
             </div>
-          </div>
+            <APIBanner />
+          </>
         )}
-        <APIBanner />
         <CloseSessionButton />
       </div>
     </div>
