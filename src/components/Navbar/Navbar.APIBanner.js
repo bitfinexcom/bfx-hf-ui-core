@@ -10,6 +10,7 @@ import {
 import {
   getMainAPIKeyState,
   getPaperAPIKeyState,
+  getUsername,
 } from '../../redux/selectors/ws'
 import { changeUIModalState, setSettingsTab } from '../../redux/actions/ui'
 import { SETTINGS_TABS } from '../../modals/AppSettingsModal/AppSettingsModal.constants'
@@ -21,9 +22,12 @@ const APIBanner = () => {
   const isPaperTrading = useSelector(getIsPaperTrading)
   const paperAPIKeyState = useSelector(getPaperAPIKeyState)
   const mainAPIKeyState = useSelector(getMainAPIKeyState)
-  const isLoggedIn = isPaperTrading
-    ? paperAPIKeyState.valid
-    : mainAPIKeyState.valid
+  const username = useSelector(getUsername)
+
+  const isLoggedIn = username
+    && (isPaperTrading
+      ? paperAPIKeyState.valid
+      : mainAPIKeyState.valid)
 
   const dispatch = useDispatch()
 
@@ -45,7 +49,10 @@ const APIBanner = () => {
           <p className='logged-in-bar__text'>
             <span>{t('navbar.loggedInAs')}</span>
             &nbsp;
-            <span className='logged-in-bar__username'>@anybody</span>
+            <span className='logged-in-bar__username'>
+              @
+              {username}
+            </span>
           </p>
           <p onClick={buttonHandler} className='logged-in-bar__update-creds '>
             {t('navbar.updateCreds')}
