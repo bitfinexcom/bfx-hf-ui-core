@@ -1,20 +1,29 @@
 /* eslint-disable no-restricted-globals */
 import React from 'react'
 import { useTranslation } from 'react-i18next'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import _isEmpty from 'lodash/isEmpty'
 import { BFX_TOKEN_COOKIE } from '../../constants/cookies'
 import { changeUIModalState } from '../../redux/actions/ui'
 
 import WSActions from '../../redux/actions/ws'
 import { isElectronApp } from '../../redux/config'
 import { UI_MODAL_KEYS } from '../../redux/constants/modals'
+import { getActiveStrategies, getAlgoOrders } from '../../redux/selectors/ws'
 import { removeCookie } from '../../util/cookies'
+
+const ipcHelpers = window.electronService
 
 const homeUrl = process.env.REACT_APP_ENVIRONMENT === 'staging'
   ? 'https://bfx-ui-api.staging.bitfinex.com/'
   : 'https://honey.bitfinex.com'
 
 const CloseSessionButton = () => {
+  const activeStrategies = useSelector(getActiveStrategies)
+  const algoOrders = useSelector(getAlgoOrders)
+
+  const needToProcessBeforeCloseApp = !_isEmpty(activeStrategies) || !_isEmpty(algoOrders)
+
   const dispatch = useDispatch()
 
   const { t } = useTranslation()
@@ -29,7 +38,11 @@ const CloseSessionButton = () => {
   }
 
   const openCloseSessionModal = () => {
-    dispatch(changeUIModalState(UI_MODAL_KEYS.CLOSE_SESSION_MODAL, true))
+    if (needToProcessBeforeCloseApp) {
+      dispatch(changeUIModalState(UI_MODAL_KEYS.CLOSE_SESSION_MODAL, true))
+      return
+    }
+    ipcHelpers.sendAppClosedEvent()
   }
 
   const buttonHandler = () => (isElectronApp ? openCloseSessionModal() : logout())
