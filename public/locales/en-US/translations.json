@@ -880,6 +880,7 @@
     "text_1": "You have the following active operations running. If you close the session now, these will be cancelled:",
     "text_2": "Do you want to proceed?",
     "strategy": "Strategy",
-    "startedOn": "started on: {{time}}"
+    "startedOn": "started on: {{time}}",
+    "error": "The safe close process failed. Try to cancel active orders or stop execution manually"
   }
 }
