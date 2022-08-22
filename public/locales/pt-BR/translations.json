@@ -438,7 +438,7 @@
     "unrecognisedExchange": "Bolsa não reconhecida, a ordem não pode ser enviada",
     "submittingOrderTo": "Enviando ordem para {{target}}",
     "strategyRemovedSuccessfully": "A estratégia foi removida com sucesso",
-    "encryptedApiCredentialsSavedFor": "Credenciais de API criptografadas salvas para {{exID}}",
+    "encryptedApiCredentialsSavedFor": "Credenciais de API criptografadas salvas para {{target}}",
     "reconnectingWithNewCredentials": "Reconectando com novas credenciais...",
     "requestedAlgoOrderNotRunningCannotStop": "Ordem algo solicitada não em execução, não pode parar",
     "favouriteTradingPairsSuccessfullySaved": "Pares de negociação preferidos salvos com sucesso",

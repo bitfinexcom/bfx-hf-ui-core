@@ -438,7 +438,7 @@
     "unrecognisedExchange": "無法識別交易，訂單提交失敗",
     "submittingOrderTo": "提交訂單至{{target}}",
     "strategyRemovedSuccessfully": "已成功刪除策略",
-    "encryptedApiCredentialsSavedFor": "已儲存 {{exID}} 的加密 API 憑證",
+    "encryptedApiCredentialsSavedFor": "已儲存 {{target}} 的加密 API 憑證",
     "reconnectingWithNewCredentials": "使用新憑證重新連線中...",
     "requestedAlgoOrderNotRunningCannotStop": "請求的演算法訂單未運行，無法中止",
     "favouriteTradingPairsSuccessfullySaved": "已成功儲存收藏的交易對",
