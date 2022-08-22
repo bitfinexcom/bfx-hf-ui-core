@@ -41,15 +41,6 @@ export default function (state = getInitialState(), action = {}) {
       }
     }
 
-    case t.SET_USERNAME: {
-      const { username } = payload
-
-      return {
-        ...state,
-        username,
-      }
-    }
-
     // web auth token success
     case t.DATA_WEB_AUTH_SUCCESS: {
       const { userId } = payload

@@ -44,7 +44,6 @@ import getActiveStrategies from './get_active_strategies'
 import getCurrentStrategyExecutionState from './get_current_strategy_execution_state'
 import getCurrentStrategyPositions from './get_current_strategy_positions'
 import getDraftStrategies from './get_draft_strategies'
-import getUsername from './get_username'
 
 export {
   getSockets,
@@ -93,7 +92,6 @@ export {
   getCurrentModeAPIKeyState,
   getIsMainModeApiKeyUpdating,
   getIsPaperModeApiKeyUpdating,
-  getUsername,
 
   getSavedStrategies,
   getIsExecutionLoading,

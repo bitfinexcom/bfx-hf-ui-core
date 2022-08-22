@@ -323,11 +323,6 @@ export default {
     type: t.UPDATING_API_KEY,
     payload: { mode, isUpdating },
   }),
-  setUsername: (username) => ({
-    type: t.SET_USERNAME,
-    payload: { username },
-  }),
-
   initAuth: password => send(['auth.init', password, 'main', getScope()]),
   auth: (password, mode) => send(['auth.submit', password, mode, getScope()]),
   resetAuth: () => send(['auth.reset']),

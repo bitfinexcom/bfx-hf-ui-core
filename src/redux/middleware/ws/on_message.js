@@ -521,12 +521,6 @@ export default (alias, store) => (e = {}) => {
         break
       }
 
-      case 'info.username': {
-        const [,, username] = payload
-        store.dispatch(WSActions.setUsername(username))
-        break
-      }
-
       default: {
         break
       }
