@@ -91,7 +91,7 @@ const ApiKeys = () => {
     <div>
       <div className={getClasses(MAIN_MODE)}>
         <div className='appsettings-modal__content'>
-          <p>
+          <div className='appsettings-modal__key-title-wrapper'>
             <span className='appsettings-modal__key-title'>
               {t('appSettings.productionKey')}
             </span>
@@ -107,7 +107,7 @@ const ApiKeys = () => {
               {t('appSettings.howToCreate')}
             </a>
             <div className='appsettings-modal__key-text appsettings-modal__key-desc'>{t('appSettings.howToCreateDesc')}</div>
-          </p>
+          </div>
           <ApiBanner
             apiKeyState={mainAPIKeyState}
             isUpdating={isMainApiKeyUpdating}
@@ -142,7 +142,7 @@ const ApiKeys = () => {
       </div>
       <div className={getClasses(PAPER_MODE)}>
         <div className='appsettings-modal__content'>
-          <p>
+          <div className='appsettings-modal__key-title-wrapper'>
             <span className='appsettings-modal__key-title'>
               {t('appSettings.paperKey')}
             </span>
@@ -158,7 +158,7 @@ const ApiKeys = () => {
               {t('appSettings.howToCreatePaper')}
             </a>
             <div className='appsettings-modal__key-text appsettings-modal__key-desc'>{t('appSettings.howToCreatePaperDesc')}</div>
-          </p>
+          </div>
 
           <ApiBanner
             apiKeyState={paperAPIKeyState}

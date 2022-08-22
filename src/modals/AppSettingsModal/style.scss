@@ -22,11 +22,10 @@
     overflow: auto;
   }
 
-  &__key-title {
+  &__key-title-wrapper {
     margin-bottom: spacing();
   }
 
-  &__title,
   &__key-title {
     font-weight: 600;
     font-size: 14px;
