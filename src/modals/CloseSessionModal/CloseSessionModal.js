@@ -23,20 +23,21 @@ const CloseSessionModal = () => {
 
   const onClose = () => dispatch(UIActions.changeUIModalState(UI_MODAL_KEYS.CLOSE_SESSION_MODAL, false))
   const onSubmit = () => {
-    dispatch(WSActions.send('app.safe_close'))
+    dispatch(WSActions.send(['app.safe_close']))
     setIsLoading(true)
+
+    // Timeout, if the message allowing the application to close is not received
     setTimeout(() => {
       setIsLoading(false)
       onClose()
 
-      // Timeout, if the message allowing the application to close is not received
       dispatch(UIActions.recvNotification({
         mts: Date.now(),
         status: 'error',
         text: t('closeSessionModal.error'),
         cid: uuidv4(),
       }))
-    }, 5000)
+    }, 10000)
   }
 
   return (
