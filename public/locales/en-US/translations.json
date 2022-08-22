@@ -881,6 +881,6 @@
     "text_2": "Do you want to proceed?",
     "strategy": "Strategy",
     "startedOn": "started on: {{time}}",
-    "error": "The safe close process failed. Try to cancel active orders or stop execution manually"
+    "error": "It was not possible to safely terminate one or more of the active strategies and/or algorithmic orders. Try to cancel manually or Force Quit the application (Ctrl+Q/Cmd+Q)"
   }
 }
