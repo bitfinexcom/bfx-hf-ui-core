@@ -128,6 +128,31 @@ body.hosted {
   align-items: center;
   flex-wrap: wrap;
   height: 100%;
+
+  .simpledropdown-wrapper .simpledropdown-label {
+    margin-top: 7px;
+    margin-left: 5px;
+  }
+
+  .dropdown-leaf {
+    width: 18px;
+    height: 18px;
+
+    &:hover {
+      cursor: pointer;
+      opacity: 0.8;
+    }
+  }
+
+  .dropdown-leaf-link {
+    color: var(--text-color);
+    text-decoration: none;
+    font-size: 14px;
+
+    &:hover {
+      color: var(--primary-8);
+    }
+  }
 }
 
 .hfui-navbar__app-settings,
