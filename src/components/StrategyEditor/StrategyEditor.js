@@ -50,9 +50,9 @@ import { getStrategyModeForSymbol } from '../../util/market'
 import useToggle from '../../hooks/useToggle'
 import { INDICATORS_ARRAY_SHAPE, STRATEGY_SHAPE } from '../../constants/prop-types-shapes'
 import EditStrategyLabelModal from '../../modals/Strategy/EditStrategyLabelModal'
+import { UI_MODAL_KEYS } from '../../redux/constants/modals'
 
 import './style.css'
-import { UI_MODAL_KEYS } from '../../redux/constants/modals'
 
 const debug = Debug('hfui-ui:c:strategy-editor')
 

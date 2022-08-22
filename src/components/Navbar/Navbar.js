@@ -2,7 +2,6 @@ import React, { memo, useMemo } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import _values from 'lodash/values'
 import _map from 'lodash/map'
-import cx from 'clsx'
 
 import { useTranslation } from 'react-i18next'
 import HFIcon from '../../ui/HFIcon'
@@ -12,18 +11,18 @@ import UIActions from '../../redux/actions/ui'
 import NavbarLink from './Navbar.Link'
 import NavbarButton from './Navbar.Button'
 import SwitchMode from '../SwitchMode'
-import Logout from './Navbar.Logout'
-
+import CloseSessionButton from './Navbar.CloseSessionButton'
 import LayoutSettings from './Navbar.LayoutSettings'
+import APIBanner from './Navbar.APIBanner'
 import AppSettings from './Navbar.AppSettings'
 import Routes, { strategyEditor } from '../../constants/routes'
 import { isElectronApp } from '../../redux/config'
 import {
   getThemeSetting, THEMES, getIsPaperTrading, getIsBetaVersion, getIsStrategiesTabVisible,
 } from '../../redux/selectors/ui'
+import { UI_MODAL_KEYS } from '../../redux/constants/modals'
 
 import './style.css'
-import { UI_MODAL_KEYS } from '../../redux/constants/modals'
 
 const getOption = (label, url) => (
   <a key={label} className='dropdown-leaf-link' href={url} target='_blank' rel='noopener noreferrer'>
@@ -69,7 +68,7 @@ const Navbar = () => {
         })}
       </ul>
       <div className='hfui-tradingpage__menu'>
-        <div className={cx('hfui-exchangeinfobar__buttons', { 'is-web': !isElectronApp })}>
+        <div className='hfui-exchangeinfobar__buttons'>
           <LayoutSettings />
           <NavbarButton
             alt={t('notifications.title')}
@@ -84,18 +83,19 @@ const Navbar = () => {
             options={leafOptions}
             className='simpledropdown-wrapper'
           />
-          {!isElectronApp && (
-            <Logout />
-          )}
         </div>
         {isElectronApp && (
-          <div className='hfui-tradingpaper__control'>
-            <div className='hfui-tradingpaper__control-toggle'>
-              <p>{t('main.sandbox')}</p>
-              <SwitchMode />
+          <>
+            <div className='hfui-tradingpaper__control'>
+              <div className='hfui-tradingpaper__control-toggle'>
+                <p>{t('main.sandbox')}</p>
+                <SwitchMode />
+              </div>
             </div>
-          </div>
+            <APIBanner />
+          </>
         )}
+        <CloseSessionButton />
       </div>
     </div>
   )
