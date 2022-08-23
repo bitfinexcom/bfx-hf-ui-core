@@ -5,6 +5,7 @@ import _map from 'lodash/map'
 import _isFunction from 'lodash/isFunction'
 import cx from 'clsx'
 import { useTranslation } from 'react-i18next'
+import { TransitionGroup, CSSTransition } from 'react-transition-group'
 
 import { useDispatch, useSelector } from 'react-redux'
 import { isElectronApp } from '../../redux/config'
@@ -20,6 +21,11 @@ import { UI_MODAL_KEYS } from '../../redux/constants/modals'
 import { DEFAULT_TAB, SETTINGS_TABS, WEB_SETTINGS_TABS } from './AppSettingsModal.constants'
 
 import './style.css'
+
+const cssTransitionProps = {
+  timeout: 300,
+  classNames: 'setting',
+}
 
 const AppSettingsModal = () => {
   const isOpen = useSelector(state => getUIModalStateForKey(state, UI_MODAL_KEYS.APP_SETTINGS_MODAL))
@@ -67,17 +73,39 @@ const AppSettingsModal = () => {
           </div>
         ))}
       </div>
-      <div className={activeTab === SETTINGS_TABS.Keys ? '' : 'appsettings-modal__content'}>
-        {isElectronApp && (
-          <>
-            {activeTab === SETTINGS_TABS.Beta && <BetaTab />}
-            {activeTab === SETTINGS_TABS.General && <GeneralTab />}
-            {activeTab === SETTINGS_TABS.Keys && <ApiKeysTab />}
-          </>
+
+      <TransitionGroup
+        exit={false}
+        className={cx('content-all', {
+          'appsettings-modal__content': activeTab !== SETTINGS_TABS.Keys,
+        })}
+      >
+        {isElectronApp && activeTab === SETTINGS_TABS.Beta && (
+          <CSSTransition {...cssTransitionProps}>
+            <BetaTab />
+          </CSSTransition>
         )}
-        {activeTab === SETTINGS_TABS.Appearance && <AppearanceTab />}
-        {activeTab === SETTINGS_TABS.About && <AboutTab />}
-      </div>
+        {isElectronApp && activeTab === SETTINGS_TABS.General && (
+          <CSSTransition {...cssTransitionProps}>
+            <GeneralTab />
+          </CSSTransition>
+        )}
+        {isElectronApp && activeTab === SETTINGS_TABS.Keys && (
+          <CSSTransition {...cssTransitionProps}>
+            <ApiKeysTab />
+          </CSSTransition>
+        )}
+        {activeTab === SETTINGS_TABS.Appearance && (
+          <CSSTransition {...cssTransitionProps}>
+            <AppearanceTab />
+          </CSSTransition>
+        )}
+        {activeTab === SETTINGS_TABS.About && (
+          <CSSTransition {...cssTransitionProps}>
+            <AboutTab />
+          </CSSTransition>
+        )}
+      </TransitionGroup>
     </Modal>
   )
 }
