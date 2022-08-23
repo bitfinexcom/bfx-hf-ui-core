@@ -4,6 +4,7 @@ export const UI_KEYS = {
   isOrderExecuting: 'isOrderExecuting',
   pendingLiveStrategy: 'pendingLiveStrategy',
   currentStrategy: 'currentStrategy',
+  isStrategyDirty: 'isStrategyDirty',
   layoutID: 'layoutID',
   orderToEdit: 'orderToEdit',
   closePositionModalData: 'closePositionModalData',

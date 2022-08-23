@@ -2,7 +2,7 @@ import { connect } from 'react-redux'
 import {
   getUIState,
 } from '../../redux/selectors/ui'
-import UIActions from '../../redux/actions/ui'
+import UIActions, { setUIValue } from '../../redux/actions/ui'
 import WSActions from '../../redux/actions/ws'
 
 import StrategiesPage from './Strategies'
@@ -15,6 +15,7 @@ const mapStateToProps = (state) => ({
   authToken: getAuthToken(state),
   strategy: getUIState(state, UI_KEYS.currentStrategy, EMP_OBJ),
   backtestResults: getBacktestResults(state),
+  strategyDirty: getUIState(state, UI_KEYS.isStrategyDirty, false),
 })
 
 const mapDispatchToProps = (dispatch) => ({
@@ -27,6 +28,7 @@ const mapDispatchToProps = (dispatch) => ({
   onRemove: (authToken, id) => {
     dispatch(UIActions.removeStrategy(authToken, id))
   },
+  setStrategyDirty: (value) => dispatch(setUIValue(UI_KEYS.isStrategyDirty, value)),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(StrategiesPage)

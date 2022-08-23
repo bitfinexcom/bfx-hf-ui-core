@@ -76,6 +76,7 @@ function getInitialState() {
     closePositionModalData: {},
     isOrderExecuting: false,
     currentStrategy: {},
+    isStrategyDirty: false,
     unsavedLayout: null,
     layoutID: null,
     settingsActiveTab: DEFAULT_TAB,

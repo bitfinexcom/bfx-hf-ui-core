@@ -37,10 +37,12 @@ const StrategiesPage = ({
   backtestResults: { finished },
   strategy,
   setStrategy,
+  strategyDirty,
+  setStrategyDirty,
 }) => {
   const [indicators, setIndicators] = useState([])
   const [sectionErrors, setSectionErrors] = useState({})
-  const [strategyDirty, setStrategyDirty] = useState(false)
+
   const [
     isUnsavedStrategyModalOpen,,
     openUnsavedStrategyModal,
@@ -215,6 +217,7 @@ const StrategiesPage = ({
       openClearBacktestResultsModal,
       openUnsavedStrategyModal,
       setStrategy,
+      setStrategyDirty,
       strategyDirty,
     ],
   )
@@ -364,6 +367,8 @@ StrategiesPage.propTypes = {
   backtestResults: PropTypes.shape({
     finished: PropTypes.bool,
   }).isRequired,
+  strategyDirty: PropTypes.bool.isRequired,
+  setStrategyDirty: PropTypes.func.isRequired,
 }
 
 StrategiesPage.defaultProps = {}
