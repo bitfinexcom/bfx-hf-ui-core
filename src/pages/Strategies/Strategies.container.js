@@ -25,9 +25,7 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch(WSActions.send(['strategy.save', authToken, strategy]))
   },
   onRemove: (authToken, id) => {
-    dispatch(WSActions.send(['strategy.remove', authToken, id]))
-    dispatch(WSActions.resetBacktestData())
-    dispatch(UIActions.setUIValue(UI_KEYS.currentStrategy, {}))
+    dispatch(UIActions.removeStrategy(authToken, id))
   },
 })
 

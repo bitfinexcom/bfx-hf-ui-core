@@ -153,6 +153,11 @@ export const toggleUIModalState = (key) => ({
   payload: { key },
 })
 
+export const removeStrategy = (authToken, id) => ({
+  type: types.REMOVE_STRATEGY,
+  payload: { authToken, id },
+})
+
 export default {
   setUIValue,
   updateUIValue,
@@ -175,4 +180,5 @@ export default {
   changeMode,
   changeUIModalState,
   toggleUIModalState,
+  removeStrategy,
 }
