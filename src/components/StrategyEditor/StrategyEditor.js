@@ -54,6 +54,7 @@ import {
 } from '../../constants/prop-types-shapes'
 import EditStrategyLabelModal from '../../modals/Strategy/EditStrategyLabelModal'
 import { UI_MODAL_KEYS } from '../../redux/constants/modals'
+import { PAPER_MODE } from '../../redux/reducers/ui'
 
 import './style.css'
 
@@ -304,7 +305,7 @@ const StrategyEditor = (props) => {
         return
       }
 
-      setStrategy(newStrategy)
+      setStrategy(newStrategy, PAPER_MODE)
       saveStrategy(newStrategy)
       setStrategyDirty(false)
     },
@@ -536,7 +537,8 @@ const StrategyEditor = (props) => {
   const editInSandbox = useCallback(() => {
     stopExecution()
     changeTradingMode(!isPaperTrading)
-  }, [changeTradingMode, isPaperTrading, stopExecution])
+    setStrategy(strategy, PAPER_MODE)
+  }, [changeTradingMode, isPaperTrading, stopExecution, setStrategy, strategy])
 
   const openNewTest = () => onLoadStrategy(strategy)
 

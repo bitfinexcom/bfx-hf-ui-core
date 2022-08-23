@@ -7,7 +7,7 @@ import Debug from 'debug'
 import { v4 } from 'uuid'
 import i18nLib from '../../../locales/i18n'
 
-import UIActions, { setCurrentStrategy } from '../../actions/ui'
+import UIActions from '../../actions/ui'
 import WSActions from '../../actions/ws'
 import AOActions from '../../actions/ao'
 import zendeskActions from '../../actions/zendesk'
@@ -436,10 +436,9 @@ export default (alias, store) => (e = {}) => {
         const [, strategyMapKey, executionResultsObj] = payload
         const { startedOn } = executionResultsObj
         store.dispatch(WSActions.setStartedLiveStrategy(strategyMapKey, executionResultsObj))
-        store.dispatch(UIActions.setStrategyExecutionId(strategyMapKey))
 
         const currentStrategy = getCurrentStrategy(state)
-        store.dispatch(UIActions.setCurrentStrategy({ ...currentStrategy, startedOn }))
+        store.dispatch(UIActions.setCurrentStrategy({ ...currentStrategy, startedOn, executionId: strategyMapKey }, MAIN_MODE))
 
         break
       }
@@ -462,8 +461,9 @@ export default (alias, store) => (e = {}) => {
         store.dispatch(WSActions.setStoppedLiveStrategy(strategyMapKey, executionResultsObj))
 
         const currentStrategy = getCurrentStrategy(state)
-        store.dispatch(setCurrentStrategy(
+        store.dispatch(UIActions.setCurrentStrategy(
           { ...currentStrategy, stoppedOn: new Date().getTime() },
+          MAIN_MODE,
         ))
 
         break

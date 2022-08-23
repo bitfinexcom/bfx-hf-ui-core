@@ -88,14 +88,9 @@ export const recvNotification = (notification) => ({
   payload: { notification },
 })
 
-export const setStrategyExecutionId = (execId) => ({
-  type: types.SET_STRATEGY_EXECUTION_ID,
-  payload: { executionId: execId },
-})
-
-export const setCurrentStrategy = strategy => ({
+export const setCurrentStrategy = (strategy, mode = null) => ({
   type: types.SET_CURRENT_STRATEGY,
-  payload: { strategy },
+  payload: { strategy, mode },
 })
 
 export const setIsStrategyDirty = isStrategyDirty => ({
@@ -181,7 +176,6 @@ export default {
   removeNotifications,
   clearNotifications,
   recvNotification,
-  setStrategyExecutionId,
   setTradingMode,
   setMarketFromStore,
   changeTickersVolumeUnit,

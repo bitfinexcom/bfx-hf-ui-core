@@ -19,8 +19,8 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = (dispatch) => ({
-  setStrategy(strategy) {
-    dispatch(UIActions.setCurrentStrategy(strategy))
+  setStrategy(strategy, mode = null) {
+    dispatch(UIActions.setCurrentStrategy(strategy, mode))
   },
   onSave: (authToken, strategy = {}) => {
     dispatch(WSActions.send(['strategy.save', authToken, strategy]))

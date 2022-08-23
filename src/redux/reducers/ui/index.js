@@ -326,29 +326,22 @@ function reducer(state = getInitialState(), action = {}) {
       }
     }
 
-    case types.SET_STRATEGY_EXECUTION_ID: {
-      const { executionId } = payload
-      return {
-        ...state,
-        strategyEditor: {
-          ...state.strategyEditor,
-          strategyMainMode: {
-            ...state.strategyEditor.main,
-            executionId,
-          },
-        },
-      }
-    }
-
     case types.SET_CURRENT_STRATEGY: {
-      const { strategy } = payload
+      const { strategy, mode } = payload
       const { isPaperTrading } = state
 
+      let key = null
+      if (!mode) {
+        key = isPaperTrading ? 'strategySandboxMode' : 'strategyMainMode'
+      } else {
+        key = mode === PAPER_MODE ? 'strategySandboxMode' : 'strategyMainMode'
+      }
+
       return {
         ...state,
         strategyEditor: {
           ...state.strategyEditor,
-          [isPaperTrading ? 'strategySandboxMode' : 'strategyMainMode']: strategy,
+          [key]: strategy,
         },
       }
     }

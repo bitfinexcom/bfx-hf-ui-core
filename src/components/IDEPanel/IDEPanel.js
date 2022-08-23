@@ -13,6 +13,7 @@ import { getIsPaperTrading, getThemeSetting } from '../../redux/selectors/ui'
 import Panel from '../../ui/Panel'
 import { STRATEGY_IDE_SECTIONS } from '../StrategyEditor/StrategyEditor.helpers'
 import { STRATEGY_SHAPE } from '../../constants/prop-types-shapes'
+import { PAPER_MODE } from '../../redux/reducers/ui'
 
 const IDEPanel = ({
   setStrategyDirty,
@@ -47,7 +48,7 @@ const IDEPanel = ({
 
   const setStrategyMemo = useMemo(
     () => _debounce(
-      (content) => setStrategy({ ...strategy, strategyContent: content }),
+      (content) => setStrategy({ ...strategy, strategyContent: content }, PAPER_MODE),
       500,
     ),
     [setStrategy, strategy],

@@ -11,6 +11,7 @@ import routes from '../../constants/routes'
 import { showActiveOrdersModal } from '../../redux/actions/ao'
 import { getIsPaperTrading } from '../../redux/selectors/ui'
 import { prepareStrategyToLoad } from '../../components/StrategyEditor/StrategyEditor.helpers'
+import { MAIN_MODE } from '../../redux/reducers/ui'
 
 const SessionList = ({ onModalClose }) => {
   const activeStrategies = useSelector(getSortedByTimeActiveStrategies())
@@ -37,7 +38,7 @@ const SessionList = ({ onModalClose }) => {
       savedStrategies,
     )
 
-    dispatch(setCurrentStrategy(newStrategyObject))
+    dispatch(setCurrentStrategy(newStrategyObject, MAIN_MODE))
 
     const { path: strategyEditorPath } = routes.strategyEditor
     if (pathname !== strategyEditorPath) {
