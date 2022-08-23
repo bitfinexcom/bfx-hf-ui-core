@@ -305,7 +305,6 @@
     "title": "设置",
     "generalTab": "一般",
     "tradingModeTab": "交易模式",
-    "appearanceTab": "版面设计",
     "language": "语言",
     "aboutTab": "关于",
     "appVersion": "版本 {{version}}",

@@ -305,7 +305,6 @@
     "title": "Configuraciones",
     "generalTab": "General",
     "tradingModeTab": "Modo de Trading",
-    "appearanceTab": "Apariencia",
     "language": "Idioma",
     "aboutTab": "Acerca",
     "appVersion": "Versión {{version}}",

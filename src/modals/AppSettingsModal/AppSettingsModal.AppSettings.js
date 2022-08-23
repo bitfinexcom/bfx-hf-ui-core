@@ -19,7 +19,7 @@ import {
 } from '../../redux/selectors/ui'
 import { isElectronApp } from '../../redux/config'
 
-const Appearance = () => {
+const AppSettings = () => {
   const { t } = useTranslation()
   const dispatch = useDispatch()
   const settingsTheme = useSelector(getThemeSetting)
@@ -87,4 +87,4 @@ const Appearance = () => {
   )
 }
 
-export default memo(Appearance)
+export default memo(AppSettings)

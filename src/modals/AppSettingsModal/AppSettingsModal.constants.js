@@ -4,13 +4,13 @@ export const SETTINGS_TABS = {
   Beta: 'appSettings.betaTab',
   General: 'appSettings.generalTab',
   Keys: 'appSettings.apiKeys',
-  Appearance: 'appSettings.appearanceTab',
+  AppSettings: 'appSettings.appSettingsTab',
   About: 'appSettings.aboutTab',
 }
 
-export const WEB_SETTINGS_TABS = [SETTINGS_TABS.Appearance, SETTINGS_TABS.About]
+export const WEB_SETTINGS_TABS = [SETTINGS_TABS.AppSettings, SETTINGS_TABS.About]
 
-export const DEFAULT_TAB = isElectronApp ? SETTINGS_TABS.General : SETTINGS_TABS.Appearance
+export const DEFAULT_TAB = isElectronApp ? SETTINGS_TABS.General : SETTINGS_TABS.AppSettings
 
 export const TERMS_CONDITIONS_URL = 'https://www.bitfinex.com/legal/general/api-terms'
 

@@ -305,7 +305,6 @@
     "title": "Настройки",
     "generalTab": "Общие",
     "tradingModeTab": "Режим торговли",
-    "appearanceTab": "Внешний вид",
     "language": "Язык",
     "aboutTab": "О нас",
     "appVersion": "Версия {{version}}",

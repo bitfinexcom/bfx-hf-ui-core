@@ -12,7 +12,7 @@ import { isElectronApp } from '../../redux/config'
 import Modal from '../../ui/Modal'
 import GeneralTab from './AppSettingsModal.General'
 import ApiKeysTab from './AppSettingsModal.ApiKeys'
-import AppearanceTab from './AppSettingsModal.Appearance'
+import AppSettings from './AppSettingsModal.AppSettings'
 import AboutTab from './AppSettingsModal.About'
 import BetaTab from './AppSettingsModal.Beta'
 import { getUIModalStateForKey, getSettingsActiveTab } from '../../redux/selectors/ui'
@@ -95,9 +95,9 @@ const AppSettingsModal = () => {
             <ApiKeysTab />
           </CSSTransition>
         )}
-        {activeTab === SETTINGS_TABS.Appearance && (
+        {activeTab === SETTINGS_TABS.AppSettings && (
           <CSSTransition {...cssTransitionProps}>
-            <AppearanceTab />
+            <AppSettings />
           </CSSTransition>
         )}
         {activeTab === SETTINGS_TABS.About && (

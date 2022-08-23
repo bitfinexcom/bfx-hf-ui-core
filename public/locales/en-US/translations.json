@@ -306,7 +306,7 @@
     "betaTab": "Beta Program",
     "generalTab": "General",
     "tradingModeTab": "Trading Mode",
-    "appearanceTab": "Appearance",
+    "appSettingsTab": "App Settings",
     "language": "Language",
     "minimizeToTrayCheckbox": "Minimize window to tray",
     "minimizeToTrayText": "When you close application window, it will be minizied to tray and continue work in background",
