@@ -220,7 +220,7 @@ const StrategyEditor = (props) => {
   )
 
   const onCreateStrategyFromExisted = useCallback(
-    (label, _newStrategy) => {
+    (label, _newStrategy, forcedLoad = false) => {
       gaCreateStrategy()
 
       const newStrategy = {
@@ -236,7 +236,7 @@ const StrategyEditor = (props) => {
       delete newStrategy.stoppedOn
 
       saveStrategy(newStrategy)
-      onLoadStrategy(newStrategy, true)
+      onLoadStrategy(newStrategy, forcedLoad)
 
       onCloseModals()
     },
@@ -278,7 +278,7 @@ const StrategyEditor = (props) => {
       const newLabel = t('strategyEditor.copyOfStrategy', {
         strategyName: strategyLabel,
       })
-      onCreateStrategyFromExisted(newLabel, strategy)
+      onCreateStrategyFromExisted(newLabel, strategy, true)
       return
     }
 
@@ -300,7 +300,7 @@ const StrategyEditor = (props) => {
         const newLabel = t('strategyEditor.copyOfStrategy', {
           strategyName: strategyLabel,
         })
-        onCreateStrategyFromExisted(newLabel, newStrategy)
+        onCreateStrategyFromExisted(newLabel, newStrategy, true)
         return
       }
 
@@ -737,7 +737,7 @@ const StrategyEditor = (props) => {
         isOpen={createNewStrategyFromModalOpened}
         onClose={onCloseModals}
         onSubmit={onCreateStrategyFromExisted}
-        currentStrategyLabel={strategyLabel}
+        currentStrategy={strategy}
       />
       <CreateNewStrategyModal
         isOpen={createNewStrategyModalOpen}

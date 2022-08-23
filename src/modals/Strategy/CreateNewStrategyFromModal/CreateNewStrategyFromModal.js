@@ -19,15 +19,18 @@ import {
   getTabs,
 } from './CreateNewStrategyFromModal.helpers'
 import { validateStrategyName } from '../../../components/StrategyEditor/StrategyEditor.helpers'
+import { STRATEGY_SHAPE } from '../../../constants/prop-types-shapes'
 
 const CreateNewStrategyFromModalOpen = ({
   onSubmit,
   onClose,
   isOpen,
-  currentStrategyLabel,
+  currentStrategy,
 }) => {
   const savedStrategies = useSelector(getSortedByTimeStrategies)
   const { t } = useTranslation()
+
+  const currentStrategyLabel = currentStrategy?.label
 
   const savedStrategiesExists = !_isEmpty(savedStrategies)
   const tabs = useMemo(
@@ -42,6 +45,7 @@ const CreateNewStrategyFromModalOpen = ({
   const [template, setTemplate] = useState(MACD.label)
   const [selectedStrategyLabel, setSelectedStrategyLabel] = useState(null)
 
+  const isCurrentStrategyTabSelected = tabs[0].value === activeTab
   const isTemplatesTabSelected = tabs[1].value === activeTab
   const isDraftTabSelected = tabs[2].value === activeTab
 
@@ -54,18 +58,25 @@ const CreateNewStrategyFromModalOpen = ({
 
     let newStrategy
 
+    if (isCurrentStrategyTabSelected) {
+      newStrategy = currentStrategy
+    }
     if (isTemplatesTabSelected) {
       newStrategy = _find(Templates, (_t) => _t.label === template)
-    } else {
+    }
+    if (isDraftTabSelected) {
       newStrategy = _find(
         savedStrategies,
         (_s) => _s.label === selectedStrategyLabel,
       )
     }
 
-    onSubmit(label, newStrategy)
+    onSubmit(label, newStrategy, false)
     onClose()
   }, [
+    currentStrategy,
+    isCurrentStrategyTabSelected,
+    isDraftTabSelected,
     isTemplatesTabSelected,
     label,
     onClose,
@@ -156,13 +167,13 @@ const CreateNewStrategyFromModalOpen = ({
 CreateNewStrategyFromModalOpen.propTypes = {
   onSubmit: PropTypes.func.isRequired,
   onClose: PropTypes.func.isRequired,
-  currentStrategyLabel: PropTypes.string,
+  currentStrategy: PropTypes.shape(STRATEGY_SHAPE),
   isOpen: PropTypes.bool,
 }
 
 CreateNewStrategyFromModalOpen.defaultProps = {
   isOpen: true,
-  currentStrategyLabel: null,
+  currentStrategy: {},
 }
 
 export default CreateNewStrategyFromModalOpen
