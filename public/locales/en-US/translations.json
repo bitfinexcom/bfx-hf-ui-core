@@ -880,6 +880,7 @@
     "text_1": "You have the following active operations running. If you close the session now, these will be cancelled:",
     "text_2": "Do you want to proceed?",
     "strategy": "Strategy",
-    "startedOn": "started on: {{time}}"
+    "startedOn": "started on: {{time}}",
+    "error": "It was not possible to safely terminate one or more of the active strategies and/or algorithmic orders. Try to cancel manually or Force Quit the application (Ctrl+Q/Cmd+Q)"
   }
 }

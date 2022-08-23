@@ -527,6 +527,21 @@ export default (alias, store) => (e = {}) => {
         break
       }
 
+      case 'app.can_be_closed': {
+        const [, canBeClosed] = payload
+        if (canBeClosed) {
+          window.electronService?.sendAppClosedEvent()
+        } else {
+          store.dispatch(UIActions.recvNotification({
+            mts: Date.now(),
+            status: 'error',
+            text: i18nLib.t('closeSessionModal.error'),
+            cid: v4(),
+          }))
+        }
+        break
+      }
+
       default: {
         break
       }
