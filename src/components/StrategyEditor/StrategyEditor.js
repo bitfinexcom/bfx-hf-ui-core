@@ -535,10 +535,14 @@ const StrategyEditor = (props) => {
   }, [authToken, dsStopLiveStrategy, executionId])
 
   const editInSandbox = useCallback(() => {
-    stopExecution()
     changeTradingMode(!isPaperTrading)
     setStrategy(strategy, PAPER_MODE)
-  }, [changeTradingMode, isPaperTrading, stopExecution, setStrategy, strategy])
+  }, [
+    changeTradingMode,
+    isPaperTrading,
+    setStrategy,
+    strategy,
+  ])
 
   const openNewTest = () => onLoadStrategy(strategy)
 
