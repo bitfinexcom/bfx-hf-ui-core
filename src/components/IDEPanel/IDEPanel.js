@@ -1,13 +1,18 @@
-import React, { useState, memo } from 'react'
+import React, {
+  useState, memo, useMemo, useEffect,
+} from 'react'
 import PropTypes from 'prop-types'
 import ClassNames from 'clsx'
 import _isEmpty from 'lodash/isEmpty'
+import _get from 'lodash/get'
+import _debounce from 'lodash/debounce'
 
 import { useSelector } from 'react-redux'
 import MonacoEditor from '../StrategyEditor/components/MonacoEditor'
 import { getIsPaperTrading, getThemeSetting } from '../../redux/selectors/ui'
 import Panel from '../../ui/Panel'
 import { STRATEGY_IDE_SECTIONS } from '../StrategyEditor/StrategyEditor.helpers'
+import { STRATEGY_SHAPE } from '../../constants/prop-types-shapes'
 
 const IDEPanel = ({
   setStrategyDirty,
@@ -15,9 +20,10 @@ const IDEPanel = ({
   evalSectionContent,
   setSectionErrors,
   sectionErrors,
-  IDEcontent: strategyContent,
-  setIDEcontent,
+  setStrategy,
+  strategy,
 }) => {
+  const [IDEcontent, setIDEcontent] = useState({})
   const [activeContent, setActiveContent] = useState('defineIndicators')
   const [execError, setExecError] = useState('')
 
@@ -39,15 +45,24 @@ const IDEPanel = ({
     return updatedContent
   }
 
+  const setStrategyMemo = useMemo(
+    () => _debounce(
+      (content) => setStrategy({ ...strategy, strategyContent: content }),
+      500,
+    ),
+    [setStrategy, strategy],
+  )
+
   const updateStrategy = (updatedStrategy) => {
     const content = processStrategy(updatedStrategy)
+    setStrategyMemo(content)
     setIDEcontent(content)
   }
 
   const onEditorContentChange = (code) => {
     setStrategyDirty(true)
     updateStrategy({
-      ...strategyContent,
+      ...IDEcontent,
       [activeContent]: code,
     })
 
@@ -62,6 +77,14 @@ const IDEPanel = ({
     setSectionErrors({})
     setExecError('')
   }
+
+  useEffect(() => {
+    if (strategy?.strategyContent) {
+      const content = _get(strategy, 'strategyContent', {})
+      setIDEcontent(content)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [strategy.id])
 
   return (
     <Panel
@@ -86,7 +109,7 @@ const IDEPanel = ({
             >
               <p>{section}</p>
 
-              {_isEmpty(strategyContent[section]) ? null : _isEmpty(
+              {_isEmpty(IDEcontent[section]) ? null : _isEmpty(
                 sectionErrors[section],
               ) ? (
                 <p>~</p>
@@ -104,21 +127,21 @@ const IDEPanel = ({
             })}
           >
             <MonacoEditor
-              value={strategyContent[activeContent] || ''}
+              value={IDEcontent[activeContent] || ''}
               onChange={onEditorContentChange}
               theme={settingsTheme}
               readOnly={!isPaperTrading}
             />
             {(execError || sectionErrors[activeContent]) && (
-            <div className='hfui-strategyeditor__editor-error-output'>
-              <p
-                className='hfui-panel__close strategyeditor__close-icon'
-                onClick={onClearErrors}
-              >
-                &#10005;
-              </p>
-              <pre>{execError || sectionErrors[activeContent]}</pre>
-            </div>
+              <div className='hfui-strategyeditor__editor-error-output'>
+                <p
+                  className='hfui-panel__close strategyeditor__close-icon'
+                  onClick={onClearErrors}
+                >
+                  &#10005;
+                </p>
+                <pre>{execError || sectionErrors[activeContent]}</pre>
+              </div>
             )}
           </div>
         </div>
@@ -133,12 +156,16 @@ IDEPanel.propTypes = {
   evalSectionContent: PropTypes.func.isRequired,
   setSectionErrors: PropTypes.func.isRequired,
   sectionErrors: PropTypes.objectOf(PropTypes.string),
-  setIDEcontent: PropTypes.func.isRequired,
-  IDEcontent: PropTypes.objectOf(PropTypes.string).isRequired,
+  strategy: PropTypes.shape(STRATEGY_SHAPE),
+  setStrategy: PropTypes.func.isRequired,
 }
 
 IDEPanel.defaultProps = {
   sectionErrors: {},
+  strategy: {
+    id: null,
+    label: null,
+  },
 }
 
 export default memo(IDEPanel)

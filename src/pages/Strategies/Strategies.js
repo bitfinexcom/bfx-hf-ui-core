@@ -1,5 +1,5 @@
 import React, {
-  lazy, Suspense, useState, useCallback, useEffect,
+  lazy, Suspense, useState, useCallback,
 } from 'react'
 import Debug from 'debug'
 import PropTypes from 'prop-types'
@@ -7,7 +7,6 @@ import randomColor from 'randomcolor'
 import _ from 'lodash'
 import _values from 'lodash/values'
 import _map from 'lodash/map'
-import _get from 'lodash/get'
 // import _remove from 'lodash/remove'
 import _forEach from 'lodash/forEach'
 import _isEmpty from 'lodash/isEmpty'
@@ -39,8 +38,6 @@ const StrategiesPage = ({
   strategy,
   setStrategy,
 }) => {
-  const [IDEcontent, setIDEcontent] = useState({})
-
   const [indicators, setIndicators] = useState([])
   const [sectionErrors, setSectionErrors] = useState({})
   const [strategyDirty, setStrategyDirty] = useState(false)
@@ -205,11 +202,6 @@ const StrategiesPage = ({
       setSectionErrors({})
       setNextStrategyToOpen(null)
       setStrategyDirty(false)
-      if (_isEmpty(strategyToLoad?.strategyContent)) {
-        setIDEcontent({})
-      } else {
-        setIDEcontent(strategyToLoad.strategyContent)
-      }
 
       if (strategyToLoad?.strategyContent?.defineIndicators) {
         onDefineIndicatorsChange(
@@ -295,14 +287,6 @@ const StrategiesPage = ({
     [openRemoveModal],
   )
 
-  useEffect(() => {
-    if (strategy?.strategyContent) {
-      const content = _get(strategy, 'strategyContent', {})
-      setIDEcontent(content)
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [strategy.id])
-
   return (
     <Layout>
       <Layout.Header />
@@ -325,8 +309,6 @@ const StrategiesPage = ({
             moveable={false}
             indicators={indicators}
             removeable={false}
-            IDEcontent={IDEcontent}
-            setIDEcontent={setIDEcontent}
           />
         </Suspense>
         <StrategiesListTable
@@ -342,7 +324,6 @@ const StrategiesPage = ({
           nextStrategy={nextStrategyToOpen}
           onLoadStrategy={onLoadStrategy}
           saveStrategy={saveStrategy}
-          IDEcontent={IDEcontent}
         />
         <SaveStrategyAsModal
           isOpen={isSaveStrategyAsModalOpen}

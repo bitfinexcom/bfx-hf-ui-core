@@ -48,7 +48,10 @@ import { SETTINGS_TABS } from '../../modals/AppSettingsModal/AppSettingsModal.co
 
 import { getStrategyModeForSymbol } from '../../util/market'
 import useToggle from '../../hooks/useToggle'
-import { INDICATORS_ARRAY_SHAPE, STRATEGY_SHAPE } from '../../constants/prop-types-shapes'
+import {
+  INDICATORS_ARRAY_SHAPE,
+  STRATEGY_SHAPE,
+} from '../../constants/prop-types-shapes'
 import EditStrategyLabelModal from '../../modals/Strategy/EditStrategyLabelModal'
 import { UI_MODAL_KEYS } from '../../redux/constants/modals'
 
@@ -89,8 +92,6 @@ const StrategyEditor = (props) => {
     onDefineIndicatorsChange,
     evalSectionContent,
     setSectionErrors,
-    IDEcontent,
-    setIDEcontent,
     serviceStatus,
     getCurrencySymbol,
   } = props
@@ -277,17 +278,13 @@ const StrategyEditor = (props) => {
       const newLabel = t('strategyEditor.copyOfStrategy', {
         strategyName: strategyLabel,
       })
-      onCreateStrategyFromExisted(newLabel, {
-        ...strategy,
-        strategyContent: IDEcontent,
-      })
+      onCreateStrategyFromExisted(newLabel, strategy)
       return
     }
 
-    saveStrategy({ ...strategy, strategyContent: IDEcontent })
+    saveStrategy(strategy)
     setStrategyDirty(false)
   }, [
-    IDEcontent,
     executionId,
     onCreateStrategyFromExisted,
     saveStrategy,
@@ -298,19 +295,12 @@ const StrategyEditor = (props) => {
   ])
 
   const onSaveAsStrategy = useCallback(
-    (_newStrategy) => {
-      const newStrategy = {
-        ..._newStrategy,
-        strategyContent: IDEcontent,
-      }
+    (newStrategy) => {
       if (executionId) {
         const newLabel = t('strategyEditor.copyOfStrategy', {
           strategyName: strategyLabel,
         })
-        onCreateStrategyFromExisted(newLabel, {
-          ...newStrategy,
-          strategyContent: IDEcontent,
-        })
+        onCreateStrategyFromExisted(newLabel, newStrategy)
         return
       }
 
@@ -319,7 +309,6 @@ const StrategyEditor = (props) => {
       setStrategyDirty(false)
     },
     [
-      IDEcontent,
       executionId,
       onCreateStrategyFromExisted,
       saveStrategy,
@@ -445,20 +434,29 @@ const StrategyEditor = (props) => {
     [apiKeyStates, openAppSettingsModal, setAPIKeysTab, showAPIKeyError],
   )
 
-  const onLaunchExecutionClick = useCallback((forcedLaunch = false) => {
-    if (strategyDirty && !forcedLaunch) {
-      openSaveStrategyBeforeLaunchModal()
-      return
-    }
+  const onLaunchExecutionClick = useCallback(
+    (forcedLaunch = false) => {
+      if (strategyDirty && !forcedLaunch) {
+        openSaveStrategyBeforeLaunchModal()
+        return
+      }
 
-    if (isFullFilled) {
-      openLaunchStrategyModal()
-      return
-    }
+      if (isFullFilled) {
+        openLaunchStrategyModal()
+        return
+      }
 
-    setExecutionOptionsModalType(EXECUTION_TYPES.LIVE)
-    openExecutionOptionsModal()
-  }, [isFullFilled, openExecutionOptionsModal, openLaunchStrategyModal, openSaveStrategyBeforeLaunchModal, strategyDirty])
+      setExecutionOptionsModalType(EXECUTION_TYPES.LIVE)
+      openExecutionOptionsModal()
+    },
+    [
+      isFullFilled,
+      openExecutionOptionsModal,
+      openLaunchStrategyModal,
+      openSaveStrategyBeforeLaunchModal,
+      strategyDirty,
+    ],
+  )
 
   const launchWithoutSaving = () => {
     onCloseModals()
@@ -548,7 +546,13 @@ const StrategyEditor = (props) => {
   )
 
   useEffect(() => {
-    if (isPaperTrading || !pendingLiveStrategy || !isStrategyManagerRunning || executing || _isEmpty(savedStrategies)) {
+    if (
+      isPaperTrading
+      || !pendingLiveStrategy
+      || !isStrategyManagerRunning
+      || executing
+      || _isEmpty(savedStrategies)
+    ) {
       return
     }
 
@@ -559,7 +563,12 @@ const StrategyEditor = (props) => {
 
     loadStrategyAndStartExecution(strategyToLoad)
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [savedStrategies, executing, pendingLiveStrategy, isStrategyManagerRunning])
+  }, [
+    savedStrategies,
+    executing,
+    pendingLiveStrategy,
+    isStrategyManagerRunning,
+  ])
 
   const sbtitleStrategy = useCallback(
     ({ selectedTab, sidebarOpened }) => (
@@ -679,8 +688,8 @@ const StrategyEditor = (props) => {
                 evalSectionContent={evalSectionContent}
                 setSectionErrors={setSectionErrors}
                 sectionErrors={sectionErrors}
-                IDEcontent={IDEcontent}
-                setIDEcontent={setIDEcontent}
+                setStrategy={setStrategy}
+                strategy={strategy}
               />
             )}
           </StrategyEditorPanel>
@@ -801,8 +810,6 @@ StrategyEditor.propTypes = {
   onDefineIndicatorsChange: PropTypes.func.isRequired,
   evalSectionContent: PropTypes.func.isRequired,
   setSectionErrors: PropTypes.func.isRequired,
-  IDEcontent: PropTypes.objectOf(PropTypes.string).isRequired,
-  setIDEcontent: PropTypes.func.isRequired,
   serviceStatus: PropTypes.shape({
     dmsControl: PropTypes.bool,
     algoWorker: PropTypes.bool,
