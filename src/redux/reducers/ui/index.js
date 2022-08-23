@@ -75,8 +75,11 @@ function getInitialState() {
     isNoConnectionModalVisible: false,
     closePositionModalData: {},
     isOrderExecuting: false,
-    currentStrategy: {},
-    isStrategyDirty: false,
+    strategyEditor: {
+      strategyMainMode: {},
+      strategySandboxMode: {},
+      isStrategyDirty: false,
+    },
     unsavedLayout: null,
     layoutID: null,
     settingsActiveTab: DEFAULT_TAB,
@@ -327,9 +330,43 @@ function reducer(state = getInitialState(), action = {}) {
       const { executionId } = payload
       return {
         ...state,
-        currentStrategy: {
-          ...state.currentStrategy,
-          executionId,
+        strategyEditor: {
+          ...state.strategyEditor,
+          strategyMainMode: {
+            ...state.strategyEditor.main,
+            executionId,
+          },
+        },
+      }
+    }
+
+    case types.SET_CURRENT_STRATEGY: {
+      const { strategy } = payload
+      const { isPaperTrading } = state
+
+      return {
+        ...state,
+        strategyEditor: {
+          ...state.strategyEditor,
+          [isPaperTrading ? 'strategySandboxMode' : 'strategyMainMode']: strategy,
+        },
+      }
+    }
+
+    case types.SET_IS_STRATEGY_DIRTY: {
+      const { isStrategyDirty } = payload
+      const { isPaperTrading } = state
+
+      // Strategy can be dirty only in sandbox (paper) mode
+      if (!isPaperTrading) {
+        return state
+      }
+
+      return {
+        ...state,
+        strategyEditor: {
+          ...state.strategyEditor,
+          isStrategyDirty,
         },
       }
     }

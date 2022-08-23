@@ -39,6 +39,7 @@ const StrategiesPage = ({
   setStrategy,
   strategyDirty,
   setStrategyDirty,
+  isPaperTrading,
 }) => {
   const [indicators, setIndicators] = useState([])
   const [sectionErrors, setSectionErrors] = useState({})
@@ -184,7 +185,7 @@ const StrategiesPage = ({
     (newStrategy, forcedLoad = false) => {
       // const updated = { ...newStrategy, savedTs: Date.now() }
       const strategyToLoad = { ...newStrategy }
-      if (strategyDirty && !forcedLoad) {
+      if (isPaperTrading && strategyDirty && !forcedLoad) {
         setNextStrategyToOpen(strategyToLoad)
         openUnsavedStrategyModal()
         return
@@ -219,6 +220,7 @@ const StrategiesPage = ({
       setStrategy,
       setStrategyDirty,
       strategyDirty,
+      isPaperTrading,
     ],
   )
 
@@ -368,6 +370,7 @@ StrategiesPage.propTypes = {
     finished: PropTypes.bool,
   }).isRequired,
   strategyDirty: PropTypes.bool.isRequired,
+  isPaperTrading: PropTypes.bool.isRequired,
   setStrategyDirty: PropTypes.func.isRequired,
 }
 

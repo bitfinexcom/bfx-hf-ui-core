@@ -6,8 +6,7 @@ import { useHistory, useLocation } from 'react-router'
 import { useTranslation } from 'react-i18next'
 import { getAlgoOrders, getSortedByTimeActiveStrategies, getSortedByTimeStrategies } from '../../redux/selectors/ws'
 import { getExecutionMarketPair, getMarketPair, getMarketsForExecution } from '../../redux/selectors/meta'
-import { changeMode, setUIValue } from '../../redux/actions/ui'
-import { UI_KEYS } from '../../redux/constants/ui_keys'
+import { changeMode, setCurrentStrategy } from '../../redux/actions/ui'
 import routes from '../../constants/routes'
 import { showActiveOrdersModal } from '../../redux/actions/ao'
 import { getIsPaperTrading } from '../../redux/selectors/ui'
@@ -38,7 +37,7 @@ const SessionList = ({ onModalClose }) => {
       savedStrategies,
     )
 
-    dispatch(setUIValue(UI_KEYS.currentStrategy, newStrategyObject))
+    dispatch(setCurrentStrategy(newStrategyObject))
 
     const { path: strategyEditorPath } = routes.strategyEditor
     if (pathname !== strategyEditorPath) {

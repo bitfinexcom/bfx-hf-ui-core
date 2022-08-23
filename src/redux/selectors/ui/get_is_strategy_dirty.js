@@ -4,8 +4,4 @@ import { UI_KEYS } from '../../constants/ui_keys'
 
 const path = REDUCER_PATHS.UI
 
-export default (state) => _get(
-  state,
-  `${path}.${UI_KEYS.strategyEditor}.strategyMainMode.executionId`,
-  null,
-)
+export default (state) => _get(state, `${path}.${UI_KEYS.strategyEditor}.isStrategyDirty`, false)

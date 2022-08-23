@@ -7,7 +7,7 @@ import Debug from 'debug'
 import { v4 } from 'uuid'
 import i18nLib from '../../../locales/i18n'
 
-import UIActions from '../../actions/ui'
+import UIActions, { setCurrentStrategy } from '../../actions/ui'
 import WSActions from '../../actions/ws'
 import AOActions from '../../actions/ao'
 import zendeskActions from '../../actions/zendesk'
@@ -19,11 +19,14 @@ import { AOAdapter } from '../../adapters/ws'
 import { isElectronApp, HONEY_AUTH_URL } from '../../config'
 import { UI_MODAL_KEYS } from '../../constants/modals'
 import { UI_KEYS } from '../../constants/ui_keys'
+import { getCurrentStrategy } from '../../selectors/ui'
 
 const debug = Debug('hfui:rx:m:ws-hfui-server:msg')
 
 export default (alias, store) => (e = {}) => {
   const { data = '' } = e
+  const state = store.getState()
+
   let payload
 
   try {
@@ -434,7 +437,9 @@ export default (alias, store) => (e = {}) => {
         const { startedOn } = executionResultsObj
         store.dispatch(WSActions.setStartedLiveStrategy(strategyMapKey, executionResultsObj))
         store.dispatch(UIActions.setStrategyExecutionId(strategyMapKey))
-        store.dispatch(UIActions.updateUIValue(UI_KEYS.currentStrategy, { startedOn }))
+
+        const currentStrategy = getCurrentStrategy(state)
+        store.dispatch(UIActions.setCurrentStrategy({ ...currentStrategy, startedOn }))
 
         break
       }
@@ -455,9 +460,10 @@ export default (alias, store) => (e = {}) => {
       case 'strategy.live_execution_stopped': {
         const [, strategyMapKey, executionResultsObj] = payload
         store.dispatch(WSActions.setStoppedLiveStrategy(strategyMapKey, executionResultsObj))
-        store.dispatch(UIActions.updateUIValue(
-          UI_KEYS.currentStrategy,
-          { stoppedOn: new Date().getTime() },
+
+        const currentStrategy = getCurrentStrategy(state)
+        store.dispatch(setCurrentStrategy(
+          { ...currentStrategy, stoppedOn: new Date().getTime() },
         ))
 
         break

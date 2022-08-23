@@ -93,6 +93,16 @@ export const setStrategyExecutionId = (execId) => ({
   payload: { executionId: execId },
 })
 
+export const setCurrentStrategy = strategy => ({
+  type: types.SET_CURRENT_STRATEGY,
+  payload: { strategy },
+})
+
+export const setIsStrategyDirty = isStrategyDirty => ({
+  type: types.SET_IS_STRATEGY_DIRTY,
+  payload: { isStrategyDirty },
+})
+
 export const setTradingMode = (isPaperTrading) => ({
   type: types.SET_TRADING_MODE,
   payload: { isPaperTrading },
@@ -181,4 +191,6 @@ export default {
   changeUIModalState,
   toggleUIModalState,
   removeStrategy,
+  setCurrentStrategy,
+  setIsStrategyDirty,
 }
