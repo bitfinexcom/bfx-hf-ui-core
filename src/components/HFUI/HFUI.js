@@ -16,6 +16,7 @@ import closeElectronApp from '../../redux/helpers/close_electron_app'
 import Routes from '../../constants/routes'
 import { isElectronApp } from '../../redux/config'
 import ModalsWrapper from '../../modals/ModalsWrapper/ModalsWrapper'
+import FullscreenModeBar from '../FullscreenModeBar'
 
 import './style.css'
 
@@ -150,6 +151,7 @@ const HFUI = (props) => {
 
   return (
     <Suspense fallback={<></>}>
+      {isElectronApp && <FullscreenModeBar />}
       {authToken ? (
         <>
           <Switch>

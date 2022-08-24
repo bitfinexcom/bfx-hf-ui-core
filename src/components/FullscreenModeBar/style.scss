@@ -1,0 +1,60 @@
+@import "../../variables.scss";
+@import "../../ui/Panel/style.scss";
+
+.hfui-fullscreen-mode-bar__transition {
+  &-enter {
+    opacity: 0;
+    transform: translate(-50%, -200px);
+  }
+  &-enter-active {
+    opacity: 1;
+    transform: translate(-50%, 0);
+    transition: all 600ms;
+  }
+  &-enter-done {
+    transform: translate(-50%, 0);
+  }
+  &-exit {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+  &-exit-active {
+    opacity: 0;
+    transform: translate(-50%, -200px);
+    transition: all 600ms;
+  }
+}
+
+.hfui-fullscreen-mode-bar {
+  position: absolute;
+  top: 30px;
+  left: 50%;
+  width: 650px;
+  height: 100px;
+
+  background-color: $lighter-background-color;
+  border-radius: 5px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  &__text {
+    font-size: 18px;
+    margin-right: spacing();
+  }
+
+  &__close-button {
+    @extend .hfui-panel__close;
+
+    position: absolute;
+    right: 5px;
+    top: 5px;
+    transition: all 0.2s;
+
+    &:hover,
+    &:focus {
+      background: $darker-background-color;
+    }
+  }
+}
