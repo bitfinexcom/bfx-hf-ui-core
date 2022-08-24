@@ -31,6 +31,7 @@
   left: 50%;
   width: 650px;
   height: 100px;
+  z-index: 2147483000 !important;
 
   background-color: $lighter-background-color;
   border-radius: 5px;

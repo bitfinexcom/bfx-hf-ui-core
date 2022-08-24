@@ -35,13 +35,15 @@ const FullscreenModeBar = () => {
   useEffect(() => {
     if (isFullscreen) {
       showBar()
+    } else if (isShown) {
+      hideBar()
     }
     return () => {
       if (timeoutRef.current) {
         clearTimeout(timeoutRef.current)
       }
     }
-  }, [isFullscreen, showBar])
+  }, [isFullscreen, showBar, isShown, hideBar])
 
   return (
     <CSSTransition
