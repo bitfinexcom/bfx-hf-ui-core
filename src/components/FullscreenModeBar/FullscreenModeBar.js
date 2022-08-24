@@ -4,8 +4,13 @@ import { CSSTransition } from 'react-transition-group'
 import { Button, Intent } from '@ufx-ui/core'
 import { useTranslation } from 'react-i18next'
 import WSActions from '../../redux/actions/ws'
-import { getIsFullscreen, SETTINGS_KEYS } from '../../redux/selectors/ui'
+import {
+  getUIState,
+  SETTINGS_KEYS,
+} from '../../redux/selectors/ui'
 import useToggle from '../../hooks/useToggle'
+import { UI_KEYS } from '../../redux/constants/ui_keys'
+import UIActions from '../../redux/actions/ui'
 
 import './style.css'
 
@@ -13,37 +18,43 @@ const ipcHelpers = window.electronService
 
 const FullscreenModeBar = () => {
   const [isShown, , showBar, hideBar] = useToggle(false)
+  const shouldBarBeShown = useSelector((state) => getUIState(state, UI_KEYS.isFullscreenBarShown))
 
   const timeoutRef = useRef(null)
 
   const { t } = useTranslation()
   const dispatch = useDispatch()
 
-  const isFullscreen = useSelector(getIsFullscreen)
+  const onClose = () => {
+    hideBar()
+    dispatch(UIActions.setUIValue(UI_KEYS.isFullscreenBarShown, false))
+  }
 
   const onExitFullscreen = () => {
     dispatch(WSActions.saveSettings(SETTINGS_KEYS.FULLSCREEN, false))
     if (ipcHelpers) {
       ipcHelpers.sendChangeFullscreenEvent(false)
     }
+    onClose()
   }
 
   const onComponentEntered = () => {
-    timeoutRef.current = setTimeout(hideBar, 5000)
+    timeoutRef.current = setTimeout(onClose, 5000)
   }
 
   useEffect(() => {
-    if (isFullscreen) {
+    if (shouldBarBeShown) {
       showBar()
     } else if (isShown) {
-      hideBar()
+      onClose()
     }
     return () => {
       if (timeoutRef.current) {
         clearTimeout(timeoutRef.current)
       }
     }
-  }, [isFullscreen, showBar, isShown, hideBar])
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [shouldBarBeShown])
 
   return (
     <CSSTransition
@@ -58,7 +69,7 @@ const FullscreenModeBar = () => {
         <button
           type='button'
           className='hfui-fullscreen-mode-bar__close-button'
-          onClick={hideBar}
+          onClick={onClose}
         >
           &#10005;
         </button>

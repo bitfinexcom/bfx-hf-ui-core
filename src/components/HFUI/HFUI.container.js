@@ -88,6 +88,7 @@ const mapDispatchToProps = (dispatch) => ({
     }
   },
   updateFullscreenState: (fullscreen) => {
+    dispatch(UIActions.setUIValue(UI_KEYS.isFullscreenBarShown, fullscreen))
     dispatch(WSActions.saveSettings(SETTINGS_KEYS.FULLSCREEN, fullscreen))
   },
 })
