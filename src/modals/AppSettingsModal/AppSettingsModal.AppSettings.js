@@ -16,16 +16,21 @@ import {
   getThemeSetting,
   THEMES,
   getShouldHideOnClose,
+  getIsFullscreen,
 } from '../../redux/selectors/ui'
 import { isElectronApp } from '../../redux/config'
+
+const ipcHelpers = window.electronService
 
 const AppSettings = () => {
   const { t } = useTranslation()
   const dispatch = useDispatch()
   const settingsTheme = useSelector(getThemeSetting)
   const shouldHideOnClose = useSelector(getShouldHideOnClose)
+  const isFullscreen = useSelector(getIsFullscreen)
   const [currentTheme, setCurrentTheme] = useState(settingsTheme)
   const [hideOnCloseChecked, setHideOnCloseChecked] = useState(shouldHideOnClose)
+  const [fullscreenChecked, setFullscreenChecked] = useState(isFullscreen)
 
   const themes = useMemo(
     () => _map(_values(THEMES), (value) => ({
@@ -39,6 +44,10 @@ const AppSettings = () => {
     setCurrentTheme(settingsTheme)
   }, [settingsTheme])
 
+  useEffect(() => {
+    setFullscreenChecked(isFullscreen)
+  }, [isFullscreen])
+
   const updateTheme = (nextTheme) => {
     setCurrentTheme(nextTheme)
     dispatch(WSActions.saveSettings(SETTINGS_KEYS.THEME, nextTheme))
@@ -50,6 +59,15 @@ const AppSettings = () => {
     setHideOnCloseChecked(shouldHide)
     dispatch(WSActions.saveSettings(SETTINGS_KEYS.HIDE_ON_CLOSE, shouldHide))
     dispatch(GAActions.updateSettings())
+  }
+
+  const fullscreenHandler = (fullscreen) => {
+    setFullscreenChecked(fullscreen)
+    dispatch(WSActions.saveSettings(SETTINGS_KEYS.FULLSCREEN, fullscreen))
+    dispatch(GAActions.updateSettings())
+    if (ipcHelpers) {
+      ipcHelpers.sendChangeFullscreenEvent(fullscreen)
+    }
   }
 
   return (
@@ -80,6 +98,14 @@ const AppSettings = () => {
             <div className='appsettings-modal__description'>
               {t('appSettings.minimizeToTrayText')}
             </div>
+          </div>
+          <div className='appsettings-modal__setting'>
+            <Checkbox
+              onChange={fullscreenHandler}
+              label={t('appSettings.fullscreenCheckbox')}
+              checked={fullscreenChecked}
+              className='appsettings-modal__checkbox'
+            />
           </div>
         </>
       )}

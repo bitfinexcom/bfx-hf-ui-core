@@ -310,6 +310,7 @@
     "language": "Language",
     "minimizeToTrayCheckbox": "Minimize to Tray",
     "minimizeToTrayText": "The application will run in the background when you close the window. You can close the app at any time by clicking “Quit” (Ctrl+Q/Cmd+Q) on the menu bar",
+    "fullscreenCheckbox": "Fullscreen mode (F11)",
     "aboutTab": "About",
     "appVersion": "Version {{version}}",
     "description": "Official free algorithmic trading app based on the <url>Bitfinex API</url>, created by the Bitfinex team.",

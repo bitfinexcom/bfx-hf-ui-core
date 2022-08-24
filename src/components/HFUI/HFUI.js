@@ -47,6 +47,7 @@ const HFUI = (props) => {
     getPastStrategies,
     openAppSettingsModal,
     setApplicationHiddenStatus,
+    updateFullscreenState,
   } = props
   useInjectBfxData()
 
@@ -84,6 +85,7 @@ const HFUI = (props) => {
       ipcHelpers.addOpenSettingsModalListener(openAppSettingsModal)
       ipcHelpers.addAppHiddenListener(() => setApplicationHiddenStatus(true, notificationOnAppHide))
       ipcHelpers.addAppRestoredListener(() => setApplicationHiddenStatus(false))
+      ipcHelpers.addFullscreenChangeListener((_, { fullscreen }) => updateFullscreenState(fullscreen))
 
       return () => {
         ipcHelpers.removeAllGlobalListeners()
@@ -95,6 +97,7 @@ const HFUI = (props) => {
     openAppSettingsModal,
     setApplicationHiddenStatus,
     settingsShowAlgoPauseInfo,
+    updateFullscreenState,
     t,
   ])
 
@@ -197,6 +200,7 @@ HFUI.propTypes = {
   showStrategies: PropTypes.bool,
   openAppSettingsModal: PropTypes.func.isRequired,
   setApplicationHiddenStatus: PropTypes.func.isRequired,
+  updateFullscreenState: PropTypes.func.isRequired,
 }
 
 HFUI.defaultProps = {

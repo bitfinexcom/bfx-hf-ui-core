@@ -14,6 +14,7 @@ export const SETTINGS_KEYS = {
   THEME: 'theme',
   JOIN_BETA_PROGRAM: 'joinBetaProgram',
   HIDE_ON_CLOSE: 'hideOnClose',
+  FULLSCREEN: 'fullScreen',
 }
 
 export const THEMES = {
@@ -61,6 +62,11 @@ export const getIsBetaVersion = createSelector(
 export const getShouldHideOnClose = createSelector(
   getSettings,
   (settings) => _get(settings, SETTINGS_KEYS.HIDE_ON_CLOSE, false),
+)
+
+export const getIsFullscreen = createSelector(
+  getSettings,
+  (settings) => _get(settings, SETTINGS_KEYS.FULLSCREEN, true),
 )
 
 export default getSettings
