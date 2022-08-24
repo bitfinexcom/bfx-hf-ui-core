@@ -88,9 +88,14 @@ export const recvNotification = (notification) => ({
   payload: { notification },
 })
 
-export const setStrategyExecutionId = (execId) => ({
-  type: types.SET_STRATEGY_EXECUTION_ID,
-  payload: { executionId: execId },
+export const setCurrentStrategy = (strategy, mode = null) => ({
+  type: types.SET_CURRENT_STRATEGY,
+  payload: { strategy, mode },
+})
+
+export const setIsStrategyDirty = isStrategyDirty => ({
+  type: types.SET_IS_STRATEGY_DIRTY,
+  payload: { isStrategyDirty },
 })
 
 export const setTradingMode = (isPaperTrading) => ({
@@ -153,6 +158,11 @@ export const toggleUIModalState = (key) => ({
   payload: { key },
 })
 
+export const removeStrategy = (authToken, id) => ({
+  type: types.REMOVE_STRATEGY,
+  payload: { authToken, id },
+})
+
 export default {
   setUIValue,
   updateUIValue,
@@ -166,7 +176,6 @@ export default {
   removeNotifications,
   clearNotifications,
   recvNotification,
-  setStrategyExecutionId,
   setTradingMode,
   setMarketFromStore,
   changeTickersVolumeUnit,
@@ -175,4 +184,7 @@ export default {
   changeMode,
   changeUIModalState,
   toggleUIModalState,
+  removeStrategy,
+  setCurrentStrategy,
+  setIsStrategyDirty,
 }

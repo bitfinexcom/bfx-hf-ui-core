@@ -48,9 +48,13 @@ import { SETTINGS_TABS } from '../../modals/AppSettingsModal/AppSettingsModal.co
 
 import { getStrategyModeForSymbol } from '../../util/market'
 import useToggle from '../../hooks/useToggle'
-import { INDICATORS_ARRAY_SHAPE, STRATEGY_SHAPE } from '../../constants/prop-types-shapes'
+import {
+  INDICATORS_ARRAY_SHAPE,
+  STRATEGY_SHAPE,
+} from '../../constants/prop-types-shapes'
 import EditStrategyLabelModal from '../../modals/Strategy/EditStrategyLabelModal'
 import { UI_MODAL_KEYS } from '../../redux/constants/modals'
+import { PAPER_MODE } from '../../redux/reducers/ui'
 
 import './style.css'
 
@@ -89,8 +93,6 @@ const StrategyEditor = (props) => {
     onDefineIndicatorsChange,
     evalSectionContent,
     setSectionErrors,
-    IDEcontent,
-    setIDEcontent,
     serviceStatus,
     getCurrencySymbol,
   } = props
@@ -219,7 +221,7 @@ const StrategyEditor = (props) => {
   )
 
   const onCreateStrategyFromExisted = useCallback(
-    (label, _newStrategy) => {
+    (label, _newStrategy, forcedLoad = false) => {
       gaCreateStrategy()
 
       const newStrategy = {
@@ -235,7 +237,7 @@ const StrategyEditor = (props) => {
       delete newStrategy.stoppedOn
 
       saveStrategy(newStrategy)
-      onLoadStrategy(newStrategy, true)
+      onLoadStrategy(newStrategy, forcedLoad)
 
       onCloseModals()
     },
@@ -277,17 +279,13 @@ const StrategyEditor = (props) => {
       const newLabel = t('strategyEditor.copyOfStrategy', {
         strategyName: strategyLabel,
       })
-      onCreateStrategyFromExisted(newLabel, {
-        ...strategy,
-        strategyContent: IDEcontent,
-      })
+      onCreateStrategyFromExisted(newLabel, strategy, true)
       return
     }
 
-    saveStrategy({ ...strategy, strategyContent: IDEcontent })
+    saveStrategy(strategy)
     setStrategyDirty(false)
   }, [
-    IDEcontent,
     executionId,
     onCreateStrategyFromExisted,
     saveStrategy,
@@ -298,28 +296,20 @@ const StrategyEditor = (props) => {
   ])
 
   const onSaveAsStrategy = useCallback(
-    (_newStrategy) => {
-      const newStrategy = {
-        ..._newStrategy,
-        strategyContent: IDEcontent,
-      }
+    (newStrategy) => {
       if (executionId) {
         const newLabel = t('strategyEditor.copyOfStrategy', {
           strategyName: strategyLabel,
         })
-        onCreateStrategyFromExisted(newLabel, {
-          ...newStrategy,
-          strategyContent: IDEcontent,
-        })
+        onCreateStrategyFromExisted(newLabel, newStrategy, true)
         return
       }
 
-      setStrategy(newStrategy)
+      setStrategy(newStrategy, PAPER_MODE)
       saveStrategy(newStrategy)
       setStrategyDirty(false)
     },
     [
-      IDEcontent,
       executionId,
       onCreateStrategyFromExisted,
       saveStrategy,
@@ -445,20 +435,29 @@ const StrategyEditor = (props) => {
     [apiKeyStates, openAppSettingsModal, setAPIKeysTab, showAPIKeyError],
   )
 
-  const onLaunchExecutionClick = useCallback((forcedLaunch = false) => {
-    if (strategyDirty && !forcedLaunch) {
-      openSaveStrategyBeforeLaunchModal()
-      return
-    }
+  const onLaunchExecutionClick = useCallback(
+    (forcedLaunch = false) => {
+      if (strategyDirty && !forcedLaunch) {
+        openSaveStrategyBeforeLaunchModal()
+        return
+      }
 
-    if (isFullFilled) {
-      openLaunchStrategyModal()
-      return
-    }
+      if (isFullFilled) {
+        openLaunchStrategyModal()
+        return
+      }
 
-    setExecutionOptionsModalType(EXECUTION_TYPES.LIVE)
-    openExecutionOptionsModal()
-  }, [isFullFilled, openExecutionOptionsModal, openLaunchStrategyModal, openSaveStrategyBeforeLaunchModal, strategyDirty])
+      setExecutionOptionsModalType(EXECUTION_TYPES.LIVE)
+      openExecutionOptionsModal()
+    },
+    [
+      isFullFilled,
+      openExecutionOptionsModal,
+      openLaunchStrategyModal,
+      openSaveStrategyBeforeLaunchModal,
+      strategyDirty,
+    ],
+  )
 
   const launchWithoutSaving = () => {
     onCloseModals()
@@ -536,9 +535,14 @@ const StrategyEditor = (props) => {
   }, [authToken, dsStopLiveStrategy, executionId])
 
   const editInSandbox = useCallback(() => {
-    stopExecution()
     changeTradingMode(!isPaperTrading)
-  }, [changeTradingMode, isPaperTrading, stopExecution])
+    setStrategy(strategy, PAPER_MODE)
+  }, [
+    changeTradingMode,
+    isPaperTrading,
+    setStrategy,
+    strategy,
+  ])
 
   const openNewTest = () => onLoadStrategy(strategy)
 
@@ -548,7 +552,13 @@ const StrategyEditor = (props) => {
   )
 
   useEffect(() => {
-    if (isPaperTrading || !pendingLiveStrategy || !isStrategyManagerRunning || executing || _isEmpty(savedStrategies)) {
+    if (
+      isPaperTrading
+      || !pendingLiveStrategy
+      || !isStrategyManagerRunning
+      || executing
+      || _isEmpty(savedStrategies)
+    ) {
       return
     }
 
@@ -559,7 +569,12 @@ const StrategyEditor = (props) => {
 
     loadStrategyAndStartExecution(strategyToLoad)
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [savedStrategies, executing, pendingLiveStrategy, isStrategyManagerRunning])
+  }, [
+    savedStrategies,
+    executing,
+    pendingLiveStrategy,
+    isStrategyManagerRunning,
+  ])
 
   const sbtitleStrategy = useCallback(
     ({ selectedTab, sidebarOpened }) => (
@@ -679,8 +694,8 @@ const StrategyEditor = (props) => {
                 evalSectionContent={evalSectionContent}
                 setSectionErrors={setSectionErrors}
                 sectionErrors={sectionErrors}
-                IDEcontent={IDEcontent}
-                setIDEcontent={setIDEcontent}
+                setStrategy={setStrategy}
+                strategy={strategy}
               />
             )}
           </StrategyEditorPanel>
@@ -728,7 +743,7 @@ const StrategyEditor = (props) => {
         isOpen={createNewStrategyFromModalOpened}
         onClose={onCloseModals}
         onSubmit={onCreateStrategyFromExisted}
-        currentStrategyLabel={strategyLabel}
+        currentStrategy={strategy}
       />
       <CreateNewStrategyModal
         isOpen={createNewStrategyModalOpen}
@@ -801,8 +816,6 @@ StrategyEditor.propTypes = {
   onDefineIndicatorsChange: PropTypes.func.isRequired,
   evalSectionContent: PropTypes.func.isRequired,
   setSectionErrors: PropTypes.func.isRequired,
-  IDEcontent: PropTypes.objectOf(PropTypes.string).isRequired,
-  setIDEcontent: PropTypes.func.isRequired,
   serviceStatus: PropTypes.shape({
     dmsControl: PropTypes.bool,
     algoWorker: PropTypes.bool,

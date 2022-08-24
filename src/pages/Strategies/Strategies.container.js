@@ -1,34 +1,34 @@
 import { connect } from 'react-redux'
 import {
-  getUIState,
+  getCurrentStrategy,
+  getIsPaperTrading,
+  getIsStrategyDirty,
 } from '../../redux/selectors/ui'
 import UIActions from '../../redux/actions/ui'
 import WSActions from '../../redux/actions/ws'
+import { getAuthToken, getBacktestResults } from '../../redux/selectors/ws'
 
 import StrategiesPage from './Strategies'
-import { getAuthToken, getBacktestResults } from '../../redux/selectors/ws'
-import { UI_KEYS } from '../../redux/constants/ui_keys'
-
-const EMP_OBJ = {}
 
 const mapStateToProps = (state) => ({
   authToken: getAuthToken(state),
-  strategy: getUIState(state, UI_KEYS.currentStrategy, EMP_OBJ),
+  strategy: getCurrentStrategy(state),
   backtestResults: getBacktestResults(state),
+  strategyDirty: getIsStrategyDirty(state),
+  isPaperTrading: getIsPaperTrading(state),
 })
 
 const mapDispatchToProps = (dispatch) => ({
-  setStrategy(strategy) {
-    dispatch(UIActions.setUIValue(UI_KEYS.currentStrategy, strategy))
+  setStrategy(strategy, mode = null) {
+    dispatch(UIActions.setCurrentStrategy(strategy, mode))
   },
   onSave: (authToken, strategy = {}) => {
     dispatch(WSActions.send(['strategy.save', authToken, strategy]))
   },
   onRemove: (authToken, id) => {
-    dispatch(WSActions.send(['strategy.remove', authToken, id]))
-    dispatch(WSActions.resetBacktestData())
-    dispatch(UIActions.setUIValue(UI_KEYS.currentStrategy, {}))
+    dispatch(UIActions.removeStrategy(authToken, id))
   },
+  setStrategyDirty: (value) => dispatch(UIActions.setIsStrategyDirty(value)),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(StrategiesPage)

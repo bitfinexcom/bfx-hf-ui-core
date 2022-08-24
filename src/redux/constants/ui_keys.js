@@ -3,7 +3,7 @@ export const UI_KEYS = {
   isLoadingOrderHistData: 'isLoadingOrderHistData',
   isOrderExecuting: 'isOrderExecuting',
   pendingLiveStrategy: 'pendingLiveStrategy',
-  currentStrategy: 'currentStrategy',
+  strategyEditor: 'strategyEditor',
   layoutID: 'layoutID',
   orderToEdit: 'orderToEdit',
   closePositionModalData: 'closePositionModalData',

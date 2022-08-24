@@ -5,7 +5,6 @@ import getLayouts from './get_layouts'
 import getRemoteVersion from './get_remote_version'
 import getIsPaperTrading from './get_is_paper_trading'
 import getCurrentMode from './get_current_mode'
-import getStrategyId from './get_strategy_id'
 import getMarketComponents from './get_market_components'
 import getCurrentUnsavedLayout from './get_current_unsaved_layout'
 import getTickersVolumeUnit from './get_tickers_volume_unit'
@@ -14,6 +13,8 @@ import getSettingsActiveTab, { getSettingActiveSection } from './get_settings_ac
 import getStrategyExecutionId from './get_strategy_execution_id'
 import getServicesStatus from './get_services_status'
 import getUIModalStateForKey from './get_ui_modal_state'
+import getCurrentStrategy from './get_current_strategy'
+import getIsStrategyDirty from './get_is_strategy_dirty'
 
 export * from './get_settings'
 export * from './get_core_settings'
@@ -27,7 +28,6 @@ export {
   getLayouts,
   getIsPaperTrading,
   getCurrentMode,
-  getStrategyId,
   getMarketComponents,
   getCurrentUnsavedLayout,
   getTickersVolumeUnit,
@@ -36,5 +36,7 @@ export {
   getSettingActiveSection,
   getStrategyExecutionId,
   getServicesStatus,
+  getCurrentStrategy,
+  getIsStrategyDirty,
   getUIModalStateForKey,
 }
