@@ -33,7 +33,7 @@ const getOption = (label, url) => (
 const getLeafDropdownOptions = (theme) => ([
   <BitfinexIcon key='logo' fill={theme === THEMES.DARK ? 'white' : 'black'} />,
   getOption('Trading', 'https://trading.bitfinex.com/trading'),
-  getOption('Wallet', 'https://report.bitfinex.com/wallets'),
+  getOption('Wallet', 'https://movement.bitfinex.com/wallets'),
   getOption('Account', 'https://setting.bitfinex.com/account'),
   getOption('Pulse', 'https://pulse.bitfinex.com/'),
   getOption('OTC', 'https://trading.bitfinex.com/otc'),
