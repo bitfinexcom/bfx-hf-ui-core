@@ -255,7 +255,7 @@ const renderLayoutComponent = ({
   const C = COMPONENTS_FOR_ID[id]
 
   if (!C) {
-    console.error(`can't render uknown component: ${id}`)
+    console.error(`can't render an unknown component: ${id}`)
     return null
   }
 
@@ -371,7 +371,7 @@ const renderLayoutSection = ({
   return (
     <div
       key={name}
-      className={ClassNames('hfui-orderform__layout-section', {
+      className={ClassNames('hfui-orderform__layout-section', `type-${name}`, {
         fullWidth,
       })}
     >
@@ -381,6 +381,13 @@ const renderLayoutSection = ({
         {_flatten(
           _map(rows, (row, i) => _map(row, (field, rowI) => {
             if (field === null) {
+              // put a placeholder for actions so we'll be able to centrify them
+              if (row[0] === 'action') {
+                return (
+                  <li className='list-action-placeholder' />
+                )
+              }
+
               // spacing placeholder
               return (
                 <li key={`empty-${i}-${rowI}`} /> // eslint-disable-line
