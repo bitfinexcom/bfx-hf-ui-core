@@ -16,7 +16,7 @@ import {
   getSortedByTimeStrategies,
 } from '../../redux/selectors/ws'
 import {
-  getExecutionMarketPair,
+  getMarketPair,
   getMarketsForExecution,
 } from '../../redux/selectors/meta'
 import PastStrategiesList from './PastStrategiesList'
@@ -33,7 +33,7 @@ const StrategiesListTable = ({
   renameStrategy,
 }) => {
   const { t } = useTranslation()
-  const _getMarketPair = useSelector(getExecutionMarketPair)
+  const _getMarketPair = useSelector(getMarketPair)
   const activeStrategies = useSelector(getSortedByTimeActiveStrategies())
   const pastStrategies = useSelector(sortedByTimePastStrategies)
   const savedStrategies = useSelector(getSortedByTimeStrategies)
