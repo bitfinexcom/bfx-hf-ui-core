@@ -12,4 +12,8 @@
   z-index: 2147483000;
   transform: translate(-50%, -50%);
   top: 50%;
+
+  div.modal__body {
+    height: 300px;
+  }
 }
