@@ -10,9 +10,8 @@ import {
   reduxSelectors,
   VOLUME_UNIT,
 } from '@ufx-ui/bfx-containers'
-import _isEmpty from 'lodash/isEmpty'
 
-import { getPairFromMarket } from '../../../util/market'
+import { getIsPaperPair, getPairFromMarket } from '../../../util/market'
 import { REDUCER_PATHS } from '../../config'
 import { getIsPaperTrading } from '../ui'
 import { MARKET_TYPES_KEYS } from '../../constants/market'
@@ -101,19 +100,16 @@ export const getMarketsSortedByVolumeForExecution = createSelector(
 )
 
 export const getMarketPair = createSelector(
-  [getMarkets, getCurrencySymbolMemo],
+  [getMarketsObject, getCurrencySymbolMemo],
   (markets, getCurrencySymbol) => memoizeOne((symbol) => {
-    const currentMarket = markets?.[symbol]
-    return getPairFromMarket(currentMarket, getCurrencySymbol)
-  }),
-)
+    const isPaperMarket = getIsPaperPair(symbol)
+    const marketTypeKey = isPaperMarket
+      ? MARKET_TYPES_KEYS.SANDBOX_MARKETS
+      : MARKET_TYPES_KEYS.LIVE_MARKETS
+    const currentMarket = _get(markets, `${marketTypeKey}.${symbol}`, null)
 
-export const getExecutionMarketPair = createSelector(
-  [getMarketsForExecution, getCurrencySymbolMemo],
-  (markets, getCurrencySymbol) => memoizeOne((symbol) => {
-    const currentMarket = markets?.[symbol]
-    if (_isEmpty(currentMarket)) {
-      return 'N/A'
+    if (!currentMarket) {
+      return symbol
     }
 
     return getPairFromMarket(currentMarket, getCurrencySymbol)

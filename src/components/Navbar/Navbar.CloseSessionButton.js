@@ -42,7 +42,9 @@ const CloseSessionButton = () => {
       dispatch(changeUIModalState(UI_MODAL_KEYS.CLOSE_SESSION_MODAL, true))
       return
     }
-    ipcHelpers.sendAppClosedEvent()
+    if (ipcHelpers) {
+      ipcHelpers.sendAppClosedEvent()
+    }
   }
 
   const buttonHandler = () => (isElectronApp ? openCloseSessionModal() : logout())

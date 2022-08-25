@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useHistory, useLocation } from 'react-router'
 import { useTranslation } from 'react-i18next'
 import { getAlgoOrders, getSortedByTimeActiveStrategies, getSortedByTimeStrategies } from '../../redux/selectors/ws'
-import { getExecutionMarketPair, getMarketPair, getMarketsForExecution } from '../../redux/selectors/meta'
+import { getMarketPair, getMarketsForExecution } from '../../redux/selectors/meta'
 import { changeMode, setCurrentStrategy } from '../../redux/actions/ui'
 import routes from '../../constants/routes'
 import { showActiveOrdersModal } from '../../redux/actions/ao'
@@ -15,8 +15,7 @@ import { MAIN_MODE } from '../../redux/reducers/ui'
 
 const SessionList = ({ onModalClose }) => {
   const activeStrategies = useSelector(getSortedByTimeActiveStrategies())
-  const getMarketPairForStartegy = useSelector(getExecutionMarketPair)
-  const getMarketPairForOrder = useSelector(getMarketPair)
+  const _getMarketPair = useSelector(getMarketPair)
   const isPaperTrading = useSelector(getIsPaperTrading)
   const algoOrders = useSelector(getAlgoOrders)
   const savedStrategies = useSelector(getSortedByTimeStrategies)
@@ -69,7 +68,7 @@ const SessionList = ({ onModalClose }) => {
             &nbsp;
           <span className='secondary-label'>
             (
-            {getMarketPairForStartegy(strategy?.symbol)}
+            {_getMarketPair(strategy?.symbol)}
             ,&nbsp;
             {t('closeSessionModal.startedOn', {
               time: new Date(strategy.startedOn).toLocaleString(),
@@ -85,7 +84,7 @@ const SessionList = ({ onModalClose }) => {
           </span>
             &nbsp;
           <span className='secondary-label'>
-            {getMarketPairForOrder(order?.args?.symbol)}
+            {_getMarketPair(order?.args?.symbol)}
           </span>
         </li>
       ))}
