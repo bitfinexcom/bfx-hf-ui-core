@@ -17,7 +17,7 @@ import _split from 'lodash/split'
 import _replace from 'lodash/replace'
 import _includes from 'lodash/includes'
 import {
-  Iceberg, TWAP, AccumulateDistribute, PingPong, OCOCO,
+  Iceberg, TWAP, AccumulateDistribute, PingPong, Bracket,
 } from 'bfx-hf-algo'
 import Debug from 'debug'
 
@@ -226,9 +226,9 @@ const validateAOData = (data, currentLayout, currentMarket, atomicOrdersCount, a
       break
     }
 
-    case OCOCO.id: {
-      const processedData = OCOCO.meta.processParams(data)
-      errors = OCOCO.meta.validateParams(processedData)
+    case Bracket.id: {
+      const processedData = Bracket.meta.processParams(data)
+      errors = Bracket.meta.validateParams(processedData)
       break
     }
 
