@@ -182,11 +182,6 @@ const StrategyEditor = (props) => {
     closeLaunchStrategyModal()
     closeSaveStrategyBeforeLaunchModal()
     closeEditStrategyLabelModal()
-
-    // setTimeout is needed to prevent flickering when 'Save & Launch' execution options modal is closing
-    setTimeout(() => {
-      setExecutionOptionsModalType(null)
-    }, 500)
   }, [
     closeCancelProcessModal,
     closeCreateNewStrategyFromModal,
@@ -376,6 +371,7 @@ const StrategyEditor = (props) => {
       setExecutionOptionsModalType(EXECUTION_TYPES.BACKTEST)
       return
     }
+    setExecutionOptionsModalType(null)
 
     dsExecuteBacktest(backtestArgs)
   }, [
@@ -441,14 +437,14 @@ const StrategyEditor = (props) => {
         openSaveStrategyBeforeLaunchModal()
         return
       }
-
       if (isFullFilled) {
         openLaunchStrategyModal()
+        setExecutionOptionsModalType(null)
         return
       }
 
-      setExecutionOptionsModalType(EXECUTION_TYPES.LIVE)
       openExecutionOptionsModal()
+      setExecutionOptionsModalType(EXECUTION_TYPES.LIVE)
     },
     [
       isFullFilled,
