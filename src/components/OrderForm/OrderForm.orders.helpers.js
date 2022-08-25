@@ -1,5 +1,5 @@
 import {
-  Iceberg, TWAP, AccumulateDistribute, PingPong, OCOCO,
+  Iceberg, TWAP, AccumulateDistribute, PingPong,
 } from 'bfx-hf-algo'
 import memoizeOne from 'memoize-one'
 import _values from 'lodash/values'
@@ -19,7 +19,6 @@ const getAlgoOrdersForStandalone = (isBeta) => [
   PingPong,
   Iceberg,
   TWAP,
-  OCOCO,
 ]
 
 const HOSTED_ALGO_ORDERS = [Iceberg, TWAP]
