@@ -73,6 +73,19 @@ const ApiKeys = () => {
     }
   }
 
+  const onResetApiKey = (mode) => () => {
+    dispatch(WSActions.updatingApiKey(mode, true))
+    dispatch(WSActions.send([
+      'api_credentials.save',
+      authToken,
+      '',
+      '',
+      mode,
+      currentMode,
+      getScope(),
+    ]))
+  }
+
   const [highlight, setHighlight] = useState(false)
 
   const getClasses = (mode) => cx('appsettings-modal__setting', {
@@ -138,6 +151,15 @@ const ApiKeys = () => {
           >
             {mainAPIKeyState.configured ? t('ui.updateBtn') : t('ui.save')}
           </Button>
+          <Button
+            intent={Intent.SECONDARY}
+            className='reset_button'
+            small
+            onClick={onResetApiKey(MAIN_MODE)}
+            disabled={isProductionKeysTouched}
+          >
+            {t('ui.reset')}
+          </Button>
         </div>
       </div>
       <div className={getClasses(PAPER_MODE)}>
@@ -189,6 +211,15 @@ const ApiKeys = () => {
             disabled={!isPaperKeysTouched}
           >
             {paperAPIKeyState.configured ? t('ui.updateBtn') : t('ui.save')}
+          </Button>
+          <Button
+            intent={Intent.SECONDARY}
+            className='reset_button'
+            small
+            onClick={onResetApiKey(PAPER_MODE)}
+            disabled={isProductionKeysTouched}
+          >
+            {t('ui.reset')}
           </Button>
         </div>
       </div>
