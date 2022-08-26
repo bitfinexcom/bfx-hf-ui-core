@@ -52,6 +52,29 @@
 }
 
 .hfui-orderform__panel {
+  .ao-submit-action {
+    justify-content: center !important;
+    margin-top: 15px;
+  }
+
+  .type-action li > div {
+    display: flex;
+    justify-content: center;
+  }
+
+  .type-actions {
+    ul, li > div {
+      display: flex;
+      justify-content: center;
+    }
+  }
+
+  .list-action-placeholder {
+    width: 0 !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+
   .hfui-panel__footer {
     width: 100%;
     background: var(--background-color);
