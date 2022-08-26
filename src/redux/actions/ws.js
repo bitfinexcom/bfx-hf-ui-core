@@ -166,19 +166,19 @@ export default {
     type: t.RESET_ORDER_HIST,
   }),
 
-  recvDataAlgoOrder: ({ ao }) => ({
+  recvDataAlgoOrder: ({ ao, mode }) => ({
     type: t.DATA_ALGO_ORDER,
-    payload: { ao },
+    payload: { ao, mode },
   }),
 
-  recvDataAlgoOrderStopped: ({ gid }) => ({
+  recvDataAlgoOrderStopped: ({ gid, mode }) => ({
     type: t.DATA_ALGO_ORDER_STOPPED,
-    payload: { gid },
+    payload: { gid, mode },
   }),
 
-  recvDataAlgoOrders: (aos) => ({
+  recvDataAlgoOrders: (aos, mode) => ({
     type: t.DATA_ALGO_ORDERS,
-    payload: { aos },
+    payload: { aos, mode },
   }),
 
   clearAlgoOrders: () => ({
