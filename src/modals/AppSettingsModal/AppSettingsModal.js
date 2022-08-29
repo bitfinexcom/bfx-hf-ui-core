@@ -27,7 +27,7 @@ const cssTransitionProps = {
   classNames: 'setting',
 }
 
-const renderCell = (tab, activeTab, element) => {
+const renderTab = (tab, activeTab, element) => {
   if (!isElectronApp || activeTab !== tab) {
     return null
   }
@@ -92,11 +92,11 @@ const AppSettingsModal = () => {
           'appsettings-modal__content': activeTab !== SETTINGS_TABS.Keys,
         })}
       >
-        {renderCell(SETTINGS_TABS.Beta, activeTab, <BetaTab />)}
-        {renderCell(SETTINGS_TABS.General, activeTab, <GeneralTab />)}
-        {renderCell(SETTINGS_TABS.Keys, activeTab, <ApiKeysTab />)}
-        {renderCell(SETTINGS_TABS.AppSettings, activeTab, <AppSettings />)}
-        {renderCell(SETTINGS_TABS.About, activeTab, <AboutTab />)}
+        {renderTab(SETTINGS_TABS.Beta, activeTab, <BetaTab />)}
+        {renderTab(SETTINGS_TABS.General, activeTab, <GeneralTab />)}
+        {renderTab(SETTINGS_TABS.Keys, activeTab, <ApiKeysTab />)}
+        {renderTab(SETTINGS_TABS.AppSettings, activeTab, <AppSettings />)}
+        {renderTab(SETTINGS_TABS.About, activeTab, <AboutTab />)}
       </TransitionGroup>
     </Modal>
   )
