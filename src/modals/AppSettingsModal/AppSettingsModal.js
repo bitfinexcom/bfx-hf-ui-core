@@ -27,6 +27,18 @@ const cssTransitionProps = {
   classNames: 'setting',
 }
 
+const renderCell = (tab, activeTab, element) => {
+  if (!isElectronApp || activeTab !== tab) {
+    return null
+  }
+
+  return (
+    <CSSTransition key={tab} {...cssTransitionProps}>
+      {element}
+    </CSSTransition>
+  )
+}
+
 const AppSettingsModal = () => {
   const isOpen = useSelector(state => getUIModalStateForKey(state, UI_MODAL_KEYS.APP_SETTINGS_MODAL))
   const activeTab = useSelector(getSettingsActiveTab)
@@ -80,31 +92,11 @@ const AppSettingsModal = () => {
           'appsettings-modal__content': activeTab !== SETTINGS_TABS.Keys,
         })}
       >
-        {isElectronApp && activeTab === SETTINGS_TABS.Beta && (
-          <CSSTransition {...cssTransitionProps}>
-            <BetaTab />
-          </CSSTransition>
-        )}
-        {isElectronApp && activeTab === SETTINGS_TABS.General && (
-          <CSSTransition {...cssTransitionProps}>
-            <GeneralTab />
-          </CSSTransition>
-        )}
-        {isElectronApp && activeTab === SETTINGS_TABS.Keys && (
-          <CSSTransition {...cssTransitionProps}>
-            <ApiKeysTab />
-          </CSSTransition>
-        )}
-        {activeTab === SETTINGS_TABS.AppSettings && (
-          <CSSTransition {...cssTransitionProps}>
-            <AppSettings />
-          </CSSTransition>
-        )}
-        {activeTab === SETTINGS_TABS.About && (
-          <CSSTransition {...cssTransitionProps}>
-            <AboutTab />
-          </CSSTransition>
-        )}
+        {renderCell(SETTINGS_TABS.Beta, activeTab, <BetaTab />)}
+        {renderCell(SETTINGS_TABS.General, activeTab, <GeneralTab />)}
+        {renderCell(SETTINGS_TABS.Keys, activeTab, <ApiKeysTab />)}
+        {renderCell(SETTINGS_TABS.AppSettings, activeTab, <AppSettings />)}
+        {renderCell(SETTINGS_TABS.About, activeTab, <AboutTab />)}
       </TransitionGroup>
     </Modal>
   )
