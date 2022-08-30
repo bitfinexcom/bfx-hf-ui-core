@@ -129,28 +129,62 @@ body.hosted {
   flex-wrap: wrap;
   height: 100%;
 
-  .simpledropdown-wrapper .simpledropdown-label {
-    margin-top: 7px;
-    margin-left: 5px;
-  }
+  .simpledropdown-wrapper {
+    .simpledropdown-label {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 10px;
+      margin-left: 5px;
 
-  .dropdown-leaf {
-    width: 18px;
-    height: 18px;
+      .label-chevron {
+        margin-left: 5px;
+        font-size: 10px;
+      }
 
-    &:hover {
-      cursor: pointer;
-      opacity: 0.8;
+      .dropdown-leaf {
+        width: 15px;
+        height: 15px;
+    
+        &:hover {
+          cursor: pointer;
+          opacity: 0.8;
+        }
+      }
     }
-  }
 
-  .dropdown-leaf-link {
-    color: var(--text-color);
-    text-decoration: none;
-    font-size: 14px;
+    .simpledropdown-separator {
+      height: 9px;
+    }
 
-    &:hover {
-      color: var(--primary-8);
+    .simpledropdown-content {
+      text-align: center;
+      padding-top: 5px;
+      position: absolute;
+      background-color: var(--grayish-color);
+      left: -50px;
+
+      > svg {
+        margin-bottom: 5px;
+      }
+
+      > a {
+        margin-bottom: 7px;
+
+        &:last-child {
+          margin-bottom: 0;
+        }
+      }
+
+      .dropdown-leaf-link {
+        color: var(--text-color);
+        text-decoration: none;
+        font-size: 14px;
+    
+        &:hover {
+          color: var(--primary-8);
+        }
+      }
     }
   }
 }
