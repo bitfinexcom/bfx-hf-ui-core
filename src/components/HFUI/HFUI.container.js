@@ -6,7 +6,12 @@ import WSActions from '../../redux/actions/ws'
 import GAActions from '../../redux/actions/google_analytics'
 import UIActions from '../../redux/actions/ui'
 import {
-  getCurrentMode, getShowAlgoPauseInfoSetting, getThemeSetting, getIsBetaVersion, getIsStrategiesTabVisible,
+  getCurrentMode,
+  getShowAlgoPauseInfoSetting,
+  getThemeSetting,
+  getIsBetaVersion,
+  getIsStrategiesTabVisible,
+  SETTINGS_KEYS,
 } from '../../redux/selectors/ui'
 import { MAX_ORDER_COUNT_SETTING } from '../../redux/selectors/ui/get_core_settings'
 import { getAuthToken, getIsBitfinexConnected } from '../../redux/selectors/ws'
@@ -30,7 +35,7 @@ const mapStateToProps = (state = {}) => {
   }
 }
 
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch) => ({
   getSettings: (authToken) => {
     dispatch(WSActions.send(['get.settings', authToken]))
   },
@@ -38,17 +43,19 @@ const mapDispatchToProps = dispatch => ({
     dispatch(WSActions.send(['get.past_strategies', authToken]))
   },
   getCoreSettings: (authToken) => {
-    dispatch(WSActions.send(['get.core_settings', authToken, [MAX_ORDER_COUNT_SETTING]]))
+    dispatch(
+      WSActions.send([
+        'get.core_settings',
+        authToken,
+        [MAX_ORDER_COUNT_SETTING],
+      ]),
+    )
   },
   GAPageview: (page) => {
     dispatch(GAActions.pageview(page))
   },
   getFavoritePairs: (authToken, mode) => {
-    dispatch(WSActions.send([
-      'get.favourite_trading_pairs',
-      authToken,
-      mode,
-    ]))
+    dispatch(WSActions.send(['get.favourite_trading_pairs', authToken, mode]))
   },
   onUnload: (authToken, mode) => {
     dispatch(WSActions.onUnload(authToken, mode))
@@ -63,18 +70,26 @@ const mapDispatchToProps = dispatch => ({
     dispatch(WSActions.send(['feature_flags.get', authToken]))
   },
   openAppSettingsModal: () => {
-    dispatch(UIActions.changeUIModalState(UI_MODAL_KEYS.APP_SETTINGS_MODAL, true))
+    dispatch(
+      UIActions.changeUIModalState(UI_MODAL_KEYS.APP_SETTINGS_MODAL, true),
+    )
   },
   setApplicationHiddenStatus: (isHidden, message = '') => {
     dispatch(UIActions.setUIValue(UI_KEYS.isApplicationHidden, isHidden))
     if (isHidden) {
-      dispatch(UIActions.recvNotification({
-        mts: Date.now(),
-        status: 'info',
-        text: message,
-        cid: uuidv4(),
-      }))
+      dispatch(
+        UIActions.recvNotification({
+          mts: Date.now(),
+          status: 'info',
+          text: message,
+          cid: uuidv4(),
+        }),
+      )
     }
+  },
+  updateFullscreenState: (fullscreen) => {
+    dispatch(UIActions.setUIValue(UI_KEYS.isFullscreenBarShown, fullscreen))
+    dispatch(WSActions.saveSettings(SETTINGS_KEYS.FULLSCREEN, fullscreen))
   },
 })
 

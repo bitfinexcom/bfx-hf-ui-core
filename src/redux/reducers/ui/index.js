@@ -85,6 +85,7 @@ function getInitialState() {
     settingsActiveTab: DEFAULT_TAB,
     tickersVolumeUnit: null,
     isApplicationHidden: false,
+    isFullscreenBarShown: false,
   }
 
   _map(_values(UI_MODAL_KEYS), (modalKey) => {

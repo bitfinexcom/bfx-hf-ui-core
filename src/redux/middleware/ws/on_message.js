@@ -536,7 +536,7 @@ export default (alias, store) => (e = {}) => {
       case 'app.can_be_closed': {
         const [, canBeClosed] = payload
         if (canBeClosed) {
-          window.electronService?.sendAppClosedEvent()
+          closeElectronApp()
         } else {
           store.dispatch(UIActions.recvNotification({
             mts: Date.now(),
