@@ -17,7 +17,14 @@
     }
   }
 
-  &:hover .simpledropdown-content {
-    display: block;
+  .simpledropdown-separator {
+    background: transparent;
+    display: none;
+  }
+
+  &:hover {
+    .simpledropdown-content, .simpledropdown-separator {
+      display: block;
+    }
   }
 }
