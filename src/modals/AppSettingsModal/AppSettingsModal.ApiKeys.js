@@ -156,7 +156,7 @@ const ApiKeys = () => {
             className='reset_button'
             small
             onClick={onResetApiKey(MAIN_MODE)}
-            disabled={isProductionKeysTouched}
+            disabled={!!isProductionKeysTouched}
           >
             {t('ui.reset')}
           </Button>
@@ -217,7 +217,7 @@ const ApiKeys = () => {
             className='reset_button'
             small
             onClick={onResetApiKey(PAPER_MODE)}
-            disabled={isProductionKeysTouched}
+            disabled={!!isProductionKeysTouched}
           >
             {t('ui.reset')}
           </Button>
