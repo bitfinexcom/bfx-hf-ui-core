@@ -232,6 +232,17 @@ export default (alias, store) => (e = {}) => {
         break
       }
 
+      case 'data.api_credentials.reset': {
+        const [, mode, status] = payload
+
+        if (!status) {
+          return
+        }
+
+        store.dispatch(WSActions.recvAPICredentialsReset(mode))
+        break
+      }
+
       case 'data.settings.updated': {
         const [, settings] = payload
         store.dispatch(UIActions.setUIValue(UI_KEYS.settings, settings))

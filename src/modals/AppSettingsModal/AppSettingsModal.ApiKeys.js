@@ -14,6 +14,8 @@ import {
   getIsPaperModeApiKeyUpdating,
 } from '../../redux/selectors/ws'
 import { getCurrentMode, getSettingActiveSection } from '../../redux/selectors/ui'
+import { changeUIModalState } from '../../redux/actions/ui'
+import { UI_MODAL_KEYS } from '../../redux/constants/modals'
 import WSActions from '../../redux/actions/ws'
 import Input from '../../ui/Input'
 import {
@@ -74,16 +76,11 @@ const ApiKeys = () => {
   }
 
   const onResetApiKey = (mode) => () => {
-    dispatch(WSActions.updatingApiKey(mode, true))
-    dispatch(WSActions.send([
-      'api_credentials.save',
-      authToken,
-      '',
-      '',
-      mode,
-      currentMode,
-      getScope(),
-    ]))
+    if (mode === MAIN_MODE) {
+      dispatch(changeUIModalState(UI_MODAL_KEYS.RESET_LIVE_API_KEY_MODAL, true))
+    } else {
+      dispatch(changeUIModalState(UI_MODAL_KEYS.RESET_PAPER_API_KEY_MODAL, true))
+    }
   }
 
   const [highlight, setHighlight] = useState(false)
