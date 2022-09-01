@@ -32,6 +32,24 @@ export default function (state = getInitialState(), action = {}) {
         apiKeys: { ...apiKeysState },
       }
     }
+
+    case t.UPDATE_API_CREDENTIALS_CONFIGURED: {
+      const { mode } = payload
+
+      return {
+        ...state,
+        apiKeys: {
+          ...(state.apiKeys || {}),
+          [mode]: {
+            configured: false,
+            valid: false,
+          },
+        },
+        isMainModeApiKeyUpdating: false,
+        isPaperModeApiKeyUpdating: false,
+      }
+    }
+
     case t.UPDATING_API_KEY: {
       const { mode, isUpdating } = payload
       return {

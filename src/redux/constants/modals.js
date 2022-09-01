@@ -10,4 +10,6 @@ export const UI_MODAL_KEYS = {
   NOTIFICATIONS_PANEL: 'NotificationsPanel',
   REFILL_BALANCE_MODAL: 'RefillBalanceModal',
   CLOSE_SESSION_MODAL: 'CloseSessionModal',
+  RESET_LIVE_API_KEY_MODAL: 'ResetLiveApiKeyModal',
+  RESET_PAPER_API_KEY_MODAL: 'ResetPaperApiKeyModal',
 }

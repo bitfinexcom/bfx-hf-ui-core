@@ -92,6 +92,11 @@ export default {
     payload: { state },
   }),
 
+  recvAPICredentialsReset: (mode) => ({
+    type: t.UPDATE_API_CREDENTIALS_CONFIGURED,
+    payload: { mode },
+  }),
+
   recvClientStatusUpdate: ({ status }) => ({
     type: t.DATA_CLIENT_STATUS_UPDATE,
     payload: { status },

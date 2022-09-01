@@ -14,6 +14,8 @@ import {
   getIsPaperModeApiKeyUpdating,
 } from '../../redux/selectors/ws'
 import { getCurrentMode, getSettingActiveSection } from '../../redux/selectors/ui'
+import { changeUIModalState } from '../../redux/actions/ui'
+import { UI_MODAL_KEYS } from '../../redux/constants/modals'
 import WSActions from '../../redux/actions/ws'
 import Input from '../../ui/Input'
 import {
@@ -70,6 +72,14 @@ const ApiKeys = () => {
         currentMode,
         getScope(),
       ]))
+    }
+  }
+
+  const onResetApiKey = (mode) => () => {
+    if (mode === MAIN_MODE) {
+      dispatch(changeUIModalState(UI_MODAL_KEYS.RESET_LIVE_API_KEY_MODAL, true))
+    } else {
+      dispatch(changeUIModalState(UI_MODAL_KEYS.RESET_PAPER_API_KEY_MODAL, true))
     }
   }
 
@@ -138,6 +148,15 @@ const ApiKeys = () => {
           >
             {mainAPIKeyState.configured ? t('ui.updateBtn') : t('ui.save')}
           </Button>
+          <Button
+            intent={Intent.SECONDARY}
+            className='reset_button'
+            small
+            onClick={onResetApiKey(MAIN_MODE)}
+            disabled={!!isProductionKeysTouched}
+          >
+            {t('ui.reset')}
+          </Button>
         </div>
       </div>
       <div className={getClasses(PAPER_MODE)}>
@@ -189,6 +208,15 @@ const ApiKeys = () => {
             disabled={!isPaperKeysTouched}
           >
             {paperAPIKeyState.configured ? t('ui.updateBtn') : t('ui.save')}
+          </Button>
+          <Button
+            intent={Intent.SECONDARY}
+            className='reset_button'
+            small
+            onClick={onResetApiKey(PAPER_MODE)}
+            disabled={!!isProductionKeysTouched}
+          >
+            {t('ui.reset')}
           </Button>
         </div>
       </div>
