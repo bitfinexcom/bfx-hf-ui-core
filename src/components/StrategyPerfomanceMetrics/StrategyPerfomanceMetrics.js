@@ -54,6 +54,7 @@ const StrategyPerfomanceMetrics = ({
             startedOn={startedOn}
             isPaused={!isExecutionConnected}
             delay={connectionLostDurationMs}
+            key={startedOn}
           />
         )}
         {_map(metrics, (value, label) => (
