@@ -1,6 +1,7 @@
 import {
   delay, put, select, call,
 } from 'redux-saga/effects'
+import _isEmpty from 'lodash/isEmpty'
 
 import WSActions from '../../actions/ws'
 import getSettings, { SETTINGS_KEYS } from '../../selectors/ui/get_settings'
@@ -23,14 +24,15 @@ export default function* onSaveSettings(action = {}) {
 
   function* sendWSMessage() {
     const authToken = yield select(getAuthToken)
+    const settings = { ...(yield select(getSettings)) }
 
     // Save updated settings after login
-    if (!authToken) {
+    if (!authToken || _isEmpty(settings)) {
       yield delay(3000)
       yield call(sendWSMessage)
       return
     }
-    const settings = { ...(yield select(getSettings)) }
+
     settings[key] = value
 
     yield put(
