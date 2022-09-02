@@ -89,7 +89,6 @@ const StrategyEditor = (props) => {
     saveStrategyToExecuteToLS,
     removeStrategyToExecuteFromLS,
     pendingLiveStrategy,
-    executionId,
     onDefineIndicatorsChange,
     evalSectionContent,
     setSectionErrors,
@@ -159,7 +158,7 @@ const StrategyEditor = (props) => {
   } = strategyOptions
 
   const strategyQuote = getCurrencySymbol(symbol?.quote)
-  const { executing, loadingGid } = executionState
+  const { loadingGid } = executionState
   const { strategyManager: isStrategyManagerRunning } = serviceStatus
 
   const isFullFilled = isExecutionInputsFullFilled(
@@ -170,6 +169,7 @@ const StrategyEditor = (props) => {
 
   const strategyId = strategy?.id
   const strategyLabel = strategy?.label
+  const executionId = strategy?.executionId
 
   const onCloseModals = useCallback(() => {
     closeOpenExistingStrategyModal()
@@ -552,7 +552,6 @@ const StrategyEditor = (props) => {
       isPaperTrading
       || !pendingLiveStrategy
       || !isStrategyManagerRunning
-      || executing
       || _isEmpty(savedStrategies)
     ) {
       return
@@ -567,7 +566,6 @@ const StrategyEditor = (props) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     savedStrategies,
-    executing,
     pendingLiveStrategy,
     isStrategyManagerRunning,
   ])
@@ -808,7 +806,6 @@ StrategyEditor.propTypes = {
   saveStrategyToExecuteToLS: PropTypes.func.isRequired,
   removeStrategyToExecuteFromLS: PropTypes.func.isRequired,
   pendingLiveStrategy: PropTypes.string,
-  executionId: PropTypes.string,
   onDefineIndicatorsChange: PropTypes.func.isRequired,
   evalSectionContent: PropTypes.func.isRequired,
   setSectionErrors: PropTypes.func.isRequired,
@@ -830,7 +827,6 @@ StrategyEditor.defaultProps = {
     label: null,
   },
   indicators: [],
-  executionId: null,
   pendingLiveStrategy: null,
 }
 
