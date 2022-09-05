@@ -288,8 +288,8 @@ export default (alias, store) => (e = {}) => {
       }
 
       case 'data.client': {
-        const [, , status] = payload
-        store.dispatch(WSActions.recvClientStatusUpdate({ status }))
+        const [, , mode, status] = payload
+        store.dispatch(WSActions.recvClientStatusUpdate({ status, mode }))
         break
       }
 

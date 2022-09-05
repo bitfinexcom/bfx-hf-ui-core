@@ -28,12 +28,17 @@ import getBacktestData from './get_backtest_data'
 import getBacktestResults from './get_backtest_results'
 
 import {
-  getAPIClientState, apiClientConnected, apiClientConnecting, apiClientDisconnected,
+  getAPIClientState,
+  apiClientConnected,
+  apiClientConnecting,
+  apiClientDisconnected,
 } from './api_client_state'
 
 import getPaperAPIKeyState from './get_paper_api_key_state'
 import getMainAPIKeyState from './get_main_api_key_state'
-import getCurrentModeAPIKeyState, { getAPIKeyStates } from './get_current_mode_api_key_state'
+import getCurrentModeAPIKeyState, {
+  getAPIKeyStates,
+} from './get_current_mode_api_key_state'
 import getIsMainModeApiKeyUpdating from './get_is_main_mode_api_key_updating'
 import getIsPaperModeApiKeyUpdating from './get_is_paper_mode_api_key_updating'
 
