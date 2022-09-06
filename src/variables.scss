@@ -243,3 +243,10 @@ $border-radius: 5px;
 
   @return $spacing-unit * $value;
 }
+
+:export {
+  backgroundColor: $background-color;
+  greyColor: $grey-color;
+  lighterBackgroundColor: $lighter-background-color;
+  darkerBackgroundColorLight: $darker-background-color-light;
+}
