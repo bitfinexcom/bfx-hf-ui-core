@@ -1,7 +1,7 @@
-import t from '../../constants/ws'
+import t, { WS_CONNECTION } from '../../constants/ws'
 
 const getInitialState = () => {
-  return 0
+  return WS_CONNECTION.CLOSED
 }
 
 export default function (state = getInitialState(), action = {}) {

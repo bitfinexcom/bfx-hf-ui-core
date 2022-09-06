@@ -19,6 +19,7 @@ import { AOAdapter } from '../../adapters/ws'
 import { isElectronApp, HONEY_AUTH_URL } from '../../config'
 import { UI_MODAL_KEYS } from '../../constants/modals'
 import { UI_KEYS } from '../../constants/ui_keys'
+import { WS_CONNECTION } from '../../constants/ws'
 import { getCurrentStrategy } from '../../selectors/ui'
 
 const debug = Debug('hfui:rx:m:ws-hfui-server:msg')
@@ -290,6 +291,15 @@ export default (alias, store) => (e = {}) => {
       case 'data.client': {
         const [, , status] = payload
         store.dispatch(WSActions.recvClientStatusUpdate({ status }))
+
+        if (status === WS_CONNECTION.CLOSED) {
+          store.dispatch(UIActions.setUIValue(UI_KEYS.isBadInternetConnection, true))
+        }
+
+        if (status === WS_CONNECTION.OPENED) {
+          store.dispatch(UIActions.setUIValue(UI_KEYS.isBadInternetConnection, false))
+        }
+
         break
       }
 

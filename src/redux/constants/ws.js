@@ -4,6 +4,12 @@ export const SOCKET_STATUS_MAP = {
   CONNECTING: 'connecting',
 }
 
+export const WS_CONNECTION = {
+  OPENED: 2,
+  CLOSED: 0,
+  CONNECTING: 1,
+}
+
 export default {
   SOCKET_ERROR: 'WS_SOCKET_ERROR',
   SEND: 'WS_SEND',
