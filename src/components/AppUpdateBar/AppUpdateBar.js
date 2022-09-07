@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from 'react'
-import cx from 'clsx'
+import { CSSTransition } from 'react-transition-group'
 import { useTranslation } from 'react-i18next'
 import ProgressBar from '../../ui/ProgressBar'
 
 import './style.css'
-import { CSSTransition } from 'react-transition-group'
 
 const ipcHelpers = window.electronService
 
@@ -18,7 +17,7 @@ const UPDATE_STATES = {
 
 const LOCAL_STORAGE_KEY_SHOW_NEW_VERSION = 'HF_SHOW_NEW_VERSION'
 
-const AppUpdate = () => {
+const AppUpdateBar = () => {
   const { t } = useTranslation()
 
   const [isShown, setIsShown] = useState(false)
@@ -90,13 +89,14 @@ const AppUpdate = () => {
     }
 
     return () => {} // consistent-return
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   return (
     <CSSTransition
       in={isShown}
       timeout={600}
-      classNames='hfui-app-update__notification'
+      classNames='hfui-app-update__notification__transition'
       appear
       unmountOnExit
     >
@@ -153,4 +153,4 @@ const AppUpdate = () => {
   )
 }
 
-export default AppUpdate
+export default AppUpdateBar
