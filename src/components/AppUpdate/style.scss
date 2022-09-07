@@ -4,6 +4,30 @@ body.Light {
   }
 }
 
+.hfui-app-update__notification__transition {
+  &-enter {
+    opacity: 0;
+    transform: translate(-50%, -200px);
+  }
+  &-enter-active {
+    opacity: 1;
+    transform: translate(-50%, 0);
+    transition: all 600ms;
+  }
+  &-enter-done {
+    transform: translate(-50%, 0);
+  }
+  &-exit {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+  &-exit-active {
+    opacity: 0;
+    transform: translate(-50%, -200px);
+    transition: all 600ms;
+  }
+}
+
 .hfui-app-update__notification {
   position: fixed;
   z-index: 99999;
@@ -14,11 +38,6 @@ body.Light {
   border-radius: 5px;
   background-color: var(--shade-1);
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-
-  &.hidden,
-  .hidden {
-    display: none;
-  }
 
   .btn-group {
     margin-top: 10px;
