@@ -7,7 +7,7 @@ body.Light {
 .hfui-app-update__notification__transition {
   &-enter {
     opacity: 0;
-    transform: translate(-600px);
+    transform: translate(600px);
   }
   &-enter-active {
     opacity: 1;
@@ -23,7 +23,7 @@ body.Light {
   }
   &-exit-active {
     opacity: 0;
-    transform: translate(-600px);
+    transform: translate(600px);
     transition: all 600ms;
   }
 }
@@ -31,8 +31,8 @@ body.Light {
 .hfui-app-update__notification {
   position: fixed;
   z-index: 99999;
-  bottom: 40px;
-  left: 15px;
+  top: 30px;
+  right: 20px;
   width: 350px;
   padding: 20px;
   border-radius: 5px;
