@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useCallback } from 'react'
 import { CSSTransition } from 'react-transition-group'
 import { useTranslation } from 'react-i18next'
 import ProgressBar from '../../ui/ProgressBar'
@@ -40,14 +40,19 @@ const AppUpdateBar = () => {
     setDownloadProgress(Math.round(args?.percent))
   }
 
-  const onUpdateDownloaded = () => {
+  const onUpdateDownloaded = (_, { version }) => {
     setIsShown(false)
-    setUpdatingState(UPDATE_STATES.UPDATE_DOWNLOADED)
-    setTimeout(() => setIsShown(true), 1000)
     setTimeout(() => {
-      localStorage.setItem(LOCAL_STORAGE_KEY_SHOW_NEW_VERSION, newVersion)
-      ipcHelpers?.sendRestartAppEvent()
-    }, 3000)
+      setUpdatingState(UPDATE_STATES.UPDATE_DOWNLOADED)
+      setIsShown(true)
+
+      setTimeout(() => {
+        if (version) {
+          localStorage.setItem(LOCAL_STORAGE_KEY_SHOW_NEW_VERSION, version)
+        }
+        ipcHelpers?.sendRestartAppEvent()
+      }, 3000)
+    }, 1000)
   }
 
   const onUpdateError = () => {
@@ -66,6 +71,77 @@ const AppUpdateBar = () => {
     }, 1000)
   }
 
+  const renderBarContent = useCallback(() => {
+    switch (updatingState) {
+      case UPDATE_STATES.UPDATE_AVAILABLE: {
+        return (
+          <div>
+            <p className='message'>
+              {t('appUpdate.available', { version: newVersion })}
+            </p>
+            <div className='btn-group'>
+              <button
+                className='close-button'
+                type='button'
+                onClick={onDownloadAndRestartButtonClick}
+              >
+                {t('appUpdate.downloadButton')}
+              </button>
+              <button
+                className='close-button'
+                type='button'
+                onClick={closeNotification}
+              >
+                {t('appUpdate.remindMeButton')}
+              </button>
+            </div>
+          </div>
+        )
+      }
+
+      case UPDATE_STATES.UPDATE_DOWNLOADING: {
+        return (
+          <div>
+            <p className='message'>
+              {downloadProgress
+                ? t('appUpdate.downloading')
+                : t('appUpdate.preparing')}
+            </p>
+            <ProgressBar percent={downloadProgress} showPercent />
+          </div>
+        )
+      }
+
+      case UPDATE_STATES.UPDATE_DOWNLOADED: {
+        return (
+          <div>
+            <p className='message'>{t('appUpdate.downloaded')}</p>
+          </div>
+        )
+      }
+
+      case UPDATE_STATES.UPDATE_INSTALLED: {
+        return (
+          <div>
+            <p className='message'>
+              {t('appUpdate.updateInstalled', { version: newVersion })}
+            </p>
+          </div>
+        )
+      }
+
+      case UPDATE_STATES.UPDATE_ERROR: {
+        return (
+          <div>
+            <p className='message'>{t('appUpdate.updateError')}</p>
+          </div>
+        )
+      }
+      default:
+        return null
+    }
+  }, [downloadProgress, newVersion, t, updatingState])
+
   useEffect(() => {
     const updatedToNewVersion = localStorage.getItem(
       LOCAL_STORAGE_KEY_SHOW_NEW_VERSION,
@@ -77,7 +153,7 @@ const AppUpdateBar = () => {
         setUpdatingState(UPDATE_STATES.UPDATE_INSTALLED)
         setIsShown(true)
         localStorage.removeItem(LOCAL_STORAGE_KEY_SHOW_NEW_VERSION)
-        setTimeout(() => setIsShown(false), 3000)
+        setTimeout(closeNotification, 3000)
       }, 1000)
     }
 
@@ -104,58 +180,7 @@ const AppUpdateBar = () => {
       appear
       unmountOnExit
     >
-      <div className='hfui-app-update__notification'>
-        {updatingState === UPDATE_STATES.UPDATE_AVAILABLE && (
-          <div>
-            <p className='message'>
-              {t('appUpdate.available', { version: newVersion })}
-            </p>
-            <div className='btn-group'>
-              <button
-                className='close-button'
-                type='button'
-                onClick={onDownloadAndRestartButtonClick}
-              >
-                {t('appUpdate.downloadButton')}
-              </button>
-              <button
-                className='close-button'
-                type='button'
-                onClick={closeNotification}
-              >
-                {t('appUpdate.remindMeButton')}
-              </button>
-            </div>
-          </div>
-        )}
-        {updatingState === UPDATE_STATES.UPDATE_DOWNLOADING && (
-          <div>
-            <p className='message'>
-              {downloadProgress
-                ? t('appUpdate.downloading')
-                : t('appUpdate.preparing')}
-            </p>
-            <ProgressBar percent={downloadProgress} showPercent />
-          </div>
-        )}
-        {updatingState === UPDATE_STATES.UPDATE_DOWNLOADED && (
-          <div>
-            <p className='message'>{t('appUpdate.downloaded')}</p>
-          </div>
-        )}
-        {updatingState === UPDATE_STATES.UPDATE_INSTALLED && (
-          <div>
-            <p className='message'>
-              {t('appUpdate.updateInstalled', { version: newVersion })}
-            </p>
-          </div>
-        )}
-        {updatingState === UPDATE_STATES.UPDATE_ERROR && (
-          <div>
-            <p className='message'>{t('appUpdate.updateError')}</p>
-          </div>
-        )}
-      </div>
+      <div className='hfui-app-update__notification'>{renderBarContent()}</div>
     </CSSTransition>
   )
 }
