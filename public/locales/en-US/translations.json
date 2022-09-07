@@ -10,8 +10,13 @@
     "craftedBy": "Crafted by Bitfinex"
   },
   "appUpdate": {
-    "available": "A new update is available. Downloading now...",
-    "downloaded": "Update downloaded. It will be installed on a restart. Restart now?"
+    "available": "A new version {{version}} is available. The application will download the update and restart automatically.",
+    "remindMeButton": "Remind me later",
+    "downloadButton": "Download and Restart",
+    "downloading": "Downloading...",
+    "downloaded": "The update was downloaded. Restarting the application...",
+    "updateInstalled": "The application was successfully updated to {{version}}",
+    "updateError": "The update was failed. Try later"
   },
   "auth": {
     "enterPsw": "Enter your password to unlock",
@@ -785,7 +790,6 @@
     "export": "Export",
     "import": "Import",
     "closeBtn": "Close",
-    "restartBtn": "Restart",
     "closeWithoutSaving": "Close without saving",
     "lastBtn": "Finish",
     "nextBtn": "Next",
