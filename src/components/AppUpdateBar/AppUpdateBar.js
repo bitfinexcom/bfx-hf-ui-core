@@ -130,12 +130,12 @@ const AppUpdateBar = () => {
         )}
         {updatingState === UPDATE_STATES.UPDATE_DOWNLOADING && (
           <div>
-            <p className='message'>{t('appUpdate.downloading')}</p>
-            {downloadProgress > 5 ? (
-              <ProgressBar progress={downloadProgress} maxCompleted={100} />
-            ) : (
-              <ProgressBar progress={0} customLabel={t('appUpdate.preparing')} />
-            )}
+            <p className='message'>
+              {downloadProgress
+                ? t('appUpdate.downloading')
+                : t('appUpdate.preparing')}
+            </p>
+            <ProgressBar percent={downloadProgress} showPercent />
           </div>
         )}
         {updatingState === UPDATE_STATES.UPDATE_DOWNLOADED && (

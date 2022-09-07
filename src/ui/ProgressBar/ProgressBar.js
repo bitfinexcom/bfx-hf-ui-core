@@ -1,40 +1,50 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import ReactProgressBar from '@ramonak/react-progress-bar'
+import { Line } from 'rc-progress'
 import { useSelector } from 'react-redux'
 import { getThemeSetting, THEMES } from '../../redux/selectors/ui'
 import scssVariables from '../../variables.scss'
 
-const ProgressBar = ({ progress, ...props }) => {
+import './style.css'
+
+const ProgressBar = ({ percent, showPercent }) => {
   const theme = useSelector(getThemeSetting)
   const isDark = theme === THEMES.DARK
 
   const {
     backgroundColor,
     greyColor,
-    lighterBackgroundColor,
+    backgroundColorLight,
     darkerBackgroundColorLight,
   } = scssVariables
 
-  const bgColor = isDark ? backgroundColor : greyColor
-  const baseBgColor = isDark
-    ? lighterBackgroundColor
+  const strokeColor = isDark ? backgroundColor : greyColor
+  const trailColor = isDark
+    ? backgroundColorLight
     : darkerBackgroundColorLight
 
   return (
-    <ReactProgressBar
-      animateOnRender
-      completed={progress}
-      bgColor={bgColor}
-      baseBgColor={baseBgColor}
-      labelAlignment={progress < 30 ? 'left' : 'right'}
-      {...props}
-    />
+    <div className='hfui-progress-bar'>
+      <Line
+        className='hfui-progress-bar__line'
+        percent={percent}
+        strokeColor={strokeColor}
+        trailColor={trailColor}
+      />
+      {showPercent && (
+        <p className='hfui-progress-bar__percent'>{`${percent} %`}</p>
+      )}
+    </div>
   )
 }
 
 ProgressBar.propTypes = {
-  progress: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
+  percent: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
+  showPercent: PropTypes.bool,
+}
+
+ProgressBar.defaultProps = {
+  showPercent: false,
 }
 
 export default ProgressBar
