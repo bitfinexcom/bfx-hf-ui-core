@@ -37,10 +37,6 @@ const AppUpdateBar = () => {
   }
 
   const onUpdateDownloading = (_, args) => {
-    if (updatingState !== UPDATE_STATES.UPDATE_DOWNLOADING) {
-      setUpdatingState(UPDATE_STATES.UPDATE_DOWNLOADING)
-    }
-    setIsShown(true)
     setDownloadProgress(Math.round(args?.percent))
   }
 
@@ -49,19 +45,25 @@ const AppUpdateBar = () => {
     setUpdatingState(UPDATE_STATES.UPDATE_DOWNLOADED)
     setTimeout(() => setIsShown(true), 1000)
     setTimeout(() => {
-      ipcHelpers?.sendRestartAppEvent()
       localStorage.setItem(LOCAL_STORAGE_KEY_SHOW_NEW_VERSION, newVersion)
+      ipcHelpers?.sendRestartAppEvent()
     }, 3000)
   }
 
   const onUpdateError = () => {
     setUpdatingState(UPDATE_STATES.UPDATE_ERROR)
+    setIsShown(true)
     setTimeout(closeNotification, 3000)
   }
 
   const onDownloadAndRestartButtonClick = () => {
     setIsShown(false)
     ipcHelpers?.sendDownloadUpdateEvent()
+
+    setTimeout(() => {
+      setUpdatingState(UPDATE_STATES.UPDATE_DOWNLOADING)
+      setIsShown(true)
+    }, 1000)
   }
 
   useEffect(() => {
@@ -70,11 +72,13 @@ const AppUpdateBar = () => {
     )
     if (updatedToNewVersion) {
       // Show a message about the successful installation of the new version
-      setNewVersion(updatedToNewVersion)
-      setUpdatingState(UPDATE_STATES.UPDATE_INSTALLED)
-      setIsShown(true)
-      localStorage.removeItem(LOCAL_STORAGE_KEY_SHOW_NEW_VERSION)
-      setTimeout(() => setIsShown(false), 3000)
+      setTimeout(() => {
+        setNewVersion(updatedToNewVersion)
+        setUpdatingState(UPDATE_STATES.UPDATE_INSTALLED)
+        setIsShown(true)
+        localStorage.removeItem(LOCAL_STORAGE_KEY_SHOW_NEW_VERSION)
+        setTimeout(() => setIsShown(false), 3000)
+      }, 1000)
     }
 
     if (ipcHelpers) {
@@ -89,7 +93,7 @@ const AppUpdateBar = () => {
     }
 
     return () => {} // consistent-return
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   return (
@@ -100,55 +104,58 @@ const AppUpdateBar = () => {
       appear
       unmountOnExit
     >
-      <div
-        className='hfui-app-update__notification'
-      >
+      <div className='hfui-app-update__notification'>
         {updatingState === UPDATE_STATES.UPDATE_AVAILABLE && (
-        <div>
-          <p className='message'>
-            {t('appUpdate.available', { version: newVersion })}
-          </p>
-          <div className='btn-group'>
-            <button
-              className='close-button'
-              type='button'
-              onClick={onDownloadAndRestartButtonClick}
-            >
-              {t('appUpdate.downloadButton')}
-            </button>
-            <button
-              className='close-button'
-              type='button'
-              onClick={closeNotification}
-            >
-              {t('appUpdate.remindMeButton')}
-            </button>
+          <div>
+            <p className='message'>
+              {t('appUpdate.available', { version: newVersion })}
+            </p>
+            <div className='btn-group'>
+              <button
+                className='close-button'
+                type='button'
+                onClick={onDownloadAndRestartButtonClick}
+              >
+                {t('appUpdate.downloadButton')}
+              </button>
+              <button
+                className='close-button'
+                type='button'
+                onClick={closeNotification}
+              >
+                {t('appUpdate.remindMeButton')}
+              </button>
+            </div>
           </div>
-        </div>
         )}
         {updatingState === UPDATE_STATES.UPDATE_DOWNLOADING && (
-        <div>
-          <p className='message'>{t('appUpdate.downloading')}</p>
-          <ProgressBar progress={downloadProgress} maxCompleted={100} />
-        </div>
+          <div>
+            <p className='message'>{t('appUpdate.downloading')}</p>
+            {downloadProgress > 5 ? (
+              <ProgressBar progress={downloadProgress} maxCompleted={100} />
+            ) : (
+              <ProgressBar progress={0} customLabel={t('appUpdate.preparing')} />
+            )}
+          </div>
         )}
         {updatingState === UPDATE_STATES.UPDATE_DOWNLOADED && (
-        <div>
-          <p className='message'>{t('appUpdate.downloaded')}</p>
-        </div>
+          <div>
+            <p className='message'>{t('appUpdate.downloaded')}</p>
+          </div>
         )}
         {updatingState === UPDATE_STATES.UPDATE_INSTALLED && (
-        <div>
-          <p className='message'>{t('appUpdate.updateInstalled')}</p>
-        </div>
+          <div>
+            <p className='message'>
+              {t('appUpdate.updateInstalled', { version: newVersion })}
+            </p>
+          </div>
         )}
         {updatingState === UPDATE_STATES.UPDATE_ERROR && (
-        <div>
-          <p className='message'>{t('appUpdate.updateError')}</p>
-        </div>
+          <div>
+            <p className='message'>{t('appUpdate.updateError')}</p>
+          </div>
         )}
       </div>
-
     </CSSTransition>
   )
 }

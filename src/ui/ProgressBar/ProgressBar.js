@@ -27,7 +27,7 @@ const ProgressBar = ({ progress, ...props }) => {
       completed={progress}
       bgColor={bgColor}
       baseBgColor={baseBgColor}
-      labelAlignment={progress < 10 ? 'left' : 'right'}
+      labelAlignment={progress < 30 ? 'left' : 'right'}
       {...props}
     />
   )
