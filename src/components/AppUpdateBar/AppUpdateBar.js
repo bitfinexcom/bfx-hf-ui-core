@@ -41,6 +41,8 @@ const AppUpdateBar = () => {
   }
 
   const onUpdateDownloaded = (_, { version }) => {
+    // Close download, and show success message
+    // Then restart the application after 3s
     setIsShown(false)
     setTimeout(() => {
       setUpdatingState(UPDATE_STATES.UPDATE_DOWNLOADED)
@@ -62,6 +64,7 @@ const AppUpdateBar = () => {
   }
 
   const onDownloadAndRestartButtonClick = () => {
+    // Close update request and open download
     setIsShown(false)
     ipcHelpers?.sendDownloadUpdateEvent()
 
@@ -143,9 +146,7 @@ const AppUpdateBar = () => {
   }, [downloadProgress, newVersion, t, updatingState])
 
   useEffect(() => {
-    const updatedToNewVersion = localStorage.getItem(
-      LOCAL_STORAGE_KEY_SHOW_NEW_VERSION,
-    )
+    const updatedToNewVersion = localStorage.getItem(LOCAL_STORAGE_KEY_SHOW_NEW_VERSION)
     if (updatedToNewVersion) {
       // Show a message about the successful installation of the new version
       setTimeout(() => {
