@@ -738,7 +738,7 @@
     "templatesTab": "Templates",
     "savedStrategiesTab": "Drafts",
     "selectMarketDescription": "This is the market in which the strategy will run",
-    "selectMarketDescriptionDisabled": "Selected Market",
+    "selectMarketDescriptionDisabled": "Set the trading pair",
     "selectMarketPlaceholder": "Select a market",
     "selectCandleDurationDescription": "Select candle duration",
     "fullscreenChartBtn": "Fullscreen Chart",
