@@ -97,9 +97,9 @@ export default {
     payload: { mode },
   }),
 
-  recvClientStatusUpdate: ({ status }) => ({
+  recvClientStatusUpdate: ({ status, mode }) => ({
     type: t.DATA_CLIENT_STATUS_UPDATE,
-    payload: { status },
+    payload: { status, mode },
   }),
 
   recvPositions: ({ positions }) => ({

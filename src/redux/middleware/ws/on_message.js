@@ -289,9 +289,9 @@ export default (alias, store) => (e = {}) => {
       }
 
       case 'data.client': {
-        const [, , status] = payload
-        store.dispatch(WSActions.recvClientStatusUpdate({ status }))
-
+        const [, , mode, status] = payload
+        store.dispatch(WSActions.recvClientStatusUpdate({ status, mode }))
+        
         if (status === WS_CONNECTION.CLOSED) {
           store.dispatch(UIActions.setUIValue(UI_KEYS.isBadInternetConnection, true))
         }

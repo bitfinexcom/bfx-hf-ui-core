@@ -1,7 +1,11 @@
 import t, { WS_CONNECTION } from '../../constants/ws'
+import { PAPER_MODE } from '../ui'
 
 const getInitialState = () => {
-  return WS_CONNECTION.CLOSED
+  return {
+    sandbox: WS_CONNECTION.CLOSED,
+    main: WS_CONNECTION.CLOSED,
+  }
 }
 
 export default function (state = getInitialState(), action = {}) {
@@ -9,8 +13,12 @@ export default function (state = getInitialState(), action = {}) {
 
   switch (type) {
     case t.DATA_CLIENT_STATUS_UPDATE: {
-      const { status } = payload
-      return status
+      const { status, mode } = payload
+
+      return {
+        ...state,
+        [mode === PAPER_MODE ? 'sandbox' : 'main']: status,
+      }
     }
 
     case t.DEAUTH: {
