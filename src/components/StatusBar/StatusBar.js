@@ -4,11 +4,7 @@ import PropTypes from 'prop-types'
 import { useTranslation } from 'react-i18next'
 
 import { useDispatch } from 'react-redux'
-import {
-  isElectronApp,
-  appVersion,
-  RELEASE_URL,
-} from '../../redux/config'
+import { isElectronApp, appVersion, RELEASE_URL } from '../../redux/config'
 import { changeUIModalState, setSettingsTab } from '../../redux/actions/ui'
 
 import NavbarButton from '../Navbar/Navbar.Link'
@@ -41,6 +37,19 @@ const StatusBar = ({
     dispatch(changeUIModalState(UI_MODAL_KEYS.APP_SETTINGS_MODAL, true))
   }
 
+  const getHFConnectionText = () => {
+    if (apiClientConnected) {
+      return `HF ${t('statusbar.connected')}`
+    }
+    if (apiClientConnecting) {
+      return `HF ${t('statusbar.connecting')}`
+    }
+    if (apiClientDisconnected) {
+      return `HF ${t('statusbar.disconnected')}`
+    }
+    return null
+  }
+
   return (
     <div className='hfui-statusbar__wrapper'>
       <div className='hfui-statusbar__left'>
@@ -68,7 +77,10 @@ const StatusBar = ({
                 {appVersion}
               </span>
               &nbsp;
-              <span className='hfui-statusbar__beta' onClick={onVersionTypeClickHandler}>
+              <span
+                className='hfui-statusbar__beta'
+                onClick={onVersionTypeClickHandler}
+              >
                 (
                 {isBetaVersion ? 'BETA' : 'STABLE'}
                 )
@@ -81,11 +93,7 @@ const StatusBar = ({
                 red: apiClientDisconnected,
               })}
             />
-            <p>
-              {apiClientConnected && `HF ${t('statusbar.connected')}`}
-              {apiClientConnecting && `HF ${t('statusbar.connecting')}`}
-              {apiClientDisconnected && `HF ${t('statusbar.disconnected')}`}
-            </p>
+            <p>{getHFConnectionText()}</p>
             <div className='hfui-statusbar__divide' />
           </>
         )}
