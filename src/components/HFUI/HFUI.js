@@ -11,7 +11,7 @@ import { useTranslation } from 'react-i18next'
 import { THEMES, SETTINGS_KEYS } from '../../redux/selectors/ui'
 import useInjectBfxData from '../../hooks/useInjectBfxData'
 import NotificationsSidebar from '../NotificationsSidebar'
-import AppUpdate from '../AppUpdate'
+import AppUpdateBar from '../AppUpdateBar'
 import closeElectronApp from '../../redux/helpers/close_electron_app'
 import Routes from '../../constants/routes'
 import { isElectronApp } from '../../redux/config'
@@ -178,7 +178,7 @@ const HFUI = (props) => {
         <>{isElectronApp && <AuthenticationPage />}</>
       )}
       <NotificationsSidebar notificationsVisible={notificationsVisible} />
-      {isElectronApp && <AppUpdate />}
+      {isElectronApp && <AppUpdateBar />}
     </Suspense>
   )
 }
