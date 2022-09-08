@@ -20,20 +20,20 @@ const LOCAL_STORAGE_KEY_SHOW_NEW_VERSION = 'HF_SHOW_NEW_VERSION'
 const AppUpdateBar = () => {
   const { t } = useTranslation()
 
-  const [isShown, setIsShown] = useState(false)
+  const [isOpen, setIsOpen] = useState(false)
   const [newVersion, setNewVersion] = useState(null)
   const [downloadProgress, setDownloadProgress] = useState(0)
   const [updatingState, setUpdatingState] = useState(null)
 
   const closeNotification = () => {
-    setIsShown(false)
+    setIsOpen(false)
     ipcHelpers?.sendClearAppUpdateTimerEvent()
   }
 
   const onUpdateAvailable = (_, args) => {
     setNewVersion(args?.version)
     setUpdatingState(UPDATE_STATES.UPDATE_AVAILABLE)
-    setIsShown(true)
+    setIsOpen(true)
   }
 
   const onUpdateDownloading = (_, args) => {
@@ -43,10 +43,10 @@ const AppUpdateBar = () => {
   const onUpdateDownloaded = (_, { version }) => {
     // Close download, and show success message
     // Then restart the application after 3s
-    setIsShown(false)
+    setIsOpen(false)
     setTimeout(() => {
       setUpdatingState(UPDATE_STATES.UPDATE_DOWNLOADED)
-      setIsShown(true)
+      setIsOpen(true)
 
       setTimeout(() => {
         if (version) {
@@ -59,18 +59,18 @@ const AppUpdateBar = () => {
 
   const onUpdateError = () => {
     setUpdatingState(UPDATE_STATES.UPDATE_ERROR)
-    setIsShown(true)
+    setIsOpen(true)
     setTimeout(closeNotification, 3000)
   }
 
   const onDownloadAndRestartButtonClick = () => {
     // Close update request and open download
-    setIsShown(false)
+    setIsOpen(false)
     ipcHelpers?.sendDownloadUpdateEvent()
 
     setTimeout(() => {
       setUpdatingState(UPDATE_STATES.UPDATE_DOWNLOADING)
-      setIsShown(true)
+      setIsOpen(true)
     }, 1000)
   }
 
@@ -152,7 +152,7 @@ const AppUpdateBar = () => {
       setTimeout(() => {
         setNewVersion(updatedToNewVersion)
         setUpdatingState(UPDATE_STATES.UPDATE_INSTALLED)
-        setIsShown(true)
+        setIsOpen(true)
         localStorage.removeItem(LOCAL_STORAGE_KEY_SHOW_NEW_VERSION)
         setTimeout(closeNotification, 3000)
       }, 1000)
@@ -175,7 +175,7 @@ const AppUpdateBar = () => {
 
   return (
     <CSSTransition
-      in={isShown}
+      in={isOpen}
       timeout={600}
       classNames='hfui-app-update__notification__transition'
       appear
