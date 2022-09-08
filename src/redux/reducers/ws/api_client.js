@@ -1,10 +1,10 @@
-import t from '../../constants/ws'
+import t, { WS_CONNECTION } from '../../constants/ws'
 import { PAPER_MODE } from '../ui'
 
 const getInitialState = () => {
   return {
-    sandbox: 0,
-    main: 0,
+    sandbox: WS_CONNECTION.CLOSED,
+    main: WS_CONNECTION.CLOSED,
   }
 }
 
