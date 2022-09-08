@@ -49,7 +49,7 @@ const getMetrics = (results, t, quoteCcy, postProcessing = false) => {
       [t('strategyEditor.equityCurve')]: resultNumber(equityCurve),
       [t('strategyEditor.ret')]: resultNumber(ret, quoteCcy),
       [t('strategyEditor.retPerc')]: resultNumber(adjustPercentage(retPerc)),
-      [t('strategyEditor.drawdown')]: resultNumber(adjustPercentage(drawdown)),
+      [t('strategyEditor.drawdown')]: resultNumber(adjustPercentage(drawdown), null, false),
       [t('strategyEditor.backtestCandles')]: nCandles,
       [t('strategyEditor.backtestTrades')]: nTrades,
       [t('strategyEditor.trades')]: nStrategyTrades,
