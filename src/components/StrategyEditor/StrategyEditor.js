@@ -55,6 +55,7 @@ import {
 import EditStrategyLabelModal from '../../modals/Strategy/EditStrategyLabelModal'
 import { UI_MODAL_KEYS } from '../../redux/constants/modals'
 import { PAPER_MODE } from '../../redux/reducers/ui'
+import SettingsTitle from './tabs/SettingsTitle'
 
 import './style.css'
 
@@ -533,12 +534,7 @@ const StrategyEditor = (props) => {
   const editInSandbox = useCallback(() => {
     changeTradingMode(!isPaperTrading)
     setStrategy(strategy, PAPER_MODE)
-  }, [
-    changeTradingMode,
-    isPaperTrading,
-    setStrategy,
-    strategy,
-  ])
+  }, [changeTradingMode, isPaperTrading, setStrategy, strategy])
 
   const openNewTest = () => onLoadStrategy(strategy)
 
@@ -564,11 +560,7 @@ const StrategyEditor = (props) => {
 
     loadStrategyAndStartExecution(strategyToLoad)
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [
-    savedStrategies,
-    pendingLiveStrategy,
-    isStrategyManagerRunning,
-  ])
+  }, [savedStrategies, pendingLiveStrategy, isStrategyManagerRunning])
 
   const sbtitleStrategy = useCallback(
     ({ selectedTab, sidebarOpened }) => (
@@ -628,6 +620,11 @@ const StrategyEditor = (props) => {
       />
     ),
     [backtestResults],
+  )
+
+  const sbtitleSettings = useCallback(
+    ({ sidebarOpened }) => <SettingsTitle sidebarOpened={sidebarOpened} />,
+    [],
   )
 
   return (
@@ -690,6 +687,14 @@ const StrategyEditor = (props) => {
                 sectionErrors={sectionErrors}
                 setStrategy={setStrategy}
                 strategy={strategy}
+              />
+            )}
+            {(isBetaVersion || flags?.live_execution) && (
+              <div
+                htmlKey='settings'
+                key='settings'
+                sbtitle={sbtitleSettings}
+                onClick={openExecutionOptionsModal}
               />
             )}
           </StrategyEditorPanel>
