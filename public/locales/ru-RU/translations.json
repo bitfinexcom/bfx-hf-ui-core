@@ -744,8 +744,6 @@
     },
     "closeStrategy": "Закрыть стратегию",
     "executionOptionsModal": {
-      "title": "Выбрать параметры исполнения перед запуском",
-      "disabledTitle": "Параметры исполнения",
       "capitalAllocationLabel": "Распределение капитала",
       "stopLoss": "Stop-Loss",
       "maxDrawdown": "Максимальная просадка"

@@ -744,8 +744,6 @@
     },
     "closeStrategy": "Cerrar estrategia",
     "executionOptionsModal": {
-      "title": "Seleccionar parámetros de ejecución antes de lanzar",
-      "disabledTitle": "Parámetros de ejecución",
       "capitalAllocationLabel": "Alocación de Capital",
       "stopLoss": "Stop-Loss",
       "maxDrawdown": "Máximo Drawdown"

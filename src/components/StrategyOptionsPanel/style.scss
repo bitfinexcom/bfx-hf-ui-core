@@ -142,25 +142,4 @@
     width: 15px;
     height: 15px;
   }
-
-  &__settings-btn {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    cursor: pointer;
-    text-transform: uppercase;
-    height: 32px;
-
-    .hfui-exchangeinfobar__button {
-      &:hover,
-      &:active {
-        color: inherit;
-      }
-    }
-
-    &:hover {
-      color: $green-color;
-      justify-content: space-between;
-    }
-  }
 }

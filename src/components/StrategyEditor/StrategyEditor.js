@@ -28,7 +28,7 @@ import CancelProcessModal from '../../modals/Strategy/CancelProcessModal'
 import StrategyTabTitle from './tabs/StrategyTab/StrategyTab.Title'
 import BacktestTabTitle from './tabs/BacktestTab.Title'
 import IDETabTitle from './tabs/IDETab.Title'
-import ExecutionOptionsModal from '../../modals/Strategy/ExecutionOptionsModal'
+import StrategySettingsModal from '../../modals/Strategy/StrategySettingsModal'
 import SaveUnsavedChangesLaunchModal from '../../modals/Strategy/SaveUnsavedChangesLaunchModal'
 import {
   getDefaultStrategyOptions,
@@ -131,9 +131,9 @@ const StrategyEditor = (props) => {
     closeCancelProcessModal,
   ] = useToggle(false)
   const [
-    isExecutionOptionsModalOpen,,
-    openExecutionOptionsModal,
-    closeExecutionOptionsModal,
+    isStrategySettingsModalOpen,,
+    openStrategySettingsModal,
+    closeStrategySettingsModal,
   ] = useToggle(false)
   const [
     isLaunchStrategyModalOpen,,
@@ -178,7 +178,7 @@ const StrategyEditor = (props) => {
     closeRemoveModal()
     closeCreateNewStrategyFromModal()
     closeSaveStrategyAsModal()
-    closeExecutionOptionsModal()
+    closeStrategySettingsModal()
     closeCancelProcessModal()
     closeLaunchStrategyModal()
     closeSaveStrategyBeforeLaunchModal()
@@ -187,7 +187,7 @@ const StrategyEditor = (props) => {
     closeCancelProcessModal,
     closeCreateNewStrategyFromModal,
     closeCreateNewStrategyModal,
-    closeExecutionOptionsModal,
+    closeStrategySettingsModal,
     closeLaunchStrategyModal,
     closeOpenExistingStrategyModal,
     closeRemoveModal,
@@ -368,7 +368,7 @@ const StrategyEditor = (props) => {
     }
 
     if (!isFullFilled) {
-      openExecutionOptionsModal()
+      openStrategySettingsModal()
       setExecutionOptionsModalType(EXECUTION_TYPES.BACKTEST)
       return
     }
@@ -379,7 +379,7 @@ const StrategyEditor = (props) => {
     candles,
     dsExecuteBacktest,
     isFullFilled,
-    openExecutionOptionsModal,
+    openStrategySettingsModal,
     showError,
     strategy,
     t,
@@ -444,12 +444,12 @@ const StrategyEditor = (props) => {
         return
       }
 
-      openExecutionOptionsModal()
+      openStrategySettingsModal()
       setExecutionOptionsModalType(EXECUTION_TYPES.LIVE)
     },
     [
       isFullFilled,
-      openExecutionOptionsModal,
+      openStrategySettingsModal,
       openLaunchStrategyModal,
       openSaveStrategyBeforeLaunchModal,
       strategyDirty,
@@ -473,7 +473,7 @@ const StrategyEditor = (props) => {
     }
 
     if (!isFullFilled) {
-      openExecutionOptionsModal()
+      openStrategySettingsModal()
       setExecutionOptionsModalType(EXECUTION_TYPES.LIVE)
       return
     }
@@ -495,7 +495,7 @@ const StrategyEditor = (props) => {
     dsExecuteLiveStrategy,
     isFullFilled,
     isPaperTrading,
-    openExecutionOptionsModal,
+    openStrategySettingsModal,
     strategy,
     saveStrategyToExecuteToLS,
   ])
@@ -652,7 +652,6 @@ const StrategyEditor = (props) => {
                 isPaperTrading={isPaperTrading}
                 stopExecution={stopExecution}
                 onSaveStrategy={onSaveStrategy}
-                openExecutionOptionsModal={openExecutionOptionsModal}
                 saveStrategyOptions={saveStrategyOptions}
                 hasErrors={hasErrorsInIDE}
                 onCancelProcess={onCancelProcess}
@@ -694,7 +693,7 @@ const StrategyEditor = (props) => {
                 htmlKey='settings'
                 key='settings'
                 sbtitle={sbtitleSettings}
-                onClick={openExecutionOptionsModal}
+                onClick={openStrategySettingsModal}
               />
             )}
           </StrategyEditorPanel>
@@ -710,8 +709,8 @@ const StrategyEditor = (props) => {
             strategy={strategy}
             onSubmit={onSaveAsStrategy}
           />
-          <ExecutionOptionsModal
-            isOpen={isExecutionOptionsModalOpen}
+          <StrategySettingsModal
+            isOpen={isStrategySettingsModalOpen}
             onClose={onCloseModals}
             saveStrategyOptions={saveStrategyOptions}
             capitalAllocation={capitalAllocation}

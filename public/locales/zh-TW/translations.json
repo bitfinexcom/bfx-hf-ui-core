@@ -744,8 +744,6 @@
     },
     "closeStrategy": "關閉策略",
     "executionOptionsModal": {
-      "title": "執行前選擇執行參數",
-      "disabledTitle": "執行參數",
       "capitalAllocationLabel": "資本配置",
       "stopLoss": "止損",
       "maxDrawdown": "最大回撤"

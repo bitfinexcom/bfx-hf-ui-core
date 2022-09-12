@@ -17,7 +17,7 @@ import './style.scss'
 
 const getProcessedLocalState = (value) => String(AmountInput.processValue(value))
 
-const ExecutionOptionsModal = (props) => {
+const StrategySettingsModal = (props) => {
   const {
     isOpen,
     onClose,
@@ -145,11 +145,7 @@ const ExecutionOptionsModal = (props) => {
     <Modal
       isOpen={isOpen}
       onClose={onClose}
-      label={
-        isPaperTrading
-          ? t('strategyEditor.executionOptionsModal.title')
-          : t('strategyEditor.executionOptionsModal.disabledTitle')
-      }
+      label={t('strategyEditor.executionOptionsModal.title')}
       onSubmit={onSubmit}
       className='hfui-execution-options-modal-container'
     >
@@ -189,7 +185,7 @@ const ExecutionOptionsModal = (props) => {
   )
 }
 
-ExecutionOptionsModal.propTypes = {
+StrategySettingsModal.propTypes = {
   isOpen: PropTypes.bool.isRequired,
   onClose: PropTypes.func.isRequired,
   capitalAllocation: PropTypes.string.isRequired,
@@ -204,9 +200,9 @@ ExecutionOptionsModal.propTypes = {
   strategyQuote: PropTypes.string,
 }
 
-ExecutionOptionsModal.defaultProps = {
+StrategySettingsModal.defaultProps = {
   executionOptionsModalType: null,
   strategyQuote: null,
 }
 
-export default ExecutionOptionsModal
+export default StrategySettingsModal

@@ -10,7 +10,6 @@ import StrategyRunned from '../StrategyEditor/components/StrategyRunned'
 import StrategyStopped from '../StrategyEditor/components/StrategyStopped'
 import StrategyPaused from '../StrategyEditor/components/StrategyPaused'
 import StrategyTypeSelect from './StrategyTypeSelect'
-import StrategyOptionsButton from './StrategyOptionsButton'
 import { STRATEGY_SHAPE } from '../../constants/prop-types-shapes'
 import { getExecutionConnectionState } from '../../redux/selectors/ws'
 import StrategyMarketSelect from './StrategyMarketSelect'
@@ -24,7 +23,6 @@ const StrategyOptionsPanelLive = ({
   markets,
   isExecuting,
   hasResults,
-  openExecutionOptionsModal,
   setFullScreenChart,
   stopExecution,
 }) => {
@@ -76,7 +74,6 @@ const StrategyOptionsPanelLive = ({
           isExecuting={isExecuting}
           isDisabled
         />
-        <StrategyOptionsButton onClick={openExecutionOptionsModal} />
       </div>
       <div className='hfui-strategy-options__buttons-container'>
         {hasResults && (
@@ -105,7 +102,6 @@ StrategyOptionsPanelLive.propTypes = {
   strategy: PropTypes.shape(STRATEGY_SHAPE).isRequired,
   isExecuting: PropTypes.bool.isRequired,
   hasResults: PropTypes.bool.isRequired,
-  openExecutionOptionsModal: PropTypes.func.isRequired,
   setFullScreenChart: PropTypes.func.isRequired,
   stopExecution: PropTypes.func.isRequired,
 }

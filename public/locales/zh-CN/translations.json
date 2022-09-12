@@ -744,8 +744,6 @@
     },
     "closeStrategy": "关闭策略",
     "executionOptionsModal": {
-      "title": "执行前，请选择执行参数",
-      "disabledTitle": "执行参数",
       "capitalAllocationLabel": "资金配置",
       "stopLoss": "停损",
       "maxDrawdown": "最大回撤"

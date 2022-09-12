@@ -31,7 +31,7 @@ const SidebarTabs = ({
               setSelectedSBTab(index)
             }}
           >
-            {tab.props.sbtitle({ selectedTab: selectedSBTab, sidebarOpened })}
+            {sbtitle({ selectedTab: selectedSBTab, sidebarOpened })}
           </li>
         )
       })}
