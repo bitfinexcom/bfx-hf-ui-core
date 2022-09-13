@@ -763,6 +763,9 @@
     "closeStrategy": "Close strategy",
     "executionOptionsModal": {
       "title": "Strategy Settings",
+      "executionTab": "Execution",
+      "leverageTab": "Leverage",
+      "ordersTab": "Orders",
       "capitalAllocationLabel": "Capital Allocation",
       "stopLoss": "Stop-Loss",
       "maxDrawdown": "Maximum Drawdown",
