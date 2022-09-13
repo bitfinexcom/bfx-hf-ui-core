@@ -1,46 +1,29 @@
 /* eslint-disable react/prop-types */
-import React, { memo } from 'react'
-import _values from 'lodash/values'
+import React, { memo, useMemo } from 'react'
 import _map from 'lodash/map'
 import _isFunction from 'lodash/isFunction'
-import cx from 'clsx'
 import { useTranslation } from 'react-i18next'
-import { TransitionGroup, CSSTransition } from 'react-transition-group'
 
 import { useDispatch, useSelector } from 'react-redux'
 import { isElectronApp } from '../../redux/config'
 import Modal from '../../ui/Modal'
-import GeneralTab from './AppSettingsModal.General'
-import ApiKeysTab from './AppSettingsModal.ApiKeys'
-import AppSettings from './AppSettingsModal.AppSettings'
-import AboutTab from './AppSettingsModal.About'
-import BetaTab from './AppSettingsModal.Beta'
-import { getUIModalStateForKey, getSettingsActiveTab } from '../../redux/selectors/ui'
+import {
+  getUIModalStateForKey,
+  getSettingsActiveTab,
+} from '../../redux/selectors/ui'
 import { changeUIModalState, setSettingsTab } from '../../redux/actions/ui'
 import { UI_MODAL_KEYS } from '../../redux/constants/modals'
-import { DEFAULT_TAB, SETTINGS_TABS, WEB_SETTINGS_TABS } from './AppSettingsModal.constants'
+import {
+  DEFAULT_TAB,
+  SETTINGS_TABS,
+  SETTINGS_TABS_COMPONENTS,
+  WEB_SETTINGS_TABS,
+} from './AppSettingsModal.constants'
 
 import './style.css'
 
-const cssTransitionProps = {
-  timeout: 300,
-  classNames: 'setting',
-}
-
-const renderTab = (tab, activeTab, element) => {
-  if (!isElectronApp || activeTab !== tab) {
-    return null
-  }
-
-  return (
-    <CSSTransition key={tab} {...cssTransitionProps}>
-      {element}
-    </CSSTransition>
-  )
-}
-
 const AppSettingsModal = () => {
-  const isOpen = useSelector(state => getUIModalStateForKey(state, UI_MODAL_KEYS.APP_SETTINGS_MODAL))
+  const isOpen = useSelector((state) => getUIModalStateForKey(state, UI_MODAL_KEYS.APP_SETTINGS_MODAL))
   const activeTab = useSelector(getSettingsActiveTab)
 
   const dispatch = useDispatch()
@@ -61,7 +44,13 @@ const AppSettingsModal = () => {
   }
   const { t } = useTranslation()
 
-  const tabs = isElectronApp ? _values(SETTINGS_TABS) : WEB_SETTINGS_TABS
+  const tabs = useMemo(() => {
+    return _map(isElectronApp ? SETTINGS_TABS : WEB_SETTINGS_TABS, (tab) => ({
+      key: tab,
+      label: t(`appSettings.${tab}`),
+      component: SETTINGS_TABS_COMPONENTS[tab],
+    }))
+  }, [t])
 
   return (
     <Modal
@@ -72,32 +61,11 @@ const AppSettingsModal = () => {
       width={640}
       textAlign='center'
     >
-      <div className='appsettings-modal__tabs'>
-        {_map(tabs, tab => (
-          <div
-            key={tab}
-            className={cx('appsettings-modal__tab', {
-              'is-active': tab === activeTab,
-            })}
-            onClick={() => setActiveTab(tab)}
-          >
-            {t(tab)}
-          </div>
-        ))}
-      </div>
-
-      <TransitionGroup
-        exit={false}
-        className={cx('content-all', {
-          'appsettings-modal__content': activeTab !== SETTINGS_TABS.Keys,
-        })}
-      >
-        {renderTab(SETTINGS_TABS.Beta, activeTab, <BetaTab />)}
-        {renderTab(SETTINGS_TABS.General, activeTab, <GeneralTab />)}
-        {renderTab(SETTINGS_TABS.Keys, activeTab, <ApiKeysTab />)}
-        {renderTab(SETTINGS_TABS.AppSettings, activeTab, <AppSettings />)}
-        {renderTab(SETTINGS_TABS.About, activeTab, <AboutTab />)}
-      </TransitionGroup>
+      <Modal.Tabs
+        tabs={tabs}
+        activeTab={activeTab}
+        setActiveTab={setActiveTab}
+      />
     </Modal>
   )
 }

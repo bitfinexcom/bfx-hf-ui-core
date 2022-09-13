@@ -1,16 +1,31 @@
-import React from 'react'
+import React, { useMemo } from 'react'
 import PropTypes from 'prop-types'
+import _some from 'lodash/some'
+import cx from 'clsx'
 
 import { Dialog } from '@ufx-ui/core'
 import useModalFocus from '../../hooks/useModalFocus'
 import Scrollbars from '../Scrollbars'
+import ModalTabs from './Modal.Tabs'
 
 import './style.css'
 
 const Modal = ({
-  label, isOpen, onClose, onSubmit, children, className, scrollable, ...rest
+  label,
+  isOpen,
+  onClose,
+  onSubmit,
+  children,
+  className,
+  scrollable,
+  ...rest
 }) => {
   useModalFocus()
+
+  const containsTabs = useMemo(
+    () => _some(children, (el) => el === ModalTabs, false),
+    [children],
+  )
 
   return (
     <Dialog
@@ -18,15 +33,11 @@ const Modal = ({
       title={label}
       onClose={onClose}
       onSubmit={onSubmit}
-      className={className}
+      className={cx(className, { 'hfui-modal-tabs-wrapper': containsTabs })}
       textAlign='left'
       {...rest}
     >
-      {scrollable ? (
-        <Scrollbars>
-          {children}
-        </Scrollbars>
-      ) : children}
+      {scrollable ? <Scrollbars>{children}</Scrollbars> : children}
     </Dialog>
   )
 }
@@ -50,6 +61,7 @@ Modal.defaultProps = {
 
 Modal.Footer = Dialog.Footer
 Modal.Button = Dialog.Button
+Modal.Tabs = ModalTabs
 Modal.displayName = 'Modal'
 
 export default Modal
