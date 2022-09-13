@@ -1,6 +1,7 @@
 import React, { useMemo } from 'react'
 import PropTypes from 'prop-types'
 import _some from 'lodash/some'
+import _isArray from 'lodash/isArray'
 import cx from 'clsx'
 
 import { Dialog } from '@ufx-ui/core'
@@ -23,7 +24,13 @@ const Modal = ({
   useModalFocus()
 
   const containsTabs = useMemo(
-    () => _some(children, (el) => el === ModalTabs, false),
+    () => {
+      // Check is children has instance of the ModalTab
+      if (_isArray(children)) {
+        return _some(children, (el) => el.type === ModalTabs, false)
+      }
+      return children.type === ModalTabs
+    },
     [children],
   )
 
