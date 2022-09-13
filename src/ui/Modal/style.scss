@@ -33,13 +33,15 @@
     padding-top: spacing(0.25) !important;
     height: 430px;
     max-height: 430px;
+    display: flex;
+    flex-direction: column;
   }
 }
 
 .hfui-modal-tabs {
   display: flex;
   text-align: left;
-  height: 100%;
+  flex-grow: 1;
 
   &__menu {
     border-radius: $border-radius;

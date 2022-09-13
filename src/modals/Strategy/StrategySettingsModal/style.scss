@@ -7,7 +7,8 @@
       align-items: center;
       gap: 10px;
 
-      > p, > div {
+      > p,
+      > div {
         flex: 0 50%;
       }
     }
@@ -27,8 +28,4 @@
       }
     }
   }
-}
-
-.hfui-execution-options-modal-container {
-  max-width: 600px !important;
 }
