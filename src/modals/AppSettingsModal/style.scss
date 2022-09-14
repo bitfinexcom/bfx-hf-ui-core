@@ -70,14 +70,6 @@
     color: var(--shade-5);
   }
 
-  &__warning {
-    display: inline-block;
-    background: var(--red-background);
-    border-radius: $border-radius;
-    color: $red-color;
-    padding: spacing(0.5) spacing();
-  }
-
   &__checkbox {
     font-weight: 600;
     color: var(--shade-8);
@@ -95,24 +87,8 @@
 
   &__api-configuration-message {
     display: flex;
-    padding: spacing();
-    border-radius: $border-radius;
     margin-bottom: spacing(1.5);
-
-    &.is-success {
-      color: var(--primary-9);
-      background: var(--primary-0);
-    }
-
-    &.is-error {
-      color: $red-color;
-      background: var(--red-background);
-    }
-
-    &.is-warning {
-      color: $yellow-color;
-      background: var(--yellow-background-mix);
-    }
+    padding: spacing();
 
     svg {
       width: 16px;

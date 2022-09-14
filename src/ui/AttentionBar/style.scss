@@ -1,0 +1,23 @@
+@import "../../variables.scss";
+
+.hfui-attention-bar {
+  display: inline-block;
+  background: var(--red-background);
+  border-radius: $border-radius;
+  padding: spacing(0.5) spacing();
+
+  &.green {
+    color: var(--primary-9);
+    background: var(--primary-0);
+  }
+
+  &.red {
+    color: $red-color;
+    background: var(--red-background);
+  }
+
+  &.yellow {
+    color: $yellow-color;
+    background: var(--yellow-background-mix);
+  }
+}
