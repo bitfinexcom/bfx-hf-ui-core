@@ -5,10 +5,6 @@ import { useSelector } from 'react-redux'
 import PropTypes from 'prop-types'
 import { useTranslation } from 'react-i18next'
 import _map from 'lodash/map'
-import _values from 'lodash/values'
-import cx from 'clsx'
-import { Spinner } from '@ufx-ui/core'
-import { CSSTransition, TransitionGroup } from 'react-transition-group'
 import Modal from '../../../ui/Modal'
 import AmountInput from '../../../components/OrderForm/FieldComponents/input.amount'
 import ExecutionTab from './tabs/StrategySettings.Execution'
@@ -21,23 +17,6 @@ import {
 import { STRATEGY_SETTINGS_TABS } from './StrategySettingsModal.constants'
 
 import './style.scss'
-
-const cssTransitionProps = {
-  timeout: 300,
-  classNames: 'setting',
-}
-
-const renderTab = (tab, activeTab, element) => {
-  if (activeTab !== tab) {
-    return null
-  }
-
-  return (
-    <CSSTransition key={tab} {...cssTransitionProps}>
-      {element}
-    </CSSTransition>
-  )
-}
 
 const getProcessedLocalState = (value) => String(AmountInput.processValue(value))
 
@@ -165,7 +144,7 @@ const StrategySettingsModal = (props) => {
   const tabs = useMemo(() => {
     return _map(STRATEGY_SETTINGS_TABS, (tab) => ({
       key: tab,
-      label: t(`strategyEditor.executionOptionsModal.${tab}`),
+      label: t(`executionOptionsModal.${tab}`),
       component: getTabContentComponent(tab),
     }))
   }, [t, getTabContentComponent])
@@ -183,7 +162,7 @@ const StrategySettingsModal = (props) => {
       setCapitalAllocationError('')
     } else {
       setCapitalAllocationError(
-        t('strategyEditor.executionOptionsModal.noMarketSelected'),
+        t('executionOptionsModal.noMarketSelected'),
       )
     }
   }, [strategyQuote, t])
@@ -223,7 +202,7 @@ const StrategySettingsModal = (props) => {
     <Modal
       isOpen={isOpen}
       onClose={onClose}
-      label={t('strategyEditor.executionOptionsModal.title')}
+      label={t('executionOptionsModal.title')}
       onSubmit={onSubmit}
       className='hfui-execution-options-modal-container'
       width={900}

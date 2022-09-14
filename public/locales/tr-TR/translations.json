@@ -743,11 +743,6 @@
       "other": "Other..."
     },
     "closeStrategy": "Close strategy",
-    "executionOptionsModal": {
-      "capitalAllocationLabel": "Capital Allocation",
-      "stopLoss": "Stop-Loss",
-      "maxDrawdown": "Maximum Drawdown"
-    },
     "perfomanceMetrics": {
       "title": "Perfomance metrics",
       "runTime": "Strategy Run Time"
@@ -863,5 +858,10 @@
     "warning_2": "This action can not be undone!",
     "strategyName": "the strategy name",
     "input_placeholder": "Type {{label}} to delete it"
+  },
+  "executionOptionsModal": {
+    "capitalAllocationLabel": "Capital Allocation",
+    "stopLoss": "Stop-Loss",
+    "maxDrawdown": "Maximum Drawdown"
   }
 }

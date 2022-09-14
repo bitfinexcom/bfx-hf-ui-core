@@ -638,9 +638,6 @@
     "saved": "Guardado",
     "errorsInIDE": "Resolver errores de código y guardar",
     "newStrategy": "Crear estrategia nueva",
-    "capitalAllocationHelp": "Esta es la cantidad máxima de capital que quieres utilizar en esta estrategia, en la moneda base (o equivalente)\nNOTA: debes tener suficientes fondos en la cartera correspondiente para lanzar la estrategia",
-    "stopLossHelp": "Esta es la cantidad máxima de capital que estás dispuesto a perder, como porcentaje de alocación de capital\nIMPORTANTE: esta estrategia se frenará automáticamente si se alcanza este nivel",
-    "maximumDrawdownHelp": "Este es el drawdown porcentual máximo que de permite para esta estrategia\nIMPORTANTE: la estrategia se detendrá automáticamente si se llega a este nivel",
     "newStrategyFrom": "Crear nueva estrategia desde...",
     "newStrategy2": "Nueva estrategia",
     "newStrategyFrom2": "Nueva estrategia desde...",
@@ -743,11 +740,6 @@
       "other": "Otro..."
     },
     "closeStrategy": "Cerrar estrategia",
-    "executionOptionsModal": {
-      "capitalAllocationLabel": "Alocación de Capital",
-      "stopLoss": "Stop-Loss",
-      "maxDrawdown": "Máximo Drawdown"
-    },
     "perfomanceMetrics": {
       "title": "Métricas de desempeño",
       "runTime": "Tiempo de ejecución de la estrategia"
@@ -863,5 +855,13 @@
     "warning_2": "¡Esta acción no se puede deshacer!",
     "strategyName": "el nombre de la estrategia",
     "input_placeholder": "Escribe {{label}} para eliminarlo"
+  },
+  "executionOptionsModal": {
+    "capitalAllocationLabel": "Alocación de Capital",
+    "stopLoss": "Stop-Loss",
+    "maxDrawdown": "Máximo Drawdown",
+    "capitalAllocationHelp": "Esta es la cantidad máxima de capital que quieres utilizar en esta estrategia, en la moneda base (o equivalente)\nNOTA: debes tener suficientes fondos en la cartera correspondiente para lanzar la estrategia",
+    "stopLossHelp": "Esta es la cantidad máxima de capital que estás dispuesto a perder, como porcentaje de alocación de capital\nIMPORTANTE: esta estrategia se frenará automáticamente si se alcanza este nivel",
+    "maximumDrawdownHelp": "Este es el drawdown porcentual máximo que de permite para esta estrategia\nIMPORTANTE: la estrategia se detendrá automáticamente si se llega a este nivel"
   }
 }

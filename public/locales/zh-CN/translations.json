@@ -638,9 +638,6 @@
     "saved": "已保存",
     "errorsInIDE": "解决编码错误并保存",
     "newStrategy": "创建新的策略",
-    "capitalAllocationHelp": "This is the maximum amount of capital you want to deploy to this strategy, in quote currency (or equivalent)\nNOTE: you must have enough funds in the corresponding wallet to launch the strategy",
-    "stopLossHelp": "This is the maximum amount of capital you are willing to lose, as a percentage of the capital allocation\nIMPORTANT: the strategy will automatically stop if this level is reached",
-    "maximumDrawdownHelp": "This is the maximum drawdown allowed for this strategy in percentage\nIMPORTANT: the strategy will automatically stop if this level is reached",
     "newStrategyFrom": "创建新的策略从...",
     "newStrategy2": "新交易策略",
     "newStrategyFrom2": "从模板或储存档案建立新策略",
@@ -746,7 +743,10 @@
     "executionOptionsModal": {
       "capitalAllocationLabel": "资金配置",
       "stopLoss": "停损",
-      "maxDrawdown": "最大回撤"
+      "maxDrawdown": "最大回撤",
+      "capitalAllocationHelp": "This is the maximum amount of capital you want to deploy to this strategy, in quote currency (or equivalent)\nNOTE: you must have enough funds in the corresponding wallet to launch the strategy",
+      "stopLossHelp": "This is the maximum amount of capital you are willing to lose, as a percentage of the capital allocation\nIMPORTANT: the strategy will automatically stop if this level is reached",
+      "maximumDrawdownHelp": "This is the maximum drawdown allowed for this strategy in percentage\nIMPORTANT: the strategy will automatically stop if this level is reached"
     },
     "perfomanceMetrics": {
       "title": "绩效指标",

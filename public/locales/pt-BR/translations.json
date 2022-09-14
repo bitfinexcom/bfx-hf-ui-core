@@ -638,9 +638,6 @@
     "saved": "Salvo",
     "errorsInIDE": "Resolva erros de código e salve",
     "newStrategy": "Criar uma nova estratégia",
-    "capitalAllocationHelp": "Este é o valor máximo de capital que você deseja implantar nesta estratégia, na moeda de cotação (ou equivalente)\nNOTA: você deve ter fundos suficientes na carteira correspondente para lançar a estratégia",
-    "stopLossHelp": "Este é o valor máximo de capital que você está disposto a perder, como porcentagem da alocação de capital\nIMPORTANTE: a estratégia irá parar automaticamente se este nível for atingido",
-    "maximumDrawdownHelp": "Este é o drawdown máximo permitido para esta estratégia em porcentagem\nIMPORTANTE: a estratégia irá parar automaticamente se este nível for atingido",
     "newStrategyFrom": "Crie uma nova estratégia...",
     "newStrategy2": "Nova estratégia",
     "newStrategyFrom2": "Nova estratégia de...",
@@ -743,11 +740,6 @@
       "other": "Outro..."
     },
     "closeStrategy": "Fechar estratégia",
-    "executionOptionsModal": {
-      "capitalAllocationLabel": "Alocação de Capital",
-      "stopLoss": "Stop-Loss",
-      "maxDrawdown": "Drawdown Máximo"
-    },
     "perfomanceMetrics": {
       "title": "Métricas de performance",
       "runTime": "Tempo de execução da estratégia"
@@ -863,5 +855,13 @@
     "warning_2": "Esta ação não pode ser desfeita!",
     "strategyName": "nome da estratégia",
     "input_placeholder": "Digite {{label}} para excluir"
+  },
+  "executionOptionsModal": {
+    "capitalAllocationLabel": "Alocação de Capital",
+    "stopLoss": "Stop-Loss",
+    "maxDrawdown": "Drawdown Máximo",
+    "capitalAllocationHelp": "Este é o valor máximo de capital que você deseja implantar nesta estratégia, na moeda de cotação (ou equivalente)\nNOTA: você deve ter fundos suficientes na carteira correspondente para lançar a estratégia",
+    "stopLossHelp": "Este é o valor máximo de capital que você está disposto a perder, como porcentagem da alocação de capital\nIMPORTANTE: a estratégia irá parar automaticamente se este nível for atingido",
+    "maximumDrawdownHelp": "Este é o drawdown máximo permitido para esta estratégia em porcentagem\nIMPORTANTE: a estratégia irá parar automaticamente se este nível for atingido"
   }
 }
