@@ -8,6 +8,7 @@ import _map from 'lodash/map'
 import Modal from '../../../ui/Modal'
 import AmountInput from '../../../components/OrderForm/FieldComponents/input.amount'
 import ExecutionTab from './tabs/StrategySettings.Execution'
+import LeverageTab from './tabs/StrategySettings.Leverage'
 import { getIsPaperTrading } from '../../../redux/selectors/ui'
 import {
   EXECUTION_TYPES,
@@ -43,6 +44,8 @@ const StrategySettingsModal = (props) => {
   const [capitalAllocationError, setCapitalAllocationError] = useState('')
   const [stopLossPercError, setStopLossError] = useState('')
   const [maxDrawdownError, setMaxDrawdownError] = useState('')
+
+  const [tradeOnMargin, setTradeOnMargin] = useState(false)
 
   const [pendingForSaveOptions, setPendingForSaveOptions] = useState(false)
 
@@ -122,6 +125,15 @@ const StrategySettingsModal = (props) => {
               setMaxDrawdownPerc={maxDrawdownHandler}
             />
           )
+
+        case STRATEGY_SETTINGS_TABS.Leverage:
+          return (
+            <LeverageTab
+              tradeOnMargin={tradeOnMargin}
+              setTradeOnMargin={setTradeOnMargin}
+            />
+          )
+
         default:
           return null
       }

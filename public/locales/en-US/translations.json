@@ -897,6 +897,7 @@
     "strategyStop": "IMPORTANT: the strategy will automatically stop when this value is reached",
     "maximumDrawdownHelp": "This is the maximum drawdown allowed for this strategy in percentage",
     "tradeOnMarginCheckbox": "Trade on Margin",
-    "tradeOnMarginCheckboxDescription": "This will draw funds from your Margin Wallet"
+    "tradeOnMarginCheckboxDescription": "This will draw funds from your Margin Wallet",
+    "noSelectedPairWarning": "You must select the Trading Pair in the Strategy IDE top bar to enable these options"
   }
 }
