@@ -898,6 +898,14 @@
     "maximumDrawdownHelp": "This is the maximum drawdown allowed for this strategy in percentage",
     "tradeOnMarginCheckbox": "Trade on Margin",
     "tradeOnMarginCheckboxDescription": "This will draw funds from your Margin Wallet",
-    "noSelectedPairWarning": "You must select the Trading Pair in the Strategy IDE top bar to enable these options"
+    "noSelectedPairWarning": "You must select the Trading Pair in the Strategy IDE top bar to enable these options",
+    "chooseDropdown": "Choose",
+    "maxMarginTradeMode": "Always Maximum",
+    "fixedMarginTradeMode": "Fixed",
+    "maxModeDescription": "On each trade, the app will try and use as much leverage as the Bitfinex exchange allows for the selected pair. Limits on Initial Equity and Collateral still apply.",
+    "fixModeDescription": "On each trade, the app will try and apply the leverage specified below.",
+    "leverageInfo": "Note: Leverage is affected by the pair you’re trading in. You can find more information in <url>this article</url>",
+    "increaseLeverageCheckbox": "Increase leverage if required",
+    "increaseLeverageCheckboxDescription": "If there isn’t enough initial equity for the value specified above, the app will increase the leverage automatically using all of the remaining funds"
   }
 }

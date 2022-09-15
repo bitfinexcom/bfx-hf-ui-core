@@ -1,3 +1,5 @@
+@import "../../../variables.scss";
+
 .hfui-execution-options-modal {
   &__option {
     .hfui-execution-options-modal-selection {
@@ -14,7 +16,7 @@
     }
 
     &:not(:last-child) {
-      margin-bottom: 10px;
+      margin-bottom: spacing();
     }
     .title {
       color: var(--primary-8);
@@ -26,6 +28,16 @@
         margin-left: 5px;
         cursor: pointer;
       }
+    }
+  }
+
+  &__dropdown-choose {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+
+    .hfui-dropdown__wrapper {
+      width: 200px;
     }
   }
 }

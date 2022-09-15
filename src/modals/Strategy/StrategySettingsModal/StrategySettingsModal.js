@@ -15,7 +15,7 @@ import {
   isExecutionInputsFullFilled,
   STRATEGY_OPTIONS_KEYS,
 } from '../../../components/StrategyEditor/StrategyEditor.helpers'
-import { STRATEGY_SETTINGS_TABS } from './StrategySettingsModal.constants'
+import { MARGIN_TRADE_MODES, STRATEGY_SETTINGS_TABS } from './StrategySettingsModal.constants'
 
 import './style.scss'
 
@@ -46,6 +46,9 @@ const StrategySettingsModal = (props) => {
   const [maxDrawdownError, setMaxDrawdownError] = useState('')
 
   const [tradeOnMargin, setTradeOnMargin] = useState(false)
+  const [marginTradeMode, setMarginTradeMode] = useState(MARGIN_TRADE_MODES.MAX)
+  const [leverageValue, setLeverageValue] = useState(50)
+  const [increaseLeverage, setIncreaseLeverage] = useState(false)
 
   const [pendingForSaveOptions, setPendingForSaveOptions] = useState(false)
 
@@ -131,6 +134,12 @@ const StrategySettingsModal = (props) => {
             <LeverageTab
               tradeOnMargin={tradeOnMargin}
               setTradeOnMargin={setTradeOnMargin}
+              setMarginTradeMode={setMarginTradeMode}
+              marginTradeMode={marginTradeMode}
+              leverageValue={leverageValue}
+              setLeverageValue={setLeverageValue}
+              setIncreaseLeverage={setIncreaseLeverage}
+              increaseLeverage={increaseLeverage}
             />
           )
 
@@ -217,7 +226,7 @@ const StrategySettingsModal = (props) => {
       label={t('executionOptionsModal.title')}
       onSubmit={onSubmit}
       className='hfui-execution-options-modal-container'
-      width={900}
+      width={activeTab === STRATEGY_SETTINGS_TABS.Execution ? 900 : 600}
       textAlign='center'
     >
       <Modal.Tabs

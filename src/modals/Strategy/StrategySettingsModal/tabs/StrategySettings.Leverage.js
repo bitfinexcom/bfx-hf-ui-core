@@ -1,18 +1,42 @@
-import React from 'react'
+/* eslint-disable jsx-a11y/anchor-has-content */
+
+import React, { useMemo } from 'react'
 import PropTypes from 'prop-types'
 import { Checkbox } from '@ufx-ui/core'
-import { useTranslation } from 'react-i18next'
+import _map from 'lodash/map'
+import { Trans, useTranslation } from 'react-i18next'
 import AttentionBar from '../../../../ui/AttentionBar/AttentionBar'
+import Dropdown from '../../../../ui/Dropdown'
+import { MARGIN_TRADE_MODES } from '../StrategySettingsModal.constants'
+import { MARGIN_TRADING_ARTICLE_URL } from '../../../../redux/config'
+import SliderInput from '../../../../components/OrderForm/FieldComponents/input.range'
 
-const LeverageTab = ({ tradeOnMargin, setTradeOnMargin }) => {
+const LeverageTab = ({
+  tradeOnMargin,
+  setTradeOnMargin,
+  setMarginTradeMode,
+  marginTradeMode,
+  leverageValue,
+  setLeverageValue,
+  increaseLeverage,
+  setIncreaseLeverage,
+}) => {
   const { t } = useTranslation()
+
+  const marginTradeModesOptions = useMemo(
+    () => _map(MARGIN_TRADE_MODES, (mode) => ({
+      label: t(`executionOptionsModal.${mode}`),
+      value: mode,
+    })),
+    [t],
+  )
 
   return (
     <div className='hfui-execution-options-modal'>
-      <AttentionBar red>
+      <AttentionBar className='hfui-execution-options-modal__option' red>
         {t('executionOptionsModal.noSelectedPairWarning')}
       </AttentionBar>
-      <div className='appsettings-modal__setting'>
+      <div className='hfui-execution-options-modal__option'>
         <Checkbox
           onChange={setTradeOnMargin}
           label={t('executionOptionsModal.tradeOnMarginCheckbox')}
@@ -23,8 +47,75 @@ const LeverageTab = ({ tradeOnMargin, setTradeOnMargin }) => {
           <p>{t('executionOptionsModal.tradeOnMarginCheckboxDescription')}</p>
         </div>
       </div>
+      <div className='hfui-execution-options-modal__option hfui-execution-options-modal__dropdown-choose'>
+        <p>{t('executionOptionsModal.chooseDropdown')}</p>
+        <Dropdown
+          options={marginTradeModesOptions}
+          onChange={setMarginTradeMode}
+          value={marginTradeMode}
+        />
+      </div>
+      {marginTradeMode === MARGIN_TRADE_MODES.MAX && (
+        <div className='hfui-execution-options-modal__option'>
+          <p>{t('executionOptionsModal.maxModeDescription')}</p>
+        </div>
+      )}
+      {marginTradeMode === MARGIN_TRADE_MODES.FIXED && (
+        <>
+          <div className='hfui-execution-options-modal__option'>
+            <p>{t('executionOptionsModal.fixModeDescription')}</p>
+          </div>
+          <SliderInput
+            def={{
+              label: t('orderForm.leverage'),
+              min: 0,
+              max: 100,
+            }}
+            value={leverageValue}
+            onChange={setLeverageValue}
+            className='hfui-execution-options-modal__option'
+          />
+          <div className='hfui-execution-options-modal__option'>
+            <Checkbox
+              onChange={setIncreaseLeverage}
+              label={t('executionOptionsModal.increaseLeverageCheckbox')}
+              checked={increaseLeverage}
+              className='appsettings-modal__checkbox'
+            />
+            <div className='appsettings-modal__description'>
+              <p>{t('executionOptionsModal.increaseLeverageCheckboxDescription')}</p>
+            </div>
+          </div>
+        </>
+      )}
+      <AttentionBar green>
+        <Trans
+          t={t}
+          i18nKey='executionOptionsModal.leverageInfo'
+          components={{
+            url: (
+              <a
+                href={MARGIN_TRADING_ARTICLE_URL}
+                target='_blank'
+                rel='noopener noreferrer'
+              />
+            ),
+          }}
+        />
+      </AttentionBar>
     </div>
   )
+}
+
+LeverageTab.propTypes = {
+  tradeOnMargin: PropTypes.bool.isRequired,
+  setTradeOnMargin: PropTypes.func.isRequired,
+  setMarginTradeMode: PropTypes.func.isRequired,
+  marginTradeMode: PropTypes.string.isRequired,
+  leverageValue: PropTypes.number.isRequired,
+  setLeverageValue: PropTypes.func.isRequired,
+  increaseLeverage: PropTypes.bool.isRequired,
+  setIncreaseLeverage: PropTypes.func.isRequired,
 }
 
 export default LeverageTab
