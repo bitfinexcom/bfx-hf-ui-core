@@ -15,7 +15,10 @@ import {
   isExecutionInputsFullFilled,
   STRATEGY_OPTIONS_KEYS,
 } from '../../../components/StrategyEditor/StrategyEditor.helpers'
-import { MARGIN_TRADE_MODES, STRATEGY_SETTINGS_TABS } from './StrategySettingsModal.constants'
+import {
+  MARGIN_TRADE_MODES,
+  STRATEGY_SETTINGS_TABS,
+} from './StrategySettingsModal.constants'
 
 import './style.scss'
 
@@ -41,10 +44,6 @@ const StrategySettingsModal = (props) => {
   const [stopLossPercValue, setStopLossPercValue] = useState('')
   const [maxDrawdownPercValue, setMaxDrawdownPercValue] = useState('')
 
-  const [capitalAllocationError, setCapitalAllocationError] = useState('')
-  const [stopLossPercError, setStopLossError] = useState('')
-  const [maxDrawdownError, setMaxDrawdownError] = useState('')
-
   const [tradeOnMargin, setTradeOnMargin] = useState(false)
   const [marginTradeMode, setMarginTradeMode] = useState(MARGIN_TRADE_MODES.MAX)
   const [leverageValue, setLeverageValue] = useState(50)
@@ -61,27 +60,6 @@ const StrategySettingsModal = (props) => {
   )
 
   const { t } = useTranslation()
-
-  const capitalAllocationHandler = (v) => {
-    const error = AmountInput.validateValue(v, t)
-
-    setCapitalAllocationError(error)
-    setCapitalAllocationValue(v)
-  }
-
-  const stopLossPercHandler = (v) => {
-    const error = AmountInput.validateValue(v, t)
-
-    setStopLossError(error)
-    setStopLossPercValue(v)
-  }
-
-  const maxDrawdownHandler = (v) => {
-    const error = AmountInput.validateValue(v, t)
-
-    setMaxDrawdownError(error)
-    setMaxDrawdownPercValue(v)
-  }
 
   const saveStrategyOptionsHelper = () => {
     saveStrategyOptions({
@@ -118,14 +96,12 @@ const StrategySettingsModal = (props) => {
               {...props}
               isPaperTrading={isPaperTrading}
               capitalAllocation={capitalAllocationValue}
-              setCapitalAllocation={capitalAllocationHandler}
-              capitalAllocationError={capitalAllocationError}
+              setCapitalAllocationValue={setCapitalAllocationValue}
               stopLossPerc={stopLossPercValue}
-              stopLossPercError={stopLossPercError}
-              setStopLossPerc={stopLossPercHandler}
+              setStopLossPercValue={setStopLossPercValue}
               maxDrawdownPerc={maxDrawdownPercValue}
-              maxDrawdownError={maxDrawdownError}
-              setMaxDrawdownPerc={maxDrawdownHandler}
+              setMaxDrawdownPercValue={setMaxDrawdownPercValue}
+              strategyQuote={strategyQuote}
             />
           )
 
@@ -148,17 +124,16 @@ const StrategySettingsModal = (props) => {
       }
     },
     [
-      capitalAllocationError,
-      capitalAllocationHandler,
       capitalAllocationValue,
+      increaseLeverage,
       isPaperTrading,
-      maxDrawdownError,
-      maxDrawdownHandler,
+      leverageValue,
+      marginTradeMode,
       maxDrawdownPercValue,
       props,
-      stopLossPercError,
-      stopLossPercHandler,
       stopLossPercValue,
+      tradeOnMargin,
+      strategyQuote,
     ],
   )
 
@@ -177,16 +152,6 @@ const StrategySettingsModal = (props) => {
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [strategyId, isOpen])
-
-  useEffect(() => {
-    if (strategyQuote) {
-      setCapitalAllocationError('')
-    } else {
-      setCapitalAllocationError(
-        t('executionOptionsModal.noMarketSelected'),
-      )
-    }
-  }, [strategyQuote, t])
 
   useEffect(() => {
     if (

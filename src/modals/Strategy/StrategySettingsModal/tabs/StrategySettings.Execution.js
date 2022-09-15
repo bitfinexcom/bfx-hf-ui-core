@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
 import { Tooltip } from '@ufx-ui/core'
 
@@ -9,17 +9,46 @@ import PercentInput from '../../../../components/OrderForm/FieldComponents/input
 const ExecutionTab = ({
   isPaperTrading,
   maxDrawdownPerc,
-  setMaxDrawdownPerc,
-  maxDrawdownError,
-  setCapitalAllocation,
+  setCapitalAllocationValue,
+  setStopLossPercValue,
+  setMaxDrawdownPercValue,
   capitalAllocation,
-  capitalAllocationError,
   stopLossPerc,
-  stopLossPercError,
-  setStopLossPerc,
   strategyQuote,
 }) => {
+  const [capitalAllocationError, setCapitalAllocationError] = useState('')
+  const [stopLossPercError, setStopLossError] = useState('')
+  const [maxDrawdownError, setMaxDrawdownError] = useState('')
   const { t } = useTranslation()
+
+  const capitalAllocationHandler = (v) => {
+    const error = AmountInput.validateValue(v, t)
+
+    setCapitalAllocationError(error)
+    setCapitalAllocationValue(v)
+  }
+
+  const stopLossPercHandler = (v) => {
+    const error = AmountInput.validateValue(v, t)
+
+    setStopLossError(error)
+    setStopLossPercValue(v)
+  }
+
+  const maxDrawdownHandler = (v) => {
+    const error = AmountInput.validateValue(v, t)
+
+    setMaxDrawdownError(error)
+    setMaxDrawdownPercValue(v)
+  }
+
+  useEffect(() => {
+    if (strategyQuote) {
+      setCapitalAllocationError('')
+    } else {
+      setCapitalAllocationError(t('executionOptionsModal.noMarketSelected'))
+    }
+  }, [strategyQuote, t])
 
   return (
     <div className='hfui-execution-options-modal'>
@@ -33,7 +62,7 @@ const ExecutionTab = ({
           </p>
           <AmountInput
             placeholder={t('ui.e.g.', { value: 3000.0 })}
-            onChange={setCapitalAllocation}
+            onChange={capitalAllocationHandler}
             value={capitalAllocation}
             validationError={capitalAllocationError}
             disabled={!isPaperTrading || !strategyQuote}
@@ -58,7 +87,7 @@ const ExecutionTab = ({
           <PercentInput
             placeholder={t('ui.e.g.', { value: '45%' })}
             value={stopLossPerc}
-            onChange={setStopLossPerc}
+            onChange={stopLossPercHandler}
             disabled={!isPaperTrading}
             validationError={stopLossPercError}
             indicator='%'
@@ -82,7 +111,7 @@ const ExecutionTab = ({
           <PercentInput
             placeholder={t('ui.e.g.', { value: '45%' })}
             value={maxDrawdownPerc}
-            onChange={setMaxDrawdownPerc}
+            onChange={maxDrawdownHandler}
             disabled={!isPaperTrading}
             validationError={maxDrawdownError}
             indicator='%'
@@ -96,21 +125,15 @@ const ExecutionTab = ({
 ExecutionTab.propTypes = {
   capitalAllocation: PropTypes.string.isRequired,
   stopLossPerc: PropTypes.string.isRequired,
-  setStopLossPerc: PropTypes.func.isRequired,
-  stopLossPercError: PropTypes.string,
   maxDrawdownPerc: PropTypes.string.isRequired,
-  maxDrawdownError: PropTypes.string,
-  setMaxDrawdownPerc: PropTypes.func.isRequired,
-  capitalAllocationError: PropTypes.string,
-  setCapitalAllocation: PropTypes.func.isRequired,
+  setCapitalAllocationValue: PropTypes.func.isRequired,
+  setStopLossPercValue: PropTypes.func.isRequired,
+  setMaxDrawdownPercValue: PropTypes.func.isRequired,
   isPaperTrading: PropTypes.bool.isRequired,
   strategyQuote: PropTypes.string,
 }
 
 ExecutionTab.defaultProps = {
-  stopLossPercError: '',
-  maxDrawdownError: '',
-  capitalAllocationError: '',
   strategyQuote: null,
 }
 
