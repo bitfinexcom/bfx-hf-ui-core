@@ -517,7 +517,7 @@
     "tifDate": "订单有效日期",
     "postOnlyCheckbox": "仅限提交订单",
     "postOnlyMessage": "“仅限提交” 限价单可确保只支付挂单手续费。挂单时，“仅限提交” 限价单如无挂入订单簿便会取消 （仅限限价单)",
-    "laverage": "杠杆倍数",
+    "leverage": "杠杆倍数",
     "stopPrice": "止损价",
     "limitPrice": "限价",
     "distance": "距离",

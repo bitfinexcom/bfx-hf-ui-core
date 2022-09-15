@@ -517,7 +517,7 @@
     "tifDate": "Fecha TEV",
     "postOnlyCheckbox": "SOLO PUBLICAR",
     "postOnlyMessage": "Las órdenes de límite de tipo \"Solo Publicar\" son órdenes que te aseguran que siempre pagarás la comisión de creador. Cuando se coloca, una orden de límite de tipo \"Solo Publicar\" se inserta en el libro de órdenes o se cancela (solo para órdenes de límite)",
-    "laverage": "Apalancamiento",
+    "leverage": "Apalancamiento",
     "stopPrice": "Precio Stop",
     "limitPrice": "Precio Límite",
     "distance": "Distancia",

@@ -517,7 +517,7 @@
     "tifDate": "TIF Date",
     "postOnlyCheckbox": "POST-ONLY",
     "postOnlyMessage": "\"Post Only\" limit orders are orders that allow you to be sure to always pay the maker fee. When placed, a \"Post Only\" limit order is either inserted into the order book or cancelled (only for limit orders)",
-    "laverage": "Kaldıraç",
+    "leverage": "Kaldıraç",
     "stopPrice": "Stop Fiyatı",
     "limitPrice": "Limit Fiyatı",
     "distance": "Aralık",

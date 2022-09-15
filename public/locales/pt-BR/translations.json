@@ -517,7 +517,7 @@
     "tifDate": "Data de TIF",
     "postOnlyCheckbox": "POST-ONLY",
     "postOnlyMessage": "Ordens limite \"post-only\" permitem que você sempre tenha a certeza de que pagará a taxa de maker. Quando colocada, uma ordem limite \"post-only\" ou é inserida no livro de ordens, ou então cancelada (somente para ordens limite)",
-    "laverage": "Alavancagem",
+    "leverage": "Alavancagem",
     "stopPrice": "Preço do stop",
     "limitPrice": "Preço-limite",
     "distance": "Distância",

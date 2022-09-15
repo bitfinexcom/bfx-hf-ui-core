@@ -517,7 +517,7 @@
     "tifDate": "訂單有效日期",
     "postOnlyCheckbox": "僅限提交訂單",
     "postOnlyMessage": "「僅限提交」限價單可確保您只支付掛單手續費。下單後，「僅限提交」限價單若未進入掛單簿便會取消 (僅限限價單)。",
-    "laverage": "槓桿倍率",
+    "leverage": "槓桿倍率",
     "stopPrice": "止損價",
     "limitPrice": "限價",
     "distance": "距離",
