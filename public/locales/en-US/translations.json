@@ -906,6 +906,9 @@
     "fixModeDescription": "On each trade, the app will try and apply the leverage specified below.",
     "leverageInfo": "Note: Leverage is affected by the pair you’re trading in. You can find more information in <url>this article</url>",
     "increaseLeverageCheckbox": "Increase leverage if required",
-    "increaseLeverageCheckboxDescription": "If there isn’t enough initial equity for the value specified above, the app will increase the leverage automatically using all of the remaining funds"
+    "increaseLeverageCheckboxDescription": "If there isn’t enough initial equity for the value specified above, the app will increase the leverage automatically using all of the remaining funds",
+    "additionStopOrderCheckbox": "Automatically add a Stop order after each entry trade",
+    "additionStopOrderCheckboxDescription": "The app will automatically place a <url>Stop Order</url> with each new position based on the following value",
+    "stopOrderValuePlaceholder": "% of the entry price"
   }
 }

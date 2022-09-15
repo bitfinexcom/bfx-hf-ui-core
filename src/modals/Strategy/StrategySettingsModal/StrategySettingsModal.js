@@ -21,6 +21,7 @@ import {
 } from './StrategySettingsModal.constants'
 
 import './style.scss'
+import OrdersTab from './tabs/StrategySettings.Orders'
 
 const getProcessedLocalState = (value) => String(AmountInput.processValue(value))
 
@@ -48,6 +49,9 @@ const StrategySettingsModal = (props) => {
   const [marginTradeMode, setMarginTradeMode] = useState(MARGIN_TRADE_MODES.MAX)
   const [leverageValue, setLeverageValue] = useState(50)
   const [increaseLeverage, setIncreaseLeverage] = useState(false)
+
+  const [additionStopOrder, setAdditionStopOrder] = useState(false)
+  const [stopOrderValue, setStopOrderValue] = useState('')
 
   const [pendingForSaveOptions, setPendingForSaveOptions] = useState(false)
 
@@ -119,6 +123,16 @@ const StrategySettingsModal = (props) => {
             />
           )
 
+        case STRATEGY_SETTINGS_TABS.Orders:
+          return (
+            <OrdersTab
+              additionStopOrder={additionStopOrder}
+              setAdditionStopOrder={setAdditionStopOrder}
+              stopOrderValue={stopOrderValue}
+              setStopOrderValue={setStopOrderValue}
+            />
+          )
+
         default:
           return null
       }
@@ -134,6 +148,10 @@ const StrategySettingsModal = (props) => {
       stopLossPercValue,
       tradeOnMargin,
       strategyQuote,
+      additionStopOrder,
+      setAdditionStopOrder,
+      stopOrderValue,
+      setStopOrderValue,
     ],
   )
 

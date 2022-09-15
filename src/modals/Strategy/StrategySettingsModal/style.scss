@@ -40,4 +40,19 @@
       width: 200px;
     }
   }
+
+  &__stop-order-input {
+    display: flex;
+    justify-content: space-evenly;
+  }
+
+  &__amount {
+    width: 150px !important;
+    margin-bottom: 0;
+  }
+
+  &__right-placeholder {
+    margin-top: 8px;
+    color: var(--shade-3);
+  }
 }
