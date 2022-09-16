@@ -1,5 +1,10 @@
 @import "../../../variables.scss";
 
+.hfui-execution-options-modal-container {
+  .modal__body {
+    min-height: 430px;
+  }
+}
 .hfui-execution-options-modal {
   &__option {
     .hfui-execution-options-modal-selection {

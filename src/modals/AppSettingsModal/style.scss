@@ -1,6 +1,11 @@
 @import "../../variables.scss";
 
 .appsettings-modal {
+  .modal__body {
+    height: 430px;
+    max-height: 430px;
+  }
+  
   .reset_button {
     margin-left: 10px;
   }

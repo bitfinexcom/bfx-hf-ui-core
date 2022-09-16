@@ -53,7 +53,7 @@ const StrategySettingsModal = (props) => {
   const [marginTradeMode, setMarginTradeMode] = useState(
     MARGIN_TRADE_MODES.MAX,
   )
-  const [leverageValue, setLeverageValue] = useState(50)
+  const [leverageValue, setLeverageValue] = useState(10)
   const [increaseLeverage, setIncreaseLeverage] = useState(false)
 
   const [additionStopOrder, setAdditionStopOrder] = useState(false)
