@@ -139,7 +139,7 @@ const StrategyEditor = (props) => {
     openLaunchStrategyModal,
     closeLaunchStrategyModal,
   ] = useToggle(false)
-  const [executionOptionsModalType, setExecutionOptionsModalType] = useState(null)
+  const [strategySettingsModalType, setStrategySettingsModalType] = useState(null)
 
   const strategyOptions = _get(
     strategy,
@@ -367,10 +367,10 @@ const StrategyEditor = (props) => {
 
     if (!isFullFilled) {
       openStrategySettingsModal()
-      setExecutionOptionsModalType(EXECUTION_TYPES.BACKTEST)
+      setStrategySettingsModalType(EXECUTION_TYPES.BACKTEST)
       return
     }
-    setExecutionOptionsModalType(null)
+    setStrategySettingsModalType(null)
 
     dsExecuteBacktest(backtestArgs)
   }, [
@@ -438,12 +438,12 @@ const StrategyEditor = (props) => {
       }
       if (isFullFilled) {
         openLaunchStrategyModal()
-        setExecutionOptionsModalType(null)
+        setStrategySettingsModalType(null)
         return
       }
 
       openStrategySettingsModal()
-      setExecutionOptionsModalType(EXECUTION_TYPES.LIVE)
+      setStrategySettingsModalType(EXECUTION_TYPES.LIVE)
     },
     [
       isFullFilled,
@@ -472,7 +472,7 @@ const StrategyEditor = (props) => {
 
     if (!isFullFilled) {
       openStrategySettingsModal()
-      setExecutionOptionsModalType(EXECUTION_TYPES.LIVE)
+      setStrategySettingsModalType(EXECUTION_TYPES.LIVE)
       return
     }
     if (isPaperTrading) {
@@ -713,7 +713,7 @@ const StrategyEditor = (props) => {
             saveStrategyOptions={saveStrategyOptions}
             startExecution={onLaunchExecutionClick}
             startBacktest={onBacktestStart}
-            executionOptionsModalType={executionOptionsModalType}
+            strategySettingsModalType={strategySettingsModalType}
             strategyId={strategyId}
             strategyOptions={strategyOptions}
           />

@@ -28,13 +28,13 @@ const OrdersTab = ({
     <div className='hfui-execution-options-modal'>
       {!isPairSelected && (
         <AttentionBar className='hfui-execution-options-modal__option' red>
-          {t('executionOptionsModal.noSelectedPairWarning')}
+          {t('strategySettingsModal.noSelectedPairWarning')}
         </AttentionBar>
       )}
       <div className='hfui-execution-options-modal__option'>
         <Checkbox
           onChange={setAdditionStopOrder}
-          label={t('executionOptionsModal.additionStopOrderCheckbox')}
+          label={t('strategySettingsModal.additionStopOrderCheckbox')}
           checked={additionStopOrder}
           disabled={!isPairSelected}
           className='appsettings-modal__checkbox'
@@ -42,7 +42,7 @@ const OrdersTab = ({
         <div className='appsettings-modal__description'>
           <Trans
             t={t}
-            i18nKey='executionOptionsModal.additionStopOrderCheckboxDescription'
+            i18nKey='strategySettingsModal.additionStopOrderCheckboxDescription'
             components={{
               url: (
                 <a
@@ -66,7 +66,7 @@ const OrdersTab = ({
           disabled={!additionStopOrder || !isPairSelected}
         />
         <p className='hfui-execution-options-modal__right-placeholder'>
-          {t('executionOptionsModal.stopOrderValuePlaceholder')}
+          {t('strategySettingsModal.stopOrderValuePlaceholder')}
         </p>
       </div>
     </div>

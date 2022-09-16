@@ -56,7 +56,7 @@ const ExecutionTab = ({
     if (strategyQuote) {
       setCapitalAllocationError('')
     } else {
-      setCapitalAllocationError(t('executionOptionsModal.noMarketSelected'))
+      setCapitalAllocationError(t('strategySettingsModal.noMarketSelected'))
     }
   }, [strategyQuote, t])
 
@@ -64,11 +64,11 @@ const ExecutionTab = ({
     <div className='hfui-execution-options-modal'>
       <div className='hfui-execution-options-modal__option'>
         <p className='title'>
-          {t('executionOptionsModal.capitalAllocationLabel')}
+          {t('strategySettingsModal.capitalAllocationLabel')}
         </p>
         <div className='hfui-execution-options-modal-selection'>
           <p>
-            {t('executionOptionsModal.capitalAllocationHelp')}
+            {t('strategySettingsModal.capitalAllocationHelp')}
           </p>
           <AmountInput
             placeholder={t('ui.e.g.', { value: 3000.0 })}
@@ -82,17 +82,17 @@ const ExecutionTab = ({
       </div>
       <div className='hfui-execution-options-modal__option'>
         <p className='title'>
-          {`${t('executionOptionsModal.stopLoss')}, %`}
+          {`${t('strategySettingsModal.stopLoss')}, %`}
           <Tooltip
             className='__react-tooltip __react-tooltip-break-line'
-            content={t('executionOptionsModal.strategyStop')}
+            content={t('strategySettingsModal.strategyStop')}
           >
             <i className='fa fa-info-circle __react_component_tooltip title-tooltip' />
           </Tooltip>
         </p>
         <div className='hfui-execution-options-modal-selection'>
           <p>
-            {t('executionOptionsModal.stopLossHelp')}
+            {t('strategySettingsModal.stopLossHelp')}
           </p>
           <PercentInput
             placeholder={t('ui.e.g.', { value: '45%' })}
@@ -106,17 +106,17 @@ const ExecutionTab = ({
       </div>
       <div className='hfui-execution-options-modal__option'>
         <p className='title'>
-          {`${t('executionOptionsModal.maxDrawdown')}, %`}
+          {`${t('strategySettingsModal.maxDrawdown')}, %`}
           <Tooltip
             className='__react-tooltip __react-tooltip-break-line'
-            content={t('executionOptionsModal.strategyStop')}
+            content={t('strategySettingsModal.strategyStop')}
           >
             <i className='fa fa-info-circle __react_component_tooltip title-tooltip' />
           </Tooltip>
         </p>
         <div className='hfui-execution-options-modal-selection'>
           <p>
-            {t('executionOptionsModal.maximumDrawdownHelp')}
+            {t('strategySettingsModal.maximumDrawdownHelp')}
           </p>
           <PercentInput
             placeholder={t('ui.e.g.', { value: '45%' })}

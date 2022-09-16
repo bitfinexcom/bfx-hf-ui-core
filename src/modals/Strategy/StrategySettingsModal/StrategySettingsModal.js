@@ -35,7 +35,7 @@ const StrategySettingsModal = (props) => {
     saveStrategyOptions,
     startExecution,
     startBacktest,
-    executionOptionsModalType,
+    strategySettingsModalType,
     strategyOptions,
     strategyId,
   } = props
@@ -167,7 +167,7 @@ const StrategySettingsModal = (props) => {
   const tabs = useMemo(() => {
     return _map(STRATEGY_SETTINGS_TABS, (tab) => ({
       key: tab,
-      label: t(`executionOptionsModal.${tab}`),
+      label: t(`strategySettingsModal.${tab}`),
       component: getTabContentComponent(tab),
     }))
   }, [t, getTabContentComponent])
@@ -188,7 +188,7 @@ const StrategySettingsModal = (props) => {
       && stopLossPerc === getProcessedLocalState(stopLossPercValue)
     ) {
       // Continue process (execute or backtest) after options was saved
-      const isExecution = executionOptionsModalType === EXECUTION_TYPES.LIVE
+      const isExecution = strategySettingsModalType === EXECUTION_TYPES.LIVE
       onClose()
       setPendingForSaveOptions(false)
       if (isExecution) {
@@ -205,7 +205,7 @@ const StrategySettingsModal = (props) => {
     stopLossPerc,
     stopLossPercValue,
     capitalAllocation,
-    executionOptionsModalType,
+    strategySettingsModalType,
     onClose,
     startExecution,
     startBacktest,
@@ -215,7 +215,7 @@ const StrategySettingsModal = (props) => {
     <Modal
       isOpen={isOpen}
       onClose={onClose}
-      label={t('executionOptionsModal.title')}
+      label={t('strategySettingsModal.title')}
       onSubmit={onSubmit}
       className='hfui-execution-options-modal-container'
       width={activeTab === STRATEGY_SETTINGS_TABS.Execution ? 900 : 600}
@@ -231,7 +231,7 @@ const StrategySettingsModal = (props) => {
           <Modal.Button secondary onClick={onClose}>
             {t('ui.closeBtn')}
           </Modal.Button>
-        ) : !executionOptionsModalType ? (
+        ) : !strategySettingsModalType ? (
           <Modal.Button primary onClick={onSave}>
             {t('ui.save')}
           </Modal.Button>
@@ -257,11 +257,11 @@ StrategySettingsModal.propTypes = {
   saveStrategyOptions: PropTypes.func.isRequired,
   strategyId: PropTypes.string.isRequired,
   startBacktest: PropTypes.func.isRequired,
-  executionOptionsModalType: PropTypes.string,
+  strategySettingsModalType: PropTypes.string,
 }
 
 StrategySettingsModal.defaultProps = {
-  executionOptionsModalType: null,
+  strategySettingsModalType: null,
   strategyOptions: getDefaultStrategyOptions(),
 }
 

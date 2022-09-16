@@ -883,7 +883,7 @@
     "startedOn": "started on: {{time}}",
     "error": "It was not possible to safely terminate one or more of the active strategies and/or algorithmic orders. Try to cancel manually or Force Quit the application (Ctrl+Q/Cmd+Q)"
   },
-  "executionOptionsModal": {
+  "strategySettingsModal": {
     "title": "Strategy Settings",
     "executionTab": "Execution",
     "leverageTab": "Leverage",

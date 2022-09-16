@@ -856,7 +856,7 @@
     "strategyName": "策略名稱",
     "input_placeholder": "輸入 {{label}} 以進行刪除"
   },
-  "executionOptionsModal": {
+  "strategySettingsModal": {
     "capitalAllocationLabel": "資本配置",
     "stopLoss": "止損",
     "maxDrawdown": "最大回撤",

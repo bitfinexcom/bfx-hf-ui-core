@@ -26,7 +26,7 @@ const LeverageTab = ({
 
   const marginTradeModesOptions = useMemo(
     () => _map(MARGIN_TRADE_MODES, (mode) => ({
-      label: t(`executionOptionsModal.${mode}`),
+      label: t(`strategySettingsModal.${mode}`),
       value: mode,
     })),
     [t],
@@ -36,25 +36,25 @@ const LeverageTab = ({
     <div className='hfui-execution-options-modal'>
       {!isPairSelected && (
         <AttentionBar className='hfui-execution-options-modal__option' red>
-          {t('executionOptionsModal.noSelectedPairWarning')}
+          {t('strategySettingsModal.noSelectedPairWarning')}
         </AttentionBar>
       )}
       <div className='hfui-execution-options-modal__option'>
         <Checkbox
           onChange={setTradeOnMargin}
-          label={t('executionOptionsModal.tradeOnMarginCheckbox')}
+          label={t('strategySettingsModal.tradeOnMarginCheckbox')}
           checked={tradeOnMargin}
           disabled={!isPairSelected}
           className='appsettings-modal__checkbox'
         />
         <div className='appsettings-modal__description'>
-          <p>{t('executionOptionsModal.tradeOnMarginCheckboxDescription')}</p>
+          <p>{t('strategySettingsModal.tradeOnMarginCheckboxDescription')}</p>
         </div>
       </div>
       {tradeOnMargin && (
         <>
           <div className='hfui-execution-options-modal__option hfui-execution-options-modal__dropdown-choose'>
-            <p>{t('executionOptionsModal.chooseDropdown')}</p>
+            <p>{t('strategySettingsModal.chooseDropdown')}</p>
             <Dropdown
               options={marginTradeModesOptions}
               onChange={setMarginTradeMode}
@@ -64,13 +64,13 @@ const LeverageTab = ({
           </div>
           {marginTradeMode === MARGIN_TRADE_MODES.MAX && (
             <div className='hfui-execution-options-modal__option'>
-              <p>{t('executionOptionsModal.maxModeDescription')}</p>
+              <p>{t('strategySettingsModal.maxModeDescription')}</p>
             </div>
           )}
           {marginTradeMode === MARGIN_TRADE_MODES.FIXED && (
             <>
               <div className='hfui-execution-options-modal__option'>
-                <p>{t('executionOptionsModal.fixModeDescription')}</p>
+                <p>{t('strategySettingsModal.fixModeDescription')}</p>
               </div>
               <SliderInput
                 def={{
@@ -86,7 +86,7 @@ const LeverageTab = ({
               <div className='hfui-execution-options-modal__option'>
                 <Checkbox
                   onChange={setIncreaseLeverage}
-                  label={t('executionOptionsModal.increaseLeverageCheckbox')}
+                  label={t('strategySettingsModal.increaseLeverageCheckbox')}
                   checked={increaseLeverage}
                   disabled={!isPairSelected}
                   className='appsettings-modal__checkbox'
@@ -94,7 +94,7 @@ const LeverageTab = ({
                 <div className='appsettings-modal__description'>
                   <p>
                     {t(
-                      'executionOptionsModal.increaseLeverageCheckboxDescription',
+                      'strategySettingsModal.increaseLeverageCheckboxDescription',
                     )}
                   </p>
                 </div>
@@ -106,7 +106,7 @@ const LeverageTab = ({
       <AttentionBar green>
         <Trans
           t={t}
-          i18nKey='executionOptionsModal.leverageInfo'
+          i18nKey='strategySettingsModal.leverageInfo'
           components={{
             url: (
               <a

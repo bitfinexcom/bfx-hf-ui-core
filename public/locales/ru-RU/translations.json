@@ -856,7 +856,7 @@
     "strategyName": "название стратегии",
     "input_placeholder": "Введите {{label}} для ее удаления"
   },
-  "executionOptionsModal": {
+  "strategySettingsModal": {
     "capitalAllocationLabel": "Распределение капитала",
     "stopLoss": "Stop-Loss",
     "maxDrawdown": "Максимальная просадка",

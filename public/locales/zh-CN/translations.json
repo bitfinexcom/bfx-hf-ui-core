@@ -740,14 +740,6 @@
       "other": "其他..."
     },
     "closeStrategy": "关闭策略",
-    "executionOptionsModal": {
-      "capitalAllocationLabel": "资金配置",
-      "stopLoss": "停损",
-      "maxDrawdown": "最大回撤",
-      "capitalAllocationHelp": "This is the maximum amount of capital you want to deploy to this strategy, in quote currency (or equivalent)\nNOTE: you must have enough funds in the corresponding wallet to launch the strategy",
-      "stopLossHelp": "This is the maximum amount of capital you are willing to lose, as a percentage of the capital allocation\nIMPORTANT: the strategy will automatically stop if this level is reached",
-      "maximumDrawdownHelp": "This is the maximum drawdown allowed for this strategy in percentage\nIMPORTANT: the strategy will automatically stop if this level is reached"
-    },
     "perfomanceMetrics": {
       "title": "绩效指标",
       "runTime": "策略运行时间"
@@ -863,5 +855,13 @@
     "warning_2": "此指令无法回复！",
     "strategyName": "策略名称",
     "input_placeholder": "输入 {{label}} 以进行删除"
+  },
+  "strategySettingsModal": {
+    "capitalAllocationLabel": "资金配置",
+    "stopLoss": "停损",
+    "maxDrawdown": "最大回撤",
+    "capitalAllocationHelp": "This is the maximum amount of capital you want to deploy to this strategy, in quote currency (or equivalent)\nNOTE: you must have enough funds in the corresponding wallet to launch the strategy",
+    "stopLossHelp": "This is the maximum amount of capital you are willing to lose, as a percentage of the capital allocation\nIMPORTANT: the strategy will automatically stop if this level is reached",
+    "maximumDrawdownHelp": "This is the maximum drawdown allowed for this strategy in percentage\nIMPORTANT: the strategy will automatically stop if this level is reached"
   }
 }

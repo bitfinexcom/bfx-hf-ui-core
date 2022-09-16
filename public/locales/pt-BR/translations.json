@@ -856,7 +856,7 @@
     "strategyName": "nome da estratégia",
     "input_placeholder": "Digite {{label}} para excluir"
   },
-  "executionOptionsModal": {
+  "strategySettingsModal": {
     "capitalAllocationLabel": "Alocação de Capital",
     "stopLoss": "Stop-Loss",
     "maxDrawdown": "Drawdown Máximo",
