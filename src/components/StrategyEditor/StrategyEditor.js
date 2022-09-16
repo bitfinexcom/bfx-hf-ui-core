@@ -94,7 +94,6 @@ const StrategyEditor = (props) => {
     evalSectionContent,
     setSectionErrors,
     serviceStatus,
-    getCurrencySymbol,
   } = props
   const { t } = useTranslation()
 
@@ -158,7 +157,6 @@ const StrategyEditor = (props) => {
     maxDrawdownPerc,
   } = strategyOptions
 
-  const strategyQuote = getCurrencySymbol(symbol?.quote)
   const { loadingGid } = executionState
   const { strategyManager: isStrategyManagerRunning } = serviceStatus
 
@@ -713,15 +711,11 @@ const StrategyEditor = (props) => {
             isOpen={isStrategySettingsModalOpen}
             onClose={onCloseModals}
             saveStrategyOptions={saveStrategyOptions}
-            capitalAllocation={capitalAllocation}
-            stopLossPerc={stopLossPerc}
-            maxDrawdownPerc={maxDrawdownPerc}
             startExecution={onLaunchExecutionClick}
             startBacktest={onBacktestStart}
             executionOptionsModalType={executionOptionsModalType}
-            isFullFilled={isFullFilled}
             strategyId={strategyId}
-            strategyQuote={strategyQuote}
+            strategyOptions={strategyOptions}
           />
           <LaunchStrategyModal
             onSubmit={saveStrategyAndStartExecution}
@@ -819,7 +813,6 @@ StrategyEditor.propTypes = {
     bfxClient: PropTypes.bool,
     strategyManager: PropTypes.bool,
   }).isRequired,
-  getCurrencySymbol: PropTypes.func.isRequired,
 }
 
 StrategyEditor.defaultProps = {

@@ -12,6 +12,7 @@ const OrdersTab = ({
   setAdditionStopOrder,
   setStopOrderValue,
   stopOrderValue,
+  isPairSelected,
 }) => {
   const [stopOrderValueError, setStopOrderValueError] = useState('')
   const { t } = useTranslation()
@@ -25,14 +26,17 @@ const OrdersTab = ({
 
   return (
     <div className='hfui-execution-options-modal'>
-      <AttentionBar className='hfui-execution-options-modal__option' red>
-        {t('executionOptionsModal.noSelectedPairWarning')}
-      </AttentionBar>
+      {!isPairSelected && (
+        <AttentionBar className='hfui-execution-options-modal__option' red>
+          {t('executionOptionsModal.noSelectedPairWarning')}
+        </AttentionBar>
+      )}
       <div className='hfui-execution-options-modal__option'>
         <Checkbox
           onChange={setAdditionStopOrder}
           label={t('executionOptionsModal.additionStopOrderCheckbox')}
           checked={additionStopOrder}
+          disabled={!isPairSelected}
           className='appsettings-modal__checkbox'
         />
         <div className='appsettings-modal__description'>
@@ -57,8 +61,13 @@ const OrdersTab = ({
           onChange={stopOrderValueHandler}
           validationError={stopOrderValueError}
           value={stopOrderValue}
+          min={0}
+          max={99}
+          disabled={!additionStopOrder || !isPairSelected}
         />
-        <p className='hfui-execution-options-modal__right-placeholder'>{t('executionOptionsModal.stopOrderValuePlaceholder')}</p>
+        <p className='hfui-execution-options-modal__right-placeholder'>
+          {t('executionOptionsModal.stopOrderValuePlaceholder')}
+        </p>
       </div>
     </div>
   )
@@ -69,6 +78,7 @@ OrdersTab.propTypes = {
   setAdditionStopOrder: PropTypes.func.isRequired,
   setStopOrderValue: PropTypes.func.isRequired,
   stopOrderValue: PropTypes.string.isRequired,
+  isPairSelected: PropTypes.bool.isRequired,
 }
 
 export default OrdersTab

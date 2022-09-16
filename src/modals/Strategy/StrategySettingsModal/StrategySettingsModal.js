@@ -5,6 +5,7 @@ import { useSelector } from 'react-redux'
 import PropTypes from 'prop-types'
 import { useTranslation } from 'react-i18next'
 import _map from 'lodash/map'
+import _isEmpty from 'lodash/isEmpty'
 import Modal from '../../../ui/Modal'
 import AmountInput from '../../../components/OrderForm/FieldComponents/input.amount'
 import ExecutionTab from './tabs/StrategySettings.Execution'
@@ -12,6 +13,7 @@ import LeverageTab from './tabs/StrategySettings.Leverage'
 import { getIsPaperTrading } from '../../../redux/selectors/ui'
 import {
   EXECUTION_TYPES,
+  getDefaultStrategyOptions,
   isExecutionInputsFullFilled,
   STRATEGY_OPTIONS_KEYS,
 } from '../../../components/StrategyEditor/StrategyEditor.helpers'
@@ -19,9 +21,10 @@ import {
   MARGIN_TRADE_MODES,
   STRATEGY_SETTINGS_TABS,
 } from './StrategySettingsModal.constants'
+import OrdersTab from './tabs/StrategySettings.Orders'
+import { STRATEGY_SHAPE } from '../../../constants/prop-types-shapes'
 
 import './style.scss'
-import OrdersTab from './tabs/StrategySettings.Orders'
 
 const getProcessedLocalState = (value) => String(AmountInput.processValue(value))
 
@@ -33,12 +36,13 @@ const StrategySettingsModal = (props) => {
     startExecution,
     startBacktest,
     executionOptionsModalType,
-    capitalAllocation,
-    stopLossPerc,
-    maxDrawdownPerc,
+    strategyOptions,
     strategyId,
-    strategyQuote,
   } = props
+  const {
+    capitalAllocation, stopLossPerc, maxDrawdownPerc, symbol,
+  } = strategyOptions
+
   const [activeTab, setActiveTab] = useState(STRATEGY_SETTINGS_TABS.Execution)
 
   const [capitalAllocationValue, setCapitalAllocationValue] = useState('')
@@ -46,7 +50,9 @@ const StrategySettingsModal = (props) => {
   const [maxDrawdownPercValue, setMaxDrawdownPercValue] = useState('')
 
   const [tradeOnMargin, setTradeOnMargin] = useState(false)
-  const [marginTradeMode, setMarginTradeMode] = useState(MARGIN_TRADE_MODES.MAX)
+  const [marginTradeMode, setMarginTradeMode] = useState(
+    MARGIN_TRADE_MODES.MAX,
+  )
   const [leverageValue, setLeverageValue] = useState(50)
   const [increaseLeverage, setIncreaseLeverage] = useState(false)
 
@@ -62,6 +68,8 @@ const StrategySettingsModal = (props) => {
     stopLossPercValue,
     maxDrawdownPercValue,
   )
+
+  const isPairSelected = !_isEmpty(symbol)
 
   const { t } = useTranslation()
 
@@ -105,7 +113,7 @@ const StrategySettingsModal = (props) => {
               setStopLossPercValue={setStopLossPercValue}
               maxDrawdownPerc={maxDrawdownPercValue}
               setMaxDrawdownPercValue={setMaxDrawdownPercValue}
-              strategyQuote={strategyQuote}
+              symbol={symbol}
             />
           )
 
@@ -120,6 +128,7 @@ const StrategySettingsModal = (props) => {
               setLeverageValue={setLeverageValue}
               setIncreaseLeverage={setIncreaseLeverage}
               increaseLeverage={increaseLeverage}
+              isPairSelected={isPairSelected}
             />
           )
 
@@ -130,6 +139,7 @@ const StrategySettingsModal = (props) => {
               setAdditionStopOrder={setAdditionStopOrder}
               stopOrderValue={stopOrderValue}
               setStopOrderValue={setStopOrderValue}
+              isPairSelected={isPairSelected}
             />
           )
 
@@ -138,20 +148,19 @@ const StrategySettingsModal = (props) => {
       }
     },
     [
-      capitalAllocationValue,
-      increaseLeverage,
-      isPaperTrading,
-      leverageValue,
-      marginTradeMode,
-      maxDrawdownPercValue,
       props,
+      isPaperTrading,
+      capitalAllocationValue,
       stopLossPercValue,
+      maxDrawdownPercValue,
+      symbol,
       tradeOnMargin,
-      strategyQuote,
+      marginTradeMode,
+      leverageValue,
+      increaseLeverage,
+      isPairSelected,
       additionStopOrder,
-      setAdditionStopOrder,
       stopOrderValue,
-      setStopOrderValue,
     ],
   )
 
@@ -243,21 +252,17 @@ const StrategySettingsModal = (props) => {
 StrategySettingsModal.propTypes = {
   isOpen: PropTypes.bool.isRequired,
   onClose: PropTypes.func.isRequired,
-  capitalAllocation: PropTypes.string.isRequired,
-  stopLossPerc: PropTypes.string.isRequired,
-  maxDrawdownPerc: PropTypes.string.isRequired,
+  strategyOptions: STRATEGY_SHAPE.strategyOptions,
   startExecution: PropTypes.func.isRequired,
   saveStrategyOptions: PropTypes.func.isRequired,
-  isFullFilled: PropTypes.bool.isRequired,
   strategyId: PropTypes.string.isRequired,
   startBacktest: PropTypes.func.isRequired,
   executionOptionsModalType: PropTypes.string,
-  strategyQuote: PropTypes.string,
 }
 
 StrategySettingsModal.defaultProps = {
   executionOptionsModalType: null,
-  strategyQuote: null,
+  strategyOptions: getDefaultStrategyOptions(),
 }
 
 export default StrategySettingsModal

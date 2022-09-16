@@ -20,6 +20,7 @@ const LeverageTab = ({
   setLeverageValue,
   increaseLeverage,
   setIncreaseLeverage,
+  isPairSelected,
 }) => {
   const { t } = useTranslation()
 
@@ -33,59 +34,73 @@ const LeverageTab = ({
 
   return (
     <div className='hfui-execution-options-modal'>
-      <AttentionBar className='hfui-execution-options-modal__option' red>
-        {t('executionOptionsModal.noSelectedPairWarning')}
-      </AttentionBar>
+      {!isPairSelected && (
+        <AttentionBar className='hfui-execution-options-modal__option' red>
+          {t('executionOptionsModal.noSelectedPairWarning')}
+        </AttentionBar>
+      )}
       <div className='hfui-execution-options-modal__option'>
         <Checkbox
           onChange={setTradeOnMargin}
           label={t('executionOptionsModal.tradeOnMarginCheckbox')}
           checked={tradeOnMargin}
+          disabled={!isPairSelected}
           className='appsettings-modal__checkbox'
         />
         <div className='appsettings-modal__description'>
           <p>{t('executionOptionsModal.tradeOnMarginCheckboxDescription')}</p>
         </div>
       </div>
-      <div className='hfui-execution-options-modal__option hfui-execution-options-modal__dropdown-choose'>
-        <p>{t('executionOptionsModal.chooseDropdown')}</p>
-        <Dropdown
-          options={marginTradeModesOptions}
-          onChange={setMarginTradeMode}
-          value={marginTradeMode}
-        />
-      </div>
-      {marginTradeMode === MARGIN_TRADE_MODES.MAX && (
-        <div className='hfui-execution-options-modal__option'>
-          <p>{t('executionOptionsModal.maxModeDescription')}</p>
-        </div>
-      )}
-      {marginTradeMode === MARGIN_TRADE_MODES.FIXED && (
+      {tradeOnMargin && (
         <>
-          <div className='hfui-execution-options-modal__option'>
-            <p>{t('executionOptionsModal.fixModeDescription')}</p>
-          </div>
-          <SliderInput
-            def={{
-              label: t('orderForm.leverage'),
-              min: 0,
-              max: 100,
-            }}
-            value={leverageValue}
-            onChange={setLeverageValue}
-            className='hfui-execution-options-modal__option'
-          />
-          <div className='hfui-execution-options-modal__option'>
-            <Checkbox
-              onChange={setIncreaseLeverage}
-              label={t('executionOptionsModal.increaseLeverageCheckbox')}
-              checked={increaseLeverage}
-              className='appsettings-modal__checkbox'
+          <div className='hfui-execution-options-modal__option hfui-execution-options-modal__dropdown-choose'>
+            <p>{t('executionOptionsModal.chooseDropdown')}</p>
+            <Dropdown
+              options={marginTradeModesOptions}
+              onChange={setMarginTradeMode}
+              value={marginTradeMode}
+              disabled={!isPairSelected}
             />
-            <div className='appsettings-modal__description'>
-              <p>{t('executionOptionsModal.increaseLeverageCheckboxDescription')}</p>
-            </div>
           </div>
+          {marginTradeMode === MARGIN_TRADE_MODES.MAX && (
+            <div className='hfui-execution-options-modal__option'>
+              <p>{t('executionOptionsModal.maxModeDescription')}</p>
+            </div>
+          )}
+          {marginTradeMode === MARGIN_TRADE_MODES.FIXED && (
+            <>
+              <div className='hfui-execution-options-modal__option'>
+                <p>{t('executionOptionsModal.fixModeDescription')}</p>
+              </div>
+              <SliderInput
+                def={{
+                  label: t('orderForm.leverage'),
+                  min: 0,
+                  max: 100,
+                }}
+                value={leverageValue}
+                onChange={setLeverageValue}
+                className='hfui-execution-options-modal__option'
+                disabled={!isPairSelected}
+              />
+              <div className='hfui-execution-options-modal__option'>
+                <Checkbox
+                  onChange={setIncreaseLeverage}
+                  label={t('executionOptionsModal.increaseLeverageCheckbox')}
+                  checked={increaseLeverage}
+                  disabled={!isPairSelected}
+                  className='appsettings-modal__checkbox'
+                />
+                <div className='appsettings-modal__description'>
+                  <p>
+                    {t(
+                      'executionOptionsModal.increaseLeverageCheckboxDescription',
+                    )}
+                  </p>
+                </div>
+              </div>
+            </>
+          )}
         </>
       )}
       <AttentionBar green>
@@ -116,6 +131,7 @@ LeverageTab.propTypes = {
   setLeverageValue: PropTypes.func.isRequired,
   increaseLeverage: PropTypes.bool.isRequired,
   setIncreaseLeverage: PropTypes.func.isRequired,
+  isPairSelected: PropTypes.bool.isRequired,
 }
 
 export default LeverageTab

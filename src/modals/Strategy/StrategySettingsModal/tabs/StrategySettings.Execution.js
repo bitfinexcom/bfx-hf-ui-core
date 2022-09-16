@@ -1,10 +1,16 @@
 import React, { useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
 import { Tooltip } from '@ufx-ui/core'
+import _isEmpty from 'lodash/isEmpty'
 
 import { useTranslation } from 'react-i18next'
+import { useSelector } from 'react-redux'
+import { reduxSelectors } from '@ufx-ui/bfx-containers'
 import AmountInput from '../../../../components/OrderForm/FieldComponents/input.amount'
 import PercentInput from '../../../../components/OrderForm/FieldComponents/input.percent'
+import { MARKET_SHAPE } from '../../../../constants/prop-types-shapes'
+
+const { getCurrencySymbolMemo } = reduxSelectors
 
 const ExecutionTab = ({
   isPaperTrading,
@@ -14,12 +20,16 @@ const ExecutionTab = ({
   setMaxDrawdownPercValue,
   capitalAllocation,
   stopLossPerc,
-  strategyQuote,
+  symbol,
 }) => {
   const [capitalAllocationError, setCapitalAllocationError] = useState('')
   const [stopLossPercError, setStopLossError] = useState('')
   const [maxDrawdownError, setMaxDrawdownError] = useState('')
   const { t } = useTranslation()
+
+  const getCurrencySymbol = useSelector(getCurrencySymbolMemo)
+
+  const strategyQuote = !_isEmpty(symbol) && getCurrencySymbol(symbol?.quote)
 
   const capitalAllocationHandler = (v) => {
     const error = AmountInput.validateValue(v, t)
@@ -130,11 +140,11 @@ ExecutionTab.propTypes = {
   setStopLossPercValue: PropTypes.func.isRequired,
   setMaxDrawdownPercValue: PropTypes.func.isRequired,
   isPaperTrading: PropTypes.bool.isRequired,
-  strategyQuote: PropTypes.string,
+  symbol: PropTypes.shape(MARKET_SHAPE),
 }
 
 ExecutionTab.defaultProps = {
-  strategyQuote: null,
+  symbol: null,
 }
 
 export default ExecutionTab
