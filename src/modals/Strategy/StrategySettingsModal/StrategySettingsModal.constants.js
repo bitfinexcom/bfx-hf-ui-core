@@ -1,7 +1,7 @@
 export const STRATEGY_SETTINGS_TABS = {
   Execution: 'executionTab',
-  Leverage: 'leverageTab',
-  Orders: 'ordersTab',
+  // Leverage: 'leverageTab',
+  // Orders: 'ordersTab',
 }
 
 export const MARGIN_TRADE_MODES = {
