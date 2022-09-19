@@ -44,6 +44,7 @@ const StrategySettingsModal = (props) => {
   } = strategyOptions
 
   const [activeTab, setActiveTab] = useState(STRATEGY_SETTINGS_TABS.Execution)
+  const [isDirty, setIsDirty] = useState(false)
 
   const [capitalAllocationValue, setCapitalAllocationValue] = useState('')
   const [stopLossPercValue, setStopLossPercValue] = useState('')
@@ -83,6 +84,7 @@ const StrategySettingsModal = (props) => {
       [STRATEGY_OPTIONS_KEYS.MAX_DRAWDOWN_PERC]:
         getProcessedLocalState(maxDrawdownPercValue),
     })
+    setIsDirty(false)
   }
 
   const onSave = () => {
@@ -211,6 +213,28 @@ const StrategySettingsModal = (props) => {
     startBacktest,
   ])
 
+  useEffect(() => {
+    if (
+      capitalAllocation !== capitalAllocationValue
+      || maxDrawdownPerc !== maxDrawdownPercValue
+      || stopLossPerc !== stopLossPercValue
+    ) {
+      setIsDirty(true)
+    } else {
+      setIsDirty(false)
+    }
+  }, [
+    isDirty,
+    capitalAllocation,
+    capitalAllocationValue,
+    maxDrawdownPerc,
+    maxDrawdownPercValue,
+    stopLossPerc,
+    stopLossPercValue,
+  ])
+
+  console.log({ capitalAllocation, capitalAllocationValue })
+
   return (
     <Modal
       isOpen={isOpen}
@@ -232,14 +256,14 @@ const StrategySettingsModal = (props) => {
             {t('ui.closeBtn')}
           </Modal.Button>
         ) : !strategySettingsModalType ? (
-          <Modal.Button primary onClick={onSave}>
+          <Modal.Button primary onClick={onSave} disabled={!isDirty}>
             {t('ui.save')}
           </Modal.Button>
         ) : (
           <Modal.Button
             primary
             onClick={onSubmit}
-            disabled={!isFullFilled || pendingForSaveOptions}
+            disabled={!isDirty || !isFullFilled || pendingForSaveOptions}
           >
             {t('strategyEditor.saveAndLaunchBtn')}
           </Modal.Button>
