@@ -87,6 +87,7 @@ const ApiKeys = () => {
 
   const getClasses = (mode) => cx('appsettings-modal__setting', {
     highlight: highlight && activeSection === mode,
+    'appsettings-modal__setting--paddings': highlight,
   })
 
   useEffect(() => {
