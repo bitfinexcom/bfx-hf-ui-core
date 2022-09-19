@@ -504,7 +504,7 @@ const StrategyEditor = (props) => {
       if (!checkForAPIKeys(strategyToLoad)) {
         return
       }
-      onLoadStrategy(strategyToLoad)
+      onLoadStrategy(strategyToLoad, true)
       setTimeout(() => {
         const executionArgs = prepareStrategyExecutionArgs(strategyToLoad)
         dsExecuteLiveStrategy({
