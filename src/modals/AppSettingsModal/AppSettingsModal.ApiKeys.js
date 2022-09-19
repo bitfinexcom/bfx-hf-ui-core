@@ -1,4 +1,6 @@
-import React, { useState, memo, useEffect } from 'react'
+import React, {
+  useState, memo, useEffect, useRef,
+} from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import _size from 'lodash/size'
 import _trim from 'lodash/trim'
@@ -39,6 +41,8 @@ const ApiKeys = () => {
   const [apiSecret, setApiSecret] = useState('')
   const [paperApiKey, setPaperApiKey] = useState('')
   const [paperApiSecret, setPaperApiSecret] = useState('')
+
+  const paperKeysRef = useRef()
 
   const { t } = useTranslation()
 
@@ -94,6 +98,11 @@ const ApiKeys = () => {
     if (activeSection) {
       setTimeout(() => {
         setHighlight(true)
+        if (activeSection === PAPER_MODE && paperKeysRef?.current) {
+          paperKeysRef.current.scrollIntoView({
+            behavior: 'smooth',
+          })
+        }
       }, 350)
     }
   })
@@ -158,7 +167,7 @@ const ApiKeys = () => {
           {t('ui.reset')}
         </Button>
       </div>
-      <div className={getClasses(PAPER_MODE)}>
+      <div className={getClasses(PAPER_MODE)} ref={paperKeysRef}>
         <div className='appsettings-modal__key-title-wrapper'>
           <span className='appsettings-modal__key-title'>
             {t('appSettings.paperKey')}
