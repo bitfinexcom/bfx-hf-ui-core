@@ -28,7 +28,6 @@ import getBacktestData from './get_backtest_data'
 import getBacktestResults from './get_backtest_results'
 
 import {
-  getAPIClientState,
   apiClientConnected,
   apiClientConnecting,
   apiClientDisconnected,
@@ -71,7 +70,6 @@ export {
   getBacktestData,
   getBacktestResults,
 
-  getAPIClientState,
   apiClientConnected,
   apiClientConnecting,
   apiClientDisconnected,
