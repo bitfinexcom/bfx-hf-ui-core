@@ -1,0 +1,14 @@
+.reset_api_keys-modal {
+  .modal__body {
+    > p {
+      white-space: pre-line;
+    }
+
+    .modal__footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-left: 0;
+    }
+  }
+}

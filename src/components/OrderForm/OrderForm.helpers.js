@@ -17,7 +17,7 @@ import _split from 'lodash/split'
 import _replace from 'lodash/replace'
 import _includes from 'lodash/includes'
 import {
-  Iceberg, TWAP, AccumulateDistribute, PingPong, MACrossover, OCOCO,
+  Iceberg, TWAP, AccumulateDistribute, PingPong, Bracket,
 } from 'bfx-hf-algo'
 import Debug from 'debug'
 
@@ -226,15 +226,9 @@ const validateAOData = (data, currentLayout, currentMarket, atomicOrdersCount, a
       break
     }
 
-    case MACrossover.id: {
-      const processedData = MACrossover.meta.processParams(data)
-      errors = MACrossover.meta.validateParams(processedData)
-      break
-    }
-
-    case OCOCO.id: {
-      const processedData = OCOCO.meta.processParams(data)
-      errors = OCOCO.meta.validateParams(processedData)
+    case Bracket.id: {
+      const processedData = Bracket.meta.processParams(data)
+      errors = Bracket.meta.validateParams(processedData)
       break
     }
 
@@ -261,7 +255,7 @@ const renderLayoutComponent = ({
   const C = COMPONENTS_FOR_ID[id]
 
   if (!C) {
-    console.error(`can't render uknown component: ${id}`)
+    console.error(`can't render an unknown component: ${id}`)
     return null
   }
 
@@ -377,7 +371,7 @@ const renderLayoutSection = ({
   return (
     <div
       key={name}
-      className={ClassNames('hfui-orderform__layout-section', {
+      className={ClassNames('hfui-orderform__layout-section', `type-${name}`, {
         fullWidth,
       })}
     >
@@ -387,6 +381,13 @@ const renderLayoutSection = ({
         {_flatten(
           _map(rows, (row, i) => _map(row, (field, rowI) => {
             if (field === null) {
+              // put a placeholder for actions so we'll be able to centrify them
+              if (row[0] === 'action') {
+                return (
+                  <li className='list-action-placeholder' />
+                )
+              }
+
               // spacing placeholder
               return (
                 <li key={`empty-${i}-${rowI}`} /> // eslint-disable-line

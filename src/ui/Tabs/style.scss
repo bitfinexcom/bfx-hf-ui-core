@@ -1,0 +1,15 @@
+.hfui-tabs {
+  display: flex;
+  justify-content: space-evenly;
+  &__button {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    max-width: 120px;
+
+    .icon {
+      margin-bottom: 3px;
+      font-size: 15px;
+    }
+  }
+}

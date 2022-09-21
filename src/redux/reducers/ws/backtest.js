@@ -1,4 +1,3 @@
-import _size from 'lodash/size'
 import types from '../../constants/ws'
 
 function getInitialState() {
@@ -6,9 +5,10 @@ function getInitialState() {
     currentTest: null,
     loading: false,
     executing: false,
+    finished: false,
     trades: [],
     candles: [],
-    backtestOptions: {},
+    gid: null,
   }
 }
 
@@ -36,16 +36,6 @@ function reducer(state = getInitialState(), action = {}) {
       }
     }
 
-    case types.BACKTEST_END: {
-      return {
-        ...state,
-        candles: state.candles.sort((a, b) => a.mts - b.mts),
-        trades: state.trades.sort((a, b) => a.mts - b.mts),
-        loading: false,
-        executing: false,
-      }
-    }
-
     case types.SET_BACKTEST_LOADING: {
       return {
         ...state,
@@ -53,31 +43,37 @@ function reducer(state = getInitialState(), action = {}) {
       }
     }
 
-    case types.SET_BACKTEST_OPTIONS: {
-      const { options = {} } = payload
-      if (!_size(options)) {
-        return {
-          ...state,
-        }
-      }
-      return {
-        ...state,
-        backtestOptions: options,
-      }
-    }
-
     case types.BACKTEST_RESULTS: {
       return {
         ...state,
         ...payload,
+      }
+    }
+
+    case types.BACKTEST_STARTED: {
+      const { gid } = payload
+
+      return {
+        ...state,
+        gid,
+      }
+    }
+
+    case types.BACKTEST_STOPPED: {
+      return {
+        ...state,
         loading: false,
         executing: false,
         finished: true,
+        gid: null,
       }
     }
+
+    case types.DISCONNECTED:
     case types.RESET_DATA_BACKTEST: {
       return getInitialState()
     }
+
     case types.PURGE_DATA_BACKTEST: {
       return {
         candles: [],

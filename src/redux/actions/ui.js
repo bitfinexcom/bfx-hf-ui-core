@@ -1,21 +1,21 @@
 import types from '../constants/ui'
 
-export const saveRemoteVersion = version => ({
-  type: types.SAVE_REMOTE_VERSION,
+export const setUIValue = (key, value) => ({
+  type: types.SET_UI_VALUE,
   payload: {
-    version,
+    key, value,
+  },
+})
+
+export const updateUIValue = (key, value) => ({
+  type: types.UPDATE_UI_VALUE,
+  payload: {
+    key, value,
   },
 })
 
 export const saveLayout = () => ({
   type: types.SAVE_LAYOUT,
-})
-
-export const storeUnsavedLayout = (layout) => ({
-  type: types.STORE_UNSAVED_LAYOUT,
-  payload: {
-    layout,
-  },
 })
 
 export const selectLayout = (id, routePath) => ({
@@ -33,25 +33,21 @@ export const createLayout = (id) => ({
   },
 })
 
-export const deleteLayout = id => ({
+export const deleteLayout = (id) => ({
   type: types.DELETE_LAYOUT,
   payload: {
     id,
   },
 })
 
-export const setActiveMarket = market => ({
+export const setActiveMarket = (market) => ({
   type: types.SET_ACTIVE_MARKET,
   payload: {
     market,
   },
 })
 
-export const saveComponentState = ({
-  layoutID,
-  componentID,
-  state,
-}) => ({
+export const saveComponentState = ({ layoutID, componentID, state }) => ({
   type: types.SAVE_COMPONENT_STATE,
   payload: {
     state,
@@ -60,21 +56,13 @@ export const saveComponentState = ({
   },
 })
 
-export const updateComponentState = ({
-  layoutID,
-  componentID,
-  state,
-}) => ({
+export const updateComponentState = ({ layoutID, componentID, state }) => ({
   type: types.UPDATE_COMPONENT_STATE,
   payload: {
     layoutID,
     componentID,
     state,
   },
-})
-
-export const closeNotificationPanel = () => ({
-  type: types.CLOSE_NOTIFICATIONS,
 })
 
 export const removeNotification = (cid) => ({
@@ -95,44 +83,19 @@ export const clearNotifications = () => ({
   type: types.CLEAR_NOTIFICATIONS,
 })
 
-export const openNotifcationPanel = () => ({
-  type: types.OPEN_NOTIFICATIONS,
-})
-
-export const switchNotifcationPanel = () => ({
-  type: types.SWITCH_NOTIFICATIONS,
-})
-
-export const firstLogin = () => ({
-  type: types.FIRST_LOGIN,
-})
-
-export const finishGuide = (page) => ({
-  type: types.FINISH_GUIDE,
-  payload: page,
-})
-
-export const recvNotification = notification => ({
+export const recvNotification = (notification) => ({
   type: types.DATA_NOTIFICATION,
   payload: { notification },
 })
 
-export const strategySelect = () => ({
-  type: types.STRATEGY_SELECT,
+export const setCurrentStrategy = (strategy, mode = null) => ({
+  type: types.SET_CURRENT_STRATEGY,
+  payload: { strategy, mode },
 })
 
-export const updateStrategyContent = content => ({
-  type: types.UPDATE_STRATEGY_CONTENT,
-  payload: { content },
-})
-
-export const updateStrategyId = id => ({
-  type: types.UPDATE_STRATEGY_ID,
-  payload: { id },
-})
-
-export const clearStrategies = () => ({
-  type: types.CLEAR_STRATEGIES,
+export const setIsStrategyDirty = isStrategyDirty => ({
+  type: types.SET_IS_STRATEGY_DIRTY,
+  payload: { isStrategyDirty },
 })
 
 export const setTradingMode = (isPaperTrading) => ({
@@ -143,56 +106,6 @@ export const setTradingMode = (isPaperTrading) => ({
 export const setMarketFromStore = (isPaperTrading) => ({
   type: types.SET_MARKET_FROM_STORE,
   payload: { isPaperTrading },
-})
-
-export const changeTradingModeModalState = (isVisible) => ({
-  type: types.CHANGE_TRADING_MODAL_STATE,
-  payload: { isVisible },
-})
-
-export const changeOldFormatModalState = (isVisible) => ({
-  type: types.CHANGE_OLD_FORMAT_MODAL_STATE,
-  payload: { isVisible },
-})
-
-export const changeAOPauseModalState = (isVisible) => ({
-  type: types.CHANGE_AO_PAUSE_MODAL_STATE,
-  payload: { isVisible },
-})
-
-export const changeEditOrderModalState = (isVisible, order = {}) => ({
-  type: types.CHANGE_EDIT_ORDER_MODAL_STATE,
-  payload: { isVisible, order },
-})
-
-export const changeConfirmDMSModalState = (isVisible) => ({
-  type: types.CHANGE_CONFIRM_DMS_MODAL_VISIBLE,
-  payload: { isVisible },
-})
-
-export const changeBadInternetConnectionState = (isVisible) => ({
-  type: types.CHANGE_BAD_INTERNET_STATE,
-  payload: { isVisible },
-})
-
-export const changeClosePositionModalState = (isVisible, rowData = {}) => ({
-  type: types.CHANGE_CLOSE_POSITION_MODAL_STATE,
-  payload: { isVisible, rowData },
-})
-
-export const setIsOrderExecuting = (executing) => ({
-  type: types.SET_IS_ORDER_EXECUTING,
-  payload: { executing },
-})
-
-export const changeReffilBalanceModalState = isVisible => ({
-  type: types.CHANGE_REFILL_BALANCE_MODAL_STATE,
-  payload: { isVisible },
-})
-
-export const setLayoutID = layoutID => ({
-  type: types.SET_LAYOUT_ID,
-  payload: { layoutID },
 })
 
 export const addComponent = (component) => ({
@@ -210,74 +123,68 @@ export const changeLayout = (incomingLayout) => ({
   payload: { incomingLayout },
 })
 
-export const changeTickersVolumeUnit = key => ({
+export const changeTickersVolumeUnit = (key) => ({
   type: types.CHANGE_TICKERS_VOLUME_UNIT,
   payload: { key },
 })
 
-export const changeCcyInfoModalState = (isVisible) => ({
-  type: types.CHANGE_CCY_INFO_MODAL_STATE,
-  payload: { isVisible },
-})
-
-export const changeAppSettingsModalState = isVisible => ({
-  type: types.CHANGE_APP_SETTINGS_MODAL_STATE,
-  payload: { isVisible },
-})
-
-export const setStrategyTab = tab => ({
-  type: types.SET_STRATEGIES_TAB,
-  payload: { tab },
-})
-
-export const setSettingsTab = (tab) => ({
+export const setSettingsTab = (tab, section) => ({
   type: types.SET_SETTINGS_TAB,
-  payload: { tab },
+  payload: { tab, section },
 })
 
-export const setIsLoadingOrderHistData = flag => ({
-  type: types.SET_IS_LOADING_ORDER_HIST_DATA,
-  payload: flag,
+export const updateServiceStatus = (mode, serviceStatus) => ({
+  type: types.UPDATE_SERVICE_STATUS,
+  payload: {
+    mode,
+    serviceStatus,
+  },
+})
+
+export const changeMode = (isPaperTrading) => ({
+  type: types.CHANGE_MODE,
+  payload: {
+    isPaperTrading,
+  },
+})
+
+export const changeUIModalState = (key, isOpen) => ({
+  type: types.CHANGE_UI_MODAL_STATE,
+  payload: { key, isOpen },
+})
+
+export const toggleUIModalState = (key) => ({
+  type: types.TOGGLE_UI_MODAL_STATE,
+  payload: { key },
+})
+
+export const removeStrategy = (authToken, id) => ({
+  type: types.REMOVE_STRATEGY,
+  payload: { authToken, id },
 })
 
 export default {
+  setUIValue,
+  updateUIValue,
   saveLayout,
-  storeUnsavedLayout,
   createLayout,
   deleteLayout,
   setActiveMarket,
   saveComponentState,
   updateComponentState,
-  saveRemoteVersion,
-  closeNotificationPanel,
   removeNotification,
   removeNotifications,
   clearNotifications,
-  openNotifcationPanel,
-  firstLogin,
-  finishGuide,
   recvNotification,
-  strategySelect,
-  updateStrategyContent,
-  updateStrategyId,
   setTradingMode,
   setMarketFromStore,
-  changeTradingModeModalState,
-  changeReffilBalanceModalState,
-  changeBadInternetConnectionState,
-  setIsOrderExecuting,
-  clearStrategies,
-  switchNotifcationPanel,
-  setLayoutID,
   changeTickersVolumeUnit,
-  changeOldFormatModalState,
-  changeAOPauseModalState,
-  changeCcyInfoModalState,
-  setStrategyTab,
-  changeConfirmDMSModalState,
-  changeEditOrderModalState,
-  changeClosePositionModalState,
-  changeAppSettingsModalState,
   setSettingsTab,
-  setIsLoadingOrderHistData,
+  updateServiceStatus,
+  changeMode,
+  changeUIModalState,
+  toggleUIModalState,
+  removeStrategy,
+  setCurrentStrategy,
+  setIsStrategyDirty,
 }

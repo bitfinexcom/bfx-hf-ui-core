@@ -5,6 +5,8 @@ import _isEmpty from 'lodash/isEmpty'
 import { useTranslation } from 'react-i18next'
 
 import AlgoOrdersTableColumns from './AlgoOrdersTable.columns'
+import { ORDER_SHAPE } from '../../constants/prop-types-shapes'
+
 import './style.css'
 
 const AlgoOrdersTable = ({
@@ -31,8 +33,8 @@ const AlgoOrdersTable = ({
 }
 
 AlgoOrdersTable.propTypes = {
-  algoOrders: PropTypes.objectOf(PropTypes.object),
-  filteredAlgoOrders: PropTypes.objectOf(PropTypes.object),
+  algoOrders: PropTypes.objectOf(PropTypes.shape(ORDER_SHAPE)),
+  filteredAlgoOrders: PropTypes.objectOf(PropTypes.shape(ORDER_SHAPE)),
   cancelOrder: PropTypes.func.isRequired,
   gaCancelOrder: PropTypes.func.isRequired,
   authToken: PropTypes.string.isRequired,

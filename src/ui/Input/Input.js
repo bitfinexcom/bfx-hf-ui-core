@@ -19,6 +19,7 @@ const Input = ({
   max,
   percentage,
   shouldBeAutofocused,
+  indicator,
 }) => {
   const [isHidden, setIsHidden] = useState(true)
   const inputRef = useRef()
@@ -90,6 +91,11 @@ const Input = ({
         max={max}
         ref={inputRef}
       />
+      {indicator && (
+        <span className='hfui-input-indicator'>
+          {indicator}
+        </span>
+      )}
     </div>
   )
 }
@@ -110,6 +116,7 @@ Input.propTypes = {
   min: PropTypes.number,
   max: PropTypes.number,
   shouldBeAutofocused: PropTypes.bool,
+  indicator: PropTypes.string,
 }
 
 Input.defaultProps = {
@@ -125,6 +132,7 @@ Input.defaultProps = {
   autocomplete: 'off',
   percentage: false,
   shouldBeAutofocused: false,
+  indicator: null,
 }
 
 export default Input

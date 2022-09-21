@@ -1,5 +1,5 @@
 import React, {
-  memo, useRef, useMemo, useCallback, Fragment,
+  memo, useRef, useMemo, useCallback, Fragment, useEffect,
 } from 'react'
 import PropTypes from 'prop-types'
 import _isEmpty from 'lodash/isEmpty'
@@ -12,11 +12,28 @@ import AtomicOrdersTable from '../AtomicOrdersTable'
 import AlgoOrdersTable from '../AlgoOrdersTable'
 import BalancesTable from '../BalancesTable'
 import MarketSelect from '../MarketSelect'
-import TabTitle from './TabTitle'
+import { MARKET_SHAPE } from '../../constants/prop-types-shapes'
+
 import './style.css'
 
 const TradingStatePanel = ({
-  dark, onRemove, moveable, removeable, getPositionsCount, getAtomicOrdersCount, getAlgoOrdersCount, markets, savedState, updateState, layoutID, layoutI, getCurrencySymbol,
+  dark,
+  onRemove,
+  moveable,
+  removeable,
+  getPositionsCount,
+  getAtomicOrdersCount,
+  getAlgoOrdersCount,
+  markets,
+  savedState,
+  updateState,
+  layoutID,
+  layoutI,
+  getCurrencySymbol,
+  authToken,
+  currentMode,
+  getActiveAlgoOrders,
+  isInitialAlgoOrderFetch,
 }) => {
   const { currentMarket: activeFilter = {} } = savedState
   const positionsCount = getPositionsCount(activeFilter)
@@ -33,6 +50,13 @@ const TradingStatePanel = ({
   const onTabChange = useCallback((tab) => {
     saveState('tab', tab)
   }, [saveState])
+
+  useEffect(() => {
+    if (authToken) {
+      getActiveAlgoOrders(isInitialAlgoOrderFetch)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [authToken, currentMode, getActiveAlgoOrders])
 
   const setActiveFilter = (market) => {
     saveState('currentMarket', market)
@@ -101,19 +125,22 @@ const TradingStatePanel = ({
         <PositionsTable
           renderedInTradingState
           htmlKey='Positions'
-          tabtitle={<TabTitle heading={t('tradingStatePanel.positionsTab')} count={positionsCount} />}
+          tabtitle={t('tradingStatePanel.positionsTab')}
+          count={positionsCount}
           activeFilter={activeFilter}
         />
         <AtomicOrdersTable
           renderedInTradingState
           htmlKey='Atomics'
-          tabtitle={<TabTitle heading={t('tradingStatePanel.atomicsTab')} count={atomicOrdersCount} />}
+          tabtitle={t('tradingStatePanel.atomicsTab')}
+          count={atomicOrdersCount}
           activeFilter={activeFilter}
         />
         <AlgoOrdersTable
           renderedInTradingState
           htmlKey='Algos'
-          tabtitle={<TabTitle heading={t('tradingStatePanel.algosTab')} count={algoOrdersCount} />}
+          tabtitle={t('tradingStatePanel.algosTab')}
+          count={algoOrdersCount}
           activeFilter={activeFilter}
         />
         <BalancesTable
@@ -136,18 +163,19 @@ TradingStatePanel.propTypes = {
   getPositionsCount: PropTypes.func,
   getAtomicOrdersCount: PropTypes.func,
   getAlgoOrdersCount: PropTypes.func,
-  markets: PropTypes.objectOf(PropTypes.object).isRequired,
+  markets: PropTypes.objectOf(PropTypes.shape(MARKET_SHAPE)).isRequired,
   savedState: PropTypes.shape({
-    currentMarket: PropTypes.shape({
-      base: PropTypes.string,
-      quote: PropTypes.string,
-    }),
+    currentMarket: PropTypes.shape(MARKET_SHAPE),
     tab: PropTypes.number,
   }),
   updateState: PropTypes.func.isRequired,
   layoutI: PropTypes.string.isRequired,
   layoutID: PropTypes.string,
   getCurrencySymbol: PropTypes.func.isRequired,
+  authToken: PropTypes.string,
+  currentMode: PropTypes.string.isRequired,
+  isInitialAlgoOrderFetch: PropTypes.bool.isRequired,
+  getActiveAlgoOrders: PropTypes.func.isRequired,
 }
 
 TradingStatePanel.defaultProps = {
@@ -160,6 +188,7 @@ TradingStatePanel.defaultProps = {
   onRemove: () => { },
   savedState: {},
   layoutID: '',
+  authToken: '',
 }
 
 export default memo(TradingStatePanel)

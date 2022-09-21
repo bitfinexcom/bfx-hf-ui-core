@@ -15,7 +15,7 @@ AmountInput.validateValue = (v, t) => {
     return numericError
   }
 
-  if (+v < 0) {
+  if (+v <= 0) {
     return t('orderForm.greaterThan0Message')
   }
 

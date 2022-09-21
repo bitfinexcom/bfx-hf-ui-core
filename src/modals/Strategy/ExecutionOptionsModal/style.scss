@@ -1,0 +1,34 @@
+.hfui-execution-options-modal {
+  &__option {
+    .hfui-execution-options-modal-selection {
+      display: flex;
+      flex: 0 50%;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+
+      > p, > div {
+        flex: 0 50%;
+      }
+    }
+
+    &:not(:last-child) {
+      margin-bottom: 10px;
+    }
+    .title {
+      color: var(--primary-8);
+      font-weight: 700;
+      margin-bottom: 5px;
+      font-size: 15px;
+
+      .title-tooltip {
+        margin-left: 5px;
+        cursor: pointer;
+      }
+    }
+  }
+}
+
+.hfui-execution-options-modal-container {
+  max-width: 600px !important;
+}

@@ -1,7 +1,6 @@
 import _isArray from 'lodash/isArray'
 import _isObject from 'lodash/isObject'
 import _isNumber from 'lodash/isNumber'
-import _isEmpty from 'lodash/isEmpty'
 import _reduce from 'lodash/reduce'
 import _map from 'lodash/map'
 import Debug from 'debug'
@@ -18,11 +17,17 @@ import { MAIN_MODE, PAPER_MODE } from '../../reducers/ui'
 import tokenStore from '../../../util/token_store'
 import { AOAdapter } from '../../adapters/ws'
 import { isElectronApp, HONEY_AUTH_URL } from '../../config'
+import { UI_MODAL_KEYS } from '../../constants/modals'
+import { UI_KEYS } from '../../constants/ui_keys'
+import { WS_CONNECTION } from '../../constants/ws'
+import { getCurrentStrategy } from '../../selectors/ui'
 
 const debug = Debug('hfui:rx:m:ws-hfui-server:msg')
 
 export default (alias, store) => (e = {}) => {
   const { data = '' } = e
+  const state = store.getState()
+
   let payload
 
   try {
@@ -67,8 +72,10 @@ export default (alias, store) => (e = {}) => {
 
       case 'info.auth_token': {
         const [, token] = payload
-        store.dispatch(WSActions.onAuthResponse(token))
-        store.dispatch(AOActions.getActiveAlgoOrders())
+
+        // reset order history
+        store.dispatch(WSActions.resetOrderHist())
+        store.dispatch(WSActions.recvAuthToken(token))
         store.dispatch(WSActions.send(['strategy.execute_status', token]))
         break
       }
@@ -159,7 +166,7 @@ export default (alias, store) => (e = {}) => {
 
       case 'data.algo_order.submit_status':
       case 'data.order.submit_status':
-        store.dispatch(UIActions.setIsOrderExecuting(false))
+        store.dispatch(UIActions.setUIValue(UI_KEYS.isOrderExecuting, false))
         break
 
       case 'error': {
@@ -203,7 +210,10 @@ export default (alias, store) => (e = {}) => {
         const [, visible] = payload
 
         if (visible) {
-          store.dispatch(UIActions.changeAOPauseModalState(visible))
+          store.dispatch(UIActions.changeUIModalState(
+            UI_MODAL_KEYS.AO_PAUSE_MODAL,
+            visible,
+          ))
         } else {
           closeElectronApp()
         }
@@ -223,15 +233,26 @@ export default (alias, store) => (e = {}) => {
         break
       }
 
+      case 'data.api_credentials.reset': {
+        const [, mode, status] = payload
+
+        if (!status) {
+          return
+        }
+
+        store.dispatch(WSActions.recvAPICredentialsReset(mode))
+        break
+      }
+
       case 'data.settings.updated': {
         const [, settings] = payload
-        store.dispatch(WSActions.recvUpdatedSettings(settings))
+        store.dispatch(UIActions.setUIValue(UI_KEYS.settings, settings))
         break
       }
 
       case 'data.feature_flags': {
         const [, featureFlags] = payload
-        store.dispatch(WSActions.setFeatureFlags(featureFlags))
+        store.dispatch(UIActions.setUIValue(UI_KEYS.featureFlags, featureFlags))
         break
       }
 
@@ -263,13 +284,22 @@ export default (alias, store) => (e = {}) => {
           }
         }, {})
 
-        store.dispatch(WSActions.recvCoreSettings(transformed))
+        store.dispatch(UIActions.setUIValue(UI_KEYS.coreSettings, transformed))
         break
       }
 
       case 'data.client': {
-        const [, , status] = payload
-        store.dispatch(WSActions.recvClientStatusUpdate({ status }))
+        const [, , mode, status] = payload
+        store.dispatch(WSActions.recvClientStatusUpdate({ status, mode }))
+
+        if (status === WS_CONNECTION.CLOSED) {
+          store.dispatch(UIActions.setUIValue(UI_KEYS.isBadInternetConnection, true))
+        }
+
+        if (status === WS_CONNECTION.OPENED) {
+          store.dispatch(UIActions.setUIValue(UI_KEYS.isBadInternetConnection, false))
+        }
+
         break
       }
 
@@ -323,7 +353,7 @@ export default (alias, store) => (e = {}) => {
 
       case 'data.order_history': {
         const [, orderHist] = payload
-        store.dispatch(UIActions.setIsLoadingOrderHistData(false))
+        store.dispatch(UIActions.setUIValue(UI_KEYS.isLoadingOrderHistData, false))
         store.dispatch(WSActions.recvOrderHist({ orderHist }))
         break
       }
@@ -331,7 +361,7 @@ export default (alias, store) => (e = {}) => {
       case 'data.aos': {
         const [, , aos] = payload
         const adapted = _map(aos, ao => (_isArray(ao) ? AOAdapter(ao) : ao))
-        store.dispatch(WSActions.recvDataAlgoOrders({ aos: adapted }))
+        store.dispatch(WSActions.recvDataAlgoOrders(adapted))
         break
       }
 
@@ -379,22 +409,34 @@ export default (alias, store) => (e = {}) => {
         break
       }
 
-      case 'bt.end': {
-        const [, , , from, to] = payload
-        store.dispatch(WSActions.recvBacktestEnd({ from, to }))
-        break
-      }
-
       case 'bt.btresult': {
         const [, res] = payload
         store.dispatch(WSActions.recvBacktestResults(res))
         break
       }
 
+      case 'bt.started': {
+        const [, gid] = payload
+        store.dispatch(WSActions.recvBacktestStarted(gid))
+        break
+      }
+
+      case 'bt.stopped': {
+        const [, gid] = payload
+        store.dispatch(WSActions.recvBacktestStopped(gid))
+        break
+      }
+
       case 'algo.active_orders': {
-        const [, activeAlgoOrders] = payload
-        store.dispatch(AOActions.setActiveAlgoOrders(activeAlgoOrders))
-        store.dispatch(AOActions.showActiveOrdersModal(true))
+        const [, initialFetch, mode, activeAlgoOrders] = payload
+
+        if (initialFetch) {
+          store.dispatch(AOActions.setActiveAlgoOrders(activeAlgoOrders, mode))
+          store.dispatch(AOActions.showActiveOrdersModal(true))
+        } else {
+          store.dispatch(WSActions.recvDataAlgoOrders(activeAlgoOrders))
+        }
+
         break
       }
 
@@ -404,59 +446,126 @@ export default (alias, store) => (e = {}) => {
         break
       }
 
-      case 'strategy.start_live_execution_submit_status': {
-        const [, status] = payload
-
-        if (status) {
-          store.dispatch(WSActions.startLiveExecution())
-        } else {
-          store.dispatch(WSActions.stopLiveExecution())
-        }
-        store.dispatch(WSActions.setExecutionLoading(false))
-
-        break
-      }
-
-      case 'strategy.stop_live_execution_submit_status': {
-        const [, status] = payload
-
-        if (status) {
-          store.dispatch(WSActions.stopLiveExecution())
-        } else {
-          store.dispatch(WSActions.startLiveExecution())
-        }
-        store.dispatch(WSActions.setExecutionLoading(false))
-
-        break
-      }
-
       case 'strategy.live_execution_status': {
-        const [, status, options] = payload
+        store.dispatch(WSActions.setExecutionLoading(false))
+
+        break
+      }
+
+      // emitted when the strategy execution is started
+      case 'strategy.live_execution_started': {
+        const [, strategyMapKey, executionResultsObj] = payload
+        const { startedOn } = executionResultsObj
+        store.dispatch(WSActions.setStartedLiveStrategy(strategyMapKey, executionResultsObj))
+
+        const currentStrategy = getCurrentStrategy(state)
+        store.dispatch(UIActions.setCurrentStrategy({ ...currentStrategy, startedOn, executionId: strategyMapKey }, MAIN_MODE))
+
+        break
+      }
+
+      case 'strategy.start_live_execution_submit_status': {
+        const [, status, gid] = payload
 
         if (status) {
-          store.dispatch(WSActions.startLiveExecution())
+          store.dispatch(WSActions.setExecutionLoadingGid(gid))
         } else {
-          store.dispatch(WSActions.stopLiveExecution())
+          store.dispatch(WSActions.setExecutionLoading(false, gid))
         }
 
-        if (!_isEmpty(options)) {
-          store.dispatch(WSActions.setExecutionOptions(options))
-        }
+        break
+      }
 
-        store.dispatch(WSActions.setExecutionLoading(false))
+      // emitted when the strategy execution is stopped
+      case 'strategy.live_execution_stopped': {
+        const [, strategyMapKey, executionResultsObj] = payload
+        store.dispatch(WSActions.setStoppedLiveStrategy(strategyMapKey, executionResultsObj))
+
+        const currentStrategy = getCurrentStrategy(state)
+        store.dispatch(UIActions.setCurrentStrategy(
+          { ...currentStrategy, stoppedOn: new Date().getTime() },
+          MAIN_MODE,
+        ))
+
+        break
+      }
+
+      // emitted on each price update
+      case 'strategy.rt_execution_results': {
+        const [, strategyMapKey, executionResultsObj] = payload
+        store.dispatch(WSActions.setLivePriceUpdate(strategyMapKey, executionResultsObj))
+
+        break
+      }
+
+      // emitted when a position is opened
+      case 'strategy.opened_position_data': {
+        const [, strategyMapKey, openedPositionDetails] = payload
+
+        store.dispatch(WSActions.setLiveExecutionTrades(strategyMapKey, openedPositionDetails, true))
+
+        break
+      }
+
+      // emitted when a position is closed
+      case 'strategy.closed_position_data': {
+        const [, strategyMapKey, closedPositionDetails] = payload
+
+        store.dispatch(WSActions.setLiveExecutionTrades(strategyMapKey, closedPositionDetails, false))
+
+        break
+      }
+
+      case 'data.past_strategies': {
+        const [, pastStrategies] = payload
+        store.dispatch(WSActions.setPastStrategies(pastStrategies))
 
         break
       }
 
       case 'strategy.live_execution_results': {
-        const [, results] = payload
-        store.dispatch(WSActions.setExecutionResults(results))
+        const [, strategyId, results] = payload
+        store.dispatch(WSActions.setExecutionResults(strategyId, results))
+
+        break
+      }
+
+      case 'strategy.connection_lost': {
+        const [, isConnectionLost] = payload
+        store.dispatch(WSActions.setExecutionConnectionStatus(isConnectionLost))
 
         break
       }
 
       case 'refresh': {
         window.location.reload()
+        break
+      }
+
+      case 'info.services.status': {
+        const [, mode, serviceStatus] = payload
+        store.dispatch(UIActions.updateServiceStatus(mode, serviceStatus))
+        break
+      }
+
+      case 'info.username': {
+        const [,, username] = payload
+        store.dispatch(WSActions.setUsername(username))
+        break
+      }
+
+      case 'app.can_be_closed': {
+        const [, canBeClosed] = payload
+        if (canBeClosed) {
+          closeElectronApp()
+        } else {
+          store.dispatch(UIActions.recvNotification({
+            mts: Date.now(),
+            status: 'error',
+            text: i18nLib.t('closeSessionModal.error'),
+            cid: v4(),
+          }))
+        }
         break
       }
 

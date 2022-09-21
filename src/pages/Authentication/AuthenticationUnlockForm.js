@@ -6,7 +6,6 @@ import { useTranslation } from 'react-i18next'
 
 import Input from '../../ui/Input'
 import Button from '../../ui/Button'
-import Dropdown from '../../ui/Dropdown'
 import {
   getStoredPassword,
   getAutoLoginState,
@@ -20,21 +19,13 @@ const isDevEnv = devEnv()
 
 const initialAutoLoginSave = getAutoLoginState()
 
-const getModes = (t) => {
-  const MAIN_MODE_OPTION = { value: MAIN_MODE, label: t('main.production') }
-  const PAPER_MODE_OPTION = { value: PAPER_MODE, label: t('main.sandbox') }
-  return [MAIN_MODE_OPTION, PAPER_MODE_OPTION]
-}
-
 const AuthenticationUnlockForm = ({ isPaperTrading, onUnlock: _onUnlock, onReset }) => {
   const [password, setPassword] = useState('')
   const [autoLoginState, setAutoLoginState] = useState(initialAutoLoginSave)
-  const [mode, setMode] = useState(isPaperTrading ? PAPER_MODE : MAIN_MODE)
-  const submitReady = !_isEmpty(password) && !_isEmpty(mode)
+  const mode = isPaperTrading ? PAPER_MODE : MAIN_MODE
+  const submitReady = !_isEmpty(password)
 
   const { t } = useTranslation()
-
-  const OPTIONS = getModes(t)
 
   const onUnlock = useCallback(() => {
     if (!submitReady) return
@@ -67,7 +58,7 @@ const AuthenticationUnlockForm = ({ isPaperTrading, onUnlock: _onUnlock, onReset
 
   return (
     <div className='hfui-authenticationpage__content'>
-      <h2>HoneyFramework UI</h2>
+      <h2>Bitfinex Honey</h2>
 
       <form className='hfui-authenticationpage__inner-form' onSubmit={onFormSubmit}>
         <p>{t('auth.enterPsw')}</p>
@@ -79,18 +70,6 @@ const AuthenticationUnlockForm = ({ isPaperTrading, onUnlock: _onUnlock, onReset
           onChange={setPassword}
           shouldBeAutofocused
         />
-        <div className='hfui-authenticationpage__mode-select'>
-          <p>{t('auth.selectMode')}</p>
-
-          <Dropdown
-            className='hfui-authenticationpage__trading-mode'
-            placeholder={t('auth.selectMode')}
-            // eslint-disable-next-line lodash/prefer-lodash-method
-            value={OPTIONS.find(o => o.value === mode)?.value}
-            options={OPTIONS}
-            onChange={(value) => setMode(value)}
-          />
-        </div>
         {isDevEnv && (
           <div className='hfui-authenticationpage__dev-mode'>
             <Checkbox

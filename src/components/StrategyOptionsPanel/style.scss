@@ -1,0 +1,166 @@
+@import "../../variables.scss";
+
+.hfui-strategy-options {
+  display: flex;
+  justify-content: space-between;
+  height: 100%;
+
+  .item {
+    margin-right: 30px;
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+
+  .hfui-orderform__input-label {
+    white-space: nowrap;
+  }
+
+  &__results-container {
+    background-color: var(--darker-background-color);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 250px;
+    border-radius: 5px;
+    padding: 10px;
+  }
+
+  &__left-container {
+    display: flex;
+    width: 80%;
+  }
+
+  &__save-container {
+    display: flex;
+    align-items: center;
+    height: 34px;
+
+    .saving-message {
+      text-transform: uppercase;
+      font-size: 10px;
+      line-height: 12px;
+      font-weight: 700;
+      margin-right: 10px;
+      text-align: end;
+
+      .red {
+        color: #d94343;
+      }
+
+      .green {
+        color: var(--primary-7);
+      }
+
+      .grey {
+        color: var(--shade-6);
+      }
+    }
+
+    .save-btn {
+      height: 28px;
+      width: 80px;
+    }
+  }
+
+  &__buttons-container {
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-start;
+  }
+
+  &__option {
+    padding-top: 7px;
+  }
+
+  &__strategy-name {
+    @extend .hfui-strategy-options__option;
+    font-size: 20px;
+    font-weight: 700;
+    max-width: 25ch;
+    min-width: 12ch;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+
+    &.edited {
+      cursor: pointer;
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+
+  &__input {
+    margin-bottom: 0;
+  }
+
+  &__description{
+    padding-left: 11px;
+  }
+
+  &__amount-input {
+    padding: 8 16px;
+  }
+
+  &__strategy-type-input {
+    display: flex;
+    flex-direction: row;
+  }
+
+  &__dropdown-wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+
+    & > *:not(:last-child) {
+      margin-right: 10px;
+    }
+
+    .__react_component_tooltip {
+      cursor: pointer;
+    }
+  }
+
+  &__backtest-result-btn {
+    height: 34px;
+    min-width: 70px;
+    align-self: center;
+  }
+
+  &__option-btn {
+    height: 34px;
+    min-width: 70px;
+  }
+
+  &__ok-btn {
+    min-width: 36px;
+    height: 36px;
+  }
+
+  &__search-btn {
+    width: 15px;
+    height: 15px;
+  }
+
+  &__settings-btn {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+    text-transform: uppercase;
+    height: 32px;
+
+    .hfui-exchangeinfobar__button {
+      &:hover,
+      &:active {
+        color: inherit;
+      }
+    }
+
+    &:hover {
+      color: $green-color;
+      justify-content: space-between;
+    }
+  }
+}

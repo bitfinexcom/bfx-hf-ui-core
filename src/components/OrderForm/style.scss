@@ -1,30 +1,10 @@
 @import "../../variables.scss";
 
 .hfui-orderform__wrapper {
+  height: 100%;
 
   input {
     background: var(--lighter-background-color);
-  }
-
-  .hfui-dropdown__button {
-    margin-left: 0;
-    background: var(--background-color);
-    position: relative;
-    width: 165;
-    padding-left: 8px;
-
-    p {
-      width: calc(100% - 32px);
-      text-overflow: ellipsis;
-      white-space: nowrap;
-      overflow: hidden;
-    }
-
-    i {
-      position: absolute;
-      right: 10px;
-      color: var(--shade-7);
-    }
   }
 
   .hfui-dropdown__wrapper {
@@ -72,6 +52,29 @@
 }
 
 .hfui-orderform__panel {
+  .ao-submit-action {
+    justify-content: center !important;
+    margin-top: 15px;
+  }
+
+  .type-action li > div {
+    display: flex;
+    justify-content: center;
+  }
+
+  .type-actions {
+    ul, li > div {
+      display: flex;
+      justify-content: center;
+    }
+  }
+
+  .list-action-placeholder {
+    width: 0 !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+
   .hfui-panel__footer {
     width: 100%;
     background: var(--background-color);
@@ -337,6 +340,7 @@
 
   &.disabled {
     opacity: 0.5;
+    cursor: not-allowed;
   }
 
   &.invalid {
@@ -359,22 +363,6 @@
     input {
       width: 100%;
     }
-  }
-
-  .hfui-orderform__input-label {
-    color: var(--shade-4);
-    font-size: 12px;
-    font-weight: 600;
-    line-height: 16px;
-    margin-top: 2px;
-    display: flex;
-    flex-shrink: 0;
-    justify-content: space-between;
-  }
-
-  .hfui-orderform__input-error-label {
-    font-size: 13px;
-    margin-bottom: 8px;
   }
 
   &.text p:first-child {
@@ -414,6 +402,31 @@
   }
 }
 
+.hfui-orderform__input-label {
+  color: var(--shade-4);
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 16px;
+  margin-top: 2px;
+  display: flex;
+  flex-shrink: 0;
+  justify-content: space-between;
+
+  &.disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  &.error {
+    color: $red-color;
+  }
+}
+
+.hfui-orderform__input-error-label {
+  font-size: 13px;
+  margin-bottom: 8px;
+}
+
 .hfui-orderform__overlay-wrapper {
   line-height: 1.5;
   white-space: pre-line;
@@ -437,242 +450,6 @@
     .prefix {
       color: var(--shade-4);
       margin-right: 8px;
-    }
-  }
-}
-
-.hfui-orderform__modal-wrapper {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: calc(100% - 10px);
-  user-select: none;
-
-  &:hover:not(.nohover) {
-    cursor: pointer;
-  }
-
-  i + p {
-    font-weight: 500;
-  }
-
-  .submit-keys {
-    color: var(--primary-8);
-    font-weight: 700;
-
-    &:hover {
-      color: var(--primary-9);
-      text-decoration: underline;
-    }
-  }
-
-  .notice {
-    padding: 0 16px;
-    font-size: 13px;
-    color: $grey-color;
-    line-height: 1.5;
-    text-align: center;
-  }
-
-  .hfui-input {
-    margin-bottom: 8px;
-  }
-
-  .hfui-orderform__modal-form {
-    margin: 16px 0 !important;
-
-    .error {
-      font-size: 13px;
-      color: $red-color;
-      text-align: center;
-    }
-  }
-
-  .hfui-orderform__modal-form .row,
-  .hfui-orderform__modal-buttons .row {
-    display: flex;
-    flex-direction: row;
-
-    > *:first-child {
-      margin-left: 20px;
-      margin-right: 15px;
-    }
-
-    > *:last-child {
-      margin-right: 20px;
-    }
-
-    > .hfui-input:first-child {
-      width: 62%;
-    }
-
-    .hfui-input {
-      line-height: 32px;
-
-      input {
-        height: 24px;
-        font-size: 13px;
-      }
-    }
-
-    .hfui-button {
-      padding: 8px 13px;
-      text-transform: uppercase;
-      width: 50%;
-
-      button {
-        font-size: 13px;
-      }
-
-      button,
-      i {
-        color: $white-color;
-      }
-    }
-  }
-
-  .hfui-orderform__modal-buttons {
-    width: 100%;
-  }
-
-  .hfui-orderform__modal-inner {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding: 16px 0;
-
-    &.fullheight {
-      height: calc(100% - 32px);
-    }
-
-    > p {
-      text-align: center;
-    }
-
-    > i {
-      font-size: 38px;
-      height: 38px;
-      margin-bottom: 16px !important;
-    }
-
-    > * {
-      margin-bottom: 8px;
-
-      &:last-child {
-        margin-bottom: 0;
-      }
-    }
-  }
-}
-
-.hfui-orderform__wrapper-nomodal {
-  background: var(--background-color);
-  width: calc(100% - 1px);
-  height: 500px;
-  user-select: none;
-
-  &:hover:not(.nohover) {
-    cursor: pointer;
-  }
-
-  i + p {
-    font-weight: 500;
-  }
-
-  .underline {
-    text-decoration: underline;
-  }
-
-  .notice {
-    padding: 0 16px;
-    font-size: 13px;
-    color: $grey-color;
-    line-height: 1.5;
-    text-align: center;
-  }
-
-  .hfui-input {
-    margin-bottom: 8px;
-  }
-
-  .hfui-orderform__modal-form {
-    margin: 16px 0 !important;
-
-    .error {
-      font-size: 13px;
-      color: $red-color;
-      text-align: center;
-    }
-  }
-
-  .hfui-orderform__modal-form .row,
-  .hfui-orderform__modal-buttons .row {
-    display: flex;
-    flex-direction: row;
-
-    > *:first-child {
-      margin-left: 20px;
-      margin-right: 15px;
-    }
-
-    > *:last-child {
-      margin-right: 20px;
-    }
-
-    .hfui-input {
-      line-height: 32px;
-
-      input {
-        height: 24px;
-        font-size: 13px;
-      }
-    }
-
-    .hfui-button {
-      padding: 8px 13px;
-      text-transform: uppercase;
-      width: 50%;
-
-      button {
-        font-size: 13px;
-      }
-
-      button,
-      i {
-        color: $white-color;
-      }
-    }
-  }
-
-  .hfui-orderform__modal-buttons {
-    width: 100%;
-  }
-
-  .hfui-orderform__modal-inner {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding: 16px 0;
-
-    &.fullheight {
-      height: calc(100% - 32px);
-    }
-
-    > i {
-      font-size: 38px;
-      height: 38px;
-      margin-bottom: 16px !important;
-    }
-
-    > * {
-      margin-bottom: 8px;
-
-      &:last-child {
-        margin-bottom: 0;
-      }
     }
   }
 }

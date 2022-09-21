@@ -46,7 +46,7 @@ body button:focus {
   .react-datepicker-year-header {
     display: none;
   }
-  .react-datepicker__time-list-item{
+  .react-datepicker__time-list-item {
     margin-bottom: 0;
     display: block;
   }
@@ -170,6 +170,10 @@ body.Light {
   }
 }
 
+.__react-tooltip-break-line {
+  white-space: pre-line;
+}
+
 .__react_component_tooltip,
 .ufx-tooltip {
   background-color: var(--darker-background-color) !important;
@@ -281,12 +285,22 @@ a:visited {
 .empty {
   padding-top: 10px;
   text-align: center;
+  margin-top: 10px;
 }
 
 .link-button {
   color: $green-color;
   border-bottom: solid 1px $green-color;
   cursor: pointer;
+}
+
+.blur {
+  filter: blur(5px);
+  pointer-events: none;
+}
+
+.blinking-animation {
+  animation: blinking 2s linear infinite;
 }
 
 // OrderHistory & Atomic Orders table marker icon
@@ -360,4 +374,10 @@ a:visited {
 
 .ReactVirtualized__Table__Grid {
   font-feature-settings: "tnum";
+}
+
+@keyframes blinking {
+  50% {
+    opacity: 0;
+  }
 }

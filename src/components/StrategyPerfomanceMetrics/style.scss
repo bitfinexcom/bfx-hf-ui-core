@@ -1,0 +1,29 @@
+.hfui-performance-metrics {
+  &__item {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+
+    &:hover {
+      background-color: var(--lighter-background-color);
+    }
+
+    &:last-child {
+      padding-bottom: 0;
+    }
+
+    &:first-child {
+      padding-top: 0;
+    }
+  }
+
+  &__runnedFor {
+    @extend .hfui-performance-metrics__item;
+
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--shade-9);
+  }
+}

@@ -1,4 +1,3 @@
-/* eslint-disable react/forbid-prop-types */
 import React, { memo, useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import { useSelector } from 'react-redux'
@@ -13,14 +12,15 @@ import {
 } from '@ufx-ui/bfx-containers'
 import { useTranslation } from 'react-i18next'
 
-import routes from '../../constants/routes'
 import MarketSelect from '../MarketSelect'
 import OrderBook from '../OrderBook'
 import PanelSettings from '../../ui/PanelSettings'
 import Panel from '../../ui/Panel'
+import { getPairFromMarket } from '../../util/market'
+import useWidgetMarket from '../../hooks/useWidgetMarket'
+import { MARKET_SHAPE } from '../../constants/prop-types-shapes'
 
 import './style.css'
-import { getPairFromMarket } from '../../util/market'
 
 const { WSSubscribeChannel, WSUnsubscribeChannel } = reduxActions
 const { SUBSCRIPTION_CONFIG } = reduxConstants
@@ -36,8 +36,6 @@ const {
 } = reduxSelectors
 
 const OrderBookPanel = (props) => {
-  const isTradingTerminal = window.location.pathname === routes.tradingTerminal.path
-
   const {
     onRemove, showMarket, canChangeStacked, moveable,
     removeable, dark, savedState, activeMarket,
@@ -46,12 +44,12 @@ const OrderBookPanel = (props) => {
   const {
     sumAmounts = true,
     stackedView = true,
-    currentMarket = activeMarket,
+    currentMarket: savedMarket,
   } = savedState
-  const bookMarket = isTradingTerminal ? activeMarket : currentMarket
+  const currentMarket = useWidgetMarket(savedMarket, activeMarket)
   const {
     base, quote, isPerp, uiID,
-  } = bookMarket
+  } = currentMarket
   const currentPair = getPairFromMarket(activeMarket, getCurrencySymbol)
 
   const [settingsOpen, setSettingsOpen] = useState(false)
@@ -208,19 +206,18 @@ OrderBookPanel.propTypes = {
   canChangeStacked: PropTypes.bool,
   moveable: PropTypes.bool,
   removeable: PropTypes.bool,
+  // eslint-disable-next-line react/forbid-prop-types
   savedState: PropTypes.object,
   dark: PropTypes.bool,
-  activeMarket: PropTypes.shape({
-    base: PropTypes.string,
-    quote: PropTypes.string,
-    uiID: PropTypes.string,
-  }),
-  markets: PropTypes.objectOf(PropTypes.object).isRequired,
+  activeMarket: PropTypes.shape(MARKET_SHAPE),
+  markets: PropTypes.objectOf(PropTypes.shape(MARKET_SHAPE)).isRequired,
   canChangeMarket: PropTypes.bool.isRequired,
   layoutID: PropTypes.string,
   layoutI: PropTypes.string.isRequired,
   updateState: PropTypes.func.isRequired,
-  allMarketBooks: PropTypes.arrayOf(PropTypes.object),
+  allMarketBooks: PropTypes.arrayOf(PropTypes.shape({
+    currentMarket: PropTypes.shape(MARKET_SHAPE),
+  })),
   getCurrencySymbol: PropTypes.func.isRequired,
 }
 

@@ -10,11 +10,13 @@ import Panel from '../../ui/Panel'
 import useSize from '../../hooks/useSize'
 import { rowMapping } from './OrderHistory.colunms'
 import { getNextEndDate } from './OrderHistory.helpers'
+import { ORDER_SHAPE } from '../../constants/prop-types-shapes'
+
 import './style.css'
 
 const OrderHistory = ({
   onRemove, dark, orders, fetchOrderHistory, authToken, setIsLoadingOrderHistFlag,
-  isLoadingOrderHistData,
+  isLoadingOrderHistData, apiCredentials, currentMode,
 }) => {
   const [ref, { width }] = useSize()
   const { t } = useTranslation()
@@ -25,12 +27,17 @@ const OrderHistory = ({
 
   const handleLoadMoreRows = () => {
     setIsLoadingOrderHistFlag(true)
-    fetchMoreItems({ fetchMoreItems: true })
+    fetchMoreItems()
   }
 
+  const apiClientConfigured = apiCredentials?.configured && apiCredentials?.valid
+
+  // fetch on change of currentMode or apiClientConfigured
   useEffect(() => {
-    fetchOrderHistory(authToken)
-  }, [authToken, fetchOrderHistory])
+    if (apiClientConfigured) {
+      fetchOrderHistory(authToken)
+    }
+  }, [apiClientConfigured, authToken, fetchOrderHistory, currentMode])
 
   return (
     <Panel
@@ -58,13 +65,15 @@ const OrderHistory = ({
 }
 
 OrderHistory.propTypes = {
-  orders: PropTypes.arrayOf(PropTypes.object),
+  orders: PropTypes.arrayOf(PropTypes.shape(ORDER_SHAPE)),
   dark: PropTypes.bool,
   onRemove: PropTypes.func,
   fetchOrderHistory: PropTypes.func.isRequired,
   setIsLoadingOrderHistFlag: PropTypes.func.isRequired,
   authToken: PropTypes.string,
   isLoadingOrderHistData: PropTypes.bool,
+  apiCredentials: PropTypes.objectOf(PropTypes.bool),
+  currentMode: PropTypes.string.isRequired,
 }
 
 OrderHistory.defaultProps = {
@@ -73,6 +82,7 @@ OrderHistory.defaultProps = {
   orders: [],
   authToken: '',
   isLoadingOrderHistData: false,
+  apiCredentials: {},
 }
 
 export default OrderHistory

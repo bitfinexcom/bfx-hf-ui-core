@@ -15,6 +15,7 @@ import FavoriteIcon from '../../ui/Icons/FavoriteIcon'
 import { THEMES } from '../../redux/selectors/ui'
 import { getPairFromMarket } from '../../util/market'
 import './style.css'
+import { MARKET_SHAPE } from '../../constants/prop-types-shapes'
 
 const favIconColourMapping = {
   [THEMES.DARK]: {
@@ -33,7 +34,8 @@ const MarketSelect = forwardRef(function MarketSelect(props, ref) {
     savePairs,
     authToken,
     favoritePairs = [],
-    currentMode, value,
+    currentMode,
+    value,
     onChange,
     markets,
     className,
@@ -44,41 +46,57 @@ const MarketSelect = forwardRef(function MarketSelect(props, ref) {
     ...otherProps
   } = props
   const [searchTerm, setSearchTerm] = useState('')
-  const favoriteSelect = useCallback((pair, isPairSelected) => {
-    if (isPairSelected) {
-      savePairs([...favoritePairs, pair], authToken, currentMode)
-    } else {
-      const filteredPairs = _filter(favoritePairs, p => p !== pair)
-      savePairs(filteredPairs, authToken, currentMode)
-    }
-  }, [savePairs, favoritePairs, authToken, currentMode])
+  const favoriteSelect = useCallback(
+    (pair, isPairSelected) => {
+      if (isPairSelected) {
+        savePairs([...favoritePairs, pair], authToken, currentMode)
+      } else {
+        const filteredPairs = _filter(favoritePairs, (p) => p !== pair)
+        savePairs(filteredPairs, authToken, currentMode)
+      }
+    },
+    [savePairs, favoritePairs, authToken, currentMode],
+  )
 
   const sortedOptions = useMemo(() => {
-    const filtered = searchTerm ? _filter(markets,
-      (market) => {
-        const { quote, base, ccyLabels = [] } = market
-        const baseSymbol = getCurrencySymbol(base)
-        const quoteSymbol = getCurrencySymbol(quote)
-        const defaultLabels = [
-          base,
-          quote,
-          base + quote,
-          `${base}/${quote}`,
-          baseSymbol,
-          quoteSymbol,
-          baseSymbol + quoteSymbol,
-          `${baseSymbol}/${quoteSymbol}`,
-        ]
-        const matches = _toLower(_join([...ccyLabels, ...defaultLabels]))
-        return _includes(matches, _toLower(searchTerm))
-      }, []) : markets
+    const filtered = searchTerm
+      ? _filter(
+        markets,
+        (market) => {
+          const { quote, base, ccyLabels = [] } = market
+          const baseSymbol = getCurrencySymbol(base)
+          const quoteSymbol = getCurrencySymbol(quote)
+          const defaultLabels = [
+            base,
+            quote,
+            base + quote,
+            `${base}/${quote}`,
+            baseSymbol,
+            quoteSymbol,
+            baseSymbol + quoteSymbol,
+            `${baseSymbol}/${quoteSymbol}`,
+          ]
+          const matches = _toLower(_join([...ccyLabels, ...defaultLabels]))
+          return _includes(matches, _toLower(searchTerm))
+        },
+        [],
+      )
+      : markets
 
-    const options = _map(filtered, (m => ({
-      label: m.isPerp ? m.uiID : getPairFromMarket(m, getCurrencySymbol) || `${m.base}/${m.quote}`,
-      value: m.uiID,
-    })), [])
+    const options = _map(
+      filtered,
+      (m) => ({
+        label: m.isPerp
+          ? m.uiID
+          : getPairFromMarket(m, getCurrencySymbol) || `${m.base}/${m.quote}`,
+        value: m.uiID,
+      }),
+      [],
+    )
 
-    return options.sort((a, b) => _includes(favoritePairs, b.value) - _includes(favoritePairs, a.value))
+    return options.sort(
+      (a, b) => _includes(favoritePairs, b.value) - _includes(favoritePairs, a.value),
+    )
   }, [searchTerm, markets, getCurrencySymbol, favoritePairs])
 
   return (
@@ -88,56 +106,68 @@ const MarketSelect = forwardRef(function MarketSelect(props, ref) {
       searchable
       className={ClassNames('hfui-marketselect', className)}
       onChange={(val) => {
-        onChange(_find(markets, m => m?.uiID === val))
+        onChange(_find(markets, (m) => m?.uiID === val))
       }}
-      value={value.uiID}
+      value={value?.uiID}
       options={sortedOptions}
       onSearchTermChange={setSearchTerm}
-      optionRenderer={renderWithFavorites ? (optionValue, optionLabel) => {
-        const isSelected = _includes(favoritePairs, optionValue)
-        return (
-          <div className='hfui-marketselect__option'>
-            <div className='hfui-marketselect__text'>{optionLabel}</div>
-            <div
-              className='hfui-marketselect__icon'
-              onClick={(event) => {
-                event.preventDefault()
-                event.stopPropagation()
-                favoriteSelect(optionValue, !isSelected)
-              }}
-            >
-              <FavoriteIcon
-                value={optionValue}
-                nonFilled={!isSelected}
-                isSelected={isSelected}
-                selectedColor={favIconColourMapping[settingsTheme].favIconSelected}
-                strokeColor={favIconColourMapping[settingsTheme].strokeColor}
-              />
-            </div>
-          </div>
-        )
-      } : undefined}
+      optionRenderer={
+        renderWithFavorites
+          ? (optionValue, optionLabel) => {
+            const isSelected = _includes(favoritePairs, optionValue)
+            return (
+              <div className='hfui-marketselect__option'>
+                <div className='hfui-marketselect__text'>{optionLabel}</div>
+                <div
+                  className='hfui-marketselect__icon'
+                  onClick={(event) => {
+                    event.preventDefault()
+                    event.stopPropagation()
+                    favoriteSelect(optionValue, !isSelected)
+                  }}
+                >
+                  <FavoriteIcon
+                    value={optionValue}
+                    nonFilled={!isSelected}
+                    isSelected={isSelected}
+                    selectedColor={
+                        favIconColourMapping[settingsTheme].favIconSelected
+                      }
+                    strokeColor={
+                        favIconColourMapping[settingsTheme].strokeColor
+                      }
+                  />
+                </div>
+              </div>
+            )
+          }
+          : undefined
+      }
       {...otherProps}
     />
   )
 })
 
 MarketSelect.propTypes = {
-  value: PropTypes.instanceOf(Object).isRequired,
+  value: PropTypes.instanceOf(Object),
   onChange: PropTypes.func.isRequired,
-  markets: PropTypes.objectOf(PropTypes.object).isRequired,
+  markets: PropTypes.oneOfType([
+    PropTypes.objectOf(PropTypes.shape(MARKET_SHAPE)),
+    PropTypes.arrayOf(PropTypes.shape(MARKET_SHAPE)),
+  ]).isRequired,
   renderLabel: PropTypes.bool,
   className: PropTypes.instanceOf(Object),
   currentMode: PropTypes.string,
   savePairs: PropTypes.func.isRequired,
   authToken: PropTypes.string.isRequired,
-  favoritePairs: PropTypes.instanceOf(Array),
+  favoritePairs: PropTypes.arrayOf(PropTypes.string),
   renderWithFavorites: PropTypes.bool,
   getCurrencySymbol: PropTypes.func.isRequired,
   settingsTheme: PropTypes.oneOf([THEMES.LIGHT, THEMES.DARK]),
 }
 
 MarketSelect.defaultProps = {
+  value: null,
   className: {},
   favoritePairs: [],
   currentMode: '',

@@ -12,6 +12,7 @@ import _values from 'lodash/values'
 import _some from 'lodash/some'
 import _isUndefined from 'lodash/isUndefined'
 import _findIndex from 'lodash/findIndex'
+import _includes from 'lodash/includes'
 import { nonce } from 'bfx-api-node-util'
 import { VOLUME_UNIT, VOLUME_UNIT_PAPER } from '@ufx-ui/bfx-containers'
 
@@ -34,6 +35,7 @@ import { isElectronApp } from '../../config'
 
 import { storeLastUsedLayoutID } from '../../../util/layout'
 import { DEFAULT_TAB } from '../../../modals/AppSettingsModal/AppSettingsModal.constants'
+import { UI_MODAL_KEYS } from '../../constants/modals'
 
 const debug = Debug('hfui:rx:r:ui')
 const LAYOUTS_KEY = 'HF_UI_LAYOUTS'
@@ -44,6 +46,8 @@ export const IS_PAPER_TRADING = 'IS_PAPER_TRADING'
 export const PAPER_MODE = 'paper'
 export const MAIN_MODE = 'main'
 let shownOldFormatModal = false
+
+export const ALLOWED_PAPER_PAIRS = ['tTESTBTC:TESTUSD']
 
 const DEFAULT_MARKET = {
   contexts: ['e', 'm'],
@@ -64,31 +68,29 @@ function getInitialState() {
     notificationsVisible: false,
     previousMarket: null,
     remoteVersion: null,
-    firstLogin: false,
     isPaperTrading: false,
-    TRADING_PAGE_IS_GUIDE_ACTIVE: true,
-    modals: {
-      isRefillBalanceModalVisible: false,
-      isOldFormatModalVisible: false,
-      isAOPauseModalVisible: false,
-      isCcyInfoModalVisible: false,
-      isConfirmDMSModalVisible: false,
-      isEditOrderModalVisible: false,
-      isTradingModeModalVisible: false,
-      isClosePositionModalVisible: false,
-      isAppSettingsModalVisible: false,
-    },
+    modals: {},
     orderToEdit: {},
     isBadInternetConnection: false,
+    isNoConnectionModalVisible: false,
     closePositionModalData: {},
     isOrderExecuting: false,
-    content: {},
+    strategyEditor: {
+      strategyMainMode: {},
+      strategySandboxMode: {},
+      isStrategyDirty: false,
+    },
     unsavedLayout: null,
     layoutID: null,
-    strategiesActiveTab: null,
     settingsActiveTab: DEFAULT_TAB,
     tickersVolumeUnit: null,
+    isApplicationHidden: false,
+    isFullscreenBarShown: false,
   }
+
+  _map(_values(UI_MODAL_KEYS), (modalKey) => {
+    defaultState.modals[`is${modalKey}Open`] = false
+  })
 
   if (!localStorage) {
     return defaultState
@@ -175,6 +177,27 @@ function reducer(state = getInitialState(), action = {}) {
   const { type, payload = {} } = action
 
   switch (type) {
+    case types.SET_UI_VALUE: {
+      const { key, value } = payload
+
+      return {
+        ...state,
+        [key]: value,
+      }
+    }
+
+    case types.UPDATE_UI_VALUE: {
+      const { key, value } = payload
+
+      return {
+        ...state,
+        [key]: {
+          ...(state?.[key] || {}),
+          ...value,
+        },
+      }
+    }
+
     case types.SAVE_REMOTE_VERSION: {
       const { version } = payload
 
@@ -197,50 +220,6 @@ function reducer(state = getInitialState(), action = {}) {
             savedAt: Date.now(),
           },
         },
-      }
-    }
-
-    case types.STORE_UNSAVED_LAYOUT: {
-      const { layout } = payload
-
-      return {
-        ...state,
-        unsavedLayout: layout,
-      }
-    }
-
-    case types.UPDATE_SETTINGS: {
-      return {
-        ...state,
-        settings: payload,
-      }
-    }
-
-    case types.RECEIVE_CORE_SETTINGS: {
-      return {
-        ...state,
-        coreSettings: payload,
-      }
-    }
-
-    case types.OPEN_NOTIFICATIONS: {
-      return {
-        ...state,
-        notificationsVisible: true,
-      }
-    }
-
-    case types.CLOSE_NOTIFICATIONS: {
-      return {
-        ...state,
-        notificationsVisible: false,
-      }
-    }
-
-    case types.SWITCH_NOTIFICATIONS: {
-      return {
-        ...state,
-        notificationsVisible: !state.notificationsVisible,
       }
     }
 
@@ -332,11 +311,13 @@ function reducer(state = getInitialState(), action = {}) {
         activeMarket: market,
       }
     }
+
     case types.SET_MARKET_FROM_STORE: {
       const { isPaperTrading } = payload
       const mode = isPaperTrading ? PAPER_MODE : MAIN_MODE
       const activeMarketJSON = localStorage.getItem(isPaperTrading ? ACTIVE_MARKET_PAPER_KEY : ACTIVE_MARKET_KEY)
-      const activeMarket = JSON.parse(activeMarketJSON) || DEFAULT_ACTIVE_MARKET_STATE[mode].activeMarket
+      const savedMarket = JSON.parse(activeMarketJSON)
+      const activeMarket = (!isPaperTrading || _includes(ALLOWED_PAPER_PAIRS, savedMarket?.wsID)) && !!savedMarket ? savedMarket : DEFAULT_ACTIVE_MARKET_STATE[mode].activeMarket
 
       return {
         ...state,
@@ -346,46 +327,44 @@ function reducer(state = getInitialState(), action = {}) {
       }
     }
 
-    case types.FIRST_LOGIN: {
-      return {
-        ...state,
-        firstLogin: true,
+    case types.SET_CURRENT_STRATEGY: {
+      const { strategy, mode } = payload
+      const { isPaperTrading } = state
+
+      let key = null
+      if (!mode) {
+        key = isPaperTrading ? 'strategySandboxMode' : 'strategyMainMode'
+      } else {
+        key = mode === PAPER_MODE ? 'strategySandboxMode' : 'strategyMainMode'
       }
-    }
-    case types.FINISH_GUIDE: {
-      const page = payload
-      return {
-        ...state,
-        [`${page}_GUIDE_ACTIVE`]: false,
-      }
-    }
-    case types.UPDATE_STRATEGY_CONTENT: {
-      const { content = {} } = payload
 
       return {
         ...state,
-        content: {
-          id: state.content.id,
-          ...content,
+        strategyEditor: {
+          ...state.strategyEditor,
+          [key]: strategy,
         },
       }
     }
-    case types.UPDATE_STRATEGY_ID: {
-      const { id } = payload
+
+    case types.SET_IS_STRATEGY_DIRTY: {
+      const { isStrategyDirty } = payload
+      const { isPaperTrading } = state
+
+      // Strategy can be dirty only in sandbox (paper) mode
+      if (!isPaperTrading) {
+        return state
+      }
+
       return {
         ...state,
-        content: {
-          ...state.content,
-          id,
+        strategyEditor: {
+          ...state.strategyEditor,
+          isStrategyDirty,
         },
       }
     }
-    case types.CLEAR_STRATEGIES: {
-      return {
-        ...state,
-        content: {},
-      }
-    }
+
     case types.SET_TRADING_MODE: {
       const { isPaperTrading } = payload
       const mode = isPaperTrading ? PAPER_MODE : MAIN_MODE
@@ -401,115 +380,7 @@ function reducer(state = getInitialState(), action = {}) {
         tickersVolumeUnit: isPaperTrading ? VOLUME_UNIT_PAPER.TESTUSD : VOLUME_UNIT.USD,
       }
     }
-    case types.CHANGE_TRADING_MODAL_STATE: {
-      const { isVisible } = payload
-      return {
-        ...state,
-        modals: {
-          ...state.modals,
-          isTradingModeModalVisible: isVisible,
-        },
-      }
-    }
-    case types.CHANGE_BAD_INTERNET_STATE: {
-      const { isVisible } = payload
-      return {
-        ...state,
-        isBadInternetConnection: isVisible,
-      }
-    }
-    case types.CHANGE_CLOSE_POSITION_MODAL_STATE: {
-      const { isVisible, rowData } = payload
 
-      return {
-        ...state,
-        closePositionModalData: rowData,
-        modals: {
-          ...state.modals,
-          isClosePositionModalVisible: isVisible,
-        },
-      }
-    }
-    case types.SET_IS_ORDER_EXECUTING: {
-      const { executing } = payload
-      return {
-        ...state,
-        isOrderExecuting: executing,
-      }
-    }
-    case types.SET_IS_LOADING_ORDER_HIST_DATA: {
-      return {
-        ...state,
-        isLoadingOrderHistData: payload,
-      }
-    }
-    case types.CHANGE_REFILL_BALANCE_MODAL_STATE: {
-      const { isVisible } = payload
-
-      return {
-        ...state,
-        modals: {
-          ...state.modals,
-          isRefillBalanceModalVisible: isVisible,
-        },
-      }
-    }
-    case types.CHANGE_OLD_FORMAT_MODAL_STATE: {
-      const { isVisible } = payload
-
-      return {
-        ...state,
-        modals: {
-          ...state.modals,
-          isOldFormatModalVisible: isVisible,
-        },
-      }
-    }
-    case types.CHANGE_CONFIRM_DMS_MODAL_VISIBLE: {
-      const { isVisible } = payload
-
-      return {
-        ...state,
-        modals: {
-          ...state.modals,
-          isConfirmDMSModalVisible: isVisible,
-        },
-      }
-    }
-    case types.CHANGE_EDIT_ORDER_MODAL_STATE: {
-      const { isVisible, order } = payload
-
-      return {
-        ...state,
-        orderToEdit: order,
-        modals: {
-          ...state.modals,
-          isEditOrderModalVisible: isVisible,
-        },
-      }
-    }
-    case types.CHANGE_AO_PAUSE_MODAL_STATE: {
-      const { isVisible } = payload
-
-      return {
-        ...state,
-        modals: {
-          ...state.modals,
-          isAOPauseModalVisible: isVisible,
-        },
-      }
-    }
-    case types.CHANGE_APP_SETTINGS_MODAL_STATE: {
-      const { isVisible } = payload
-
-      return {
-        ...state,
-        modals: {
-          ...state.modals,
-          isAppSettingsModalVisible: isVisible,
-        },
-      }
-    }
     case types.ADD_COMPONENT: {
       const { component } = payload
       const layoutDef = getActiveLayoutDef(state)
@@ -546,6 +417,7 @@ function reducer(state = getInitialState(), action = {}) {
         },
       }
     }
+
     case types.REMOVE_COMPONENT: {
       const { i } = payload
       const newLayoutDef = _cloneDeep(getActiveLayoutDef(state))
@@ -561,6 +433,7 @@ function reducer(state = getInitialState(), action = {}) {
         unsavedLayout: newLayoutDef,
       }
     }
+
     case types.CHANGE_LAYOUT: {
       const { incomingLayout } = payload
       const layoutDef = getActiveLayoutDef(state)
@@ -589,14 +462,7 @@ function reducer(state = getInitialState(), action = {}) {
         unsavedLayout: updated,
       }
     }
-    case types.SET_LAYOUT_ID: {
-      const { layoutID } = payload
 
-      return {
-        ...state,
-        layoutID,
-      }
-    }
     case types.SELECT_LAYOUT: {
       const { id, routePath } = payload
 
@@ -609,6 +475,7 @@ function reducer(state = getInitialState(), action = {}) {
         layoutID: id,
       }
     }
+
     case types.CHANGE_TICKERS_VOLUME_UNIT: {
       const { key } = payload
       const { isPaperTrading } = state
@@ -616,38 +483,51 @@ function reducer(state = getInitialState(), action = {}) {
 
       return { ...state, tickersVolumeUnit: unit || 'SELF' }
     }
-    case types.CHANGE_CCY_INFO_MODAL_STATE: {
-      const { isVisible } = payload
+
+    case types.CHANGE_UI_MODAL_STATE: {
+      const { key, isOpen } = payload
 
       return {
         ...state,
         modals: {
           ...state.modals,
-          isCcyInfoModalVisible: isVisible,
+          [`is${key}Open`]: isOpen,
         },
       }
     }
-    case types.SET_STRATEGIES_TAB: {
-      const { tab } = payload
+
+    case types.TOGGLE_UI_MODAL_STATE: {
+      const { key } = payload
+      const modalKey = `is${key}Open`
+      const currModalState = state.modals?.[modalKey]
 
       return {
         ...state,
-        strategiesActiveTab: tab,
+        modals: {
+          ...state.modals,
+          [modalKey]: !currModalState,
+        },
       }
     }
+
     case types.SET_SETTINGS_TAB: {
-      const { tab } = payload
+      const { tab, section } = payload
 
       return {
         ...state,
         settingsActiveTab: tab,
+        settingsActiveSection: section,
       }
     }
 
-    case types.SET_FEATURE_FLAGS: {
+    case types.UPDATE_SERVICE_STATUS: {
+      const { mode, serviceStatus } = payload
       return {
         ...state,
-        featureFlags: payload,
+        serviceStatus: {
+          ...state.serviceStatus,
+          [mode]: serviceStatus,
+        },
       }
     }
 
@@ -676,6 +556,7 @@ function reducerWithStorage(state = getInitialState(), action = {}) {
         localStorage.setItem(LAYOUTS_STATE_KEY, JSON.stringify(layoutComponentState))
         break
       }
+
       case types.UPDATE_COMPONENT_STATE: {
         const { layoutComponentState } = newState
         localStorage.setItem(LAYOUTS_STATE_KEY, JSON.stringify(layoutComponentState))

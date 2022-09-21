@@ -40,27 +40,12 @@ export default {
     payload: { markets },
   }),
 
-  recvUpdatedSettings: settings => ({
-    type: ui.UPDATE_SETTINGS,
-    payload: settings,
-  }),
-
-  setFeatureFlags: flags => ({
-    type: ui.SET_FEATURE_FLAGS,
-    payload: flags,
-  }),
-
   saveSettings: (key, value) => ({
     type: ui.SAVE_SETTINGS,
     payload: {
       key,
       value,
     },
-  }),
-
-  recvCoreSettings: settings => ({
-    type: ui.RECEIVE_CORE_SETTINGS,
-    payload: settings,
   }),
 
   bufferDataFromExchange: (
@@ -112,9 +97,14 @@ export default {
     payload: { state },
   }),
 
-  recvClientStatusUpdate: ({ status }) => ({
+  recvAPICredentialsReset: (mode) => ({
+    type: t.UPDATE_API_CREDENTIALS_CONFIGURED,
+    payload: { mode },
+  }),
+
+  recvClientStatusUpdate: ({ status, mode }) => ({
     type: t.DATA_CLIENT_STATUS_UPDATE,
-    payload: { status },
+    payload: { status, mode },
   }),
 
   recvPositions: ({ positions }) => ({
@@ -182,6 +172,10 @@ export default {
     payload: { orderHist },
   }),
 
+  resetOrderHist: () => ({
+    type: t.RESET_ORDER_HIST,
+  }),
+
   recvDataAlgoOrder: ({ ao }) => ({
     type: t.DATA_ALGO_ORDER,
     payload: { ao },
@@ -192,7 +186,7 @@ export default {
     payload: { gid },
   }),
 
-  recvDataAlgoOrders: ({ aos }) => ({
+  recvDataAlgoOrders: (aos) => ({
     type: t.DATA_ALGO_ORDERS,
     payload: { aos },
   }),
@@ -221,14 +215,19 @@ export default {
     payload: opts,
   }),
 
-  recvBacktestEnd: opts => ({
-    type: t.BACKTEST_END,
-    payload: opts,
-  }),
-
   recvBacktestResults: opts => ({
     type: t.BACKTEST_RESULTS,
     payload: opts,
+  }),
+
+  recvBacktestStarted: gid => ({
+    type: t.BACKTEST_STARTED,
+    payload: { gid },
+  }),
+
+  recvBacktestStopped: gid => ({
+    type: t.BACKTEST_STOPPED,
+    payload: gid,
   }),
 
   recvBacktestCandle: candle => ({
@@ -263,36 +262,65 @@ export default {
     payload: { channel },
   }),
 
-  setBacktestOptions: options => ({
-    type: t.SET_BACKTEST_OPTIONS,
-    payload: { options },
+  setLivePriceUpdate: (strategyMapKey, executionResultsObj) => ({
+    type: t.SET_PRICE_UPDATE,
+    payload: {
+      strategyMapKey, executionResultsObj,
+    },
   }),
 
-  setExecutionOptions: options => ({
-    type: t.SET_EXECUTION_OPTIONS,
-    payload: { options },
+  setLiveExecutionTrades: (strategyMapKey, positionData, isOpened) => ({
+    type: t.SET_LIVE_EXECUTION_TRADES,
+    payload: {
+      strategyMapKey, positionData, isOpened,
+    },
+  }),
+
+  setPastStrategies: (pastStrategies) => ({
+    type: t.SET_PAST_STRATEGIES,
+    payload: {
+      pastStrategies,
+    },
+  }),
+
+  setStartedLiveStrategy: (strategyMapKey, executionResultsObj) => ({
+    type: t.SET_STARTED_LIVE_STRATEGY,
+    payload: {
+      strategyMapKey, executionResultsObj,
+    },
+  }),
+
+  setStoppedLiveStrategy: (strategyMapKey, executionResultsObj) => ({
+    type: t.SET_STOPPED_LIVE_STRATEGY,
+    payload: {
+      strategyMapKey, executionResultsObj,
+    },
+  }),
+
+  setExecutionConnectionStatus: (isConnectionLost) => ({
+    type: t.EXECUTION_CONNECTION_LOST,
+    payload: {
+      isConnectionLost,
+    },
   }),
 
   resetExecutionData: () => ({
     type: t.RESET_DATA_EXECUTION,
   }),
 
-  startLiveExecution: () => ({
-    type: t.EXECUTION_START,
-  }),
-
-  stopLiveExecution: () => ({
-    type: t.EXECUTION_STOP,
-  }),
-
-  setExecutionLoading: (loading) => ({
+  setExecutionLoading: (loading, loadingGid) => ({
     type: t.EXECUTION_LOADING,
-    payload: { loading },
+    payload: { loading, loadingGid },
   }),
 
-  setExecutionResults: (results) => ({
+  setExecutionLoadingGid: (loadingGid) => ({
+    type: t.EXECUTION_LOADING_GID,
+    payload: { loadingGid },
+  }),
+
+  setExecutionResults: (strategyId, results) => ({
     type: t.SET_EXECUTION_RESULTS,
-    payload: { results },
+    payload: { strategyId, results },
   }),
 
   purgeBacktestData: () => ({
@@ -305,6 +333,11 @@ export default {
     type: t.UPDATING_API_KEY,
     payload: { mode, isUpdating },
   }),
+  setUsername: (username) => ({
+    type: t.SET_USERNAME,
+    payload: { username },
+  }),
+
   initAuth: password => send(['auth.init', password, 'main', getScope()]),
   auth: (password, mode) => send(['auth.submit', password, mode, getScope()]),
   resetAuth: () => send(['auth.reset']),
@@ -337,4 +370,13 @@ export default {
       },
     },
   ]),
+
+  changeMode: (isPaperTrading) => {
+    const mode = isPaperTrading ? 'paper' : 'main'
+    return send([
+      'auth.change_mode',
+      mode,
+      getScope(),
+    ])
+  },
 }

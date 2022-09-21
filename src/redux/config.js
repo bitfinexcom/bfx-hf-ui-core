@@ -19,6 +19,8 @@ const UFX_REDUCER_PATHS = {
 
 const isElectronApp = process.env.REACT_APP_IS_ELECTRON_APP === 'true'
 
+const isDevEnv = process.env.REACT_APP_DEV === 'true'
+
 const env = isElectronApp ? 'electron' : process.env.REACT_APP_ENVIRONMENT
 
 const PUB_REST_API_URL = isElectronApp ? 'http://localhost:45001' : process.env.REACT_APP_UFX_PUBLIC_API_URL
@@ -36,9 +38,12 @@ const LICENCE_URL = 'https://github.com/bitfinexcom/bfx-hf-ui/blob/master/LICENS
 // product description link
 const HF_DESC_URL = 'https://support.bitfinex.com/hc/en-us/articles/900000096823-Honey-Framework'
 
-const CHART_URL = isElectronApp ? 'https://bitfinexcom.github.io/bfx-hf-tradingview' : process.env.REACT_APP_CHART_URL
+const CHART_URL = isElectronApp ? 'https://bitfinexcom.github.io/bfx-hf-tradingview/' : process.env.REACT_APP_CHART_URL
 
 const HONEY_AUTH_URL = `${process.env.REACT_APP_UFX_API_URL}/honey`
+
+const PASSWORD_MIN_LENGTH = 8
+const PASSWORD_MAX_LENGTH = 64
 
 export {
   REDUCER_PATHS,
@@ -54,4 +59,7 @@ export {
   SOURCE_CODE_URL,
   LICENCE_URL,
   HF_DESC_URL,
+  isDevEnv,
+  PASSWORD_MIN_LENGTH,
+  PASSWORD_MAX_LENGTH,
 }

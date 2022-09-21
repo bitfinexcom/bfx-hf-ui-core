@@ -1,12 +1,13 @@
 import React, { memo } from 'react'
 
 import { useDispatch } from 'react-redux'
-import { changeAppSettingsModalState } from '../../redux/actions/ui'
+import { changeUIModalState } from '../../redux/actions/ui'
+import { UI_MODAL_KEYS } from '../../redux/constants/modals'
 import NavbarButton from './Navbar.Button'
 
 const AppSettings = () => {
   const dispatch = useDispatch()
-  const onOpenAppSettingsModal = () => dispatch(changeAppSettingsModalState(true))
+  const onOpenAppSettingsModal = () => dispatch(changeUIModalState(UI_MODAL_KEYS.APP_SETTINGS_MODAL, true))
 
   return (
     <div className='hfui-navbar__app-settings'>

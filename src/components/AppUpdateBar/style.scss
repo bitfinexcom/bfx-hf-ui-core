@@ -1,0 +1,55 @@
+body.Light {
+  .hfui-app-update__notification {
+    background-color: var(--background-color);
+  }
+}
+
+.hfui-app-update__notification__transition {
+  &-enter {
+    opacity: 0;
+    transform: translate(600px);
+  }
+  &-enter-active {
+    opacity: 1;
+    transform: translate(0);
+    transition: all 600ms;
+  }
+  &-enter-done {
+    transform: translate(0);
+  }
+  &-exit {
+    opacity: 1;
+    transform: translate(0);
+  }
+  &-exit-active {
+    opacity: 0;
+    transform: translate(600px);
+    transition: all 600ms;
+  }
+}
+
+.hfui-app-update__notification {
+  position: fixed;
+  z-index: 99999;
+  top: 30px;
+  right: 20px;
+  width: 350px;
+  padding: 20px;
+  border-radius: 5px;
+  background-color: var(--shade-1);
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+
+  .btn-group {
+    margin-top: 10px;
+    display: flex;
+    justify-content: space-evenly;
+  }
+
+  .message {
+    font-weight: 500;
+  }
+
+  button {
+    padding: 5px 10px;
+  }
+}

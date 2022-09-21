@@ -1,0 +1,3 @@
+import CreateNewStrategyFromModalOpen from './CreateNewStrategyFromModal'
+
+export default CreateNewStrategyFromModalOpen

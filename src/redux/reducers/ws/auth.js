@@ -32,12 +32,39 @@ export default function (state = getInitialState(), action = {}) {
         apiKeys: { ...apiKeysState },
       }
     }
+
+    case t.UPDATE_API_CREDENTIALS_CONFIGURED: {
+      const { mode } = payload
+
+      return {
+        ...state,
+        apiKeys: {
+          ...(state.apiKeys || {}),
+          [mode]: {
+            configured: false,
+            valid: false,
+          },
+        },
+        isMainModeApiKeyUpdating: false,
+        isPaperModeApiKeyUpdating: false,
+      }
+    }
+
     case t.UPDATING_API_KEY: {
       const { mode, isUpdating } = payload
       return {
         ...state,
         isMainModeApiKeyUpdating: mode === MAIN_MODE && isUpdating,
         isPaperModeApiKeyUpdating: mode === PAPER_MODE && isUpdating,
+      }
+    }
+
+    case t.SET_USERNAME: {
+      const { username } = payload
+
+      return {
+        ...state,
+        username,
       }
     }
 

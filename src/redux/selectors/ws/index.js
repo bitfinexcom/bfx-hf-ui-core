@@ -6,6 +6,9 @@ import getAuthToken from './get_auth_token'
 import getIsBitfinexConnected from './get_is_bitfinex_connected'
 import getAuthConfigured from './get_auth_configured'
 import getSortedByTimeStrategies from './get_sorted_by_time_strategies'
+import getSortedByTimeActiveStrategies from './get_sorted_by_time_active_strategies'
+import sortedByTimePastStrategies from './get_sorted_by_time_past_strategies'
+import getLiveExecutionResults from './get_live_execution_results'
 import getAllPositions from './get_all_positions'
 import getFilteredPositions from './get_filtered_positions'
 import getFilteredPositionsCount from './get_filtered_positions_count'
@@ -25,14 +28,27 @@ import getBacktestData from './get_backtest_data'
 import getBacktestResults from './get_backtest_results'
 
 import {
-  getAPIClientState, apiClientConnected, apiClientConnecting, apiClientDisconnected,
+  apiClientConnected,
+  apiClientConnecting,
+  apiClientDisconnected,
 } from './api_client_state'
 
 import getPaperAPIKeyState from './get_paper_api_key_state'
 import getMainAPIKeyState from './get_main_api_key_state'
-import getCurrentModeAPIKeyState from './get_current_mode_api_key_state'
+import getCurrentModeAPIKeyState, {
+  getAPIKeyStates,
+} from './get_current_mode_api_key_state'
 import getIsMainModeApiKeyUpdating from './get_is_main_mode_api_key_updating'
 import getIsPaperModeApiKeyUpdating from './get_is_paper_mode_api_key_updating'
+
+import getSavedStrategies from './get_saved_strategies'
+import getIsExecutionLoading from './get_is_execution_loading'
+import getExecutionConnectionState from './get_execution_connection_state'
+import getActiveStrategies from './get_active_strategies'
+import getCurrentStrategyExecutionState from './get_current_strategy_execution_state'
+import getCurrentStrategyPositions from './get_current_strategy_positions'
+import getDraftStrategies from './get_draft_strategies'
+import getUsername from './get_username'
 
 export {
   getSockets,
@@ -44,13 +60,16 @@ export {
   getAuthConfigured,
   getOrderHistory,
 
+  sortedByTimePastStrategies,
+  getLiveExecutionResults,
+  getSortedByTimeActiveStrategies,
   getSortedByTimeStrategies,
+  getDraftStrategies,
 
   getBacktestState,
   getBacktestData,
   getBacktestResults,
 
-  getAPIClientState,
   apiClientConnected,
   apiClientConnecting,
   apiClientDisconnected,
@@ -73,7 +92,16 @@ export {
 
   getPaperAPIKeyState,
   getMainAPIKeyState,
+  getAPIKeyStates,
   getCurrentModeAPIKeyState,
   getIsMainModeApiKeyUpdating,
   getIsPaperModeApiKeyUpdating,
+  getUsername,
+
+  getSavedStrategies,
+  getIsExecutionLoading,
+  getExecutionConnectionState,
+  getActiveStrategies,
+  getCurrentStrategyExecutionState,
+  getCurrentStrategyPositions,
 }

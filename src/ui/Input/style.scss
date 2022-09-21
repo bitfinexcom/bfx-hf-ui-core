@@ -1,4 +1,4 @@
-@import '../../variables.scss';
+@import "../../variables.scss";
 
 .hfui-input {
   p {
@@ -17,6 +17,7 @@
     line-height: 12px;
     outline: none;
     border-radius: $border-radius;
+    cursor: inherit;
   }
 }
 
@@ -33,4 +34,16 @@
   span {
     font-size: 13px;
   }
+}
+
+.hfui-input-indicator {
+  float: right;
+  margin-top: -26px;
+  margin-right: 10px;
+  position: relative;
+  color: var(--text-color);
+  opacity: 70%;
+  z-index: 2;
+  outline: none;
+  font-size: 14px;
 }

@@ -2,14 +2,15 @@ import React from 'react'
 import { useSelector } from 'react-redux'
 
 import {
-  getIsRefillBalanceModalVisible,
+  getUIModalStateForKey,
 } from '../../redux/selectors/ui'
 
 import Modal from '../../ui/Modal'
 import Input from '../../ui/Input'
+import { UI_MODAL_KEYS } from '../../redux/constants/modals'
 
 export default function RefillBalanceModal() {
-  const isRefillBalanceModalVisible = useSelector(getIsRefillBalanceModalVisible)
+  const isRefillBalanceModalVisible = useSelector(state => getUIModalStateForKey(state, UI_MODAL_KEYS.REFILL_BALANCE_MODAL))
 
   const onRefillBalanceModalClose = () => {
     // const { changeRefillBalanceModalState } = this.props

@@ -23,9 +23,12 @@ import {
   GET_TRADES_EVENT,
   GET_INDICATORS_EVENT,
   GET_INTERVAL_EVENT,
+  GET_RANGE_EVENT,
 } from './events'
+import { UI_MODAL_KEYS } from '../../redux/constants/modals'
+import { UI_KEYS } from '../../redux/constants/ui_keys'
 
-const useChartIframe = (iframeID, wsID, customIndicators, trades, interval) => {
+const useChartIframe = (iframeID, wsID, customIndicators, trades, interval, isSetInterval, range) => {
   const [isIframeReady, setIsIframeReady] = useState(false)
   const { t } = useTranslation()
   const dispatch = useDispatch()
@@ -42,7 +45,8 @@ const useChartIframe = (iframeID, wsID, customIndicators, trades, interval) => {
   }, [allOrders, authToken, dispatch])
 
   const closePosition = useCallback((args) => {
-    dispatch(UIActions.changeClosePositionModalState(true, args))
+    dispatch(UIActions.setUIValue(UI_KEYS.closePositionModalData, args))
+    dispatch(UIActions.changeUIModalState(UI_MODAL_KEYS.CLOSE_POSITION_MODAL, true))
   }, [dispatch])
 
   useEffect(() => {
@@ -51,12 +55,15 @@ const useChartIframe = (iframeID, wsID, customIndicators, trades, interval) => {
       sendMessageToIframe(iframeChart, GET_ORDERS_EVENT, orders)
       sendMessageToIframe(iframeChart, GET_POSITION_EVENT, position || {})
       sendMessageToIframe(iframeChart, GET_TRADES_EVENT, trades || [])
-      sendMessageToIframe(iframeChart, GET_INTERVAL_EVENT, interval || '')
+      if (isSetInterval) {
+        sendMessageToIframe(iframeChart, GET_INTERVAL_EVENT, interval || '')
+      }
+      sendMessageToIframe(iframeChart, GET_RANGE_EVENT, range || {})
       if (!_isEmpty(customIndicators)) {
         sendMessageToIframe(iframeChart, GET_INDICATORS_EVENT, customIndicators || [])
       }
     }
-  }, [orders, iframeID, isIframeReady, position, customIndicators, trades, interval])
+  }, [orders, iframeID, isIframeReady, position, customIndicators, trades, interval, range, isSetInterval])
 
   const sendMarketToChartIframe = useCallback((market) => {
     const marketOrders = getChartOrders(market?.wsID, t)

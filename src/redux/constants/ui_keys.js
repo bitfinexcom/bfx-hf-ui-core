@@ -1,0 +1,17 @@
+export const UI_KEYS = {
+  isBadInternetConnection: 'isBadInternetConnection',
+  isLoadingOrderHistData: 'isLoadingOrderHistData',
+  isOrderExecuting: 'isOrderExecuting',
+  pendingLiveStrategy: 'pendingLiveStrategy',
+  strategyEditor: 'strategyEditor',
+  layoutID: 'layoutID',
+  orderToEdit: 'orderToEdit',
+  closePositionModalData: 'closePositionModalData',
+  featureFlags: 'featureFlags',
+  coreSettings: 'coreSettings',
+  settings: 'settings',
+  unsavedLayout: 'unsavedLayout',
+  remoteVersion: 'remoteVersion',
+  isApplicationHidden: 'isApplicationHidden',
+  isFullscreenBarShown: 'isFullscreenBarShown',
+}

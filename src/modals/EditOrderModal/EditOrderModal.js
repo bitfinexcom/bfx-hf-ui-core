@@ -26,6 +26,8 @@ import {
 import {
   getAOs, getAtomicOrders,
 } from '../../components/OrderForm/OrderForm.orders.helpers'
+import { MARKET_SHAPE, ORDER_SHAPE } from '../../constants/prop-types-shapes'
+
 import '../../components/OrderForm/style.css'
 import './style.css'
 
@@ -110,10 +112,11 @@ const EditOrderModal = ({
 
   const onClose = () => {
     changeVisibilityState(false)
-    setTimeout(() => { // clearing order data after modal close amination ends
-      setLayout({})
-      setArgs({})
-    }, 600)
+    // TODO: enable this block
+    // setTimeout(() => { // clearing order data after modal close amination ends
+    //   setLayout({})
+    //   setArgs({})
+    // }, 600)
   }
 
   const onSubmitAO = () => {
@@ -236,7 +239,7 @@ const EditOrderModal = ({
 EditOrderModal.propTypes = {
   changeVisibilityState: PropTypes.func.isRequired,
   visible: PropTypes.bool.isRequired,
-  order: PropTypes.object.isRequired, // eslint-disable-line
+  order: PropTypes.shape(ORDER_SHAPE).isRequired,
   updateOrder: PropTypes.func.isRequired,
   authToken: PropTypes.string.isRequired,
   atomicOrdersCount: PropTypes.number.isRequired,
@@ -245,7 +248,7 @@ EditOrderModal.propTypes = {
   gaEditAO: PropTypes.func.isRequired,
   cancelAlgoOrder: PropTypes.func.isRequired,
   submitAlgoOrder: PropTypes.func.isRequired,
-  markets: PropTypes.objectOf(PropTypes.object).isRequired,
+  markets: PropTypes.objectOf(PropTypes.shape(MARKET_SHAPE)).isRequired,
 }
 
 export default memo(EditOrderModal)

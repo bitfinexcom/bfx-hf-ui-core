@@ -1,0 +1,23 @@
+@import "../../../variables.scss";
+
+.hfui-createnewstrategymodal {
+  &__content {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin-bottom: 25px;
+
+    & > * {
+      margin-bottom: 15px;
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+  }
+
+  &__footer {
+    display: flex;
+    justify-content: center;
+  }
+}

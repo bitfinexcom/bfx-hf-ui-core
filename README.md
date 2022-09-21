@@ -1,4 +1,4 @@
-# HoneyFramework Web App
+# Bitfinex Honey Web App
 
 # Development
 

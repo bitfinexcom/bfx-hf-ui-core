@@ -10,10 +10,11 @@ import { isElectronApp } from '../../config'
 let wasConnected = false
 
 export default function* ({ payload }) {
+  const { alias } = payload
   yield put(A.flushQueue())
 
   if (wasConnected) {
-    yield put(A.reconnected())
+    yield put(A.reconnected(alias))
   }
 
   yield put(A.recvNotification({
@@ -23,7 +24,7 @@ export default function* ({ payload }) {
     cid: v4(),
   }))
 
-  if (!isElectronApp && payload.alias === WSTypes.ALIAS_API_SERVER) {
+  if (!isElectronApp && alias === WSTypes.ALIAS_API_SERVER) {
     const token = getAuthToken()
     yield put(A.webAuth(token))
   }

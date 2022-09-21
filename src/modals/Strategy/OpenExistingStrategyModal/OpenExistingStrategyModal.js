@@ -1,14 +1,15 @@
-import React, { useState, memo, useMemo } from 'react'
+import React, { useState, memo, useCallback } from 'react'
 import PropTypes from 'prop-types'
 import Debug from 'debug'
 import _isEmpty from 'lodash/isEmpty'
 import _find from 'lodash/find'
-import _map from 'lodash/map'
+import _reduce from 'lodash/reduce'
 import { useTranslation } from 'react-i18next'
 
 import Modal from '../../../ui/Modal'
 import { makeShorterLongName } from '../../../util/ui'
 import Dropdown from '../../../ui/Dropdown'
+import { STRATEGY_SHAPE } from '../../../constants/prop-types-shapes'
 
 import './style.css'
 
@@ -16,15 +17,22 @@ const debug = Debug('hfui:c:open-existing-strategy-modal')
 
 const MAX_STRATEGY_LABEL_LENGTH = 60
 
+export const dropdownOptionsAdaptor = (options) => {
+  return _reduce(options, (nextOptions, { label, id }) => ({
+    ...nextOptions,
+    label: makeShorterLongName(label, MAX_STRATEGY_LABEL_LENGTH),
+    value: id,
+  }), {})
+}
+
 const OpenExistingStrategyModal = ({
   onClose, strategies, isOpen, onOpen,
 }) => {
+  const { t } = useTranslation()
   const [strategyID, setStrategyID] = useState(null)
   const [error, setError] = useState('')
 
-  const { t } = useTranslation()
-
-  const onSubmit = () => {
+  const onSubmit = useCallback(() => {
     if (!strategyID) {
       setError(t('strategyEditor.openStartegyModalNoSelectedError'))
       return
@@ -38,14 +46,7 @@ const OpenExistingStrategyModal = ({
 
     onOpen(strategy)
     onClose()
-  }
-
-  const strategiesOptionsArray = useMemo(() => {
-    return _map(strategies, ({ label, id }) => ({
-      label: makeShorterLongName(label, MAX_STRATEGY_LABEL_LENGTH),
-      value: id,
-    }))
-  }, [strategies])
+  }, [onClose, onOpen, strategies, strategyID, t])
 
   return (
     <Modal
@@ -58,7 +59,8 @@ const OpenExistingStrategyModal = ({
       <Dropdown
         value={strategyID}
         onChange={setStrategyID}
-        options={strategiesOptionsArray}
+        options={strategies}
+        adapter={dropdownOptionsAdaptor}
       />
 
       {!_isEmpty(error) && (
@@ -77,7 +79,7 @@ const OpenExistingStrategyModal = ({
 OpenExistingStrategyModal.propTypes = {
   onClose: PropTypes.func.isRequired,
   onOpen: PropTypes.func.isRequired,
-  strategies: PropTypes.arrayOf(PropTypes.object).isRequired,
+  strategies: PropTypes.arrayOf(PropTypes.shape(STRATEGY_SHAPE)).isRequired,
   isOpen: PropTypes.bool,
 }
 

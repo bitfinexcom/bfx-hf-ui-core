@@ -60,7 +60,9 @@ const TickerBar = (props) => {
 TickerBar.propTypes = {
   onFieldChange: PropTypes.func.isRequired,
   layout: PropTypes.shape({
-    fields: PropTypes.objectOf(PropTypes.object),
+    fields: PropTypes.shape({
+      ticker: PropTypes.objectOf(PropTypes.string),
+    }),
   }).isRequired,
 }
 

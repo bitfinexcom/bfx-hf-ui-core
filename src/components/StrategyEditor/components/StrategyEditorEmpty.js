@@ -1,71 +1,78 @@
-import React, { memo, useMemo } from 'react'
-import _isEmpty from 'lodash/isEmpty'
-import _map from 'lodash/map'
+import React, { memo } from 'react'
 import PropTypes from 'prop-types'
 import { useTranslation } from 'react-i18next'
+import { Icon } from 'react-fa'
+import Button from '../../../ui/Button'
 
 const EmptyContent = ({
-  strategies,
-  onOpen,
   openCreateNewStrategyModal,
-  openSelectExistingStrategyModal,
+  openCreateNewStrategyFromModal,
+  isPaperTrading,
+  onImportStrategy,
 }) => {
   const { t } = useTranslation()
 
-  const strategyNodesArray = useMemo(() => {
-    return _map(strategies, (strategy, index) => {
-      if (index >= 6) {
-        return null
-      }
-      return (
-        <li
-          key={strategy.id}
-          className='strategy-item'
-          onClick={() => onOpen(strategy)}
-        >
-          {strategy.label}
-        </li>
-      )
-    })
-  }, [strategies, onOpen])
-  return (
-    <>
-      {_isEmpty(strategies) ? (
+  if (!isPaperTrading) {
+    return (
+      <>
         <div className='hfui-strategyeditor__without-strategies'>
-          <div>
-            <p className='button' onClick={openCreateNewStrategyModal}>
-              {t('strategyEditor.createStrategyStringPart1')}
+          <div className='select-one-text select-strategy-live-text'>
+            <p>
+              {t('strategyEditor.nothingToDisplay')}
             </p>
-            <p>{t('strategyEditor.createStrategyStringPart2')}</p>
+            <br />
+            {t('strategyEditor.selectStrategy')}
           </div>
         </div>
-      ) : (
-        <div className='hfui-strategyeditor__empty-content'>
-          <p className='recent-title'>
-            {t('strategyEditor.recent')}
-            :
-          </p>
-          <ul className='strategies-list'>{strategyNodesArray}</ul>
-          {strategyNodesArray.length >= 7 && (
-            <p
-              className='strategy-item'
-              onClick={openSelectExistingStrategyModal}
-            >
-              {t('strategyEditor.more')}
-              ...
-            </p>
-          )}
+        <div className='hfui-strategyeditor__use-sandbox-tooltip'>
+          {t('strategyEditor.useSandboxTooltip')}
         </div>
-      )}
-    </>
+      </>
+    )
+  }
+
+  return (
+    <div className='hfui-strategyeditor__without-strategies'>
+      <div>
+        <Button
+          green
+          className='hfui-strategy-button'
+          onClick={openCreateNewStrategyModal}
+          label={[
+            <i key='icon' className='icon-strategy-editor-passive' />,
+            <p key='text'>{t('strategyEditor.newStrategy')}</p>,
+          ]}
+        />
+        <Button
+          green
+          className='hfui-strategy-button'
+          onClick={openCreateNewStrategyFromModal}
+          label={[
+            <Icon name='folder' key='icon' />,
+            <p key='text'>{t('strategyEditor.newStrategyFrom')}</p>,
+          ]}
+        />
+        <Button
+          green
+          className='hfui-strategy-button'
+          onClick={onImportStrategy}
+          label={[
+            <Icon name='file-code-o' key='icon' />,
+            <p key='text'>{t('strategyEditor.importStrategy')}</p>,
+          ]}
+        />
+        <br />
+        <div className='select-one-text'>{t('strategyEditor.orSelectOne')}</div>
+      </div>
+    </div>
   )
 }
 
 EmptyContent.propTypes = {
-  strategies: PropTypes.arrayOf(PropTypes.object).isRequired,
   openCreateNewStrategyModal: PropTypes.func.isRequired,
-  openSelectExistingStrategyModal: PropTypes.func.isRequired,
-  onOpen: PropTypes.func.isRequired,
+  openCreateNewStrategyFromModal: PropTypes.func.isRequired,
+  isPaperTrading: PropTypes.bool.isRequired,
+  onImportStrategy: PropTypes.func.isRequired,
 }
 
 export default memo(EmptyContent)

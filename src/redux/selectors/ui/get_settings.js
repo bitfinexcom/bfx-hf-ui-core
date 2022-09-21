@@ -9,12 +9,12 @@ const EMPTY_OBJ = {}
 
 export const SETTINGS_KEYS = {
   DMS: 'dms',
-  GA: 'ga',
   SHOW_ALGO_PAUSE_INFO: 'showAlgoPauseInfo',
   SHOW_ONLY_FAVORITE_PAIRS: 'showOnlyFavoritePairs',
-  REBOOT_AUTOMATICALLY: 'rebootAutomatically',
   THEME: 'theme',
   JOIN_BETA_PROGRAM: 'joinBetaProgram',
+  HIDE_ON_CLOSE: 'hideOnClose',
+  FULLSCREEN: 'fullScreen',
 }
 
 export const THEMES = {
@@ -49,24 +49,24 @@ export const getDMSSetting = createSelector(
   (settings) => _get(settings, SETTINGS_KEYS.DMS, false),
 )
 
-export const getGASetting = createSelector(
-  getSettings,
-  (settings) => _get(settings, SETTINGS_KEYS.GA, true),
-)
-
 export const getThemeSetting = createSelector(
   getSettings,
   (settings) => _get(settings, SETTINGS_KEYS.THEME, getDefaultTheme()),
 )
 
-export const getRebootSetting = createSelector(
-  getSettings,
-  (settings) => _get(settings, SETTINGS_KEYS.REBOOT_AUTOMATICALLY, false),
-)
-
 export const getIsBetaVersion = createSelector(
   getSettings,
   (settings) => _get(settings, SETTINGS_KEYS.JOIN_BETA_PROGRAM, false),
+)
+
+export const getShouldHideOnClose = createSelector(
+  getSettings,
+  (settings) => _get(settings, SETTINGS_KEYS.HIDE_ON_CLOSE, false),
+)
+
+export const getIsFullscreen = createSelector(
+  getSettings,
+  (settings) => _get(settings, SETTINGS_KEYS.FULLSCREEN, true),
 )
 
 export default getSettings

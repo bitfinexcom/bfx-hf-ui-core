@@ -5,23 +5,42 @@ import _map from 'lodash/map'
 import _isFunction from 'lodash/isFunction'
 import cx from 'clsx'
 import { useTranslation } from 'react-i18next'
+import { TransitionGroup, CSSTransition } from 'react-transition-group'
 
 import { useDispatch, useSelector } from 'react-redux'
 import { isElectronApp } from '../../redux/config'
 import Modal from '../../ui/Modal'
 import GeneralTab from './AppSettingsModal.General'
 import ApiKeysTab from './AppSettingsModal.ApiKeys'
-import TradingModeTab from './AppSettingsModal.TradingMode'
-import AppearanceTab from './AppSettingsModal.Appearance'
+import AppSettings from './AppSettingsModal.AppSettings'
 import AboutTab from './AppSettingsModal.About'
-import { getIsAppSettingsModalVisible, getSettingsActiveTab } from '../../redux/selectors/ui'
-import { changeAppSettingsModalState, setSettingsTab } from '../../redux/actions/ui'
+import BetaTab from './AppSettingsModal.Beta'
+import { getUIModalStateForKey, getSettingsActiveTab } from '../../redux/selectors/ui'
+import { changeUIModalState, setSettingsTab } from '../../redux/actions/ui'
+import { UI_MODAL_KEYS } from '../../redux/constants/modals'
 import { DEFAULT_TAB, SETTINGS_TABS, WEB_SETTINGS_TABS } from './AppSettingsModal.constants'
 
 import './style.css'
 
+const cssTransitionProps = {
+  timeout: 300,
+  classNames: 'setting',
+}
+
+const renderTab = (tab, activeTab, element) => {
+  if (!isElectronApp || activeTab !== tab) {
+    return null
+  }
+
+  return (
+    <CSSTransition key={tab} {...cssTransitionProps}>
+      {element}
+    </CSSTransition>
+  )
+}
+
 const AppSettingsModal = () => {
-  const isOpen = useSelector(getIsAppSettingsModalVisible)
+  const isOpen = useSelector(state => getUIModalStateForKey(state, UI_MODAL_KEYS.APP_SETTINGS_MODAL))
   const activeTab = useSelector(getSettingsActiveTab)
 
   const dispatch = useDispatch()
@@ -29,7 +48,7 @@ const AppSettingsModal = () => {
   const setActiveTab = (tab) => dispatch(setSettingsTab(tab))
 
   const onClose = (callback) => {
-    dispatch(changeAppSettingsModalState(false))
+    dispatch(changeUIModalState(UI_MODAL_KEYS.APP_SETTINGS_MODAL, false))
 
     // reset to default tab, but wait for transition out
     setTimeout(() => {
@@ -66,17 +85,19 @@ const AppSettingsModal = () => {
           </div>
         ))}
       </div>
-      <div className='appsettings-modal__content'>
-        {isElectronApp && (
-          <>
-            {activeTab === SETTINGS_TABS.General && <GeneralTab />}
-            {activeTab === SETTINGS_TABS.Keys && <ApiKeysTab />}
-            {activeTab === SETTINGS_TABS.TradingMode && <TradingModeTab onClose={onClose} />}
-          </>
-        )}
-        {activeTab === SETTINGS_TABS.Appearance && <AppearanceTab />}
-        {activeTab === SETTINGS_TABS.About && <AboutTab />}
-      </div>
+
+      <TransitionGroup
+        exit={false}
+        className={cx('content-all', {
+          'appsettings-modal__content': activeTab !== SETTINGS_TABS.Keys,
+        })}
+      >
+        {renderTab(SETTINGS_TABS.Beta, activeTab, <BetaTab />)}
+        {renderTab(SETTINGS_TABS.General, activeTab, <GeneralTab />)}
+        {renderTab(SETTINGS_TABS.Keys, activeTab, <ApiKeysTab />)}
+        {renderTab(SETTINGS_TABS.AppSettings, activeTab, <AppSettings />)}
+        {renderTab(SETTINGS_TABS.About, activeTab, <AboutTab />)}
+      </TransitionGroup>
     </Modal>
   )
 }

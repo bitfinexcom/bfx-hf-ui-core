@@ -12,7 +12,7 @@ import { Spinner } from '@ufx-ui/core'
 
 import { useLocation } from 'react-router'
 import {
-  removeComponent, changeLayout, setLayoutID, storeUnsavedLayout,
+  removeComponent, changeLayout, setUIValue,
 } from '../../redux/actions/ui'
 import { renderLayoutElement } from './GridLayout.helpers'
 import {
@@ -24,20 +24,32 @@ import {
 } from './Grid.constants'
 
 import {
-  getLayoutID,
   getLayoutForRoute,
+  getUIState,
 } from '../../redux/selectors/ui'
 
 import { generateLayout } from './Grid.layouts'
 import tradingTerminalLayout from './layouts/trading'
 import marketDataLayout from './layouts/marketData'
-import { marketData } from '../../constants/routes'
+import { marketData, strategyEditor, tradingTerminal } from '../../constants/routes'
+import { MARKET_SHAPE, ORDER_SHAPE } from '../../constants/prop-types-shapes'
 
-import './style.scss'
+import './style.css'
+import { UI_KEYS } from '../../redux/constants/ui_keys'
 
 const ReactGridLayout = WidthProvider(RGL)
 
-const getLayoutConfig = pathname => (pathname === marketData.path ? marketDataLayout : tradingTerminalLayout)
+const getLayoutConfig = pathname => {
+  switch (pathname) {
+    case marketData.path:
+      return marketDataLayout
+    case tradingTerminal.path:
+      return tradingTerminalLayout
+
+    default:
+      return null
+  }
+}
 
 const GridLayout = ({
   sharedProps, tradesProps, bookProps, chartProps, orderFormProps,
@@ -46,8 +58,10 @@ const GridLayout = ({
   const [breakpoint, setBreakpoint] = useState(RGL.utils.getBreakpointFromWidth(GRID_BREAKPOINTS, document.body.clientWidth))
 
   const { pathname } = useLocation()
+  const isAbleToSaveLayout = !pathname === strategyEditor.path
+
   const layoutConfig = useMemo(() => getLayoutConfig(pathname), [pathname])
-  const layoutID = useSelector(getLayoutID)
+  const layoutID = useSelector(state => getUIState(state, UI_KEYS.layoutID))
 
   const layoutIsDirty = useSelector(state => state.ui.layoutIsDirty)
   const [lastLayoutID, layoutDef, isMatchingUnsavedLayout, isMatchingSavedLayout] = useSelector(state => getLayoutForRoute(state, pathname))
@@ -70,14 +84,14 @@ const GridLayout = ({
     // set active layout id when there’s none selected (on initial load)
     // or when switching routes
     if (!layoutID || !isMatchingSavedLayout) {
-      dispatch(setLayoutID(lastLayoutID))
+      dispatch(setUIValue(UI_KEYS.layoutID, lastLayoutID))
     }
   }, [pathname, layoutID, lastLayoutID, isMatchingSavedLayout, dispatch])
 
   useEffect(() => {
     // discard unsaved layout changes
     if (!isMatchingUnsavedLayout) {
-      dispatch(storeUnsavedLayout(layoutDef))
+      dispatch(setUIValue(UI_KEYS.unsavedLayout, layoutDef))
     }
   }, [dispatch, isMatchingUnsavedLayout, layoutDef])
 
@@ -107,52 +121,43 @@ const GridLayout = ({
 
   const currentLayout = nextLayouts?.[breakpoint] || []
 
-  if (!layoutID) {
+  if (isAbleToSaveLayout && !layoutID) {
     return <Spinner className='grid-spinner' />
   }
 
   return (
-    <div className='hfui-gridlayoutpage__wrapper'>
-      <ReactGridLayout
-        draggableHandle='.icon-move'
-        cols={GRID_COLUMNS}
-        breakpoints={GRID_BREAKPOINTS}
-        margin={GRID_CELL_SPACINGS}
-        containerPadding={GRID_CONTAINER_SPACINGS}
-        rowHeight={GRID_ROW_HEIGHT}
-        layouts={nextLayouts}
-        onBreakpointChange={setBreakpoint}
-        onLayoutChange={onLayoutChange}
-        measureBeforeMount={false}
-      >
-        {_map(currentLayout, def => (
-          <div key={def.i}>
-            {renderLayoutElement(layoutID, def, componentProps, onRemoveComponent)}
-          </div>
-        ))}
-      </ReactGridLayout>
-    </div>
+    <ReactGridLayout
+      draggableHandle='.icon-move'
+      cols={GRID_COLUMNS}
+      breakpoints={GRID_BREAKPOINTS}
+      margin={GRID_CELL_SPACINGS}
+      containerPadding={GRID_CONTAINER_SPACINGS}
+      rowHeight={GRID_ROW_HEIGHT}
+      layouts={nextLayouts}
+      onBreakpointChange={setBreakpoint}
+      onLayoutChange={onLayoutChange}
+      measureBeforeMount={false}
+    >
+      {_map(currentLayout, def => (
+        <div key={def.i}>
+          {renderLayoutElement(layoutID, def, componentProps, onRemoveComponent)}
+        </div>
+      ))}
+    </ReactGridLayout>
   )
 }
 
 GridLayout.propTypes = {
   chartProps: PropTypes.shape({
     disableToolbar: PropTypes.bool,
-    activeMarket: PropTypes.objectOf(
-      PropTypes.oneOfType([
-        PropTypes.string,
-        PropTypes.array,
-        PropTypes.number,
-        PropTypes.bool,
-      ]),
-    ),
+    activeMarket: PropTypes.shape(MARKET_SHAPE),
   }),
   bookProps: PropTypes.shape({
     canChangeStacked: PropTypes.bool,
   }),
   tradesProps: PropTypes.objectOf(PropTypes.bool),
   orderFormProps: PropTypes.shape({
-    orders: PropTypes.arrayOf(PropTypes.object),
+    orders: PropTypes.arrayOf(PropTypes.shape(ORDER_SHAPE)),
   }),
   sharedProps: PropTypes.objectOf(PropTypes.oneOfType(
     [PropTypes.bool, PropTypes.string],

@@ -5,7 +5,7 @@ body.hosted {
     .hfui-strategyeditor__func-select {
       flex-flow: row wrap;
       margin-right: 0;
-  
+
       li {
         height: 35px !important;
       }
@@ -20,7 +20,7 @@ body.hosted {
       height: 300px;
       margin-top: 10px;
     }
-    
+
     .hfui-strategyeditor__panel {
       .hfui-panel__left-container {
         flex-direction: column;
@@ -29,9 +29,28 @@ body.hosted {
   }
 }
 
+.hfui-strategyeditor__ide {
+  border-bottom: 16px solid var(--darker-background-color);
+}
+
 .hfui-strategyeditor__wrapper {
   display: flex;
   height: 100%;
+  min-height: 530px;
+  background-color: var(--background-color);
+  position: relative;
+
+  .hfui-create-strategy__btn {
+    text-transform: uppercase;
+  }
+
+  .spinner {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    margin-top: 0;
+  }
 }
 
 .hfui-removestrategymodal__wrapper {
@@ -43,11 +62,47 @@ body.hosted {
   }
 }
 
+.hfui-strategy-sidebar-status {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 14px;
+  text-transform: uppercase;
+  font-weight: 700;
+
+  &.stopped {
+    color: $green-color;
+  }
+
+  &.running {
+    color: $red-color;
+  }
+
+  &.paused {
+    color: $grey-color;
+  }
+}
+
+.hfui-strategy-editor_cancel-process-btn {
+  position: absolute;
+  bottom: 10%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  margin-top: 0;
+  background: transparent;
+  color: var(--shade-5);
+
+  &:hover {
+    opacity: 1;
+    color: var(--text-color);
+  }
+}
+
 .hfui-strategyeditor__editor-wrapper {
   width: 100%;
   display: flex;
   flex-direction: column;
-  height: calc(100% - 10px);
+  height: calc(100% - 25px);
   position: relative;
   z-index: 0;
 
@@ -83,6 +138,7 @@ body.hosted {
   flex-shrink: 0;
   font-size: 13px;
   margin-right: spacing(0.75);
+  overflow: auto;
 
   li {
     display: flex;
@@ -152,6 +208,12 @@ body.hosted {
   }
 }
 
+.hfui-strategy-button {
+  height: 32px;
+  padding: 0 spacing(0.75);
+  margin: 0 spacing(0.25);
+}
+
 .hfui-strategyeditor__content-wrapper {
   width: calc(
     100% - 182px
@@ -173,23 +235,10 @@ body.hosted {
     padding-bottom: 10px;
     font-weight: 700;
   }
-  .strategies-list {
-    padding: 10px;
-    list-style: disc;
-  }
-  .strategy-item {
-    margin-bottom: 8px;
-    cursor: pointer;
-    color: #05bc97;
-
-    &:last-child {
-      margin-bottom: 0;
-    }
-  }
 }
 
 .hfui-strategyeditor__without-strategies {
-  height: 100%;
+  height: 350px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -219,4 +268,103 @@ body.hosted {
       text-decoration: underline;
     }
   }
+
+  .select-one-text {
+    margin-top: 15px;
+  }
+
+  .select-strategy-live-text {
+    font-size: 18px;
+    font-weight: 600;
+
+    > p {
+      margin-bottom: 10px;
+      font-size: 20px;
+      text-transform: uppercase;
+    }
+  }
+}
+
+.hfui-strategyeditor__use-sandbox-tooltip {
+  position: absolute;
+  top: 65px;
+  right: 295px;
+  width: 300px;
+  text-align: center;
+  font-weight: 600;
+  padding: 5px;
+  border-radius: $border-radius;
+  background-color: $green-color;
+  color: $darker-background-color;
+
+  &:after,
+  &:before {
+    bottom: 100%;
+    left: 80%;
+    border: solid transparent;
+    content: " ";
+    height: 0;
+    width: 0;
+    position: absolute;
+    pointer-events: none;
+  }
+
+  &:after {
+    border-bottom-color: $green-color;
+    border-width: 15px;
+    margin-left: -15px;
+  }
+
+  &:before {
+    border-bottom-color: $green-color;
+    border-width: 16px;
+    margin-left: -16px;
+  }
+}
+
+.hfui-strategy__options-panel {
+  min-width: 180px !important;
+  left: 240px !important;
+  top: -27px !important;
+  box-shadow: 5px -4px 15px 0px #000000;
+
+  &--sidebar-closed {
+    left: 150px !important;
+  }
+}
+
+.hfui-strategyeditor__initial-message {
+  position: absolute;
+  top: 50%;
+  left: 65%;
+  transform: translate(-50%, -50%);
+  font-size: 20px;
+  font-weight: 700;
+  text-align: center;
+}
+
+.hfui-strategyeditor__sidebar-title {
+  position: relative;
+
+  .indicator-near-icon {
+    position: absolute;
+    top: -3px;
+    right: -5px;
+  }
+  .title-icon {
+    margin-right: 5px;
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+  .title-label {
+    margin-right: 5px;
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+}
+
+.hfui-strategyeditor__panel ~ .hfui-strategies-list__wrapper {
+  flex: 1 1 230px;
 }

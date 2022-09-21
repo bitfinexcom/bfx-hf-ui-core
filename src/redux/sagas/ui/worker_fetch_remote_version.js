@@ -1,13 +1,15 @@
 import { put, delay, call } from 'redux-saga/effects'
-import _head from 'lodash/head'
 import _replace from 'lodash/replace'
+import _find from 'lodash/find'
+import semver from 'semver'
 import Debug from 'debug'
 
 import UIActions from '../../actions/ui'
-import { isElectronApp } from '../../config'
+import { isElectronApp, appVersion } from '../../config'
+import { UI_KEYS } from '../../constants/ui_keys'
 
 const CHECK_INTERVAL_MS = 60 * 60 * 1000 // 1hr
-const REMOTE_MANIFEST_URL = 'https://api.github.com/repos/bitfinexcom/bfx-hf-ui/tags?per_page=1'
+const REMOTE_MANIFEST_URL = 'https://api.github.com/repos/bitfinexcom/bfx-hf-ui/releases'
 
 const debug = Debug('hfui:rx:s:ws-hfui:worker-fetch-remote-version')
 
@@ -23,10 +25,18 @@ export default function* () {
       return
     }
 
-    let { name } = _head(manifest)
+    // skip draft and pre-release
+    const latest = _find(manifest, ({ prerelease, draft }) => !prerelease && !draft)
+
+    let { name } = latest
     name = _replace(name, 'v', '')
 
-    yield put(UIActions.saveRemoteVersion(name))
+    // check if greater than current app version
+    const hasNewRelease = semver.gt(name, appVersion)
+    if (hasNewRelease) {
+      yield put(UIActions.setUIValue(UI_KEYS.remoteVersion, name))
+    }
+
     yield delay(CHECK_INTERVAL_MS)
   }
 }

@@ -1,32 +1,16 @@
 import { connect } from 'react-redux'
-import { v4 } from 'uuid'
-
-import WSActions from '../../redux/actions/ws'
-import GAActions from '../../redux/actions/google_analytics'
 import UIActions from '../../redux/actions/ui'
-import {
-  getIsBadInternetConnection, SETTINGS_KEYS, getRebootSetting,
-} from '../../redux/selectors/ui'
+import { UI_KEYS } from '../../redux/constants/ui_keys'
+import { getUIState } from '../../redux/selectors/ui'
 
 import BadConnectionModal from './BadConnectionModal'
 
 const mapStateToProps = (state = {}) => ({
-  visible: getIsBadInternetConnection(state),
-  rebootAutomatically: getRebootSetting(state),
+  visible: getUIState(state, UI_KEYS.isBadInternetConnection, false),
 })
 
 const mapDispatchToProps = dispatch => ({
-  changeBadInternetConnectionState: (visible) => dispatch(UIActions.changeBadInternetConnectionState(visible)),
-  updateReboot: (reboot) => {
-    dispatch(WSActions.saveSettings(SETTINGS_KEYS.REBOOT_AUTOMATICALLY, reboot))
-    dispatch(GAActions.updateSettings())
-  },
-  rebootnNotify: (text) => dispatch(UIActions.recvNotification({
-    mts: Date.now(),
-    status: 'info',
-    text,
-    cid: v4(),
-  })),
+  changeBadInternetConnectionState: (visible) => dispatch(UIActions.setUIValue(UI_KEYS.isBadInternetConnection, visible)),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(BadConnectionModal)

@@ -1,0 +1,60 @@
+@import "../../variables.scss";
+
+body.hosted {
+  @media screen and (max-width: 1230px) {
+    .hfui-strategyeditorpage__wrapper {
+      .hfui-strategyeditorpage__content-wrapper {
+        flex-direction: column;
+      }
+
+      .hfui-strategyeditor__panel {
+        .scrollbar-container {
+          min-height: 700px !important;
+        }
+      }
+
+      .hfui-strategiespage__right {
+        width: 100%;
+        margin-top: 20px;
+
+        .scrollbar-container {
+          min-height: 700px !important;
+        }
+      }
+
+      .hfui-strategyeditor__panel {
+        width: 100%;
+        margin-right: 0;
+      }
+    }
+  }
+}
+
+.hfui-strategyeditorpage1 {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+}
+
+.hfui-strategyeditor__panel {
+  width: 100%;
+  margin-bottom: spacing(1.25);
+  flex: 3 1 565px;
+  border-bottom: 16px solid var(--darker-background-color);
+}
+
+.hfui-strategiespage__right {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+
+  .hfui-panel {
+    flex-shrink: 0;
+  }
+}
+
+.hfui-strategiespage__pannel-backtest {
+  height: 100%;
+}

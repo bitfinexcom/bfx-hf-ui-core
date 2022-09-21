@@ -1,11 +1,64 @@
-@import '../../variables.scss';
+@import "../../variables.scss";
+
+.hfui-strategies-list {
+  .no-trades__wrapper {
+    margin-top: 20px;
+    text-align: center;
+  }
+}
 
 .hfui-strategytradestable__wrapper {
-  .ReactVirtualized__Table__headerRow {
-    .ReactVirtualized__Table__headerColumn:first-of-type, .ReactVirtualized__Table__rowColumn:first-of-type {
-      margin-left: 24px;
+  width: auto;
+  margin: 0;
+
+  .ReactVirtualized__Table__headerColumn {
+    color: var(--shade-6) !important;
+  }
+
+  .ReactVirtualized__Table__rowColumn {
+    color: var(--shade-8);
+  }
+
+  .stratatey-main-row {
+    padding: 5px 0;
+    &.selected {
+      background-color: var(--lighter-background-color);
+    }
+  }
+
+
+
+  .hfui-trades-sub-table {
+    margin-right: auto;
+    margin-left: 40px;
+    display: flex;
+    align-items: center;
+    border-left: 1px solid #dcdcdc;
+  }
+
+  .ufx-table {
+    margin-top: 20px;
+    background-color: var(--lighter-background-color);
+    font-size: 12px;
+
+    thead {
+      text-transform: uppercase;
     }
 
+    th, td {
+      padding: 6px 15px;
+    }
+
+    th {
+      color: var(--shade-6);
+    }
+
+    td {
+      color: var(--shade-8);
+    }
+  }
+
+  .ReactVirtualized__Table__headerRow {
     .ReactVirtualized__Table__headerTruncatedText {
       text-transform: uppercase;
     }
@@ -23,8 +76,7 @@
     align-items: center;
   }
 
-  .export_csv_btn {
-    margin-left: 10px;
-    padding: 5px 10px;
+  .panel-button {
+    text-transform: uppercase;
   }
 }

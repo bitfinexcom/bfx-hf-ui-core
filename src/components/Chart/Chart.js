@@ -2,6 +2,7 @@ import React, { memo, useEffect } from 'react'
 import { useSelector } from 'react-redux'
 import { reduxSelectors } from '@ufx-ui/bfx-containers'
 import PropTypes from 'prop-types'
+import _isUndefined from 'lodash/isUndefined'
 
 import { useTranslation } from 'react-i18next'
 import { LANGUAGES_CHART_TABLE } from '../../locales/i18n'
@@ -9,6 +10,7 @@ import { THEMES } from '../../redux/selectors/ui'
 import { CHART_URL, env } from '../../redux/config'
 import useChartIframe from './useChartIframe'
 import { getPairFromMarket } from '../../util/market'
+import { INDICATORS_ARRAY_SHAPE, MARKET_SHAPE, TRADE_SHAPE } from '../../constants/prop-types-shapes'
 
 import './style.css'
 
@@ -22,7 +24,10 @@ const Chart = ({
   trades,
   interval,
   hideResolutions,
+  hideIndicators,
+  chartRange,
 }) => {
+  const isSetInterval = !_isUndefined(interval)
   const {
     wsID, base, quote, isPerp, uiID: _uiID,
   } = market
@@ -33,7 +38,7 @@ const Chart = ({
 
   const uiID = isPerp ? _uiID : getPairFromMarket(market, getCurrencySymbol)
   const iframeID = `hfui-chart-${layoutI}`
-  const sendMarketToChartIframe = useChartIframe(iframeID, wsID, indicators, trades, interval)
+  const sendMarketToChartIframe = useChartIframe(iframeID, wsID, indicators, trades, interval, isSetInterval, chartRange)
 
   const queryString = new URLSearchParams({
     env,
@@ -41,6 +46,7 @@ const Chart = ({
     locale: LANGUAGES_CHART_TABLE[i18nMappedKey] || LANGUAGES_CHART_TABLE.en,
     iframeID,
     hideResolutions,
+    hideIndicators,
   }).toString()
 
   useEffect(() => {
@@ -61,19 +67,15 @@ const Chart = ({
 }
 
 Chart.propTypes = {
-  market: PropTypes.shape({
-    wsID: PropTypes.string,
-    base: PropTypes.string,
-    quote: PropTypes.string,
-    uiID: PropTypes.string,
-    isPerp: PropTypes.bool,
-  }),
+  market: PropTypes.shape(MARKET_SHAPE),
   theme: PropTypes.oneOf([THEMES.LIGHT, THEMES.DARK]).isRequired,
   layoutI: PropTypes.string.isRequired,
-  indicators: PropTypes.array, // eslint-disable-line react/forbid-prop-types
-  trades: PropTypes.array, // eslint-disable-line react/forbid-prop-types
+  indicators: INDICATORS_ARRAY_SHAPE,
+  trades: PropTypes.arrayOf(PropTypes.shape(TRADE_SHAPE)),
   interval: PropTypes.string,
   hideResolutions: PropTypes.bool,
+  hideIndicators: PropTypes.bool,
+  chartRange: PropTypes.object, // eslint-disable-line react/forbid-prop-types
 }
 
 Chart.defaultProps = {
@@ -85,8 +87,10 @@ Chart.defaultProps = {
   },
   indicators: [],
   trades: [],
-  interval: '30',
+  interval: undefined,
   hideResolutions: false,
+  hideIndicators: false,
+  chartRange: null,
 }
 
 export default memo(Chart)

@@ -5,7 +5,7 @@ const AuthenticationConnectingForm = () => {
   const { t } = useTranslation()
   return (
     <div className='hfui-authenticationpage__content'>
-      <h2>HoneyFramework UI</h2>
+      <h2>Bitfinex Honey</h2>
       <p>{t('main.startingUp')}</p>
     </div>
   )

@@ -1,14 +1,4 @@
-export default `const whenShort = async (state = {}, update = {}) => {
-  const { price, mts } = update
-  const { macd } = HFS.indicatorValues(state)
-
-  if (macd.macd > macd.signal) {
-    return HFS.closePositionMarket(state, { price, mtsCreate: mts })
-  }
-
-  return state
-}
-
+export default `
 const whenLong = async (state = {}, update = {}) => {
   const { price, mts } = update
   const { macd } = HFS.indicatorValues(state)
@@ -43,19 +33,6 @@ const lookForTrade = async (state = {}, update = {}) => {
     })
   }
 
-  const crossedUnder = (
-    (current.macd <= current.signal) &&
-    (previous.macd >= previous.signal)
-  )
-
-  if (crossedUnder) {
-    return HFS.openShortPositionMarket(state, {
-      mtsCreate: mts,
-      amount: 1,
-      price
-    })
-  }
-
   return state
 }
 
@@ -68,10 +45,6 @@ const lookForTrade = async (state = {}, update = {}) => {
 
   if (HFS.isLong(state)) {
     return whenLong(state, update)
-  }
-
-  if (HFS.isShort(state)) {
-    return whenShort(state, update)
   }
 
   return state

@@ -67,6 +67,12 @@ body.hosted {
       transition: all 0.2s;
       color: var(--shade-6);
 
+      .hfui-indicator {
+        position: relative;
+        top: -5px;
+        margin-left: 3px;
+      }
+
       &:hover,
       &.active {
         border-bottom: 2px solid var(--primary-9);
@@ -122,6 +128,65 @@ body.hosted {
   align-items: center;
   flex-wrap: wrap;
   height: 100%;
+
+  .simpledropdown-wrapper {
+    .simpledropdown-label {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 10px;
+      margin-left: 5px;
+
+      .label-chevron {
+        margin-left: 5px;
+        font-size: 10px;
+      }
+
+      .dropdown-leaf {
+        width: 15px;
+        height: 15px;
+    
+        &:hover {
+          cursor: pointer;
+          opacity: 0.8;
+        }
+      }
+    }
+
+    .simpledropdown-separator {
+      height: 9px;
+    }
+
+    .simpledropdown-content {
+      text-align: center;
+      padding-top: 5px;
+      position: absolute;
+      background-color: var(--grayish-color);
+      left: -50px;
+
+      > svg {
+        margin-bottom: 5px;
+      }
+
+      > a {
+        margin-bottom: 7px;
+
+        &:last-child {
+          margin-bottom: 0;
+        }
+      }
+
+      .dropdown-leaf-link {
+        color: var(--text-color);
+        text-decoration: none;
+        font-size: 14px;
+    
+        &:hover {
+          color: var(--primary-8);
+        }
+      }
+    }
+  }
 }
 
 .hfui-navbar__app-settings,
@@ -237,10 +302,6 @@ body.hosted {
 .hfui-exchangeinfobar__buttons {
   display: flex;
   margin-right: spacing();
-
-  &.is-web {
-    margin-right: 0;
-  }
 }
 
 .hfui-exchangeinfobar__button {
@@ -285,7 +346,7 @@ body.hosted {
   display: flex;
   border-right: 1px solid var(--darker-background-color);
   flex-direction: row;
-  margin-right: 16px;
+  margin-right: spacing();
 
   .hfui-tradingpaper__control-toggle {
     p {
@@ -304,9 +365,41 @@ body.hosted {
   }
 }
 
-.hfui-navbar__logout {
+.hfui-navbar__close-session {
   width: auto;
   font-weight: 500;
   padding: 0 spacing(0.75);
   background: none;
+  border: 1px solid var(--text-color);
+}
+
+.hfui-navbar__api {
+  margin-right: spacing();
+
+  .logged-in-bar {
+    display: flex;
+    height: 34px;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: center;
+
+    * {
+      line-height: 16px;
+    }
+
+    &__text {
+      font-weight: 700;
+    }
+
+    &__username {
+      color: $green-color;
+    }
+
+    &__update-creds {
+      text-transform: uppercase;
+      text-decoration: underline;
+      font-size: 10px;
+      cursor: pointer;
+    }
+  }
 }

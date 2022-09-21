@@ -1,9 +1,12 @@
 import { useTranslation } from 'react-i18next'
-import React, { useEffect, useState, memo } from 'react'
+import React, {
+  useEffect, useState, memo, useCallback,
+} from 'react'
 import PropTypes from 'prop-types'
 import _size from 'lodash/size'
 import Input from '../../../ui/Input'
 import Modal from '../../../ui/Modal'
+import { STRATEGY_SHAPE } from '../../../constants/prop-types-shapes'
 
 import './style.css'
 
@@ -15,29 +18,22 @@ const RemoveExistingStrategyModal = ({
   onClose,
   strategy: { label },
 }) => {
-  const [canDeleteStrategy, setCanDeleteStrategy] = useState(false)
+  const { t } = useTranslation()
   const [inputValue, setInputValue] = useState('')
+  const canDeleteStrategy = inputValue === label
   const isLong = _size(label) > MAX_STRATEGY_LABEL_LENGTH
 
-  const removeStrategy = () => {
+  // reset value when opened for diff strategy
+  useEffect(() => {
+    setInputValue('')
+  }, [label])
+
+  const removeStrategy = useCallback(() => {
     if (!canDeleteStrategy) {
       return
     }
     onRemoveStrategy()
-    setCanDeleteStrategy(false)
-  }
-
-  useEffect(() => {
-    if (inputValue !== label) {
-      if (canDeleteStrategy) {
-        setCanDeleteStrategy(false)
-      }
-      return
-    }
-    setCanDeleteStrategy(true)
-  }, [canDeleteStrategy, inputValue, label])
-
-  const { t } = useTranslation()
+  }, [canDeleteStrategy, onRemoveStrategy])
 
   return (
     <Modal
@@ -91,9 +87,7 @@ const RemoveExistingStrategyModal = ({
 }
 
 RemoveExistingStrategyModal.propTypes = {
-  strategy: PropTypes.shape({
-    label: PropTypes.string,
-  }),
+  strategy: PropTypes.shape(STRATEGY_SHAPE),
   isOpen: PropTypes.bool,
   onClose: PropTypes.func.isRequired,
   onRemoveStrategy: PropTypes.func.isRequired,

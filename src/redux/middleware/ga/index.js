@@ -1,83 +1,94 @@
-import ua from 'universal-analytics'
+import ReactGA from 'react-ga4'
 import { v4 } from 'uuid'
 
 import {
-  GA_CANCEL_AO, GA_PAGEVIEW, GA_CANCEL_ATOMIC_ORDER, GA_CREATE_STRATEGY, GA_SUBMIT_ATOMIC_ORDER, GA_SUBMIT_AO, GA_UPDATE_SETTINGS, GA_EDIT_AO,
+  GA_CANCEL_AO,
+  GA_PAGEVIEW,
+  GA_CANCEL_ATOMIC_ORDER,
+  GA_CREATE_STRATEGY,
+  GA_SUBMIT_ATOMIC_ORDER,
+  GA_SUBMIT_AO,
+  GA_UPDATE_SETTINGS,
+  GA_EDIT_AO,
 } from '../../constants/ga'
 
 import { isElectronApp } from '../../config'
 import { getGACustomerId, storeGACustomerId } from '../../../util/ga'
 
-const GA_ID_ELECTRON_APP = 'UA-163797164-1'
-const GA_ID_HOSTED_WEB = 'UA-212993021-1'
+const GA_ID_ELECTRON_APP = 'G-YRD2QPKP8G'
+const GA_ID_HOSTED_WEB = 'G-XC213WGP9N'
 
 const gaID = isElectronApp ? GA_ID_ELECTRON_APP : GA_ID_HOSTED_WEB
 
-const gaCustomerId = getGACustomerId()
-
-if (!gaCustomerId) {
+if (!getGACustomerId()) {
   storeGACustomerId(v4())
 }
 
-const ReactGA = ua(gaID, getGACustomerId())
-ReactGA.set('aip', '1')
+ReactGA.initialize(gaID, {
+  gaOptions: {
+    anonymizeIp: true,
+    userId: getGACustomerId(),
+  },
+})
 
 export default () => {
-  return store => next => (action = {}) => {
+  return () => (next) => (action = {}) => {
     const { type, payload = {} } = action
-    const state = store.getState()
-    const { ui = {} } = state
-    const { settings = {} } = ui
-    const ga = isElectronApp ? settings?.ga : true
 
     switch (type) {
       case GA_SUBMIT_ATOMIC_ORDER: {
-        if (ga) {
-          ReactGA.event('atomicOrder', 'atomicOrder.submit').send()
-        }
-        break
-      }
-      case GA_UPDATE_SETTINGS: {
-        if (ga) {
-          ReactGA.event('settings', 'settings.update').send()
-        }
-        break
-      }
-      case GA_SUBMIT_AO: {
-        if (ga) {
-          ReactGA.event('ao', 'ao.submit').send()
-        }
-        break
-      }
-      case GA_EDIT_AO: {
-        if (ga) {
-          ReactGA.event('ao', 'ao.edit').send()
-        }
-        break
-      }
-      case GA_CREATE_STRATEGY: {
-        if (ga) {
-          ReactGA.event('strategy', 'strategy.create').send()
-        }
+        ReactGA.event({
+          category: 'atomicOrder',
+          action: 'atomicOrder.submit',
+        })
         break
       }
       case GA_CANCEL_ATOMIC_ORDER: {
-        if (ga) {
-          ReactGA.event('atomicOrder', 'atomicOrder.cancel').send()
-        }
+        ReactGA.event({
+          category: 'atomicOrder',
+          action: 'atomicOrder.cancel',
+        })
+        break
+      }
+      case GA_SUBMIT_AO: {
+        ReactGA.event({
+          category: 'ao',
+          action: 'ao.submit',
+        })
+        break
+      }
+      case GA_EDIT_AO: {
+        ReactGA.event({
+          category: 'ao',
+          action: 'ao.edit',
+        })
         break
       }
       case GA_CANCEL_AO: {
-        if (ga) {
-          ReactGA.event('ao', 'ao.cancel').send()
-        }
+        ReactGA.event({
+          category: 'ao',
+          action: 'ao.cancel',
+        })
+        break
+      }
+      case GA_UPDATE_SETTINGS: {
+        ReactGA.event({
+          category: 'settings',
+          action: 'settings.update',
+        })
+        break
+      }
+      case GA_CREATE_STRATEGY: {
+        ReactGA.event({
+          category: 'strategy',
+          action: 'strategy.create',
+        })
         break
       }
       case GA_PAGEVIEW: {
         const { page } = payload
-        if (ga) {
-          ReactGA.pageview(page).send()
-        }
+
+        ReactGA.send({ hitType: 'pageview', page })
         break
       }
       default: {

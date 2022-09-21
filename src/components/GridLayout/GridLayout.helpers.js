@@ -43,6 +43,10 @@ export const COMPONENT_IDS = {
   TRADING_ORDER_HISTORY: '1591961781970000',
   TRADING_TRADES: '1591961760845000',
   TRADING_TRADING_STATE_PANEL: '1591873390469000',
+  STRATEGIES_LIST_TABLE: '1000',
+  STRATEGIES_SIDEBAR: '1001',
+  STRATEGIES_PERFORMANCE_METRICS: '1002',
+  STRATEGIES_TRADES_TABLE: '1003',
 }
 
 export const COMPONENT_TYPES_MARKET_DATA = {
@@ -110,6 +114,7 @@ export const COMPONENT_DIMENSIONS = {
 
 export const DEFAULT_TRADING_KEY = 'Default Trading Layout'
 export const DEFAULT_MARKET_KEY = 'Default Market Data Layout'
+export const DEFAULT_STRATEGIES_KEY = 'Default Strategies Data Layout'
 
 const componentForType = (c) => {
   switch (c) {

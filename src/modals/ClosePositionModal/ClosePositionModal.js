@@ -9,7 +9,7 @@ import Modal from '../../ui/Modal'
 import './style.css'
 
 const ClosePositionModal = ({
-  rowData, changeClosePositionModalState, visible, closePosition, authToken, getMarketPair,
+  rowData, closeClosePositionModal, visible, closePosition, authToken, getMarketPair,
 }) => {
   const { t } = useTranslation()
   const [pair, setPair] = useState(null)
@@ -26,7 +26,7 @@ const ClosePositionModal = ({
   }, [rowData, getMarketPair])
 
   const onClose = () => {
-    changeClosePositionModalState(false, {})
+    closeClosePositionModal()
   }
 
   const onSubmit = () => {
@@ -60,7 +60,7 @@ const ClosePositionModal = ({
 }
 
 ClosePositionModal.propTypes = {
-  changeClosePositionModalState: PropTypes.func.isRequired,
+  closeClosePositionModal: PropTypes.func.isRequired,
   getMarketPair: PropTypes.func.isRequired,
   closePosition: PropTypes.func.isRequired,
   visible: PropTypes.bool.isRequired,

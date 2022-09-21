@@ -1,0 +1,25 @@
+@import "../../variables.scss";
+
+.hfui-indicator {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  display: inline-block;
+  opacity: 1;
+
+  &.green {
+    background-color: $green-color;
+  }
+
+  &.red {
+    background-color: $red-color;
+  }
+
+  &.white {
+    background-color: $white-color;
+  }
+
+  &.grey {
+    background-color: $grey-color;
+  }
+}

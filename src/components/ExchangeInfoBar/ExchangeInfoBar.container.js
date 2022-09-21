@@ -15,6 +15,7 @@ import { getTicker, getTickersArray, getMarkets } from '../../redux/selectors/me
 
 import ExchangeInfoBar from './ExchangeInfoBar'
 import { getActiveMarketCcyId } from '../../redux/selectors/zendesk'
+import { UI_MODAL_KEYS } from '../../redux/constants/modals'
 
 const { getCurrencySymbolMemo } = reduxSelectors
 
@@ -55,7 +56,7 @@ const mapDispatchToProps = (dispatch) => ({
   },
   setVolumeUnit: (key) => dispatch(UIActions.changeTickersVolumeUnit(key)),
   updateShowOnlyFavoritePairs: (showOnlyFavoritePairs) => dispatch(WSActions.saveSettings(SETTINGS_KEYS.SHOW_ONLY_FAVORITE_PAIRS, showOnlyFavoritePairs)),
-  showCcyIconModal: () => dispatch(UIActions.changeCcyInfoModalState(true)),
+  showCcyIconModal: () => dispatch(UIActions.changeUIModalState(UI_MODAL_KEYS.CCY_INFO_MODAL, true)),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(ExchangeInfoBar)

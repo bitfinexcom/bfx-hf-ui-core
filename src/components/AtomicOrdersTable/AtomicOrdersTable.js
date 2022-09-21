@@ -7,6 +7,8 @@ import { getAtomicOrders } from '../OrderForm/OrderForm.orders.helpers'
 
 import useSize from '../../hooks/useSize'
 import AtomicOrdersTableColumns from './AtomicOrdersTable.columns'
+import { ORDER_SHAPE } from '../../constants/prop-types-shapes'
+
 import './style.css'
 
 const AtomicOrdersTable = ({
@@ -40,8 +42,8 @@ const AtomicOrdersTable = ({
 
 AtomicOrdersTable.propTypes = {
   authToken: PropTypes.string.isRequired,
-  atomicOrders: PropTypes.objectOf(PropTypes.object),
-  filteredAtomicOrders: PropTypes.objectOf(PropTypes.object),
+  atomicOrders: PropTypes.objectOf(PropTypes.shape(ORDER_SHAPE)),
+  filteredAtomicOrders: PropTypes.objectOf(PropTypes.shape(ORDER_SHAPE)),
   getMarketPair: PropTypes.func.isRequired,
   cancelOrder: PropTypes.func.isRequired,
   editOrder: PropTypes.func.isRequired,

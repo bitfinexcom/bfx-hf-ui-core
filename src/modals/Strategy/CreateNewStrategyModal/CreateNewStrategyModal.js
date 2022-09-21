@@ -1,78 +1,53 @@
-import React, { useState, memo } from 'react'
+import React, { useState, memo, useCallback } from 'react'
 import _isEmpty from 'lodash/isEmpty'
-import _size from 'lodash/size'
-import _map from 'lodash/map'
 import PropTypes from 'prop-types'
 import { useTranslation } from 'react-i18next'
-
-import Templates from '../../../components/StrategyEditor/templates'
-import MACD from '../../../components/StrategyEditor/templates/macd_cross'
-import {
-  MAX_STRATEGY_LABEL_LENGTH as MAX_LABEL_LENGTH,
-} from '../../../constants/variables'
 import Input from '../../../ui/Input'
 import Modal from '../../../ui/Modal'
-import Dropdown from '../../../ui/Dropdown'
+import blankTemplate from '../../../components/StrategyEditor/templates/blank'
+import { validateStrategyName } from '../../../components/StrategyEditor/StrategyEditor.helpers'
+
 import './style.css'
 
 const CreateNewStrategyModal = ({
-  onSubmit, onClose, gaCreateStrategy, isOpen,
+  onSubmit, onClose, isOpen,
 }) => {
   const [label, setLabel] = useState('')
   const [error, setError] = useState('')
-  const [template, setTemplate] = useState(MACD.label)
 
   const { t } = useTranslation()
 
-  const onSubmitHandler = () => {
-    const labelSize = _size(label)
-
-    if (_isEmpty(label)) {
-      setError(t('strategyEditor.newStrategyModalEmptyError'))
+  const onSubmitHandler = useCallback(() => {
+    const err = validateStrategyName(label, t)
+    setError(err)
+    if (err) {
       return
     }
 
-    if (labelSize > MAX_LABEL_LENGTH) {
-      setError(t('strategyEditor.newStrategyModalLongError', { labelSize, MAX_LABEL_LENGTH }))
-      return
-    }
-
-    gaCreateStrategy()
-
-    onSubmit(label, template)
+    onSubmit(label, blankTemplate)
     onClose()
-  }
+  }, [label, onClose, onSubmit, t])
 
   return (
     <Modal
       isOpen={isOpen}
       onClose={onClose}
       onSubmit={onSubmitHandler}
-      className='hfui-createnewstrategymodal__wrapper'
+      className='hfui-createnewstrategymodal'
       label={t('strategyEditor.newStrategyModalTitle')}
     >
+      <div className='hfui-createnewstrategymodal__content'>
+        <Input
+          type='text'
+          placeholder={t('ui.name')}
+          value={label}
+          onChange={setLabel}
+        />
 
-      <Input
-        type='text'
-        placeholder='Label'
-        value={label}
-        onChange={setLabel}
-      />
+        {!_isEmpty(error) && <p className='error'>{error}</p>}
 
-      <Dropdown
-        value={template}
-        onChange={setTemplate}
-        options={_map(Templates, _t => ({
-          label: _t.label,
-          value: _t.label,
-        }))}
-      />
-
-      {!_isEmpty(error) && (
-        <p className='error'>{error}</p>
-      )}
-
-      <Modal.Footer>
+      </div>
+      <Modal.Footer className='hfui-createnewstrategymodal__footer'>
         <Modal.Button primary onClick={onSubmitHandler}>
           {t('ui.createBtn')}
         </Modal.Button>
@@ -84,12 +59,10 @@ const CreateNewStrategyModal = ({
 CreateNewStrategyModal.propTypes = {
   onSubmit: PropTypes.func.isRequired,
   onClose: PropTypes.func.isRequired,
-  gaCreateStrategy: PropTypes.func,
   isOpen: PropTypes.bool,
 }
 
 CreateNewStrategyModal.defaultProps = {
-  gaCreateStrategy: () => { },
   isOpen: true,
 }
 

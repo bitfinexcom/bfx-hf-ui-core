@@ -1,0 +1,17 @@
+@import '../../../variables.scss';
+
+.launch-strategy-modal {
+  .modal__body {
+    > p {
+      font-size: 14px;
+      white-space: pre-line;
+    }
+
+    .modal__footer {
+      display: flex;
+      justify-content: flex-end;
+      align-items: baseline;
+      margin-left: 0;
+    }
+  }
+}
