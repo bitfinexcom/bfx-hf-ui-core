@@ -76,7 +76,7 @@ const Navbar = () => {
             icon='notifications'
             onClick={() => dispatch(UIActions.toggleUIModalState(UI_MODAL_KEYS.NOTIFICATIONS_PANEL))}
           />
-          <AppSettings />
+          {isElectronApp && <AppSettings />}
           <Dropdown
             label={(
               <>

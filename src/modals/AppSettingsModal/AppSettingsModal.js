@@ -5,7 +5,6 @@ import _isFunction from 'lodash/isFunction'
 import { useTranslation } from 'react-i18next'
 
 import { useDispatch, useSelector } from 'react-redux'
-import { isElectronApp } from '../../redux/config'
 import Modal from '../../ui/Modal'
 import {
   getUIModalStateForKey,
@@ -17,7 +16,6 @@ import {
   DEFAULT_TAB,
   SETTINGS_TABS,
   SETTINGS_TABS_COMPONENTS,
-  WEB_SETTINGS_TABS,
 } from './AppSettingsModal.constants'
 
 import './style.css'
@@ -45,7 +43,7 @@ const AppSettingsModal = () => {
   const { t } = useTranslation()
 
   const tabs = useMemo(() => {
-    return _map(isElectronApp ? SETTINGS_TABS : WEB_SETTINGS_TABS, (tab) => ({
+    return _map(SETTINGS_TABS, (tab) => ({
       key: tab,
       label: t(`appSettings.${tab}`),
       component: SETTINGS_TABS_COMPONENTS[tab],

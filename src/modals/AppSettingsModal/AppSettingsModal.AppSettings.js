@@ -19,7 +19,7 @@ import {
   getShouldHideOnClose,
   getIsFullscreen,
 } from '../../redux/selectors/ui'
-import { isElectronApp, isMacOS } from '../../redux/config'
+import { isMacOS } from '../../redux/config'
 import { UI_KEYS } from '../../redux/constants/ui_keys'
 
 const ipcHelpers = window.electronService
@@ -87,35 +87,30 @@ const AppSettings = () => {
           options={themes}
         />
       </div>
-
-      {isElectronApp && (
-        <>
-          <br />
-          <div className='appsettings-modal__setting'>
-            <Checkbox
-              onChange={hideOnCloseHandler}
-              label={t('appSettings.minimizeToTrayCheckbox')}
-              checked={hideOnCloseChecked}
-              className='appsettings-modal__checkbox'
-            />
-            <div className='appsettings-modal__description'>
-              {t('appSettings.minimizeToTrayText', {
-                key: isMacOS ? '⌘+Q' : 'Ctrl+Q',
-              })}
-            </div>
-          </div>
-          <div className='appsettings-modal__setting'>
-            <Checkbox
-              onChange={fullscreenHandler}
-              label={t('appSettings.fullscreenCheckbox', {
-                key: isMacOS ? '⌘+F11' : 'F11',
-              })}
-              checked={fullscreenChecked}
-              className='appsettings-modal__checkbox'
-            />
-          </div>
-        </>
-      )}
+      <br />
+      <div className='appsettings-modal__setting'>
+        <Checkbox
+          onChange={hideOnCloseHandler}
+          label={t('appSettings.minimizeToTrayCheckbox')}
+          checked={hideOnCloseChecked}
+          className='appsettings-modal__checkbox'
+        />
+        <div className='appsettings-modal__description'>
+          {t('appSettings.minimizeToTrayText', {
+            key: isMacOS ? '⌘+Q' : 'Ctrl+Q',
+          })}
+        </div>
+      </div>
+      <div className='appsettings-modal__setting'>
+        <Checkbox
+          onChange={fullscreenHandler}
+          label={t('appSettings.fullscreenCheckbox', {
+            key: isMacOS ? '⌘+F11' : 'F11',
+          })}
+          checked={fullscreenChecked}
+          className='appsettings-modal__checkbox'
+        />
+      </div>
     </div>
   )
 }

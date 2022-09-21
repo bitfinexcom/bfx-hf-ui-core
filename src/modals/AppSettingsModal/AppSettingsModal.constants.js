@@ -1,5 +1,4 @@
 import React from 'react'
-import { isElectronApp } from '../../redux/config'
 import AppSettingsModalAbout from './AppSettingsModal.About'
 import AppSettingsModalApiKeys from './AppSettingsModal.ApiKeys'
 import AppSettingsModalAppSettings from './AppSettingsModal.AppSettings'
@@ -22,9 +21,7 @@ export const SETTINGS_TABS_COMPONENTS = {
   [SETTINGS_TABS.About]: <AppSettingsModalAbout />,
 }
 
-export const WEB_SETTINGS_TABS = [SETTINGS_TABS.AppSettings, SETTINGS_TABS.About]
-
-export const DEFAULT_TAB = isElectronApp ? SETTINGS_TABS.General : SETTINGS_TABS.AppSettings
+export const DEFAULT_TAB = SETTINGS_TABS.General
 
 export const TERMS_CONDITIONS_URL = 'https://www.bitfinex.com/legal/general/api-terms'
 
