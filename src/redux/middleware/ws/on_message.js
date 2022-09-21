@@ -80,6 +80,13 @@ export default (alias, store) => (e = {}) => {
         break
       }
 
+      case 'info.auid': {
+        const [, auid, { mode }] = payload
+
+        store.dispatch(WSActions.recvUserAuid(auid, mode))
+        break
+      }
+
       case 'auth.user_id': {
         const [, userId, { mode } = {}] = payload
         store.dispatch(WSActions.recvUserId(userId))

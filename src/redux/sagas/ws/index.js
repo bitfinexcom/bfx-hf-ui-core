@@ -11,7 +11,6 @@ import orderHist from './data_order_hist'
 
 import onConnected from './on_connected'
 import onDisconnected from './on_disconnected'
-import onAuth from './on_auth'
 
 export default function* () {
   yield takeEvery(t.BUFF_SEND, messageQueueWorker)
@@ -22,7 +21,6 @@ export default function* () {
   yield takeEvery(t.DATA_BALANCES, balances)
   yield takeEvery(t.DATA_BALANCE, balance)
   yield takeEvery(t.DATA_ORDER_HIST, orderHist)
-  yield takeEvery(t.ON_AUTH_RESPONSE, onAuth)
 
   yield fork(connectionWorker)
   yield fork(pingRebootAppWorker)
