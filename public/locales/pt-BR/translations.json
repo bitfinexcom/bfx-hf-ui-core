@@ -727,7 +727,7 @@
     "templatesTab": "Modelos",
     "savedStrategiesTab": "Rascunhos",
     "selectMarketDescription": "Selecionar mercado",
-    "selectMarketPlaceholder": "Selecionar mercado",
+    "selectMarketDescriptionDisabled": "Mercado Selecionado",
     "selectCandleDurationDescription": "Selecione a duração da vela",
     "fullscreenChartBtn": "Gráfico em Tela Cheia",
     "exitFullscreenChartBtn": "Sair da tela cheia",

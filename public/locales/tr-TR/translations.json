@@ -727,7 +727,7 @@
     "templatesTab": "Templates",
     "savedStrategiesTab": "Drafts",
     "selectMarketDescription": "Select market",
-    "selectMarketPlaceholder": "Select a market",
+    "selectMarketDescriptionDisabled": "Selected Market",
     "selectCandleDurationDescription": "Select candle duration",
     "fullscreenChartBtn": "Fullscreen Chart",
     "exitFullscreenChartBtn": "Exit fullscreen",

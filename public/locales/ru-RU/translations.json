@@ -727,7 +727,7 @@
     "templatesTab": "Шаблоны",
     "savedStrategiesTab": "Черновики",
     "selectMarketDescription": "Выбрать рынок",
-    "selectMarketPlaceholder": "Выбрать рынок",
+    "selectMarketDescriptionDisabled": "Выбранный рынок",
     "selectCandleDurationDescription": "Выбрать длительность свечи",
     "fullscreenChartBtn": "Полноэкранный график",
     "exitFullscreenChartBtn": "Выйти из полноэкранного режима",
