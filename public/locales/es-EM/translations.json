@@ -727,7 +727,7 @@
     "templatesTab": "Plantillas",
     "savedStrategiesTab": "Borradores",
     "selectMarketDescription": "Seleccionar mercado",
-    "selectMarketPlaceholder": "Seleciona un mercado",
+    "selectMarketDescriptionDisabled": "Mercado seleccionado",
     "selectCandleDurationDescription": "Selecciona la duración de la vela",
     "fullscreenChartBtn": "Gráfica en pantalla completa",
     "exitFullscreenChartBtn": "Salir de pantalla completa",
