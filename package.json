@@ -81,9 +81,9 @@
   "dependencies": {
     "@projectstorm/react-diagrams": "^5.3.2",
     "@svgr/webpack": "5.5.0",
-    "@ufx-ui/bfx-containers": "0.13.9",
-    "@ufx-ui/core": "0.13.9",
-    "@ufx-ui/utils": "^0.13.1",
+    "@ufx-ui/bfx-containers": "0.14.0",
+    "@ufx-ui/core": "0.14.0",
+    "@ufx-ui/utils": "0.14.0",
     "axios": "^0.25.0",
     "bfx-api-node-models": "^1.6.1",
     "bfx-api-node-util": "^1.0.11",
