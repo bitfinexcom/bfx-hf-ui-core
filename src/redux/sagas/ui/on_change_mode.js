@@ -6,6 +6,7 @@ export default function* onChangeMode(action) {
   const { payload: { isPaperTrading } } = action
 
   yield put(UIActions.setTradingMode(isPaperTrading))
+  yield put(UIActions.setPendoState(false))
   yield put(WSActions.setUsername(null))
   yield put(UIActions.setMarketFromStore(isPaperTrading))
   yield put(WSActions.recvBalances({ balances: [] }))
