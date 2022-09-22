@@ -12,7 +12,7 @@ export default function* ({ payload = {} }) {
   const { pendo } = window
 
   if (!PENDO_API_KEY) {
-    debug('pendo  api key is absent')
+    debug('pendo api key is absent')
     return
   }
 
