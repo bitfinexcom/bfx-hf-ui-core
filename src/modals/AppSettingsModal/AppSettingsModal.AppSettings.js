@@ -19,7 +19,7 @@ import {
   getShouldHideOnClose,
   getIsFullscreen,
 } from '../../redux/selectors/ui'
-import { isElectronApp } from '../../redux/config'
+import { isElectronApp, isMacOS } from '../../redux/config'
 import { UI_KEYS } from '../../redux/constants/ui_keys'
 
 const ipcHelpers = window.electronService
@@ -99,13 +99,17 @@ const AppSettings = () => {
               className='appsettings-modal__checkbox'
             />
             <div className='appsettings-modal__description'>
-              {t('appSettings.minimizeToTrayText')}
+              {t('appSettings.minimizeToTrayText', {
+                key: isMacOS ? '⌘+Q' : 'Ctrl+Q',
+              })}
             </div>
           </div>
           <div className='appsettings-modal__setting'>
             <Checkbox
               onChange={fullscreenHandler}
-              label={t('appSettings.fullscreenCheckbox')}
+              label={t('appSettings.fullscreenCheckbox', {
+                key: isMacOS ? '⌘+F11' : 'F11',
+              })}
               checked={fullscreenChecked}
               className='appsettings-modal__checkbox'
             />

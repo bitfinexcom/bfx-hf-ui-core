@@ -23,6 +23,8 @@ const isDevEnv = process.env.REACT_APP_DEV === 'true'
 
 const env = isElectronApp ? 'electron' : process.env.REACT_APP_ENVIRONMENT
 
+const isMacOS = navigator.userAgent.indexOf('Mac') !== -1
+
 const PUB_REST_API_URL = isElectronApp ? 'http://localhost:45001' : process.env.REACT_APP_UFX_PUBLIC_API_URL
 
 const appVersion = process.env.npm_package_version
@@ -52,6 +54,7 @@ export {
   isElectronApp,
   appVersion,
   env,
+  isMacOS,
   CHART_URL,
   HONEY_AUTH_URL,
   RELEASE_URL,
