@@ -5,7 +5,8 @@ import _values from 'lodash/values'
 import { getSavedStrategies } from '.'
 import sortedByTimePastStrategies from './get_sorted_by_time_past_strategies'
 
-const getDraftStrategies = createSelector([getSavedStrategies, sortedByTimePastStrategies],
+const getDraftStrategies = createSelector(
+  [getSavedStrategies, sortedByTimePastStrategies],
   (savedStrategies, pastStrategies) => {
     const draftStrategies = { ...savedStrategies }
     _forEach(pastStrategies, (pastStrategy) => {
@@ -17,6 +18,7 @@ const getDraftStrategies = createSelector([getSavedStrategies, sortedByTimePastS
     const sortedArray = _orderBy(draftStrategiesArray, 'savedTs', 'desc')
 
     return sortedArray
-  })
+  },
+)
 
 export default getDraftStrategies

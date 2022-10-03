@@ -81,15 +81,6 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch(UIActions.setUIValue(UI_KEYS.isOrderExecuting, executing))
   },
 
-  saveState: (componentID, state) => {
-    dispatch(
-      UIActions.saveComponentState({
-        state,
-        componentID,
-      }),
-    )
-  },
-
   submitOrder: ({ authToken, packet, wsConnected }) => {
     debug('submitting order %j', packet)
     dispatch(
