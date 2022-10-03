@@ -37,8 +37,6 @@
   ],
   "devDependencies": {
     "@babel/core": "^7.19.3",
-    "@typescript-eslint/eslint-plugin": "^5.38.1",
-    "@typescript-eslint/parser": "^5.38.1",
     "babel-loader": "^8.2.5",
     "babel-plugin-named-asset-import": "^0.3.8",
     "babel-preset-react-app": "^10.0.1",
@@ -48,7 +46,6 @@
     "eslint": "^8.24.0",
     "eslint-config-airbnb": "^19.0.4",
     "eslint-config-react-app": "^7.0.1",
-    "eslint-plugin-flowtype": "^8.0.3",
     "eslint-plugin-import": "^2.26.0",
     "eslint-plugin-jsx-a11y": "^6.6.1",
     "eslint-plugin-lodash": "^7.4.0",
@@ -79,7 +76,6 @@
     "workbox-webpack-plugin": "^5.0.0"
   },
   "dependencies": {
-    "@projectstorm/react-diagrams": "^6.7.4",
     "@svgr/webpack": "5.5.0",
     "@ufx-ui/bfx-containers": "0.14.0",
     "@ufx-ui/core": "0.14.0",
