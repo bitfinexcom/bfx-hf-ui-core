@@ -20,7 +20,6 @@ import FullscreenModeBar from '../FullscreenModeBar'
 
 import './style.css'
 
-// const StrategyEditorPage = lazy(() => import('../../pages/StrategyEditor'))
 const TradingPage = lazy(() => import('../../pages/Trading'))
 const MarketDataPage = lazy(() => import('../../pages/MarketData'))
 const AuthenticationPage = lazy(() => import('../../pages/Authentication'))
@@ -152,7 +151,7 @@ const HFUI = (props) => {
   return (
     <Suspense fallback={<></>}>
       {isElectronApp && <FullscreenModeBar />}
-      {authToken ? (
+      {authToken && (
         <>
           <Switch>
             <Redirect from='/index.html' to='/' exact />
@@ -171,14 +170,21 @@ const HFUI = (props) => {
               path={Routes.marketData.path}
               render={() => <MarketDataPage />}
             />
+            <Route
+              path='*'
+              render={() => <Redirect to={Routes.tradingTerminal.path} />}
+            />
           </Switch>
           <ModalsWrapper isElectronApp={isElectronApp} />
         </>
-      ) : (
-        <>{isElectronApp && <AuthenticationPage />}</>
       )}
       <NotificationsSidebar notificationsVisible={notificationsVisible} />
-      {isElectronApp && <AppUpdateBar />}
+      {isElectronApp && (
+        <>
+          {!authToken && <AuthenticationPage />}
+          <AppUpdateBar />
+        </>
+      )}
     </Suspense>
   )
 }
