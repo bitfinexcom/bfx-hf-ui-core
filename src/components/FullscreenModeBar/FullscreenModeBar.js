@@ -4,13 +4,11 @@ import { CSSTransition } from 'react-transition-group'
 import { Button, Intent } from '@ufx-ui/core'
 import { useTranslation } from 'react-i18next'
 import WSActions from '../../redux/actions/ws'
-import {
-  getUIState,
-  SETTINGS_KEYS,
-} from '../../redux/selectors/ui'
+import { getUIState, SETTINGS_KEYS } from '../../redux/selectors/ui'
 import useToggle from '../../hooks/useToggle'
 import { UI_KEYS } from '../../redux/constants/ui_keys'
 import UIActions from '../../redux/actions/ui'
+import { isMacOS } from '../../redux/config'
 
 import './style.css'
 
@@ -53,7 +51,7 @@ const FullscreenModeBar = () => {
         clearTimeout(timeoutRef.current)
       }
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [shouldBarBeShown])
 
   return (
@@ -77,7 +75,9 @@ const FullscreenModeBar = () => {
           {t('appSettings.fullscreenModeBarText')}
         </p>
         <Button intent={Intent.INFO} onClick={onExitFullscreen} small>
-          {t('appSettings.exitFullscreenButton')}
+          {t('appSettings.exitFullscreenButton', {
+            key: isMacOS ? '⌘+F11' : 'F11',
+          })}
         </Button>
       </div>
     </CSSTransition>
