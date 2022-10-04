@@ -475,6 +475,11 @@
     "title": "Reset API credentials",
     "text": "This will reset your API credentials. Are you sure you want to proceed?"
   },
+  "resetDataConfirmModal": {
+    "title": "Confirm reset data",
+    "text": "This action will reset the app to its initial state and erase all the information and logs created up to this moment. Do you want to proceed?",
+    "exportToJSON": "Export all strategies as JSON before reseting"
+  },
   "editOrderModal": {
     "title": "Edit order",
     "noOrder": "No order selected"
