@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unknown-property */
 import React, {
   memo, useEffect, useMemo, useState, useCallback,
 } from 'react'
