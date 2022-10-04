@@ -37,6 +37,10 @@ const SOURCE_CODE_URL = 'https://github.com/bitfinexcom/bfx-hf-ui'
 
 const LICENCE_URL = 'https://github.com/bitfinexcom/bfx-hf-ui/blob/master/LICENSE'
 
+const MARGIN_TRADING_ARTICLE_URL = 'https://support.bitfinex.com/hc/en-us/articles/115004555165-What-is-Margin-Trading-on-Bitfinex'
+
+const STOP_ORDER_ARTICLE_URL = 'https://support.bitfinex.com/hc/en-us/articles/115003506125-What-is-a-Stop-Order-on-Bitfinex'
+
 // product description link
 const HF_DESC_URL = 'https://support.bitfinex.com/hc/en-us/articles/900000096823-Honey-Framework'
 
@@ -65,4 +69,6 @@ export {
   isDevEnv,
   PASSWORD_MIN_LENGTH,
   PASSWORD_MAX_LENGTH,
+  MARGIN_TRADING_ARTICLE_URL,
+  STOP_ORDER_ARTICLE_URL,
 }

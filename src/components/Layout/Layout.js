@@ -1,10 +1,11 @@
 import React from 'react'
 import cx from 'clsx'
-import './style.css'
 
 import Navbar from '../Navbar'
 import StatusBar from '../StatusBar'
 import { MIN_SAFE_WIDTH } from '../../constants/variables'
+
+import './style.css'
 
 // eslint-disable-next-line react/prop-types
 function Layout({ children, ...props }) {

@@ -4,47 +4,53 @@ import { useTranslation } from 'react-i18next'
 import { ReactComponent as CheckIcon } from './check.svg'
 import { ReactComponent as ErrorIcon } from './error.svg'
 import { ReactComponent as ClockIcon } from './clock.svg'
+import AttentionBar from '../../ui/AttentionBar/AttentionBar'
 
-const ApiBanner = ({
-  isUpdating,
-  apiKeyState,
-}) => {
+const ApiBanner = ({ isUpdating, apiKeyState }) => {
   const { configured, valid } = apiKeyState
   const { t } = useTranslation()
 
   if (isUpdating) {
     return (
-      <div className='appsettings-modal__api-configuration-message is-warning'>
+      <AttentionBar
+        yellow
+        className='appsettings-modal__api-configuration-message'
+      >
         <ClockIcon />
-        {' '}
         {t('appSettings.validating')}
-      </div>
+      </AttentionBar>
     )
   }
   if (!configured) {
     return (
-      <div className='appsettings-modal__api-configuration-message is-error'>
+      <AttentionBar
+        red
+        className='appsettings-modal__api-configuration-message'
+      >
         <ErrorIcon />
-        {' '}
         {t('appSettings.apiNotConfigured')}
-      </div>
+      </AttentionBar>
     )
   }
   if (!valid) {
     return (
-      <div className='appsettings-modal__api-configuration-message is-error'>
+      <AttentionBar
+        red
+        className='appsettings-modal__api-configuration-message'
+      >
         <ErrorIcon />
-        {' '}
         {t('appSettings.apiNotValid')}
-      </div>
+      </AttentionBar>
     )
   }
   return (
-    <div className='appsettings-modal__api-configuration-message is-success'>
+    <AttentionBar
+      green
+      className='appsettings-modal__api-configuration-message'
+    >
       <CheckIcon />
-      {' '}
       {t('appSettings.configured')}
-    </div>
+    </AttentionBar>
   )
 }
 

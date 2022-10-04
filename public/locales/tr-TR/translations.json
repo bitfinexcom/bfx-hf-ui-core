@@ -517,7 +517,7 @@
     "tifDate": "TIF Date",
     "postOnlyCheckbox": "POST-ONLY",
     "postOnlyMessage": "\"Post Only\" limit orders are orders that allow you to be sure to always pay the maker fee. When placed, a \"Post Only\" limit order is either inserted into the order book or cancelled (only for limit orders)",
-    "laverage": "Kaldıraç",
+    "leverage": "Kaldıraç",
     "stopPrice": "Stop Fiyatı",
     "limitPrice": "Limit Fiyatı",
     "distance": "Aralık",
@@ -743,13 +743,6 @@
       "other": "Other..."
     },
     "closeStrategy": "Close strategy",
-    "executionOptionsModal": {
-      "title": "Select execution parameters before launch",
-      "disabledTitle": "Execution parameters",
-      "capitalAllocationLabel": "Capital Allocation",
-      "stopLoss": "Stop-Loss",
-      "maxDrawdown": "Maximum Drawdown"
-    },
     "perfomanceMetrics": {
       "title": "Perfomance metrics",
       "runTime": "Strategy Run Time"
@@ -865,5 +858,10 @@
     "warning_2": "This action can not be undone!",
     "strategyName": "the strategy name",
     "input_placeholder": "Type {{label}} to delete it"
+  },
+  "strategySettingsModal": {
+    "capitalAllocationLabel": "Capital Allocation",
+    "stopLoss": "Stop-Loss",
+    "maxDrawdown": "Maximum Drawdown"
   }
 }

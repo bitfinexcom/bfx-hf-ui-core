@@ -82,7 +82,7 @@ export default (t) => ({
 
     lev: {
       component: 'input.range',
-      label: t('orderForm.laverage'),
+      label: t('orderForm.leverage'),
       min: 1,
       max: 100,
       default: 10,

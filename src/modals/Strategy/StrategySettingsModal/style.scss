@@ -1,0 +1,63 @@
+@import "../../../variables.scss";
+
+.hfui-execution-options-modal-container {
+  .modal__body {
+    min-height: 430px;
+  }
+}
+.hfui-execution-options-modal {
+  &__option {
+    .hfui-execution-options-modal-selection {
+      display: flex;
+      flex: 0 50%;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+
+      > p,
+      > div {
+        flex: 0 50%;
+      }
+    }
+
+    &:not(:last-child) {
+      margin-bottom: spacing();
+    }
+    .title {
+      color: var(--primary-8);
+      font-weight: 700;
+      margin-bottom: 5px;
+      font-size: 15px;
+
+      .title-tooltip {
+        margin-left: 5px;
+        cursor: pointer;
+      }
+    }
+  }
+
+  &__dropdown-choose {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+
+    .hfui-dropdown__wrapper {
+      width: 200px;
+    }
+  }
+
+  &__stop-order-input {
+    display: flex;
+    justify-content: space-evenly;
+  }
+
+  &__amount {
+    width: 150px !important;
+    margin-bottom: 0;
+  }
+
+  &__right-placeholder {
+    margin-top: 8px;
+    color: var(--shade-3);
+  }
+}

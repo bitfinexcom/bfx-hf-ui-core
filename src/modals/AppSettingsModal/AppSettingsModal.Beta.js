@@ -7,6 +7,7 @@ import WSActions from '../../redux/actions/ws'
 import GAActions from '../../redux/actions/google_analytics'
 import { SETTINGS_KEYS, getIsBetaVersion } from '../../redux/selectors/ui'
 import InnerModal from '../../ui/InnerModal/InnerModal'
+import AttentionBar from '../../ui/AttentionBar/AttentionBar'
 
 const Beta = () => {
   const [isBetaModalOpen, setIsBetaModalOpen] = useState(false)
@@ -49,9 +50,9 @@ const Beta = () => {
           {t('appSettings.betaProgramText')}
         </div>
       </div>
-      <div className='appsettings-modal__api-configuration-message is-success'>
+      <AttentionBar green>
         {t('appSettings.betaDesclaimer')}
-      </div>
+      </AttentionBar>
       {isBetaModalOpen && (
         <InnerModal
           title={(

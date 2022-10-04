@@ -119,7 +119,7 @@
     "sliceAmountHelp": "Allows individual buy & sell amounts to be adjusted",
     "sliceAmountPerc": "Slice Amount as %",
     "sliceAmountPercHelp": "Takes percentage of total order amount for individual buy & sell amounts",
-    "leverage": "Laverage",
+    "leverage": "Leverage",
     "action": "Action",
     "buy": "Buy",
     "sell": "Sell",
@@ -532,7 +532,7 @@
     "tifDate": "TIF Date",
     "postOnlyCheckbox": "POST-ONLY",
     "postOnlyMessage": "\"Post Only\" limit orders are orders that allow you to be sure to always pay the maker fee. When placed, a \"Post Only\" limit order is either inserted into the order book or cancelled (only for limit orders)",
-    "laverage": "Leverage",
+    "leverage": "Leverage",
     "stopPrice": "Stop Price",
     "limitPrice": "Limit Price",
     "distance": "Distance",
@@ -650,10 +650,6 @@
     "saved": "Saved",
     "errorsInIDE": "Resolve code errors and save",
     "newStrategy": "Create a new strategy",
-    "capitalAllocationHelp": "This is the maximum amount of capital you want to deploy to this strategy, in quote currency (or equivalent)",
-    "stopLossHelp": "This is the maximum amount of capital you are willing to lose, as a percentage of the capital allocation",
-    "strategyStop": "IMPORTANT: the strategy will automatically stop when this value is reached",
-    "maximumDrawdownHelp": "This is the maximum drawdown allowed for this strategy in percentage",
     "newStrategyFrom": "Create a new strategy from...",
     "newStrategy2": "New strategy",
     "newStrategyFrom2": "New strategy from...",
@@ -761,14 +757,6 @@
       "other": "Other..."
     },
     "closeStrategy": "Close strategy",
-    "executionOptionsModal": {
-      "title": "Select execution parameters before launch",
-      "disabledTitle": "Execution parameters",
-      "capitalAllocationLabel": "Capital Allocation",
-      "stopLoss": "Stop-Loss",
-      "maxDrawdown": "Maximum Drawdown",
-      "noMarketSelected": "You must first set a market for this strategy"
-    },
     "perfomanceMetrics": {
       "title": "Perfomance metrics",
       "runTime": "Strategy Run Time"
@@ -894,5 +882,33 @@
     "strategy": "Strategy",
     "startedOn": "started on: {{time}}",
     "error": "It was not possible to safely terminate one or more of the active strategies and/or algorithmic orders. Try to cancel manually or Force Quit the application (Ctrl+Q/Cmd+Q)"
+  },
+  "strategySettingsModal": {
+    "title": "Strategy Settings",
+    "executionTab": "Execution",
+    "leverageTab": "Leverage",
+    "ordersTab": "Orders",
+    "capitalAllocationLabel": "Capital Allocation",
+    "stopLoss": "Stop-Loss",
+    "maxDrawdown": "Maximum Drawdown",
+    "noMarketSelected": "You must first set a market for this strategy",
+    "capitalAllocationHelp": "This is the maximum amount of capital you want to deploy to this strategy, in quote currency (or equivalent)",
+    "stopLossHelp": "This is the maximum amount of capital you are willing to lose, as a percentage of the capital allocation",
+    "strategyStop": "IMPORTANT: the strategy will automatically stop when this value is reached",
+    "maximumDrawdownHelp": "This is the maximum drawdown allowed for this strategy in percentage",
+    "tradeOnMarginCheckbox": "Trade on Margin",
+    "tradeOnMarginCheckboxDescription": "This will draw funds from your Margin Wallet",
+    "noSelectedPairWarning": "You must select the Trading Pair in the Strategy IDE top bar to enable these options",
+    "chooseDropdown": "Choose",
+    "maxMarginTradeMode": "Always Maximum",
+    "fixedMarginTradeMode": "Fixed",
+    "maxModeDescription": "On each trade, the app will try and use as much leverage as the Bitfinex exchange allows for the selected pair. Limits on Initial Equity and Collateral still apply.",
+    "fixModeDescription": "On each trade, the app will try and apply the leverage specified below.",
+    "leverageInfo": "Note: Leverage is affected by the pair you’re trading in. You can find more information in <url>this article</url>",
+    "increaseLeverageCheckbox": "Increase leverage if required",
+    "increaseLeverageCheckboxDescription": "If there isn’t enough initial equity for the value specified above, the app will increase the leverage automatically using all of the remaining funds",
+    "additionStopOrderCheckbox": "Automatically add a Stop order after each entry trade",
+    "additionStopOrderCheckboxDescription": "The app will automatically place a <url>Stop Order</url> with each new position based on the following value",
+    "stopOrderValuePlaceholder": "% of the entry price"
   }
 }

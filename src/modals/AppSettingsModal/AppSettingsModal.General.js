@@ -18,6 +18,7 @@ import {
 } from '../../redux/selectors/ui'
 import { DONT_SHOW_DMS_MODAL_KEY } from '../../constants/variables'
 import { UI_MODAL_KEYS } from '../../redux/constants/modals'
+import AttentionBar from '../../ui/AttentionBar/AttentionBar'
 
 const INITIAL_AUTO_LOGIN = getAutoLoginState()
 
@@ -29,7 +30,9 @@ const General = () => {
 
   const [isAutoLoginChecked, setIsAutoLoginChecked] = useState(INITIAL_AUTO_LOGIN)
   const [isDmsChecked, setIsDmsChecked] = useState(settingsDms)
-  const [isShowAlgoPauseInfoChecked, setIsShowAlgoPauseInfoChecked] = useState(settingsShowAlgoPauseInfo)
+  const [isShowAlgoPauseInfoChecked, setIsShowAlgoPauseInfoChecked] = useState(
+    settingsShowAlgoPauseInfo,
+  )
 
   useEffect(() => {
     setIsDmsChecked(settingsDms)
@@ -71,9 +74,7 @@ const General = () => {
         <div className='appsettings-modal__description'>
           <p>{t('appSettings.deadManText1')}</p>
           <p>{t('appSettings.deadManText2')}</p>
-          <div className='appsettings-modal__warning'>
-            {t('appSettings.deadManWarning')}
-          </div>
+          <AttentionBar red>{t('appSettings.deadManWarning')}</AttentionBar>
         </div>
       </div>
       <div className='appsettings-modal__setting'>

@@ -2,7 +2,6 @@ import { connect } from 'react-redux'
 import { v4 as uuidv4 } from 'uuid'
 import _omitBy from 'lodash/omitBy'
 import _isEmpty from 'lodash/isEmpty'
-import { reduxSelectors } from '@ufx-ui/bfx-containers'
 
 import WSActions from '../../redux/actions/ws'
 import UIActions from '../../redux/actions/ui'
@@ -43,7 +42,6 @@ const mapStateToProps = (state = {}) => {
     pendingLiveStrategy: getUIState(state, UI_KEYS.pendingLiveStrategy, null),
     serviceStatus: getServicesStatus(state),
     markets: getMarketsSortedByVolumeForExecution(state),
-    getCurrencySymbol: reduxSelectors.getCurrencySymbolMemo(state),
   }
 }
 
