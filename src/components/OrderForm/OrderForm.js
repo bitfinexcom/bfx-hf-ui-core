@@ -350,22 +350,6 @@ class OrderForm extends React.Component {
     })
   }
 
-  deferSaveState() {
-    setTimeout(() => {
-      this.saveState()
-    }, 0)
-  }
-
-  saveState() {
-    const { saveState, layoutI } = this.props
-    const { currentMarket, marketDirty } = this.state
-
-    saveState(layoutI, {
-      currentMarket,
-      marketDirty,
-    })
-  }
-
   renderAPIStateModal() {
     const {
       isKeysUpdating, apiClientConnecting, apiCredentials, isPaperTrading,
@@ -558,9 +542,7 @@ OrderForm.propTypes = {
   gaSubmitOrder: PropTypes.func.isRequired,
   submitAlgoOrder: PropTypes.func.isRequired,
   gaSubmitAO: PropTypes.func.isRequired,
-  saveState: PropTypes.func.isRequired,
   isPaperTrading: PropTypes.bool.isRequired,
-  layoutI: PropTypes.string,
   authToken: PropTypes.string,
   onRemove: PropTypes.func,
   isOrderExecuting: PropTypes.bool,
@@ -584,7 +566,6 @@ OrderForm.defaultProps = {
   apiCredentials: {},
   onRemove: () => { },
   authToken: null,
-  layoutI: 'orderform',
   showAdvancedAlgos: false,
 }
 

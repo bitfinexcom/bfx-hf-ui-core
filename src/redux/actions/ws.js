@@ -48,9 +48,7 @@ export default {
     },
   }),
 
-  bufferDataFromExchange: (
-    chanID, data, rawData = null,
-  ) => ({
+  bufferDataFromExchange: (chanID, data, rawData = null) => ({
     type: t.BUFFER_DATA_FROM_EXCHANGE,
     payload: {
       chanID,
