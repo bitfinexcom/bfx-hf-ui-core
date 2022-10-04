@@ -10,6 +10,7 @@ export default function* onSaveSettings(action = {}) {
   const authToken = yield select(getAuthToken)
   const settings = { ...yield select(getSettings) }
   settings[key] = value
+  settings.joinBetaProgram = false
 
   yield put(WSActions.send([
     'settings.update',
@@ -20,5 +21,6 @@ export default function* onSaveSettings(action = {}) {
     settings.showOnlyFavoritePairs,
     settings.rebootAutomatically,
     settings.theme,
+    settings.joinBetaProgram,
   ]))
 }
