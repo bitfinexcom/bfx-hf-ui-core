@@ -16,8 +16,6 @@ import {
 import {
   getThemeSetting,
   getIsPaperTrading,
-  getStrategiesFeatureFlags,
-  getIsBetaVersion,
   getCurrentMode,
   getStrategyExecutionId,
   getServicesStatus,
@@ -34,8 +32,6 @@ const mapStateToProps = (state = {}) => {
     executionState: getCurrentStrategyExecutionState(state),
     settingsTheme: getThemeSetting(state),
     isPaperTrading: getIsPaperTrading(state),
-    flags: getStrategiesFeatureFlags(state),
-    isBetaVersion: getIsBetaVersion(state),
     savedStrategies: getSavedStrategies(state),
     currentMode: getCurrentMode(state),
     executionId: getStrategyExecutionId(state),

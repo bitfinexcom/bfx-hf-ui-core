@@ -43,7 +43,6 @@ const HFUI = (props) => {
     settingsShowAlgoPauseInfo,
     settingsTheme,
     isBfxConnected,
-    showStrategies,
     getPastStrategies,
     openAppSettingsModal,
     setApplicationHiddenStatus,
@@ -160,7 +159,7 @@ const HFUI = (props) => {
               render={() => <TradingPage />}
               exact
             />
-            {showStrategies && Routes.strategyEditor && (
+            {isElectronApp && (
               <Route
                 path={Routes.strategyEditor.path}
                 render={() => <StrategiesPage />}
@@ -205,7 +204,6 @@ HFUI.propTypes = {
   settingsShowAlgoPauseInfo: PropTypes.bool,
   settingsTheme: PropTypes.oneOf([THEMES.LIGHT, THEMES.DARK]),
   isBfxConnected: PropTypes.bool,
-  showStrategies: PropTypes.bool,
   openAppSettingsModal: PropTypes.func.isRequired,
   setApplicationHiddenStatus: PropTypes.func.isRequired,
   updateFullscreenState: PropTypes.func.isRequired,
@@ -216,7 +214,6 @@ HFUI.defaultProps = {
   settingsShowAlgoPauseInfo: true,
   settingsTheme: THEMES.DARK,
   isBfxConnected: false,
-  showStrategies: false,
 }
 
 export default HFUI

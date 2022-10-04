@@ -9,8 +9,6 @@ import {
   getCurrentMode,
   getShowAlgoPauseInfoSetting,
   getThemeSetting,
-  getIsBetaVersion,
-  getIsStrategiesTabVisible,
   SETTINGS_KEYS,
 } from '../../redux/selectors/ui'
 import { MAX_ORDER_COUNT_SETTING } from '../../redux/selectors/ui/get_core_settings'
@@ -31,7 +29,6 @@ const mapStateToProps = (state = {}) => {
     settingsShowAlgoPauseInfo: getShowAlgoPauseInfoSetting(state),
     settingsTheme: getThemeSetting(state),
     isBfxConnected: getIsBitfinexConnected(state),
-    showStrategies: getIsBetaVersion(state) || getIsStrategiesTabVisible(state),
   }
 }
 

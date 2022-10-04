@@ -29,7 +29,6 @@ import {
   getIsPaperTrading,
   getMaxOrderCounts,
   getIsBetaVersion,
-  getIsStrategiesLiveExecVisible,
   getUIState,
 } from '../../redux/selectors/ui'
 import { getScope } from '../../util/scope'
@@ -67,8 +66,7 @@ const mapStateToProps = (state = {}, ownProps = {}) => {
     aoParams: getAOParams(state),
     maxOrderCounts: getMaxOrderCounts(state),
     isBetaVersion: getIsBetaVersion(state),
-    showAdvancedAlgos:
-      getIsStrategiesLiveExecVisible(state) || getIsBetaVersion(state),
+    showAdvancedAlgos: getIsBetaVersion(state),
   }
 }
 

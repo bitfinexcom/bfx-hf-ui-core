@@ -81,8 +81,6 @@ const StrategyEditor = (props) => {
     isPaperTrading,
     dsExecuteBacktest,
     showError,
-    flags,
-    isBetaVersion,
     executionState,
     sectionErrors,
     savedStrategies,
@@ -100,43 +98,43 @@ const StrategyEditor = (props) => {
 
   const [isRemoveModalOpen, , openRemoveModal, closeRemoveModal] = useToggle(false)
   const [
-    createNewStrategyModalOpen,,
+    createNewStrategyModalOpen, ,
     openCreateNewStrategyModal,
     closeCreateNewStrategyModal,
   ] = useToggle(false)
   const [
-    createNewStrategyFromModalOpened,,
+    createNewStrategyFromModalOpened, ,
     openCreateNewStrategyFromModal,
     closeCreateNewStrategyFromModal,
   ] = useToggle(false)
   const [isOpenExistingStrategyModalOpen, , , closeOpenExistingStrategyModal] = useToggle(false)
   const [
-    isSaveStrategyAsModalOpen,,
+    isSaveStrategyAsModalOpen, ,
     openSaveStrategyAsModal,
     closeSaveStrategyAsModal,
   ] = useToggle(false)
   const [
-    isEditStrategyLabelModalOpen,,
+    isEditStrategyLabelModalOpen, ,
     openEditStrategyLabelModal,
     closeEditStrategyLabelModal,
   ] = useToggle(false)
   const [
-    isSaveStrategyBeforeLaunchModalOpen,,
+    isSaveStrategyBeforeLaunchModalOpen, ,
     openSaveStrategyBeforeLaunchModal,
     closeSaveStrategyBeforeLaunchModal,
   ] = useToggle(false)
   const [
-    isCancelProcessModalOpen,,
+    isCancelProcessModalOpen, ,
     openCancelProcessModal,
     closeCancelProcessModal,
   ] = useToggle(false)
   const [
-    isStrategySettingsModalOpen,,
+    isStrategySettingsModalOpen, ,
     openStrategySettingsModal,
     closeStrategySettingsModal,
   ] = useToggle(false)
   const [
-    isLaunchStrategyModalOpen,,
+    isLaunchStrategyModalOpen, ,
     openLaunchStrategyModal,
     closeLaunchStrategyModal,
   ] = useToggle(false)
@@ -642,23 +640,21 @@ const StrategyEditor = (props) => {
             removeable={removeable}
             onRemoveStrategy={onRemoveStrategy}
           >
-            {(isBetaVersion || flags?.live_execution) && (
-              <StrategyTab
-                htmlKey='strategy'
-                sbtitle={sbtitleStrategy}
-                onOpenSaveStrategyAsModal={openSaveStrategyAsModal}
-                onOpenEditStrategyLabelModal={openEditStrategyLabelModal}
-                isPaperTrading={isPaperTrading}
-                stopExecution={stopExecution}
-                onSaveStrategy={onSaveStrategy}
-                saveStrategyOptions={saveStrategyOptions}
-                hasErrors={hasErrorsInIDE}
-                onCancelProcess={onCancelProcess}
-                {...props}
-              />
-            )}
+            <StrategyTab
+              htmlKey='strategy'
+              sbtitle={sbtitleStrategy}
+              onOpenSaveStrategyAsModal={openSaveStrategyAsModal}
+              onOpenEditStrategyLabelModal={openEditStrategyLabelModal}
+              isPaperTrading={isPaperTrading}
+              stopExecution={stopExecution}
+              onSaveStrategy={onSaveStrategy}
+              saveStrategyOptions={saveStrategyOptions}
+              hasErrors={hasErrorsInIDE}
+              onCancelProcess={onCancelProcess}
+              {...props}
+            />
 
-            {isPaperTrading && (isBetaVersion || flags?.backtest) && (
+            {isPaperTrading ? (
               <BacktestTab
                 htmlKey='backtest'
                 sbtitle={sbtitleBacktest}
@@ -669,8 +665,7 @@ const StrategyEditor = (props) => {
                 openNewTest={openNewTest}
                 {...props}
               />
-            )}
-            {(isBetaVersion || flags?.docs) && !isPaperTrading && (
+            ) : (
               <IDETab
                 htmlKey='view_in_ide'
                 key='view_in_ide'
@@ -687,14 +682,12 @@ const StrategyEditor = (props) => {
                 strategy={strategy}
               />
             )}
-            {(isBetaVersion || flags?.live_execution) && (
-              <div
-                htmlKey='settings'
-                key='settings'
-                sbtitle={sbtitleSettings}
-                onClick={openStrategySettingsModal}
-              />
-            )}
+            <div
+              htmlKey='settings'
+              key='settings'
+              sbtitle={sbtitleSettings}
+              onClick={openStrategySettingsModal}
+            />
           </StrategyEditorPanel>
           <RemoveExistingStrategyModal
             isOpen={isRemoveModalOpen}
@@ -792,12 +785,6 @@ StrategyEditor.propTypes = {
   saveStrategy: PropTypes.func.isRequired,
   isPaperTrading: PropTypes.bool.isRequired,
   dsExecuteBacktest: PropTypes.func.isRequired,
-  isBetaVersion: PropTypes.bool.isRequired,
-  flags: PropTypes.shape({
-    docs: PropTypes.bool,
-    live_execution: PropTypes.bool,
-    backtest: PropTypes.bool,
-  }).isRequired,
   showError: PropTypes.func.isRequired,
   sectionErrors: PropTypes.objectOf(PropTypes.string).isRequired,
   cancelProcess: PropTypes.func.isRequired,
@@ -819,7 +806,7 @@ StrategyEditor.propTypes = {
 StrategyEditor.defaultProps = {
   moveable: false,
   removeable: false,
-  setStrategy: () => {},
+  setStrategy: () => { },
   strategy: {
     id: null,
     label: null,

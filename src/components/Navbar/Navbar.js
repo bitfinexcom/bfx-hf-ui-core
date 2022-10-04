@@ -19,7 +19,7 @@ import AppSettings from './Navbar.AppSettings'
 import Routes, { strategyEditor } from '../../constants/routes'
 import { isElectronApp } from '../../redux/config'
 import {
-  getThemeSetting, THEMES, getIsPaperTrading, getIsBetaVersion, getIsStrategiesTabVisible,
+  getThemeSetting, THEMES, getIsPaperTrading,
 } from '../../redux/selectors/ui'
 import { UI_MODAL_KEYS } from '../../redux/constants/modals'
 
@@ -46,9 +46,6 @@ const Navbar = () => {
   const { t } = useTranslation()
   const settingsTheme = useSelector(getThemeSetting)
   const isPaperTrading = useSelector(getIsPaperTrading)
-  const isBetaVersion = useSelector(getIsBetaVersion)
-  const isStrategiesTabVisible = useSelector(getIsStrategiesTabVisible)
-  const showStrategies = isBetaVersion || isStrategiesTabVisible
   const leafOptions = useMemo(() => getLeafDropdownOptions(settingsTheme), [settingsTheme])
 
   return (
@@ -56,16 +53,18 @@ const Navbar = () => {
       <HFIcon className='hfui-navbar__logo' fill={settingsTheme === THEMES.DARK ? 'white' : 'black'} />
       <ul className='hfui-navbar__main-links'>
         {_map(_values(Routes), ({ path, label }) => {
-          return showStrategies || path !== strategyEditor.path
-            ? (
-              <li key={path}>
-                <NavbarLink
-                  route={path}
-                  label={t(label, { paperPrefix: isPaperTrading ? t('main.paperPrefix') : null })}
-                />
-              </li>
-            )
-            : null
+          if (!isElectronApp && path === strategyEditor.path) {
+            return null
+          }
+
+          return (
+            <li key={path}>
+              <NavbarLink
+                route={path}
+                label={t(label, { paperPrefix: isPaperTrading ? t('main.paperPrefix') : null })}
+              />
+            </li>
+          )
         })}
       </ul>
       <div className='hfui-tradingpage__menu'>
