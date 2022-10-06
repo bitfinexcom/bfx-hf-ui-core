@@ -317,7 +317,7 @@
 
     &.sidebar-opened {
       .hfui_panel__sidebar-container {
-        width: 155px;
+        min-width: 155px;
       }
     }
 
