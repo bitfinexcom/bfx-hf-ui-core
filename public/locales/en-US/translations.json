@@ -478,7 +478,8 @@
   "resetDataConfirmModal": {
     "title": "Confirm reset data",
     "text": "This action will reset the app to its initial state and erase all the information and logs created up to this moment. Do you want to proceed?",
-    "exportToJSON": "Export all strategies as JSON before reseting"
+    "exportToJSON": "Export all strategies as JSON before reseting",
+    "passwordRequest": "Your strategies are encrypted, in order to export you must provide your password:"
   },
   "editOrderModal": {
     "title": "Edit order",
