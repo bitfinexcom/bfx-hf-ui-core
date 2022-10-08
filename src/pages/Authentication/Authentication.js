@@ -19,7 +19,6 @@ const Authentication = ({
   configured,
   onUnlock,
   onInit,
-  onReset,
   isPaperTrading,
 }) => {
   const [
@@ -72,7 +71,6 @@ Authentication.propTypes = {
   isPaperTrading: PropTypes.bool.isRequired,
   onUnlock: PropTypes.func.isRequired,
   onInit: PropTypes.func.isRequired,
-  onReset: PropTypes.func.isRequired,
 }
 
 export default memo(Authentication)

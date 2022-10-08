@@ -5,11 +5,6 @@ import { useDispatch } from 'react-redux'
 import { Checkbox } from '@ufx-ui/core'
 import WSActions from '../../redux/actions/ws'
 import Modal from '../../ui/Modal'
-import {
-  removeStoredPassword,
-  updateAutoLoginState,
-} from '../../util/autologin'
-import { IS_PAPER_TRADING } from '../../redux/reducers/ui'
 import Input from '../../ui/Input'
 
 import './style.css'
@@ -21,12 +16,24 @@ const ResetDataConfirmModal = ({ isOpen, onClose }) => {
   const { t } = useTranslation()
   const dispatch = useDispatch()
 
+  const closeAndClearState = () => {
+    setPassword('')
+    setShouldExportToJSON(true)
+    onClose()
+  }
+
   const onReset = () => {
-    dispatch(WSActions.send(['get.saved_decrypted_strategies', '1', 'paper']))
-    // removeStoredPassword()
-    // updateAutoLoginState()
-    // dispatch(WSActions.resetAuth())
-    // window.localStorage.setItem(IS_PAPER_TRADING, false)
+    if (!shouldExportToJSON) {
+      dispatch(WSActions.authResetData())
+      closeAndClearState()
+      return
+    }
+    if (!password) {
+      return
+    }
+
+    dispatch(WSActions.exportStrategiesOnReset(password))
+    closeAndClearState()
   }
 
   return (
@@ -62,7 +69,11 @@ const ResetDataConfirmModal = ({ isOpen, onClose }) => {
           <Modal.Button secondary onClick={onClose}>
             {t('ui.cancel')}
           </Modal.Button>
-          <Modal.Button primary onClick={onReset}>
+          <Modal.Button
+            primary
+            onClick={onReset}
+            disabled={shouldExportToJSON && !password}
+          >
             {t('ui.proceed')}
           </Modal.Button>
         </div>
