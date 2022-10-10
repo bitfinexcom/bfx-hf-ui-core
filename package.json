@@ -12,12 +12,13 @@
     "build-css": "cross-env sass --no-source-map src:src --load-path ./node_modules --style compressed",
     "watch-css": "cross-env npm run build-css && cross-env sass --no-source-map src:src --load-path ./node_modules --style compressed --watch",
     "start": "node scripts/per-env.js",
-    "start:staging": "env-cmd -e staging,development node scripts/start.js",
-    "start:production": "env-cmd -e production,development node scripts/start.js",
-    "start:electron": "env-cmd -e electron,development node scripts/start.js",
+    "start:staging": "env-cmd -e staging,development react-scripts start",
+    "start:production": "env-cmd -e production,development react-scripts start",
+    "start:electron": "env-cmd -e electron,development react-scripts start",
     "build": "node scripts/per-env.js",
-    "build:staging": "GENERATE_SOURCEMAP=false cross-env npm run build-css && env-cmd -e staging node scripts/build.js",
-    "build:production": "GENERATE_SOURCEMAP=false cross-env npm run build-css && env-cmd -e production node scripts/build.js",
+    "build:staging": "GENERATE_SOURCEMAP=false cross-env npm run build-css && env-cmd -e staging react-scripts build",
+    "build:production": "GENERATE_SOURCEMAP=false cross-env npm run build-css && env-cmd -e production react-scripts build",
+    "build:electron": "GENERATE_SOURCEMAP=false cross-env npm run build-css && env-cmd -e electron react-scripts build",
     "test": "cross-env npm run lint",
     "lint": "cross-env eslint --fix src"
   },
@@ -36,12 +37,7 @@
     "BTC"
   ],
   "devDependencies": {
-    "@babel/core": "^7.19.3",
-    "babel-loader": "^8.2.5",
-    "babel-plugin-named-asset-import": "^0.3.8",
-    "babel-preset-react-app": "^10.0.1",
     "browserslist": "^4.21.4",
-    "case-sensitive-paths-webpack-plugin": "^2.4.0",
     "css-loader": "^3.6.0",
     "eslint": "^8.24.0",
     "eslint-config-airbnb": "^19.0.4",
@@ -51,12 +47,9 @@
     "eslint-plugin-lodash": "^7.4.0",
     "eslint-plugin-react": "^7.31.8",
     "eslint-plugin-react-hooks": "^4.6.0",
-    "eslint-webpack-plugin": "^2.7.0",
     "is-wsl": "^2.2.0",
     "mini-css-extract-plugin": "^1.6.2",
     "normalize.css": "^8.0.1",
-    "optimize-css-assets-webpack-plugin": "^5.0.8",
-    "pnp-webpack-plugin": "^1.7.0",
     "postcss-flexbugs-fixes": "^4.2.1",
     "postcss-loader": "^3.0.0",
     "postcss-normalize": "^8.0.1",
@@ -67,16 +60,10 @@
     "sass": "^1.55.0",
     "sass-loader": "^10.3.1",
     "style-loader": "^2.0.0",
-    "terser-webpack-plugin": "^2.3.8",
     "ts-pnp": "^1.2.0",
-    "url-loader": "^4.1.1",
-    "webpack": "^4.46.0",
-    "webpack-dev-server": "^3.11.3",
-    "webpack-manifest-plugin": "^2.2.0",
-    "workbox-webpack-plugin": "^5.0.0"
+    "url-loader": "^4.1.1"
   },
   "dependencies": {
-    "@svgr/webpack": "5.5.0",
     "@ufx-ui/bfx-containers": "0.14.0",
     "@ufx-ui/core": "0.14.0",
     "@ufx-ui/utils": "0.14.0",
@@ -102,14 +89,12 @@
     "file-saver": "^2.0.5",
     "fs-extra": "^10.1.0",
     "history": "^4.10.1",
-    "html-webpack-plugin": "^4.5.2",
     "i18next": "^21.9.2",
     "i18next-browser-languagedetector": "^6.1.5",
     "i18next-xhr-backend": "^3.2.2",
     "js-cookie": "^3.0.1",
     "lodash": "^4.17.21",
     "memoize-one": "^6.0.0",
-    "monaco-editor-webpack-plugin": "^4.2.0",
     "original-fs": "^1.2.0",
     "pretty-checkbox": "^3.0.3",
     "prop-types": "^15.8.1",
@@ -129,6 +114,7 @@
     "react-perfect-scrollbar": "^1.5.8",
     "react-redux": "^8.0.4",
     "react-router": "^5.3.4",
+    "react-scripts": "^5.0.1",
     "react-timer-hook": "^3.0.5",
     "react-transition-group": "^4.4.5",
     "react-virtualized": "^9.22.3",
@@ -142,7 +128,6 @@
     "semver": "^7.3.7",
     "thread-loader": "^3.0.4",
     "uuid": "^8.3.2",
-    "workbox-webpack-plugin": "^5.1.4",
     "worker-loader": "^3.0.8"
   },
   "eslintConfig": {
@@ -158,11 +143,6 @@
       "last 1 chrome version",
       "last 1 firefox version",
       "last 1 safari version"
-    ]
-  },
-  "babel": {
-    "presets": [
-      "react-app"
     ]
   },
   "resolutions": {
