@@ -76,6 +76,7 @@
     "workbox-webpack-plugin": "^5.0.0"
   },
   "dependencies": {
+    "@blaumaus/react-monaco-editor": "^0.45.0",
     "@svgr/webpack": "5.5.0",
     "@ufx-ui/bfx-containers": "0.14.0",
     "@ufx-ui/core": "0.14.0",
@@ -109,6 +110,7 @@
     "js-cookie": "^3.0.1",
     "lodash": "^4.17.21",
     "memoize-one": "^6.0.0",
+    "monaco-editor": "^0.27.0",
     "monaco-editor-webpack-plugin": "^4.2.0",
     "original-fs": "^1.2.0",
     "pretty-checkbox": "^3.0.3",
@@ -124,7 +126,6 @@
     "react-ga4": "^1.4.1",
     "react-grid-layout": "^1.3.4",
     "react-i18next": "^11.18.6",
-    "react-monaco-editor": "^0.45.0",
     "react-outside-click-handler": "^1.3.0",
     "react-perfect-scrollbar": "^1.5.8",
     "react-redux": "^8.0.4",
