@@ -29,7 +29,7 @@ const appVersion = process.env.npm_package_version
 
 const CHART_URL = isElectronApp ? 'https://bitfinexcom.github.io/bfx-hf-tradingview' : process.env.REACT_APP_CHART_URL
 
-const HONEY_AUTH_URL = `${process.env.REACT_APP_UFX_PLATFORM_URL}/honey/`
+const HONEY_AUTH_URL = `${process.env.REACT_APP_HONEY_PLATFORM_URL}/honey/`
 
 export {
   REDUCER_PATHS,
