@@ -19,7 +19,11 @@ const isDevEnv = devEnv()
 
 const initialAutoLoginSave = getAutoLoginState()
 
-const AuthenticationUnlockForm = ({ isPaperTrading, onUnlock: _onUnlock, onReset }) => {
+const AuthenticationUnlockForm = ({
+  isPaperTrading,
+  onUnlock: _onUnlock,
+  showConfirmResetDataModal,
+}) => {
   const [password, setPassword] = useState('')
   const [autoLoginState, setAutoLoginState] = useState(initialAutoLoginSave)
   const mode = isPaperTrading ? PAPER_MODE : MAIN_MODE
@@ -60,7 +64,10 @@ const AuthenticationUnlockForm = ({ isPaperTrading, onUnlock: _onUnlock, onReset
     <div className='hfui-authenticationpage__content'>
       <h2>Bitfinex Honey</h2>
 
-      <form className='hfui-authenticationpage__inner-form' onSubmit={onFormSubmit}>
+      <form
+        className='hfui-authenticationpage__inner-form'
+        onSubmit={onFormSubmit}
+      >
         <p>{t('auth.enterPsw')}</p>
         <Input
           type='password'
@@ -91,11 +98,7 @@ const AuthenticationUnlockForm = ({ isPaperTrading, onUnlock: _onUnlock, onReset
       <div className='hfui-authenticationpage__clear'>
         <p>{t('auth.resetMsg')}</p>
 
-        <Button
-          onClick={onReset}
-          label={t('auth.resetBtn')}
-          red
-        />
+        <Button onClick={showConfirmResetDataModal} label={t('auth.resetBtn')} red />
       </div>
     </div>
   )
@@ -103,7 +106,7 @@ const AuthenticationUnlockForm = ({ isPaperTrading, onUnlock: _onUnlock, onReset
 
 AuthenticationUnlockForm.propTypes = {
   onUnlock: PropTypes.func.isRequired,
-  onReset: PropTypes.func.isRequired,
+  showConfirmResetDataModal: PropTypes.func.isRequired,
   isPaperTrading: PropTypes.bool.isRequired,
 }
 
