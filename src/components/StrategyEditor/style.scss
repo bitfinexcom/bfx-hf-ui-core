@@ -345,8 +345,6 @@ body.hosted {
 
 .hfui-strategyeditor__sidebar-title {
   position: relative;
-  display: inline-flex;
-  word-break: break-all;
 
   .indicator-near-icon {
     position: absolute;
@@ -361,7 +359,6 @@ body.hosted {
   }
   .title-label {
     margin-right: 5px;
-
     &:last-child {
       margin-right: 0;
     }
