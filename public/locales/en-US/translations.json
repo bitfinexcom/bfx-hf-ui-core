@@ -475,6 +475,14 @@
     "title": "Reset API credentials",
     "text": "This will reset your API credentials. Are you sure you want to proceed?"
   },
+  "resetDataConfirmModal": {
+    "title": "Confirm reset data",
+    "text": "This action will reset the app to its initial state and erase all the information and logs created up to this moment. Do you want to proceed?",
+    "exportToJSON": "Export all strategies as JSON before reseting",
+    "passwordRequest": "Your strategies are encrypted, in order to export you must provide your password:",
+    "errorOnStrategiesSave": "Saving your strategies was rejected",
+    "emptyList": "You don'\t have saved strategies. Resetting your data..."
+  },
   "editOrderModal": {
     "title": "Edit order",
     "noOrder": "No order selected"
@@ -667,7 +675,7 @@
     "activeStrategies": "Active strategies",
     "pastStrategies": "Executed strategies",
     "savedStrategies": "Draft strategies",
-    "copyStrategy": "Copy draft strategy",
+    "copyStrategy": "Duplicate draft strategy",
     "renameStrategy": "Rename draft strategy",
     "deleteStrategy": "Delete draft strategy",
     "more": "More",
