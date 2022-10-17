@@ -1,4 +1,4 @@
-import Editor, { monaco } from 'react-monaco-editor'
+import Editor, { useMonaco } from '@monaco-editor/react'
 import React, { useEffect, useMemo } from 'react'
 import PropTypes from 'prop-types'
 import _isEmpty from 'lodash/isEmpty'
@@ -9,17 +9,21 @@ const HF_MONACO_THEME = 'HFTheme'
 const getMonacoOptions = (readOnly) => ({
   automaticLayout: true,
   readOnly,
+  domReadOnly: readOnly,
 })
 
 const MonacoEditor = ({
   value, onChange, theme, readOnly,
 }) => {
   const monacoOptions = useMemo(() => getMonacoOptions(readOnly), [readOnly])
+  const monaco = useMonaco()
 
   const onEditorChangeHandler = (e) => {
-    if (readOnly) {
+    if (readOnly || e === value) {
       return
     }
+
+    console.log('on editor change: ', e)
     onChange(e)
   }
   useEffect(() => {
@@ -35,18 +39,23 @@ const MonacoEditor = ({
       },
     })
     monaco.editor.setTheme(HF_MONACO_THEME)
-  }, [])
+  }, [monaco])
 
   useEffect(() => {
-    monaco.editor.setTheme(theme === THEMES.DARK ? HF_MONACO_THEME : 'vs')
-  }, [theme])
+    if (_isEmpty(monaco)) {
+      return
+    }
+    monaco.editor.setTheme(theme === THEMES.DARK ? HF_MONACO_THEME : 'light')
+  }, [theme, monaco])
+
+  console.log(value)
 
   return (
     <Editor
       height='100%'
       width='100%'
       language='javascript'
-      theme={theme === THEMES.DARK ? HF_MONACO_THEME : 'vs'}
+      theme={theme === THEMES.DARK ? HF_MONACO_THEME : 'light'}
       value={value}
       onChange={onEditorChangeHandler}
       options={monacoOptions}

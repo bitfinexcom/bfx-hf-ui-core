@@ -63,6 +63,7 @@
     "url-loader": "^4.1.1"
   },
   "dependencies": {
+    "@monaco-editor/react": "^4.4.6",
     "@ufx-ui/bfx-containers": "0.14.0",
     "@ufx-ui/core": "0.14.0",
     "@ufx-ui/utils": "0.14.0",
