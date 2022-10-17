@@ -90,6 +90,9 @@ const BacktestOptionsPanel = ({
     const start = new Date()
 
     switch (value) {
+      case '1d':
+        start.setDate(start.getDate() - 1)
+        break
       case '7d':
         start.setDate(end.getDate() - 7)
         break
