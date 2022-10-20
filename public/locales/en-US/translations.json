@@ -775,7 +775,12 @@
     "copyOfStrategy": "Copy of {{strategyName}}",
     "calculating": "Calculating...",
     "backtestSuccessful": "Backtest successful!",
-    "newTest": "New Test"
+    "newTest": "New Test",
+    "timePeriod": "Select a time period",
+    "switchToCustom": "Switch to custom date picker",
+    "switchToRegular": "Switch to regular date picker",
+    "lastXday": "Last {{amount}} day",
+    "lastXdays": "Last {{amount}} days"
   },
   "ui": {
     "ok": "Okay",

@@ -233,8 +233,6 @@ const StrategySettingsModal = (props) => {
     stopLossPercValue,
   ])
 
-  console.log({ capitalAllocation, capitalAllocationValue })
-
   return (
     <Modal
       isOpen={isOpen}

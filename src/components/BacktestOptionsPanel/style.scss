@@ -18,6 +18,20 @@
     }
   }
 
+  &__text-btn {
+    color: var(--shade-4);
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 16px;
+    user-select: none;
+
+    &:hover {
+      color: var(--primary-color);
+      text-decoration: underline;
+      cursor: pointer;
+    }
+  }
+
   &__start-btn {
     width: 100%;
     height: 34px;
@@ -33,5 +47,10 @@
     @extend .hfui-strategy-backtest-options__start-btn;
     background-color: #bfccda;
     color: #152330;
+  }
+
+  .disabled {
+    cursor: not-allowed;
+    color: var(--shade-3);
   }
 }
