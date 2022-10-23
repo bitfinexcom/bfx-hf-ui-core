@@ -13,19 +13,19 @@ const getMonacoOptions = (readOnly) => ({
 })
 
 const MonacoEditor = ({
-  value, onChange, theme, readOnly,
+  value, onChange, theme, readOnly, activeContent,
 }) => {
   const monacoOptions = useMemo(() => getMonacoOptions(readOnly), [readOnly])
   const monaco = useMonaco()
 
   const onEditorChangeHandler = (e) => {
-    if (readOnly || e === value) {
+    if (readOnly) {
       return
     }
 
-    console.log('on editor change: ', e)
     onChange(e)
   }
+
   useEffect(() => {
     if (_isEmpty(monaco)) {
       return
@@ -48,8 +48,6 @@ const MonacoEditor = ({
     monaco.editor.setTheme(theme === THEMES.DARK ? HF_MONACO_THEME : 'light')
   }, [theme, monaco])
 
-  console.log(value)
-
   return (
     <Editor
       height='100%'
@@ -57,6 +55,7 @@ const MonacoEditor = ({
       language='javascript'
       theme={theme === THEMES.DARK ? HF_MONACO_THEME : 'light'}
       value={value}
+      path={activeContent}
       onChange={onEditorChangeHandler}
       options={monacoOptions}
     />
@@ -68,6 +67,7 @@ MonacoEditor.propTypes = {
   onChange: PropTypes.func.isRequired,
   theme: PropTypes.oneOf([THEMES.LIGHT, THEMES.DARK]).isRequired,
   readOnly: PropTypes.bool.isRequired,
+  activeContent: PropTypes.string.isRequired,
 }
 
 export default MonacoEditor
