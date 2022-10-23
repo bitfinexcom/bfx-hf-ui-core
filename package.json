@@ -38,7 +38,6 @@
   ],
   "devDependencies": {
     "browserslist": "^4.21.4",
-    "css-loader": "^3.6.0",
     "eslint-config-airbnb": "^19.0.4",
     "eslint-config-react-app": "^7.0.1",
     "eslint-plugin-import": "^2.26.0",
@@ -46,21 +45,11 @@
     "eslint-plugin-lodash": "^7.4.0",
     "eslint-plugin-react": "^7.31.10",
     "eslint-plugin-react-hooks": "^4.6.0",
-    "is-wsl": "^2.2.0",
-    "mini-css-extract-plugin": "^1.6.2",
     "normalize.css": "^8.0.1",
-    "postcss-flexbugs-fixes": "^4.2.1",
-    "postcss-loader": "^3.0.0",
-    "postcss-normalize": "^8.0.1",
-    "postcss-preset-env": "^6.7.0",
-    "postcss-safe-parser": "^4.0.2",
     "react-dev-utils": "^11.0.4",
     "react-error-overlay": "^6.0.11",
     "sass": "^1.55.0",
-    "sass-loader": "^10.3.1",
-    "style-loader": "^2.0.0",
-    "ts-pnp": "^1.2.0",
-    "url-loader": "^4.1.1"
+    "sass-loader": "^10.3.1"
   },
   "dependencies": {
     "@monaco-editor/react": "^4.4.6",
@@ -74,7 +63,6 @@
     "bfx-hf-indicators": "git+https://github.com/bitfinexcom/bfx-hf-indicators.git#v2.1.1",
     "bfx-hf-strategy": "git+https://github.com/bitfinexcom/bfx-hf-strategy.git#v2.1.1",
     "bfx-hf-util": "git+https://github.com/bitfinexcom/bfx-hf-util.git#v1.0.12",
-    "camelcase": "^7.0.0",
     "clsx": "^1.2.1",
     "connected-react-router": "^6.9.3",
     "cross-env": "^7.0.3",
@@ -82,12 +70,8 @@
     "dangerously-set-html-content": "^1.0.9",
     "date-fns": "^2.29.3",
     "debug": "^4.3.4",
-    "dotenv": "^16.0.3",
-    "dotenv-expand": "^9.0.0",
     "env-cmd": "^10.1.0",
-    "file-loader": "^6.2.0",
     "file-saver": "^2.0.5",
-    "fs-extra": "^10.1.0",
     "history": "^4.10.1",
     "i18next": "^21.10.0",
     "i18next-browser-languagedetector": "^6.1.8",
@@ -125,9 +109,7 @@
     "resolve": "^1.22.1",
     "sanitize-html": "^2.7.2",
     "semver": "^7.3.8",
-    "thread-loader": "^3.0.4",
-    "uuid": "^8.3.2",
-    "worker-loader": "^3.0.8"
+    "uuid": "^8.3.2"
   },
   "eslintConfig": {
     "extends": "react-app"
