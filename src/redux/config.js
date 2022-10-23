@@ -1,3 +1,5 @@
+import { version } from '../../package.json'
+
 const REDUCER_PATHS = {
   WS: 'ws',
   ROUTER: 'router',
@@ -27,7 +29,7 @@ const isMacOS = navigator.userAgent.indexOf('Mac') !== -1
 
 const PUB_REST_API_URL = isElectronApp ? 'http://localhost:45001' : process.env.REACT_APP_UFX_PUBLIC_API_URL
 
-const appVersion = process.env.npm_package_version
+const appVersion = version
 
 const RELEASE_URL = 'https://github.com/bitfinexcom/bfx-hf-ui/releases'
 
