@@ -151,16 +151,18 @@ export const getTooltip = (order, args = {}) => {
 
 export const getPositionTooltip = (position, args) => {
   const {
-    getMarketBySymbol,
+    getMarketBySymbol = () => ({}),
     getCurrencySymbol,
     t,
+    base: forcedBase,
+    quote: forcedQuote,
   } = args
 
   const tooltipLines = []
 
   const market = getMarketBySymbol(position.symbol)
-  const base = getCurrencySymbol(market?.base)
-  const quote = getCurrencySymbol(market?.quote)
+  const base = forcedBase || getCurrencySymbol(market?.base)
+  const quote = forcedQuote || getCurrencySymbol(market?.quote)
 
   tooltipLines.push(t('chart.trading.position.tooltip.amount', {
     amount: setSigFig(position.amount),

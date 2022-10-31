@@ -25,6 +25,8 @@ const Chart = ({
   interval,
   hideResolutions,
   hideIndicators,
+  hideDeleteIndicator,
+  position,
   chartRange,
 }) => {
   const isSetInterval = !_isUndefined(interval)
@@ -38,7 +40,7 @@ const Chart = ({
 
   const uiID = isPerp ? _uiID : getPairFromMarket(market, getCurrencySymbol)
   const iframeID = `hfui-chart-${layoutI}`
-  const sendMarketToChartIframe = useChartIframe(iframeID, wsID, indicators, trades, interval, isSetInterval, chartRange)
+  const sendMarketToChartIframe = useChartIframe(iframeID, wsID, indicators, trades, interval, isSetInterval, chartRange, position)
 
   const queryString = new URLSearchParams({
     env,
@@ -47,6 +49,7 @@ const Chart = ({
     iframeID,
     hideResolutions,
     hideIndicators,
+    hideDeleteIndicator,
   }).toString()
 
   useEffect(() => {
@@ -75,6 +78,8 @@ Chart.propTypes = {
   interval: PropTypes.string,
   hideResolutions: PropTypes.bool,
   hideIndicators: PropTypes.bool,
+  hideDeleteIndicator: PropTypes.bool,
+  position: PropTypes.object, // eslint-disable-line react/forbid-prop-types
   chartRange: PropTypes.object, // eslint-disable-line react/forbid-prop-types
 }
 
@@ -90,6 +95,8 @@ Chart.defaultProps = {
   interval: undefined,
   hideResolutions: false,
   hideIndicators: false,
+  hideDeleteIndicator: false,
+  position: null,
   chartRange: null,
 }
 

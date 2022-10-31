@@ -28,7 +28,7 @@ import {
 import { UI_MODAL_KEYS } from '../../redux/constants/modals'
 import { UI_KEYS } from '../../redux/constants/ui_keys'
 
-const useChartIframe = (iframeID, wsID, customIndicators, trades, interval, isSetInterval, range) => {
+const useChartIframe = (iframeID, wsID, customIndicators, trades, interval, isSetInterval, range, forcedPosition) => {
   const [isIframeReady, setIsIframeReady] = useState(false)
   const { t } = useTranslation()
   const dispatch = useDispatch()
@@ -37,7 +37,7 @@ const useChartIframe = (iframeID, wsID, customIndicators, trades, interval, isSe
   const getChartOrders = useSelector(getChartOrdersBySymbol)
   const getChartPosition = useSelector(getChartPositionBySymbol)
   const orders = getChartOrders(wsID, t)
-  const position = getChartPosition(wsID, t)?.[0]
+  const position = forcedPosition || getChartPosition(wsID, t)?.[0]
 
   const cancelOrder = useCallback((id) => {
     const symbol = allOrders?.[id]?.symbol
@@ -51,17 +51,20 @@ const useChartIframe = (iframeID, wsID, customIndicators, trades, interval, isSe
 
   useEffect(() => {
     const iframeChart = document.getElementById(iframeID)
+    console.log('chart', isIframeReady, position)
     if (isIframeReady) {
-      sendMessageToIframe(iframeChart, GET_ORDERS_EVENT, orders)
-      sendMessageToIframe(iframeChart, GET_POSITION_EVENT, position || {})
-      sendMessageToIframe(iframeChart, GET_TRADES_EVENT, trades || [])
-      if (isSetInterval) {
-        sendMessageToIframe(iframeChart, GET_INTERVAL_EVENT, interval || '')
-      }
-      sendMessageToIframe(iframeChart, GET_RANGE_EVENT, range || {})
-      if (!_isEmpty(customIndicators)) {
-        sendMessageToIframe(iframeChart, GET_INDICATORS_EVENT, customIndicators || [])
-      }
+      setTimeout(() => {
+        sendMessageToIframe(iframeChart, GET_ORDERS_EVENT, orders)
+        sendMessageToIframe(iframeChart, GET_POSITION_EVENT, position || {})
+        sendMessageToIframe(iframeChart, GET_TRADES_EVENT, trades || [])
+        if (isSetInterval) {
+          sendMessageToIframe(iframeChart, GET_INTERVAL_EVENT, interval || '')
+        }
+        sendMessageToIframe(iframeChart, GET_RANGE_EVENT, range || {})
+        if (!_isEmpty(customIndicators)) {
+          sendMessageToIframe(iframeChart, GET_INDICATORS_EVENT, customIndicators || [])
+        }
+      }, 500)
     }
   }, [orders, iframeID, isIframeReady, position, customIndicators, trades, interval, range, isSetInterval])
 

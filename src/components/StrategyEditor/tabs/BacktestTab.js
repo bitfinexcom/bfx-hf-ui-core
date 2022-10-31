@@ -3,6 +3,9 @@ import React, {
 } from 'react'
 import PropTypes from 'prop-types'
 import { useTranslation } from 'react-i18next'
+import _sortBy from 'lodash/sortBy'
+import _values from 'lodash/values'
+import _last from 'lodash/last'
 
 import clsx from 'clsx'
 import StrategyPerfomanceMetrics from '../../StrategyPerfomanceMetrics'
@@ -41,6 +44,7 @@ const BacktestTab = (props) => {
 
   const { finished = false, loading } = results
   const positions = results?.strategy?.closedPositions
+  const position = _last(_sortBy(_values(positions), 'entryAt'))
 
   const trades = useMemo(() => prepareChartTrades(positions), [positions])
 
@@ -75,6 +79,7 @@ const BacktestTab = (props) => {
           return (
             <StrategyLiveChart
               indicators={indicators}
+              lastOpenPosition={position}
               markets={markets}
               strategy={strategy}
               fullscreenChart={fullscreenChart}
