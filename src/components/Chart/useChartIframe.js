@@ -51,7 +51,6 @@ const useChartIframe = (iframeID, wsID, customIndicators, trades, interval, isSe
 
   useEffect(() => {
     const iframeChart = document.getElementById(iframeID)
-    console.log('chart', isIframeReady, position)
     if (isIframeReady) {
       setTimeout(() => {
         sendMessageToIframe(iframeChart, GET_ORDERS_EVENT, orders)

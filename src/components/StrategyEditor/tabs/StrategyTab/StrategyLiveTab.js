@@ -136,6 +136,7 @@ const StrategyLiveTab = (props) => {
       startedOn,
       positions,
       layoutConfig,
+      lastOpenPosition,
     ],
   )
 

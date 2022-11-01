@@ -44,7 +44,7 @@ const STOP_ORDER_ARTICLE_URL = 'https://support.bitfinex.com/hc/en-us/articles/1
 // product description link
 const HF_DESC_URL = 'https://support.bitfinex.com/hc/en-us/articles/900000096823-Honey-Framework'
 
-const CHART_URL = isElectronApp ? 'http://localhost:3001/bfx-hf-tradingview/' : process.env.REACT_APP_CHART_URL
+const CHART_URL = isElectronApp ? 'https://bitfinexcom.github.io/bfx-hf-tradingview/' : process.env.REACT_APP_CHART_URL
 
 const HONEY_AUTH_URL = `${process.env.REACT_APP_UFX_API_URL}/honey`
 
