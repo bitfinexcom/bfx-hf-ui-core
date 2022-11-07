@@ -153,7 +153,6 @@ const StrategyEditor = (props) => {
     return language === LANGUAGES.es || language === LANGUAGES.pt
   }, [language])
 
-  console.log(isWideSidebar)
 
   const {
     symbol,
