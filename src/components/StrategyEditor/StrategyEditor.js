@@ -153,7 +153,6 @@ const StrategyEditor = (props) => {
     return language === LANGUAGES.es || language === LANGUAGES.pt
   }, [language])
 
-
   const {
     symbol,
     timeframe,
