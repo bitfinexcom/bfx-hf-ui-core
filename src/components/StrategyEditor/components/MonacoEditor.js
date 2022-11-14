@@ -1,4 +1,4 @@
-import Editor, { monaco } from 'react-monaco-editor'
+import Editor, { monaco } from '@blaumaus/react-monaco-editor'
 import React, { useEffect, useMemo } from 'react'
 import PropTypes from 'prop-types'
 import _isEmpty from 'lodash/isEmpty'

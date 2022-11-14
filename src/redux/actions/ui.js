@@ -163,6 +163,11 @@ export const removeStrategy = (authToken, id) => ({
   payload: { authToken, id },
 })
 
+export const setPendoState = (isInitialized, auid) => ({
+  type: types.SET_PENDO_STATE,
+  payload: { isInitialized, auid },
+})
+
 export default {
   setUIValue,
   updateUIValue,
@@ -187,4 +192,5 @@ export default {
   removeStrategy,
   setCurrentStrategy,
   setIsStrategyDirty,
+  setPendoState,
 }

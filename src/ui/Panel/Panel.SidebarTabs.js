@@ -1,6 +1,7 @@
 import React, { memo } from 'react'
 import PropTypes from 'prop-types'
 import _map from 'lodash/map'
+import _isFunction from 'lodash/isFunction'
 import ClassNames from 'clsx'
 import { getTabTitle } from './Panel.helpers'
 
@@ -12,17 +13,28 @@ const SidebarTabs = ({
 }) => {
   return (
     <ul className='hfui_panel__sidebar'>
-      {_map(sbTabs, (tab, index) => (
-        <li
-          key={tab.props.htmlKey || tab.props.sbtitle}
-          className={ClassNames({
-            active: getTabTitle(tab) === getTabTitle(sbTabs[selectedSBTab]),
-          })}
-          onClick={() => setSelectedSBTab(index)}
-        >
-          {tab.props.sbtitle({ selectedTab: selectedSBTab, sidebarOpened })}
-        </li>
-      ))}
+      {_map(sbTabs, (tab, index) => {
+        const {
+          htmlKey, sbtitle, onClick,
+        } = tab.props
+        return (
+          <li
+            key={htmlKey || sbtitle}
+            className={ClassNames({
+              active: getTabTitle(tab) === getTabTitle(sbTabs[selectedSBTab]),
+            })}
+            onClick={() => {
+              if (_isFunction(onClick)) {
+                onClick()
+                return
+              }
+              setSelectedSBTab(index)
+            }}
+          >
+            {sbtitle({ selectedTab: selectedSBTab, sidebarOpened })}
+          </li>
+        )
+      })}
     </ul>
   )
 }

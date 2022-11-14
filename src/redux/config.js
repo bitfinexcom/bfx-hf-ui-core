@@ -23,6 +23,8 @@ const isDevEnv = process.env.REACT_APP_DEV === 'true'
 
 const env = isElectronApp ? 'electron' : process.env.REACT_APP_ENVIRONMENT
 
+const isMacOS = navigator.userAgent.indexOf('Mac') !== -1
+
 const PUB_REST_API_URL = isElectronApp ? 'http://localhost:45001' : process.env.REACT_APP_UFX_PUBLIC_API_URL
 
 const appVersion = process.env.npm_package_version
@@ -34,6 +36,10 @@ const API_DOCS_URL = 'https://docs.bitfinex.com/docs/introduction'
 const SOURCE_CODE_URL = 'https://github.com/bitfinexcom/bfx-hf-ui'
 
 const LICENCE_URL = 'https://github.com/bitfinexcom/bfx-hf-ui/blob/master/LICENSE'
+
+const MARGIN_TRADING_ARTICLE_URL = 'https://support.bitfinex.com/hc/en-us/articles/115004555165-What-is-Margin-Trading-on-Bitfinex'
+
+const STOP_ORDER_ARTICLE_URL = 'https://support.bitfinex.com/hc/en-us/articles/115003506125-What-is-a-Stop-Order-on-Bitfinex'
 
 // product description link
 const HF_DESC_URL = 'https://support.bitfinex.com/hc/en-us/articles/900000096823-Honey-Framework'
@@ -52,6 +58,7 @@ export {
   isElectronApp,
   appVersion,
   env,
+  isMacOS,
   CHART_URL,
   HONEY_AUTH_URL,
   RELEASE_URL,
@@ -62,4 +69,6 @@ export {
   isDevEnv,
   PASSWORD_MIN_LENGTH,
   PASSWORD_MAX_LENGTH,
+  MARGIN_TRADING_ARTICLE_URL,
+  STOP_ORDER_ARTICLE_URL,
 }

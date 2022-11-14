@@ -10,8 +10,14 @@
     "craftedBy": "Crafted by Bitfinex"
   },
   "appUpdate": {
-    "available": "A new update is available. Downloading now...",
-    "downloaded": "Update downloaded. It will be installed on a restart. Restart now?"
+    "available": "A new version {{version}} is available. The application will download the update and restart automatically.",
+    "remindMeButton": "Remind me later",
+    "downloadButton": "Download and Restart",
+    "preparing": "Preparing...",
+    "downloading": "Downloading...",
+    "downloaded": "The update was downloaded. Restarting the application...",
+    "updateInstalled": "The application was successfully updated to {{version}}",
+    "updateError": "The update was failed. Try later"
   },
   "auth": {
     "enterPsw": "Enter your password to unlock",
@@ -113,7 +119,7 @@
     "sliceAmountHelp": "Allows individual buy & sell amounts to be adjusted",
     "sliceAmountPerc": "Slice Amount as %",
     "sliceAmountPercHelp": "Takes percentage of total order amount for individual buy & sell amounts",
-    "leverage": "Laverage",
+    "leverage": "Leverage",
     "action": "Action",
     "buy": "Buy",
     "sell": "Sell",
@@ -309,7 +315,10 @@
     "appSettingsTab": "App Settings",
     "language": "Language",
     "minimizeToTrayCheckbox": "Minimize to Tray",
-    "minimizeToTrayText": "The application will run in the background when you close the window. You can close the app at any time by clicking “Quit” (Ctrl+Q/Cmd+Q) on the menu bar",
+    "minimizeToTrayText": "The application will run in the background when you close the window. You can close the app at any time by clicking “Quit” ({{key}}) on the menu bar",
+    "fullscreenCheckbox": "Fullscreen mode ({{key}})",
+    "fullscreenModeBarText": "Bitfinex Honey is now in fullscreen mode",
+    "exitFullscreenButton": "Exit fullscreen ({{key}})",
     "aboutTab": "About",
     "appVersion": "Version {{version}}",
     "description": "Official free algorithmic trading app based on the <url>Bitfinex API</url>, created by the Bitfinex team.",
@@ -462,6 +471,18 @@
     "text": "Please be aware that when this setting is enabled, closing the app will not only cancel all orders that have been created by the Bitfinex Honey, but will also cancel all other orders, including those that have been opened on the Bitfinex website or elsewhere.\n\nThis is a recommended setting, but you should be aware of the possible consequences.",
     "dontShowAgain": "Don't show again"
   },
+  "resetAPIKeysModal": {
+    "title": "Reset API credentials",
+    "text": "This will reset your API credentials. Are you sure you want to proceed?"
+  },
+  "resetDataConfirmModal": {
+    "title": "Confirm reset data",
+    "text": "This action will reset the app to its initial state and erase all the information and logs created up to this moment. Do you want to proceed?",
+    "exportToJSON": "Export all strategies as JSON before reseting",
+    "passwordRequest": "Your strategies are encrypted, in order to export you must provide your password:",
+    "errorOnStrategiesSave": "Saving your strategies was rejected",
+    "emptyList": "You don'\t have saved strategies. Resetting your data..."
+  },
   "editOrderModal": {
     "title": "Edit order",
     "noOrder": "No order selected"
@@ -519,7 +540,7 @@
     "tifDate": "TIF Date",
     "postOnlyCheckbox": "POST-ONLY",
     "postOnlyMessage": "\"Post Only\" limit orders are orders that allow you to be sure to always pay the maker fee. When placed, a \"Post Only\" limit order is either inserted into the order book or cancelled (only for limit orders)",
-    "laverage": "Leverage",
+    "leverage": "Leverage",
     "stopPrice": "Stop Price",
     "limitPrice": "Limit Price",
     "distance": "Distance",
@@ -637,10 +658,6 @@
     "saved": "Saved",
     "errorsInIDE": "Resolve code errors and save",
     "newStrategy": "Create a new strategy",
-    "capitalAllocationHelp": "This is the maximum amount of capital you want to deploy to this strategy, in quote currency (or equivalent)",
-    "stopLossHelp": "This is the maximum amount of capital you are willing to lose, as a percentage of the capital allocation",
-    "strategyStop": "IMPORTANT: the strategy will automatically stop when this value is reached",
-    "maximumDrawdownHelp": "This is the maximum drawdown allowed for this strategy in percentage",
     "newStrategyFrom": "Create a new strategy from...",
     "newStrategy2": "New strategy",
     "newStrategyFrom2": "New strategy from...",
@@ -658,7 +675,7 @@
     "activeStrategies": "Active strategies",
     "pastStrategies": "Executed strategies",
     "savedStrategies": "Draft strategies",
-    "copyStrategy": "Copy draft strategy",
+    "copyStrategy": "Duplicate draft strategy",
     "renameStrategy": "Rename draft strategy",
     "deleteStrategy": "Delete draft strategy",
     "more": "More",
@@ -732,7 +749,7 @@
     "savedStrategiesTab": "Drafts",
     "selectMarketDescription": "This is the market in which the strategy will run",
     "selectMarketDescriptionDisabled": "Selected Market",
-    "selectMarketPlaceholder": "Select a market",
+    "selectMarketPlaceholder": "Set the trading pair",
     "selectCandleDurationDescription": "Select candle duration",
     "fullscreenChartBtn": "Fullscreen Chart",
     "exitFullscreenChartBtn": "Exit fullscreen",
@@ -748,14 +765,6 @@
       "other": "Other..."
     },
     "closeStrategy": "Close strategy",
-    "executionOptionsModal": {
-      "title": "Select execution parameters before launch",
-      "disabledTitle": "Execution parameters",
-      "capitalAllocationLabel": "Capital Allocation",
-      "stopLoss": "Stop-Loss",
-      "maxDrawdown": "Maximum Drawdown",
-      "noMarketSelected": "You must first set a market for this strategy"
-    },
     "perfomanceMetrics": {
       "title": "Perfomance metrics",
       "runTime": "Strategy Run Time"
@@ -766,7 +775,12 @@
     "copyOfStrategy": "Copy of {{strategyName}}",
     "calculating": "Calculating...",
     "backtestSuccessful": "Backtest successful!",
-    "newTest": "New Test"
+    "newTest": "New Test",
+    "timePeriod": "Select a time period",
+    "switchToCustom": "Switch to custom date picker",
+    "switchToRegular": "Switch to regular date picker",
+    "lastXday": "Last {{amount}} day",
+    "lastXdays": "Last {{amount}} days"
   },
   "ui": {
     "ok": "Okay",
@@ -778,7 +792,6 @@
     "export": "Export",
     "import": "Import",
     "closeBtn": "Close",
-    "restartBtn": "Restart",
     "closeWithoutSaving": "Close without saving",
     "lastBtn": "Finish",
     "nextBtn": "Next",
@@ -882,5 +895,33 @@
     "strategy": "Strategy",
     "startedOn": "started on: {{time}}",
     "error": "It was not possible to safely terminate one or more of the active strategies and/or algorithmic orders. Try to cancel manually or Force Quit the application (Ctrl+Q/Cmd+Q)"
+  },
+  "strategySettingsModal": {
+    "title": "Strategy Settings",
+    "executionTab": "Execution",
+    "leverageTab": "Leverage",
+    "ordersTab": "Orders",
+    "capitalAllocationLabel": "Capital Allocation",
+    "stopLoss": "Stop-Loss",
+    "maxDrawdown": "Maximum Drawdown",
+    "noMarketSelected": "You must first set a market for this strategy",
+    "capitalAllocationHelp": "This is the maximum amount of capital you want to deploy to this strategy, in quote currency (or equivalent)",
+    "stopLossHelp": "This is the maximum amount of capital you are willing to lose, as a percentage of the capital allocation",
+    "strategyStop": "IMPORTANT: the strategy will automatically stop when this value is reached",
+    "maximumDrawdownHelp": "This is the maximum drawdown allowed for this strategy in percentage",
+    "tradeOnMarginCheckbox": "Trade on Margin",
+    "tradeOnMarginCheckboxDescription": "This will draw funds from your Margin Wallet",
+    "noSelectedPairWarning": "You must select the Trading Pair in the Strategy IDE top bar to enable these options",
+    "chooseDropdown": "Choose",
+    "maxMarginTradeMode": "Always Maximum",
+    "fixedMarginTradeMode": "Fixed",
+    "maxModeDescription": "On each trade, the app will try and use as much leverage as the Bitfinex exchange allows for the selected pair. Limits on Initial Equity and Collateral still apply.",
+    "fixModeDescription": "On each trade, the app will try and apply the leverage specified below.",
+    "leverageInfo": "Note: Leverage is affected by the pair you’re trading in. You can find more information in <url>this article</url>",
+    "increaseLeverageCheckbox": "Increase leverage if required",
+    "increaseLeverageCheckboxDescription": "If there isn’t enough initial equity for the value specified above, the app will increase the leverage automatically using all of the remaining funds",
+    "additionStopOrderCheckbox": "Automatically add a Stop order after each entry trade",
+    "additionStopOrderCheckboxDescription": "The app will automatically place a <url>Stop Order</url> with each new position based on the following value",
+    "stopOrderValuePlaceholder": "% of the entry price"
   }
 }

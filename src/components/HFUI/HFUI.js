@@ -11,15 +11,15 @@ import { useTranslation } from 'react-i18next'
 import { THEMES, SETTINGS_KEYS } from '../../redux/selectors/ui'
 import useInjectBfxData from '../../hooks/useInjectBfxData'
 import NotificationsSidebar from '../NotificationsSidebar'
-import AppUpdate from '../AppUpdate'
+import AppUpdateBar from '../AppUpdateBar'
 import closeElectronApp from '../../redux/helpers/close_electron_app'
 import Routes from '../../constants/routes'
 import { isElectronApp } from '../../redux/config'
 import ModalsWrapper from '../../modals/ModalsWrapper/ModalsWrapper'
+import FullscreenModeBar from '../FullscreenModeBar'
 
 import './style.css'
 
-// const StrategyEditorPage = lazy(() => import('../../pages/StrategyEditor'))
 const TradingPage = lazy(() => import('../../pages/Trading'))
 const MarketDataPage = lazy(() => import('../../pages/MarketData'))
 const AuthenticationPage = lazy(() => import('../../pages/Authentication'))
@@ -47,6 +47,7 @@ const HFUI = (props) => {
     getPastStrategies,
     openAppSettingsModal,
     setApplicationHiddenStatus,
+    updateFullscreenState,
   } = props
   useInjectBfxData()
 
@@ -84,6 +85,7 @@ const HFUI = (props) => {
       ipcHelpers.addOpenSettingsModalListener(openAppSettingsModal)
       ipcHelpers.addAppHiddenListener(() => setApplicationHiddenStatus(true, notificationOnAppHide))
       ipcHelpers.addAppRestoredListener(() => setApplicationHiddenStatus(false))
+      ipcHelpers.addFullscreenChangeListener((_, { fullscreen }) => updateFullscreenState(fullscreen))
 
       return () => {
         ipcHelpers.removeAllGlobalListeners()
@@ -95,6 +97,7 @@ const HFUI = (props) => {
     openAppSettingsModal,
     setApplicationHiddenStatus,
     settingsShowAlgoPauseInfo,
+    updateFullscreenState,
     t,
   ])
 
@@ -147,7 +150,8 @@ const HFUI = (props) => {
 
   return (
     <Suspense fallback={<></>}>
-      {authToken ? (
+      {isElectronApp && <FullscreenModeBar />}
+      {authToken && (
         <>
           <Switch>
             <Redirect from='/index.html' to='/' exact />
@@ -166,14 +170,21 @@ const HFUI = (props) => {
               path={Routes.marketData.path}
               render={() => <MarketDataPage />}
             />
+            <Route
+              path='*'
+              render={() => <Redirect to={Routes.tradingTerminal.path} />}
+            />
           </Switch>
           <ModalsWrapper isElectronApp={isElectronApp} />
         </>
-      ) : (
-        <>{isElectronApp && <AuthenticationPage />}</>
       )}
       <NotificationsSidebar notificationsVisible={notificationsVisible} />
-      {isElectronApp && <AppUpdate />}
+      {isElectronApp && (
+        <>
+          {!authToken && <AuthenticationPage />}
+          <AppUpdateBar />
+        </>
+      )}
     </Suspense>
   )
 }
@@ -197,6 +208,7 @@ HFUI.propTypes = {
   showStrategies: PropTypes.bool,
   openAppSettingsModal: PropTypes.func.isRequired,
   setApplicationHiddenStatus: PropTypes.func.isRequired,
+  updateFullscreenState: PropTypes.func.isRequired,
 }
 
 HFUI.defaultProps = {

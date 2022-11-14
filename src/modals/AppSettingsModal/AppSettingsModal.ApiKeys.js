@@ -1,4 +1,6 @@
-import React, { useState, memo, useEffect } from 'react'
+import React, {
+  useState, memo, useEffect, useRef,
+} from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import _size from 'lodash/size'
 import _trim from 'lodash/trim'
@@ -14,6 +16,8 @@ import {
   getIsPaperModeApiKeyUpdating,
 } from '../../redux/selectors/ws'
 import { getCurrentMode, getSettingActiveSection } from '../../redux/selectors/ui'
+import { changeUIModalState } from '../../redux/actions/ui'
+import { UI_MODAL_KEYS } from '../../redux/constants/modals'
 import WSActions from '../../redux/actions/ws'
 import Input from '../../ui/Input'
 import {
@@ -37,6 +41,8 @@ const ApiKeys = () => {
   const [apiSecret, setApiSecret] = useState('')
   const [paperApiKey, setPaperApiKey] = useState('')
   const [paperApiSecret, setPaperApiSecret] = useState('')
+
+  const paperKeysRef = useRef()
 
   const { t } = useTranslation()
 
@@ -73,16 +79,30 @@ const ApiKeys = () => {
     }
   }
 
+  const onResetApiKey = (mode) => () => {
+    if (mode === MAIN_MODE) {
+      dispatch(changeUIModalState(UI_MODAL_KEYS.RESET_LIVE_API_KEY_MODAL, true))
+    } else {
+      dispatch(changeUIModalState(UI_MODAL_KEYS.RESET_PAPER_API_KEY_MODAL, true))
+    }
+  }
+
   const [highlight, setHighlight] = useState(false)
 
   const getClasses = (mode) => cx('appsettings-modal__setting', {
     highlight: highlight && activeSection === mode,
+    'appsettings-modal__setting--paddings': highlight,
   })
 
   useEffect(() => {
     if (activeSection) {
       setTimeout(() => {
         setHighlight(true)
+        if (activeSection === PAPER_MODE && paperKeysRef?.current) {
+          paperKeysRef.current.scrollIntoView({
+            behavior: 'smooth',
+          })
+        }
       }, 350)
     }
   })
@@ -90,107 +110,121 @@ const ApiKeys = () => {
   return (
     <div>
       <div className={getClasses(MAIN_MODE)}>
-        <div className='appsettings-modal__content'>
-          <div className='appsettings-modal__key-title-wrapper'>
-            <span className='appsettings-modal__key-title'>
-              {t('appSettings.productionKey')}
-            </span>
-            {' '}
-            <a
-              href='https://support.bitfinex.com/hc/en-us/articles/115002349625-API-Key-Setup-Login'
-              target='_blank'
-              rel='noopener noreferrer'
-              className='appsettings-modal__key-text appsettings-modal__key-link'
-            >
-              <i className='fa fa-info-circle' />
-              {' '}
-              {t('appSettings.howToCreate')}
-            </a>
-            <div className='appsettings-modal__key-text appsettings-modal__key-desc'>{t('appSettings.howToCreateDesc')}</div>
-          </div>
-          <ApiBanner
-            apiKeyState={mainAPIKeyState}
-            isUpdating={isMainApiKeyUpdating}
-          />
-          <div className='appsettings-modal__input'>
-            <Input
-              type='text'
-              placeholder={t('appSettings.apiKey')}
-              onChange={setApiKey}
-              value={apiKey}
-              autocomplete='off'
-            />
-          </div>
-          <div className='appsettings-modal__input'>
-            <Input
-              type='password'
-              placeholder={t('appSettings.apiSecret')}
-              onChange={setApiSecret}
-              value={apiSecret}
-              autocomplete='off'
-            />
-          </div>
-          <Button
-            intent={Intent.PRIMARY}
-            small
-            onClick={onSaveMainModeApiKey}
-            disabled={!isProductionKeysTouched}
+        <div className='appsettings-modal__key-title-wrapper'>
+          <span className='appsettings-modal__key-title'>
+            {t('appSettings.productionKey')}
+          </span>
+          {' '}
+          <a
+            href='https://support.bitfinex.com/hc/en-us/articles/115002349625-API-Key-Setup-Login'
+            target='_blank'
+            rel='noopener noreferrer'
+            className='appsettings-modal__key-text appsettings-modal__key-link'
           >
-            {mainAPIKeyState.configured ? t('ui.updateBtn') : t('ui.save')}
-          </Button>
+            <i className='fa fa-info-circle' />
+            {' '}
+            {t('appSettings.howToCreate')}
+          </a>
+          <div className='appsettings-modal__key-text appsettings-modal__key-desc'>{t('appSettings.howToCreateDesc')}</div>
         </div>
+        <ApiBanner
+          apiKeyState={mainAPIKeyState}
+          isUpdating={isMainApiKeyUpdating}
+        />
+        <div className='appsettings-modal__input'>
+          <Input
+            type='text'
+            placeholder={t('appSettings.apiKey')}
+            onChange={setApiKey}
+            value={apiKey}
+            autocomplete='off'
+          />
+        </div>
+        <div className='appsettings-modal__input'>
+          <Input
+            type='password'
+            placeholder={t('appSettings.apiSecret')}
+            onChange={setApiSecret}
+            value={apiSecret}
+            autocomplete='off'
+          />
+        </div>
+        <Button
+          intent={Intent.PRIMARY}
+          small
+          onClick={onSaveMainModeApiKey}
+          disabled={!isProductionKeysTouched}
+        >
+          {mainAPIKeyState.configured ? t('ui.updateBtn') : t('ui.save')}
+        </Button>
+        <Button
+          intent={Intent.SECONDARY}
+          className='reset_button'
+          small
+          onClick={onResetApiKey(MAIN_MODE)}
+          disabled={!!isProductionKeysTouched}
+        >
+          {t('ui.reset')}
+        </Button>
       </div>
-      <div className={getClasses(PAPER_MODE)}>
-        <div className='appsettings-modal__content'>
-          <div className='appsettings-modal__key-title-wrapper'>
-            <span className='appsettings-modal__key-title'>
-              {t('appSettings.paperKey')}
-            </span>
-            {' '}
-            <a
-              href='https://support.bitfinex.com/hc/en-us/articles/900001525006-Paper-Trading-test-learn-and-simulate-trading-strategies-'
-              target='_blank'
-              rel='noopener noreferrer'
-              className='appsettings-modal__key-text appsettings-modal__key-link'
-            >
-              <i className='fa fa-info-circle' />
-              {' '}
-              {t('appSettings.howToCreatePaper')}
-            </a>
-            <div className='appsettings-modal__key-text appsettings-modal__key-desc'>{t('appSettings.howToCreatePaperDesc')}</div>
-          </div>
-
-          <ApiBanner
-            apiKeyState={paperAPIKeyState}
-            isUpdating={isPaperApiKeyUpdating}
-          />
-          <div className='appsettings-modal__input'>
-            <Input
-              type='text'
-              placeholder={t('appSettings.apiKey')}
-              onChange={setPaperApiKey}
-              value={paperApiKey}
-              autocomplete='off'
-            />
-          </div>
-          <div className='appsettings-modal__input'>
-            <Input
-              type='password'
-              placeholder={t('appSettings.apiSecret')}
-              onChange={setPaperApiSecret}
-              value={paperApiSecret}
-              autocomplete='off'
-            />
-          </div>
-          <Button
-            intent={Intent.PRIMARY}
-            small
-            onClick={onSavePaperModeApiKey}
-            disabled={!isPaperKeysTouched}
+      <div className={getClasses(PAPER_MODE)} ref={paperKeysRef}>
+        <div className='appsettings-modal__key-title-wrapper'>
+          <span className='appsettings-modal__key-title'>
+            {t('appSettings.paperKey')}
+          </span>
+          {' '}
+          <a
+            href='https://support.bitfinex.com/hc/en-us/articles/900001525006-Paper-Trading-test-learn-and-simulate-trading-strategies-'
+            target='_blank'
+            rel='noopener noreferrer'
+            className='appsettings-modal__key-text appsettings-modal__key-link'
           >
-            {paperAPIKeyState.configured ? t('ui.updateBtn') : t('ui.save')}
-          </Button>
+            <i className='fa fa-info-circle' />
+            {' '}
+            {t('appSettings.howToCreatePaper')}
+          </a>
+          <div className='appsettings-modal__key-text appsettings-modal__key-desc'>{t('appSettings.howToCreatePaperDesc')}</div>
         </div>
+
+        <ApiBanner
+          apiKeyState={paperAPIKeyState}
+          isUpdating={isPaperApiKeyUpdating}
+        />
+        <div className='appsettings-modal__input'>
+          <Input
+            type='text'
+            placeholder={t('appSettings.apiKey')}
+            onChange={setPaperApiKey}
+            value={paperApiKey}
+            autocomplete='off'
+          />
+        </div>
+        <div className='appsettings-modal__input'>
+          <Input
+            type='password'
+            placeholder={t('appSettings.apiSecret')}
+            onChange={setPaperApiSecret}
+            value={paperApiSecret}
+            autocomplete='off'
+          />
+        </div>
+        <Button
+          intent={Intent.PRIMARY}
+          small
+          onClick={onSavePaperModeApiKey}
+          disabled={!isPaperKeysTouched}
+        >
+          {paperAPIKeyState.configured ? t('ui.updateBtn') : t('ui.save')}
+        </Button>
+        <Button
+          intent={Intent.SECONDARY}
+          className='reset_button'
+          small
+          onClick={onResetApiKey(PAPER_MODE)}
+          disabled={!!isProductionKeysTouched}
+        >
+          {t('ui.reset')}
+        </Button>
       </div>
     </div>
   )

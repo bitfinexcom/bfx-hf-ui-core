@@ -13,4 +13,5 @@ export const UI_KEYS = {
   unsavedLayout: 'unsavedLayout',
   remoteVersion: 'remoteVersion',
   isApplicationHidden: 'isApplicationHidden',
+  isFullscreenBarShown: 'isFullscreenBarShown',
 }

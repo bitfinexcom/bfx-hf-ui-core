@@ -47,6 +47,7 @@ const Panel = ({
   fullscreen,
   onEnterFullscreen,
   onExitFullscreen,
+  isWideSidebar,
 }) => {
   const tabs = _filter(
     React.Children.toArray(children),
@@ -221,7 +222,11 @@ const Panel = ({
               'no-sidebar': _isEmpty(sbTabs),
             })}
           >
-            <div className='hfui_panel__sidebar-container'>
+            <div
+              className={ClassNames('hfui_panel__sidebar-container', {
+                wide: isWideSidebar,
+              })}
+            >
               <Icon
                 className='hfui_panel__sidebar_switch'
                 name={sidebarOpened ? 'chevron-left' : 'chevron-right'}
@@ -295,6 +300,7 @@ Panel.propTypes = {
   fullscreen: PropTypes.bool,
   onEnterFullscreen: PropTypes.func,
   onExitFullscreen: PropTypes.func,
+  isWideSidebar: PropTypes.bool,
 }
 
 Panel.defaultProps = {
@@ -325,6 +331,7 @@ Panel.defaultProps = {
   fullscreen: false,
   onEnterFullscreen: () => {},
   onExitFullscreen: () => {},
+  isWideSidebar: false,
 }
 
 export default Panel

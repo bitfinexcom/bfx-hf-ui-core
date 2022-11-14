@@ -9,6 +9,7 @@ import workerFetchRemoteVersion from './worker_fetch_remote_version'
 import onChangeMode from './on_change_mode'
 import onRemoveStrategy from './on_remove_strategy'
 import onShowNotification from './on_show_notification'
+import pendoIdentify from './pendo_identify'
 import { isElectronApp } from '../../config'
 
 export default function* () {
@@ -17,6 +18,7 @@ export default function* () {
   yield takeEvery(UITypes.SAVE_SETTINGS, onSaveSettings)
   yield takeEvery(UITypes.CHANGE_MODE, onChangeMode)
   yield takeEvery(UITypes.REMOVE_STRATEGY, onRemoveStrategy)
+  yield takeEvery(WSTypes.SET_AUID, pendoIdentify)
 
   if (isElectronApp) {
     yield takeEvery(UITypes.DATA_NOTIFICATION, onShowNotification)

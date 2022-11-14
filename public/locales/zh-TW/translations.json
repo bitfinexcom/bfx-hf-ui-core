@@ -517,7 +517,7 @@
     "tifDate": "訂單有效日期",
     "postOnlyCheckbox": "僅限提交訂單",
     "postOnlyMessage": "「僅限提交」限價單可確保您只支付掛單手續費。下單後，「僅限提交」限價單若未進入掛單簿便會取消 (僅限限價單)。",
-    "laverage": "槓桿倍率",
+    "leverage": "槓桿倍率",
     "stopPrice": "止損價",
     "limitPrice": "限價",
     "distance": "距離",
@@ -638,9 +638,6 @@
     "saved": "已存檔",
     "errorsInIDE": "解決代碼錯誤並儲存",
     "newStrategy": "建立新策略",
-    "capitalAllocationHelp": "此為您希望分配至此策略的最高資本金額，以計價貨幣（或等值貨幣）表示\n注意：您必須在對應的錢包持有足夠的資金以啟動該策略",
-    "stopLossHelp": "此為您願意承擔虧損的最高金額，佔配置資本的百分比\n重要訊息：當虧損金額達到此水平，策略將自動停止",
-    "maximumDrawdownHelp": "此策略允許的最大回撤百分比\n重要訊息：當虧損幅度達到此水平，策略將自動停止",
     "newStrategyFrom": "建立新策略的位置：",
     "newStrategy2": "新增策略",
     "newStrategyFrom2": "從模板或儲存檔案建立新策略",
@@ -728,7 +725,6 @@
     "savedStrategiesTab": "草稿",
     "selectMarketDescription": "選取市況",
     "selectMarketDescriptionDisabled": "已選取市況",
-    "selectMarketPlaceholder": "選取市場",
     "selectCandleDurationDescription": "選取K線期間",
     "fullscreenChartBtn": "全螢幕圖表",
     "exitFullscreenChartBtn": "退出全螢幕模式",
@@ -744,13 +740,6 @@
       "other": "其他"
     },
     "closeStrategy": "關閉策略",
-    "executionOptionsModal": {
-      "title": "執行前選擇執行參數",
-      "disabledTitle": "執行參數",
-      "capitalAllocationLabel": "資本配置",
-      "stopLoss": "止損",
-      "maxDrawdown": "最大回撤"
-    },
     "perfomanceMetrics": {
       "title": "表現指標",
       "runTime": "策略執行時間"
@@ -773,7 +762,6 @@
     "export": "匯出",
     "import": "導入",
     "closeBtn": "關閉",
-    "restartBtn": "重新啟動",
     "closeWithoutSaving": "退出而不儲存",
     "lastBtn": "結束",
     "nextBtn": "下一步",
@@ -867,5 +855,13 @@
     "warning_2": "此操作無法復原！",
     "strategyName": "策略名稱",
     "input_placeholder": "輸入 {{label}} 以進行刪除"
+  },
+  "strategySettingsModal": {
+    "capitalAllocationLabel": "資本配置",
+    "stopLoss": "止損",
+    "maxDrawdown": "最大回撤",
+    "capitalAllocationHelp": "此為您希望分配至此策略的最高資本金額，以計價貨幣（或等值貨幣）表示\n注意：您必須在對應的錢包持有足夠的資金以啟動該策略",
+    "stopLossHelp": "此為您願意承擔虧損的最高金額，佔配置資本的百分比\n重要訊息：當虧損金額達到此水平，策略將自動停止",
+    "maximumDrawdownHelp": "此策略允許的最大回撤百分比\n重要訊息：當虧損幅度達到此水平，策略將自動停止"
   }
 }

@@ -5,9 +5,11 @@ import { Notifications, useInterval } from '@ufx-ui/core'
 import ClassNames from 'clsx'
 import PropTypes from 'prop-types'
 import _filter from 'lodash/filter'
+import _isEmpty from 'lodash/isEmpty'
+import _map from 'lodash/map'
 import { withTranslation } from 'react-i18next'
-
 import SidebarContent from './SidebarContent'
+
 import './style.css'
 
 const REFRESH_NOTIFICATIONS_MS = 1000
@@ -16,7 +18,12 @@ const LIVE_NOTIFICATIONS_MS = 5000
 const EMPTY_ARR = []
 
 const NotificationsSidebar = ({
-  notifications, notificationsVisible, closeNotificationPanel, removeNotifications, clearNotifications, t,
+  notifications,
+  notificationsVisible,
+  closeNotificationPanel,
+  removeNotifications,
+  clearNotifications,
+  t,
 }) => {
   const [newNotifications, setNewNotifications] = useState(EMPTY_ARR)
   const [visible, setVisible] = useState(notificationsVisible)
@@ -28,10 +35,28 @@ const NotificationsSidebar = ({
   }, [clearNotifications])
 
   const checkNotificationsTime = () => {
-    const nextNotifications = _filter(notifications, n => n?.mts > new Date().getTime() - LIVE_NOTIFICATIONS_MS)
+    const nextNotifications = _filter(
+      notifications,
+      (n) => n?.mts > new Date().getTime() - LIVE_NOTIFICATIONS_MS,
+    )
 
     setNewNotifications(nextNotifications)
   }
+
+  const onClose = useCallback(
+    ({ cid, group }) => {
+      let cids = []
+
+      if (!_isEmpty(group)) {
+        cids = _map(group, (el) => el.cid)
+      } else if (!_isEmpty(cid)) {
+        cids = [cid]
+      }
+
+      removeNotifications(cids)
+    },
+    [removeNotifications],
+  )
 
   useEffect(() => {
     if (notificationsVisible) {
@@ -44,7 +69,7 @@ const NotificationsSidebar = ({
   // set notification on component mount
   useEffect(() => {
     setNewNotifications(notifications)
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   // get notifications prop update with delay
@@ -59,10 +84,11 @@ const NotificationsSidebar = ({
         })}
         onClick={closeNotificationPanel}
       />
-      <div className={ClassNames('hfui-notificationssidebar__wrapper', {
-        visible: notificationsVisible,
-        hidden: !notificationsVisible,
-      })}
+      <div
+        className={ClassNames('hfui-notificationssidebar__wrapper', {
+          visible: notificationsVisible,
+          hidden: !notificationsVisible,
+        })}
       >
         <SidebarContent
           closeNotificationPanel={closeNotificationPanel}
@@ -72,9 +98,12 @@ const NotificationsSidebar = ({
           onClearNotifications={onClearNotifications}
           t={t}
         />
-
       </div>
-      <Notifications className='hfui-notificationssidebar__external' notifications={newNotifications} />
+      <Notifications
+        className='hfui-notificationssidebar__external'
+        notifications={newNotifications}
+        onClose={onClose}
+      />
     </>
   )
 }

@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unknown-property */
 import React, {
   memo, useEffect, useMemo, useState, useCallback,
 } from 'react'
@@ -28,7 +29,7 @@ import CancelProcessModal from '../../modals/Strategy/CancelProcessModal'
 import StrategyTabTitle from './tabs/StrategyTab/StrategyTab.Title'
 import BacktestTabTitle from './tabs/BacktestTab.Title'
 import IDETabTitle from './tabs/IDETab.Title'
-import ExecutionOptionsModal from '../../modals/Strategy/ExecutionOptionsModal'
+import StrategySettingsModal from '../../modals/Strategy/StrategySettingsModal'
 import SaveUnsavedChangesLaunchModal from '../../modals/Strategy/SaveUnsavedChangesLaunchModal'
 import {
   getDefaultStrategyOptions,
@@ -55,6 +56,8 @@ import {
 import EditStrategyLabelModal from '../../modals/Strategy/EditStrategyLabelModal'
 import { UI_MODAL_KEYS } from '../../redux/constants/modals'
 import { PAPER_MODE } from '../../redux/reducers/ui'
+import SettingsTitle from './tabs/SettingsTitle'
+import { LANGUAGES } from '../../locales/i18n'
 
 import './style.css'
 
@@ -89,14 +92,12 @@ const StrategyEditor = (props) => {
     saveStrategyToExecuteToLS,
     removeStrategyToExecuteFromLS,
     pendingLiveStrategy,
-    executionId,
     onDefineIndicatorsChange,
     evalSectionContent,
     setSectionErrors,
     serviceStatus,
-    getCurrencySymbol,
   } = props
-  const { t } = useTranslation()
+  const { t, i18n: { language } } = useTranslation()
 
   const [isRemoveModalOpen, , openRemoveModal, closeRemoveModal] = useToggle(false)
   const [
@@ -131,22 +132,26 @@ const StrategyEditor = (props) => {
     closeCancelProcessModal,
   ] = useToggle(false)
   const [
-    isExecutionOptionsModalOpen,,
-    openExecutionOptionsModal,
-    closeExecutionOptionsModal,
+    isStrategySettingsModalOpen,,
+    openStrategySettingsModal,
+    closeStrategySettingsModal,
   ] = useToggle(false)
   const [
     isLaunchStrategyModalOpen,,
     openLaunchStrategyModal,
     closeLaunchStrategyModal,
   ] = useToggle(false)
-  const [executionOptionsModalType, setExecutionOptionsModalType] = useState(null)
+  const [strategySettingsModalType, setStrategySettingsModalType] = useState(null)
 
   const strategyOptions = _get(
     strategy,
     'strategyOptions',
     getDefaultStrategyOptions(),
   )
+
+  const isWideSidebar = useMemo(() => {
+    return language === LANGUAGES.es || language === LANGUAGES.pt
+  }, [language])
 
   const {
     symbol,
@@ -158,8 +163,7 @@ const StrategyEditor = (props) => {
     maxDrawdownPerc,
   } = strategyOptions
 
-  const strategyQuote = getCurrencySymbol(symbol?.quote)
-  const { executing, loadingGid } = executionState
+  const { loadingGid } = executionState
   const { strategyManager: isStrategyManagerRunning } = serviceStatus
 
   const isFullFilled = isExecutionInputsFullFilled(
@@ -170,6 +174,7 @@ const StrategyEditor = (props) => {
 
   const strategyId = strategy?.id
   const strategyLabel = strategy?.label
+  const executionId = strategy?.executionId
 
   const onCloseModals = useCallback(() => {
     closeOpenExistingStrategyModal()
@@ -177,7 +182,7 @@ const StrategyEditor = (props) => {
     closeRemoveModal()
     closeCreateNewStrategyFromModal()
     closeSaveStrategyAsModal()
-    closeExecutionOptionsModal()
+    closeStrategySettingsModal()
     closeCancelProcessModal()
     closeLaunchStrategyModal()
     closeSaveStrategyBeforeLaunchModal()
@@ -186,7 +191,7 @@ const StrategyEditor = (props) => {
     closeCancelProcessModal,
     closeCreateNewStrategyFromModal,
     closeCreateNewStrategyModal,
-    closeExecutionOptionsModal,
+    closeStrategySettingsModal,
     closeLaunchStrategyModal,
     closeOpenExistingStrategyModal,
     closeRemoveModal,
@@ -367,18 +372,18 @@ const StrategyEditor = (props) => {
     }
 
     if (!isFullFilled) {
-      openExecutionOptionsModal()
-      setExecutionOptionsModalType(EXECUTION_TYPES.BACKTEST)
+      openStrategySettingsModal()
+      setStrategySettingsModalType(EXECUTION_TYPES.BACKTEST)
       return
     }
-    setExecutionOptionsModalType(null)
+    setStrategySettingsModalType(null)
 
     dsExecuteBacktest(backtestArgs)
   }, [
     candles,
     dsExecuteBacktest,
     isFullFilled,
-    openExecutionOptionsModal,
+    openStrategySettingsModal,
     showError,
     strategy,
     t,
@@ -439,16 +444,16 @@ const StrategyEditor = (props) => {
       }
       if (isFullFilled) {
         openLaunchStrategyModal()
-        setExecutionOptionsModalType(null)
+        setStrategySettingsModalType(null)
         return
       }
 
-      openExecutionOptionsModal()
-      setExecutionOptionsModalType(EXECUTION_TYPES.LIVE)
+      openStrategySettingsModal()
+      setStrategySettingsModalType(EXECUTION_TYPES.LIVE)
     },
     [
       isFullFilled,
-      openExecutionOptionsModal,
+      openStrategySettingsModal,
       openLaunchStrategyModal,
       openSaveStrategyBeforeLaunchModal,
       strategyDirty,
@@ -472,8 +477,8 @@ const StrategyEditor = (props) => {
     }
 
     if (!isFullFilled) {
-      openExecutionOptionsModal()
-      setExecutionOptionsModalType(EXECUTION_TYPES.LIVE)
+      openStrategySettingsModal()
+      setStrategySettingsModalType(EXECUTION_TYPES.LIVE)
       return
     }
     if (isPaperTrading) {
@@ -494,7 +499,7 @@ const StrategyEditor = (props) => {
     dsExecuteLiveStrategy,
     isFullFilled,
     isPaperTrading,
-    openExecutionOptionsModal,
+    openStrategySettingsModal,
     strategy,
     saveStrategyToExecuteToLS,
   ])
@@ -504,7 +509,7 @@ const StrategyEditor = (props) => {
       if (!checkForAPIKeys(strategyToLoad)) {
         return
       }
-      onLoadStrategy(strategyToLoad)
+      onLoadStrategy(strategyToLoad, true)
       setTimeout(() => {
         const executionArgs = prepareStrategyExecutionArgs(strategyToLoad)
         dsExecuteLiveStrategy({
@@ -533,12 +538,7 @@ const StrategyEditor = (props) => {
   const editInSandbox = useCallback(() => {
     changeTradingMode(!isPaperTrading)
     setStrategy(strategy, PAPER_MODE)
-  }, [
-    changeTradingMode,
-    isPaperTrading,
-    setStrategy,
-    strategy,
-  ])
+  }, [changeTradingMode, isPaperTrading, setStrategy, strategy])
 
   const openNewTest = () => onLoadStrategy(strategy)
 
@@ -552,7 +552,6 @@ const StrategyEditor = (props) => {
       isPaperTrading
       || !pendingLiveStrategy
       || !isStrategyManagerRunning
-      || executing
       || _isEmpty(savedStrategies)
     ) {
       return
@@ -565,12 +564,7 @@ const StrategyEditor = (props) => {
 
     loadStrategyAndStartExecution(strategyToLoad)
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [
-    savedStrategies,
-    executing,
-    pendingLiveStrategy,
-    isStrategyManagerRunning,
-  ])
+  }, [savedStrategies, pendingLiveStrategy, isStrategyManagerRunning])
 
   const sbtitleStrategy = useCallback(
     ({ selectedTab, sidebarOpened }) => (
@@ -632,6 +626,11 @@ const StrategyEditor = (props) => {
     [backtestResults],
   )
 
+  const sbtitleSettings = useCallback(
+    ({ sidebarOpened }) => <SettingsTitle sidebarOpened={sidebarOpened} />,
+    [],
+  )
+
   return (
     <>
       {!strategy || _isEmpty(strategy) ? (
@@ -647,6 +646,7 @@ const StrategyEditor = (props) => {
             moveable={moveable}
             removeable={removeable}
             onRemoveStrategy={onRemoveStrategy}
+            isWideSidebar={isWideSidebar}
           >
             {(isBetaVersion || flags?.live_execution) && (
               <StrategyTab
@@ -657,7 +657,6 @@ const StrategyEditor = (props) => {
                 isPaperTrading={isPaperTrading}
                 stopExecution={stopExecution}
                 onSaveStrategy={onSaveStrategy}
-                openExecutionOptionsModal={openExecutionOptionsModal}
                 saveStrategyOptions={saveStrategyOptions}
                 hasErrors={hasErrorsInIDE}
                 onCancelProcess={onCancelProcess}
@@ -694,6 +693,14 @@ const StrategyEditor = (props) => {
                 strategy={strategy}
               />
             )}
+            {(isBetaVersion || flags?.live_execution) && (
+              <div
+                htmlKey='settings'
+                key='settings'
+                sbtitle={sbtitleSettings}
+                onClick={openStrategySettingsModal}
+              />
+            )}
           </StrategyEditorPanel>
           <RemoveExistingStrategyModal
             isOpen={isRemoveModalOpen}
@@ -707,19 +714,15 @@ const StrategyEditor = (props) => {
             strategy={strategy}
             onSubmit={onSaveAsStrategy}
           />
-          <ExecutionOptionsModal
-            isOpen={isExecutionOptionsModalOpen}
+          <StrategySettingsModal
+            isOpen={isStrategySettingsModalOpen}
             onClose={onCloseModals}
             saveStrategyOptions={saveStrategyOptions}
-            capitalAllocation={capitalAllocation}
-            stopLossPerc={stopLossPerc}
-            maxDrawdownPerc={maxDrawdownPerc}
             startExecution={onLaunchExecutionClick}
             startBacktest={onBacktestStart}
-            executionOptionsModalType={executionOptionsModalType}
-            isFullFilled={isFullFilled}
+            strategySettingsModalType={strategySettingsModalType}
             strategyId={strategyId}
-            strategyQuote={strategyQuote}
+            strategyOptions={strategyOptions}
           />
           <LaunchStrategyModal
             onSubmit={saveStrategyAndStartExecution}
@@ -808,7 +811,6 @@ StrategyEditor.propTypes = {
   saveStrategyToExecuteToLS: PropTypes.func.isRequired,
   removeStrategyToExecuteFromLS: PropTypes.func.isRequired,
   pendingLiveStrategy: PropTypes.string,
-  executionId: PropTypes.string,
   onDefineIndicatorsChange: PropTypes.func.isRequired,
   evalSectionContent: PropTypes.func.isRequired,
   setSectionErrors: PropTypes.func.isRequired,
@@ -818,7 +820,6 @@ StrategyEditor.propTypes = {
     bfxClient: PropTypes.bool,
     strategyManager: PropTypes.bool,
   }).isRequired,
-  getCurrencySymbol: PropTypes.func.isRequired,
 }
 
 StrategyEditor.defaultProps = {
@@ -830,7 +831,6 @@ StrategyEditor.defaultProps = {
     label: null,
   },
   indicators: [],
-  executionId: null,
   pendingLiveStrategy: null,
 }
 

@@ -8,7 +8,6 @@ import { Icon } from 'react-fa'
 import clsx from 'clsx'
 import Button from '../../ui/Button'
 import StrategyTypeSelect from './StrategyTypeSelect'
-import StrategyOptionsButton from './StrategyOptionsButton'
 import { MARKET_SHAPE, STRATEGY_SHAPE } from '../../constants/prop-types-shapes'
 import StrategyMarketSelect from './StrategyMarketSelect'
 
@@ -20,7 +19,6 @@ const StrategyOptionsPanelSandbox = ({
   strategy,
   onOpenEditStrategyLabelModal,
   markets,
-  openExecutionOptionsModal,
   strategyDirty,
   hasErrors,
   onSaveStrategy,
@@ -72,7 +70,6 @@ const StrategyOptionsPanelSandbox = ({
           strategyType={strategyType}
           isExecuting={false}
         />
-        <StrategyOptionsButton onClick={openExecutionOptionsModal} />
       </div>
       <div className='hfui-strategy-options__save-container'>
         <p className='saving-message'>
@@ -105,7 +102,6 @@ StrategyOptionsPanelSandbox.propTypes = {
   markets: PropTypes.arrayOf(PropTypes.shape(MARKET_SHAPE)).isRequired,
   saveStrategyOptions: PropTypes.func.isRequired,
   strategy: PropTypes.shape(STRATEGY_SHAPE).isRequired,
-  openExecutionOptionsModal: PropTypes.func.isRequired,
   strategyDirty: PropTypes.bool.isRequired,
   hasErrors: PropTypes.bool.isRequired,
   onSaveStrategy: PropTypes.func.isRequired,

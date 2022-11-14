@@ -517,7 +517,7 @@
     "tifDate": "Data de TIF",
     "postOnlyCheckbox": "POST-ONLY",
     "postOnlyMessage": "Ordens limite \"post-only\" permitem que você sempre tenha a certeza de que pagará a taxa de maker. Quando colocada, uma ordem limite \"post-only\" ou é inserida no livro de ordens, ou então cancelada (somente para ordens limite)",
-    "laverage": "Alavancagem",
+    "leverage": "Alavancagem",
     "stopPrice": "Preço do stop",
     "limitPrice": "Preço-limite",
     "distance": "Distância",
@@ -638,9 +638,6 @@
     "saved": "Salvo",
     "errorsInIDE": "Resolva erros de código e salve",
     "newStrategy": "Criar uma nova estratégia",
-    "capitalAllocationHelp": "Este é o valor máximo de capital que você deseja implantar nesta estratégia, na moeda de cotação (ou equivalente)\nNOTA: você deve ter fundos suficientes na carteira correspondente para lançar a estratégia",
-    "stopLossHelp": "Este é o valor máximo de capital que você está disposto a perder, como porcentagem da alocação de capital\nIMPORTANTE: a estratégia irá parar automaticamente se este nível for atingido",
-    "maximumDrawdownHelp": "Este é o drawdown máximo permitido para esta estratégia em porcentagem\nIMPORTANTE: a estratégia irá parar automaticamente se este nível for atingido",
     "newStrategyFrom": "Crie uma nova estratégia...",
     "newStrategy2": "Nova estratégia",
     "newStrategyFrom2": "Nova estratégia de...",
@@ -728,7 +725,6 @@
     "savedStrategiesTab": "Rascunhos",
     "selectMarketDescription": "Selecionar mercado",
     "selectMarketDescriptionDisabled": "Mercado Selecionado",
-    "selectMarketPlaceholder": "Selecionar mercado",
     "selectCandleDurationDescription": "Selecione a duração da vela",
     "fullscreenChartBtn": "Gráfico em Tela Cheia",
     "exitFullscreenChartBtn": "Sair da tela cheia",
@@ -744,13 +740,6 @@
       "other": "Outro..."
     },
     "closeStrategy": "Fechar estratégia",
-    "executionOptionsModal": {
-      "title": "Selecione os parâmetros de execução antes do lançamento",
-      "disabledTitle": "Parâmetros de execução",
-      "capitalAllocationLabel": "Alocação de Capital",
-      "stopLoss": "Stop-Loss",
-      "maxDrawdown": "Drawdown Máximo"
-    },
     "perfomanceMetrics": {
       "title": "Métricas de performance",
       "runTime": "Tempo de execução da estratégia"
@@ -773,7 +762,6 @@
     "export": "Exportar",
     "import": "Importar",
     "closeBtn": "Fechar",
-    "restartBtn": "Reiniciar",
     "closeWithoutSaving": "Fechar sem salvar",
     "lastBtn": "Concluir",
     "nextBtn": "Próximo",
@@ -867,5 +855,13 @@
     "warning_2": "Esta ação não pode ser desfeita!",
     "strategyName": "nome da estratégia",
     "input_placeholder": "Digite {{label}} para excluir"
+  },
+  "strategySettingsModal": {
+    "capitalAllocationLabel": "Alocação de Capital",
+    "stopLoss": "Stop-Loss",
+    "maxDrawdown": "Drawdown Máximo",
+    "capitalAllocationHelp": "Este é o valor máximo de capital que você deseja implantar nesta estratégia, na moeda de cotação (ou equivalente)\nNOTA: você deve ter fundos suficientes na carteira correspondente para lançar a estratégia",
+    "stopLossHelp": "Este é o valor máximo de capital que você está disposto a perder, como porcentagem da alocação de capital\nIMPORTANTE: a estratégia irá parar automaticamente se este nível for atingido",
+    "maximumDrawdownHelp": "Este é o drawdown máximo permitido para esta estratégia em porcentagem\nIMPORTANTE: a estratégia irá parar automaticamente se este nível for atingido"
   }
 }

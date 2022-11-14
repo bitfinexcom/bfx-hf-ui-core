@@ -21,7 +21,7 @@ const appendUnit = (value, unit, prefix) => {
 
 const getSmallestUnit = (isFiatValue) => (isFiatValue ? 0.01 : 0.00000001)
 
-const resultNumber = (value, ccy, isPositive) => {
+const resultNumber = (value, ccy, isPositive, isPercent = false) => {
   if (_isNaN(value)) {
     return '--'
   }
@@ -37,7 +37,8 @@ const resultNumber = (value, ccy, isPositive) => {
   }
 
   const decimalNumberString = formatNumber({
-    number: val, decimals: maxDecimals,
+    number: val,
+    decimals: maxDecimals,
   })
   const decimalNumberWithoutRounded = numberExponentToLarge(val)
 
@@ -49,20 +50,18 @@ const resultNumber = (value, ccy, isPositive) => {
     : isZero
       ? appendUnit(0, quotePrefix, isCcyFiat)
       : _isPositive
-        ? appendUnit(
-          `<${smallestUnit}`,
-          quotePrefix,
-          isCcyFiat,
-        )
+        ? appendUnit(`<${smallestUnit}`, quotePrefix, isCcyFiat)
         : appendUnit(`>-${smallestUnit}`, quotePrefix, isCcyFiat)
 
   const style = { color: _isPositive ? 'green' : 'red' }
 
   return (
     <Tooltip
-      content={
-        <span style={style}>{decimalNumberWithoutRounded}</span>
-        }
+      content={(
+        <span style={style}>
+          {isPercent ? resultValueWithCcySign : decimalNumberWithoutRounded}
+        </span>
+      )}
       placement='top'
     >
       <span style={style}>{resultValueWithCcySign}</span>

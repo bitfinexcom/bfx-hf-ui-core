@@ -33,7 +33,6 @@ const StrategyLiveTab = (props) => {
     strategy,
     markets,
     indicators,
-    openExecutionOptionsModal,
     stopExecution,
     onCancelProcess,
   } = props
@@ -70,7 +69,6 @@ const StrategyLiveTab = (props) => {
             <StrategyOptionsPanelLive
               strategy={strategy}
               markets={markets}
-              openExecutionOptionsModal={openExecutionOptionsModal}
               stopExecution={stopExecution}
               setFullScreenChart={setFullScreenChart}
               isExecuting={executing}
@@ -115,7 +113,6 @@ const StrategyLiveTab = (props) => {
     },
     [
       markets,
-      openExecutionOptionsModal,
       stopExecution,
       setFullScreenChart,
       executing,
@@ -148,7 +145,6 @@ StrategyLiveTab.propTypes = {
   onCancelProcess: PropTypes.func.isRequired,
   strategy: PropTypes.shape(STRATEGY_SHAPE).isRequired,
   markets: PropTypes.arrayOf(PropTypes.shape(MARKET_SHAPE)).isRequired,
-  openExecutionOptionsModal: PropTypes.func.isRequired,
   stopExecution: PropTypes.func.isRequired,
   indicators: INDICATORS_ARRAY_SHAPE,
 }

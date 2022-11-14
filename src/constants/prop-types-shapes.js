@@ -90,7 +90,9 @@ export const STRATEGY_TRADE_SHAPE = {
 }
 
 export const ORDER_SHAPE = {
-  id: PropTypes.number,
+  id: PropTypes.oneOfType([
+    PropTypes.string, PropTypes.number,
+  ]),
   gid: PropTypes.oneOfType([
     PropTypes.string, PropTypes.number,
   ]),

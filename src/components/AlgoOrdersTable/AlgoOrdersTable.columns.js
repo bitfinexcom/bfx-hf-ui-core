@@ -46,7 +46,7 @@ export default (authToken, cancelOrder, gaCancelOrder, t, getMarketPair, editOrd
         aria-label='Edit order'
         onClick={() => editOrder(rowData)}
       />
-      {!_isEmpty(rowData?.id) && (
+      {!_isEmpty(rowData?.gid) && (
         <i
           role='button'
           aria-label='Cancel order'

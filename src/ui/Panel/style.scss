@@ -318,6 +318,10 @@
     &.sidebar-opened {
       .hfui_panel__sidebar-container {
         width: 155px;
+
+        &.wide {
+          width: 190px;
+        }
       }
     }
 

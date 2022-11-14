@@ -2,6 +2,7 @@ import _isString from 'lodash/isString'
 import t from '../constants/ws'
 import ui from '../constants/ui'
 import { getScope } from '../../util/scope'
+import { MAIN_MODE } from '../reducers/ui'
 
 const send = payload => ({
   type: t.BUFF_SEND,
@@ -25,6 +26,11 @@ export default {
   disconnected: (alias) => ({ type: t.DISCONNECTED, payload: { alias } }),
   disconnect: (alias) => ({ type: t.DISCONNECT, payload: { alias } }),
 
+  recvUserAuid: (auid, mode) => ({
+    type: t.SET_AUID,
+    payload: { auid, mode },
+  }),
+
   setBacktestLoading: () => ({
     type: t.SET_BACKTEST_LOADING,
     payload: {},
@@ -43,9 +49,7 @@ export default {
     },
   }),
 
-  bufferDataFromExchange: (
-    chanID, data, rawData = null,
-  ) => ({
+  bufferDataFromExchange: (chanID, data, rawData = null) => ({
     type: t.BUFFER_DATA_FROM_EXCHANGE,
     payload: {
       chanID,
@@ -92,9 +96,14 @@ export default {
     payload: { state },
   }),
 
-  recvClientStatusUpdate: ({ status }) => ({
+  recvAPICredentialsReset: (mode) => ({
+    type: t.UPDATE_API_CREDENTIALS_CONFIGURED,
+    payload: { mode },
+  }),
+
+  recvClientStatusUpdate: ({ status, mode }) => ({
     type: t.DATA_CLIENT_STATUS_UPDATE,
-    payload: { status },
+    payload: { status, mode },
   }),
 
   recvPositions: ({ positions }) => ({
@@ -327,10 +336,16 @@ export default {
     type: t.SET_USERNAME,
     payload: { username },
   }),
+  authResetData: () => ({
+    type: t.AUTH_RESET_DATA,
+  }),
+  exportStrategiesOnReset: (password) => ({
+    type: t.EXPORT_STRATEGIES_ON_RESET,
+    payload: { password },
+  }),
 
-  initAuth: password => send(['auth.init', password, 'main', getScope()]),
+  initAuth: password => send(['auth.init', password, MAIN_MODE, getScope()]),
   auth: (password, mode) => send(['auth.submit', password, mode, getScope()]),
-  resetAuth: () => send(['auth.reset']),
   webAuth: token => send({ event: 'auth', token }),
   onUnload: (authToken, mode) => send(['algo_order.pause', authToken, mode]),
 

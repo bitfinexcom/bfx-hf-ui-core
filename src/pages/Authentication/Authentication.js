@@ -9,6 +9,8 @@ import AuthenticationUnlockForm from './AuthenticationUnlockForm'
 import AuthenticationConnectingForm from './AuthenticationConnectingForm'
 import { isElectronApp, appVersion } from '../../redux/config'
 import { getThemeSetting, THEMES } from '../../redux/selectors/ui'
+import useToggle from '../../hooks/useToggle'
+import ResetDataConfirmModal from '../../modals/ResetDataConfirmModal'
 
 import './style.css'
 
@@ -17,9 +19,14 @@ const Authentication = ({
   configured,
   onUnlock,
   onInit,
-  onReset,
   isPaperTrading,
 }) => {
+  const [
+    isConfirmResetDataModalOpen,,
+    showConfirmResetDataModal,
+    closeConfirmResetDataModal,
+  ] = useToggle(false)
+
   const { t } = useTranslation()
   const settingsTheme = useSelector(getThemeSetting)
 
@@ -32,10 +39,10 @@ const Authentication = ({
             <div className='hfui-authenticationpage__inner-left-version'>
               <h6>{t('main.craftedBy')}</h6>
               {isElectronApp && (
-                <p>
-                  v
-                  {appVersion}
-                </p>
+              <p>
+                v
+                {appVersion}
+              </p>
               )}
             </div>
           </div>
@@ -46,15 +53,14 @@ const Authentication = ({
         ) : configured ? (
           <AuthenticationUnlockForm
             onUnlock={onUnlock}
-            onReset={onReset}
             isPaperTrading={isPaperTrading}
+            showConfirmResetDataModal={showConfirmResetDataModal}
           />
         ) : (
-          <AuthenticationInitForm
-            onInit={onInit}
-          />
+          <AuthenticationInitForm onInit={onInit} />
         )}
       </div>
+      <ResetDataConfirmModal isOpen={isConfirmResetDataModalOpen} onClose={closeConfirmResetDataModal} />
     </div>
   )
 }
@@ -65,7 +71,6 @@ Authentication.propTypes = {
   isPaperTrading: PropTypes.bool.isRequired,
   onUnlock: PropTypes.func.isRequired,
   onInit: PropTypes.func.isRequired,
-  onReset: PropTypes.func.isRequired,
 }
 
 export default memo(Authentication)

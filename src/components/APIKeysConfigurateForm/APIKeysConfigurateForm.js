@@ -75,7 +75,7 @@ const APIKeysConfigurateForm = ({
 
             {apiClientConnecting && (
               <span>
-                {t('orderForm.exchangeConnectings')}
+                {t('orderForm.exchangeConnecting')}
               </span>
             )}
           </div>

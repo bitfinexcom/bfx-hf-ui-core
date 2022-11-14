@@ -17,6 +17,7 @@ import tokenStore from '../../../util/token_store'
 import { isElectronApp, HONEY_AUTH_URL } from '../../config'
 import { UI_MODAL_KEYS } from '../../constants/modals'
 import { UI_KEYS } from '../../constants/ui_keys'
+import { WS_CONNECTION } from '../../constants/ws'
 import { getCurrentStrategy } from '../../selectors/ui'
 
 const debug = Debug('hfui:rx:m:ws-hfui-server:msg')
@@ -74,6 +75,13 @@ export default (alias, store) => (e = {}) => {
         store.dispatch(WSActions.resetOrderHist())
         store.dispatch(WSActions.recvAuthToken(token))
         store.dispatch(WSActions.send(['strategy.execute_status', token]))
+        break
+      }
+
+      case 'info.auid': {
+        const [, auid, { mode }] = payload
+
+        store.dispatch(WSActions.recvUserAuid(auid, mode))
         break
       }
 
@@ -230,6 +238,17 @@ export default (alias, store) => (e = {}) => {
         break
       }
 
+      case 'data.api_credentials.reset': {
+        const [, mode, status] = payload
+
+        if (!status) {
+          return
+        }
+
+        store.dispatch(WSActions.recvAPICredentialsReset(mode))
+        break
+      }
+
       case 'data.settings.updated': {
         const [, settings] = payload
         store.dispatch(UIActions.setUIValue(UI_KEYS.settings, settings))
@@ -275,8 +294,17 @@ export default (alias, store) => (e = {}) => {
       }
 
       case 'data.client': {
-        const [, , status] = payload
-        store.dispatch(WSActions.recvClientStatusUpdate({ status }))
+        const [, , mode, status] = payload
+        store.dispatch(WSActions.recvClientStatusUpdate({ status, mode }))
+
+        if (status === WS_CONNECTION.CLOSED) {
+          store.dispatch(UIActions.setUIValue(UI_KEYS.isBadInternetConnection, true))
+        }
+
+        if (status === WS_CONNECTION.OPENED) {
+          store.dispatch(UIActions.setUIValue(UI_KEYS.isBadInternetConnection, false))
+        }
+
         break
       }
 
@@ -527,7 +555,7 @@ export default (alias, store) => (e = {}) => {
       case 'app.can_be_closed': {
         const [, canBeClosed] = payload
         if (canBeClosed) {
-          window.electronService?.sendAppClosedEvent()
+          closeElectronApp()
         } else {
           store.dispatch(UIActions.recvNotification({
             mts: Date.now(),

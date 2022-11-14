@@ -68,6 +68,7 @@ class OrderForm extends React.Component {
     this.setFieldData = this.setFieldData.bind(this)
     this.validateAOData = this.validateAOData.bind(this)
     this.handleKeydown = this.handleKeydown.bind(this)
+    this.renderAPIStateModal = this.renderAPIStateModal.bind(this)
   }
 
   componentDidMount() {
@@ -304,10 +305,9 @@ class OrderForm extends React.Component {
   }
 
   getIsOrderFormInputsView() {
-    const { apiClientState, apiCredentials } = this.props
+    const { apiClientConnected, apiCredentials } = this.props
     const { currentLayout, helpOpen } = this.state
 
-    const apiClientConnected = apiClientState === 2
     const apiClientConfigured = apiCredentials?.configured && apiCredentials?.valid
     const isConnectedWithValidAPI = apiClientConnected && apiClientConfigured
     const showOrderform = isConnectedWithValidAPI || !isElectronApp
@@ -350,25 +350,35 @@ class OrderForm extends React.Component {
     })
   }
 
-  deferSaveState() {
-    setTimeout(() => {
-      this.saveState()
-    }, 0)
-  }
+  renderAPIStateModal() {
+    const {
+      isKeysUpdating, apiClientConnecting, apiCredentials, isPaperTrading,
+    } = this.props
 
-  saveState() {
-    const { saveState, layoutI } = this.props
-    const { currentMarket, marketDirty } = this.state
+    const apiClientConfigured = apiCredentials?.configured && apiCredentials?.valid
 
-    saveState(layoutI, {
-      currentMarket,
-      marketDirty,
-    })
+    if (isKeysUpdating) {
+      return <ConnectingModal key='connecting' />
+    }
+
+    if (!isKeysUpdating && !apiClientConfigured) {
+      return (
+        <SubmitAPIKeysModal
+          key='submit-api-keys'
+          onSubmit={this.onSubmitAPIKeys}
+          apiClientConnecting={apiClientConnecting}
+          isPaperTrading={isPaperTrading}
+          keyExistButNotValid={apiCredentials?.configured && !apiCredentials?.valid}
+        />
+      )
+    }
+
+    return null
   }
 
   render() {
     const {
-      onRemove, apiClientState, apiCredentials, moveable, removeable, isPaperTrading, isOrderExecuting, activeMarket, t, showAdvancedAlgos,
+      onRemove, apiClientConnected, apiCredentials, moveable, removeable, isOrderExecuting, activeMarket, t, showAdvancedAlgos,
     } = this.props
     const orders = getAtomicOrders(t)
 
@@ -379,8 +389,6 @@ class OrderForm extends React.Component {
 
     const algoOrders = getAOs(t, showAdvancedAlgos)
 
-    const apiClientConnected = apiClientState === 2
-    const apiClientConnecting = apiClientState === 1
     const apiClientConfigured = apiCredentials?.configured && apiCredentials?.valid
     const isConnectedWithValidAPI = apiClientConnected && apiClientConfigured
     const showOrderform = isConnectedWithValidAPI || !isElectronApp
@@ -437,21 +445,7 @@ class OrderForm extends React.Component {
           ]}
         >
           <div key='orderform-wrapper' className='hfui-orderform__wrapper'>
-            {isElectronApp && [
-              apiClientConnecting && (
-                <ConnectingModal key='connecting' />
-              ),
-
-              !apiClientConfigured && (
-                <SubmitAPIKeysModal
-                  key='submit-api-keys'
-                  onSubmit={this.onSubmitAPIKeys}
-                  apiClientConnecting={apiClientConnecting}
-                  isPaperTrading={isPaperTrading}
-                  keyExistButNotValid={apiCredentials?.configured && !apiCredentials?.valid}
-                />
-              ),
-            ]}
+            {isElectronApp && this.renderAPIStateModal()}
 
             {helpOpen && showOrderform && currentLayout && currentLayout.customHelp && (
               <div key='overlay-wrapper' className='hfui-orderform__overlay-wrapper'>
@@ -537,7 +531,6 @@ OrderForm.propTypes = {
     PropTypes.string, PropTypes.bool, PropTypes.object,
   ])).isRequired,
   activeMarket: PropTypes.shape(MARKET_SHAPE).isRequired,
-  apiClientState: PropTypes.number.isRequired,
   apiCredentials: PropTypes.objectOf(PropTypes.bool),
   setIsOrderExecuting: PropTypes.func.isRequired,
   mode: PropTypes.string.isRequired,
@@ -549,9 +542,7 @@ OrderForm.propTypes = {
   gaSubmitOrder: PropTypes.func.isRequired,
   submitAlgoOrder: PropTypes.func.isRequired,
   gaSubmitAO: PropTypes.func.isRequired,
-  saveState: PropTypes.func.isRequired,
   isPaperTrading: PropTypes.bool.isRequired,
-  layoutI: PropTypes.string,
   authToken: PropTypes.string,
   onRemove: PropTypes.func,
   isOrderExecuting: PropTypes.bool,
@@ -563,6 +554,9 @@ OrderForm.propTypes = {
   atomicOrdersCountActiveMarket: PropTypes.number.isRequired,
   maxOrderCounts: PropTypes.objectOf(PropTypes.number).isRequired,
   wsConnected: PropTypes.bool.isRequired,
+  apiClientConnecting: PropTypes.bool.isRequired,
+  apiClientConnected: PropTypes.bool.isRequired,
+  isKeysUpdating: PropTypes.bool.isRequired,
 }
 
 OrderForm.defaultProps = {
@@ -572,7 +566,6 @@ OrderForm.defaultProps = {
   apiCredentials: {},
   onRemove: () => { },
   authToken: null,
-  layoutI: 'orderform',
   showAdvancedAlgos: false,
 }
 

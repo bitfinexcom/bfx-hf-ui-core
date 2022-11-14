@@ -11,8 +11,7 @@ import { isElectronApp } from '../../redux/config'
 import { UI_MODAL_KEYS } from '../../redux/constants/modals'
 import { getActiveStrategies, getAlgoOrders } from '../../redux/selectors/ws'
 import { removeCookie } from '../../util/cookies'
-
-const ipcHelpers = window.electronService
+import closeElectronApp from '../../redux/helpers/close_electron_app'
 
 const homeUrl = process.env.REACT_APP_ENVIRONMENT === 'staging'
   ? 'https://bfx-ui-api.staging.bitfinex.com/'
@@ -42,9 +41,7 @@ const CloseSessionButton = () => {
       dispatch(changeUIModalState(UI_MODAL_KEYS.CLOSE_SESSION_MODAL, true))
       return
     }
-    if (ipcHelpers) {
-      ipcHelpers.sendAppClosedEvent()
-    }
+    closeElectronApp()
   }
 
   const buttonHandler = () => (isElectronApp ? openCloseSessionModal() : logout())

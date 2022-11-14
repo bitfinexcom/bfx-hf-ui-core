@@ -12,6 +12,7 @@ const SimpleDropdown = ({
       <div className='simpledropdown-label'>
         {label}
       </div>
+      <div className='simpledropdown-separator' />
       <div className='simpledropdown-content'>
         {options}
       </div>

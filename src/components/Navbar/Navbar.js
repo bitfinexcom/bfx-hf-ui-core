@@ -2,6 +2,7 @@ import React, { memo, useMemo } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import _values from 'lodash/values'
 import _map from 'lodash/map'
+import { Icon } from 'react-fa'
 
 import { useTranslation } from 'react-i18next'
 import HFIcon from '../../ui/HFIcon'
@@ -75,10 +76,13 @@ const Navbar = () => {
             icon='notifications'
             onClick={() => dispatch(UIActions.toggleUIModalState(UI_MODAL_KEYS.NOTIFICATIONS_PANEL))}
           />
-          <AppSettings />
+          {isElectronApp && <AppSettings />}
           <Dropdown
             label={(
-              <img src='/bitfinex-leaf.svg' className='dropdown-leaf' alt='' />
+              <>
+                <img src='/bitfinex-leaf.svg' className='dropdown-leaf' alt='' />
+                <Icon name='chevron-down' width={2} className='label-chevron' />
+              </>
             )}
             options={leafOptions}
             className='simpledropdown-wrapper'

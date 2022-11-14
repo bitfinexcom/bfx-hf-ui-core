@@ -11,6 +11,7 @@ $lighter-background-color-light: mix($white-color, lighten($background-color-lig
 $background-color: #172d3e;
 $darker-background-color: #102331;
 $lighter-background-color: mix($white-color, lighten($background-color, 3%), 4%);
+$grayish-color: #4f5a62;
 
 $green-color: mix(#00e0ad, $background-color, 80%);
 $green-button-color: mix(#00e0ad, $background-color, 70%);
@@ -60,6 +61,7 @@ $themes: (
       "secondary-9": #0089ff,
       "background-color": $background-color-light,
       "lighter-background-color": $lighter-background-color-light,
+      "grayish-color": $lighter-background-color-light,
       "darker-background-color": $darker-background-color-light,
       "red-background": mix($red-color, $background-color-light, 10%),
       "red": lighten($red-color, 10%),
@@ -147,6 +149,7 @@ $themes: (
       "secondary-9": #0089ff,
       "background-color": $background-color,
       "lighter-background-color": $lighter-background-color,
+      "grayish-color": $grayish-color,
       "darker-background-color": $darker-background-color,
       "red-background": mix($red-color, $background-color, 10%),
       "red": lighten($red-color, 10%),
@@ -239,4 +242,11 @@ $border-radius: 5px;
   }
 
   @return $spacing-unit * $value;
+}
+
+:export {
+  backgroundColor: $background-color;
+  greyColor: $grey-color;
+  backgroundColorLight: $background-color-light;
+  darkerBackgroundColorLight: $darker-background-color-light;
 }
