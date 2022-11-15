@@ -178,7 +178,7 @@ export const getPositionTooltip = (position, args) => {
   }))
 
   tooltipLines.push(t('chart.trading.position.tooltip.pl', {
-    pl: setSigFig(position.realizedPnl),
+    pl: setSigFig(position.realizedPnl || position.pl),
     ccy: quote,
   }))
 
