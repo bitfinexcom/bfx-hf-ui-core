@@ -39,6 +39,7 @@ const StrategyLiveTab = (props) => {
     indicators,
     stopExecution,
     onCancelProcess,
+    openUnableToClosePositionModal,
   } = props
   const [layoutConfig, setLayoutConfig] = useState()
   const [fullscreenChart, , setFullScreenChart, unsetFullScreenChart] = useToggle(false)
@@ -94,6 +95,7 @@ const StrategyLiveTab = (props) => {
               strategy={strategy}
               fullscreenChart={fullscreenChart}
               exitFullscreenChart={unsetFullScreenChart}
+              openUnableToClosePositionModal={openUnableToClosePositionModal}
               trades={trades}
             />
           )
@@ -137,6 +139,7 @@ const StrategyLiveTab = (props) => {
       positions,
       layoutConfig,
       lastOpenPosition,
+      openUnableToClosePositionModal,
     ],
   )
 
@@ -158,6 +161,7 @@ StrategyLiveTab.propTypes = {
   markets: PropTypes.arrayOf(PropTypes.shape(MARKET_SHAPE)).isRequired,
   stopExecution: PropTypes.func.isRequired,
   indicators: INDICATORS_ARRAY_SHAPE,
+  openUnableToClosePositionModal: PropTypes.func.isRequired,
 }
 
 StrategyLiveTab.defaultProps = {

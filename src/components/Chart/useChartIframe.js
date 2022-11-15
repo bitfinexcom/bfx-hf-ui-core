@@ -3,6 +3,7 @@ import {
 } from 'react'
 import _split from 'lodash/split'
 import _isEmpty from 'lodash/isEmpty'
+import _isFunction from 'lodash/isFunction'
 
 import { useDispatch, useSelector } from 'react-redux'
 import { useTranslation } from 'react-i18next'
@@ -28,7 +29,7 @@ import {
 import { UI_MODAL_KEYS } from '../../redux/constants/modals'
 import { UI_KEYS } from '../../redux/constants/ui_keys'
 
-const useChartIframe = (iframeID, wsID, customIndicators, trades, interval, isSetInterval, range, forcedPosition) => {
+const useChartIframe = (iframeID, wsID, customIndicators, trades, interval, isSetInterval, range, forcedPosition, onClosePosition) => {
   const [isIframeReady, setIsIframeReady] = useState(false)
   const { t } = useTranslation()
   const dispatch = useDispatch()
@@ -51,8 +52,10 @@ const useChartIframe = (iframeID, wsID, customIndicators, trades, interval, isSe
 
   useEffect(() => {
     const iframeChart = document.getElementById(iframeID)
+    let timer
+
     if (isIframeReady) {
-      setTimeout(() => {
+      timer = setTimeout(() => {
         sendMessageToIframe(iframeChart, GET_ORDERS_EVENT, orders)
         sendMessageToIframe(iframeChart, GET_POSITION_EVENT, position || {})
         sendMessageToIframe(iframeChart, GET_TRADES_EVENT, trades || [])
@@ -64,6 +67,10 @@ const useChartIframe = (iframeID, wsID, customIndicators, trades, interval, isSe
           sendMessageToIframe(iframeChart, GET_INDICATORS_EVENT, customIndicators || [])
         }
       }, 500)
+    }
+
+    return () => {
+      clearTimeout(timer)
     }
   }, [orders, iframeID, isIframeReady, position, customIndicators, trades, interval, range, isSetInterval])
 
@@ -96,9 +103,14 @@ const useChartIframe = (iframeID, wsID, customIndicators, trades, interval, isSe
       cancelOrder(data?.[2])
     } else if (eventType === CLOSE_POSITION_EVENT) {
       const parsed = JSON.parse(data?.[2])
-      closePosition(parsed)
+
+      if (_isFunction(onClosePosition)) {
+        onClosePosition(parsed)
+      } else {
+        closePosition(parsed)
+      }
     }
-  }, [cancelOrder, closePosition, iframeID])
+  }, [cancelOrder, closePosition, iframeID, onClosePosition])
 
   useEffect(() => {
     window.addEventListener('message', onMessageReceivedFromIframe)

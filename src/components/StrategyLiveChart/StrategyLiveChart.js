@@ -33,6 +33,7 @@ const StrategyLiveChart = ({
   lastOpenPosition,
   trades,
   isBacktest,
+  openUnableToClosePositionModal,
 }) => {
   const {
     strategyOptions: {
@@ -80,16 +81,19 @@ const StrategyLiveChart = ({
       return null
     }
 
-    return {
+    const processedPosition = {
       ...lastOpenPosition,
-      tooltip: getPositionTooltip(lastOpenPosition, {
+      basePrice: lastOpenPosition?.entryPrice,
+      amount: parseFloat(lastOpenPosition?.amount),
+      realizedPnl: parseFloat(lastOpenPosition?.realizedPnl),
+      pl: parseFloat(lastOpenPosition?.realizedPnl),
+    }
+
+    return {
+      ...processedPosition,
+      tooltip: getPositionTooltip(processedPosition, {
         base, quote, t,
       }),
-      basePrice: lastOpenPosition?.entryPrice,
-
-      // TEST VALUES
-      pl: 12,
-      plPerc: 0.12,
     }
   }, [lastOpenPosition, base, quote, t])
 
@@ -128,6 +132,7 @@ const StrategyLiveChart = ({
           hideDeleteIndicator
           hideIndicators
           chartRange={chartRange}
+          onClosePosition={openUnableToClosePositionModal}
           key={executionId}
         />
       )}
@@ -144,12 +149,14 @@ StrategyLiveChart.propTypes = {
   exitFullscreenChart: PropTypes.func.isRequired,
   lastOpenPosition: PropTypes.object, // eslint-disable-line
   isBacktest: PropTypes.bool,
+  openUnableToClosePositionModal: PropTypes.func,
 }
 
 StrategyLiveChart.defaultProps = {
   indicators: [],
   isBacktest: false,
   lastOpenPosition: null,
+  openUnableToClosePositionModal: () => { },
 }
 
 export default memo(StrategyLiveChart)
