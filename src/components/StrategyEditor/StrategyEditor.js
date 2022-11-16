@@ -24,6 +24,7 @@ import StrategyTab from './tabs/StrategyTab/StrategyTabWrapper'
 import BacktestTab from './tabs/BacktestTab'
 import IDETab from './tabs/IDETab'
 import CreateNewStrategyFromModalOpen from '../../modals/Strategy/CreateNewStrategyFromModal'
+import UnableToClosePositionModal from '../../modals/Strategy/UnableToClosePositionModal'
 import SaveStrategyAsModal from '../../modals/Strategy/SaveStrategyAsModal/SaveStrategyAsModal'
 import CancelProcessModal from '../../modals/Strategy/CancelProcessModal'
 import StrategyTabTitle from './tabs/StrategyTab/StrategyTab.Title'
@@ -111,6 +112,10 @@ const StrategyEditor = (props) => {
     closeCreateNewStrategyFromModal,
   ] = useToggle(false)
   const [isOpenExistingStrategyModalOpen, , , closeOpenExistingStrategyModal] = useToggle(false)
+  const [isUnableToClosePositionModalOpen,,
+    openUnableToClosePositionModal,
+    closeUnableToClosePositionModal,
+  ] = useToggle(false)
   const [
     isSaveStrategyAsModalOpen,,
     openSaveStrategyAsModal,
@@ -660,6 +665,7 @@ const StrategyEditor = (props) => {
                 saveStrategyOptions={saveStrategyOptions}
                 hasErrors={hasErrorsInIDE}
                 onCancelProcess={onCancelProcess}
+                openUnableToClosePositionModal={openUnableToClosePositionModal}
                 {...props}
               />
             )}
@@ -673,6 +679,7 @@ const StrategyEditor = (props) => {
                 saveStrategyOptions={saveStrategyOptions}
                 onCancelProcess={onCancelProcess}
                 openNewTest={openNewTest}
+                openUnableToClosePositionModal={openUnableToClosePositionModal}
                 {...props}
               />
             )}
@@ -754,6 +761,10 @@ const StrategyEditor = (props) => {
         isOpen={isOpenExistingStrategyModalOpen}
         onClose={onCloseModals}
         onOpen={onLoadStrategy}
+      />
+      <UnableToClosePositionModal
+        isOpen={isUnableToClosePositionModalOpen}
+        onClose={closeUnableToClosePositionModal}
       />
       <CancelProcessModal
         isOpen={isCancelProcessModalOpen}

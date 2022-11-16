@@ -2,6 +2,7 @@ import _get from 'lodash/get'
 import _toLower from 'lodash/toLower'
 import _replace from 'lodash/replace'
 import _includes from 'lodash/includes'
+import _isUndefined from 'lodash/isUndefined'
 import { setSigFig, precision } from '@ufx-ui/utils'
 
 import {
@@ -151,16 +152,18 @@ export const getTooltip = (order, args = {}) => {
 
 export const getPositionTooltip = (position, args) => {
   const {
-    getMarketBySymbol,
+    getMarketBySymbol = () => ({}),
     getCurrencySymbol,
     t,
+    base: forcedBase,
+    quote: forcedQuote,
   } = args
 
   const tooltipLines = []
 
   const market = getMarketBySymbol(position.symbol)
-  const base = getCurrencySymbol(market?.base)
-  const quote = getCurrencySymbol(market?.quote)
+  const base = forcedBase || getCurrencySymbol(market?.base)
+  const quote = forcedQuote || getCurrencySymbol(market?.quote)
 
   tooltipLines.push(t('chart.trading.position.tooltip.amount', {
     amount: setSigFig(position.amount),
@@ -172,20 +175,26 @@ export const getPositionTooltip = (position, args) => {
     ccy: quote,
   }))
 
-  tooltipLines.push(t('chart.trading.position.tooltip.liqPrice', {
-    liquidationPrice: setSigFig(position.liquidationPrice),
-    ccy: quote,
-  }))
+  if (!_isUndefined(position.liquidationPrice)) {
+    tooltipLines.push(t('chart.trading.position.tooltip.liqPrice', {
+      liquidationPrice: setSigFig(position.liquidationPrice),
+      ccy: quote,
+    }))
+  }
 
-  tooltipLines.push(t('chart.trading.position.tooltip.pl', {
-    pl: setSigFig(position.realizedPnl),
-    ccy: quote,
-  }))
+  if (!_isUndefined(position.realizedPnl)) {
+    tooltipLines.push(t('chart.trading.position.tooltip.pl', {
+      pl: setSigFig(position.realizedPnl),
+      ccy: quote,
+    }))
+  }
 
-  tooltipLines.push(t('chart.trading.position.tooltip.plPercent', {
-    plPercent: precision(position.plPerc, 2),
-    ccy: quote,
-  }))
+  if (!_isUndefined(position.plPerc)) {
+    tooltipLines.push(t('chart.trading.position.tooltip.plPercent', {
+      plPercent: precision(position.plPerc, 2),
+      ccy: quote,
+    }))
+  }
 
   const tooltip = tooltipLines.join('\n')
   return tooltip
