@@ -2,6 +2,7 @@ import React, { memo, useMemo } from 'react'
 import { useSelector } from 'react-redux'
 import PropTypes from 'prop-types'
 import { useTranslation } from 'react-i18next'
+import _isEmpty from 'lodash/isEmpty'
 
 import { getThemeSetting } from '../../redux/selectors/ui'
 import Panel from '../../ui/Panel'
@@ -11,6 +12,9 @@ import {
   prepareTVIndicators,
 } from './StrategyLiveChart.helpers'
 import { TIMEFRAME_INTERVAL_MAPPING } from '../../util/time_frames'
+import {
+  getPositionTooltip,
+} from '../../util/chart'
 import {
   INDICATORS_ARRAY_SHAPE,
   MARKET_SHAPE,
@@ -26,8 +30,10 @@ const StrategyLiveChart = ({
   fullscreenChart,
   exitFullscreenChart,
   strategy,
+  lastOpenPosition,
   trades,
   isBacktest,
+  openUnableToClosePositionModal,
 }) => {
   const {
     strategyOptions: {
@@ -70,6 +76,27 @@ const StrategyLiveChart = ({
     [base, quote, uiID, wsID],
   )
 
+  const position = useMemo(() => {
+    if (_isEmpty(lastOpenPosition)) {
+      return null
+    }
+
+    const processedPosition = {
+      ...lastOpenPosition,
+      basePrice: lastOpenPosition?.entryPrice,
+      amount: parseFloat(lastOpenPosition?.amount),
+      realizedPnl: parseFloat(lastOpenPosition?.realizedPnl),
+      pl: parseFloat(lastOpenPosition?.realizedPnl),
+    }
+
+    return {
+      ...processedPosition,
+      tooltip: getPositionTooltip(processedPosition, {
+        base, quote, t,
+      }),
+    }
+  }, [lastOpenPosition, base, quote, t])
+
   return (
     <Panel
       removeable={false}
@@ -100,9 +127,12 @@ const StrategyLiveChart = ({
           indicators={chartIndicators}
           interval={interval}
           trades={trades}
+          position={position}
           hideResolutions
+          hideDeleteIndicator
           hideIndicators
           chartRange={chartRange}
+          onClosePosition={openUnableToClosePositionModal}
           key={executionId}
         />
       )}
@@ -117,12 +147,16 @@ StrategyLiveChart.propTypes = {
   trades: PropTypes.arrayOf(PropTypes.shape(STRATEGY_TRADE_SHAPE)).isRequired,
   fullscreenChart: PropTypes.bool.isRequired,
   exitFullscreenChart: PropTypes.func.isRequired,
+  lastOpenPosition: PropTypes.object, // eslint-disable-line
   isBacktest: PropTypes.bool,
+  openUnableToClosePositionModal: PropTypes.func,
 }
 
 StrategyLiveChart.defaultProps = {
   indicators: [],
   isBacktest: false,
+  lastOpenPosition: null,
+  openUnableToClosePositionModal: () => { },
 }
 
 export default memo(StrategyLiveChart)
