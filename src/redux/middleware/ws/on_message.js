@@ -2,6 +2,7 @@ import _isArray from 'lodash/isArray'
 import _isObject from 'lodash/isObject'
 import _isNumber from 'lodash/isNumber'
 import _reduce from 'lodash/reduce'
+import _map from 'lodash/map'
 import Debug from 'debug'
 import { v4 } from 'uuid'
 import i18nLib from '../../../locales/i18n'
@@ -15,6 +16,7 @@ import closeElectronApp from '../../helpers/close_electron_app'
 import { MAIN_MODE, PAPER_MODE } from '../../reducers/ui'
 import tokenStore from '../../../util/token_store'
 import { isElectronApp, HONEY_AUTH_URL } from '../../config'
+import { AOAdapter } from '../../adapters/ws'
 import { UI_MODAL_KEYS } from '../../constants/modals'
 import { UI_KEYS } from '../../constants/ui_keys'
 import { WS_CONNECTION } from '../../constants/ws'
@@ -363,6 +365,13 @@ export default (alias, store) => (e = {}) => {
         break
       }
 
+      case 'data.aos': {
+        const [, , mode, aos] = payload
+        const adapted = _map(aos, ao => (_isArray(ao) ? AOAdapter(ao) : ao))
+        store.dispatch(WSActions.recvDataAlgoOrders({ mode, aos: adapted }))
+        break
+      }
+
       case 'data.ao': {
         const [, , mode, ao] = payload
         store.dispatch(WSActions.recvDataAlgoOrder({ mode, ao }))
@@ -432,7 +441,7 @@ export default (alias, store) => (e = {}) => {
           store.dispatch(AOActions.setActiveAlgoOrders(activeAlgoOrders, mode))
           store.dispatch(AOActions.showActiveOrdersModal(true))
         } else {
-          store.dispatch(WSActions.recvDataAlgoOrders(activeAlgoOrders, mode))
+          store.dispatch(WSActions.recvDataAlgoOrders({ aos: activeAlgoOrders, mode }))
         }
 
         break
