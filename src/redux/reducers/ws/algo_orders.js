@@ -4,7 +4,10 @@ import _forEach from 'lodash/forEach'
 import types from '../../constants/ws'
 
 const getInitialState = () => {
-  return {}
+  return {
+    main: {},
+    paper: {},
+  }
 }
 
 export default (state = getInitialState(), action = {}) => {
@@ -14,7 +17,7 @@ export default (state = getInitialState(), action = {}) => {
     case types.DATA_ALGO_ORDERS: {
       const { aos, mode } = payload
       const transformed = {}
-      _forEach(aos, ao => {
+      _forEach(aos, (ao) => {
         transformed[ao?.gid] = ao
       })
 
@@ -30,7 +33,7 @@ export default (state = getInitialState(), action = {}) => {
       return {
         ...state,
         [mode]: {
-          ...state[mode] || {},
+          ...(state[mode] || {}),
           [ao?.gid]: ao,
         },
       }

@@ -1,4 +1,5 @@
 import _get from 'lodash/get'
+import _values from 'lodash/values'
 
 import { createSelector } from 'reselect'
 import { REDUCER_PATHS } from '../../config'
@@ -10,10 +11,13 @@ const EMPTY_OBJ = {}
 
 const getAllAlgoOrders = (state) => _get(state, `${path}.algoOrders`, EMPTY_OBJ)
 
-const getAlgoOrders = createSelector(
+export const getAllAlgoOrdersArray = createSelector(
+  getAllAlgoOrders,
+  ({ paper, main }) => _values({ ...paper, ...main }),
+)
+
+export const getCurrentModeAlgoOrders = createSelector(
   getAllAlgoOrders,
   getCurrentMode,
   (algoOrders, currentMode) => _get(algoOrders, currentMode, EMPTY_OBJ),
 )
-
-export default getAlgoOrders

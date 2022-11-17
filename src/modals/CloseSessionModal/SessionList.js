@@ -4,8 +4,15 @@ import _map from 'lodash/map'
 import { useDispatch, useSelector } from 'react-redux'
 import { useHistory, useLocation } from 'react-router'
 import { useTranslation } from 'react-i18next'
-import { getAlgoOrders, getSortedByTimeActiveStrategies, getSortedByTimeStrategies } from '../../redux/selectors/ws'
-import { getMarketPair, getMarketsForExecution } from '../../redux/selectors/meta'
+import {
+  getAllAlgoOrdersArray,
+  getSortedByTimeActiveStrategies,
+  getSortedByTimeStrategies,
+} from '../../redux/selectors/ws'
+import {
+  getMarketPair,
+  getMarketsForExecution,
+} from '../../redux/selectors/meta'
 import { changeMode, setCurrentStrategy } from '../../redux/actions/ui'
 import routes from '../../constants/routes'
 import { showActiveOrdersModal } from '../../redux/actions/ao'
@@ -17,7 +24,7 @@ const SessionList = ({ onModalClose }) => {
   const activeStrategies = useSelector(getSortedByTimeActiveStrategies())
   const _getMarketPair = useSelector(getMarketPair)
   const isPaperTrading = useSelector(getIsPaperTrading)
-  const algoOrders = useSelector(getAlgoOrders)
+  const algoOrders = useSelector(getAllAlgoOrdersArray)
   const savedStrategies = useSelector(getSortedByTimeStrategies)
   const markets = useSelector(getMarketsForExecution)
 
@@ -53,19 +60,16 @@ const SessionList = ({ onModalClose }) => {
   return (
     <ul className='close-session-modal__orders-list'>
       {_map(activeStrategies, (strategy) => (
-        <li
-          key={strategy.id}
-          className='close-session-modal__orders-list-item'
-        >
+        <li key={strategy.id} className='close-session-modal__orders-list-item'>
           <span>{t('closeSessionModal.strategy')}</span>
-            &nbsp;
+          &nbsp;
           <span
             className='primary-label'
             onClick={() => onStrategyClick(strategy)}
           >
             {strategy.label}
           </span>
-            &nbsp;
+          &nbsp;
           <span className='secondary-label'>
             (
             {_getMarketPair(strategy?.symbol)}
@@ -82,7 +86,7 @@ const SessionList = ({ onModalClose }) => {
           <span className='primary-label' onClick={onAlgoOrderClick}>
             {order.label}
           </span>
-            &nbsp;
+          &nbsp;
           <span className='secondary-label'>
             {_getMarketPair(order?.args?.symbol)}
           </span>
