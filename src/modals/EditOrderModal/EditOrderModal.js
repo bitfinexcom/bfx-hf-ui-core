@@ -87,7 +87,7 @@ const EditOrderModal = ({
     const updOrder = { ...order }
     const algoOrders = getAOs(t)
     let isAlgoOrder = true
-    let uiDef = _find(algoOrders, ({ id }) => id === updOrder.id)
+    let uiDef = _find(algoOrders, ({ id }) => id === updOrder.algoID)
 
     if (!uiDef) {
       const orders = getAtomicOrders(t)
@@ -104,7 +104,6 @@ const EditOrderModal = ({
       uiDef.action = updOrder.amount < 0 ? 'sell' : 'buy'
       updOrder.amount = Math.abs(updOrder.amount)
     }
-
     setArgs(isAlgoOrder ? order.args : updOrder)
     setLayout(uiDef)
     setIsAO(isAlgoOrder)

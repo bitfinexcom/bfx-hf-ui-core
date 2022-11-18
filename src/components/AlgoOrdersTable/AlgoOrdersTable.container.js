@@ -1,7 +1,7 @@
 import { connect } from 'react-redux'
 import Debug from 'debug'
 
-import { getAlgoOrders, getFilteredAlgoOrders, getAuthToken } from '../../redux/selectors/ws'
+import { getCurrentModeAlgoOrders, getFilteredAlgoOrders, getAuthToken } from '../../redux/selectors/ws'
 import { getActiveMarket } from '../../redux/selectors/ui'
 import WSActions from '../../redux/actions/ws'
 import UIActions from '../../redux/actions/ui'
@@ -15,7 +15,7 @@ const debug = Debug('hfui:c:algo-orders-table')
 
 const mapStateToProps = (state = {}, { activeFilter }) => ({
   authToken: getAuthToken(state),
-  algoOrders: getAlgoOrders(state),
+  algoOrders: getCurrentModeAlgoOrders(state),
   filteredAlgoOrders: getFilteredAlgoOrders(state)(activeFilter),
   activeMarket: getActiveMarket(state),
   getMarketPair: getMarketPair(state),

@@ -15,8 +15,8 @@ import marketActions from '../../actions/market'
 import closeElectronApp from '../../helpers/close_electron_app'
 import { MAIN_MODE, PAPER_MODE } from '../../reducers/ui'
 import tokenStore from '../../../util/token_store'
-import { AOAdapter } from '../../adapters/ws'
 import { isElectronApp, HONEY_AUTH_URL } from '../../config'
+import { AOAdapter } from '../../adapters/ws'
 import { UI_MODAL_KEYS } from '../../constants/modals'
 import { UI_KEYS } from '../../constants/ui_keys'
 import { WS_CONNECTION } from '../../constants/ws'
@@ -366,21 +366,21 @@ export default (alias, store) => (e = {}) => {
       }
 
       case 'data.aos': {
-        const [, , aos] = payload
+        const [, , mode, aos] = payload
         const adapted = _map(aos, ao => (_isArray(ao) ? AOAdapter(ao) : ao))
-        store.dispatch(WSActions.recvDataAlgoOrders(adapted))
+        store.dispatch(WSActions.recvDataAlgoOrders({ mode, aos: adapted }))
         break
       }
 
       case 'data.ao': {
-        const [, , ao] = payload
-        store.dispatch(WSActions.recvDataAlgoOrder({ ao }))
+        const [, , mode, ao] = payload
+        store.dispatch(WSActions.recvDataAlgoOrder({ mode, ao }))
         break
       }
 
       case 'data.ao.stopped': {
-        const [, , gid] = payload
-        store.dispatch(WSActions.recvDataAlgoOrderStopped({ gid }))
+        const [, , mode, gid] = payload
+        store.dispatch(WSActions.recvDataAlgoOrderStopped({ mode, gid }))
         break
       }
 
@@ -441,7 +441,7 @@ export default (alias, store) => (e = {}) => {
           store.dispatch(AOActions.setActiveAlgoOrders(activeAlgoOrders, mode))
           store.dispatch(AOActions.showActiveOrdersModal(true))
         } else {
-          store.dispatch(WSActions.recvDataAlgoOrders(activeAlgoOrders))
+          store.dispatch(WSActions.recvDataAlgoOrders({ aos: activeAlgoOrders, mode }))
         }
 
         break
