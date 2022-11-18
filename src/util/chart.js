@@ -164,6 +164,7 @@ export const getPositionTooltip = (position, args) => {
   const market = getMarketBySymbol(position.symbol)
   const base = forcedBase || getCurrencySymbol(market?.base)
   const quote = forcedQuote || getCurrencySymbol(market?.quote)
+  const positionPL = position.realizedPnl || position.pl
 
   tooltipLines.push(t('chart.trading.position.tooltip.amount', {
     amount: setSigFig(position.amount),
@@ -182,9 +183,9 @@ export const getPositionTooltip = (position, args) => {
     }))
   }
 
-  if (!_isUndefined(position.realizedPnl)) {
+  if (!_isUndefined(positionPL)) {
     tooltipLines.push(t('chart.trading.position.tooltip.pl', {
-      pl: setSigFig(position.realizedPnl),
+      pl: setSigFig(positionPL),
       ccy: quote,
     }))
   }
