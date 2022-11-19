@@ -33,7 +33,6 @@ const StrategyLiveChart = ({
   lastOpenPosition,
   trades,
   isBacktest,
-  openUnableToClosePositionModal,
 }) => {
   const {
     strategyOptions: {
@@ -132,7 +131,6 @@ const StrategyLiveChart = ({
           hideDeleteIndicator
           hideIndicators
           chartRange={chartRange}
-          onClosePosition={openUnableToClosePositionModal}
           key={executionId}
         />
       )}
@@ -149,14 +147,12 @@ StrategyLiveChart.propTypes = {
   exitFullscreenChart: PropTypes.func.isRequired,
   lastOpenPosition: PropTypes.object, // eslint-disable-line
   isBacktest: PropTypes.bool,
-  openUnableToClosePositionModal: PropTypes.func,
 }
 
 StrategyLiveChart.defaultProps = {
   indicators: [],
   isBacktest: false,
   lastOpenPosition: null,
-  openUnableToClosePositionModal: () => { },
 }
 
 export default memo(StrategyLiveChart)

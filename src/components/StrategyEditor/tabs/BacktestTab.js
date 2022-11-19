@@ -33,7 +33,6 @@ const BacktestTab = (props) => {
     markets,
     onBacktestStart,
     saveStrategyOptions,
-    openUnableToClosePositionModal,
     openNewTest,
   } = props
   const { t } = useTranslation()
@@ -77,7 +76,6 @@ const BacktestTab = (props) => {
             <StrategyLiveChart
               indicators={indicators}
               markets={markets}
-              openUnableToClosePositionModal={openUnableToClosePositionModal}
               strategy={strategy}
               fullscreenChart={fullscreenChart}
               exitFullscreenChart={hideFullscreenChart}
@@ -126,7 +124,6 @@ const BacktestTab = (props) => {
       results,
       positions,
       layoutConfig,
-      openUnableToClosePositionModal,
     ],
   )
 
@@ -164,7 +161,6 @@ BacktestTab.propTypes = {
   onBacktestStart: PropTypes.func.isRequired,
   saveStrategyOptions: PropTypes.func.isRequired,
   openNewTest: PropTypes.func.isRequired,
-  openUnableToClosePositionModal: PropTypes.func.isRequired,
 }
 
 BacktestTab.defaultProps = {
