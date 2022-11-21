@@ -4,7 +4,6 @@ import React, {
 import PropTypes from 'prop-types'
 import { useTranslation } from 'react-i18next'
 
-import clsx from 'clsx'
 import StrategyPerfomanceMetrics from '../../StrategyPerfomanceMetrics'
 import useToggle from '../../../hooks/useToggle'
 import StrategyTradesTable from '../../StrategyTradesTable'
@@ -23,6 +22,7 @@ import {
   STRATEGY_SHAPE,
 } from '../../../constants/prop-types-shapes'
 import BacktestResultsOptionsPanel from '../../BacktestOptionsPanel/BacktestResultsOptionsPanel'
+import BacktestProgressBar from '../../BacktestProgressBar'
 
 const BacktestTab = (props) => {
   const {
@@ -40,7 +40,10 @@ const BacktestTab = (props) => {
   const [layoutConfig, setLayoutConfig] = useState()
   const [fullscreenChart, , showFullscreenChart, hideFullscreenChart] = useToggle(false)
 
-  const { finished = false, loading } = results
+  const {
+    finished = false, loading, progressPerc, gid,
+  } = results
+  // const loading = true
   const positions = results?.strategy?.closedPositions
 
   const trades = useMemo(() => prepareChartTrades(positions), [positions])
@@ -137,13 +140,15 @@ const BacktestTab = (props) => {
         renderGridComponents={renderGridComponents}
       />
       {!finished && (
-        <p
-          className={clsx('hfui-strategyeditor__initial-message', {
-            blur: loading,
-          })}
-        >
-          {t('strategyEditor.backtestingStartingMessage')}
-        </p>
+        <div className='hfui-strategyeditor__backtest-tab-empty'>
+          {loading ? (
+            <BacktestProgressBar percent={progressPerc} startedOn={gid} />
+          ) : (
+            <p className='hfui-strategyeditor__initial-message'>
+              {t('strategyEditor.backtestingStartingMessage')}
+            </p>
+          )}
+        </div>
       )}
     </div>
   )
@@ -156,6 +161,8 @@ BacktestTab.propTypes = {
     strategy: PropTypes.shape({
       closedPositions: PropTypes.arrayOf(PropTypes.string),
     }),
+    progressPerc: PropTypes.number,
+    gid: PropTypes.number,
   }).isRequired,
   onCancelProcess: PropTypes.func.isRequired,
   strategy: PropTypes.shape(STRATEGY_SHAPE).isRequired,

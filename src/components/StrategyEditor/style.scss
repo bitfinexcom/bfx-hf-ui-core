@@ -333,11 +333,14 @@ body.hosted {
   }
 }
 
-.hfui-strategyeditor__initial-message {
+.hfui-strategyeditor__backtest-tab-empty {
   position: absolute;
   top: 50%;
   left: 65%;
   transform: translate(-50%, -50%);
+}
+
+.hfui-strategyeditor__initial-message {
   font-size: 20px;
   font-weight: 700;
   text-align: center;
