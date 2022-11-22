@@ -218,6 +218,13 @@ export default {
     payload: opts,
   }),
 
+  recvBacktestProgress: (progressPerc) => ({
+    type: t.BACKTEST_PROGRESS,
+    payload: {
+      progressPerc,
+    },
+  }),
+
   recvBacktestResults: (opts) => ({
     type: t.BACKTEST_RESULTS,
     payload: opts,

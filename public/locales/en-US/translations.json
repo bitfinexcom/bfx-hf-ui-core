@@ -780,7 +780,8 @@
     "switchToCustom": "Switch to custom date picker",
     "switchToRegular": "Switch to regular date picker",
     "lastXday": "Last {{amount}} day",
-    "lastXdays": "Last {{amount}} days"
+    "lastXdays": "Last {{amount}} days",
+    "elapsedTime": "Elapsed time"
   },
   "ui": {
     "ok": "Okay",

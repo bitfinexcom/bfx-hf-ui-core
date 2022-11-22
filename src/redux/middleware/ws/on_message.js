@@ -416,7 +416,13 @@ export default (alias, store) => (e = {}) => {
         break
       }
 
-      case 'bt.btresult': {
+      case 'bt.progress': {
+        const [, progressPerc] = payload
+        store.dispatch(WSActions.recvBacktestProgress(progressPerc))
+        break
+      }
+
+      case 'btresult': {
         const [, res] = payload
         store.dispatch(WSActions.recvBacktestResults(res))
         break
