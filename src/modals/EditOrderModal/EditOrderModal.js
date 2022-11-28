@@ -69,6 +69,11 @@ const processUpdateOrder = (order, id) => ({
   flags: calculateFlags(order),
 })
 
+// const getAlgoOrderAction = (order) => {
+//   const { amount, algoID } = order
+//   console.log(amount, algoID)
+// }
+
 const EditOrderModal = ({
   changeVisibilityState, visible, order, updateOrder, authToken, atomicOrdersCount, countFilterAtomicOrdersByMarket,
   maxOrderCounts, gaEditAO, cancelAlgoOrder, submitAlgoOrder, markets,
@@ -100,11 +105,14 @@ const EditOrderModal = ({
       return
     }
 
-    if (!isAlgoOrder) {
+    if (isAlgoOrder) {
+      updOrder.args.action = updOrder.args.amount < 0 ? 'Sell' : 'Buy'
+      updOrder.args.amount = Math.abs(updOrder.args.amount)
+    } else {
       uiDef.action = updOrder.amount < 0 ? 'sell' : 'buy'
       updOrder.amount = Math.abs(updOrder.amount)
     }
-    setArgs(isAlgoOrder ? order.args : updOrder)
+    setArgs(isAlgoOrder ? updOrder.args : updOrder)
     setLayout(uiDef)
     setIsAO(isAlgoOrder)
   }, [order, t])
@@ -195,6 +203,7 @@ const EditOrderModal = ({
       ...args,
       [key]: processedValue,
     })
+    console.log(key, processedValue)
 
     return true
   }
