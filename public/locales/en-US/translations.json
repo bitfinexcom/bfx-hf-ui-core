@@ -779,8 +779,11 @@
     "timePeriod": "Select a time period",
     "switchToCustom": "Switch to custom date picker",
     "switchToRegular": "Switch to regular date picker",
-    "lastXday": "Last {{amount}} day",
-    "lastXdays": "Last {{amount}} days",
+    "lastWeek": "Last week",
+    "lastMonth": "Last month",
+    "lastQuarter": "Last quarter",
+    "lastYear": "Last year",
+    "lastXyears": "Last {{amount}} years",
     "elapsedTime": "Elapsed time"
   },
   "ui": {
