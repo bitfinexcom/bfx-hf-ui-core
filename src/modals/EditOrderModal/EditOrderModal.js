@@ -69,10 +69,17 @@ const processUpdateOrder = (order, id) => ({
   flags: calculateFlags(order),
 })
 
-// const getAlgoOrderAction = (order) => {
-//   const { amount, algoID } = order
-//   console.log(amount, algoID)
-// }
+const processAOArgs = (args) => {
+  const updArgs = { ...args }
+  updArgs.action = updArgs.amount < 0 ? 'Sell' : 'Buy'
+  updArgs.amount = Math.abs(updArgs.amount)
+
+  if (updArgs.sliceAmount) {
+    updArgs.sliceAmount = Math.abs(updArgs.sliceAmount)
+  }
+
+  return updArgs
+}
 
 const EditOrderModal = ({
   changeVisibilityState, visible, order, updateOrder, authToken, atomicOrdersCount, countFilterAtomicOrdersByMarket,
@@ -106,8 +113,7 @@ const EditOrderModal = ({
     }
 
     if (isAlgoOrder) {
-      updOrder.args.action = updOrder.args.amount < 0 ? 'Sell' : 'Buy'
-      updOrder.args.amount = Math.abs(updOrder.args.amount)
+      updOrder.args = processAOArgs(updOrder.args)
     } else {
       uiDef.action = updOrder.amount < 0 ? 'sell' : 'buy'
       updOrder.amount = Math.abs(updOrder.amount)
@@ -203,7 +209,6 @@ const EditOrderModal = ({
       ...args,
       [key]: processedValue,
     })
-    console.log(key, processedValue)
 
     return true
   }
