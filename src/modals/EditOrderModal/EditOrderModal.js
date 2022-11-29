@@ -87,7 +87,7 @@ const EditOrderModal = ({
     const updOrder = { ...order }
     const algoOrders = getAOs(t)
     let isAlgoOrder = true
-    let uiDef = _find(algoOrders, ({ id }) => id === updOrder.algoID)
+    let uiDef = _find(algoOrders, ({ id }) => id === updOrder.id)
 
     if (!uiDef) {
       const orders = getAtomicOrders(t)

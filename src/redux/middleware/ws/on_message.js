@@ -1,6 +1,7 @@
 import _isArray from 'lodash/isArray'
 import _isObject from 'lodash/isObject'
 import _isNumber from 'lodash/isNumber'
+import _isEmpty from 'lodash/isEmpty'
 import _reduce from 'lodash/reduce'
 import _map from 'lodash/map'
 import Debug from 'debug'
@@ -366,9 +367,15 @@ export default (alias, store) => (e = {}) => {
       }
 
       case 'data.aos': {
-        const [, , mode, aos] = payload
+        const [, , , aos] = payload
+
+        if (_isEmpty(aos)) {
+          break
+        }
+
         const adapted = _map(aos, ao => (_isArray(ao) ? AOAdapter(ao) : ao))
-        store.dispatch(WSActions.recvDataAlgoOrders({ mode, aos: adapted }))
+        store.dispatch(AOActions.setActiveAlgoOrders(adapted))
+        store.dispatch(AOActions.showActiveOrdersModal(true))
         break
       }
 
@@ -437,19 +444,6 @@ export default (alias, store) => (e = {}) => {
       case 'bt.stopped': {
         const [, gid] = payload
         store.dispatch(WSActions.recvBacktestStopped(gid))
-        break
-      }
-
-      case 'algo.active_orders': {
-        const [, initialFetch, mode, activeAlgoOrders] = payload
-
-        if (initialFetch) {
-          store.dispatch(AOActions.setActiveAlgoOrders(activeAlgoOrders, mode))
-          store.dispatch(AOActions.showActiveOrdersModal(true))
-        } else {
-          store.dispatch(WSActions.recvDataAlgoOrders({ aos: activeAlgoOrders, mode }))
-        }
-
         break
       }
 
