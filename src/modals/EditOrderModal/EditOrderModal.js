@@ -69,6 +69,18 @@ const processUpdateOrder = (order, id) => ({
   flags: calculateFlags(order),
 })
 
+const processAOArgs = (args) => {
+  const updArgs = { ...args }
+  updArgs.action = updArgs.amount < 0 ? 'Sell' : 'Buy'
+  updArgs.amount = Math.abs(updArgs.amount)
+
+  if (updArgs.sliceAmount) {
+    updArgs.sliceAmount = Math.abs(updArgs.sliceAmount)
+  }
+
+  return updArgs
+}
+
 const EditOrderModal = ({
   changeVisibilityState, visible, order, updateOrder, authToken, atomicOrdersCount, countFilterAtomicOrdersByMarket,
   maxOrderCounts, gaEditAO, cancelAlgoOrder, submitAlgoOrder, markets,
@@ -100,11 +112,13 @@ const EditOrderModal = ({
       return
     }
 
-    if (!isAlgoOrder) {
+    if (isAlgoOrder) {
+      updOrder.args = processAOArgs(updOrder.args)
+    } else {
       uiDef.action = updOrder.amount < 0 ? 'sell' : 'buy'
       updOrder.amount = Math.abs(updOrder.amount)
     }
-    setArgs(isAlgoOrder ? order.args : updOrder)
+    setArgs(isAlgoOrder ? updOrder.args : updOrder)
     setLayout(uiDef)
     setIsAO(isAlgoOrder)
   }, [order, t])
