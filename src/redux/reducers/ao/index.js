@@ -14,16 +14,10 @@ function reducer(state = getInitialState(), action = {}) {
 
   switch (type) {
     case types.SET_ACTIVE_AOS: {
-      const { activeAlgoOrders, mode } = payload
+      const { activeAlgoOrders } = payload
       return {
         ...state,
         activeAlgoOrders,
-        algoOrderTable: {
-          ...state.algoOrderTable || {},
-          [mode]: {
-            isInitialFetch: false,
-          },
-        },
       }
     }
 
