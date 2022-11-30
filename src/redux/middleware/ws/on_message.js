@@ -422,7 +422,7 @@ export default (alias, store) => (e = {}) => {
         break
       }
 
-      case 'btresult': {
+      case 'bt.btresult': {
         const [, res] = payload
         store.dispatch(WSActions.recvBacktestResults(res))
         break
