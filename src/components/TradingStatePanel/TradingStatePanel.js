@@ -37,15 +37,21 @@ const TradingStatePanel = ({
   const algoOrdersCount = getAlgoOrdersCount(activeFilter)
   const { t } = useTranslation()
 
-  const saveState = useCallback((param, value) => {
-    updateState(layoutID, layoutI, {
-      [param]: value,
-    })
-  }, [layoutID, layoutI, updateState])
+  const saveState = useCallback(
+    (param, value) => {
+      updateState(layoutID, layoutI, {
+        [param]: value,
+      })
+    },
+    [layoutID, layoutI, updateState],
+  )
 
-  const onTabChange = useCallback((tab) => {
-    saveState('tab', tab)
-  }, [saveState])
+  const onTabChange = useCallback(
+    (tab) => {
+      saveState('tab', tab)
+    },
+    [saveState],
+  )
 
   const setActiveFilter = (market) => {
     saveState('currentMarket', market)
@@ -61,10 +67,15 @@ const TradingStatePanel = ({
 
   const showMarketDropdown = _isEmpty(activeFilter)
 
-  const styles = useMemo(() => ({ display: showMarketDropdown ? 'block' : 'none' }), [showMarketDropdown])
+  const styles = useMemo(
+    () => ({ display: showMarketDropdown ? 'block' : 'none' }),
+    [showMarketDropdown],
+  )
 
   const { isPerp, uiID } = activeFilter
-  const activeFilterID = isPerp ? uiID : getPairFromMarket(activeFilter, getCurrencySymbol)
+  const activeFilterID = isPerp
+    ? uiID
+    : getPairFromMarket(activeFilter, getCurrencySymbol)
 
   return (
     <Panel
@@ -72,43 +83,46 @@ const TradingStatePanel = ({
       dark={dark}
       darkHeader={dark}
       className='hfui-tradingstatepanel__wrapper'
-      moveable={false}
-      removeable={false}
-      extraIcons={[
-        <Fragment key='filter-market'>
-          <div style={styles}>
-            <MarketSelect
-              markets={markets}
-              value={activeFilter}
-              onChange={setActiveFilter}
-              renderWithFavorites
-              ref={marketRef}
-            />
-          </div>
-          {!showMarketDropdown && (
-          <div
-            onClick={handleSelectedFilterClick}
-            className='hfui-tspanel-header-button active'
-          >
-            <i className='icon-filter-active' />
-            <p>{activeFilterID}</p>
-          </div>
-          )}
-        </Fragment>,
-        (
-          <div key='filter-by'>
-            <p className='hfui-uppercase'>
-              {`${showMarketDropdown ? t('tradingStatePanel.filterBy') : t('tradingStatePanel.filteringBy')}:`}
-            </p>
-          </div>
-        )]}
+      moveable={moveable}
+      removeable={removeable}
     >
       <Panel
         onRemove={onRemove}
-        moveable={moveable}
-        removeable={removeable}
+        moveable={false}
+        removeable={false}
         forcedTab={savedState.tab}
         onTabChange={onTabChange}
+        extraIcons={[
+          <Fragment key='filter-market'>
+            <div style={styles}>
+              <MarketSelect
+                markets={markets}
+                value={activeFilter}
+                onChange={setActiveFilter}
+                renderWithFavorites
+                ref={marketRef}
+              />
+            </div>
+            {!showMarketDropdown && (
+              <div
+                onClick={handleSelectedFilterClick}
+                className='hfui-tspanel-header-button active'
+              >
+                <i className='icon-filter-active' />
+                <p>{activeFilterID}</p>
+              </div>
+            )}
+          </Fragment>,
+          <div key='filter-by'>
+            <p className='hfui-uppercase'>
+              {`${
+                showMarketDropdown
+                  ? t('tradingStatePanel.filterBy')
+                  : t('tradingStatePanel.filteringBy')
+              }:`}
+            </p>
+          </div>,
+        ]}
         darkHeader
       >
         <PositionsTable
@@ -167,10 +181,10 @@ TradingStatePanel.defaultProps = {
   dark: true,
   moveable: false,
   removeable: false,
-  getPositionsCount: () => { },
-  getAtomicOrdersCount: () => { },
-  getAlgoOrdersCount: () => { },
-  onRemove: () => { },
+  getPositionsCount: () => {},
+  getAtomicOrdersCount: () => {},
+  getAlgoOrdersCount: () => {},
+  onRemove: () => {},
   savedState: {},
   layoutID: '',
 }
