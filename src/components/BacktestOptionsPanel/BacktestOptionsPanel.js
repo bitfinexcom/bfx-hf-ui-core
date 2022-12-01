@@ -17,6 +17,14 @@ import './style.css'
 
 const MAX_DATE = new Date()
 
+const TIME_MAPPING = {
+  '168h': 168,
+  '720h': 720,
+  '2160h': 2160,
+  '8640h': 8640,
+  '25920h': 25920,
+}
+
 const getTimePeriods = (t) => ([
   { value: '168h', label: t('strategyEditor.lastWeek') },
   { value: '720h', label: t('strategyEditor.lastMonth') },
@@ -82,26 +90,8 @@ const BacktestOptionsPanel = ({
   const setTimePeriod = (value) => {
     const end = new Date()
     const start = new Date()
-
-    switch (value) {
-      case '168h':
-        start.setHours(start.getHours() - 168)
-        break
-      case '720h':
-        start.setHours(start.getHours() - 720)
-        break
-      case '2160h':
-        start.setHours(start.getHours() - 2160)
-        break
-      case '8640h':
-        start.setHours(start.getHours() - 8640)
-        break
-      case '25920h':
-        start.setHours(start.getHours() - 25920)
-        break
-      default:
-        break
-    }
+    const hours = TIME_MAPPING[value]
+    start.setHours(start.getHours() - hours)
 
     saveStrategyOptions({
       [STRATEGY_OPTIONS_KEYS.START_DATE]: start,
