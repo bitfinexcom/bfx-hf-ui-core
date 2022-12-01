@@ -15,6 +15,7 @@ import MarketSelect from '../MarketSelect'
 import { MARKET_SHAPE } from '../../constants/prop-types-shapes'
 
 import './style.css'
+import PanelButton from '../../ui/Panel/Panel.Button'
 
 const TradingStatePanel = ({
   dark,
@@ -114,15 +115,23 @@ const TradingStatePanel = ({
                 />
               </div>
               {!showMarketDropdown && (
-                <div
+                <PanelButton
                   onClick={handleSelectedFilterClick}
-                  className='hfui-tspanel-header-button active'
-                >
-                  <i className='icon-filter-active' />
-                  <p>{activeFilterID}</p>
-                </div>
+                  text={activeFilterID}
+                  isActive
+                  icon={
+                    <i className='icon-filter-active' />
+                  }
+                />
               )}
             </Fragment>
+            <div
+              onClick={() => {}}
+              className='hfui-tspanel-header-button active'
+            >
+              <i className='icon-filter-active' />
+              <p>{activeFilterID}</p>
+            </div>
           </div>
         )}
         darkHeader
