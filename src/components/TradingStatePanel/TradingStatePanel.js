@@ -92,37 +92,39 @@ const TradingStatePanel = ({
         removeable={false}
         forcedTab={savedState.tab}
         onTabChange={onTabChange}
-        extraIcons={[
-          <Fragment key='filter-market'>
-            <div style={styles}>
-              <MarketSelect
-                markets={markets}
-                value={activeFilter}
-                onChange={setActiveFilter}
-                renderWithFavorites
-                ref={marketRef}
-              />
+        extraIcons={(
+          <div className='hfui-tradingstatepanel__options'>
+            <div key='filter-by'>
+              <p className='hfui-uppercase'>
+                {`${
+                  showMarketDropdown
+                    ? t('tradingStatePanel.filterBy')
+                    : t('tradingStatePanel.filteringBy')
+                }:`}
+              </p>
             </div>
-            {!showMarketDropdown && (
-              <div
-                onClick={handleSelectedFilterClick}
-                className='hfui-tspanel-header-button active'
-              >
-                <i className='icon-filter-active' />
-                <p>{activeFilterID}</p>
+            <Fragment key='filter-market'>
+              <div style={styles}>
+                <MarketSelect
+                  markets={markets}
+                  value={activeFilter}
+                  onChange={setActiveFilter}
+                  renderWithFavorites
+                  ref={marketRef}
+                />
               </div>
-            )}
-          </Fragment>,
-          <div key='filter-by'>
-            <p className='hfui-uppercase'>
-              {`${
-                showMarketDropdown
-                  ? t('tradingStatePanel.filterBy')
-                  : t('tradingStatePanel.filteringBy')
-              }:`}
-            </p>
-          </div>,
-        ]}
+              {!showMarketDropdown && (
+                <div
+                  onClick={handleSelectedFilterClick}
+                  className='hfui-tspanel-header-button active'
+                >
+                  <i className='icon-filter-active' />
+                  <p>{activeFilterID}</p>
+                </div>
+              )}
+            </Fragment>
+          </div>
+        )}
         darkHeader
       >
         <PositionsTable
