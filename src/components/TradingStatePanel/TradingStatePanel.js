@@ -6,7 +6,6 @@ import _isEmpty from 'lodash/isEmpty'
 import _get from 'lodash/get'
 import { useTranslation } from 'react-i18next'
 
-import Icon from 'react-fa'
 import {
   getCorrectIconNameOfPerpCcy,
   getPairFromMarket,

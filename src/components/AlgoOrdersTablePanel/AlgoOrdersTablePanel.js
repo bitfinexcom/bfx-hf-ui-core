@@ -4,7 +4,6 @@ import { useTranslation } from 'react-i18next'
 
 import AlgoOrdersTable from '../AlgoOrdersTable'
 import Panel from '../../ui/Panel'
-
 import AlgoOrdersHistoryButton from '../AlgoOrdersHistoryButton'
 
 const AlgoOrdersTablePanel = ({ dark, onRemove }) => {
