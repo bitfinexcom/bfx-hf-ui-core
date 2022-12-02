@@ -53,6 +53,14 @@ const AlgoOrdersHistoryButton = () => {
     }
   }, [isHistoryLoaded, isHistoryLoading, setStopLoading])
 
+  useEffect(() => {
+    return () => {
+      if (timeoutId.current) {
+        clearTimeout(timeoutId.current)
+      }
+    }
+  }, [])
+
   return (
     <PanelButton
       onClick={onButtonClickHandler}
