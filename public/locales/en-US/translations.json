@@ -305,7 +305,8 @@
   "AOTableModal": {
     "title": "Algo. Orders",
     "titleFull": "Algorithmic Orders",
-    "noOrders": "No active algorithmic orders"
+    "noOrders": "No active algorithmic orders",
+    "noHistory": "No algorithmic orders in history"
   },
   "appSettings": {
     "title": "Settings",
