@@ -77,6 +77,15 @@ export function setActiveAOParamsID(id) {
   }
 }
 
+export function setShowAOsHistory(showAOsHistory) {
+  return {
+    type: types.SHOW_AOS_HISTORY,
+    payload: {
+      showAOsHistory,
+    },
+  }
+}
+
 export default {
   setActiveAlgoOrders,
   showActiveOrdersModal,
@@ -87,4 +96,5 @@ export default {
   saveAlgoOrderParams,
   setActiveAOParamsID,
   appendAlgoOrderParams,
+  setShowAOsHistory,
 }
