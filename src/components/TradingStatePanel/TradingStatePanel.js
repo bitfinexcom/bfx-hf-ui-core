@@ -4,7 +4,6 @@ import React, {
 import PropTypes from 'prop-types'
 import _isEmpty from 'lodash/isEmpty'
 import _get from 'lodash/get'
-import _toUpper from 'lodash/toUpper'
 import { useTranslation } from 'react-i18next'
 
 import Icon from 'react-fa'
@@ -21,6 +20,7 @@ import MarketSelect from '../MarketSelect'
 import { MARKET_SHAPE } from '../../constants/prop-types-shapes'
 import PanelButton from '../../ui/Panel/Panel.Button'
 import CCYIcon from '../../ui/CCYIcon'
+import AlgoOrdersHistoryButton from '../AlgoOrdersHistoryButton'
 
 import './style.css'
 
@@ -38,8 +38,6 @@ const TradingStatePanel = ({
   layoutID,
   layoutI,
   getCurrencySymbol,
-  isAOsHistoryActive,
-  toggleShowAOsHistory: _toggleShowAOsHistory,
 }) => {
   const { currentMarket: activeFilter = {} } = savedState
   const positionsCount = getPositionsCount(activeFilter)
@@ -61,11 +59,6 @@ const TradingStatePanel = ({
       saveState('tab', tab)
     },
     [saveState],
-  )
-
-  const toggleShowAOsHistory = useCallback(
-    () => _toggleShowAOsHistory(isAOsHistoryActive),
-    [isAOsHistoryActive, _toggleShowAOsHistory],
   )
 
   const setActiveFilter = (market) => {
@@ -144,6 +137,7 @@ const TradingStatePanel = ({
                 />
               )}
             </Fragment>
+            {isAOsTabActive && <AlgoOrdersHistoryButton />}
           </div>
         )}
       >
@@ -197,8 +191,6 @@ TradingStatePanel.propTypes = {
   layoutI: PropTypes.string.isRequired,
   layoutID: PropTypes.string,
   getCurrencySymbol: PropTypes.func.isRequired,
-  isAOsHistoryActive: PropTypes.bool.isRequired,
-  toggleShowAOsHistory: PropTypes.func.isRequired,
 }
 
 TradingStatePanel.defaultProps = {
