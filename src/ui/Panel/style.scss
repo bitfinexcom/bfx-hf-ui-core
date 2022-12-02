@@ -205,12 +205,6 @@
   display: flex;
   flex-direction: row-reverse;
   align-items: center;
-
-  p {
-    font-size: 13px;
-    margin-right: 8px;
-    line-height: 32px;
-  }
 }
 
 .hfui-panel__label {
@@ -344,6 +338,7 @@
   height: 32px;
   cursor: pointer;
   transition: all 0.2s;
+  text-transform: uppercase;
 
   i,
   span {

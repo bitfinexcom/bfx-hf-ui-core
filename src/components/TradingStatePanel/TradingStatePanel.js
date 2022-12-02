@@ -95,15 +95,14 @@ const TradingStatePanel = ({
         onTabChange={onTabChange}
         extraIcons={(
           <div className='hfui-tradingstatepanel__options'>
-            <div key='filter-by'>
-              <p className='hfui-uppercase'>
-                {`${
-                  showMarketDropdown
-                    ? t('tradingStatePanel.filterBy')
-                    : t('tradingStatePanel.filteringBy')
-                }:`}
-              </p>
-            </div>
+            <p className='filter-by' key='filter-by'>
+              <i className='icon-filter-active filter-icon' />
+              {`${
+                showMarketDropdown
+                  ? t('tradingStatePanel.filterBy')
+                  : t('tradingStatePanel.filteringBy')
+              }:`}
+            </p>
             <Fragment key='filter-market'>
               <div style={styles}>
                 <MarketSelect
@@ -119,17 +118,9 @@ const TradingStatePanel = ({
                   onClick={handleSelectedFilterClick}
                   text={activeFilterID}
                   isActive
-                  icon={<i className='icon-filter-active filter-icon' />}
                 />
               )}
             </Fragment>
-            {/* <div
-              onClick={() => {}}
-              className='hfui-tspanel-header-button active'
-            >
-              <i className='icon-filter-active' />
-              <p>{activeFilterID}</p>
-            </div> */}
           </div>
         )}
         darkHeader
