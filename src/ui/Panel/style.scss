@@ -211,51 +211,6 @@
     margin-right: 8px;
     line-height: 32px;
   }
-
-  i,
-  span {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 32px;
-    height: 32px;
-    font-size: 20px;
-    color: var(--shade-5);
-    transition: all 0.2s;
-    cursor: pointer;
-    border-radius: $border-radius;
-
-    &.disabled {
-      cursor: not-allowed;
-      color: var(--shade-3);
-    }
-
-    &:hover:not(.disabled) {
-      color: var(--shade-9);
-      background: var(--shade-0);
-    }
-
-    &.high-contrast {
-      background: var(--background-color);
-    }
-
-    &.no-margin {
-      margin-right: 0;
-    }
-
-    &.small {
-      line-height: 15px;
-    }
-  }
-
-  .fa-circle-notch {
-    animation: hfui-panel-spinner-rotate 1s infinite ease-in-out both;
-    color: $yellow-color !important;
-  }
-
-  .icon-move {
-    cursor: move;
-  }
 }
 
 .hfui-panel__label {
@@ -407,6 +362,56 @@
   &.active {
     background: var(--primary-0);
     color: var(--primary-8);
+  }
+}
+
+.hfui-panel__icon-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 32px;
+  height: 32px;
+  font-size: 20px;
+  color: var(--shade-5);
+  transition: all 0.2s;
+  cursor: pointer;
+  border-radius: $border-radius;
+  background-color: var(--darker-background-color);
+
+  & > * {
+    width: 20px;
+    height: 20px;
+  }
+
+  &.disabled {
+    cursor: not-allowed;
+    color: var(--shade-3);
+  }
+
+  &:hover:not(.disabled) {
+    color: var(--shade-9);
+    background: var(--shade-0);
+  }
+
+  &.high-contrast {
+    background: var(--background-color);
+  }
+
+  &.no-margin {
+    margin-right: 0;
+  }
+
+  &.small {
+    line-height: 15px;
+  }
+
+  .fa-circle-notch {
+    animation: hfui-panel-spinner-rotate 1s infinite ease-in-out both;
+    color: $yellow-color !important;
+  }
+
+  .icon-move {
+    cursor: move;
   }
 }
 

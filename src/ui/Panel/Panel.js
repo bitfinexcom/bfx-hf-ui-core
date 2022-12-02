@@ -16,6 +16,7 @@ import PanelSidebarTabs from './Panel.SidebarTabs'
 import PanelTabs from './Panel.Tabs'
 import { getForcedTab } from './Panel.helpers'
 import Scrollbars from '../Scrollbars'
+import PanelIconButton from './Panel.IconButton'
 
 import './style.css'
 
@@ -180,9 +181,19 @@ const Panel = ({
 
           {!hideIcons && (
             <div className='hfui-panel__header-icons'>
-              {removeable && <i onClick={onRemove} className='icon-cancel' />}
+              {removeable && (
+                <PanelIconButton
+                  onClick={onRemove}
+                  icon={<i className='icon-cancel' />}
+                />
+              )}
 
-              {moveable && <i className='icon-move' />}
+              {moveable && (
+                <PanelIconButton
+                  onClick={() => {}}
+                  icon={<i className='icon-move' />}
+                />
+              )}
 
               {showChartMarket && (
                 <div className='hfui-panel__chart-market-select'>
@@ -191,11 +202,15 @@ const Panel = ({
               )}
 
               {onToggleSettings && (
-                <i
+                <PanelIconButton
                   onClick={onToggleSettings}
-                  className={ClassNames('icon-settings-icon', {
-                    yellow: settingsOpen,
-                  })}
+                  icon={(
+                    <i
+                      className={ClassNames('icon-settings-icon', {
+                        yellow: settingsOpen,
+                      })}
+                    />
+                  )}
                 />
               )}
 
