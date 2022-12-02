@@ -184,6 +184,11 @@ export default {
     payload,
   }),
 
+  recvDataAlgoOrdersHistory: (payload) => ({
+    type: t.DATA_ALGO_ORDERS_HISTORY,
+    payload,
+  }),
+
   recvDataAlgoOrderStopped: (payload) => ({
     type: t.DATA_ALGO_ORDER_STOPPED,
     payload,
