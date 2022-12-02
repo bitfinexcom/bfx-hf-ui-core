@@ -119,19 +119,17 @@ const TradingStatePanel = ({
                   onClick={handleSelectedFilterClick}
                   text={activeFilterID}
                   isActive
-                  icon={
-                    <i className='icon-filter-active' />
-                  }
+                  icon={<i className='icon-filter-active filter-icon' />}
                 />
               )}
             </Fragment>
-            <div
+            {/* <div
               onClick={() => {}}
               className='hfui-tspanel-header-button active'
             >
               <i className='icon-filter-active' />
               <p>{activeFilterID}</p>
-            </div>
+            </div> */}
           </div>
         )}
         darkHeader

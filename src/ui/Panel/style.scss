@@ -345,8 +345,9 @@
   cursor: pointer;
   transition: all 0.2s;
 
-  i {
-    font-size: 13px;
+  i,
+  span {
+    font-size: 18px;
     color: inherit;
 
     &:before {
