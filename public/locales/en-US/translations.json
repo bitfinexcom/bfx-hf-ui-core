@@ -628,7 +628,8 @@
     "positionsTab": "Positions",
     "atomicsTab": "Atomics",
     "algosTab": "Algos",
-    "balancesTab": "Balances"
+    "balancesTab": "Balances",
+    "history": "History"
   },
   "statusbar": {
     "liveModeDisclaimer": "You are in LIVE mode. All orders placed in this mode are executed in the real market using real funds",

@@ -3,8 +3,11 @@ import React, {
 } from 'react'
 import PropTypes from 'prop-types'
 import _isEmpty from 'lodash/isEmpty'
+import _get from 'lodash/get'
+import _toUpper from 'lodash/toUpper'
 import { useTranslation } from 'react-i18next'
 
+import Icon from 'react-fa'
 import {
   getCorrectIconNameOfPerpCcy,
   getPairFromMarket,
@@ -35,6 +38,8 @@ const TradingStatePanel = ({
   layoutID,
   layoutI,
   getCurrencySymbol,
+  isAOsHistoryActive,
+  toggleShowAOsHistory: _toggleShowAOsHistory,
 }) => {
   const { currentMarket: activeFilter = {} } = savedState
   const positionsCount = getPositionsCount(activeFilter)
@@ -58,6 +63,11 @@ const TradingStatePanel = ({
     [saveState],
   )
 
+  const toggleShowAOsHistory = useCallback(
+    () => _toggleShowAOsHistory(isAOsHistoryActive),
+    [isAOsHistoryActive, _toggleShowAOsHistory],
+  )
+
   const setActiveFilter = (market) => {
     saveState('currentMarket', market)
   }
@@ -69,6 +79,8 @@ const TradingStatePanel = ({
       marketRef.current.click()
     }
   }
+
+  const isAOsTabActive = _get(savedState, 'tab', null) === 2
 
   const showMarketDropdown = _isEmpty(activeFilter)
 
@@ -93,6 +105,7 @@ const TradingStatePanel = ({
     >
       <Panel
         onRemove={onRemove}
+        darkHeader
         moveable={false}
         removeable={false}
         forcedTab={savedState.tab}
@@ -133,7 +146,6 @@ const TradingStatePanel = ({
             </Fragment>
           </div>
         )}
-        darkHeader
       >
         <PositionsTable
           renderedInTradingState
@@ -185,6 +197,8 @@ TradingStatePanel.propTypes = {
   layoutI: PropTypes.string.isRequired,
   layoutID: PropTypes.string,
   getCurrencySymbol: PropTypes.func.isRequired,
+  isAOsHistoryActive: PropTypes.bool.isRequired,
+  toggleShowAOsHistory: PropTypes.func.isRequired,
 }
 
 TradingStatePanel.defaultProps = {

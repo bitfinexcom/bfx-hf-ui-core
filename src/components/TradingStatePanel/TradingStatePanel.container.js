@@ -9,9 +9,11 @@ import {
 } from '../../redux/selectors/ws'
 import { getMarkets } from '../../redux/selectors/meta'
 import UIActions from '../../redux/actions/ui'
+import AOActions from '../../redux/actions/ao'
 import { getComponentState, getCurrentMode } from '../../redux/selectors/ui'
 
 import TradingStatePanel from './TradingStatePanel'
+import { getShowAOsHistory } from '../../redux/selectors/ao'
 
 const mapStateToProps = (state = {}, { layoutID, layoutI: id } = {}) => ({
   authToken: getAuthToken(state),
@@ -22,16 +24,20 @@ const mapStateToProps = (state = {}, { layoutID, layoutI: id } = {}) => ({
   markets: getMarkets(state),
   savedState: getComponentState(state, layoutID, 'trading_state', id),
   getCurrencySymbol: reduxSelectors.getCurrencySymbolMemo(state),
+  isAOsHistoryActive: getShowAOsHistory(state),
 })
 
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch) => ({
   updateState: (layoutID, componentID, state) => {
-    dispatch(UIActions.updateComponentState({
-      state,
-      layoutID,
-      componentID,
-    }))
+    dispatch(
+      UIActions.updateComponentState({
+        state,
+        layoutID,
+        componentID,
+      }),
+    )
   },
+  toggleShowAOsHistory: (currentState) => dispatch(AOActions.setShowAOsHistory(!currentState)),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(TradingStatePanel)
