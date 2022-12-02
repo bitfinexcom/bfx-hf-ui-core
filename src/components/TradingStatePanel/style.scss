@@ -36,3 +36,12 @@
     margin-right: 5px;
   }
 }
+
+.hfui-tradingstatepanel__ccy-icon {
+  margin-top: 5px;
+  width: 20px;
+  height: 20px;
+  // primary-8 color
+  filter: invert(51%) sepia(60%) saturate(1705%) hue-rotate(130deg)
+    brightness(104%) contrast(98%);
+}

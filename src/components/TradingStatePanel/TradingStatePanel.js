@@ -5,7 +5,10 @@ import PropTypes from 'prop-types'
 import _isEmpty from 'lodash/isEmpty'
 import { useTranslation } from 'react-i18next'
 
-import { getPairFromMarket } from '../../util/market'
+import {
+  getCorrectIconNameOfPerpCcy,
+  getPairFromMarket,
+} from '../../util/market'
 import Panel from '../../ui/Panel'
 import PositionsTable from '../PositionsTable'
 import AtomicOrdersTable from '../AtomicOrdersTable'
@@ -13,9 +16,10 @@ import AlgoOrdersTable from '../AlgoOrdersTable'
 import BalancesTable from '../BalancesTable'
 import MarketSelect from '../MarketSelect'
 import { MARKET_SHAPE } from '../../constants/prop-types-shapes'
+import PanelButton from '../../ui/Panel/Panel.Button'
+import CCYIcon from '../../ui/CCYIcon'
 
 import './style.css'
-import PanelButton from '../../ui/Panel/Panel.Button'
 
 const TradingStatePanel = ({
   dark,
@@ -73,7 +77,7 @@ const TradingStatePanel = ({
     [showMarketDropdown],
   )
 
-  const { isPerp, uiID } = activeFilter
+  const { isPerp, uiID, base } = activeFilter
   const activeFilterID = isPerp
     ? uiID
     : getPairFromMarket(activeFilter, getCurrencySymbol)
@@ -118,6 +122,12 @@ const TradingStatePanel = ({
                   onClick={handleSelectedFilterClick}
                   text={activeFilterID}
                   isActive
+                  icon={(
+                    <CCYIcon
+                      ccy={isPerp ? getCorrectIconNameOfPerpCcy(base) : base}
+                      className='hfui-tradingstatepanel__ccy-icon'
+                    />
+                  )}
                 />
               )}
             </Fragment>

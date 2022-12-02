@@ -3,22 +3,25 @@
 import React from 'react'
 import { TICKERLIST_KEYS, TICKER_KEYS } from '@ufx-ui/core'
 
-import CCYIcon from './CCYIcon'
-import { getCorrectIconNameOfPerpCcy, getPairFromMarket } from '../../util/market'
+import CCYIcon from '../../ui/CCYIcon'
+import {
+  getCorrectIconNameOfPerpCcy,
+  getPairFromMarket,
+} from '../../util/market'
 
 export const getTickerDataMapping = (getCurrencySymbol) => ({
   [TICKER_KEYS.BASE_CCY]: {
     renderer: ({ baseCcy, quoteCcy, data }) => {
       const { isPerp, uiID } = data
 
-      return (
-        isPerp ? <div className='highlight'>{uiID}</div> : (
-          <>
-            <div className='highlight'>{getCurrencySymbol(baseCcy)}</div>
-            /
-            <div className='quote-ccy'>{getCurrencySymbol(quoteCcy)}</div>
-          </>
-        )
+      return isPerp ? (
+        <div className='highlight'>{uiID}</div>
+      ) : (
+        <>
+          <div className='highlight'>{getCurrencySymbol(baseCcy)}</div>
+          /
+          <div className='quote-ccy'>{getCurrencySymbol(quoteCcy)}</div>
+        </>
       )
     },
   },
@@ -35,7 +38,11 @@ export const getTickerListMapping = (getCurrencySymbol, markets) => ({
 
       return (
         <span className='ccy-pair'>
-          <CCYIcon small ccy={isPerp ? getCorrectIconNameOfPerpCcy(base) : base} />
+          <CCYIcon
+            className='hfui-exchangeinfobar__ccy-icon'
+            ccy={isPerp ? getCorrectIconNameOfPerpCcy(base) : base}
+            small
+          />
           <span>{isPerp ? uiID : id}</span>
         </span>
       )
