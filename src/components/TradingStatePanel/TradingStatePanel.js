@@ -38,8 +38,10 @@ const TradingStatePanel = ({
   layoutID,
   layoutI,
   getCurrencySymbol,
+  currentMode,
 }) => {
-  const { currentMarket: activeFilter = {} } = savedState
+  const currentMarket = _get(savedState, 'currentMarket', {})
+  const activeFilter = _get(currentMarket, currentMode, {})
   const positionsCount = getPositionsCount(activeFilter)
   const atomicOrdersCount = getAtomicOrdersCount(activeFilter)
   const algoOrdersCount = getAlgoOrdersCount(activeFilter)
@@ -62,7 +64,10 @@ const TradingStatePanel = ({
   )
 
   const setActiveFilter = (market) => {
-    saveState('currentMarket', market)
+    saveState('currentMarket', {
+      ...currentMarket,
+      [currentMode]: market,
+    })
   }
   const marketRef = useRef('')
 
@@ -191,6 +196,7 @@ TradingStatePanel.propTypes = {
   layoutI: PropTypes.string.isRequired,
   layoutID: PropTypes.string,
   getCurrencySymbol: PropTypes.func.isRequired,
+  currentMode: PropTypes.string.isRequired,
 }
 
 TradingStatePanel.defaultProps = {
