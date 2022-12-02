@@ -462,8 +462,9 @@ class OrderForm extends React.Component {
           extraIcons={[
             !helpOpen && currentLayout && currentLayout.customHelp && (
               <PanelIconButton
+                key='question'
                 onClick={this.onToggleHelp}
-                icon={<Icon key='question' name='question' />}
+                icon={<Icon name='question' />}
               />
             ),
             !helpOpen && currentLayout && currentLayout.id && (
