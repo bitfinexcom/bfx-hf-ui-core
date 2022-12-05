@@ -68,19 +68,19 @@ const BacktestOptionsPanel = ({
     const diff = endDate.getTime() - startDate.getTime()
     const diffHours = Math.ceil(diff / (1000 * 60 * 60))
 
-    if (diffHours <= 168) {
+    if (diffHours <= TIME_MAPPING['168h']) {
       return '168h'
     }
 
-    if (diffHours <= 720) {
+    if (diffHours <= TIME_MAPPING['720h']) {
       return '720h'
     }
 
-    if (diffHours <= 2160) {
+    if (diffHours <= TIME_MAPPING['2160h']) {
       return '2160h'
     }
 
-    if (diffHours <= 8640) {
+    if (diffHours <= TIME_MAPPING['8640h']) {
       return '8640h'
     }
 
