@@ -449,7 +449,6 @@ export default (alias, store) => (e = {}) => {
 
       case 'algo.reload': {
         store.dispatch(WSActions.clearAlgoOrders())
-        store.dispatch(AOActions.getActiveAlgoOrders())
         break
       }
 
