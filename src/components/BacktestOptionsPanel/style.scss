@@ -1,3 +1,5 @@
+@import "../../variables.scss";
+
 .hfui-strategy-backtest-options {
   display: flex;
   flex-direction: column;
@@ -15,6 +17,34 @@
 
     input {
       background-color: var(--lighter-background-color);
+    }
+  }
+
+  &__icn-selector-container {
+    display: flex;
+    justify-content: flex-end;
+
+    .icon-selector {
+      margin-right: 10px;
+      color: var(--shade-4);
+      font-size: 18px;
+      font-weight: 600;
+      line-height: 16px;
+      user-select: none;
+
+      &:hover {
+        color: var(--primary-color);
+        text-decoration: underline;
+        cursor: pointer;
+      }
+
+      &:last-child {
+        margin-right: 0;
+      }
+
+      &.active {
+        color: $green-button-color;
+      }
     }
   }
 
