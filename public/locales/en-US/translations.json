@@ -305,7 +305,8 @@
   "AOTableModal": {
     "title": "Algo. Orders",
     "titleFull": "Algorithmic Orders",
-    "noOrders": "No active algorithmic orders"
+    "noOrders": "No active algorithmic orders",
+    "noHistory": "No algorithmic orders in history"
   },
   "appSettings": {
     "title": "Settings",
@@ -628,7 +629,8 @@
     "positionsTab": "Positions",
     "atomicsTab": "Atomics",
     "algosTab": "Algos",
-    "balancesTab": "Balances"
+    "balancesTab": "Balances",
+    "history": "History"
   },
   "statusbar": {
     "liveModeDisclaimer": "You are in LIVE mode. All orders placed in this mode are executed in the real market using real funds",

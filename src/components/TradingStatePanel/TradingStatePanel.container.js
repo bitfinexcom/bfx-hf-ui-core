@@ -24,13 +24,15 @@ const mapStateToProps = (state = {}, { layoutID, layoutI: id } = {}) => ({
   getCurrencySymbol: reduxSelectors.getCurrencySymbolMemo(state),
 })
 
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch) => ({
   updateState: (layoutID, componentID, state) => {
-    dispatch(UIActions.updateComponentState({
-      state,
-      layoutID,
-      componentID,
-    }))
+    dispatch(
+      UIActions.updateComponentState({
+        state,
+        layoutID,
+        componentID,
+      }),
+    )
   },
 })
 

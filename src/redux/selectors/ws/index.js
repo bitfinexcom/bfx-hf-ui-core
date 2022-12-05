@@ -53,6 +53,8 @@ import getCurrentStrategyExecutionState from './get_current_strategy_execution_s
 import getCurrentStrategyPositions from './get_current_strategy_positions'
 import getDraftStrategies from './get_draft_strategies'
 import getUsername from './get_username'
+import getAlgoOrdersHistory from './get_algo_orders_history'
+import getIsAOsHistoryLoaded from './get_is_aos_history_loaded'
 
 export {
   getSockets,
@@ -110,4 +112,7 @@ export {
   getCurrentStrategyExecutionState,
   getCurrentStrategyPositions,
   getCurrentStrategyOpenPositions,
+
+  getIsAOsHistoryLoaded,
+  getAlgoOrdersHistory,
 }

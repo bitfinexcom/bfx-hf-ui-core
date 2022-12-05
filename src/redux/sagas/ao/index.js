@@ -6,10 +6,12 @@ import handleActiveAlgoOrders from './handle_active_algo_orders'
 import getAlgoOrderParams from './get_algo_order_params'
 import removeAlgoOrderParams from './remove_algo_order_params'
 import saveAlgoOrderParams from './save_algo_order_params'
+import requestAOsHistory from './request_aos_history'
 
 export default function* () {
   yield takeEvery(types.HANDLE_ACTIVE_AOS, handleActiveAlgoOrders)
   yield takeEvery(types.GET_AO_PARAMS, getAlgoOrderParams)
   yield takeEvery(types.REMOVE_AO_PARAMS, removeAlgoOrderParams)
   yield takeEvery(types.SAVE_AO_PARAMS, saveAlgoOrderParams)
+  yield takeEvery(types.SHOW_AOS_HISTORY, requestAOsHistory)
 }

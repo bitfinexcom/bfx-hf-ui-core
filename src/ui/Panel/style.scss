@@ -205,57 +205,6 @@
   display: flex;
   flex-direction: row-reverse;
   align-items: center;
-
-  p {
-    font-size: 13px;
-    margin-right: 8px;
-    line-height: 32px;
-  }
-
-  i,
-  span {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 32px;
-    height: 32px;
-    font-size: 20px;
-    color: var(--shade-5);
-    transition: all 0.2s;
-    cursor: pointer;
-    border-radius: $border-radius;
-
-    &.disabled {
-      cursor: not-allowed;
-      color: var(--shade-3);
-    }
-
-    &:hover:not(.disabled) {
-      color: var(--shade-9);
-      background: var(--shade-0);
-    }
-
-    &.high-contrast {
-      background: var(--background-color);
-    }
-
-    &.no-margin {
-      margin-right: 0;
-    }
-
-    &.small {
-      line-height: 15px;
-    }
-  }
-
-  .fa-circle-notch {
-    animation: hfui-panel-spinner-rotate 1s infinite ease-in-out both;
-    color: $yellow-color !important;
-  }
-
-  .icon-move {
-    cursor: move;
-  }
 }
 
 .hfui-panel__label {
@@ -374,6 +323,91 @@
         }
       }
     }
+  }
+}
+
+.hfui-panel__button {
+  display: flex;
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 32px;
+  padding: 0 spacing(0.5);
+  background: var(--darker-background-color);
+  border-radius: $border-radius;
+  color: var(--shade-7);
+  height: 32px;
+  cursor: pointer;
+  transition: all 0.2s;
+  text-transform: uppercase;
+
+  i,
+  span {
+    font-size: 18px;
+    color: inherit;
+
+    &:before {
+      font-weight: 600 !important;
+    }
+  }
+
+  &:hover,
+  &.active {
+    background: var(--shade-0);
+  }
+
+  &.active {
+    background: var(--primary-0);
+    color: var(--primary-8);
+  }
+}
+
+.hfui-panel__icon-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 32px;
+  height: 32px;
+  font-size: 20px;
+  color: var(--shade-5);
+  transition: all 0.2s;
+  cursor: pointer;
+  border-radius: $border-radius;
+  background-color: var(--darker-background-color);
+
+  & > * {
+    width: 20px;
+    height: 20px;
+  }
+
+  &.disabled {
+    cursor: not-allowed;
+    color: var(--shade-3);
+  }
+
+  &:hover:not(.disabled) {
+    color: var(--shade-9);
+    background: var(--shade-0);
+  }
+
+  &.high-contrast {
+    background: var(--background-color);
+  }
+
+  &.no-margin {
+    margin-right: 0;
+  }
+
+  &.small {
+    line-height: 15px;
+  }
+
+  .fa-circle-notch {
+    animation: hfui-panel-spinner-rotate 1s infinite ease-in-out both;
+    color: $yellow-color !important;
+  }
+
+  .icon-move {
+    cursor: move;
   }
 }
 

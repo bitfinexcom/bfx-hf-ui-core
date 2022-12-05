@@ -22,10 +22,16 @@ import SubmitAPIKeysModal from '../APIKeysConfigurateForm/SubmitAPIKeysModal'
 import OrderFormMenu from './OrderFormMenu'
 import { getAOs, getAtomicOrders } from './OrderForm.orders.helpers'
 import {
-  renderLayout, processFieldData, marketToQuoteBase, defaultDataForLayout, fixComponentContext,
-  COMPONENTS_FOR_ID, validateAOData,
+  renderLayout,
+  processFieldData,
+  marketToQuoteBase,
+  defaultDataForLayout,
+  fixComponentContext,
+  COMPONENTS_FOR_ID,
+  validateAOData,
 } from './OrderForm.helpers'
 import { MARKET_SHAPE } from '../../constants/prop-types-shapes'
+import PanelIconButton from '../../ui/Panel/Panel.IconButton'
 
 import './style.css'
 
@@ -40,10 +46,7 @@ class OrderForm extends React.Component {
     super(props)
 
     const { savedState, activeMarket } = props
-    const {
-      currentMarket = activeMarket,
-      marketDirty,
-    } = savedState
+    const { currentMarket = activeMarket, marketDirty } = savedState
 
     this.state = {
       ...this.state,
@@ -76,7 +79,7 @@ class OrderForm extends React.Component {
   }
 
   shouldComponentUpdate(nextProps, nextState) {
-    return !(_isEqual(nextProps, this.props)) || !(_isEqual(this.state, nextState))
+    return !_isEqual(nextProps, this.props) || !_isEqual(this.state, nextState)
   }
 
   componentWillUnmount() {
@@ -90,9 +93,11 @@ class OrderForm extends React.Component {
     } = prevState
 
     // reset errors when switched back to orders list view
-    const nextValidationErrors = _isNil(currentLayout?.label) ? {} : validationErrors
+    const nextValidationErrors = _isNil(currentLayout?.label)
+      ? {}
+      : validationErrors
 
-    if (marketDirty || (activeMarket === currentMarket)) {
+    if (marketDirty || activeMarket === currentMarket) {
       return {
         validationErrors: nextValidationErrors,
       }
@@ -124,14 +129,15 @@ class OrderForm extends React.Component {
   }
 
   onSubmitAPIKeys({ apiKey, apiSecret }) {
-    const {
-      submitAPIKeys, authToken, mode,
-    } = this.props
-    submitAPIKeys({
-      authToken,
-      apiKey,
-      apiSecret,
-    }, mode)
+    const { submitAPIKeys, authToken, mode } = this.props
+    submitAPIKeys(
+      {
+        authToken,
+        apiKey,
+        apiSecret,
+      },
+      mode,
+    )
   }
 
   onToggleHelp() {
@@ -153,7 +159,11 @@ class OrderForm extends React.Component {
 
   onChangeActiveOrderLayout(orderLabel) {
     const {
-      resetActiveAOParamsID, getAlgoOrderParams, aoParams, t, showAdvancedAlgos,
+      resetActiveAOParamsID,
+      getAlgoOrderParams,
+      aoParams,
+      t,
+      showAdvancedAlgos,
     } = this.props
     const { currentMarket } = this.state
     const algoOrders = getAOs(t, showAdvancedAlgos)
@@ -182,11 +192,7 @@ class OrderForm extends React.Component {
   onFieldChange(fieldName, value) {
     const { t } = this.props
 
-    this.setState(({
-      fieldData,
-      currentLayout,
-      validationErrors,
-    }) => {
+    this.setState(({ fieldData, currentLayout, validationErrors }) => {
       const { fields = {} } = currentLayout
       const field = fields[fieldName] || {}
       const { disabled } = field
@@ -203,9 +209,7 @@ class OrderForm extends React.Component {
         processedValue = _trim(value)
       }
 
-      const validationError = (C && C.validateValue)
-        ? C.validateValue(processedValue, t)
-        : null
+      const validationError = C && C.validateValue ? C.validateValue(processedValue, t) : null
 
       return {
         creationError: null,
@@ -233,7 +237,8 @@ class OrderForm extends React.Component {
     if (action === 'submit') {
       this.onSubmitAlgoOrder()
       return
-    } if (action === 'preview') {
+    }
+    if (action === 'preview') {
       // TODO:
       return
     }
@@ -268,7 +273,12 @@ class OrderForm extends React.Component {
 
   onSubmitAlgoOrder() {
     const {
-      submitAlgoOrder, authToken, gaSubmitAO, setIsOrderExecuting, t, wsConnected,
+      submitAlgoOrder,
+      authToken,
+      gaSubmitAO,
+      setIsOrderExecuting,
+      t,
+      wsConnected,
     } = this.props
     const {
       currentMarket, currentLayout, fieldData, context,
@@ -298,7 +308,9 @@ class OrderForm extends React.Component {
       this.setState(({ validationErrors }) => ({
         validationErrors: {
           ...validationErrors,
-          [field]: i18n ? t(`algoOrderForm.validationMessages.${i18n.key}`, i18n.props) : message,
+          [field]: i18n
+            ? t(`algoOrderForm.validationMessages.${i18n.key}`, i18n.props)
+            : message,
         },
       }))
     }
@@ -337,7 +349,14 @@ class OrderForm extends React.Component {
     const { currentLayout, currentMarket } = this.state
     const { atomicOrdersCount, atomicOrdersCountActiveMarket, maxOrderCounts } = this.props
 
-    return validateAOData(data, currentLayout, currentMarket, atomicOrdersCount, atomicOrdersCountActiveMarket, maxOrderCounts)
+    return validateAOData(
+      data,
+      currentLayout,
+      currentMarket,
+      atomicOrdersCount,
+      atomicOrdersCountActiveMarket,
+      maxOrderCounts,
+    )
   }
 
   processAOData() {
@@ -352,7 +371,10 @@ class OrderForm extends React.Component {
 
   renderAPIStateModal() {
     const {
-      isKeysUpdating, apiClientConnecting, apiCredentials, isPaperTrading,
+      isKeysUpdating,
+      apiClientConnecting,
+      apiCredentials,
+      isPaperTrading,
     } = this.props
 
     const apiClientConfigured = apiCredentials?.configured && apiCredentials?.valid
@@ -368,7 +390,9 @@ class OrderForm extends React.Component {
           onSubmit={this.onSubmitAPIKeys}
           apiClientConnecting={apiClientConnecting}
           isPaperTrading={isPaperTrading}
-          keyExistButNotValid={apiCredentials?.configured && !apiCredentials?.valid}
+          keyExistButNotValid={
+            apiCredentials?.configured && !apiCredentials?.valid
+          }
         />
       )
     }
@@ -378,13 +402,26 @@ class OrderForm extends React.Component {
 
   render() {
     const {
-      onRemove, apiClientConnected, apiCredentials, moveable, removeable, isOrderExecuting, activeMarket, t, showAdvancedAlgos,
+      onRemove,
+      apiClientConnected,
+      apiCredentials,
+      moveable,
+      removeable,
+      isOrderExecuting,
+      activeMarket,
+      t,
+      showAdvancedAlgos,
     } = this.props
     const orders = getAtomicOrders(t)
 
     const {
-      fieldData, validationErrors, creationError, context, currentLayout,
-      helpOpen, currentMarket,
+      fieldData,
+      validationErrors,
+      creationError,
+      context,
+      currentLayout,
+      helpOpen,
+      currentMarket,
     } = this.state
 
     const algoOrders = getAOs(t, showAdvancedAlgos)
@@ -400,7 +437,8 @@ class OrderForm extends React.Component {
       id,
       label,
       uiIcon,
-    }))
+    }),
+    )
 
     _forEach(algoOrders, ({ label, id, uiIcon }) => {
       algoOrderTypes.push({
@@ -423,10 +461,10 @@ class OrderForm extends React.Component {
           onRemove={onRemove}
           extraIcons={[
             !helpOpen && currentLayout && currentLayout.customHelp && (
-              <Icon
+              <PanelIconButton
                 key='question'
-                name='question'
                 onClick={this.onToggleHelp}
+                icon={<Icon name='question' />}
               />
             ),
             !helpOpen && currentLayout && currentLayout.id && (
@@ -447,28 +485,37 @@ class OrderForm extends React.Component {
           <div key='orderform-wrapper' className='hfui-orderform__wrapper'>
             {isElectronApp && this.renderAPIStateModal()}
 
-            {helpOpen && showOrderform && currentLayout && currentLayout.customHelp && (
-              <div key='overlay-wrapper' className='hfui-orderform__overlay-wrapper'>
-                <div className='hfui-orderform__help-inner'>
-                  <p className='hfui-orderform__help-title'>
-                    <span className='prefix'>{t('orderForm.help')}</span>
-                    {currentLayout.label}
-                    <i
-                      role='button'
-                      tabIndex={0}
-                      onClick={this.onToggleHelp}
-                      className='hfui-orderform__question-btn icon-cancel'
-                    />
-                  </p>
-                  <p className='hfui-orderform__help-content'>
-                    {currentLayout.customHelp}
-                  </p>
+            {helpOpen
+              && showOrderform
+              && currentLayout
+              && currentLayout.customHelp && (
+                <div
+                  key='overlay-wrapper'
+                  className='hfui-orderform__overlay-wrapper'
+                >
+                  <div className='hfui-orderform__help-inner'>
+                    <p className='hfui-orderform__help-title'>
+                      <span className='prefix'>{t('orderForm.help')}</span>
+                      {currentLayout.label}
+                      <i
+                        role='button'
+                        tabIndex={0}
+                        onClick={this.onToggleHelp}
+                        className='hfui-orderform__question-btn icon-cancel'
+                      />
+                    </p>
+                    <p className='hfui-orderform__help-content'>
+                      {currentLayout.customHelp}
+                    </p>
+                  </div>
                 </div>
-              </div>
             )}
 
             {!currentLayout && showOrderform && (
-              <div key='order-form-menu' className='hfui-orderform__overlay-wrapper'>
+              <div
+                key='order-form-menu'
+                className='hfui-orderform__overlay-wrapper'
+              >
                 <OrderFormMenu
                   atomicOrderTypes={atomicOrderTypes}
                   algoOrderTypes={algoOrderTypes}
@@ -491,8 +538,14 @@ class OrderForm extends React.Component {
 
               <ul className='hfui-orderform__header' key='of-header'>
                 <li key='item' className='hfui-orderform__centered-item'>
-                  {_map(currentMarket.contexts, value => (
-                    <div key={value} onClick={() => this.onContextChange(value)} className={`hfui__orderform-tab ${value === context ? 'active' : ''}`}>
+                  {_map(currentMarket.contexts, (value) => (
+                    <div
+                      key={value}
+                      onClick={() => this.onContextChange(value)}
+                      className={`hfui__orderform-tab ${
+                        value === context ? 'active' : ''
+                      }`}
+                    >
                       <p>{t(CONTEXT_LABELS[value])}</p>
                     </div>
                   ))}
@@ -527,9 +580,9 @@ class OrderForm extends React.Component {
 }
 
 OrderForm.propTypes = {
-  savedState: PropTypes.objectOf(PropTypes.oneOfType([
-    PropTypes.string, PropTypes.bool, PropTypes.object,
-  ])).isRequired,
+  savedState: PropTypes.objectOf(
+    PropTypes.oneOfType([PropTypes.string, PropTypes.bool, PropTypes.object]),
+  ).isRequired,
   activeMarket: PropTypes.shape(MARKET_SHAPE).isRequired,
   apiCredentials: PropTypes.objectOf(PropTypes.bool),
   setIsOrderExecuting: PropTypes.func.isRequired,
@@ -564,7 +617,7 @@ OrderForm.defaultProps = {
   removeable: true,
   isOrderExecuting: false,
   apiCredentials: {},
-  onRemove: () => { },
+  onRemove: () => {},
   authToken: null,
   showAdvancedAlgos: false,
 }

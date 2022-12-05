@@ -10,7 +10,15 @@ import { ORDER_SHAPE } from '../../constants/prop-types-shapes'
 import './style.css'
 
 const AlgoOrdersTable = ({
-  filteredAlgoOrders, algoOrders, cancelOrder, authToken, gaCancelOrder, renderedInTradingState, getMarketPair, editOrder,
+  filteredAlgoOrders,
+  algoOrders,
+  cancelOrder,
+  authToken,
+  gaCancelOrder,
+  renderedInTradingState,
+  getMarketPair,
+  editOrder,
+  showHistory,
 }) => {
   const data = renderedInTradingState ? filteredAlgoOrders : algoOrders
   const { t } = useTranslation()
@@ -18,11 +26,21 @@ const AlgoOrdersTable = ({
   return (
     <div className='hfui-aolist__wrapper'>
       {_isEmpty(data) ? (
-        <p className='empty'>{t('AOTableModal.noOrders')}</p>
+        <p className='empty'>
+          {t(showHistory ? 'AOTableModal.noHistory' : 'AOTableModal.noOrders')}
+        </p>
       ) : (
         <VirtualTable
           data={data}
-          columns={AlgoOrdersTableColumns(authToken, cancelOrder, gaCancelOrder, t, getMarketPair, editOrder)}
+          columns={AlgoOrdersTableColumns({
+            authToken,
+            cancelOrder,
+            gaCancelOrder,
+            t,
+            getMarketPair,
+            editOrder,
+            showActions: !showHistory,
+          })}
           defaultSortBy='createdAt'
           defaultSortDirection='ASC'
           rowHeight={30}
@@ -33,7 +51,7 @@ const AlgoOrdersTable = ({
 }
 
 AlgoOrdersTable.propTypes = {
-  algoOrders: PropTypes.objectOf(PropTypes.shape(ORDER_SHAPE)),
+  algoOrders: PropTypes.objectOf(PropTypes.shape(ORDER_SHAPE)).isRequired,
   filteredAlgoOrders: PropTypes.objectOf(PropTypes.shape(ORDER_SHAPE)),
   cancelOrder: PropTypes.func.isRequired,
   gaCancelOrder: PropTypes.func.isRequired,
@@ -41,10 +59,10 @@ AlgoOrdersTable.propTypes = {
   renderedInTradingState: PropTypes.bool,
   getMarketPair: PropTypes.func.isRequired,
   editOrder: PropTypes.func.isRequired,
+  showHistory: PropTypes.bool.isRequired,
 }
 
 AlgoOrdersTable.defaultProps = {
-  algoOrders: {},
   filteredAlgoOrders: {},
   renderedInTradingState: false,
 }

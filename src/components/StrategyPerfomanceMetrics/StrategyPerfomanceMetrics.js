@@ -12,6 +12,7 @@ import MetricRow from './MetricRow'
 import ExecutionTimer from './ExecutionTimer'
 import { metricsExport, getMetrics } from './StrategyPerfomanceMetrics.helpers'
 import { getExecutionConnectionState } from '../../redux/selectors/ws'
+import PanelIconButton from '../../ui/Panel/Panel.IconButton'
 
 import './style.css'
 
@@ -41,9 +42,9 @@ const StrategyPerfomanceMetrics = ({
       darkHeader
       label={t('strategyEditor.perfomanceMetrics.title')}
       extraIcons={(
-        <Icon
+        <PanelIconButton
           onClick={() => metricsExport(results, t, getCurrencySymbol)}
-          name='download'
+          icon={<Icon name='download' />}
         />
       )}
     >

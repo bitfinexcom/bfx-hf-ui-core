@@ -391,6 +391,12 @@ export default (alias, store) => (e = {}) => {
         break
       }
 
+      case 'algo.order_history_loaded': {
+        const [, aos] = payload
+        store.dispatch(WSActions.recvDataAlgoOrdersHistory(aos))
+        break
+      }
+
       case 'bt.exec': {
         const [, from, to, symbol, tf, withCandles, withTrades, syncData] = payload
         store.dispatch(WSActions.recvBacktestExecute({

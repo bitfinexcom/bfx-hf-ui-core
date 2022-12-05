@@ -5,6 +5,7 @@ function getInitialState() {
   return {
     showActiveAlgoModal: false,
     activeAOParamsID: null,
+    showAOsHistory: false,
     aoParams: {}, // { symbol: { algoID: [/* data */] } }
   }
 }
@@ -79,6 +80,15 @@ function reducer(state = getInitialState(), action = {}) {
             [algoID]: _filter(state.aoParams?.[symbol]?.[algoID], (p) => p?.id !== id),
           },
         },
+      }
+    }
+
+    case types.SHOW_AOS_HISTORY: {
+      const { showAOsHistory } = payload
+
+      return {
+        ...state,
+        showAOsHistory,
       }
     }
 

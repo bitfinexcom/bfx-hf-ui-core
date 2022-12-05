@@ -12,15 +12,14 @@ import {
   prepareTVIndicators,
 } from './StrategyLiveChart.helpers'
 import { TIMEFRAME_INTERVAL_MAPPING } from '../../util/time_frames'
-import {
-  getPositionTooltip,
-} from '../../util/chart'
+import { getPositionTooltip } from '../../util/chart'
 import {
   INDICATORS_ARRAY_SHAPE,
   MARKET_SHAPE,
   STRATEGY_SHAPE,
   STRATEGY_TRADE_SHAPE,
 } from '../../constants/prop-types-shapes'
+import PanelIconButton from '../../ui/Panel/Panel.IconButton'
 
 import './style.css'
 
@@ -91,7 +90,9 @@ const StrategyLiveChart = ({
     return {
       ...processedPosition,
       tooltip: getPositionTooltip(processedPosition, {
-        base, quote, t,
+        base,
+        quote,
+        t,
       }),
     }
   }, [lastOpenPosition, base, quote, t])
@@ -103,15 +104,18 @@ const StrategyLiveChart = ({
       hideIcons={!fullscreenChart}
       dark
       darkHeader
-      extraIcons={[
-        <span
-          key='exit-fullscreen'
-          type='button'
-          className='icon-move toggle-fullscreen'
+      extraIcons={(
+        <PanelIconButton
           onClick={exitFullscreenChart}
-          title={t('strategyEditor.exitFullscreenChartBtn')}
-        />,
-      ]}
+          icon={(
+            <i
+              key='exit-fullscreen'
+              className='icon-move toggle-fullscreen'
+              title={t('strategyEditor.exitFullscreenChartBtn')}
+            />
+          )}
+        />
+      )}
       fullscreen={fullscreenChart}
       onExitFullscreen={exitFullscreenChart}
     >

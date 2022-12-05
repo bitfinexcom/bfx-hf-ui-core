@@ -3,7 +3,9 @@ import _values from 'lodash/values'
 
 import { createSelector } from 'reselect'
 import { REDUCER_PATHS } from '../../config'
+import { getShowAOsHistory } from '../ao'
 import { getCurrentMode } from '../ui'
+import getAlgoOrdersHistory from './get_algo_orders_history'
 
 const path = REDUCER_PATHS.WS
 
@@ -17,7 +19,6 @@ export const getAllAlgoOrdersArray = createSelector(
 )
 
 export const getCurrentModeAlgoOrders = createSelector(
-  getAllAlgoOrders,
-  getCurrentMode,
-  (algoOrders, currentMode) => _get(algoOrders, currentMode, EMPTY_OBJ),
+  [getAllAlgoOrders, getAlgoOrdersHistory, getShowAOsHistory, getCurrentMode],
+  (algoOrders, historyAOs, showHistory, currentMode) => _get(showHistory ? historyAOs : algoOrders, currentMode, EMPTY_OBJ),
 )
