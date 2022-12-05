@@ -2,10 +2,11 @@ import React, { useMemo, useState } from 'react'
 import PropTypes from 'prop-types'
 import _debounce from 'lodash/debounce'
 import { useTranslation } from 'react-i18next'
+import { Icon } from 'react-fa'
 import {
   Checkbox, Button, Spinner, Intent,
 } from '@ufx-ui/core'
-import clsx from 'clsx'
+import cx from 'clsx'
 import AmountInput from '../OrderForm/FieldComponents/input.amount'
 import DateInput from '../OrderForm/FieldComponents/input.date'
 import TimeFrameDropdown from '../TimeFrameDropdown'
@@ -118,12 +119,6 @@ const BacktestOptionsPanel = ({
     })
   }
 
-  const onCustomPickerUpdate = () => {
-    if (!isLoading) {
-      setIsCustomDatePicker((prev) => !prev)
-    }
-  }
-
   // https://kyleshevlin.com/debounce-and-throttle-callbacks-with-react-hooks
   const setCandleSeed = useMemo(
     () => _debounce(
@@ -158,14 +153,24 @@ const BacktestOptionsPanel = ({
   return (
     <div className='hfui-strategy-backtest-options'>
       <div className='item'>
-        <p
-          className={clsx('hfui-strategy-backtest-options__text-btn', {
-            disabled: isLoading,
-          })}
-          onClick={onCustomPickerUpdate}
-        >
-          {isCustomDatePicker ? t('strategyEditor.switchToRegular') : t('strategyEditor.switchToCustom')}
-        </p>
+        <div className='hfui-strategy-backtest-options__icn-selector-container'>
+          <Icon
+            name='clock-o'
+            className={cx('icon-selector', {
+              active: !isCustomDatePicker,
+            })}
+            title={t('strategyEditor.switchToRegular')}
+            onClick={() => setIsCustomDatePicker(false)}
+          />
+          <Icon
+            name='calendar'
+            className={cx('icon-selector', {
+              active: isCustomDatePicker,
+            })}
+            title={t('strategyEditor.switchToCustom')}
+            onClick={() => setIsCustomDatePicker(true)}
+          />
+        </div>
       </div>
       {isCustomDatePicker ? (
         <>
@@ -199,7 +204,7 @@ const BacktestOptionsPanel = ({
             placeholder={t('strategyEditor.timePeriod')}
           />
           <p
-            className={clsx('hfui-orderform__input-label', {
+            className={cx('hfui-orderform__input-label', {
               disabled: isLoading,
             })}
           >
@@ -215,7 +220,7 @@ const BacktestOptionsPanel = ({
           disabled={isLoading}
         />
         <div
-          className={clsx('hfui-orderform__input-label', {
+          className={cx('hfui-orderform__input-label', {
             disabled: isLoading,
           })}
         >
@@ -231,7 +236,7 @@ const BacktestOptionsPanel = ({
               onChange={setTimeframe}
             />
             <p
-              className={clsx('hfui-orderform__input-label', {
+              className={cx('hfui-orderform__input-label', {
                 disabled: isLoading,
               })}
             >
@@ -266,7 +271,7 @@ const BacktestOptionsPanel = ({
           disabled={isLoading}
         />
         <div
-          className={clsx('hfui-orderform__input-label', {
+          className={cx('hfui-orderform__input-label', {
             disabled: isLoading,
           })}
         >
