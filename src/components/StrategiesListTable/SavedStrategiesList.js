@@ -7,7 +7,11 @@ import { savedStrategiesColumns } from './StrategiesList.columns'
 import { STRATEGY_SHAPE } from '../../constants/prop-types-shapes'
 
 const SavedStrategiesList = ({
-  onRowClick, strategies, onStrategyRemove, saveAsHandler, renameStrategy,
+  onRowClick,
+  strategies,
+  onStrategyRemove,
+  saveAsHandler,
+  renameStrategy,
 }) => {
   const { t } = useTranslation()
 
@@ -22,7 +26,12 @@ const SavedStrategiesList = ({
       ) : (
         <VirtualTable
           data={strategies}
-          columns={savedStrategiesColumns(t, onStrategyRemove, saveAsHandler, renameStrategy)}
+          columns={savedStrategiesColumns({
+            t,
+            onStrategyRemove,
+            saveAsHandler,
+            renameStrategy,
+          })}
           defaultSortBy='savedTs'
           defaultSortDirection='DESC'
           onRowClick={onRowClick}

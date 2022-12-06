@@ -563,6 +563,7 @@
     "context": "Context",
     "created": "Created",
     "startedOn": "Started on",
+    "savedOn": "Saved on",
     "stoppedOn": "Stopped on",
     "symbol": "Symbol",
     "label": "Label",
@@ -599,7 +600,8 @@
     "executedAt": "Executed At",
     "orderPrice": "Order Price",
     "tradePrice": "Trade Price",
-    "viewTrades": "View Trades"
+    "viewTrades": "View Trades",
+    "strategyType": "Strategy type"
   },
   "tickersPanel": {
     "title": "Ticker Panel"
