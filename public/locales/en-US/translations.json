@@ -563,6 +563,8 @@
     "lastActive": "Last active",
     "moreInfo": "More info",
     "name": "Name",
+    "edit": "Edit",
+    "cancelRemaining": "Cancel remaining",
     "context": "Context",
     "created": "Created",
     "startedOn": "Started on",
