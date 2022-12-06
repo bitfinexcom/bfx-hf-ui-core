@@ -4,6 +4,20 @@
   padding-bottom: 8px;
   height: 100%;
 
+  &_more_info {
+    text-transform: uppercase;
+    cursor: pointer;
+    color: var(--shade-6) !important;
+
+    &:hover {
+      color: var(--shade-5) !important;
+    }
+
+    .more_info_action {
+      margin-left: 5px;
+    }
+  }
+
   .ReactVirtualized__Table__row {
     border-radius: 5px;
 

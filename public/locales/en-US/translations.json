@@ -559,6 +559,9 @@
     "noPositions": "No active positions found"
   },
   "table": {
+    "alias": "Alias",
+    "lastActive": "Last active",
+    "moreInfo": "More info",
     "name": "Name",
     "context": "Context",
     "created": "Created",
