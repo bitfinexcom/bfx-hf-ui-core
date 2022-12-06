@@ -1,9 +1,9 @@
 import React from 'react'
 import { Icon } from 'react-fa'
-import _isEmpty from 'lodash/isEmpty'
+import OutsideClickHandler from 'react-outside-click-handler'
 
 import { defaultCellRenderer } from '../../util/ui'
-import { getAOContext } from '../../util/order'
+import { Item } from '../Navbar/Navbar.LayoutSettings'
 
 export default ({
   authToken,
@@ -13,6 +13,8 @@ export default ({
   getMarketPair,
   editOrder,
   showActions,
+  activeOrderGID,
+  setActiveOrderGID,
 }) => {
   const columns = [
     {
@@ -48,51 +50,63 @@ export default ({
       flexGrow: 1.5,
       cellRenderer: ({ rowData = {} }) => defaultCellRenderer(getMarketPair(rowData.args?.symbol)),
     },
-    {
+  ]
+
+  if (showActions) {
+    // 'More info' button
+    columns.push({
       label: '',
       dataKey: '',
-      width: 300,
-      flexGrow: 3.0,
+      width: 250,
+      flexGrow: 2.5,
       cellRenderer: () => (
         <div className='hfui-aolist__wrapper_more_info'>
           <Icon
             name='info-circle'
             aria-label='More info'
-            onClick={() => {}}
+            onClick={() => { }}
           />
           <span className='more_info_action'>
             {t('table.moreInfo')}
           </span>
         </div>
       ),
-    },
-  ]
+    })
 
-  if (showActions) {
+    // 'Actions' column
     columns.push({
       dataKey: 'cid',
-      width: 50,
-      minWidth: 50,
+      width: 20,
+      minWidth: 20,
       cellRenderer: (
         { rowData = {} } // eslint-disable-line
       ) => (
         <div className='icons-cell'>
           <Icon
-            name='pencil'
-            aria-label='Edit order'
-            onClick={() => editOrder(rowData)}
+            className='more-options-button'
+            name='ellipsis-v'
+            aria-label='More options'
+            onClick={() => rowData?.gid && setActiveOrderGID(rowData.gid)}
           />
-          {!_isEmpty(rowData?.gid) && (
-            <i
-              role='button'
-              aria-label='Cancel order'
-              tabIndex={0}
-              className='icon-cancel'
-              onClick={() => {
-                cancelOrder(authToken, rowData)
-                gaCancelOrder()
-              }}
-            />
+
+          {activeOrderGID === rowData?.gid && (
+            <OutsideClickHandler onOutsideClick={() => setActiveOrderGID(null)}>
+              <div className='hfui-navbar__layout-settings__menu'>
+                <div className='hfui-navbar__layout-settings__menu-buttons' onClick={() => setActiveOrderGID(null)}>
+                  <Item onClick={() => editOrder(rowData)}>
+                    {t('table.edit')}
+                  </Item>
+                  <Item
+                    onClick={() => {
+                      cancelOrder(authToken, rowData)
+                      gaCancelOrder()
+                    }}
+                  >
+                    {t('table.cancelRemaining')}
+                  </Item>
+                </div>
+              </div>
+            </OutsideClickHandler>
           )}
         </div>
       ),

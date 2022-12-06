@@ -1,4 +1,4 @@
-import React, { memo } from 'react'
+import React, { memo, useState } from 'react'
 import PropTypes from 'prop-types'
 import { VirtualTable } from '@ufx-ui/core'
 import _isEmpty from 'lodash/isEmpty'
@@ -23,6 +23,9 @@ const AlgoOrdersTable = ({
   const data = renderedInTradingState ? filteredAlgoOrders : algoOrders
   const { t } = useTranslation()
 
+  // Storing a null or an order ID here, indicates if Edit / Canel modal is opened for a specific row
+  const [activeOrderGID, setActiveOrderGID] = useState(null)
+
   return (
     <div className='hfui-aolist__wrapper'>
       {_isEmpty(data) ? (
@@ -40,6 +43,8 @@ const AlgoOrdersTable = ({
             getMarketPair,
             editOrder,
             showActions: !showHistory,
+            activeOrderGID,
+            setActiveOrderGID,
           })}
           defaultSortBy='createdAt'
           defaultSortDirection='ASC'
