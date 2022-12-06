@@ -200,7 +200,6 @@ const savedStrategiesColumns = ({
   onStrategyRemove,
   saveAsHandler,
   renameStrategy,
-  getMarketPair,
 }) => [
   {
     label: t('table.name'),
