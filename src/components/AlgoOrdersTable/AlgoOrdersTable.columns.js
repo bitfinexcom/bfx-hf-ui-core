@@ -1,9 +1,11 @@
 import React from 'react'
 import { Icon } from 'react-fa'
 import OutsideClickHandler from 'react-outside-click-handler'
+import Button from '../../ui/Button'
 
 import { defaultCellRenderer } from '../../util/ui'
 import { Item } from '../Navbar/Navbar.LayoutSettings'
+import { getAOContext } from '../../util/order'
 
 export default ({
   authToken,
@@ -15,6 +17,8 @@ export default ({
   showActions,
   activeOrderGID,
   setActiveOrderGID,
+  moreInfoGID,
+  setMoreInfoGID,
 }) => {
   const columns = [
     {
@@ -59,16 +63,73 @@ export default ({
       dataKey: '',
       width: 250,
       flexGrow: 2.5,
-      cellRenderer: () => (
-        <div className='hfui-aolist__wrapper_more_info'>
-          <Icon
-            name='info-circle'
-            aria-label='More info'
-            onClick={() => { }}
-          />
-          <span className='more_info_action'>
-            {t('table.moreInfo')}
-          </span>
+      cellRenderer: ({ rowData = {} }) => (
+        <div>
+          <div
+            className='hfui-aolist__wrapper_more_info'
+            onClick={() => setMoreInfoGID(rowData.gid)}
+          >
+            <Icon
+              name='info-circle'
+              aria-label='More info'
+              onClick={() => { }}
+            />
+            <span className='more_info_action'>
+              {t('table.moreInfo')}
+            </span>
+          </div>
+
+          {moreInfoGID === rowData?.gid && (
+            <OutsideClickHandler onOutsideClick={() => setMoreInfoGID(null)}>
+              <div className='hfui-navbar__layout-settings__menu hfui-aolist__wrapper_order_info'>
+                <div className='title-container'>
+                  <div className='hfui-navbar__layout-settings__title'>
+                    {rowData?.name}
+                    <span className='sub-title'>
+                      {rowData?.label}
+                    </span>
+                  </div>
+                  <Button
+                    onClick={() => setMoreInfoGID(null)}
+                    key='close-btn'
+                    className='close-btn'
+                    label={[
+                      <p key='text'>&#10005;</p>,
+                    ]}
+                  />
+                </div>
+                <div className='basic-info'>
+                  <div className='info-col'>
+                    <span className='info-label'>
+                      {t('table.created')}
+                    </span>
+                    {' '}
+                    <span className='info-value'>
+                      {new Date(rowData.createdAt || +rowData.gid).toLocaleString()}
+                    </span>
+                  </div>
+                  <div className='info-col'>
+                    <span className='info-label'>
+                      {t('table.symbol')}
+                    </span>
+                    {' '}
+                    <span className='info-value'>
+                      {rowData?.args?.symbol}
+                    </span>
+                  </div>
+                  <div className='info-col'>
+                    <span className='info-label'>
+                      {t('table.context')}
+                    </span>
+                    {' '}
+                    <span className='info-value'>
+                      {getAOContext(rowData)}
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </OutsideClickHandler>
+          )}
         </div>
       ),
     })
@@ -91,7 +152,7 @@ export default ({
 
           {activeOrderGID === rowData?.gid && (
             <OutsideClickHandler onOutsideClick={() => setActiveOrderGID(null)}>
-              <div className='hfui-navbar__layout-settings__menu'>
+              <div className='hfui-navbar__layout-settings__menu edit-order-menu'>
                 <div className='hfui-navbar__layout-settings__menu-buttons' onClick={() => setActiveOrderGID(null)}>
                   <Item onClick={() => editOrder(rowData)}>
                     {t('table.edit')}

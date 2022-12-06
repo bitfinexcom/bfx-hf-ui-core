@@ -25,6 +25,8 @@ const AlgoOrdersTable = ({
 
   // Storing a null or an order ID here, indicates if Edit / Canel modal is opened for a specific row
   const [activeOrderGID, setActiveOrderGID] = useState(null)
+  // Indicates if the 'More info' modal is opened for a specific row
+  const [moreInfoGID, setMoreInfoGID] = useState(null)
 
   return (
     <div className='hfui-aolist__wrapper'>
@@ -45,6 +47,8 @@ const AlgoOrdersTable = ({
             showActions: !showHistory,
             activeOrderGID,
             setActiveOrderGID,
+            moreInfoGID,
+            setMoreInfoGID,
           })}
           defaultSortBy='createdAt'
           defaultSortDirection='ASC'
