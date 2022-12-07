@@ -1,5 +1,7 @@
+/* eslint-disable react/prop-types */
 import React, { useState } from 'react'
 import { Icon } from 'react-fa'
+import _isEmpty from 'lodash/isEmpty'
 import { preparePrice } from 'bfx-api-node-util'
 import { defaultCellRenderer } from '../../util/ui'
 import resultNumber from '../../util/resultNumber'
@@ -17,7 +19,7 @@ const activeStrategiesColumns = (t, getMarketPair) => [
     style: { ...STYLES.flexStart, fontWeight: '700' },
     width: 300,
     flexGrow: 1.5,
-    cellRenderer: ({ rowData = {} }) => (defaultCellRenderer(rowData.label)),
+    cellRenderer: ({ rowData = {} }) => defaultCellRenderer(rowData.label),
     headerStyle: STYLES.flexStart,
   },
   {
@@ -83,7 +85,7 @@ const pastStrategiesColumns = (t, getMarketPair) => [
     style: { ...STYLES.flexStart, fontWeight: '700' },
     width: 300,
     flexGrow: 1.5,
-    cellRenderer: ({ rowData = {} }) => (defaultCellRenderer(rowData.label)),
+    cellRenderer: ({ rowData = {} }) => defaultCellRenderer(rowData.label),
     headerStyle: STYLES.flexStart,
   },
   {
@@ -152,7 +154,11 @@ const pastStrategiesColumns = (t, getMarketPair) => [
 ]
 
 const SavedStrategiesActions = ({
-  t, rowData, onStrategyRemove, saveAsHandler, renameStrategy, // eslint-disable-line react/prop-types
+  t,
+  rowData,
+  onStrategyRemove,
+  saveAsHandler,
+  renameStrategy,
 }) => {
   const [activeAction, setActiveAction] = useState(null)
 
@@ -163,9 +169,7 @@ const SavedStrategiesActions = ({
 
   return (
     <div className='list-actions'>
-      <p>
-        {activeAction}
-      </p>
+      <p>{activeAction}</p>
       <Icon
         name='copy'
         aria-label={t('strategyEditor.copyStrategy')}
@@ -191,32 +195,82 @@ const SavedStrategiesActions = ({
   )
 }
 
-const savedStrategiesColumns = (t, onStrategyRemove, saveAsHandler, renameStrategy) => [
+const savedStrategiesColumns = ({
+  t,
+  onStrategyRemove,
+  saveAsHandler,
+  renameStrategy,
+}) => [
   {
     label: t('table.name'),
     dataKey: 'label',
     style: { ...STYLES.flexStart, fontWeight: '700' },
     width: 300,
-    flexGrow: 3,
-    cellRenderer: ({ rowData = {} }) => (defaultCellRenderer(rowData.label)),
+    flexGrow: 1.5,
+    cellRenderer: ({ rowData = {} }) => defaultCellRenderer(rowData.label),
     headerStyle: STYLES.flexStart,
   },
   {
-    label: 'Saved on',
-    dataKey: 'savedTs',
+    label: t('table.pair'),
+    dataKey: 'strategyOptions.symbol',
+    style: STYLES.flexStart,
+    headerStyle: STYLES.flexStart,
+    width: 100,
+    flexGrow: 1,
+    cellRenderer: ({ rowData = {} }) => {
+      const {
+        strategyOptions: { symbol },
+      } = rowData
+      const isMarketSelected = !_isEmpty(symbol)
+      const value = isMarketSelected ? symbol?.uiID : '-'
+
+      return defaultCellRenderer(value)
+    },
+  },
+  {
+    label: t('table.strategyType'),
+    dataKey: 'strategyOptions.strategyType',
     style: STYLES.flexStart,
     headerStyle: STYLES.flexStart,
     width: 300,
-    flexGrow: 3,
+    flexGrow: 1.5,
+    cellRenderer: ({ rowData = {} }) => {
+      const {
+        strategyOptions: { strategyType },
+      } = rowData
+      let value = '-'
+
+      if (strategyType?.customValue) {
+        value = strategyType.customValue
+      } else if (strategyType?.i18nKey) {
+        value = t(strategyType.i18nKey)
+      }
+
+      return defaultCellRenderer(value)
+    },
+  },
+  {
+    label: t('table.savedOn'),
+    dataKey: 'savedTs',
+    style: STYLES.flexStart,
+    headerStyle: STYLES.flexStart,
+    width: 200,
+    flexGrow: 1.25,
     cellRenderer: ({ rowData = {} }) => defaultCellRenderer(new Date(rowData.savedTs).toLocaleString()),
   },
   {
     dataKey: 'id',
     style: STYLES.flexEnd,
-    width: 800,
-    flexGrow: 8,
+    width: 400,
+    flexGrow: 1,
     cellRenderer: (props) => (
-      <SavedStrategiesActions {...props} t={t} onStrategyRemove={onStrategyRemove} saveAsHandler={saveAsHandler} renameStrategy={renameStrategy} />
+      <SavedStrategiesActions
+        {...props}
+        t={t}
+        onStrategyRemove={onStrategyRemove}
+        saveAsHandler={saveAsHandler}
+        renameStrategy={renameStrategy}
+      />
     ),
   },
 ]
