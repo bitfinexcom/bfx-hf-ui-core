@@ -39,7 +39,7 @@ export default (state = getInitialState(), action = {}) => {
       }
     }
 
-    case types.DATA_ALGO_ORDER_STOPPED: {
+    case types.REMOVE_ALGO_ORDER: {
       const { gid, mode } = payload
 
       return {

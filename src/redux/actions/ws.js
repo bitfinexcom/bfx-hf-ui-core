@@ -189,6 +189,22 @@ export default {
     payload,
   }),
 
+  setAlgoOrderToHistory: (stoppedAO, mode) => ({
+    type: t.SET_ALGO_ORDER_TO_HISTORY,
+    payload: {
+      stoppedAO,
+      mode,
+    },
+  }),
+
+  removeAlgoOrder: (gid, mode) => ({
+    type: t.REMOVE_ALGO_ORDER,
+    payload: {
+      gid,
+      mode,
+    },
+  }),
+
   recvDataAlgoOrderStopped: (payload) => ({
     type: t.DATA_ALGO_ORDER_STOPPED,
     payload,
