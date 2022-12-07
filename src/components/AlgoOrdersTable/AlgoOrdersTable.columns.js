@@ -3,8 +3,12 @@ import { Icon } from 'react-fa'
 import _map from 'lodash/map'
 import _size from 'lodash/size'
 import OutsideClickHandler from 'react-outside-click-handler'
-import Button from '../../ui/Button'
+import {
+  OrderHistory as UfxOrderHistory,
+} from '@ufx-ui/core'
 
+import { rowMapping } from '../OrderHistory/OrderHistory.colunms'
+import Button from '../../ui/Button'
 import { defaultCellRenderer } from '../../util/ui'
 import { Item } from '../Navbar/Navbar.LayoutSettings'
 import { getAOContext } from '../../util/order'
@@ -36,6 +40,7 @@ export default ({
   setActiveOrderGID,
   moreInfoGID,
   setMoreInfoGID,
+  orders,
 }) => {
   const columns = [
     {
@@ -173,14 +178,19 @@ export default ({
                     </p>
                     <div
                       className='order-history_button'
-                      onClick={() => {}}
+                      onClick={() => { }}
                     >
                       {t('table.exportJSON')}
                     </div>
                   </div>
-                  {/* <div className='order-history-table'>
-
-                  </div> */}
+                  <div className='order-history-table'>
+                    <UfxOrderHistory
+                      orders={orders}
+                      rowMapping={rowMapping}
+                      isMobileLayout={false}
+                      loadMoreRows={() => {}}
+                    />
+                  </div>
                 </div>
               </OutsideClickHandler>
             )}

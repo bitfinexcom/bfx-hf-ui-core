@@ -22,6 +22,10 @@
     min-width: 90%;
     width: 90%;
     border: 2px solid var(--primary-8);
+    background-color: var(--darker-background-color);
+    height: 270px;
+    max-height: 270px;
+    overflow: auto;
 
     .title-container {
       display: flex;
@@ -128,6 +132,7 @@
     .order-history-table {
       padding-left: 16px;
       padding-right: 16px;
+      height: 100%;
     }
   }
 

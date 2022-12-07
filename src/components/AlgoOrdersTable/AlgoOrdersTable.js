@@ -19,9 +19,12 @@ const AlgoOrdersTable = ({
   getMarketPair,
   editOrder,
   showHistory,
+  orders,
 }) => {
   const data = renderedInTradingState ? filteredAlgoOrders : algoOrders
   const { t } = useTranslation()
+
+  console.log(orders)
 
   // Storing a null or an order ID here, indicates if Edit / Canel modal is opened for a specific row
   const [activeOrderGID, setActiveOrderGID] = useState(null)
@@ -49,6 +52,7 @@ const AlgoOrdersTable = ({
             setActiveOrderGID,
             moreInfoGID,
             setMoreInfoGID,
+            orders,
           })}
           defaultSortBy='createdAt'
           defaultSortDirection='ASC'
@@ -62,6 +66,7 @@ const AlgoOrdersTable = ({
 AlgoOrdersTable.propTypes = {
   algoOrders: PropTypes.objectOf(PropTypes.shape(ORDER_SHAPE)).isRequired,
   filteredAlgoOrders: PropTypes.objectOf(PropTypes.shape(ORDER_SHAPE)),
+  orders: PropTypes.arrayOf(PropTypes.shape(ORDER_SHAPE)),
   cancelOrder: PropTypes.func.isRequired,
   gaCancelOrder: PropTypes.func.isRequired,
   authToken: PropTypes.string.isRequired,
@@ -74,6 +79,7 @@ AlgoOrdersTable.propTypes = {
 AlgoOrdersTable.defaultProps = {
   filteredAlgoOrders: {},
   renderedInTradingState: false,
+  orders: [],
 }
 
 export default memo(AlgoOrdersTable)

@@ -4,6 +4,7 @@ import Debug from 'debug'
 import {
   getCurrentModeAlgoOrders,
   getFilteredAlgoOrders,
+  getOrderHistory,
   getAuthToken,
 } from '../../redux/selectors/ws'
 import { getActiveMarket } from '../../redux/selectors/ui'
@@ -21,6 +22,7 @@ const debug = Debug('hfui:c:algo-orders-table')
 const mapStateToProps = (state = {}, { activeFilter }) => ({
   authToken: getAuthToken(state),
   algoOrders: getCurrentModeAlgoOrders(state),
+  orders: getOrderHistory(state),
   filteredAlgoOrders: getFilteredAlgoOrders(state)(activeFilter),
   activeMarket: getActiveMarket(state),
   getMarketPair: getMarketPair(state),
