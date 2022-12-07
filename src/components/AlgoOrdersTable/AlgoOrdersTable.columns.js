@@ -41,6 +41,7 @@ export default ({
   moreInfoGID,
   setMoreInfoGID,
   orders,
+  handleSave,
 }) => {
   const columns = [
     {
@@ -178,7 +179,7 @@ export default ({
                     </p>
                     <div
                       className='order-history_button'
-                      onClick={() => { }}
+                      onClick={() => handleSave(rowData?.name, rowData?.gid)}
                     >
                       {t('table.exportJSON')}
                     </div>

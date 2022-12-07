@@ -6,6 +6,7 @@ import { useTranslation } from 'react-i18next'
 
 import AlgoOrdersTableColumns from './AlgoOrdersTable.columns'
 import { ORDER_SHAPE } from '../../constants/prop-types-shapes'
+import { saveAsJSON } from '../../util/ui'
 
 import './style.css'
 
@@ -24,7 +25,9 @@ const AlgoOrdersTable = ({
   const data = renderedInTradingState ? filteredAlgoOrders : algoOrders
   const { t } = useTranslation()
 
-  console.log(orders)
+  const handleSave = (name, gid) => {
+    saveAsJSON(orders, `algo-${name}-${gid}`)
+  }
 
   // Storing a null or an order ID here, indicates if Edit / Canel modal is opened for a specific row
   const [activeOrderGID, setActiveOrderGID] = useState(null)
@@ -53,6 +56,7 @@ const AlgoOrdersTable = ({
             moreInfoGID,
             setMoreInfoGID,
             orders,
+            handleSave,
           })}
           defaultSortBy='createdAt'
           defaultSortDirection='ASC'
