@@ -10,7 +10,7 @@
     color: var(--shade-6) !important;
 
     &:hover {
-      color: var(--shade-7) !important;
+      color: var(--primary-8) !important;
     }
 
     .more_info_action {
@@ -183,7 +183,7 @@
   > * {
     &:hover {
       cursor: pointer;
-      color: var(--shade-7);
+      color: var(--primary-8);
     }
   }
 }
