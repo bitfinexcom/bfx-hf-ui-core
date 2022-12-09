@@ -563,6 +563,7 @@
   },
   "table": {
     "name": "Name",
+    "alias": "Alias",
     "context": "Context",
     "created": "Created",
     "startedOn": "Started on",
@@ -604,7 +605,8 @@
     "orderPrice": "Order Price",
     "tradePrice": "Trade Price",
     "viewTrades": "View Trades",
-    "strategyType": "Strategy type"
+    "strategyType": "Strategy type",
+    "lastActive": "Last active"
   },
   "tickersPanel": {
     "title": "Ticker Panel"
