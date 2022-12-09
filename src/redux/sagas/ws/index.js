@@ -13,6 +13,7 @@ import onConnected from './on_connected'
 import onDisconnected from './on_disconnected'
 import onResetData from './on_reset_data'
 import onExportStrategiesBeforeReset from './on_export_strategies_before_reset_data.js'
+import onAlgoOrderStopped from './on_ao_stopped'
 
 export default function* () {
   yield takeEvery(t.BUFF_SEND, messageQueueWorker)
@@ -24,6 +25,7 @@ export default function* () {
   yield takeEvery(t.DATA_BALANCE, balance)
   yield takeEvery(t.DATA_ORDER_HIST, orderHist)
   yield takeEvery(t.AUTH_RESET_DATA, onResetData)
+  yield takeEvery(t.DATA_ALGO_ORDER_STOPPED, onAlgoOrderStopped)
   yield takeLatest(t.EXPORT_STRATEGIES_ON_RESET, onExportStrategiesBeforeReset)
 
   yield fork(connectionWorker)
