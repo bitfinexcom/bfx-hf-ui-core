@@ -18,13 +18,20 @@ import './style.css'
 
 const MAX_DATE = new Date()
 
+const TIME_MAPPING = {
+  '168h': 168,
+  '720h': 720,
+  '2160h': 2160,
+  '8640h': 8640,
+  '25920h': 25920,
+}
+
 const getTimePeriods = (t) => ([
-  { value: '1d', label: t('strategyEditor.lastXday', { amount: 1 }) },
-  { value: '7d', label: t('strategyEditor.lastXdays', { amount: 7 }) },
-  { value: '30d', label: t('strategyEditor.lastXdays', { amount: 30 }) },
-  { value: '90d', label: t('strategyEditor.lastXdays', { amount: 90 }) },
-  { value: '180d', label: t('strategyEditor.lastXdays', { amount: 180 }) },
-  { value: '365d', label: t('strategyEditor.lastXdays', { amount: 365 }) },
+  { value: '168h', label: t('strategyEditor.lastWeek') },
+  { value: '720h', label: t('strategyEditor.lastMonth') },
+  { value: '2160h', label: t('strategyEditor.lastQuarter') },
+  { value: '8640h', label: t('strategyEditor.lastYear') },
+  { value: '25920h', label: t('strategyEditor.lastXyears', { amount: 3 }) },
 ])
 
 const BacktestOptionsPanel = ({
@@ -58,60 +65,34 @@ const BacktestOptionsPanel = ({
 
   const setTimeframe = (value) => saveStrategyOptions({ [STRATEGY_OPTIONS_KEYS.TIMEFRAME]: value })
 
-  // create a 'timePeriod' variable which converts startDate and endDate into a string like 'Last 7 days' or 'Last 1 month', etc.
   const timePeriod = useMemo(() => {
     const diff = endDate.getTime() - startDate.getTime()
-    const diffDays = Math.ceil(diff / (1000 * 60 * 60 * 24))
+    const diffHours = Math.ceil(diff / (1000 * 60 * 60))
 
-    if (diffDays <= 1) {
-      return '1d'
+    if (diffHours <= TIME_MAPPING['168h']) {
+      return '168h'
     }
 
-    if (diffDays <= 7) {
-      return '7d'
+    if (diffHours <= TIME_MAPPING['720h']) {
+      return '720h'
     }
 
-    if (diffDays <= 30) {
-      return '30d'
+    if (diffHours <= TIME_MAPPING['2160h']) {
+      return '2160h'
     }
 
-    if (diffDays <= 90) {
-      return '90d'
+    if (diffHours <= TIME_MAPPING['8640h']) {
+      return '8640h'
     }
 
-    if (diffDays <= 180) {
-      return '180d'
-    }
-
-    return '365d'
+    return '25920h'
   }, [startDate, endDate])
 
   const setTimePeriod = (value) => {
     const end = new Date()
     const start = new Date()
-
-    switch (value) {
-      case '1d':
-        start.setDate(start.getDate() - 1)
-        break
-      case '7d':
-        start.setDate(end.getDate() - 7)
-        break
-      case '30d':
-        start.setDate(end.getDate() - 30)
-        break
-      case '90d':
-        start.setDate(end.getDate() - 90)
-        break
-      case '180d':
-        start.setDate(end.getDate() - 180)
-        break
-      case '365d':
-        start.setDate(end.getDate() - 365)
-        break
-      default:
-        break
-    }
+    const hours = TIME_MAPPING[value]
+    start.setHours(start.getHours() - hours)
 
     saveStrategyOptions({
       [STRATEGY_OPTIONS_KEYS.START_DATE]: start,
