@@ -1,0 +1,13 @@
+.hfui-balancelist__wrapper {
+  padding-bottom: 8px;
+  height: 100%;
+
+  .ReactVirtualized__Table__row {
+    border-radius: 5px;
+
+    &:hover {
+      background-color: var(--primary-0);
+      color: var(--primary-8);
+    }
+  }
+}

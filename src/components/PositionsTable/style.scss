@@ -1,0 +1,24 @@
+.hfui-positionlist__wrapper {
+  padding-bottom: 8px;
+  height: 100%;
+
+  .ReactVirtualized__Table__row {
+    border-radius: 5px;
+
+    &:hover {
+      background-color: var(--primary-0);
+      color: var(--primary-8);
+    }
+  }
+
+  .icons-cell {
+    > * {
+      color: var(--shade-7) !important;
+
+      &:hover {
+        cursor: pointer;
+        color: var(--primary-8) !important;
+      }
+    }
+  }
+}

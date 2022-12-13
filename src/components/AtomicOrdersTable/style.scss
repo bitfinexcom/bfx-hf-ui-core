@@ -4,10 +4,20 @@
   padding-bottom: 8px;
   height: 100%;
 
+  .ReactVirtualized__Table__row {
+    border-radius: 5px;
+
+    &:hover {
+      background-color: var(--primary-0);
+      color: var(--primary-8);
+    }
+  }
+
   .icons-cell {
     display: flex;
     justify-content: space-around;
     align-items: center;
+    color: var(--shade-7) !important;
 
     > * {
       margin-right: 8px;
@@ -15,7 +25,7 @@
 
       &:hover {
         cursor: pointer;
-        color: var(--shade-7);
+        color: var(--primary-8) !important;
       }
     }
   }

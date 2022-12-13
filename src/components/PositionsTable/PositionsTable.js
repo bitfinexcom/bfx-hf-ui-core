@@ -5,6 +5,7 @@ import _isEmpty from 'lodash/isEmpty'
 import { useTranslation } from 'react-i18next'
 import PositionsTableColumns from './PositionsTable.columns'
 import { POSITION_SHAPE } from '../../constants/prop-types-shapes'
+import './style.css'
 
 const PositionsTable = ({
   setClosePositionModal,
@@ -25,12 +26,14 @@ const PositionsTable = ({
   }
 
   return (
-    <VirtualTable
-      data={data}
-      columns={columns}
-      defaultSortBy='id'
-      defaultSortDirection='ASC'
-    />
+    <div className='hfui-positionlist__wrapper'>
+      <VirtualTable
+        data={data}
+        columns={columns}
+        defaultSortBy='id'
+        defaultSortDirection='ASC'
+      />
+    </div>
   )
 }
 
