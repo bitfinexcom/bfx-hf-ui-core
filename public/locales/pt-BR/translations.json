@@ -611,7 +611,6 @@
   "tradingStatePanel": {
     "title": "Painel de estado de negociação",
     "filterBy": "Filtrar por",
-    "filteringBy": "Filtrando por",
     "positionsTab": "Posições",
     "atomicsTab": "Atomics",
     "algosTab": "Algos",
