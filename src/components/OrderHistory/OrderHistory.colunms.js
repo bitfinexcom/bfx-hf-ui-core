@@ -17,6 +17,7 @@ const {
   PRICE_AVERAGE,
   PLACED,
   STATUS,
+  UPDATED,
 } = ORDER_HISTORY_KEYS
 
 export const rowMapping = {
@@ -41,27 +42,16 @@ export const rowMapping = {
       }
 
       return defaultCellRenderer(
-        amount && originalAmount && originalAmount !== amount
-          ? (
-            <span>
-              <PrettyValue
-                value={amount}
-                {...valueProps}
-              />
-              {' '}
-              /
-              <PrettyValue
-                value={originalAmount}
-                {...valueProps}
-              />
-            </span>
-          )
-          : (
-            <PrettyValue
-              value={amount || originalAmount}
-              {...valueProps}
-            />
-          ),
+        amount && originalAmount && originalAmount !== amount ? (
+          <span>
+            <PrettyValue value={amount} {...valueProps} />
+            {' '}
+            /
+            <PrettyValue value={originalAmount} {...valueProps} />
+          </span>
+        ) : (
+          <PrettyValue value={amount || originalAmount} {...valueProps} />
+        ),
       )
     },
   },
@@ -86,8 +76,13 @@ export const rowMapping = {
       return getFormatedStatus(_get(data, 'status'))
     },
   },
-  [PLACED]: {
+  [UPDATED]: {
     index: 7,
+    selector: 'mtsUpdate',
+    format: (_value, _, data) => <FullDate ts={_get(data, 'mtsUpdate')} />,
+  },
+  [PLACED]: {
+    index: 8,
     selector: 'created',
     // eslint-disable-next-line react/display-name
     format: (_value, _, data) => {
