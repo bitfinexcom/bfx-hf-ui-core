@@ -2,7 +2,6 @@ import React, { useMemo, useState } from 'react'
 import PropTypes from 'prop-types'
 import _debounce from 'lodash/debounce'
 import { useTranslation } from 'react-i18next'
-import { Icon } from 'react-fa'
 import {
   Checkbox, Button, Spinner, Intent,
 } from '@ufx-ui/core'
@@ -13,6 +12,8 @@ import TimeFrameDropdown from '../TimeFrameDropdown'
 import Dropdown from '../../ui/Dropdown'
 import { STRATEGY_OPTIONS_KEYS } from '../StrategyEditor/StrategyEditor.helpers'
 import { STRATEGY_SHAPE } from '../../constants/prop-types-shapes'
+import ClockIcon from '../../ui/Icons/ClockIcon'
+import CalendarIcon from '../../ui/Icons/CalendarIcon'
 
 import './style.css'
 
@@ -135,15 +136,14 @@ const BacktestOptionsPanel = ({
     <div className='hfui-strategy-backtest-options'>
       <div className='item'>
         <div className='hfui-strategy-backtest-options__icn-selector-container'>
-          <Icon
-            name='clock-o'
+          <ClockIcon
             className={cx('icon-selector', {
               active: !isCustomDatePicker,
             })}
             title={t('strategyEditor.switchToRegular')}
             onClick={() => setIsCustomDatePicker(false)}
           />
-          <Icon
+          <CalendarIcon
             name='calendar'
             className={cx('icon-selector', {
               active: isCustomDatePicker,
