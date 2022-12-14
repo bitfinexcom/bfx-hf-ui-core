@@ -39,6 +39,9 @@ const CcyInfoModal = ({
       link.rel = 'noopener noreferrer'
     })
 
+    if (!chart) {
+      return
+    }
     chart.setAttribute('data-background-color', chartBgColour)
   }, [body, settingsTheme])
 
