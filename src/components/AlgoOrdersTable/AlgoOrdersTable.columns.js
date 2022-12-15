@@ -96,7 +96,7 @@ export default ({
       dataKey: 'createdAt',
       width: 175,
       flexGrow: 1.75,
-      cellRenderer: ({ rowData = {} }) => defaultCellRenderer(
+      cellRenderer: () => defaultCellRenderer(
         'N/A',
         // new Date(rowData.createdAt || +rowData.gid).toLocaleString(),
       ),
