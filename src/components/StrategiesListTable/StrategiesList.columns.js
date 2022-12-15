@@ -218,9 +218,7 @@ const savedStrategiesColumns = ({
     width: 100,
     flexGrow: 1,
     cellRenderer: ({ rowData = {} }) => {
-      const {
-        strategyOptions: { symbol },
-      } = rowData
+      const { strategyOptions: { symbol = null } = {} } = rowData
       const isMarketSelected = !_isEmpty(symbol)
       const value = isMarketSelected ? symbol?.uiID : '-'
 
@@ -235,9 +233,7 @@ const savedStrategiesColumns = ({
     width: 300,
     flexGrow: 1.5,
     cellRenderer: ({ rowData = {} }) => {
-      const {
-        strategyOptions: { strategyType },
-      } = rowData
+      const { strategyOptions: { strategyType = null } = {} } = rowData
       let value = '-'
 
       if (strategyType?.customValue) {
