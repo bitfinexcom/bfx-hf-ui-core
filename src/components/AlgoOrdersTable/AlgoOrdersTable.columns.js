@@ -123,8 +123,12 @@ export default ({
         const orderDetails = getOrderDetails(rowData)
         const detailsSize = _size(orderDetails)
         const filteredAtomics = _filter(_values(atomicOrders), (atomicOrder) => _toString(atomicOrder.gid) === _toString(rowData?.gid))
+        const mappedAtomics = _map(filteredAtomics, order => ({
+          ...order,
+          pair: getMarketPair(order.symbol),
+        }))
         const filteredOrders = [
-          ...filteredAtomics,
+          ...mappedAtomics,
           ..._filter(orders, (order) => _toString(order.gid) === _toString(rowData?.gid)),
         ]
 
