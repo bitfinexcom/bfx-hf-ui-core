@@ -9,6 +9,9 @@ import OutsideClickHandler from 'react-outside-click-handler'
 import {
   OrderHistory as UfxOrderHistory,
 } from '@ufx-ui/core'
+import {
+  Iceberg, TWAP, AccumulateDistribute, PingPong, Bracket,
+} from 'bfx-hf-algo'
 
 import { rowMapping } from '../OrderHistory/OrderHistory.colunms'
 import Button from '../../ui/Button'
@@ -20,27 +23,27 @@ const getOrderDetails = (rowData = {}) => {
   const { args = {}, id } = rowData
 
   switch (id) {
-    case 'bfx-twap':
+    case TWAP.id:
       return [
         { label: 'Interval', value: `${args.sliceInterval / 1000}s` },
         { label: 'Slice', value: args.sliceAmount },
         { label: 'Target', value: args.priceCondition },
       ]
 
-    case 'bfx-ping_pong':
+    case PingPong.id:
       return [
         { label: 'Ping Price', value: args.pingPrice },
         { label: 'Pong Price', value: args.pongPrice },
         { label: 'Order Count', value: args.orderCount },
       ]
 
-    case 'bfx-iceberg':
+    case Iceberg.id:
       return [
         args.sliceAmountPerc === 0 ? { label: 'Slice', value: args.sliceAmount } : { label: 'Slice as %', value: args.sliceAmountPerc },
         { label: 'Price', value: args.price },
       ]
 
-    case 'bfx-accumulate_distribute':
+    case AccumulateDistribute.id:
       return [
         { label: 'Slice', value: args.sliceAmount },
         { label: 'Interval', value: `${args.sliceInterval / 1000}s` },
@@ -48,7 +51,7 @@ const getOrderDetails = (rowData = {}) => {
         { label: 'Interval Distortion %', value: args.intervalDistortion },
       ]
 
-    case 'bfx-bracket':
+    case Bracket.id:
       return [
         { label: 'Higher Bracket Price', value: args.limitPrice },
         { label: 'Lower Bracket Price', value: args.stopPrice },
