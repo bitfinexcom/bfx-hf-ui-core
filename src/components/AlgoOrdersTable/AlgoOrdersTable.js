@@ -13,6 +13,7 @@ import './style.css'
 const AlgoOrdersTable = ({
   filteredAlgoOrders,
   algoOrders,
+  atomicOrders,
   cancelOrder,
   authToken,
   gaCancelOrder,
@@ -57,6 +58,7 @@ const AlgoOrdersTable = ({
             setMoreInfoGID,
             orders,
             handleSave,
+            atomicOrders,
           })}
           defaultSortBy='createdAt'
           defaultSortDirection='ASC'
@@ -69,6 +71,7 @@ const AlgoOrdersTable = ({
 
 AlgoOrdersTable.propTypes = {
   algoOrders: PropTypes.objectOf(PropTypes.shape(ORDER_SHAPE)).isRequired,
+  atomicOrders: PropTypes.objectOf(PropTypes.shape(ORDER_SHAPE)),
   filteredAlgoOrders: PropTypes.objectOf(PropTypes.shape(ORDER_SHAPE)),
   orders: PropTypes.arrayOf(PropTypes.shape(ORDER_SHAPE)),
   cancelOrder: PropTypes.func.isRequired,
@@ -84,6 +87,7 @@ AlgoOrdersTable.defaultProps = {
   filteredAlgoOrders: {},
   renderedInTradingState: false,
   orders: [],
+  atomicOrders: [],
 }
 
 export default memo(AlgoOrdersTable)

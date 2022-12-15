@@ -6,6 +6,7 @@ import {
   getFilteredAlgoOrders,
   getOrderHistory,
   getAuthToken,
+  getAtomicOrders,
 } from '../../redux/selectors/ws'
 import { getActiveMarket } from '../../redux/selectors/ui'
 import WSActions from '../../redux/actions/ws'
@@ -23,6 +24,7 @@ const mapStateToProps = (state = {}, { activeFilter }) => ({
   authToken: getAuthToken(state),
   algoOrders: getCurrentModeAlgoOrders(state),
   orders: getOrderHistory(state),
+  atomicOrders: getAtomicOrders(state),
   filteredAlgoOrders: getFilteredAlgoOrders(state)(activeFilter),
   activeMarket: getActiveMarket(state),
   getMarketPair: getMarketPair(state),

@@ -4,6 +4,7 @@ import _map from 'lodash/map'
 import _size from 'lodash/size'
 import _filter from 'lodash/filter'
 import _toString from 'lodash/toString'
+import _values from 'lodash/values'
 import OutsideClickHandler from 'react-outside-click-handler'
 import {
   OrderHistory as UfxOrderHistory,
@@ -73,6 +74,7 @@ export default ({
   setMoreInfoGID,
   orders,
   handleSave,
+  atomicOrders,
 }) => {
   const columns = [
     {
@@ -120,7 +122,11 @@ export default ({
       cellRenderer: ({ rowData = {} }) => {
         const orderDetails = getOrderDetails(rowData)
         const detailsSize = _size(orderDetails)
-        const filteredOrders = _filter(orders, (order) => _toString(order.gid) === _toString(rowData?.gid))
+        const filteredAtomics = _filter(_values(atomicOrders), (atomicOrder) => _toString(atomicOrder.gid) === _toString(rowData?.gid))
+        const filteredOrders = [
+          ...filteredAtomics,
+          ..._filter(orders, (order) => _toString(order.gid) === _toString(rowData?.gid)),
+        ]
 
         return (
           <div>
