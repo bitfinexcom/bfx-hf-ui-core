@@ -19,13 +19,17 @@ import { defaultCellRenderer } from '../../util/ui'
 import { Item } from '../Navbar/Navbar.LayoutSettings'
 import { getAOContext } from '../../util/order'
 
+const convertIntervalToSeconds = (interval) => {
+  return `${interval / 1000}s`
+}
+
 const getOrderDetails = (rowData = {}) => {
   const { args = {}, id } = rowData
 
   switch (id) {
     case TWAP.id:
       return [
-        { label: 'Interval', value: `${args.sliceInterval / 1000}s` },
+        { label: 'Interval', value: convertIntervalToSeconds(args.sliceInterval) },
         { label: 'Slice', value: args.sliceAmount },
         { label: 'Target', value: args.priceCondition },
       ]
@@ -46,7 +50,7 @@ const getOrderDetails = (rowData = {}) => {
     case AccumulateDistribute.id:
       return [
         { label: 'Slice', value: args.sliceAmount },
-        { label: 'Interval', value: `${args.sliceInterval / 1000}s` },
+        { label: 'Interval', value: convertIntervalToSeconds(args.sliceInterval) },
         { label: 'Amount Distortion %', value: args.amountDistortion },
         { label: 'Interval Distortion %', value: args.intervalDistortion },
       ]
