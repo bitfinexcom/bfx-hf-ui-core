@@ -19,10 +19,39 @@ const getOrderDetails = (rowData = {}) => {
   switch (id) {
     case 'bfx-twap':
       return [
-        { label: 'Interval', value: `${args.sliceInterval}s` },
+        { label: 'Interval', value: `${args.sliceInterval / 1000}s` },
         { label: 'Slice', value: args.sliceAmount },
         { label: 'Target', value: args.priceCondition },
       ]
+
+    case 'bfx-ping_pong':
+      return [
+        { label: 'Ping Price', value: args.pingPrice },
+        { label: 'Pong Price', value: args.pongPrice },
+        { label: 'Order Count', value: args.orderCount },
+      ]
+
+    case 'bfx-iceberg':
+      return [
+        args.sliceAmountPerc === 0 ? { label: 'Slice', value: args.sliceAmount } : { label: 'Slice as %', value: args.sliceAmountPerc },
+        { label: 'Price', value: args.price },
+      ]
+
+    case 'bfx-accumulate_distribute':
+      return [
+        { label: 'Slice', value: args.sliceAmount },
+        { label: 'Interval', value: `${args.sliceInterval / 1000}s` },
+        { label: 'Amount Distortion %', value: args.amountDistortion },
+        { label: 'Interval Distortion %', value: args.intervalDistortion },
+      ]
+
+    case 'bfx-bracket':
+      return [
+        { label: 'Higher Bracket Price', value: args.limitPrice },
+        { label: 'Lower Bracket Price', value: args.stopPrice },
+        { label: 'Primary Order Price', value: args.orderPrice },
+      ]
+
     default:
       return []
   }
