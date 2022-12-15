@@ -2,6 +2,8 @@ import React from 'react'
 import { Icon } from 'react-fa'
 import _map from 'lodash/map'
 import _size from 'lodash/size'
+import _filter from 'lodash/filter'
+import _toString from 'lodash/toString'
 import OutsideClickHandler from 'react-outside-click-handler'
 import {
   OrderHistory as UfxOrderHistory,
@@ -118,6 +120,7 @@ export default ({
       cellRenderer: ({ rowData = {} }) => {
         const orderDetails = getOrderDetails(rowData)
         const detailsSize = _size(orderDetails)
+        const filteredOrders = _filter(orders, (order) => _toString(order.gid) === _toString(rowData?.gid))
 
         return (
           <div>
@@ -134,8 +137,6 @@ export default ({
                 {t('table.moreInfo')}
               </span>
             </div>
-
-            {console.log(rowData)}
 
             {moreInfoGID === rowData?.gid && (
               <OutsideClickHandler onOutsideClick={() => setMoreInfoGID(null)}>
@@ -215,7 +216,7 @@ export default ({
                   </div>
                   <div className='order-history-table'>
                     <UfxOrderHistory
-                      orders={orders}
+                      orders={filteredOrders}
                       rowMapping={rowMapping}
                       isMobileLayout={false}
                       loadMoreRows={() => {}}
