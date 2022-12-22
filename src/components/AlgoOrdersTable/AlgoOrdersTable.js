@@ -1,4 +1,4 @@
-import React, { memo } from 'react'
+import React, { memo, useState } from 'react'
 import PropTypes from 'prop-types'
 import { VirtualTable } from '@ufx-ui/core'
 import _isEmpty from 'lodash/isEmpty'
@@ -6,12 +6,14 @@ import { useTranslation } from 'react-i18next'
 
 import AlgoOrdersTableColumns from './AlgoOrdersTable.columns'
 import { ORDER_SHAPE } from '../../constants/prop-types-shapes'
+import { saveAsJSON } from '../../util/ui'
 
 import './style.css'
 
 const AlgoOrdersTable = ({
   filteredAlgoOrders,
   algoOrders,
+  atomicOrders,
   cancelOrder,
   authToken,
   gaCancelOrder,
@@ -19,9 +21,19 @@ const AlgoOrdersTable = ({
   getMarketPair,
   editOrder,
   showHistory,
+  orders,
 }) => {
   const data = renderedInTradingState ? filteredAlgoOrders : algoOrders
   const { t } = useTranslation()
+
+  const handleSave = (name, gid) => {
+    saveAsJSON(orders, `algo-${name}-${gid}`)
+  }
+
+  // Storing a null or an order ID here, indicates if Edit / Canel modal is opened for a specific row
+  const [activeOrderGID, setActiveOrderGID] = useState(null)
+  // Indicates if the 'More info' modal is opened for a specific row
+  const [moreInfoGID, setMoreInfoGID] = useState(null)
 
   return (
     <div className='hfui-aolist__wrapper'>
@@ -40,6 +52,13 @@ const AlgoOrdersTable = ({
             getMarketPair,
             editOrder,
             showActions: !showHistory,
+            activeOrderGID,
+            setActiveOrderGID,
+            moreInfoGID,
+            setMoreInfoGID,
+            orders,
+            handleSave,
+            atomicOrders,
           })}
           defaultSortBy='createdAt'
           defaultSortDirection='ASC'
@@ -52,7 +71,9 @@ const AlgoOrdersTable = ({
 
 AlgoOrdersTable.propTypes = {
   algoOrders: PropTypes.objectOf(PropTypes.shape(ORDER_SHAPE)).isRequired,
+  atomicOrders: PropTypes.objectOf(PropTypes.shape(ORDER_SHAPE)),
   filteredAlgoOrders: PropTypes.objectOf(PropTypes.shape(ORDER_SHAPE)),
+  orders: PropTypes.arrayOf(PropTypes.shape(ORDER_SHAPE)),
   cancelOrder: PropTypes.func.isRequired,
   gaCancelOrder: PropTypes.func.isRequired,
   authToken: PropTypes.string.isRequired,
@@ -65,6 +86,8 @@ AlgoOrdersTable.propTypes = {
 AlgoOrdersTable.defaultProps = {
   filteredAlgoOrders: {},
   renderedInTradingState: false,
+  orders: [],
+  atomicOrders: [],
 }
 
 export default memo(AlgoOrdersTable)

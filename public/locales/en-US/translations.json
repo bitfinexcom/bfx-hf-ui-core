@@ -562,8 +562,11 @@
     "noPositions": "No active positions found"
   },
   "table": {
-    "name": "Name",
     "alias": "Alias",
+    "moreInfo": "More info",
+    "name": "Name",
+    "edit": "Edit",
+    "cancelRemaining": "Cancel remaining",
     "context": "Context",
     "created": "Created",
     "startedOn": "Started on",
@@ -603,6 +606,9 @@
     "timestamp": "Timestamp",
     "executedAt": "Executed At",
     "orderPrice": "Order Price",
+    "orderDetails": "Order Details",
+    "atomicHistory": "Atomic Order History",
+    "exportJSON": "Export JSON",
     "tradePrice": "Trade Price",
     "viewTrades": "View Trades",
     "strategyType": "Strategy type",
