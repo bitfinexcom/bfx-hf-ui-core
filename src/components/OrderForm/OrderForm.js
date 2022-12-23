@@ -195,7 +195,8 @@ class OrderForm extends React.Component {
     this.setState(({ fieldData, currentLayout, validationErrors }) => {
       const { fields = {} } = currentLayout
       const field = fields[fieldName] || {}
-      const { disabled } = field
+
+      const { disabled, avoidTrimming = false } = field
 
       if (_isBoolean(disabled) && disabled) {
         return null
@@ -205,7 +206,7 @@ class OrderForm extends React.Component {
       const C = COMPONENTS_FOR_ID[component]
       let processedValue = value
 
-      if (_isString(value)) {
+      if (_isString(value) && !avoidTrimming) {
         processedValue = _trim(value)
       }
 
