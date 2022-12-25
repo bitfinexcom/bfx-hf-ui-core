@@ -611,7 +611,6 @@
   "tradingStatePanel": {
     "title": "Панель торговли",
     "filterBy": "Фильтровать по",
-    "filteringBy": "Фильтруем по",
     "positionsTab": "Позиции",
     "atomicsTab": "Atomics",
     "algosTab": "Алгоритмические ордера",

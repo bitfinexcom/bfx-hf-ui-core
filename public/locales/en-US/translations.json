@@ -66,6 +66,8 @@
       "title": "Iceberg",
       "help": "Iceberg allows you to place a large order on the market while ensuring only a small part of it is ever filled at once.\n\nBy enabling the 'Excess As Hidden' option, it is possible to offer up the remainder as a hidden order, allowing for minimal market disruption when executing large trades."
     },
+    "alias": "Alias",
+    "aliasPlaceholder": "Enter the alias of your algo order...",
     "visibleOnHit": "Visible on hit",
     "visibleOnHitHelp": "The rest part of the hidden order will be visible after first hit (partial execution).",
     "saveParamsSettings": "Algo Params settings",
@@ -291,7 +293,8 @@
       "invalidMatchedPriceTarget": "Invalid matched price target",
       "invalidPriceDeltaProvided": "Invalid price delta provided",
       "orderCountExceedsTotalMaxLimit": "limit: placed count exceeded ({{count}}/{{limit}})",
-      "orderCountExceedsPairMaxLimit": "limit: placed count exceeded ({{count}}/{{limit}} for {{pair}})"
+      "orderCountExceedsPairMaxLimit": "limit: placed count exceeded ({{count}}/{{limit}} for {{pair}})",
+      "aliasMaxLength": "The maximum number of chars should be {{value}}"
     }
   },
   "AOPauseModal": {
@@ -565,9 +568,11 @@
     "name": "Name",
     "edit": "Edit",
     "cancelRemaining": "Cancel remaining",
+    "alias": "Alias",
     "context": "Context",
     "created": "Created",
     "startedOn": "Started on",
+    "savedOn": "Saved on",
     "stoppedOn": "Stopped on",
     "symbol": "Symbol",
     "label": "Label",
@@ -607,7 +612,9 @@
     "atomicHistory": "Atomic Order History",
     "exportJSON": "Export JSON",
     "tradePrice": "Trade Price",
-    "viewTrades": "View Trades"
+    "viewTrades": "View Trades",
+    "strategyType": "Strategy type",
+    "lastActive": "Last active"
   },
   "tickersPanel": {
     "title": "Ticker Panel"
@@ -632,8 +639,7 @@
   },
   "tradingStatePanel": {
     "title": "Trading State Panel",
-    "filterBy": "Filter by",
-    "filteringBy": "Filtering by",
+    "filterBy": "Filter by...",
     "positionsTab": "Positions",
     "atomicsTab": "Atomics",
     "algosTab": "Algos",
@@ -789,8 +795,11 @@
     "timePeriod": "Select a time period",
     "switchToCustom": "Switch to custom date picker",
     "switchToRegular": "Switch to regular date picker",
-    "lastXday": "Last {{amount}} day",
-    "lastXdays": "Last {{amount}} days",
+    "lastWeek": "Last week",
+    "lastMonth": "Last month",
+    "lastQuarter": "Last quarter",
+    "lastYear": "Last year",
+    "lastXyears": "Last {{amount}} years",
     "elapsedTime": "Elapsed time"
   },
   "ui": {

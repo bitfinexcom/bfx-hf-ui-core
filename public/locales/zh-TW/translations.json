@@ -611,7 +611,6 @@
   "tradingStatePanel": {
     "title": "交易狀態面板",
     "filterBy": "篩選：",
-    "filteringBy": "篩選：",
     "positionsTab": "倉位",
     "atomicsTab": "自动",
     "algosTab": "演算法",

@@ -611,7 +611,6 @@
   "tradingStatePanel": {
     "title": "交易状态管理面板",
     "filterBy": "筛选以",
-    "filteringBy": "筛选以",
     "positionsTab": "仓位",
     "atomicsTab": "自动订单",
     "algosTab": "演算法订单",

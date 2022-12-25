@@ -109,14 +109,6 @@ const TradingStatePanel = ({
         onTabChange={onTabChange}
         extraIcons={(
           <div className='hfui-tradingstatepanel__options'>
-            <p className='filter-by' key='filter-by'>
-              <i className='icon-filter-active filter-icon' />
-              {`${
-                showMarketDropdown
-                  ? t('tradingStatePanel.filterBy')
-                  : t('tradingStatePanel.filteringBy')
-              }:`}
-            </p>
             <Fragment key='filter-market'>
               <div style={styles}>
                 <MarketSelect
@@ -125,6 +117,7 @@ const TradingStatePanel = ({
                   onChange={setActiveFilter}
                   renderWithFavorites
                   ref={marketRef}
+                  placeholder={t('tradingStatePanel.filterBy')}
                 />
               </div>
               {!showMarketDropdown && (

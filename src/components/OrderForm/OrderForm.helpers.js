@@ -32,6 +32,7 @@ import DropdownInput from './FieldComponents/input.dropdown'
 import RangeInput from './FieldComponents/input.range'
 import UICheckboxGroup from './FieldComponents/ui.checkboxGroup'
 import TickerBar from './FieldComponents/ui.ticker'
+import AliasInput from './FieldComponents/input.alias'
 import Button from '../../ui/Button'
 import { validateOrderLimits } from './OrderForm.orders.helpers'
 
@@ -48,6 +49,7 @@ const COMPONENTS_FOR_ID = {
   'input.radio': RadioInput,
   'input.date': DateInput,
   'input.range': RangeInput,
+  'input.alias': AliasInput,
   'ui.ticker': TickerBar,
 }
 

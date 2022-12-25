@@ -86,10 +86,10 @@ export default ({
   const columns = [
     {
       label: t('table.alias'),
-      dataKey: 'name',
+      dataKey: 'alias',
       width: 90,
       flexGrow: 0.7,
-      cellRenderer: ({ rowData = {} }) => defaultCellRenderer(rowData.name),
+      cellRenderer: ({ rowData = {} }) => defaultCellRenderer(rowData.alias),
     },
     {
       label: t('table.created'),
@@ -105,10 +105,12 @@ export default ({
       dataKey: 'createdAt',
       width: 175,
       flexGrow: 1.75,
-      cellRenderer: () => defaultCellRenderer(
-        'N/A',
-        // new Date(rowData.createdAt || +rowData.gid).toLocaleString(),
-      ),
+      cellRenderer: ({ rowData = {} }) => {
+        const { lastActive } = rowData
+        return defaultCellRenderer(
+          lastActive ? new Date(lastActive).toLocaleString() : '-',
+        )
+      },
     },
     {
       label: t('table.symbol'),

@@ -7,6 +7,7 @@ import { useTranslation } from 'react-i18next'
 
 import BalancesTableColumns from './BalancesTable.columns'
 import { BALANCE_SHAPE } from '../../constants/prop-types-shapes'
+import './style.css'
 
 // balance < 0.000000004 will be rounded and shown as 0.00000000, so hide at this threshold
 const DUST_THRESHOLD = 0.000000004
@@ -27,12 +28,14 @@ const BalancesTable = ({
   }
 
   return (
-    <VirtualTable
-      data={filtered}
-      columns={BalancesTableColumns(t)}
-      defaultSortBy='context'
-      defaultSortDirection='ASC'
-    />
+    <div className='hfui-balancelist__wrapper'>
+      <VirtualTable
+        data={filtered}
+        columns={BalancesTableColumns(t)}
+        defaultSortBy='context'
+        defaultSortDirection='ASC'
+      />
+    </div>
   )
 }
 

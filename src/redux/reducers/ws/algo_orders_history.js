@@ -43,6 +43,21 @@ export default (state = getInitialState(), action = {}) => {
       return newState
     }
 
+    case t.SET_ALGO_ORDER_TO_HISTORY: {
+      const { stoppedAO, mode } = payload
+      const { gid } = stoppedAO
+
+      const newState = {
+        ...state,
+        [mode]: {
+          ...state[mode],
+          [gid]: stoppedAO,
+        },
+      }
+
+      return newState
+    }
+
     default: {
       return state
     }
