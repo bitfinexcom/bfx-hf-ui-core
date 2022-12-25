@@ -164,7 +164,7 @@ export default ({
                     <div className='hfui-navbar__layout-settings__title'>
                       {rowData?.name}
                       <span className='sub-title'>
-                        {rowData?.label}
+                        {rowData?.alias}
                       </span>
                     </div>
                     <Button
