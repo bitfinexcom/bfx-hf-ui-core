@@ -23,7 +23,7 @@ export default ({
       dataKey: 'alias',
       width: 90,
       flexGrow: 0.7,
-      cellRenderer: ({ rowData = {} }) => defaultCellRenderer(rowData.alias),
+      cellRenderer: ({ rowData = {} }) => defaultCellRenderer(rowData.alias || rowData.name),
     },
     {
       label: t('table.created'),
