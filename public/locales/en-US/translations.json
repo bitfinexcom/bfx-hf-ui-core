@@ -309,7 +309,8 @@
     "title": "Algo. Orders",
     "titleFull": "Algorithmic Orders",
     "noOrders": "No active algorithmic orders",
-    "noHistory": "No algorithmic orders in history"
+    "noHistory": "No algorithmic orders in history",
+    "detailsModalTitle": "Algo Order Details"
   },
   "appSettings": {
     "title": "Settings",

@@ -67,11 +67,10 @@ const AlgoOrderDetailsModal = ({ onClose, algoOrderId }) => {
     <Modal
       onClose={onClose}
       isOpen={isOpen}
-      title='Algo Order details'
+      title={t('AOTableModal.detailsModalTitle')}
       className='hfui-ao-details-modal'
       height={460}
       width={1200}
-      scrollable
     >
       <div className='title-container'>
         <div className='hfui-navbar__layout-settings__title'>
