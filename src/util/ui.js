@@ -48,7 +48,7 @@ export const makeShorterLongName = (name, limit) => _truncate(name, {
 export const defaultCellRenderer = (content) => (<Truncate>{content}</Truncate>)
 
 export const saveAsJSON = (obj, fileName) => {
-  const data = `data:text/json;charset=utf-8,${encodeURIComponent(JSON.stringify(obj))}`
+  const data = `data:text/json;charset=utf-8,${encodeURIComponent(JSON.stringify(obj, null, 2))}`
   const node = document.createElement('a')
   node.setAttribute('href', data)
   node.setAttribute('download', `${fileName}.json`)
