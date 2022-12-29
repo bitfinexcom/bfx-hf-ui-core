@@ -309,7 +309,8 @@
     "title": "Algo. Orders",
     "titleFull": "Algorithmic Orders",
     "noOrders": "No active algorithmic orders",
-    "noHistory": "No algorithmic orders in history"
+    "noHistory": "No algorithmic orders in history",
+    "detailsModalTitle": "Algo Order Details"
   },
   "appSettings": {
     "title": "Settings",
@@ -563,12 +564,10 @@
   },
   "table": {
     "alias": "Alias",
-    "lastActive": "Last active",
     "moreInfo": "More info",
     "name": "Name",
     "edit": "Edit",
     "cancelRemaining": "Cancel remaining",
-    "alias": "Alias",
     "context": "Context",
     "created": "Created",
     "startedOn": "Started on",

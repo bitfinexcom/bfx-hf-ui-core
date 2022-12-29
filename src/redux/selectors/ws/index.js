@@ -55,6 +55,7 @@ import getDraftStrategies from './get_draft_strategies'
 import getUsername from './get_username'
 import getAlgoOrdersHistory from './get_algo_orders_history'
 import getIsAOsHistoryLoaded from './get_is_aos_history_loaded'
+import getAlgoOrderById from './get_algo_order_by_id'
 
 export {
   getSockets,
@@ -115,4 +116,5 @@ export {
 
   getIsAOsHistoryLoaded,
   getAlgoOrdersHistory,
+  getAlgoOrderById,
 }
