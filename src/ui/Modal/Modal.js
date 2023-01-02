@@ -23,16 +23,13 @@ const Modal = ({
 }) => {
   useModalFocus()
 
-  const containsTabs = useMemo(
-    () => {
-      // Check is children has instance of the ModalTab
-      if (_isArray(children)) {
-        return _some(children, (el) => el.type === ModalTabs, false)
-      }
-      return children.type === ModalTabs
-    },
-    [children],
-  )
+  const containsTabs = useMemo(() => {
+    // Check is children has instance of the ModalTab
+    if (_isArray(children)) {
+      return _some(children, (el) => el.type === ModalTabs, false)
+    }
+    return children.type === ModalTabs
+  }, [children])
 
   return (
     <Dialog
@@ -51,7 +48,7 @@ const Modal = ({
 
 Modal.propTypes = {
   isOpen: PropTypes.bool.isRequired,
-  label: PropTypes.string,
+  label: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
   className: PropTypes.string,
   onClose: PropTypes.func.isRequired,
   onSubmit: PropTypes.func,
@@ -63,7 +60,7 @@ Modal.defaultProps = {
   label: '',
   className: '',
   scrollable: false,
-  onSubmit: () => { },
+  onSubmit: () => {},
 }
 
 Modal.Footer = Dialog.Footer
