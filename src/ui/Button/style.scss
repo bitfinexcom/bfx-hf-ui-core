@@ -1,22 +1,23 @@
-@import '../../variables.scss';
+@import "../../variables.scss";
 
-.hfui-button, button {
+.hfui-button,
+button {
   background: var(--lighter-background-color);
   border: none;
   color: var(--shade-8);
   font-size: 13px;
   font-weight: 600;
   border-radius: $border-radius;
-  transition: background-color .2s;
+  transition: background-color 0.2s;
   cursor: pointer;
 
   &:hover:not(.disabled),
   &:focus:not(.disabled) {
-    opacity: .8;
+    opacity: 0.8;
   }
 
   &:active:not(.disabled) {
-    transition-duration: .05s;
+    transition-duration: 0.05s;
     background-color: var(--lighter-background-color);
   }
 
@@ -47,6 +48,14 @@
 
     &:active:not(.disabled) {
       background-color: darken($green-button-color, 6%);
+    }
+  }
+
+  &.blue {
+    transition: all 0.2s linear;
+
+    &:hover {
+      color: var(--primary-9);
     }
   }
 
