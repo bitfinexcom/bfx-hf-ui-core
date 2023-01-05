@@ -68,7 +68,8 @@ const BacktestOptionsPanel = ({
 
   const timePeriod = useMemo(() => {
     const diff = endDate.getTime() - startDate.getTime()
-    const diffHours = Math.ceil(diff / (1000 * 60 * 60))
+    // Apparently the dates sometimes overlap on Chrome so there's a few extra hours in the diff, let's subtract them.
+    const diffHours = Math.ceil(diff / (1000 * 60 * 60)) - 2
 
     if (diffHours <= TIME_MAPPING['168h']) {
       return '168h'
