@@ -1,9 +1,9 @@
 import React, { memo } from 'react'
 import PropTypes from 'prop-types'
 import { useTranslation } from 'react-i18next'
-import { ReactComponent as CheckIcon } from './check.svg'
-import { ReactComponent as ErrorIcon } from './error.svg'
-import { ReactComponent as ClockIcon } from './clock.svg'
+import CheckIcon from './check.svg'
+import ErrorIcon from './error.svg'
+import ClockIcon from './clock.svg'
 import AttentionBar from '../../ui/AttentionBar/AttentionBar'
 
 const ApiBanner = ({ isUpdating, apiKeyState }) => {

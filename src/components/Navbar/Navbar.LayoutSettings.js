@@ -14,7 +14,7 @@ import { useLocation } from 'react-router'
 import { selectLayout, deleteLayout, saveLayout } from '../../redux/actions/ui'
 import { getLayouts, getUIState } from '../../redux/selectors/ui'
 
-import { ReactComponent as LayoutIcon } from './layout-icon.svg'
+import LayoutIcon from './layout-icon.svg'
 import NavbarButton from './Navbar.Button'
 import Routes from '../../constants/routes'
 import useToggle from '../../hooks/useToggle'

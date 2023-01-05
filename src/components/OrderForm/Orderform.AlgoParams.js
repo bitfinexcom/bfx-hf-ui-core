@@ -14,7 +14,7 @@ import { useTranslation } from 'react-i18next'
 import { removeAlgoOrderParams, saveAlgoOrderParams, setActiveAOParamsID } from '../../redux/actions/ao'
 import { getActiveAOparamsID, getAOParams } from '../../redux/selectors/ao'
 
-import { ReactComponent as LayoutIcon } from '../Navbar/layout-icon.svg'
+import LayoutIcon from '../Navbar/layout-icon.svg'
 import NavbarButton from '../Navbar/Navbar.Button'
 
 import AddNewParam from './Modals/AddNewParam'
