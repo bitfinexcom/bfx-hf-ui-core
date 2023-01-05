@@ -1,9 +1,10 @@
 import React, { memo } from 'react'
 import PropTypes from 'prop-types'
-
 import { useTranslation } from 'react-i18next'
+
 import AlgoOrdersTable from '../AlgoOrdersTable'
 import Panel from '../../ui/Panel'
+import AlgoOrdersHistoryButton from '../AlgoOrdersHistoryButton'
 
 const AlgoOrdersTablePanel = ({ dark, onRemove }) => {
   const { t } = useTranslation()
@@ -14,6 +15,7 @@ const AlgoOrdersTablePanel = ({ dark, onRemove }) => {
       onRemove={onRemove}
       dark={dark}
       darkHeader={dark}
+      extraIcons={<AlgoOrdersHistoryButton />}
     >
       <AlgoOrdersTable />
     </Panel>

@@ -1,4 +1,4 @@
-@import '../../variables.scss';
+@import "../../variables.scss";
 
 .hfui-tradingstatepanel__wrapper {
   > .hfui-panel__content {
@@ -12,37 +12,36 @@
   .hfui-panel .hfui-panel__label {
     font-weight: 500;
   }
+}
 
-  .hfui-tspanel-header-button {
-    display: flex;
-    font-size: 13px;
-    font-weight: 600;
-    line-height: 32px;
-    padding: 0 spacing(0.5);
-    background: var(--darker-background-color);
-    border-radius: $border-radius;
-    color: var(--shade-7);
-    height: 32px;
-    cursor: pointer;
-    transition: all .2s;
+.hfui-tradingstatepanel__options {
+  display: flex;
+  padding: 0 12px;
 
-    i {
-      font-size: 13px;
-      color: inherit;
-
-      &:before {
-        font-weight: 600 !important;
-      }
-    }
-
-    &:hover,
-    &.active {
-      background: var(--shade-0);
-    }
-
-    &.active {
-      background: var(--primary-0);
-      color: var(--primary-8);
-    }
+  & > *:not(:last-child) {
+    margin-right: 10px;
   }
+
+  .filter-by {
+    display: flex;
+    align-items: center;
+    line-height: normal;
+    text-transform: uppercase;
+    height: 32px;
+  }
+
+  .filter-icon {
+    font-size: 16px;
+    padding-top: 2px;
+    margin-right: 5px;
+  }
+}
+
+.hfui-tradingstatepanel__ccy-icon {
+  margin-top: 5px;
+  width: 20px;
+  height: 20px;
+  // primary-8 color
+  filter: invert(51%) sepia(60%) saturate(1705%) hue-rotate(130deg)
+    brightness(104%) contrast(98%);
 }

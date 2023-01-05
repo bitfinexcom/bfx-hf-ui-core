@@ -1,8 +1,8 @@
 import { put, select } from 'redux-saga/effects'
 
 import WSActions from '../../actions/ws'
+import AOActions from '../../actions/ao'
 import { getAuthToken } from '../../selectors/ws'
-import { showActiveOrdersModal } from '../../actions/ao'
 
 export default function* handleActiveAlgoOrders({ payload }) {
   const {
@@ -19,5 +19,6 @@ export default function* handleActiveAlgoOrders({ payload }) {
   if (type === 'cancel_all') {
     yield put(WSActions.send(['algo_order.remove', authToken, allOrders]))
   }
-  yield put(showActiveOrdersModal(false))
+  yield put(AOActions.setActiveAlgoOrders([]))
+  yield put(AOActions.showActiveOrdersModal(false))
 }

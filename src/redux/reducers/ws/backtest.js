@@ -9,6 +9,7 @@ function getInitialState() {
     trades: [],
     candles: [],
     gid: null,
+    progressPerc: 0,
   }
 }
 
@@ -40,6 +41,14 @@ function reducer(state = getInitialState(), action = {}) {
       return {
         ...state,
         loading: true,
+      }
+    }
+
+    case types.BACKTEST_PROGRESS: {
+      const { progressPerc } = payload
+      return {
+        ...state,
+        progressPerc,
       }
     }
 
@@ -80,6 +89,7 @@ function reducer(state = getInitialState(), action = {}) {
         trades: [],
         loading: false,
         executing: false,
+        progressPerc: 0,
         ...state,
       }
     }

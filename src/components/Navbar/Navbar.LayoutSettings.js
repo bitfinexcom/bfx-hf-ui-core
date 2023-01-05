@@ -26,7 +26,7 @@ import { UI_KEYS } from '../../redux/constants/ui_keys'
 
 const MAX_ID_LENGTH = 30
 
-const Item = ({
+export const Item = ({
   /* eslint-disable react/prop-types */
   isLayout,
   isSelected,

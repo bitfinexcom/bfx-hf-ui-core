@@ -66,6 +66,8 @@
       "title": "Iceberg",
       "help": "Iceberg allows you to place a large order on the market while ensuring only a small part of it is ever filled at once.\n\nBy enabling the 'Excess As Hidden' option, it is possible to offer up the remainder as a hidden order, allowing for minimal market disruption when executing large trades."
     },
+    "alias": "Alias",
+    "aliasPlaceholder": "Enter the alias of your algo order...",
     "visibleOnHit": "Visible on hit",
     "visibleOnHitHelp": "The rest part of the hidden order will be visible after first hit (partial execution).",
     "saveParamsSettings": "Algo Params settings",
@@ -291,7 +293,8 @@
       "invalidMatchedPriceTarget": "Invalid matched price target",
       "invalidPriceDeltaProvided": "Invalid price delta provided",
       "orderCountExceedsTotalMaxLimit": "limit: placed count exceeded ({{count}}/{{limit}})",
-      "orderCountExceedsPairMaxLimit": "limit: placed count exceeded ({{count}}/{{limit}} for {{pair}})"
+      "orderCountExceedsPairMaxLimit": "limit: placed count exceeded ({{count}}/{{limit}} for {{pair}})",
+      "aliasMaxLength": "The maximum number of chars should be {{value}}"
     }
   },
   "AOPauseModal": {
@@ -305,7 +308,9 @@
   "AOTableModal": {
     "title": "Algo. Orders",
     "titleFull": "Algorithmic Orders",
-    "noOrders": "No active algorithmic orders"
+    "noOrders": "No active algorithmic orders",
+    "noHistory": "No algorithmic orders in history",
+    "detailsModalTitle": "Algo Order Details"
   },
   "appSettings": {
     "title": "Settings",
@@ -558,10 +563,15 @@
     "noPositions": "No active positions found"
   },
   "table": {
+    "alias": "Alias",
+    "moreInfo": "More info",
     "name": "Name",
+    "edit": "Edit",
+    "cancelRemaining": "Cancel remaining",
     "context": "Context",
     "created": "Created",
     "startedOn": "Started on",
+    "savedOn": "Saved on",
     "stoppedOn": "Stopped on",
     "symbol": "Symbol",
     "label": "Label",
@@ -597,8 +607,13 @@
     "timestamp": "Timestamp",
     "executedAt": "Executed At",
     "orderPrice": "Order Price",
+    "orderDetails": "Order Details",
+    "atomicHistory": "Atomic Order History",
+    "exportJSON": "Export JSON",
     "tradePrice": "Trade Price",
-    "viewTrades": "View Trades"
+    "viewTrades": "View Trades",
+    "strategyType": "Strategy type",
+    "lastActive": "Last active"
   },
   "tickersPanel": {
     "title": "Ticker Panel"
@@ -623,12 +638,12 @@
   },
   "tradingStatePanel": {
     "title": "Trading State Panel",
-    "filterBy": "Filter by",
-    "filteringBy": "Filtering by",
+    "filterBy": "Filter by...",
     "positionsTab": "Positions",
     "atomicsTab": "Atomics",
     "algosTab": "Algos",
-    "balancesTab": "Balances"
+    "balancesTab": "Balances",
+    "history": "History"
   },
   "statusbar": {
     "liveModeDisclaimer": "You are in LIVE mode. All orders placed in this mode are executed in the real market using real funds",
@@ -775,7 +790,16 @@
     "copyOfStrategy": "Copy of {{strategyName}}",
     "calculating": "Calculating...",
     "backtestSuccessful": "Backtest successful!",
-    "newTest": "New Test"
+    "newTest": "New Test",
+    "timePeriod": "Select a time period",
+    "switchToCustom": "Switch to custom date picker",
+    "switchToRegular": "Switch to regular date picker",
+    "lastWeek": "Last week",
+    "lastMonth": "Last month",
+    "lastQuarter": "Last quarter",
+    "lastYear": "Last year",
+    "lastXyears": "Last {{amount}} years",
+    "elapsedTime": "Elapsed time"
   },
   "ui": {
     "ok": "Okay",

@@ -9,7 +9,7 @@ import { changeUIModalState } from '../../redux/actions/ui'
 import WSActions from '../../redux/actions/ws'
 import { isElectronApp } from '../../redux/config'
 import { UI_MODAL_KEYS } from '../../redux/constants/modals'
-import { getActiveStrategies, getAlgoOrders } from '../../redux/selectors/ws'
+import { getActiveStrategies, getAllAlgoOrdersArray } from '../../redux/selectors/ws'
 import { removeCookie } from '../../util/cookies'
 import closeElectronApp from '../../redux/helpers/close_electron_app'
 
@@ -19,7 +19,7 @@ const homeUrl = process.env.REACT_APP_ENVIRONMENT === 'staging'
 
 const CloseSessionButton = () => {
   const activeStrategies = useSelector(getActiveStrategies)
-  const algoOrders = useSelector(getAlgoOrders)
+  const algoOrders = useSelector(getAllAlgoOrdersArray)
 
   const needToProcessBeforeCloseApp = !_isEmpty(activeStrategies) || !_isEmpty(algoOrders)
 

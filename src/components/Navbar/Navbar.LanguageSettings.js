@@ -14,7 +14,17 @@ const LanguageSettings = () => {
 
   const i18nMappedKey = i18n.getMappedLanguageKey()
 
-  const changeLanguageHandler = (lang) => i18n.changeLanguage(LANGUAGES[lang])
+  const changeLanguageHandler = (lang) => {
+    const { pendo } = window
+
+    i18n.changeLanguage(LANGUAGES[lang])
+
+    if (pendo) {
+      pendo.updateOptions({
+        language: LANGUAGES[lang],
+      })
+    }
+  }
 
   return (
     <Dropdown

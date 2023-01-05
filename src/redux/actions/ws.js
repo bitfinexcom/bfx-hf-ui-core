@@ -4,16 +4,14 @@ import ui from '../constants/ui'
 import { getScope } from '../../util/scope'
 import { MAIN_MODE } from '../reducers/ui'
 
-const send = payload => ({
+const send = (payload) => ({
   type: t.BUFF_SEND,
-  payload: _isString(payload)
-    ? payload
-    : JSON.stringify(payload),
+  payload: _isString(payload) ? payload : JSON.stringify(payload),
 })
 
 export default {
   send,
-  error: payload => ({ type: t.ERROR, payload }),
+  error: (payload) => ({ type: t.ERROR, payload }),
   flushQueue: () => ({ type: t.FLUSH_QUEUE }),
 
   connect: (alias = '', destination = '') => ({
@@ -63,7 +61,10 @@ export default {
   }) => ({
     type: t.DATA_SYNC_START,
     payload: {
-      symbol, tf, start, end,
+      symbol,
+      tf,
+      start,
+      end,
     },
   }),
 
@@ -72,7 +73,10 @@ export default {
   }) => ({
     type: t.DATA_SYNC_END,
     payload: {
-      symbol, tf, start, end,
+      symbol,
+      tf,
+      start,
+      end,
     },
   }),
 
@@ -175,81 +179,109 @@ export default {
     type: t.RESET_ORDER_HIST,
   }),
 
-  recvDataAlgoOrder: ({ ao }) => ({
+  recvDataAlgoOrder: (payload) => ({
     type: t.DATA_ALGO_ORDER,
-    payload: { ao },
+    payload,
   }),
 
-  recvDataAlgoOrderStopped: ({ gid }) => ({
+  recvDataAlgoOrdersHistory: (payload) => ({
+    type: t.DATA_ALGO_ORDERS_HISTORY,
+    payload,
+  }),
+
+  setAlgoOrderToHistory: (stoppedAO, mode) => ({
+    type: t.SET_ALGO_ORDER_TO_HISTORY,
+    payload: {
+      stoppedAO,
+      mode,
+    },
+  }),
+
+  removeAlgoOrder: (gid, mode) => ({
+    type: t.REMOVE_ALGO_ORDER,
+    payload: {
+      gid,
+      mode,
+    },
+  }),
+
+  recvDataAlgoOrderStopped: (payload) => ({
     type: t.DATA_ALGO_ORDER_STOPPED,
-    payload: { gid },
+    payload,
   }),
 
-  recvDataAlgoOrders: (aos) => ({
+  recvDataAlgoOrders: (payload) => ({
     type: t.DATA_ALGO_ORDERS,
-    payload: { aos },
+    payload,
   }),
 
   clearAlgoOrders: () => ({
     type: t.CLEAR_ALGO_ORDERS,
   }),
 
-  recvNotification: notification => ({
+  recvNotification: (notification) => ({
     type: t.DATA_NOTIFICATION,
     payload: { notification },
   }),
 
-  recvAuthConfigured: configured => ({
+  recvAuthConfigured: (configured) => ({
     type: t.DATA_AUTH_CONFIGURED,
     payload: { configured },
   }),
 
-  recvAuthToken: token => ({
+  recvAuthToken: (token) => ({
     type: t.DATA_AUTH_TOKEN,
     payload: { token },
   }),
 
-  recvBacktestStart: opts => ({
+  recvBacktestStart: (opts) => ({
     type: t.BACKTEST_START,
     payload: opts,
   }),
 
-  recvBacktestResults: opts => ({
+  recvBacktestProgress: (progressPerc) => ({
+    type: t.BACKTEST_PROGRESS,
+    payload: {
+      progressPerc,
+    },
+  }),
+
+  recvBacktestResults: (opts) => ({
     type: t.BACKTEST_RESULTS,
     payload: opts,
   }),
 
-  recvBacktestStarted: gid => ({
+  recvBacktestStarted: (gid) => ({
     type: t.BACKTEST_STARTED,
     payload: { gid },
   }),
 
-  recvBacktestStopped: gid => ({
+  recvBacktestStopped: (gid) => ({
     type: t.BACKTEST_STOPPED,
     payload: gid,
   }),
 
-  recvBacktestCandle: candle => ({
+  recvBacktestCandle: (candle) => ({
     type: t.BACKTEST_CANDLE,
     payload: candle,
   }),
 
-  recvBacktestTrade: trade => ({
+  recvBacktestTrade: (trade) => ({
     type: t.BACKTEST_TRADE,
     payload: trade,
   }),
 
-  recvBacktestExecute: opts => ({
+  recvBacktestExecute: (opts) => ({
     type: t.BACKTEST_EXECUTE,
     payload: opts,
   }),
 
-  recvUpdatedFavoritePairs: pairs => ({
+  recvUpdatedFavoritePairs: (pairs) => ({
     type: t.UPDATE_FAVORITE_PAIRS,
     payload: pairs,
   }),
 
-  recvUserId: userId => ({
+  recvUserId: (userId) => ({
     type: t.DATA_WEB_AUTH_SUCCESS,
     payload: {
       userId,
@@ -264,14 +296,17 @@ export default {
   setLivePriceUpdate: (strategyMapKey, executionResultsObj) => ({
     type: t.SET_PRICE_UPDATE,
     payload: {
-      strategyMapKey, executionResultsObj,
+      strategyMapKey,
+      executionResultsObj,
     },
   }),
 
   setLiveExecutionTrades: (strategyMapKey, positionData, isOpened) => ({
     type: t.SET_LIVE_EXECUTION_TRADES,
     payload: {
-      strategyMapKey, positionData, isOpened,
+      strategyMapKey,
+      positionData,
+      isOpened,
     },
   }),
 
@@ -285,14 +320,16 @@ export default {
   setStartedLiveStrategy: (strategyMapKey, executionResultsObj) => ({
     type: t.SET_STARTED_LIVE_STRATEGY,
     payload: {
-      strategyMapKey, executionResultsObj,
+      strategyMapKey,
+      executionResultsObj,
     },
   }),
 
   setStoppedLiveStrategy: (strategyMapKey, executionResultsObj) => ({
     type: t.SET_STOPPED_LIVE_STRATEGY,
     payload: {
-      strategyMapKey, executionResultsObj,
+      strategyMapKey,
+      executionResultsObj,
     },
   }),
 
@@ -344,9 +381,9 @@ export default {
     payload: { password },
   }),
 
-  initAuth: password => send(['auth.init', password, MAIN_MODE, getScope()]),
+  initAuth: (password) => send(['auth.init', password, MAIN_MODE, getScope()]),
   auth: (password, mode) => send(['auth.submit', password, mode, getScope()]),
-  webAuth: token => send({ event: 'auth', token }),
+  webAuth: (token) => send({ event: 'auth', token }),
   onUnload: (authToken, mode) => send(['algo_order.pause', authToken, mode]),
 
   submitAlgoOrder: (authToken, id, args) => send([
@@ -378,10 +415,6 @@ export default {
 
   changeMode: (isPaperTrading) => {
     const mode = isPaperTrading ? 'paper' : 'main'
-    return send([
-      'auth.change_mode',
-      mode,
-      getScope(),
-    ])
+    return send(['auth.change_mode', mode, getScope()])
   },
 }

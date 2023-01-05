@@ -13,31 +13,17 @@ const balanceAdapter = (data = [], getCurrencySymbol = () => {}) => ({
   symbol: getCurrencySymbol(data[0]),
 })
 
-const orderAdapter = (data = [], getMarketPair = () => {}) => ({
-  id: data[0],
-  gid: data[1],
-  cid: data[2],
-  symbol: data[3],
-  created: data[4],
-  mtsUpdate: data[4],
-  amount: data[5],
-  originalAmount: data[6],
-  type: data[7],
-  tif: !!data[8],
-  tifDate: new Date(data[8]),
-  status: data[9],
-  price: data[10],
-  priceAverage: data[11],
-  priceTrailing: data[12],
-  priceAuxLimit: data[13],
-  hidden: data[14],
-  postonly: data[15],
-  oco: data[16],
-  reduceonly: data[17],
-  visibleOnHit: data[18],
-  lev: data[19],
-  pair: getMarketPair(data[3]),
-})
+const orderAdapter = (order = {}, getMarketPair = () => {}) => {
+  return {
+    ...order,
+    created: order.mtsCreate,
+    originalAmount: order.amountOrig,
+    tif: !!order.mtsTIF,
+    tifDate: new Date(order.mtsTIF),
+    priceAverage: order.priceAvg,
+    pair: getMarketPair(order.symbol),
+  }
+}
 
 const AOAdapter = (data = []) => ({
   gid: data[0],

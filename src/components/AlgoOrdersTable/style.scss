@@ -3,20 +3,69 @@
 .hfui-aolist__wrapper {
   padding-bottom: 8px;
   height: 100%;
+
+  &_more_info {
+    text-transform: uppercase;
+    cursor: pointer;
+    color: var(--shade-6) !important;
+
+    &:hover {
+      color: var(--primary-8) !important;
+    }
+
+    .more_info_action {
+      margin-left: 5px;
+    }
+  }
+
+  .ReactVirtualized__Table__row {
+    border-radius: 5px;
+    overflow-x: hidden !important;
+    overflow: visible !important;
+
+    &:hover {
+      background-color: var(--primary-0);
+      color: var(--primary-8);
+    }
+  }
+
+  .ReactVirtualized__Table__Grid {
+    > div {
+      overflow-x: hidden !important;
+      overflow: visible !important;
+    }
+  }
 }
 
 .icons-cell {
   display: flex;
   justify-content: space-around;
   align-items: center;
+  color: var(--shade-6) !important;
+
+  .edit-order-menu {
+    top: 0% !important;
+    left: 82% !important;
+    min-width: 180px;
+
+    .hfui-navbar__layout-settings__menu-buttons {
+      :hover {
+        color: var(--primary-8) !important;
+        background-color: var(--lighter-background-color) !important;
+      }
+    }
+  }
+
+  .more-options-button {
+    padding-left: 5px;
+    padding-right: 5px;
+    font-size: 16px;
+  }
 
   > * {
-    margin-right: 8px;
-    font-size: 16px;
-
     &:hover {
       cursor: pointer;
-      color: var(--shade-7);
+      color: var(--primary-8);
     }
   }
 }

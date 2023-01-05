@@ -1,24 +1,14 @@
 @import "../../variables.scss";
 
 body.Light {
-  .hfui-exchangeinfobar__wrapper {
-    .ccy-icon {
-      filter: saturate(180) brightness(0);
-    }
-    .ccy-icon-small {
-      filter: saturate(180) brightness(0);
-    }
+  .hfui-exchangeinfobar__ccy-icon {
+    filter: saturate(180) brightness(0);
   }
 }
 
 body.Dark {
-  .hfui-exchangeinfobar__wrapper {
-    .ccy-icon {
-      filter: saturate(0) brightness(180);
-    }
-    .ccy-icon-small {
-      filter: saturate(0) brightness(180);
-    }
+  .hfui-exchangeinfobar__ccy-icon {
+    filter: saturate(0) brightness(180);
   }
 }
 
@@ -32,11 +22,6 @@ body.Dark {
   .hfui-exchangeinfobar__ticker {
     width: 100%;
     padding-bottom: spacing();
-
-    .ccy-icon {
-      width: 30px;
-      height: 30px;
-    }
 
     .highlight {
       font-size: 18px;
@@ -82,12 +67,6 @@ body.Dark {
     width: 100%;
     display: flex;
     flex-direction: column;
-
-    .ccy-icon-small {
-      width: 15px;
-      height: 15px;
-      margin-right: 3px;
-    }
 
     .ufx-virtual-table--container {
       width: 100%;

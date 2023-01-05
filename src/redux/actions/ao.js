@@ -1,20 +1,10 @@
 import types from '../constants/ao'
 
-export function getActiveAlgoOrders({ initialFetch = false } = {}) {
-  return {
-    type: types.GET_ACTIVE_AOS,
-    payload: {
-      initialFetch,
-    },
-  }
-}
-
-export function setActiveAlgoOrders(activeAlgoOrders, mode) {
+export function setActiveAlgoOrders(activeAlgoOrders) {
   return {
     type: types.SET_ACTIVE_AOS,
     payload: {
       activeAlgoOrders,
-      mode,
     },
   }
 }
@@ -87,8 +77,16 @@ export function setActiveAOParamsID(id) {
   }
 }
 
+export function setShowAOsHistory(showAOsHistory) {
+  return {
+    type: types.SHOW_AOS_HISTORY,
+    payload: {
+      showAOsHistory,
+    },
+  }
+}
+
 export default {
-  getActiveAlgoOrders,
   setActiveAlgoOrders,
   showActiveOrdersModal,
   handleActiveOrders,
@@ -98,4 +96,5 @@ export default {
   saveAlgoOrderParams,
   setActiveAOParamsID,
   appendAlgoOrderParams,
+  setShowAOsHistory,
 }

@@ -57,6 +57,7 @@ import EditStrategyLabelModal from '../../modals/Strategy/EditStrategyLabelModal
 import { UI_MODAL_KEYS } from '../../redux/constants/modals'
 import { PAPER_MODE } from '../../redux/reducers/ui'
 import SettingsTitle from './tabs/SettingsTitle'
+import { LANGUAGES } from '../../locales/i18n'
 
 import './style.css'
 
@@ -96,7 +97,7 @@ const StrategyEditor = (props) => {
     setSectionErrors,
     serviceStatus,
   } = props
-  const { t } = useTranslation()
+  const { t, i18n: { language } } = useTranslation()
 
   const [isRemoveModalOpen, , openRemoveModal, closeRemoveModal] = useToggle(false)
   const [
@@ -147,6 +148,10 @@ const StrategyEditor = (props) => {
     'strategyOptions',
     getDefaultStrategyOptions(),
   )
+
+  const isWideSidebar = useMemo(() => {
+    return language === LANGUAGES.es || language === LANGUAGES.pt
+  }, [language])
 
   const {
     symbol,
@@ -641,6 +646,7 @@ const StrategyEditor = (props) => {
             moveable={moveable}
             removeable={removeable}
             onRemoveStrategy={onRemoveStrategy}
+            isWideSidebar={isWideSidebar}
           >
             {(isBetaVersion || flags?.live_execution) && (
               <StrategyTab

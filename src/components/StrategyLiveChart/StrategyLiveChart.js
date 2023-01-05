@@ -2,6 +2,7 @@ import React, { memo, useMemo } from 'react'
 import { useSelector } from 'react-redux'
 import PropTypes from 'prop-types'
 import { useTranslation } from 'react-i18next'
+import _isEmpty from 'lodash/isEmpty'
 
 import { getThemeSetting } from '../../redux/selectors/ui'
 import Panel from '../../ui/Panel'
@@ -11,12 +12,14 @@ import {
   prepareTVIndicators,
 } from './StrategyLiveChart.helpers'
 import { TIMEFRAME_INTERVAL_MAPPING } from '../../util/time_frames'
+import { getPositionTooltip } from '../../util/chart'
 import {
   INDICATORS_ARRAY_SHAPE,
   MARKET_SHAPE,
   STRATEGY_SHAPE,
   STRATEGY_TRADE_SHAPE,
 } from '../../constants/prop-types-shapes'
+import PanelIconButton from '../../ui/Panel/Panel.IconButton'
 
 import './style.css'
 
@@ -26,6 +29,7 @@ const StrategyLiveChart = ({
   fullscreenChart,
   exitFullscreenChart,
   strategy,
+  lastOpenPosition,
   trades,
   isBacktest,
 }) => {
@@ -70,6 +74,29 @@ const StrategyLiveChart = ({
     [base, quote, uiID, wsID],
   )
 
+  const position = useMemo(() => {
+    if (_isEmpty(lastOpenPosition)) {
+      return null
+    }
+
+    const processedPosition = {
+      ...lastOpenPosition,
+      basePrice: lastOpenPosition?.entryPrice,
+      amount: parseFloat(lastOpenPosition?.amount),
+      realizedPnl: parseFloat(lastOpenPosition?.realizedPnl),
+      pl: parseFloat(lastOpenPosition?.realizedPnl),
+    }
+
+    return {
+      ...processedPosition,
+      tooltip: getPositionTooltip(processedPosition, {
+        base,
+        quote,
+        t,
+      }),
+    }
+  }, [lastOpenPosition, base, quote, t])
+
   return (
     <Panel
       removeable={false}
@@ -77,15 +104,18 @@ const StrategyLiveChart = ({
       hideIcons={!fullscreenChart}
       dark
       darkHeader
-      extraIcons={[
-        <span
-          key='exit-fullscreen'
-          type='button'
-          className='icon-move toggle-fullscreen'
+      extraIcons={(
+        <PanelIconButton
           onClick={exitFullscreenChart}
-          title={t('strategyEditor.exitFullscreenChartBtn')}
-        />,
-      ]}
+          icon={(
+            <i
+              key='exit-fullscreen'
+              className='icon-move toggle-fullscreen'
+              title={t('strategyEditor.exitFullscreenChartBtn')}
+            />
+          )}
+        />
+      )}
       fullscreen={fullscreenChart}
       onExitFullscreen={exitFullscreenChart}
     >
@@ -100,7 +130,9 @@ const StrategyLiveChart = ({
           indicators={chartIndicators}
           interval={interval}
           trades={trades}
+          position={position}
           hideResolutions
+          hideDeleteIndicator
           hideIndicators
           chartRange={chartRange}
           key={executionId}
@@ -117,12 +149,14 @@ StrategyLiveChart.propTypes = {
   trades: PropTypes.arrayOf(PropTypes.shape(STRATEGY_TRADE_SHAPE)).isRequired,
   fullscreenChart: PropTypes.bool.isRequired,
   exitFullscreenChart: PropTypes.func.isRequired,
+  lastOpenPosition: PropTypes.object, // eslint-disable-line
   isBacktest: PropTypes.bool,
 }
 
 StrategyLiveChart.defaultProps = {
   indicators: [],
   isBacktest: false,
+  lastOpenPosition: null,
 }
 
 export default memo(StrategyLiveChart)

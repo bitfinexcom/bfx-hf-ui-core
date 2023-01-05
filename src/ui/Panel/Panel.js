@@ -16,6 +16,7 @@ import PanelSidebarTabs from './Panel.SidebarTabs'
 import PanelTabs from './Panel.Tabs'
 import { getForcedTab } from './Panel.helpers'
 import Scrollbars from '../Scrollbars'
+import PanelIconButton from './Panel.IconButton'
 
 import './style.css'
 
@@ -47,6 +48,7 @@ const Panel = ({
   fullscreen,
   onEnterFullscreen,
   onExitFullscreen,
+  isWideSidebar,
 }) => {
   const tabs = _filter(
     React.Children.toArray(children),
@@ -179,9 +181,19 @@ const Panel = ({
 
           {!hideIcons && (
             <div className='hfui-panel__header-icons'>
-              {removeable && <i onClick={onRemove} className='icon-cancel' />}
+              {removeable && (
+                <PanelIconButton
+                  onClick={onRemove}
+                  icon={<i className='icon-cancel' />}
+                />
+              )}
 
-              {moveable && <i className='icon-move' />}
+              {moveable && (
+                <PanelIconButton
+                  onClick={() => {}}
+                  icon={<i className='icon-move' />}
+                />
+              )}
 
               {showChartMarket && (
                 <div className='hfui-panel__chart-market-select'>
@@ -190,11 +202,15 @@ const Panel = ({
               )}
 
               {onToggleSettings && (
-                <i
+                <PanelIconButton
                   onClick={onToggleSettings}
-                  className={ClassNames('icon-settings-icon', {
-                    yellow: settingsOpen,
-                  })}
+                  icon={(
+                    <i
+                      className={ClassNames('icon-settings-icon', {
+                        yellow: settingsOpen,
+                      })}
+                    />
+                  )}
                 />
               )}
 
@@ -221,7 +237,11 @@ const Panel = ({
               'no-sidebar': _isEmpty(sbTabs),
             })}
           >
-            <div className='hfui_panel__sidebar-container'>
+            <div
+              className={ClassNames('hfui_panel__sidebar-container', {
+                wide: isWideSidebar,
+              })}
+            >
               <Icon
                 className='hfui_panel__sidebar_switch'
                 name={sidebarOpened ? 'chevron-left' : 'chevron-right'}
@@ -295,6 +315,7 @@ Panel.propTypes = {
   fullscreen: PropTypes.bool,
   onEnterFullscreen: PropTypes.func,
   onExitFullscreen: PropTypes.func,
+  isWideSidebar: PropTypes.bool,
 }
 
 Panel.defaultProps = {
@@ -325,6 +346,7 @@ Panel.defaultProps = {
   fullscreen: false,
   onEnterFullscreen: () => {},
   onExitFullscreen: () => {},
+  isWideSidebar: false,
 }
 
 export default Panel

@@ -1,11 +1,15 @@
 import React, {
-  memo, useRef, useMemo, useCallback, Fragment, useEffect,
+  memo, useRef, useMemo, useCallback, Fragment,
 } from 'react'
 import PropTypes from 'prop-types'
 import _isEmpty from 'lodash/isEmpty'
+import _get from 'lodash/get'
 import { useTranslation } from 'react-i18next'
 
-import { getPairFromMarket } from '../../util/market'
+import {
+  getCorrectIconNameOfPerpCcy,
+  getPairFromMarket,
+} from '../../util/market'
 import Panel from '../../ui/Panel'
 import PositionsTable from '../PositionsTable'
 import AtomicOrdersTable from '../AtomicOrdersTable'
@@ -13,6 +17,9 @@ import AlgoOrdersTable from '../AlgoOrdersTable'
 import BalancesTable from '../BalancesTable'
 import MarketSelect from '../MarketSelect'
 import { MARKET_SHAPE } from '../../constants/prop-types-shapes'
+import PanelButton from '../../ui/Panel/Panel.Button'
+import CCYIcon from '../../ui/CCYIcon'
+import AlgoOrdersHistoryButton from '../AlgoOrdersHistoryButton'
 
 import './style.css'
 
@@ -30,36 +37,36 @@ const TradingStatePanel = ({
   layoutID,
   layoutI,
   getCurrencySymbol,
-  authToken,
   currentMode,
-  getActiveAlgoOrders,
-  isInitialAlgoOrderFetch,
 }) => {
-  const { currentMarket: activeFilter = {} } = savedState
+  const currentMarket = _get(savedState, 'currentMarket', {})
+  const activeFilter = _get(currentMarket, currentMode, {})
   const positionsCount = getPositionsCount(activeFilter)
   const atomicOrdersCount = getAtomicOrdersCount(activeFilter)
   const algoOrdersCount = getAlgoOrdersCount(activeFilter)
   const { t } = useTranslation()
 
-  const saveState = useCallback((param, value) => {
-    updateState(layoutID, layoutI, {
-      [param]: value,
-    })
-  }, [layoutID, layoutI, updateState])
+  const saveState = useCallback(
+    (param, value) => {
+      updateState(layoutID, layoutI, {
+        [param]: value,
+      })
+    },
+    [layoutID, layoutI, updateState],
+  )
 
-  const onTabChange = useCallback((tab) => {
-    saveState('tab', tab)
-  }, [saveState])
-
-  useEffect(() => {
-    if (authToken) {
-      getActiveAlgoOrders(isInitialAlgoOrderFetch)
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [authToken, currentMode, getActiveAlgoOrders])
+  const onTabChange = useCallback(
+    (tab) => {
+      saveState('tab', tab)
+    },
+    [saveState],
+  )
 
   const setActiveFilter = (market) => {
-    saveState('currentMarket', market)
+    saveState('currentMarket', {
+      ...currentMarket,
+      [currentMode]: market,
+    })
   }
   const marketRef = useRef('')
 
@@ -70,12 +77,19 @@ const TradingStatePanel = ({
     }
   }
 
+  const isAOsTabActive = _get(savedState, 'tab', null) === 2
+
   const showMarketDropdown = _isEmpty(activeFilter)
 
-  const styles = useMemo(() => ({ display: showMarketDropdown ? 'block' : 'none' }), [showMarketDropdown])
+  const styles = useMemo(
+    () => ({ display: showMarketDropdown ? 'block' : 'none' }),
+    [showMarketDropdown],
+  )
 
-  const { isPerp, uiID } = activeFilter
-  const activeFilterID = isPerp ? uiID : getPairFromMarket(activeFilter, getCurrencySymbol)
+  const { isPerp, uiID, base } = activeFilter
+  const activeFilterID = isPerp
+    ? uiID
+    : getPairFromMarket(activeFilter, getCurrencySymbol)
 
   return (
     <Panel
@@ -83,44 +97,46 @@ const TradingStatePanel = ({
       dark={dark}
       darkHeader={dark}
       className='hfui-tradingstatepanel__wrapper'
-      moveable={false}
-      removeable={false}
-      extraIcons={[
-        <Fragment key='filter-market'>
-          <div style={styles}>
-            <MarketSelect
-              markets={markets}
-              value={activeFilter}
-              onChange={setActiveFilter}
-              renderWithFavorites
-              ref={marketRef}
-            />
-          </div>
-          {!showMarketDropdown && (
-          <div
-            onClick={handleSelectedFilterClick}
-            className='hfui-tspanel-header-button active'
-          >
-            <i className='icon-filter-active' />
-            <p>{activeFilterID}</p>
-          </div>
-          )}
-        </Fragment>,
-        (
-          <div key='filter-by'>
-            <p className='hfui-uppercase'>
-              {`${showMarketDropdown ? t('tradingStatePanel.filterBy') : t('tradingStatePanel.filteringBy')}:`}
-            </p>
-          </div>
-        )]}
+      moveable={moveable}
+      removeable={removeable}
     >
       <Panel
         onRemove={onRemove}
-        moveable={moveable}
-        removeable={removeable}
+        darkHeader
+        moveable={false}
+        removeable={false}
         forcedTab={savedState.tab}
         onTabChange={onTabChange}
-        darkHeader
+        extraIcons={(
+          <div className='hfui-tradingstatepanel__options'>
+            <Fragment key='filter-market'>
+              <div style={styles}>
+                <MarketSelect
+                  markets={markets}
+                  value={activeFilter}
+                  onChange={setActiveFilter}
+                  renderWithFavorites
+                  ref={marketRef}
+                  placeholder={t('tradingStatePanel.filterBy')}
+                />
+              </div>
+              {!showMarketDropdown && (
+                <PanelButton
+                  onClick={handleSelectedFilterClick}
+                  text={activeFilterID}
+                  isActive
+                  icon={(
+                    <CCYIcon
+                      ccy={isPerp ? getCorrectIconNameOfPerpCcy(base) : base}
+                      className='hfui-tradingstatepanel__ccy-icon'
+                    />
+                  )}
+                />
+              )}
+            </Fragment>
+            {isAOsTabActive && <AlgoOrdersHistoryButton />}
+          </div>
+        )}
       >
         <PositionsTable
           renderedInTradingState
@@ -172,23 +188,19 @@ TradingStatePanel.propTypes = {
   layoutI: PropTypes.string.isRequired,
   layoutID: PropTypes.string,
   getCurrencySymbol: PropTypes.func.isRequired,
-  authToken: PropTypes.string,
   currentMode: PropTypes.string.isRequired,
-  isInitialAlgoOrderFetch: PropTypes.bool.isRequired,
-  getActiveAlgoOrders: PropTypes.func.isRequired,
 }
 
 TradingStatePanel.defaultProps = {
   dark: true,
   moveable: false,
   removeable: false,
-  getPositionsCount: () => { },
-  getAtomicOrdersCount: () => { },
-  getAlgoOrdersCount: () => { },
-  onRemove: () => { },
+  getPositionsCount: () => {},
+  getAtomicOrdersCount: () => {},
+  getAlgoOrdersCount: () => {},
+  onRemove: () => {},
   savedState: {},
   layoutID: '',
-  authToken: '',
 }
 
 export default memo(TradingStatePanel)

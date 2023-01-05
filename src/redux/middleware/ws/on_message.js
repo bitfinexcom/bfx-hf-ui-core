@@ -1,6 +1,7 @@
 import _isArray from 'lodash/isArray'
 import _isObject from 'lodash/isObject'
 import _isNumber from 'lodash/isNumber'
+import _isEmpty from 'lodash/isEmpty'
 import _reduce from 'lodash/reduce'
 import _map from 'lodash/map'
 import Debug from 'debug'
@@ -15,8 +16,8 @@ import marketActions from '../../actions/market'
 import closeElectronApp from '../../helpers/close_electron_app'
 import { MAIN_MODE, PAPER_MODE } from '../../reducers/ui'
 import tokenStore from '../../../util/token_store'
-import { AOAdapter } from '../../adapters/ws'
 import { isElectronApp, HONEY_AUTH_URL } from '../../config'
+import { AOAdapter } from '../../adapters/ws'
 import { UI_MODAL_KEYS } from '../../constants/modals'
 import { UI_KEYS } from '../../constants/ui_keys'
 import { WS_CONNECTION } from '../../constants/ws'
@@ -366,21 +367,33 @@ export default (alias, store) => (e = {}) => {
       }
 
       case 'data.aos': {
-        const [, , aos] = payload
+        const [, , , aos] = payload
+
+        if (_isEmpty(aos)) {
+          break
+        }
+
         const adapted = _map(aos, ao => (_isArray(ao) ? AOAdapter(ao) : ao))
-        store.dispatch(WSActions.recvDataAlgoOrders(adapted))
+        store.dispatch(AOActions.setActiveAlgoOrders(adapted))
+        store.dispatch(AOActions.showActiveOrdersModal(true))
         break
       }
 
       case 'data.ao': {
-        const [, , ao] = payload
-        store.dispatch(WSActions.recvDataAlgoOrder({ ao }))
+        const [, , mode, ao] = payload
+        store.dispatch(WSActions.recvDataAlgoOrder({ mode, ao }))
         break
       }
 
       case 'data.ao.stopped': {
-        const [, , gid] = payload
-        store.dispatch(WSActions.recvDataAlgoOrderStopped({ gid }))
+        const [, , mode, gid] = payload
+        store.dispatch(WSActions.recvDataAlgoOrderStopped({ mode, gid }))
+        break
+      }
+
+      case 'algo.order_history_loaded': {
+        const [, aos] = payload
+        store.dispatch(WSActions.recvDataAlgoOrdersHistory(aos))
         break
       }
 
@@ -416,6 +429,12 @@ export default (alias, store) => (e = {}) => {
         break
       }
 
+      case 'bt.progress': {
+        const [, progressPerc] = payload
+        store.dispatch(WSActions.recvBacktestProgress(progressPerc))
+        break
+      }
+
       case 'bt.btresult': {
         const [, res] = payload
         store.dispatch(WSActions.recvBacktestResults(res))
@@ -434,22 +453,8 @@ export default (alias, store) => (e = {}) => {
         break
       }
 
-      case 'algo.active_orders': {
-        const [, initialFetch, mode, activeAlgoOrders] = payload
-
-        if (initialFetch) {
-          store.dispatch(AOActions.setActiveAlgoOrders(activeAlgoOrders, mode))
-          store.dispatch(AOActions.showActiveOrdersModal(true))
-        } else {
-          store.dispatch(WSActions.recvDataAlgoOrders(activeAlgoOrders))
-        }
-
-        break
-      }
-
       case 'algo.reload': {
         store.dispatch(WSActions.clearAlgoOrders())
-        store.dispatch(AOActions.getActiveAlgoOrders())
         break
       }
 
