@@ -33,8 +33,10 @@ import RangeInput from './FieldComponents/input.range'
 import UICheckboxGroup from './FieldComponents/ui.checkboxGroup'
 import TickerBar from './FieldComponents/ui.ticker'
 import AliasInput from './FieldComponents/input.alias'
+import RecurringAOSummary from './FieldComponents/customComponents/RecurringAOSummary'
 import Button from '../../ui/Button'
 import { validateOrderLimits } from './OrderForm.orders.helpers'
+import RecurringEndDate from './FieldComponents/customComponents/RecurringEndDate'
 
 const debug = Debug('hfui:order-form:helpers')
 
@@ -51,6 +53,8 @@ const COMPONENTS_FOR_ID = {
   'input.range': RangeInput,
   'input.alias': AliasInput,
   'ui.ticker': TickerBar,
+  reccuring_summary: RecurringAOSummary,
+  reccuring_endDate: RecurringEndDate,
 }
 
 const marketToQuoteBase = (market) => ({
@@ -252,7 +256,7 @@ const renderLayoutComponent = ({
   onFieldChange, // eslint-disable-line
 }) => {
   const {
-    disabled: disabledCond, component: id, visible,
+    disabled: disabledCond, component: id, visible, customClassName,
   } = componentDef
   const C = COMPONENTS_FOR_ID[id]
 
@@ -291,6 +295,7 @@ const renderLayoutComponent = ({
       validationError={validationErrors[fieldName]}
       fieldData={fieldData}
       disabled={disabled}
+      className={customClassName}
     />
   )
 }
