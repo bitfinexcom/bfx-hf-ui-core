@@ -63,7 +63,8 @@
   }
 
   .type-actions {
-    ul, li > div {
+    ul,
+    li > div {
       display: flex;
       justify-content: center;
     }
@@ -326,7 +327,6 @@
 
 .hfui-orderform__input {
   display: inline-block;
-  vertical-align: middle;
   margin: 0 0 16px 0;
 
   input[type="range"] {
@@ -399,6 +399,14 @@
 
   .hfui-dropdown__wrapper {
     width: 100%;
+  }
+
+  &.vertical-align {
+    margin-top: 8px;
+
+    .ufx-checkbox {
+      margin-top: 0;
+    }
   }
 }
 

@@ -8,9 +8,11 @@ import { renderString } from './fields.helpers'
 
 const RadioInput = memo(
   ({
-    def: { options }, renderData, value, onChange, disabled,
+    def: { options }, renderData, value, onChange, disabled, className,
   }) => (
-    <div className={ClassNames('hfui-orderform__input', { disabled })}>
+    <div
+      className={ClassNames('hfui-orderform__input', className, { disabled })}
+    >
       {_map(options, ({ value: v, label }, i) => (
         <RadioButton
           key={i}
@@ -41,11 +43,13 @@ RadioInput.propTypes = {
   }).isRequired,
   value: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
+  className: PropTypes.string,
   disabled: PropTypes.bool,
 }
 
 RadioInput.defaultProps = {
   disabled: false,
+  className: null,
 }
 
 export default RadioInput
