@@ -417,8 +417,6 @@
   line-height: 16px;
   margin-top: 2px;
   display: flex;
-  flex-shrink: 0;
-  justify-content: space-between;
 
   &.disabled {
     opacity: 0.5;
@@ -427,6 +425,10 @@
 
   &.error {
     color: $red-color;
+  }
+
+  .trigger {
+    margin-left: 5px;
   }
 }
 
