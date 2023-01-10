@@ -538,19 +538,21 @@ class OrderForm extends React.Component {
                 </div>
               </div>,
 
-              <ul className='hfui-orderform__header' key='of-header'>
-                <li key='item' className='hfui-orderform__centered-item'>
-                  {_map(currentMarket.contexts, (value) => (
-                    <OrderFormTab
-                      key={value}
-                      value={value}
-                      onClick={this.onContextChange}
-                      isActive={value === context}
-                      label={t(CONTEXT_LABELS[value])}
-                    />
-                  ))}
-                </li>
-              </ul>,
+              !currentLayout?.hideContexts && (
+                <ul className='hfui-orderform__header' key='of-header'>
+                  <li key='item' className='hfui-orderform__centered-item'>
+                    {_map(currentMarket.contexts, (value) => (
+                      <OrderFormTab
+                        key={value}
+                        value={value}
+                        onClick={this.onContextChange}
+                        isActive={value === context}
+                        label={t(CONTEXT_LABELS[value])}
+                      />
+                    ))}
+                  </li>
+                </ul>
+              ),
 
               renderLayout({
                 onSubmit: this.onSubmit,
