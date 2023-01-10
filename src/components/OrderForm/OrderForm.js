@@ -12,6 +12,7 @@ import _isArray from 'lodash/isArray'
 import _isNil from 'lodash/isNil'
 import PropTypes from 'prop-types'
 
+import OrderFormTab from './FieldComponents/ui.tab'
 import { isElectronApp } from '../../redux/config'
 import Panel from '../../ui/Panel'
 import { getIsAnyModalOpen } from '../../util/document'
@@ -540,15 +541,13 @@ class OrderForm extends React.Component {
               <ul className='hfui-orderform__header' key='of-header'>
                 <li key='item' className='hfui-orderform__centered-item'>
                   {_map(currentMarket.contexts, (value) => (
-                    <div
+                    <OrderFormTab
                       key={value}
-                      onClick={() => this.onContextChange(value)}
-                      className={`hfui__orderform-tab ${
-                        value === context ? 'active' : ''
-                      }`}
-                    >
-                      <p>{t(CONTEXT_LABELS[value])}</p>
-                    </div>
+                      value={value}
+                      onClick={this.onContextChange}
+                      isActive={value === context}
+                      label={t(CONTEXT_LABELS[value])}
+                    />
                   ))}
                 </li>
               </ul>,
