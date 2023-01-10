@@ -402,7 +402,11 @@
   }
 
   &.vertical-align {
-    margin-top: 8px;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    padding-bottom: 18px;
+    margin-top: 0;
 
     .ufx-checkbox {
       margin-top: 0;
