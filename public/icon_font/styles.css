@@ -1,19 +1,19 @@
 @charset "UTF-8";
 
 @font-face {
-  font-family: "untitled-font-4";
-  src:url("fonts/untitled-font-4.eot");
-  src:url("fonts/untitled-font-4.eot?#iefix") format("embedded-opentype"),
-    url("fonts/untitled-font-4.woff") format("woff"),
-    url("fonts/untitled-font-4.ttf") format("truetype"),
-    url("fonts/untitled-font-4.svg#untitled-font-4") format("svg");
+  font-family: "bitfinex-honey-font";
+  src:url("fonts/bitfinex-honey-font.eot");
+  src:url("fonts/bitfinex-honey-font.eot?#iefix") format("embedded-opentype"),
+    url("fonts/bitfinex-honey-font.woff") format("woff"),
+    url("fonts/bitfinex-honey-font.ttf") format("truetype"),
+    url("fonts/bitfinex-honey-font.svg#bitfinex-honey-font") format("svg");
   font-weight: normal;
   font-style: normal;
 
 }
 
 [data-icon]:before {
-  font-family: "untitled-font-4" !important;
+  font-family: "bitfinex-honey-font" !important;
   content: attr(data-icon);
   font-style: normal !important;
   font-weight: normal !important;
@@ -27,7 +27,7 @@
 
 [class^="icon-"]:before,
 [class*=" icon-"]:before {
-  font-family: "untitled-font-4" !important;
+  font-family: "bitfinex-honey-font" !important;
   font-style: normal !important;
   font-weight: normal !important;
   font-variant: normal !important;
@@ -38,155 +38,158 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-.icon-distribute-up-passive:before {
-  content: "\59";
-}
-.icon-arrow-down-active:before {
+.icon-infinity:before {
   content: "\61";
 }
-.icon-arrow-down-passive:before {
+.icon-distribute-up-passive:before {
   content: "\62";
 }
-.icon-back-arrow:before {
+.icon-arrow-down-active:before {
   content: "\63";
 }
-.icon-cancel:before {
+.icon-arrow-down-passive:before {
   content: "\64";
 }
-.icon-clear:before {
+.icon-back-arrow:before {
   content: "\65";
 }
-.icon-delete1:before {
+.icon-cancel:before {
   content: "\66";
 }
-.icon-disconnected:before {
+.icon-clear:before {
   content: "\67";
 }
-.icon-distribute-active:before {
+.icon-delete1:before {
   content: "\68";
 }
-.icon-distribute-passive:before {
+.icon-disconnected:before {
   content: "\69";
 }
-.icon-exchange-active:before {
+.icon-distribute-active:before {
   content: "\6a";
 }
-.icon-exchange-passive:before {
+.icon-distribute-passive:before {
   content: "\6b";
 }
-.icon-expand-arrow:before {
+.icon-exchange-active:before {
   content: "\6c";
 }
-.icon-eye-closed:before {
+.icon-exchange-passive:before {
   content: "\6d";
 }
-.icon-eye-open:before {
+.icon-expand-arrow:before {
   content: "\6e";
 }
-.icon-fill-or-kill-active:before {
+.icon-eye-closed:before {
   content: "\6f";
 }
-.icon-fill-or-kill-passive:before {
+.icon-eye-open:before {
   content: "\70";
 }
-.icon-filter-active:before {
+.icon-fill-or-kill-active:before {
   content: "\71";
 }
-.icon-filter-passive:before {
+.icon-fill-or-kill-passive:before {
   content: "\72";
 }
-.icon-iceberg-active:before {
+.icon-filter-active:before {
   content: "\73";
 }
-.icon-iceberg-passive:before {
+.icon-filter-passive:before {
   content: "\74";
 }
-.icon-distribute-up-active:before {
+.icon-iceberg-active:before {
   content: "\75";
 }
-.icon-immediate-or-cancel-active:before {
+.icon-iceberg-passive:before {
   content: "\76";
 }
-.icon-immediate-or-cancel-passive:before {
+.icon-distribute-up-active:before {
   content: "\77";
 }
-.icon-limit-active:before {
+.icon-immediate-or-cancel-active:before {
   content: "\78";
 }
-.icon-limit-passive:before {
+.icon-immediate-or-cancel-passive:before {
   content: "\79";
 }
-.icon-ma-crossover-active:before {
+.icon-limit-active:before {
   content: "\7a";
 }
-.icon-ma-crossover-passive:before {
+.icon-limit-passive:before {
   content: "\41";
 }
-.icon-market-active:before {
+.icon-ma-crossover-active:before {
   content: "\42";
 }
-.icon-market-passive:before {
+.icon-ma-crossover-passive:before {
   content: "\43";
 }
-.icon-move:before {
+.icon-market-active:before {
   content: "\44";
 }
-.icon-notifications:before {
+.icon-market-passive:before {
   content: "\45";
 }
-.icon-open:before {
+.icon-move:before {
   content: "\46";
 }
-.icon-password:before {
+.icon-notifications:before {
   content: "\47";
 }
-.icon-ping-pong-active:before {
+.icon-open:before {
   content: "\48";
 }
-.icon-ping-pong-passive:before {
+.icon-password:before {
   content: "\49";
 }
-.icon-run:before {
+.icon-ping-pong-active:before {
   content: "\4a";
 }
-.icon-save:before {
+.icon-ping-pong-passive:before {
   content: "\4b";
 }
-.icon-settings-icon:before {
+.icon-run:before {
   content: "\4c";
 }
-.icon-stop-active:before {
+.icon-save:before {
   content: "\4d";
 }
-.icon-stop-limit-active:before {
+.icon-settings-icon:before {
   content: "\4e";
 }
-.icon-stop-limit-passive:before {
+.icon-stop-active:before {
   content: "\4f";
 }
-.icon-stop-passive:before {
+.icon-stop-limit-active:before {
   content: "\50";
 }
-.icon-strategy-editor-active:before {
+.icon-stop-limit-passive:before {
   content: "\51";
 }
-.icon-strategy-editor-passive:before {
+.icon-stop-passive:before {
   content: "\52";
 }
-.icon-tick:before {
+.icon-strategy-editor-active:before {
   content: "\53";
 }
-.icon-trailing-stop-active:before {
+.icon-strategy-editor-passive:before {
   content: "\54";
 }
-.icon-trailing-stop-passive:before {
+.icon-tick:before {
   content: "\55";
 }
-.icon-distribute-down-active:before {
+.icon-trailing-stop-active:before {
   content: "\56";
 }
-.icon-distribute-down-passive:before {
+.icon-trailing-stop-passive:before {
   content: "\57";
+}
+.icon-distribute-down-active:before {
+  content: "\58";
+}
+.icon-distribute-down-passive:before {
+  content: "\59";
 }
 .icon-api:before {
   content: "\5a";
@@ -199,4 +202,16 @@
 }
 .icon-plus:before {
   content: "\32";
+}
+.icon-layout-icon:before {
+  content: "\33";
+}
+.icon-check:before {
+  content: "\34";
+}
+.icon-clock:before {
+  content: "\35";
+}
+.icon-error:before {
+  content: "\36";
 }
