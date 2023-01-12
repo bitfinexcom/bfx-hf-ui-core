@@ -1,9 +1,6 @@
 import React, { memo } from 'react'
 import PropTypes from 'prop-types'
 import { useTranslation } from 'react-i18next'
-import { ReactComponent as CheckIcon } from './check.svg'
-import { ReactComponent as ErrorIcon } from './error.svg'
-import { ReactComponent as ClockIcon } from './clock.svg'
 import AttentionBar from '../../ui/AttentionBar/AttentionBar'
 
 const ApiBanner = ({ isUpdating, apiKeyState }) => {
@@ -16,7 +13,7 @@ const ApiBanner = ({ isUpdating, apiKeyState }) => {
         yellow
         className='appsettings-modal__api-configuration-message'
       >
-        <ClockIcon />
+        <i className='icon-clock' />
         {t('appSettings.validating')}
       </AttentionBar>
     )
@@ -27,7 +24,7 @@ const ApiBanner = ({ isUpdating, apiKeyState }) => {
         red
         className='appsettings-modal__api-configuration-message'
       >
-        <ErrorIcon />
+        <i className='icon-error' />
         {t('appSettings.apiNotConfigured')}
       </AttentionBar>
     )
@@ -38,7 +35,7 @@ const ApiBanner = ({ isUpdating, apiKeyState }) => {
         red
         className='appsettings-modal__api-configuration-message'
       >
-        <ErrorIcon />
+        <i className='icon-error' />
         {t('appSettings.apiNotValid')}
       </AttentionBar>
     )
@@ -48,7 +45,7 @@ const ApiBanner = ({ isUpdating, apiKeyState }) => {
       green
       className='appsettings-modal__api-configuration-message'
     >
-      <CheckIcon />
+      <i className='icon-check' />
       {t('appSettings.configured')}
     </AttentionBar>
   )
