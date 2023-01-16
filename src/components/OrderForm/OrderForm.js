@@ -11,6 +11,7 @@ import _trim from 'lodash/trim'
 import _isArray from 'lodash/isArray'
 import _isNil from 'lodash/isNil'
 import PropTypes from 'prop-types'
+import { Recurring } from 'bfx-hf-algo'
 
 import OrderFormTab from './FieldComponents/ui.tab'
 import { isElectronApp } from '../../redux/config'
@@ -287,11 +288,15 @@ class OrderForm extends React.Component {
     } = this.state
 
     const { id } = currentLayout
-    const data = processFieldData({
+    let data = processFieldData({
       layout: currentLayout,
       action: 'submit',
       fieldData,
     })
+
+    if (id === 'bfx-recurring') {
+      data = Recurring.meta.processParams(data, currentMarket)
+    }
     const errors = this.validateAOData(data)
 
     if (_isEmpty(errors)) {
