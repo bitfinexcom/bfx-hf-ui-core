@@ -4,7 +4,7 @@ import _startsWith from 'lodash/startsWith'
 import cookie from 'js-cookie'
 import { BFX_TOKEN_COOKIE, BFX_FORCE_LOGIN, BFX_FORCE_LOGIN_MESSAGE } from '../constants/cookies'
 
-const cookieDomain = process.env.REACT_APP_COOKIE_DOMAIN || 'bitfinex.com'
+const cookieDomain = import.meta.env.VITE_COOKIE_DOMAIN || 'bitfinex.com'
 export const defaultCookieOpts = cookieDomain === 'localhost'
   ? {}
   : { secure: true, domain: cookieDomain }

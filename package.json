@@ -12,13 +12,13 @@
     "build-css": "cross-env sass --no-source-map src:src --load-path ./node_modules --style compressed",
     "watch-css": "cross-env npm run build-css && cross-env sass --no-source-map src:src --load-path ./node_modules --style compressed --watch",
     "start": "node scripts/per-env.js",
-    "start:staging": "env-cmd -e staging,development react-scripts start",
-    "start:production": "env-cmd -e production,development react-scripts start",
-    "start:electron": "env-cmd -e electron,development react-scripts start",
+    "start:staging": "env-cmd -e staging,development vite",
+    "start:production": "env-cmd -e production,development vite",
+    "start:electron": "env-cmd -e electron,development vite",
     "build": "node scripts/per-env.js",
-    "build:staging": "GENERATE_SOURCEMAP=false cross-env npm run build-css && env-cmd -e staging react-scripts build",
-    "build:production": "GENERATE_SOURCEMAP=false cross-env npm run build-css && env-cmd -e production react-scripts build",
-    "build:electron": "GENERATE_SOURCEMAP=false cross-env npm run build-css && env-cmd -e electron react-scripts build",
+    "build:staging": "GENERATE_SOURCEMAP=false cross-env npm run build-css && env-cmd -e staging vite build",
+    "build:production": "GENERATE_SOURCEMAP=false cross-env npm run build-css && env-cmd -e production vite build",
+    "build:electron": "GENERATE_SOURCEMAP=false cross-env npm run build-css && env-cmd -e electron vite build",
     "test": "cross-env npm run lint",
     "lint": "cross-env eslint --fix src"
   },
@@ -37,6 +37,7 @@
     "BTC"
   ],
   "devDependencies": {
+    "@vitejs/plugin-react": "^3.0.1",
     "browserslist": "^4.21.4",
     "eslint-config-airbnb": "^19.0.4",
     "eslint-config-react-app": "^7.0.1",
@@ -49,9 +50,13 @@
     "react-dev-utils": "^11.0.4",
     "react-error-overlay": "^6.0.11",
     "sass": "^1.55.0",
-    "sass-loader": "^10.3.1"
+    "sass-loader": "^10.3.1",
+    "vite": "^4.0.4",
+    "vite-plugin-svgr": "^2.4.0"
   },
   "dependencies": {
+    "@esbuild-plugins/node-globals-polyfill": "^0.1.1",
+    "@esbuild-plugins/node-modules-polyfill": "^0.1.4",
     "@monaco-editor/react": "^4.4.6",
     "@ufx-ui/bfx-containers": "0.14.1",
     "@ufx-ui/core": "0.14.1",
@@ -66,11 +71,13 @@
     "clsx": "^1.2.1",
     "connected-react-router": "^6.9.3",
     "cross-env": "^7.0.3",
+    "crypto-browserify": "^3.12.0",
     "csv-export": "^1.0.2",
     "dangerously-set-html-content": "^1.0.9",
     "date-fns": "^2.29.3",
     "debug": "^4.3.4",
     "env-cmd": "^10.1.0",
+    "events": "^3.3.0",
     "file-saver": "^2.0.5",
     "history": "^4.10.1",
     "i18next": "^21.10.0",
@@ -98,7 +105,6 @@
     "react-redux": "^8.0.4",
     "react-resizable": "^3.0.4",
     "react-router": "^5.3.4",
-    "react-scripts": "^4.0.3",
     "react-timer-hook": "^3.0.5",
     "react-transition-group": "^4.4.5",
     "react-virtualized": "^9.22.3",
@@ -109,7 +115,8 @@
     "reselect": "^4.1.6",
     "sanitize-html": "^2.7.2",
     "semver": "^7.3.8",
-    "uuid": "^8.3.2"
+    "uuid": "^8.3.2",
+    "vite-plugin-require": "^1.1.10"
   },
   "eslintConfig": {
     "extends": "react-app"

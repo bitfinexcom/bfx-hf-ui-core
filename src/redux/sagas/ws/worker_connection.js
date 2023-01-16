@@ -11,8 +11,8 @@ import { isDevEnv } from '../../../util/autologin'
 import WSTypes, { SOCKET_STATUS_MAP } from '../../constants/ws'
 
 const URLS = {
-  [WSTypes.ALIAS_API_SERVER]: process.env.REACT_APP_WSS_URL,
-  [WSTypes.ALIAS_DATA_SERVER]: process.env.REACT_APP_DS_URL,
+  [WSTypes.ALIAS_API_SERVER]: import.meta.env.VITE_WSS_URL,
+  [WSTypes.ALIAS_DATA_SERVER]: import.meta.env.VITE_DS_URL,
 }
 const CHECK_CONNECTION_EVERY_MS = 10 * 1000 // 10 sec
 const CHECK_CONNECTION_INITIAL_DELAY = 8 * 1000 // 8 sec

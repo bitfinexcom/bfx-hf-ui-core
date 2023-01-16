@@ -1,3 +1,5 @@
+console.log(import.meta.env)
+
 import React from 'react'
 import { createRoot } from 'react-dom/client'
 import { I18nextProvider } from 'react-i18next'
@@ -14,6 +16,7 @@ import './passive_listener_fix'
 import './index.css'
 
 console.log(`bfx-hf-ui-core v${Manifest.version}`)
+console.log(import.meta.env, process.env)
 
 const debug = Debug('hfui:main')
 const LOCAL_STORAGE_VERSION_KEY = 'HFUI_LS_VERSION'

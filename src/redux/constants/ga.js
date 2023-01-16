@@ -1,4 +1,4 @@
-module.exports = {
+const ga = {
   GA_AO_CANCEL: 'GA_AO_CANCEL',
   GA_PAGEVIEW: 'GA_PAGEVIEW',
   GA_CANCEL_AO: 'GA_CANCEL_AO',
@@ -9,3 +9,5 @@ module.exports = {
   GA_UPDATE_SETTINGS: 'GA_UPDATE_SETTINGS',
   GA_EDIT_AO: 'GA_EDIT_AO',
 }
+
+export default ga

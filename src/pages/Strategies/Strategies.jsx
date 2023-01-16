@@ -27,8 +27,10 @@ import './style.css'
 
 const debug = Debug('hfui-ui:p:strategy-editor')
 
-const StrategyEditor = lazy(() => import('../../components/StrategyEditor'))
-const StrategiesListTable = lazy(() => import('../../components/StrategiesListTable'))
+// const StrategyEditor = lazy(() => import('../../components/StrategyEditor'))
+// const StrategiesListTable = lazy(() => import('../../components/StrategiesListTable'))
+import StrategyEditor from '../../components/StrategyEditor'
+import StrategiesListTable from '../../components/StrategiesListTable'  
 
 const StrategiesPage = ({
   authToken,

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { Line } from 'rc-progress'
 import { useSelector } from 'react-redux'
 import { getThemeSetting, THEMES } from '../../redux/selectors/ui'
-import scssVariables from '../../variables.scss'
+import scssVariables from '../../variables.scss?inline'
 
 import './style.css'
 

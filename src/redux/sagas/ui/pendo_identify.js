@@ -18,7 +18,7 @@ const getPendoVisitorId = () => {
   return newVisitorId
 }
 
-const PENDO_API_KEY = process.env.REACT_APP_PENDO_API_KEY
+const PENDO_API_KEY = import.meta.env.VITE_PENDO_API_KEY
 const PENDO_VISITOR_ID = getPendoVisitorId()
 
 const debug = Debug('hfui:pendo')

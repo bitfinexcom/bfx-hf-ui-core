@@ -16,7 +16,7 @@ export default function* fetchCcyArticle() {
     const id = yield select(getActiveMarketCcyId)
     const i18nMappedKey = i18next.getMappedLanguageKey()
 
-    const url = `${process.env.REACT_APP_UFX_API_URL}/v1/articles?type=zendesk&id=${id}&lang=${i18nMappedKey}`
+    const url = `${import.meta.env.VITE_UFX_API_URL}/v1/articles?type=zendesk&id=${id}&lang=${i18nMappedKey}`
     const { data } = yield axios.get(url)
     const { status, data: result } = data
     if (status !== 'success' || _isEmpty(result)) {

@@ -7,7 +7,7 @@ import { Line } from 'rc-progress'
 import { useTranslation } from 'react-i18next'
 import { getThemeSetting, THEMES } from '../../redux/selectors/ui'
 
-import scssVariables from '../../variables.scss'
+import scssVariables from '../../variables.scss?inline'
 
 import './style.css'
 

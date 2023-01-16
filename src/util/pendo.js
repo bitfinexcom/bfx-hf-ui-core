@@ -1,5 +1,5 @@
 /* eslint-disable */
-const PENDO_API_KEY = process.env.REACT_APP_PENDO_API_KEY;
+const PENDO_API_KEY = import.meta.env.VITE_PENDO_API_KEY;
 
 (function (apiKey) {
   (function (p, e, n, d, o) {

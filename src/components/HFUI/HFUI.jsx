@@ -20,10 +20,14 @@ import FullscreenModeBar from '../FullscreenModeBar'
 
 import './style.css'
 
-const TradingPage = lazy(() => import('../../pages/Trading'))
-const MarketDataPage = lazy(() => import('../../pages/MarketData'))
-const AuthenticationPage = lazy(() => import('../../pages/Authentication'))
-const StrategiesPage = lazy(() => import('../../pages/Strategies'))
+// const TradingPage = lazy(() => import('../../pages/Trading'))
+// const MarketDataPage = lazy(() => import('../../pages/MarketData'))
+// const AuthenticationPage = lazy(() => import('../../pages/Authentication'))
+// const StrategiesPage = lazy(() => import('../../pages/Strategies'))
+import TradingPage from '../../pages/Trading'
+import MarketDataPage from '../../pages/MarketData'
+import AuthenticationPage from '../../pages/Authentication'
+import StrategiesPage from '../../pages/Strategies'
 
 const ipcHelpers = window.electronService
 
@@ -150,41 +154,43 @@ const HFUI = (props) => {
 
   return (
     <Suspense fallback={<></>}>
-      {isElectronApp && <FullscreenModeBar />}
-      {authToken && (
-        <>
-          <Switch>
-            <Redirect from='/index.html' to='/' exact />
-            <Route
-              path={Routes.tradingTerminal.path}
-              render={() => <TradingPage />}
-              exact
-            />
-            {showStrategies && Routes.strategyEditor && (
+      <>
+        {isElectronApp && <FullscreenModeBar />}
+        {authToken && (
+          <>
+            <Switch>
+              <Redirect from='/index.html' to='/' exact />
               <Route
-                path={Routes.strategyEditor.path}
-                render={() => <StrategiesPage />}
+                path={Routes.tradingTerminal.path}
+                render={() => <TradingPage />}
+                exact
               />
-            )}
-            <Route
-              path={Routes.marketData.path}
-              render={() => <MarketDataPage />}
-            />
-            <Route
-              path='*'
-              render={() => <Redirect to={Routes.tradingTerminal.path} />}
-            />
-          </Switch>
-          <ModalsWrapper isElectronApp={isElectronApp} />
-        </>
-      )}
-      <NotificationsSidebar notificationsVisible={notificationsVisible} />
-      {isElectronApp && (
-        <>
-          {!authToken && <AuthenticationPage />}
-          <AppUpdateBar />
-        </>
-      )}
+              {showStrategies && Routes.strategyEditor && (
+                <Route
+                  path={Routes.strategyEditor.path}
+                  render={() => <StrategiesPage />}
+                />
+              )}
+              <Route
+                path={Routes.marketData.path}
+                render={() => <MarketDataPage />}
+              />
+              <Route
+                path='*'
+                render={() => <Redirect to={Routes.tradingTerminal.path} />}
+              />
+            </Switch>
+            <ModalsWrapper isElectronApp={isElectronApp} />
+          </>
+        )}
+        <NotificationsSidebar notificationsVisible={notificationsVisible} />
+        {isElectronApp && (
+          <>
+            {!authToken && <AuthenticationPage />}
+            <AppUpdateBar />
+          </>
+        )}
+      </>
     </Suspense>
   )
 }

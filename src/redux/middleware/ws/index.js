@@ -35,6 +35,7 @@ export default () => {
         }
 
         const socket = new window.WebSocket(destination)
+        console.log(socket)
         socket.onmessage = onWSMessage(alias, store)
         socket.onclose = onWSClose(alias, store)
         socket.onopen = onWSOpen(alias, store)

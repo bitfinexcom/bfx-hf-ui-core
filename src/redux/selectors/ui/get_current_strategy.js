@@ -1,9 +1,7 @@
 import _get from 'lodash/get'
-
-const { createSelector } = require('reselect')
-
-const { getIsPaperTrading, getUIState } = require('.')
-const { UI_KEYS } = require('../../constants/ui_keys')
+import { createSelector } from 'reselect'
+import { getIsPaperTrading, getUIState } from '.'
+import { UI_KEYS } from '../../constants/ui_keys'
 
 const strategyEditorState = (state) => getUIState(state, UI_KEYS.strategyEditor, {})
 

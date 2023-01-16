@@ -13,7 +13,7 @@ import { getActiveStrategies, getAllAlgoOrdersArray } from '../../redux/selector
 import { removeCookie } from '../../util/cookies'
 import closeElectronApp from '../../redux/helpers/close_electron_app'
 
-const homeUrl = process.env.REACT_APP_ENVIRONMENT === 'staging'
+const homeUrl = import.meta.env.VITE_ENVIRONMENT === 'staging'
   ? 'https://bfx-ui-api.staging.bitfinex.com/'
   : 'https://honey.bitfinex.com'
 

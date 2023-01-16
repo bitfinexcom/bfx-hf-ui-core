@@ -1,4 +1,4 @@
-module.exports = {
+const ui = {
   SET_UI_VALUE: 'UI_SET_UI_VALUE',
   UPDATE_UI_VALUE: 'UI_UPDATE_UI_VALUE',
   SAVE_COMPONENT_STATE: 'UI_SAVE_COMPONENT_STATE',
@@ -43,3 +43,5 @@ module.exports = {
   REMOVE_STRATEGY: 'UI_REMOVE_STRATEGY',
   SET_PENDO_STATE: 'UI_SET_PENDO_STATE',
 }
+
+export default ui

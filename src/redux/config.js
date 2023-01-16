@@ -19,15 +19,15 @@ const UFX_REDUCER_PATHS = {
   CURRENCIES: 'currencies',
 }
 
-const isElectronApp = process.env.REACT_APP_IS_ELECTRON_APP === 'true'
+const isElectronApp = import.meta.env.VITE_IS_ELECTRON_APP === 'true'
 
-const isDevEnv = process.env.REACT_APP_DEV === 'true'
+const isDevEnv = import.meta.env.VITE_DEV === 'true'
 
-const env = isElectronApp ? 'electron' : process.env.REACT_APP_ENVIRONMENT
+const env = isElectronApp ? 'electron' : import.meta.env.VITE_ENVIRONMENT
 
 const isMacOS = navigator.userAgent.indexOf('Mac') !== -1
 
-const PUB_REST_API_URL = isElectronApp ? 'http://localhost:45001' : process.env.REACT_APP_UFX_PUBLIC_API_URL
+const PUB_REST_API_URL = isElectronApp ? 'http://localhost:45001' : import.meta.env.VITE_UFX_PUBLIC_API_URL
 
 const appVersion = version
 
@@ -46,9 +46,9 @@ const STOP_ORDER_ARTICLE_URL = 'https://support.bitfinex.com/hc/en-us/articles/1
 // product description link
 const HF_DESC_URL = 'https://support.bitfinex.com/hc/en-us/articles/900000096823-Honey-Framework'
 
-const CHART_URL = isElectronApp ? 'https://bitfinexcom.github.io/bfx-hf-tradingview/' : process.env.REACT_APP_CHART_URL
+const CHART_URL = isElectronApp ? 'https://bitfinexcom.github.io/bfx-hf-tradingview/' : import.meta.env.VITE_CHART_URL
 
-const HONEY_AUTH_URL = `${process.env.REACT_APP_UFX_API_URL}/honey`
+const HONEY_AUTH_URL = `${import.meta.env.VITE_UFX_API_URL}/honey`
 
 const PASSWORD_MIN_LENGTH = 8
 const PASSWORD_MAX_LENGTH = 64
