@@ -4,43 +4,43 @@ import DateInput from '../../input.date'
 import { isValidDate } from '../../../../../util/date'
 
 const RecurringEndDate = ({ fieldData, onFieldChange, ...props }) => {
-  const { endless, endDate, startDate } = fieldData
+  const { endless, endedAt, startedAt } = fieldData
 
   const [value, setValue] = useState()
 
   const resetInput = useCallback(() => {
     setValue(null)
-    onFieldChange('endDate', null)
+    onFieldChange('endedAt', null)
   }, [onFieldChange])
 
   useEffect(() => {
-    if (endless || !startDate) {
+    if (endless || !startedAt) {
       resetInput()
     }
-  }, [endless, startDate, resetInput])
+  }, [endless, startedAt, resetInput])
 
   useEffect(() => {
     if (
-      isValidDate(startDate)
-      && isValidDate(endDate)
-      && startDate.getTime() > endDate.getTime()
+      isValidDate(startedAt)
+      && isValidDate(endedAt)
+      && startedAt.getTime() > endedAt.getTime()
     ) {
       resetInput()
       return
     }
-    setValue(endDate)
-  }, [endDate, onFieldChange, resetInput, startDate])
+    setValue(endedAt)
+  }, [endedAt, onFieldChange, resetInput, startedAt])
 
   return (
-    <DateInput {...props} minDate={startDate || new Date()} value={value} />
+    <DateInput {...props} minDate={startedAt || new Date()} value={value} />
   )
 }
 
 RecurringEndDate.propTypes = {
   fieldData: PropTypes.shape({
     endless: PropTypes.bool,
-    endDate: PropTypes.instanceOf(Date),
-    startDate: PropTypes.instanceOf(Date),
+    endedAt: PropTypes.instanceOf(Date),
+    startedAt: PropTypes.instanceOf(Date),
   }),
   onFieldChange: PropTypes.func.isRequired,
 }
@@ -48,8 +48,8 @@ RecurringEndDate.propTypes = {
 RecurringEndDate.defaultProps = {
   fieldData: {
     endless: false,
-    endDate: null,
-    startDate: null,
+    endedAt: null,
+    startedAt: null,
   },
 }
 
