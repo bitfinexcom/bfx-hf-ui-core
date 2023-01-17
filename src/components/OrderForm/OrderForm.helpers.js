@@ -38,6 +38,7 @@ import Button from '../../ui/Button'
 import { validateOrderLimits } from './OrderForm.orders.helpers'
 import RecurringEndDate from './FieldComponents/customComponents/RecurringEndDate'
 import OrderFormTabs from './FieldComponents/ui.tabs'
+import RecurringAmount from './FieldComponents/customComponents/RecurringAmount'
 
 const debug = Debug('hfui:order-form:helpers')
 
@@ -55,8 +56,9 @@ const COMPONENTS_FOR_ID = {
   'input.alias': AliasInput,
   'ui.ticker': TickerBar,
   'ui.tabs': OrderFormTabs,
-  reccuring_summary: RecurringAOSummary,
-  reccuring_endDate: RecurringEndDate,
+  recurring_summary: RecurringAOSummary,
+  recurring_endDate: RecurringEndDate,
+  recurring_amount: RecurringAmount,
 }
 
 const marketToQuoteBase = (market) => ({
