@@ -8,7 +8,7 @@ import {
 
 import './style.css'
 
-const RECCURENCE_OPTIONS = {
+const RECURRENCE_OPTIONS = {
   DAILY: 'DAILY',
   WEEKLY: 'WEEKLY',
   MONTHLY: 'MONTHLY',
@@ -19,14 +19,14 @@ const RecurringAOSummary = ({ fieldData }) => {
   const { recurrence, startedAt, endedAt } = fieldData
 
   const recurranceString = useMemo(() => {
-    if (recurrence === RECCURENCE_OPTIONS.DAILY) {
+    if (recurrence === RECURRENCE_OPTIONS.DAILY) {
       return t('algoOrderForm.recurring.day')
     }
-    if (recurrence === RECCURENCE_OPTIONS.WEEKLY) {
+    if (recurrence === RECURRENCE_OPTIONS.WEEKLY) {
       const weekday = getWeekDayString(startedAt || new Date())
       return t('algoOrderForm.recurring.weekOn', { weekday })
     }
-    if (recurrence === RECCURENCE_OPTIONS.MONTHLY) {
+    if (recurrence === RECURRENCE_OPTIONS.MONTHLY) {
       const day = getDateInShortFormat(startedAt)
       return t('algoOrderForm.recurring.monthOn', { day })
     }
