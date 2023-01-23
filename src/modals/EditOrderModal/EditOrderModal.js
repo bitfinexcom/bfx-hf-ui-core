@@ -146,7 +146,7 @@ const EditOrderModal = ({
       const { symbol, _futures, _margin } = args
       gaEditAO()
       cancelAlgoOrder(authToken, order.gid)
-      submitAlgoOrder(authToken, layout.id, symbol, _futures, _margin, data)
+      submitAlgoOrder(authToken, layout.id, symbol, _futures, _margin, data, order.gid)
       onClose()
     } else {
       const { field, message, i18n } = error

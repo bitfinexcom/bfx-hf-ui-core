@@ -11,6 +11,7 @@ import { isElectronApp, appVersion } from '../../redux/config'
 import { getThemeSetting, THEMES } from '../../redux/selectors/ui'
 import useToggle from '../../hooks/useToggle'
 import ResetDataConfirmModal from '../../modals/ResetDataConfirmModal'
+import { LOG_LEVELS } from '../../constants/logging'
 
 import './style.css'
 
@@ -20,15 +21,21 @@ const Authentication = ({
   onUnlock,
   onInit,
   isPaperTrading,
+  logInformation,
 }) => {
   const [
     isConfirmResetDataModalOpen,,
-    showConfirmResetDataModal,
+    _showConfirmResetDataModal,
     closeConfirmResetDataModal,
   ] = useToggle(false)
 
   const { t } = useTranslation()
   const settingsTheme = useSelector(getThemeSetting)
+
+  const showConfirmResetDataModal = () => {
+    logInformation('Clear data & Reset requested', LOG_LEVELS.INFO, 'clear_data_requested')
+    _showConfirmResetDataModal()
+  }
 
   return (
     <div className='hfui-authenticationpage__wrapper'>
@@ -60,7 +67,11 @@ const Authentication = ({
           <AuthenticationInitForm onInit={onInit} />
         )}
       </div>
-      <ResetDataConfirmModal isOpen={isConfirmResetDataModalOpen} onClose={closeConfirmResetDataModal} />
+      <ResetDataConfirmModal
+        isOpen={isConfirmResetDataModalOpen}
+        onClose={closeConfirmResetDataModal}
+        logInformation={logInformation}
+      />
     </div>
   )
 }
@@ -71,6 +82,7 @@ Authentication.propTypes = {
   isPaperTrading: PropTypes.bool.isRequired,
   onUnlock: PropTypes.func.isRequired,
   onInit: PropTypes.func.isRequired,
+  logInformation: PropTypes.func.isRequired,
 }
 
 export default memo(Authentication)

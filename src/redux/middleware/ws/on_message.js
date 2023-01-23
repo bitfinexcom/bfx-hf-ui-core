@@ -22,6 +22,7 @@ import { UI_MODAL_KEYS } from '../../constants/modals'
 import { UI_KEYS } from '../../constants/ui_keys'
 import { WS_CONNECTION } from '../../constants/ws'
 import { getCurrentStrategy } from '../../selectors/ui'
+import { LOG_LEVELS } from '../../../constants/logging'
 
 const debug = Debug('hfui:rx:m:ws-hfui-server:msg')
 
@@ -73,6 +74,10 @@ export default (alias, store) => (e = {}) => {
 
       case 'info.auth_token': {
         const [, token] = payload
+
+        if (token) {
+          store.dispatch(UIActions.logInformation('Authorised to Honey successfully', LOG_LEVELS.INFO, 'app_login_success'))
+        }
 
         // reset order history
         store.dispatch(WSActions.resetOrderHist())
@@ -255,6 +260,7 @@ export default (alias, store) => (e = {}) => {
       case 'data.settings.updated': {
         const [, settings] = payload
         store.dispatch(UIActions.setUIValue(UI_KEYS.settings, settings))
+        store.dispatch(UIActions.logInformation('App setting was updated', LOG_LEVELS.INFO, 'setting_update_success'))
         break
       }
 
@@ -438,6 +444,7 @@ export default (alias, store) => (e = {}) => {
       case 'bt.btresult': {
         const [, res] = payload
         store.dispatch(WSActions.recvBacktestResults(res))
+        store.dispatch(UIActions.logInformation('Backtest finished successfully', LOG_LEVELS.INFO, 'backtest_success'))
         break
       }
 

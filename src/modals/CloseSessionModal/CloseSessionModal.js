@@ -8,6 +8,7 @@ import { getUIModalStateForKey } from '../../redux/selectors/ui'
 import { UI_MODAL_KEYS } from '../../redux/constants/modals'
 import UIActions from '../../redux/actions/ui'
 import WSActions from '../../redux/actions/ws'
+import { LOG_LEVELS } from '../../constants/logging'
 
 import SessionList from './SessionList'
 
@@ -21,7 +22,15 @@ const CloseSessionModal = () => {
   const dispatch = useDispatch()
   const { t } = useTranslation()
 
-  const onClose = () => dispatch(UIActions.changeUIModalState(UI_MODAL_KEYS.CLOSE_SESSION_MODAL, false))
+  const onClose = () => {
+    dispatch(UIActions.changeUIModalState(UI_MODAL_KEYS.CLOSE_SESSION_MODAL, false))
+  }
+
+  const onCloseAndLog = () => {
+    onClose()
+    dispatch(UIActions.logInformation('Closing session terminated - user did not cancel active orders or strategies.', LOG_LEVELS.INFO, 'close_session_progress'))
+  }
+
   const onSubmit = () => {
     dispatch(WSActions.send(['app.safe_close']))
     setIsLoading(true)
@@ -31,6 +40,7 @@ const CloseSessionModal = () => {
       setIsLoading(false)
       onClose()
 
+      dispatch(UIActions.logInformation('Can\'t close the session: the message allowing the application to close was not received.', LOG_LEVELS.ERROR, 'close_session_failed'))
       dispatch(UIActions.recvNotification({
         mts: Date.now(),
         status: 'error',
@@ -44,7 +54,7 @@ const CloseSessionModal = () => {
     <Modal
       label={t('closeSessionModal.title')}
       isOpen={isOpen}
-      onClose={onClose}
+      onClose={onCloseAndLog}
       onSubmit={onSubmit}
       width={600}
     >
@@ -61,7 +71,7 @@ const CloseSessionModal = () => {
         <Modal.Button primary onClick={onSubmit} disabled={isLoading}>
           {t('closeSessionModal.submitButton')}
         </Modal.Button>
-        <Modal.Button secondary onClick={onClose} disabled={isLoading}>
+        <Modal.Button secondary onClick={onCloseAndLog} disabled={isLoading}>
           {t('closeSessionModal.closeButton')}
         </Modal.Button>
       </Modal.Footer>
