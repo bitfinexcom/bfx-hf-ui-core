@@ -15,7 +15,7 @@ import timeFrames from '../../util/time_frames'
 
 import rawOrders from '../../orders'
 
-const DEV_ONLY_ALGO_ORDERS = [AccumulateDistribute]
+const DEV_ONLY_ALGO_ORDERS = [AccumulateDistribute, Recurring]
 
 const getAlgoOrdersForStandalone = (isBeta) => [
   ...(isBeta ? DEV_ONLY_ALGO_ORDERS : []),
@@ -23,10 +23,9 @@ const getAlgoOrdersForStandalone = (isBeta) => [
   Iceberg,
   TWAP,
   Bracket,
-  Recurring,
 ]
 
-const HOSTED_ALGO_ORDERS = [Iceberg, TWAP, Recurring]
+const HOSTED_ALGO_ORDERS = [Iceberg, TWAP]
 
 const getAlgoOrders = (isBeta) => (isElectronApp ? getAlgoOrdersForStandalone(isBeta) : HOSTED_ALGO_ORDERS)
 
