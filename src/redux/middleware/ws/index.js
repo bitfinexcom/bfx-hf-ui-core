@@ -7,10 +7,12 @@ import Debug from 'debug'
 
 import WSTypes from '../../constants/ws'
 import AOActions from '../../actions/ao'
+import UIActions from '../../actions/ui'
 
 import onWSOpen from './on_open'
 import onWSClose from './on_close'
 import onWSMessage from './on_message'
+import { LOG_LEVELS } from '../../../constants/logging'
 
 const debug = Debug('hfui:rx:m:ws-hfui-server')
 
@@ -23,6 +25,7 @@ export default () => {
     switch (type) {
       case WSTypes.CONNECT: {
         const { destination, alias } = payload
+        store.dispatch(UIActions.logInformation('Initialising a WebSocket connection', LOG_LEVELS.INFO, 'local_connection_init'))
         if (!destination || !alias) {
           debug('requested connection, but no destination/alias provided. exiting...')
           return

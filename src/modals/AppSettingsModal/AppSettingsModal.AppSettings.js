@@ -21,6 +21,7 @@ import {
 } from '../../redux/selectors/ui'
 import { isMacOS } from '../../redux/config'
 import { UI_KEYS } from '../../redux/constants/ui_keys'
+import { LOG_LEVELS } from '../../constants/logging'
 
 const ipcHelpers = window.electronService
 
@@ -70,6 +71,7 @@ const AppSettings = () => {
     dispatch(GAActions.updateSettings())
     if (ipcHelpers) {
       ipcHelpers.sendChangeFullscreenEvent(fullscreen)
+      dispatch(UIActions.logInformation('The fullscreen mode is toggled', LOG_LEVELS.INFO, 'fullscreen_toggle'))
     }
   }
 

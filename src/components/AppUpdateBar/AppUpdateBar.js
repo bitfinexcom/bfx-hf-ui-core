@@ -61,7 +61,7 @@ const AppUpdateBar = () => {
       }
 
       case UPDATE_STATES.UPDATE_ERROR: {
-        dispatch(logInformation(UPDATE_DOWNLOAD_ERROR_MSG, LOG_LEVELS.WARN, 'update_download_failed', meta))
+        dispatch(logInformation(UPDATE_DOWNLOAD_ERROR_MSG, LOG_LEVELS.FATAL, 'update_install_failed', meta))
         break
       }
 

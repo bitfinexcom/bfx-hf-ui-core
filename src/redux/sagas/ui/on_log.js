@@ -1,4 +1,4 @@
-import { put, call } from 'redux-saga/effects'
+import { call } from 'redux-saga/effects'
 import _toUpper from 'lodash/toUpper'
 import _includes from 'lodash/includes'
 
@@ -16,7 +16,7 @@ const METRICS_SERVER_LEVELS = [
 
 export default function* ({ payload }) {
   const {
-    message, level, action, trace,
+    message, level, // action, trace,
   } = payload
 
   const method = LEVEL_CONSOLE_MAPPING[level] || LEVEL_CONSOLE_MAPPING.info

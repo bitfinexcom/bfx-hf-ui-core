@@ -84,12 +84,15 @@ const mapDispatchToProps = (dispatch) => ({
 
   submitOrder: ({ authToken, packet, wsConnected }) => {
     debug('submitting order %j', packet)
+    const orderData = {
+      symbol: packet.symbol.w,
+      ...packet,
+    }
+
     dispatch(
-      WSActions.submitOrder(authToken, {
-        symbol: packet.symbol.w,
-        ...packet,
-      }),
+      WSActions.submitOrder(authToken, orderData),
     )
+    dispatch(UIActions.logInformation('Initialising atomic order', LOG_LEVELS.INFO, 'atomic_order_init', orderData))
 
     if (!wsConnected) {
       dispatch(UIActions.setUIValue(UI_KEYS.isOrderExecuting, false))

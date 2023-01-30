@@ -84,6 +84,7 @@ const mapDispatchToProps = (dispatch) => ({
         constraints,
       ]),
     )
+    dispatch(UIActions.logInformation(`Strategy (${label}) is active and running`, LOG_LEVELS.INFO, 'strategy_init'))
     dispatch(WSActions.setExecutionLoading(true))
   },
   dsExecuteBacktest: (data) => {

@@ -177,10 +177,30 @@ export default (alias, store) => (e = {}) => {
         break
       }
 
-      case 'data.algo_order.submit_status':
-      case 'data.order.submit_status':
+      case 'data.order.submit_status': {
+        const [, status] = payload
+
         store.dispatch(UIActions.setUIValue(UI_KEYS.isOrderExecuting, false))
+
+        if (status === 'success') {
+          store.dispatch(UIActions.logInformation('Atomic order placed', LOG_LEVELS.INFO, 'atomic_order_placed'))
+        } else {
+          store.dispatch(UIActions.logInformation('Atomic order failed', LOG_LEVELS.WARN, 'atomic_order_failed'))
+        }
+
         break
+      }
+
+      case 'data.algo_order.submit_status': {
+        const [, status] = payload
+
+        store.dispatch(UIActions.setUIValue(UI_KEYS.isOrderExecuting, false))
+
+        if (status !== 'success') {
+          store.dispatch(UIActions.logInformation('Algo order failed', LOG_LEVELS.ERROR, 'ao_failed'))
+        }
+        break
+      }
 
       case 'error': {
         const [, message, i18n] = payload
@@ -362,6 +382,7 @@ export default (alias, store) => (e = {}) => {
       case 'data.order.close': {
         const [, , order] = payload
         store.dispatch(WSActions.recvOrderClose({ order }))
+        store.dispatch(UIActions.logInformation('Atomic order closed', LOG_LEVELS.INFO, 'atomic_order_executed'))
         break
       }
 
