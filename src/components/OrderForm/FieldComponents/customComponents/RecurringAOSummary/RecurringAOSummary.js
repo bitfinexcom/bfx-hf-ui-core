@@ -9,16 +9,16 @@ import {
 import './style.css'
 
 const RECURRENCE_OPTIONS = {
-  DAILY: 'DAILY',
-  WEEKLY: 'WEEKLY',
-  MONTHLY: 'MONTHLY',
+  DAILY: 'daily',
+  WEEKLY: 'weekly',
+  MONTHLY: 'monthly',
 }
 
 const RecurringAOSummary = ({ fieldData }) => {
   const { t } = useTranslation()
   const { recurrence, startedAt, endedAt } = fieldData
 
-  const recurranceString = useMemo(() => {
+  const recurrenceString = useMemo(() => {
     if (recurrence === RECURRENCE_OPTIONS.DAILY) {
       return t('algoOrderForm.recurring.day')
     }
@@ -35,7 +35,7 @@ const RecurringAOSummary = ({ fieldData }) => {
   }, [recurrence, startedAt, t])
 
   const message = t('algoOrderForm.recurring.summary', {
-    recurrence: recurranceString,
+    recurrence: recurrenceString,
     startTime: startedAt
       ? t('algoOrderForm.recurring.startOn', {
         dateTime: startedAt.toLocaleString(),
