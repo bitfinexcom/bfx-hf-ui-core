@@ -4,6 +4,7 @@ import UIActions from '../../actions/ui'
 import { getAuthToken, getSocket } from '../../selectors/ws'
 import { isElectronApp } from '../../config'
 import { UI_KEYS } from '../../constants/ui_keys'
+import { LOG_LEVELS } from '../../../constants/logging'
 
 export default (alias, store) => () => {
   const state = store.getState()
@@ -17,5 +18,6 @@ export default (alias, store) => () => {
     store.dispatch(UIActions.setUIValue(UI_KEYS.isBadInternetConnection, true))
   }
 
+  store.dispatch(UIActions.logInformation('WebSocket connection closed', LOG_LEVELS.INFO, 'local_connection_closed'))
   store.dispatch(WSActions.disconnected(alias))
 }

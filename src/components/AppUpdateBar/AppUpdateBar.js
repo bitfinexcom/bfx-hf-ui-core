@@ -1,8 +1,11 @@
 import React, { useState, useEffect, useCallback } from 'react'
+import { useDispatch } from 'react-redux'
 import { CSSTransition } from 'react-transition-group'
 import { useTranslation } from 'react-i18next'
-import ProgressBar from '../../ui/ProgressBar'
 
+import ProgressBar from '../../ui/ProgressBar'
+import { logInformation } from '../../redux/actions/ui'
+import { LOG_LEVELS } from '../../constants/logging'
 import './style.css'
 
 const ipcHelpers = window.electronService
@@ -15,11 +18,17 @@ const UPDATE_STATES = {
   UPDATE_ERROR: 'UPDATE_ERROR',
 }
 
+const UPDATE_AVAILABLE_MSG = 'New Honey version has been detected.'
+const UPDATE_DOWNLOADED_MSG = 'New Honey version has been downloaded.'
+const UPDATE_DOWNLOAD_ERROR_MSG = 'An error occured while downloading new Honey version.'
+const UPDATE_DOWNLOAD_INITIATED_MSG = 'Initiated download of a new Honey version.'
+const UPDATE_INSTALLED_MSG = 'New Honey version has been installed.'
+
 const LOCAL_STORAGE_KEY_SHOW_NEW_VERSION = 'HF_SHOW_NEW_VERSION'
 
 const AppUpdateBar = () => {
   const { t } = useTranslation()
-
+  const dispatch = useDispatch()
   const [isOpen, setIsOpen] = useState(false)
   const [newVersion, setNewVersion] = useState(null)
   const [downloadProgress, setDownloadProgress] = useState(0)
@@ -30,9 +39,47 @@ const AppUpdateBar = () => {
     ipcHelpers?.sendClearAppUpdateTimerEvent()
   }
 
+  const _setUpdatingState = (state, meta) => {
+    setUpdatingState(state)
+
+    switch (state) {
+      case UPDATE_STATES.UPDATE_AVAILABLE: {
+        const { version } = meta
+        dispatch(logInformation(UPDATE_AVAILABLE_MSG, LOG_LEVELS.INFO, 'update_detected', { version }))
+        break
+      }
+
+      case UPDATE_STATES.UPDATE_DOWNLOADING: {
+        dispatch(logInformation(UPDATE_DOWNLOAD_INITIATED_MSG, LOG_LEVELS.INFO, 'update_download_initiated'))
+        break
+      }
+
+      case UPDATE_STATES.UPDATE_DOWNLOADED: {
+        const { version } = meta
+        dispatch(logInformation(UPDATE_DOWNLOADED_MSG, LOG_LEVELS.INFO, 'update_download_success', { version }))
+        break
+      }
+
+      case UPDATE_STATES.UPDATE_ERROR: {
+        dispatch(logInformation(UPDATE_DOWNLOAD_ERROR_MSG, LOG_LEVELS.FATAL, 'update_install_failed', meta))
+        break
+      }
+
+      case UPDATE_STATES.UPDATE_INSTALLED: {
+        dispatch(logInformation(UPDATE_INSTALLED_MSG, LOG_LEVELS.INFO, 'update_install_success'))
+        break
+      }
+
+      default:
+        break
+    }
+  }
+
   const onUpdateAvailable = (_, args) => {
     setNewVersion(args?.version)
-    setUpdatingState(UPDATE_STATES.UPDATE_AVAILABLE)
+    _setUpdatingState(UPDATE_STATES.UPDATE_AVAILABLE, {
+      version: args?.version,
+    })
     setIsOpen(true)
   }
 
@@ -45,7 +92,7 @@ const AppUpdateBar = () => {
     // Then restart the application after 3s
     setIsOpen(false)
     setTimeout(() => {
-      setUpdatingState(UPDATE_STATES.UPDATE_DOWNLOADED)
+      _setUpdatingState(UPDATE_STATES.UPDATE_DOWNLOADED, { version })
       setIsOpen(true)
 
       setTimeout(() => {
@@ -58,7 +105,7 @@ const AppUpdateBar = () => {
   }
 
   const onUpdateError = () => {
-    setUpdatingState(UPDATE_STATES.UPDATE_ERROR)
+    _setUpdatingState(UPDATE_STATES.UPDATE_ERROR)
     setIsOpen(true)
     setTimeout(closeNotification, 3000)
   }
@@ -69,7 +116,7 @@ const AppUpdateBar = () => {
     ipcHelpers?.sendDownloadUpdateEvent()
 
     setTimeout(() => {
-      setUpdatingState(UPDATE_STATES.UPDATE_DOWNLOADING)
+      _setUpdatingState(UPDATE_STATES.UPDATE_DOWNLOADING)
       setIsOpen(true)
     }, 1000)
   }
@@ -143,6 +190,7 @@ const AppUpdateBar = () => {
       default:
         return null
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [downloadProgress, newVersion, t, updatingState])
 
   useEffect(() => {
@@ -151,7 +199,7 @@ const AppUpdateBar = () => {
       // Show a message about the successful installation of the new version
       setTimeout(() => {
         setNewVersion(updatedToNewVersion)
-        setUpdatingState(UPDATE_STATES.UPDATE_INSTALLED)
+        _setUpdatingState(UPDATE_STATES.UPDATE_INSTALLED)
         setIsOpen(true)
         localStorage.removeItem(LOCAL_STORAGE_KEY_SHOW_NEW_VERSION)
         setTimeout(closeNotification, 3000)

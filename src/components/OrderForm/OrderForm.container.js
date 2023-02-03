@@ -34,6 +34,7 @@ import {
 } from '../../redux/selectors/ui'
 import { getScope } from '../../util/scope'
 import { UI_KEYS } from '../../redux/constants/ui_keys'
+import { LOG_LEVELS } from '../../constants/logging'
 
 const debug = Debug('hfui:c:order-form')
 
@@ -83,12 +84,15 @@ const mapDispatchToProps = (dispatch) => ({
 
   submitOrder: ({ authToken, packet, wsConnected }) => {
     debug('submitting order %j', packet)
+    const orderData = {
+      symbol: packet.symbol.w,
+      ...packet,
+    }
+
     dispatch(
-      WSActions.submitOrder(authToken, {
-        symbol: packet.symbol.w,
-        ...packet,
-      }),
+      WSActions.submitOrder(authToken, orderData),
     )
+    dispatch(UIActions.logInformation('Initialising atomic order', LOG_LEVELS.INFO, 'atomic_order_init', orderData))
 
     if (!wsConnected) {
       dispatch(UIActions.setUIValue(UI_KEYS.isOrderExecuting, false))
@@ -104,14 +108,16 @@ const mapDispatchToProps = (dispatch) => ({
     authToken, id, market, context, data, wsConnected,
   }) => {
     debug('submitting algo order %s on %s [%s]', id, market.uiID, context)
+    const orderData = {
+      ...data,
+      _symbol: market.wsID,
+      _margin: context === 'm',
+      _futures: context === 'f',
+    }
     dispatch(
-      WSActions.submitAlgoOrder(authToken, id, {
-        ...data,
-        _symbol: market.wsID,
-        _margin: context === 'm',
-        _futures: context === 'f',
-      }),
+      WSActions.submitAlgoOrder(authToken, id, orderData),
     )
+    dispatch(UIActions.logInformation(`New ${id} algorithmic order submitted`, LOG_LEVELS.INFO, 'ao_init', orderData))
 
     if (!wsConnected) {
       dispatch(UIActions.setUIValue(UI_KEYS.isOrderExecuting, false))

@@ -42,4 +42,5 @@ module.exports = {
 
   REMOVE_STRATEGY: 'UI_REMOVE_STRATEGY',
   SET_PENDO_STATE: 'UI_SET_PENDO_STATE',
+  LOG: 'UI_LOG',
 }
