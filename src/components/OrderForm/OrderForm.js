@@ -294,7 +294,7 @@ class OrderForm extends React.Component {
       fieldData,
     })
 
-    if (id === 'bfx-recurring') {
+    if (id === Recurring.id) {
       data = Recurring.meta.processParams(data, currentMarket)
     }
     const errors = this.validateAOData(data)

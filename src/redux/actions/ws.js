@@ -390,7 +390,7 @@ export default {
   submitAlgoOrder: (authToken, id, args) => {
     if (id === Recurring.id) {
       return send([
-        'recurring_algo_order.submit',
+        'algo_order.submit',
         authToken,
         'bitfinex',
         id,
