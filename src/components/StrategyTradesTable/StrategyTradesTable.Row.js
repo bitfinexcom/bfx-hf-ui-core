@@ -64,7 +64,7 @@ export const getRowRenderer = (selectedIndex) => (props) => {
     <CellMeasurer
       cache={rowCache}
       key={key}
-      parent={parent}
+      parent={parent || {}}
       columnIndex={0}
       rowIndex={index}
     >
