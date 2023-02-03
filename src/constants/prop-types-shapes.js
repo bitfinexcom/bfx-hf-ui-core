@@ -35,7 +35,9 @@ export const TICKER_SHAPE = {
 export const STRATEGY_SHAPE = {
   id: PropTypes.string,
   label: PropTypes.string,
-  strategyContent: PropTypes.objectOf(PropTypes.string),
+  strategyContent: PropTypes.objectOf(PropTypes.oneOfType([
+    PropTypes.string, PropTypes.number, PropTypes.object, PropTypes.bool, PropTypes.array,
+  ])),
   strategyOptions: PropTypes.shape({
     [STRATEGY_OPTIONS_KEYS.SYMBOL]: PropTypes.oneOfType([
       PropTypes.shape(MARKET_SHAPE),
