@@ -6,15 +6,21 @@ import { Checkbox } from '@ufx-ui/core'
 import WSActions from '../../redux/actions/ws'
 import Modal from '../../ui/Modal'
 import Input from '../../ui/Input'
+import { LOG_LEVELS } from '../../constants/logging'
 
 import './style.css'
 
-const ResetDataConfirmModal = ({ isOpen, onClose }) => {
+const ResetDataConfirmModal = ({ isOpen, onClose, logInformation }) => {
   const [shouldExportToJSON, setShouldExportToJSON] = useState(true)
   const [password, setPassword] = useState('')
 
   const { t } = useTranslation()
   const dispatch = useDispatch()
+
+  const _onClose = () => {
+    logInformation('Clear data & Reset cancelled', LOG_LEVELS.INFO, 'clear_data_cancelled')
+    onClose()
+  }
 
   const closeAndClearState = () => {
     setPassword('')
@@ -23,15 +29,20 @@ const ResetDataConfirmModal = ({ isOpen, onClose }) => {
   }
 
   const onReset = () => {
+    logInformation('Clear data & Reset confirmed', LOG_LEVELS.INFO, 'clear_data_confirmed')
+
     if (!shouldExportToJSON) {
       dispatch(WSActions.authResetData())
       closeAndClearState()
+      logInformation('Resetting Honey without exporting strategies to JSON', LOG_LEVELS.INFO, 'clear_data_progress')
       return
     }
+
     if (!password) {
       return
     }
 
+    logInformation('Resetting Honey with exporting strategies to JSON', LOG_LEVELS.INFO, 'clear_data_progress')
     dispatch(WSActions.exportStrategiesOnReset(password))
     closeAndClearState()
   }
@@ -40,7 +51,7 @@ const ResetDataConfirmModal = ({ isOpen, onClose }) => {
     <Modal
       label={t('resetDataConfirmModal.title')}
       isOpen={isOpen}
-      onClose={onClose}
+      onClose={_onClose}
       onSubmit={onReset}
       className='reset-data-confirm-modal'
     >
@@ -66,7 +77,7 @@ const ResetDataConfirmModal = ({ isOpen, onClose }) => {
       </div>
       <Modal.Footer>
         <div>
-          <Modal.Button secondary onClick={onClose}>
+          <Modal.Button secondary onClick={_onClose}>
             {t('ui.cancel')}
           </Modal.Button>
           <Modal.Button
@@ -85,6 +96,7 @@ const ResetDataConfirmModal = ({ isOpen, onClose }) => {
 ResetDataConfirmModal.propTypes = {
   isOpen: PropTypes.bool.isRequired,
   onClose: PropTypes.func.isRequired,
+  logInformation: PropTypes.func.isRequired,
 }
 
 export default ResetDataConfirmModal

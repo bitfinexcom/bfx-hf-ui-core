@@ -15,6 +15,7 @@ import { getMarkets } from '../../redux/selectors/meta'
 import EditOrderModal from './EditOrderModal'
 import { UI_MODAL_KEYS } from '../../redux/constants/modals'
 import { UI_KEYS } from '../../redux/constants/ui_keys'
+import { LOG_LEVELS } from '../../constants/logging'
 
 const mapStateToProps = (state = {}) => ({
   visible: getUIModalStateForKey(state, UI_MODAL_KEYS.EDIT_ORDER_MODAL),
@@ -39,10 +40,16 @@ const mapDispatchToProps = dispatch => ({
   cancelAlgoOrder: (authToken, gid) => {
     dispatch(WSActions.send(['algo_order.cancel', authToken, 'bitfinex', gid]))
   },
-  submitAlgoOrder: (authToken, id, _symbol, _futures, _margin, data) => {
-    dispatch(WSActions.submitAlgoOrder(authToken, id, {
+  submitAlgoOrder: (authToken, id, _symbol, _futures, _margin, data, gid) => {
+    const orderData = {
       ...data, _symbol, _margin, _futures,
-    }))
+    }
+    dispatch(WSActions.submitAlgoOrder(authToken, id, orderData))
+
+    // TODO: Instead of submitting orderData as a trace object, there should be a:
+    // "updated [arr]: of objects, one per setting, under the format:
+    // { setting [string], oldValue [string], newValue [string] }"
+    dispatch(UIActions.logInformation(`User requested an update for the ${id} algorithmic order with ID ${gid}`, LOG_LEVELS.INFO, 'ao_updated', orderData))
   },
 })
 

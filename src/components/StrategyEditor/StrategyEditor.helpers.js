@@ -107,6 +107,7 @@ export const prepareStrategyExecutionArgs = (strategy) => {
 
 export const prepareStrategyBacktestingArgs = (strategy) => {
   const {
+    label,
     strategyOptions: {
       symbol,
       timeframe,
@@ -136,6 +137,7 @@ export const prepareStrategyBacktestingArgs = (strategy) => {
       [STRATEGY_OPTIONS_KEYS.STOP_LOSS_PERC]: Number(stopLossPerc),
       [STRATEGY_OPTIONS_KEYS.MAX_DRAWDOWN_PERC]: Number(maxDrawdownPerc),
     },
+    label,
   }
 }
 

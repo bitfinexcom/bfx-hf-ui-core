@@ -76,12 +76,16 @@ StrategyPerfomanceMetrics.propTypes = {
     nOpens: PropTypes.number,
     realizedStrategyPnl: PropTypes.string,
     unrealizedStrategyPnl: PropTypes.string,
-    profitFactor: PropTypes.number,
+    profitFactor: PropTypes.oneOfType([
+      PropTypes.number, PropTypes.string,
+    ]),
     largestGain: PropTypes.string,
     largestLoss: PropTypes.string,
     vol: PropTypes.string,
     pnlStdDeviation: PropTypes.number,
-    averageTradePnl: PropTypes.number,
+    averageTradePnl: PropTypes.oneOfType([
+      PropTypes.number, PropTypes.string,
+    ]),
     backtestOptions: PropTypes.shape({
       activeMarket: PropTypes.string,
     }),

@@ -168,6 +168,13 @@ export const setPendoState = (isInitialized, auid) => ({
   payload: { isInitialized, auid },
 })
 
+export const logInformation = (message, level, action, trace) => ({
+  type: types.LOG,
+  payload: {
+    message, level, action, trace,
+  },
+})
+
 export default {
   setUIValue,
   updateUIValue,
@@ -193,4 +200,5 @@ export default {
   setCurrentStrategy,
   setIsStrategyDirty,
   setPendoState,
+  logInformation,
 }
