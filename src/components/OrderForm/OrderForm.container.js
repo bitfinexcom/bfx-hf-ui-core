@@ -5,6 +5,7 @@ import Debug from 'debug'
 import _size from 'lodash/size'
 
 import { withTranslation } from 'react-i18next'
+import { Recurring } from 'bfx-hf-algo'
 import OrderForm from './OrderForm'
 import UIActions from '../../redux/actions/ui'
 import WSActions from '../../redux/actions/ws'
@@ -108,6 +109,14 @@ const mapDispatchToProps = (dispatch) => ({
     authToken, id, market, context, data, wsConnected,
   }) => {
     debug('submitting algo order %s on %s [%s]', id, market.uiID, context)
+    if (id === Recurring.id) {
+      const orderData = {
+        ...data,
+        _symbol: market.wsID,
+      }
+      dispatch(WSActions.submitAlgoOrder(authToken, id, orderData))
+      return
+    }
     const orderData = {
       ...data,
       _symbol: market.wsID,

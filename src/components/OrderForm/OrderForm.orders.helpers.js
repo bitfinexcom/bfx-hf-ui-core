@@ -1,5 +1,10 @@
 import {
-  Iceberg, TWAP, AccumulateDistribute, PingPong, Bracket,
+  Iceberg,
+  TWAP,
+  AccumulateDistribute,
+  PingPong,
+  Bracket,
+  Recurring,
 } from 'bfx-hf-algo'
 import memoizeOne from 'memoize-one'
 import _values from 'lodash/values'
@@ -10,9 +15,7 @@ import timeFrames from '../../util/time_frames'
 
 import rawOrders from '../../orders'
 
-const DEV_ONLY_ALGO_ORDERS = [
-  AccumulateDistribute,
-]
+const DEV_ONLY_ALGO_ORDERS = [AccumulateDistribute, Recurring]
 
 const getAlgoOrdersForStandalone = (isBeta) => [
   ...(isBeta ? DEV_ONLY_ALGO_ORDERS : []),
@@ -26,14 +29,22 @@ const HOSTED_ALGO_ORDERS = [Iceberg, TWAP]
 
 const getAlgoOrders = (isBeta) => (isElectronApp ? getAlgoOrdersForStandalone(isBeta) : HOSTED_ALGO_ORDERS)
 
-export const getAOs = memoizeOne((t, isBeta) => _map(getAlgoOrders(isBeta), ao => ao.meta.getUIDef({
+export const getAOs = memoizeOne((t, isBeta) => _map(getAlgoOrders(isBeta), (ao) => ao.meta.getUIDef({
   timeframes: timeFrames,
   i18n: { t, prefix: 'algoOrderForm.' },
-})))
+}),
+),
+)
 
-export const getAtomicOrders = memoizeOne((t) => _map(_values(rawOrders), uiDef => uiDef(t)))
+export const getAtomicOrders = memoizeOne((t) => _map(_values(rawOrders), (uiDef) => uiDef(t)),
+)
 
-export const validateOrderLimits = (orderCount, pair, existingOrders, maxOrders) => {
+export const validateOrderLimits = (
+  orderCount,
+  pair,
+  existingOrders,
+  maxOrders,
+) => {
   const errors = {}
   const newOrderCountTotal = orderCount + existingOrders?.total
   const newOrderCountPair = orderCount + existingOrders?.pair
@@ -44,7 +55,9 @@ export const validateOrderLimits = (orderCount, pair, existingOrders, maxOrders)
   if (totalLimitExceeds || pairLimitExceeds) {
     errors.field = 'orderCount'
     errors.i18n = {
-      key: totalLimitExceeds ? 'orderCountExceedsTotalMaxLimit' : 'orderCountExceedsPairMaxLimit',
+      key: totalLimitExceeds
+        ? 'orderCountExceedsTotalMaxLimit'
+        : 'orderCountExceedsPairMaxLimit',
       props: {
         count: totalLimitExceeds ? newOrderCountTotal : newOrderCountPair,
         limit: totalLimitExceeds ? maxOrders?.total : maxOrders?.pair,

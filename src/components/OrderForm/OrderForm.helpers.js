@@ -17,7 +17,7 @@ import _split from 'lodash/split'
 import _replace from 'lodash/replace'
 import _includes from 'lodash/includes'
 import {
-  Iceberg, TWAP, AccumulateDistribute, PingPong, Bracket,
+  Iceberg, TWAP, AccumulateDistribute, PingPong, Bracket, Recurring,
 } from 'bfx-hf-algo'
 import Debug from 'debug'
 
@@ -33,8 +33,12 @@ import RangeInput from './FieldComponents/input.range'
 import UICheckboxGroup from './FieldComponents/ui.checkboxGroup'
 import TickerBar from './FieldComponents/ui.ticker'
 import AliasInput from './FieldComponents/input.alias'
+import RecurringAOSummary from './FieldComponents/customComponents/RecurringAOSummary'
 import Button from '../../ui/Button'
 import { validateOrderLimits } from './OrderForm.orders.helpers'
+import RecurringEndDate from './FieldComponents/customComponents/RecurringEndDate'
+import OrderFormTabs from './FieldComponents/ui.tabs'
+import RecurringAmount from './FieldComponents/customComponents/RecurringAmount'
 
 const debug = Debug('hfui:order-form:helpers')
 
@@ -51,6 +55,10 @@ const COMPONENTS_FOR_ID = {
   'input.range': RangeInput,
   'input.alias': AliasInput,
   'ui.ticker': TickerBar,
+  'ui.tabs': OrderFormTabs,
+  recurring_summary: RecurringAOSummary,
+  recurring_endDate: RecurringEndDate,
+  recurring_amount: RecurringAmount,
 }
 
 const marketToQuoteBase = (market) => ({
@@ -234,6 +242,11 @@ const validateAOData = (data, currentLayout, currentMarket, atomicOrdersCount, a
       break
     }
 
+    case Recurring.id: {
+      errors = Recurring.meta.validateParams(data)
+      break
+    }
+
     default:
       debug('unknown layout %s', currentLayout.id)
   }
@@ -252,7 +265,7 @@ const renderLayoutComponent = ({
   onFieldChange, // eslint-disable-line
 }) => {
   const {
-    disabled: disabledCond, component: id, visible,
+    disabled: disabledCond, component: id, visible, customClassName,
   } = componentDef
   const C = COMPONENTS_FOR_ID[id]
 
@@ -291,6 +304,7 @@ const renderLayoutComponent = ({
       validationError={validationErrors[fieldName]}
       fieldData={fieldData}
       disabled={disabled}
+      className={customClassName}
     />
   )
 }

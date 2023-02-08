@@ -11,7 +11,9 @@ import _trim from 'lodash/trim'
 import _isArray from 'lodash/isArray'
 import _isNil from 'lodash/isNil'
 import PropTypes from 'prop-types'
+import { Recurring } from 'bfx-hf-algo'
 
+import OrderFormTab from './FieldComponents/ui.tab'
 import { isElectronApp } from '../../redux/config'
 import Panel from '../../ui/Panel'
 import { getIsAnyModalOpen } from '../../util/document'
@@ -286,11 +288,15 @@ class OrderForm extends React.Component {
     } = this.state
 
     const { id } = currentLayout
-    const data = processFieldData({
+    let data = processFieldData({
       layout: currentLayout,
       action: 'submit',
       fieldData,
     })
+
+    if (id === Recurring.id) {
+      data = Recurring.meta.processParams(data, currentMarket)
+    }
     const errors = this.validateAOData(data)
 
     if (_isEmpty(errors)) {
@@ -537,21 +543,21 @@ class OrderForm extends React.Component {
                 </div>
               </div>,
 
-              <ul className='hfui-orderform__header' key='of-header'>
-                <li key='item' className='hfui-orderform__centered-item'>
-                  {_map(currentMarket.contexts, (value) => (
-                    <div
-                      key={value}
-                      onClick={() => this.onContextChange(value)}
-                      className={`hfui__orderform-tab ${
-                        value === context ? 'active' : ''
-                      }`}
-                    >
-                      <p>{t(CONTEXT_LABELS[value])}</p>
-                    </div>
-                  ))}
-                </li>
-              </ul>,
+              !currentLayout?.hideContexts && (
+                <ul className='hfui-orderform__header' key='of-header'>
+                  <li key='item' className='hfui-orderform__centered-item'>
+                    {_map(currentMarket.contexts, (value) => (
+                      <OrderFormTab
+                        key={value}
+                        value={value}
+                        onClick={this.onContextChange}
+                        isActive={value === context}
+                        label={t(CONTEXT_LABELS[value])}
+                      />
+                    ))}
+                  </li>
+                </ul>
+              ),
 
               renderLayout({
                 onSubmit: this.onSubmit,
