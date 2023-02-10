@@ -467,6 +467,7 @@
     "algoOrderParameterRemovedSuccessfully": "Algo order parameter has been removed successfully",
     "algoOrderParametersSuccessfullySaved": "Algo order parameters successfully saved",
     "algoOrdersCurrentlyOnlyEnabledFor": "Algo orders currently only enabled for {{target}}",
+    "algoOrderEqualParamsError": "The recurring order with equal params is active",
     "failedToStartAlgoOrder": "Failed to start algo order: {{algoID}}",
     "noClientOpenFor": "No client open for {{target}}",
     "errorRemovingOrder": "Error removing order: {{algoID}} [{{gid}}]",
