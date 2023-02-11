@@ -4,7 +4,9 @@ import {
   AccumulateDistribute,
   PingPong,
   Bracket,
+  Recurring,
 } from 'bfx-hf-algo'
+import { getDateInShortFormat } from '../../util/date'
 
 const convertIntervalToSeconds = (interval) => {
   return `${interval / 1000}s`
@@ -64,6 +66,32 @@ export const getOrderDetails = (rowData = {}, t) => {
         { label: t('algoOrderForm.ocoLimitPrice'), value: args.limitPrice },
         { label: t('algoOrderForm.ocoStopPrice'), value: args.stopPrice },
         { label: t('algoOrderForm.initialOrderPrice'), value: args.orderPrice },
+      ]
+
+    case Recurring.id:
+      return [
+        { label: t('algoOrderForm.amount'), value: args.amount },
+        {
+          label: t('algoOrderForm.action'),
+          value: t(`algoOrderForm.${args.action}`),
+        },
+        {
+          label: t('algoOrderForm.recurring.recurrence'),
+          value: t(`algoOrderForm.recurring.${args.recurrence}`),
+        },
+        {
+          label:
+            args.startedAt < Date.now()
+              ? t('algoOrderForm.recurring.startedAt')
+              : t('algoOrderForm.recurring.willStart'),
+          value: new Date(args.startedAt).toLocaleString(),
+        },
+        {
+          label: t('algoOrderForm.recurring.endedAt'),
+          value: args.endedAt
+            ? new Date(args.endedAt).toLocaleString()
+            : t('algoOrderForm.recurring.endless'),
+        },
       ]
 
     default:

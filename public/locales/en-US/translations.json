@@ -213,7 +213,10 @@
       "monthOn": "month, on {{day}}",
       "startOn": "on {{dateTime}}",
       "startNow": "as soon as you click submit",
-      "manuallyStop": "you manually stop this Algorithmic Order"
+      "manuallyStop": "you manually stop this Algorithmic Order",
+      "startedAt": "Started",
+      "endedAt": "Will stop",
+      "willStart": "Will start"
     },
     "splitAmount": "SPLIT AMOUNT",
     "endless": "ENDLESS",
