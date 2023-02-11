@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react'
+import React, { useCallback, useMemo } from 'react'
 import PropTypes from 'prop-types'
 import _map from 'lodash/map'
 import _size from 'lodash/size'
@@ -35,7 +35,7 @@ const AlgoOrderDetailsModal = ({ onClose, algoOrderId }) => {
   const getMarketPair = useSelector(_getMarketPair)
   const rowData = useSelector(getAlgoOrderById(algoOrderId))
 
-  const orderDetails = getOrderDetails(rowData)
+  const orderDetails = useMemo(() => getOrderDetails(rowData, t), [rowData, t])
   const detailsSize = _size(orderDetails)
   const filteredAtomics = _filter(
     _values(atomicOrders),

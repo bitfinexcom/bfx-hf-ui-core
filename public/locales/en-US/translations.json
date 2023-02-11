@@ -116,6 +116,9 @@
     "market": "Market",
     "price": "Price",
     "amount": "Amount",
+    "interval": "Interval",
+    "slice": "Slice",
+    "target": "Target",
     "amountHelp": "Total order amount, to be executed slice-by-slice",
     "sliceAmount": "Slice Amount",
     "sliceAmountHelp": "Allows individual buy & sell amounts to be adjusted",
@@ -329,8 +332,7 @@
     "title": "Algo. Orders",
     "titleFull": "Algorithmic Orders",
     "noOrders": "No active algorithmic orders",
-    "noHistory": "No algorithmic orders in history",
-    "detailsModalTitle": "Algo Order Details"
+    "noHistory": "No algorithmic orders in history"
   },
   "appSettings": {
     "title": "Settings",
