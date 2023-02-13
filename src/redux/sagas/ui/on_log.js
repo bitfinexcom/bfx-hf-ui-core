@@ -1,6 +1,7 @@
-import { call } from 'redux-saga/effects'
+import { put } from 'redux-saga/effects'
 import _toUpper from 'lodash/toUpper'
 import _includes from 'lodash/includes'
+import WSActions from '../../actions/ws'
 
 const LEVEL_CONSOLE_MAPPING = {
   debug: 'debug',
@@ -16,7 +17,7 @@ const METRICS_SERVER_LEVELS = [
 
 export default function* ({ payload }) {
   const {
-    message, level, // action, trace,
+    message, level,
   } = payload
 
   const method = LEVEL_CONSOLE_MAPPING[level] || LEVEL_CONSOLE_MAPPING.info
@@ -24,7 +25,6 @@ export default function* ({ payload }) {
   console[method](`${new Date().toISOString()} ${_toUpper(level)}: ${message}`)
 
   if (_includes(METRICS_SERVER_LEVELS, level)) {
-    // TODO: Send error / fatal data to the metrics server
-    yield call(() => {})
+    yield put(WSActions.send(['error_log.dump', payload]))
   }
 }
