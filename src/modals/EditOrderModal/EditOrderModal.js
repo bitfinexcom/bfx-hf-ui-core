@@ -18,6 +18,7 @@ import _reduce from 'lodash/reduce'
 import _values from 'lodash/values'
 import _some from 'lodash/some'
 import _trim from 'lodash/trim'
+import { Recurring } from 'bfx-hf-algo'
 
 import Modal from '../../ui/Modal'
 import {
@@ -27,6 +28,7 @@ import {
   getAOs, getAtomicOrders,
 } from '../../components/OrderForm/OrderForm.orders.helpers'
 import { MARKET_SHAPE, ORDER_SHAPE } from '../../constants/prop-types-shapes'
+import { getCurrencyDefinition } from '../../components/OrderForm/FieldComponents/fields.helpers'
 
 import '../../components/OrderForm/style.css'
 import './style.css'
@@ -71,8 +73,15 @@ const processUpdateOrder = (order, id) => ({
 
 const processAOArgs = (args) => {
   const updArgs = { ...args }
-  updArgs.action = updArgs.amount < 0 ? 'Sell' : 'Buy'
   updArgs.amount = Math.abs(updArgs.amount)
+
+  if (!updArgs.action) {
+    updArgs.action = updArgs.amount < 0 ? 'sell' : 'buy'
+  }
+
+  if (updArgs.currency) {
+    updArgs.currency = getCurrencyDefinition(updArgs.currency, updArgs.symbol)
+  }
 
   if (updArgs.sliceAmount) {
     updArgs.sliceAmount = Math.abs(updArgs.sliceAmount)
@@ -83,7 +92,7 @@ const processAOArgs = (args) => {
 
 const EditOrderModal = ({
   changeVisibilityState, visible, order, updateOrder, authToken, atomicOrdersCount, countFilterAtomicOrdersByMarket,
-  maxOrderCounts, gaEditAO, cancelAlgoOrder, submitAlgoOrder, markets,
+  maxOrderCounts, gaEditAO, cancelAlgoOrder, submitAlgoOrder, markets, updateRecurringAO,
 }) => {
   const { t } = useTranslation()
   const [layout, setLayout] = useState({})
@@ -97,7 +106,7 @@ const EditOrderModal = ({
       return
     }
     const updOrder = { ...order }
-    const algoOrders = getAOs(t)
+    const algoOrders = getAOs(t, true)
     let isAlgoOrder = true
     let uiDef = _find(algoOrders, ({ id }) => id === updOrder.id)
 
@@ -114,6 +123,7 @@ const EditOrderModal = ({
 
     if (isAlgoOrder) {
       updOrder.args = processAOArgs(updOrder.args)
+      updOrder.args.alias = updOrder.alias
     } else {
       uiDef.action = updOrder.amount < 0 ? 'sell' : 'buy'
       updOrder.amount = Math.abs(updOrder.amount)
@@ -145,8 +155,23 @@ const EditOrderModal = ({
     if (_isEmpty(error)) {
       const { symbol, _futures, _margin } = args
       gaEditAO()
-      cancelAlgoOrder(authToken, order.gid)
-      submitAlgoOrder(authToken, layout.id, symbol, _futures, _margin, data, order.gid)
+      const orderData = {
+        ...data,
+        _symbol: symbol,
+      }
+
+      if (order.id === Recurring.id) {
+        orderData.id = layout.id
+
+        updateRecurringAO(authToken, orderData)
+      } else {
+        orderData._futures = _futures
+        orderData._margin = _margin
+
+        cancelAlgoOrder(authToken, order.gid)
+        submitAlgoOrder(authToken, layout.id, order.gid, orderData)
+      }
+
       onClose()
     } else {
       const { field, message, i18n } = error
@@ -216,7 +241,7 @@ const EditOrderModal = ({
   return (
     <Modal
       label={t('editOrderModal.title')}
-      className='hfui-edit-order-modal__wrapper'
+      className='hfui-edit-order-modal__wrapper hfui-orderform__panel'
       isOpen={visible}
       onClose={onClose}
       onSubmit={onSubmit}
@@ -262,6 +287,7 @@ EditOrderModal.propTypes = {
   cancelAlgoOrder: PropTypes.func.isRequired,
   submitAlgoOrder: PropTypes.func.isRequired,
   markets: PropTypes.objectOf(PropTypes.shape(MARKET_SHAPE)).isRequired,
+  updateRecurringAO: PropTypes.func.isRequired,
 }
 
 export default memo(EditOrderModal)

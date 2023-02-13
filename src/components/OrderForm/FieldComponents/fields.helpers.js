@@ -1,3 +1,4 @@
+import { getSymbols } from '@ufx-ui/utils'
 import _map from 'lodash/map'
 import _split from 'lodash/split'
 
@@ -18,4 +19,16 @@ export const renderString = (str, renderData) => {
 
     return renderData[key] || ''
   }).join(' ')
+}
+
+export const getCurrencyDefinition = (currency, symbol) => {
+  const [base, quote] = getSymbols(symbol)
+
+  if (currency === base) {
+    return '$BASE'
+  }
+  if (currency === quote) {
+    return '$QUOTE'
+  }
+  return currency
 }
