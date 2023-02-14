@@ -20,12 +20,21 @@ import AtomicOrdersTable from '../AtomicOrdersTable'
 import AlgoOrdersTable from '../AlgoOrdersTable'
 import BalancesTable from '../BalancesTable'
 import MarketSelect from '../MarketSelect'
-import { MARKET_SHAPE, ORDER_SHAPE } from '../../constants/prop-types-shapes'
+import {
+  MARKET_SHAPE, ORDER_SHAPE, POSITION_SHAPE,
+} from '../../constants/prop-types-shapes'
 import PanelButton from '../../ui/Panel/Panel.Button'
 import CCYIcon from '../../ui/CCYIcon'
 import AlgoOrdersHistoryButton from '../AlgoOrdersHistoryButton'
 
 import './style.css'
+
+const PANEL_MAPPING = {
+  POSITIONS: 0,
+  ATOMIC_ORDERS: 1,
+  ALGO_ORDERS: 2,
+  BALANCES: 3,
+}
 
 const TradingStatePanel = ({
   dark,
@@ -43,6 +52,8 @@ const TradingStatePanel = ({
   getCurrencySymbol,
   currentMode,
   algoOrders,
+  positions,
+  atomicOrders,
 }) => {
   const currentMarket = _get(savedState, 'currentMarket', {})
   const activeFilter = _get(currentMarket, currentMode, {})
@@ -68,12 +79,37 @@ const TradingStatePanel = ({
   )
 
   const filterableMarkets = useMemo(() => {
-    const algoOrderSymbols = _map(_values(algoOrders), 'args.symbol')
-    const filteredMarkets = _pickBy(markets, (_, key) => {
-      return _includes(algoOrderSymbols, key)
-    })
-    return filteredMarkets
-  }, [markets, algoOrders])
+    const activeTab = _get(savedState, 'tab', null)
+
+    // Processing markets for algo orders
+    if (activeTab === PANEL_MAPPING.ALGO_ORDERS) {
+      const algoOrderSymbols = _map(_values(algoOrders), 'args.symbol')
+      const filteredMarkets = _pickBy(markets, (_, key) => {
+        return _includes(algoOrderSymbols, key)
+      })
+      return filteredMarkets
+    }
+
+    // Processing markets for positions
+    if (activeTab === PANEL_MAPPING.POSITIONS) {
+      const positionSymbols = _map(_values(positions), 'symbol')
+      const filteredMarkets = _pickBy(markets, (_, key) => {
+        return _includes(positionSymbols, key)
+      })
+      return filteredMarkets
+    }
+
+    // Processing markets for atomic orders
+    if (activeTab === PANEL_MAPPING.ATOMIC_ORDERS) {
+      const atomicSymbols = _map(_values(atomicOrders), 'symbol')
+      const filteredMarkets = _pickBy(markets, (_, key) => {
+        return _includes(atomicSymbols, key)
+      })
+      return filteredMarkets
+    }
+
+    return markets
+  }, [markets, algoOrders, atomicOrders, positions, savedState])
 
   const setActiveFilter = (market) => {
     saveState('currentMarket', {
@@ -90,7 +126,7 @@ const TradingStatePanel = ({
     }
   }
 
-  const isAOsTabActive = _get(savedState, 'tab', null) === 2
+  const isAOsTabActive = _get(savedState, 'tab', null) === PANEL_MAPPING.ALGO_ORDERS
 
   const showMarketDropdown = _isEmpty(activeFilter)
 
@@ -195,6 +231,8 @@ TradingStatePanel.propTypes = {
   getAlgoOrdersCount: PropTypes.func,
   markets: PropTypes.objectOf(PropTypes.shape(MARKET_SHAPE)).isRequired,
   algoOrders: PropTypes.objectOf(PropTypes.shape(ORDER_SHAPE)).isRequired,
+  positions: PropTypes.objectOf(PropTypes.shape(POSITION_SHAPE)),
+  atomicOrders: PropTypes.objectOf(PropTypes.shape(ORDER_SHAPE)),
   savedState: PropTypes.shape({
     currentMarket: PropTypes.shape(MARKET_SHAPE),
     tab: PropTypes.number,
@@ -216,6 +254,8 @@ TradingStatePanel.defaultProps = {
   onRemove: () => {},
   savedState: {},
   layoutID: '',
+  positions: {},
+  atomicOrders: {},
 }
 
 export default memo(TradingStatePanel)

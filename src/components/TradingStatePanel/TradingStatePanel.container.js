@@ -7,6 +7,8 @@ import {
   getFilteredAlgoOrdersCount,
   getAuthToken,
   getCurrentModeAlgoOrders,
+  getAllPositions,
+  getAtomicOrders,
 } from '../../redux/selectors/ws'
 import { getMarkets } from '../../redux/selectors/meta'
 import UIActions from '../../redux/actions/ui'
@@ -21,6 +23,8 @@ const mapStateToProps = (state = {}, { layoutID, layoutI: id } = {}) => ({
   getAtomicOrdersCount: getFilteredAtomicOrdersCount(state),
   getAlgoOrdersCount: getFilteredAlgoOrdersCount(state),
   algoOrders: getCurrentModeAlgoOrders(state),
+  positions: getAllPositions(state),
+  atomicOrders: getAtomicOrders(state),
   markets: getMarkets(state),
   savedState: getComponentState(state, layoutID, 'trading_state', id),
   getCurrencySymbol: reduxSelectors.getCurrencySymbolMemo(state),
