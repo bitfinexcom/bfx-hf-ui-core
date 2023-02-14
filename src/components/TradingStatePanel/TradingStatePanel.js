@@ -118,6 +118,7 @@ const TradingStatePanel = ({
                   renderWithFavorites
                   ref={marketRef}
                   placeholder={t('tradingStatePanel.filterBy')}
+                  className='hfui-tradingstatepanel__options-market-select'
                 />
               </div>
               {!showMarketDropdown && (
