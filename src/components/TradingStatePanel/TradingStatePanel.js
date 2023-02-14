@@ -4,6 +4,10 @@ import React, {
 import PropTypes from 'prop-types'
 import _isEmpty from 'lodash/isEmpty'
 import _get from 'lodash/get'
+import _pickBy from 'lodash/pickBy'
+import _map from 'lodash/map'
+import _values from 'lodash/values'
+import _includes from 'lodash/includes'
 import { useTranslation } from 'react-i18next'
 
 import {
@@ -16,7 +20,7 @@ import AtomicOrdersTable from '../AtomicOrdersTable'
 import AlgoOrdersTable from '../AlgoOrdersTable'
 import BalancesTable from '../BalancesTable'
 import MarketSelect from '../MarketSelect'
-import { MARKET_SHAPE } from '../../constants/prop-types-shapes'
+import { MARKET_SHAPE, ORDER_SHAPE } from '../../constants/prop-types-shapes'
 import PanelButton from '../../ui/Panel/Panel.Button'
 import CCYIcon from '../../ui/CCYIcon'
 import AlgoOrdersHistoryButton from '../AlgoOrdersHistoryButton'
@@ -38,6 +42,7 @@ const TradingStatePanel = ({
   layoutI,
   getCurrencySymbol,
   currentMode,
+  algoOrders,
 }) => {
   const currentMarket = _get(savedState, 'currentMarket', {})
   const activeFilter = _get(currentMarket, currentMode, {})
@@ -61,6 +66,14 @@ const TradingStatePanel = ({
     },
     [saveState],
   )
+
+  const filterableMarkets = useMemo(() => {
+    const algoOrderSymbols = _map(_values(algoOrders), 'args.symbol')
+    const filteredMarkets = _pickBy(markets, (_, key) => {
+      return _includes(algoOrderSymbols, key)
+    })
+    return filteredMarkets
+  }, [markets, algoOrders])
 
   const setActiveFilter = (market) => {
     saveState('currentMarket', {
@@ -112,7 +125,7 @@ const TradingStatePanel = ({
             <Fragment key='filter-market'>
               <div style={styles}>
                 <MarketSelect
-                  markets={markets}
+                  markets={filterableMarkets}
                   value={activeFilter}
                   onChange={setActiveFilter}
                   renderWithFavorites
@@ -181,6 +194,7 @@ TradingStatePanel.propTypes = {
   getAtomicOrdersCount: PropTypes.func,
   getAlgoOrdersCount: PropTypes.func,
   markets: PropTypes.objectOf(PropTypes.shape(MARKET_SHAPE)).isRequired,
+  algoOrders: PropTypes.objectOf(PropTypes.shape(ORDER_SHAPE)).isRequired,
   savedState: PropTypes.shape({
     currentMarket: PropTypes.shape(MARKET_SHAPE),
     tab: PropTypes.number,
