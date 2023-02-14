@@ -79,6 +79,13 @@ const processAOArgs = (args) => {
     updArgs.action = updArgs.amount < 0 ? 'sell' : 'buy'
   }
 
+  if (_isString(updArgs.startedAt)) {
+    updArgs.startedAt = new Date(updArgs.startedAt)
+  }
+  if (_isString(updArgs.endedAt)) {
+    updArgs.endedAt = new Date(updArgs.endedAt)
+  }
+
   if (updArgs.currency) {
     updArgs.currency = getCurrencyDefinition(updArgs.currency, updArgs.symbol)
   }
@@ -143,33 +150,40 @@ const EditOrderModal = ({
   }
 
   const onSubmitAO = () => {
-    const market = { wsID: args?.symbol }
+    const { symbol, _futures, _margin } = args
+    const { id, gid } = order
+    const market = { wsID: symbol }
+
     const activeMarketCount = countFilterAtomicOrdersByMarket(market)
-    const data = processFieldData({
+    let data = processFieldData({
       layout,
       fieldData: args,
       action: 'submit',
     })
+
+    if (id === Recurring.id) {
+      data = Recurring.meta.processParams(data, markets[symbol])
+    }
     const error = validateAOData(data, layout, market, atomicOrdersCount, activeMarketCount, maxOrderCounts)
 
     if (_isEmpty(error)) {
-      const { symbol, _futures, _margin } = args
       gaEditAO()
       const orderData = {
         ...data,
         _symbol: symbol,
       }
 
-      if (order.id === Recurring.id) {
-        orderData.id = layout.id
+      if (id === Recurring.id) {
+        console.log(orderData);
+        delete orderData.symbol
 
-        updateRecurringAO(authToken, orderData)
+        updateRecurringAO(authToken, order.gid, orderData)
       } else {
         orderData._futures = _futures
         orderData._margin = _margin
 
-        cancelAlgoOrder(authToken, order.gid)
-        submitAlgoOrder(authToken, layout.id, order.gid, orderData)
+        cancelAlgoOrder(authToken, gid)
+        submitAlgoOrder(authToken, id, gid, orderData)
       }
 
       onClose()
@@ -249,7 +263,7 @@ const EditOrderModal = ({
       {_isEmpty(args) ? (
         t('editOrderModal.noOrder')
       ) : renderLayout({
-        onSubmit: () => {},
+        onSubmit: () => { },
         onFieldChange,
         layout,
         validationErrors,

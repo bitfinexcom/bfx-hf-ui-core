@@ -59,11 +59,12 @@ const mapDispatchToProps = (dispatch) => ({
       ),
     )
   },
-  updateRecurringAO: (authToken, payload) => dispatch(
+  updateRecurringAO: (authToken, gid, payload) => dispatch(
     WSActions.send([
       'recurring_algo_order.update',
       authToken,
       'bitfinex',
+      gid,
       payload,
     ]),
   ),
