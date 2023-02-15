@@ -131,7 +131,7 @@ const EditOrderModal = ({
       return
     }
     const updOrder = { ...order }
-    const algoOrders = getAOs(t, true)
+    const algoOrders = getAOs(t, true, true)
     let isAlgoOrder = true
     let uiDef = _find(algoOrders, ({ id }) => id === updOrder.id)
 
