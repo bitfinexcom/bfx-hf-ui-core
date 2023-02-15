@@ -4,6 +4,10 @@ import React, {
 import PropTypes from 'prop-types'
 import _isEmpty from 'lodash/isEmpty'
 import _get from 'lodash/get'
+import _pickBy from 'lodash/pickBy'
+import _map from 'lodash/map'
+import _values from 'lodash/values'
+import _includes from 'lodash/includes'
 import { useTranslation } from 'react-i18next'
 
 import {
@@ -16,12 +20,21 @@ import AtomicOrdersTable from '../AtomicOrdersTable'
 import AlgoOrdersTable from '../AlgoOrdersTable'
 import BalancesTable from '../BalancesTable'
 import MarketSelect from '../MarketSelect'
-import { MARKET_SHAPE } from '../../constants/prop-types-shapes'
+import {
+  MARKET_SHAPE, ORDER_SHAPE, POSITION_SHAPE,
+} from '../../constants/prop-types-shapes'
 import PanelButton from '../../ui/Panel/Panel.Button'
 import CCYIcon from '../../ui/CCYIcon'
 import AlgoOrdersHistoryButton from '../AlgoOrdersHistoryButton'
 
 import './style.css'
+
+const PANEL_MAPPING = {
+  POSITIONS: 0,
+  ATOMIC_ORDERS: 1,
+  ALGO_ORDERS: 2,
+  BALANCES: 3,
+}
 
 const TradingStatePanel = ({
   dark,
@@ -38,6 +51,9 @@ const TradingStatePanel = ({
   layoutI,
   getCurrencySymbol,
   currentMode,
+  algoOrders,
+  positions,
+  atomicOrders,
 }) => {
   const currentMarket = _get(savedState, 'currentMarket', {})
   const activeFilter = _get(currentMarket, currentMode, {})
@@ -62,6 +78,39 @@ const TradingStatePanel = ({
     [saveState],
   )
 
+  const filterableMarkets = useMemo(() => {
+    const activeTab = _get(savedState, 'tab', null)
+
+    // Processing markets for algo orders
+    if (activeTab === PANEL_MAPPING.ALGO_ORDERS) {
+      const algoOrderSymbols = _map(_values(algoOrders), 'args.symbol')
+      const filteredMarkets = _pickBy(markets, (_, key) => {
+        return _includes(algoOrderSymbols, key)
+      })
+      return filteredMarkets
+    }
+
+    // Processing markets for positions
+    if (activeTab === PANEL_MAPPING.POSITIONS) {
+      const positionSymbols = _map(_values(positions), 'symbol')
+      const filteredMarkets = _pickBy(markets, (_, key) => {
+        return _includes(positionSymbols, key)
+      })
+      return filteredMarkets
+    }
+
+    // Processing markets for atomic orders
+    if (activeTab === PANEL_MAPPING.ATOMIC_ORDERS) {
+      const atomicSymbols = _map(_values(atomicOrders), 'symbol')
+      const filteredMarkets = _pickBy(markets, (_, key) => {
+        return _includes(atomicSymbols, key)
+      })
+      return filteredMarkets
+    }
+
+    return markets
+  }, [markets, algoOrders, atomicOrders, positions, savedState])
+
   const setActiveFilter = (market) => {
     saveState('currentMarket', {
       ...currentMarket,
@@ -77,7 +126,7 @@ const TradingStatePanel = ({
     }
   }
 
-  const isAOsTabActive = _get(savedState, 'tab', null) === 2
+  const isAOsTabActive = _get(savedState, 'tab', null) === PANEL_MAPPING.ALGO_ORDERS
 
   const showMarketDropdown = _isEmpty(activeFilter)
 
@@ -112,12 +161,13 @@ const TradingStatePanel = ({
             <Fragment key='filter-market'>
               <div style={styles}>
                 <MarketSelect
-                  markets={markets}
+                  markets={filterableMarkets}
                   value={activeFilter}
                   onChange={setActiveFilter}
                   renderWithFavorites
                   ref={marketRef}
                   placeholder={t('tradingStatePanel.filterBy')}
+                  className='hfui-tradingstatepanel__options-market-select'
                 />
               </div>
               {!showMarketDropdown && (
@@ -180,6 +230,9 @@ TradingStatePanel.propTypes = {
   getAtomicOrdersCount: PropTypes.func,
   getAlgoOrdersCount: PropTypes.func,
   markets: PropTypes.objectOf(PropTypes.shape(MARKET_SHAPE)).isRequired,
+  algoOrders: PropTypes.objectOf(PropTypes.shape(ORDER_SHAPE)).isRequired,
+  positions: PropTypes.objectOf(PropTypes.shape(POSITION_SHAPE)),
+  atomicOrders: PropTypes.objectOf(PropTypes.shape(ORDER_SHAPE)),
   savedState: PropTypes.shape({
     currentMarket: PropTypes.shape(MARKET_SHAPE),
     tab: PropTypes.number,
@@ -201,6 +254,8 @@ TradingStatePanel.defaultProps = {
   onRemove: () => {},
   savedState: {},
   layoutID: '',
+  positions: {},
+  atomicOrders: {},
 }
 
 export default memo(TradingStatePanel)
