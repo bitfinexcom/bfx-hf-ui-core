@@ -257,7 +257,7 @@ const EditOrderModal = ({
   const onFieldChange = (key, value) => {
     const { fields = {} } = layout
     const field = fields[key] || {}
-    const { disabled } = field
+    const { disabled, avoidTrimming = false } = field
 
     if (_isBoolean(disabled) && disabled) {
       return null
@@ -267,7 +267,7 @@ const EditOrderModal = ({
     const C = COMPONENTS_FOR_ID[component]
     let processedValue = value
 
-    if (_isString(value)) {
+    if (_isString(value) && !avoidTrimming) {
       processedValue = _trim(value)
     }
 
@@ -292,22 +292,24 @@ const EditOrderModal = ({
       onClose={onClose}
       onSubmit={onSubmit}
     >
-      {_isEmpty(args)
-        ? t('editOrderModal.noOrder')
-        : renderLayout({
-          onSubmit: () => {},
-          onFieldChange,
-          layout,
-          validationErrors,
-          renderData: symbolToQuoteBase(args?.symbol),
-          isOrderExecuting: false,
-          t,
-          fieldData: {
-            ...args,
-            _orderEditing: true,
-            _context: getContext(args?.symbol, markets),
-          },
-        })}
+      <div className='hfui-orderform__wrapper'>
+        {_isEmpty(args)
+          ? t('editOrderModal.noOrder')
+          : renderLayout({
+            onSubmit: () => {},
+            onFieldChange,
+            layout,
+            validationErrors,
+            renderData: symbolToQuoteBase(args?.symbol),
+            isOrderExecuting: false,
+            t,
+            fieldData: {
+              ...args,
+              _orderEditing: true,
+              _context: getContext(args?.symbol, markets),
+            },
+          })}
+      </div>
       <Modal.Footer>
         <Modal.Button onClick={onClose} secondary>
           {t('ui.cancel')}
