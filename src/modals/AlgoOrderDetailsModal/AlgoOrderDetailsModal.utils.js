@@ -6,7 +6,6 @@ import {
   Bracket,
   Recurring,
 } from 'bfx-hf-algo'
-import { getDateInShortFormat } from '../../util/date'
 
 const convertIntervalToSeconds = (interval) => {
   return `${interval / 1000}s`

@@ -1,5 +1,4 @@
 import _isString from 'lodash/isString'
-import { Recurring } from 'bfx-hf-algo'
 import t from '../constants/ws'
 import ui from '../constants/ui'
 import { getScope } from '../../util/scope'
