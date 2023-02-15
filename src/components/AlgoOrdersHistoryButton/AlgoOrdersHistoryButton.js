@@ -1,5 +1,4 @@
 import React, { useRef, useEffect } from 'react'
-import Icon from 'react-fa'
 import _toUpper from 'lodash/toUpper'
 import { useDispatch, useSelector } from 'react-redux'
 
@@ -10,6 +9,7 @@ import { getShowAOsHistory } from '../../redux/selectors/ao'
 import { getIsAOsHistoryLoaded } from '../../redux/selectors/ws'
 import AOActions from '../../redux/actions/ao'
 import useToggle from '../../hooks/useToggle'
+import HistoryIcon from '../../ui/Icons/HistoryIcon'
 
 import './style.css'
 
@@ -70,7 +70,7 @@ const AlgoOrdersHistoryButton = () => {
         isHistoryLoading ? (
           <Spinner className='hfui-history-button__spinner' />
         ) : (
-          <Icon name='history' className='hfui-history-button__icon' />
+          <HistoryIcon className='hfui-history-button__icon' width='25px' height='25px' />
         )
       }
     />
