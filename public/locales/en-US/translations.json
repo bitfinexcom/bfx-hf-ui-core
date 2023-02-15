@@ -464,7 +464,7 @@
     "startedLiveStrategyExecution": "Started live strategy execution ({{label}}) for {{symbol}}-{{timeframe}}",
     "stoppedLiveStrategyExecution": "Stopped live strategy execution ({{label}}) for {{symbol}}-{{timeframe}}",
     "stoppedAO": "Stopped algo order",
-    "startedAO": "Started AO {{name}} on {{target}}",
+    "startedAO": "Started AO {{alias}} on {{target}}",
     "unknownAlgoOrderId": "Unknown algo order ID: {{aoID}}",
     "cancellingOrderOn": "Cancelling order on {{target}}",
     "unauthorized": "Unauthorized",

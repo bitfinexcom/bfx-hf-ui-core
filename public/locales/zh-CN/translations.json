@@ -419,7 +419,7 @@
     "startedLiveStrategyExecution": "已开始执行真实交易策略 - ({{name}}) 于{{symbol}}-{{tf}}",
     "stoppedLiveStrategyExecution": "已停止执行真实交易策略 - ({{name}}) 于{{symbol}}-{{tf}}",
     "stoppedAO": "已停止演算法订单",
-    "startedAO": "已开始{{name}} 演算法订单以{{target}}",
+    "startedAO": "已开始{{alias}} 演算法订单以{{target}}",
     "unknownAlgoOrderId": "未知的演算法订单 ID:{{aoID}}",
     "cancellingOrderOn": "于{{target}} 取消订单",
     "unauthorized": "未验证",
