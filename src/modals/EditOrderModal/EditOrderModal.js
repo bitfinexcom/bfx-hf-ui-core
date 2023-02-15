@@ -1,6 +1,4 @@
-import React, {
-  memo, useState, useEffect,
-} from 'react'
+import React, { memo, useState, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import PropTypes from 'prop-types'
 import _find from 'lodash/find'
@@ -22,10 +20,15 @@ import { Recurring } from 'bfx-hf-algo'
 
 import Modal from '../../ui/Modal'
 import {
-  renderLayout, symbolToQuoteBase, COMPONENTS_FOR_ID, processFieldData, validateAOData,
+  renderLayout,
+  symbolToQuoteBase,
+  COMPONENTS_FOR_ID,
+  processFieldData,
+  validateAOData,
 } from '../../components/OrderForm/OrderForm.helpers'
 import {
-  getAOs, getAtomicOrders,
+  getAOs,
+  getAtomicOrders,
 } from '../../components/OrderForm/OrderForm.orders.helpers'
 import { MARKET_SHAPE, ORDER_SHAPE } from '../../constants/prop-types-shapes'
 import { getCurrencyDefinition } from '../../components/OrderForm/FieldComponents/fields.helpers'
@@ -53,9 +56,13 @@ const flagsMapping = {
 
 const calculateFlags = (order) => {
   const flags = _keys(flagsMapping)
-  return _reduce(flags, (prev, curr) => {
-    return order[curr] ? prev + flagsMapping[curr] : prev
-  }, 0)
+  return _reduce(
+    flags,
+    (prev, curr) => {
+      return order[curr] ? prev + flagsMapping[curr] : prev
+    },
+    0,
+  )
 }
 
 const processUpdateOrder = (order, id) => ({
@@ -98,8 +105,19 @@ const processAOArgs = (args) => {
 }
 
 const EditOrderModal = ({
-  changeVisibilityState, visible, order, updateOrder, authToken, atomicOrdersCount, countFilterAtomicOrdersByMarket,
-  maxOrderCounts, gaEditAO, cancelAlgoOrder, submitAlgoOrder, markets, updateRecurringAO,
+  changeVisibilityState,
+  visible,
+  order,
+  updateOrder,
+  authToken,
+  atomicOrdersCount,
+  countFilterAtomicOrdersByMarket,
+  maxOrderCounts,
+  gaEditAO,
+  cancelAlgoOrder,
+  submitAlgoOrder,
+  markets,
+  updateRecurringAO,
 }) => {
   const { t } = useTranslation()
   const [layout, setLayout] = useState({})
@@ -119,7 +137,11 @@ const EditOrderModal = ({
 
     if (!uiDef) {
       const orders = getAtomicOrders(t)
-      const processedType = _replace(_toLower(updOrder.type), /(exchange )/i, '')
+      const processedType = _replace(
+        _toLower(updOrder.type),
+        /(exchange )/i,
+        '',
+      )
       uiDef = _find(orders, ({ id }) => id === processedType)
       isAlgoOrder = false
     }
@@ -164,7 +186,14 @@ const EditOrderModal = ({
     if (id === Recurring.id) {
       data = Recurring.meta.processParams(data, markets[symbol])
     }
-    const error = validateAOData(data, layout, market, atomicOrdersCount, activeMarketCount, maxOrderCounts)
+    const error = validateAOData(
+      data,
+      layout,
+      market,
+      atomicOrdersCount,
+      activeMarketCount,
+      maxOrderCounts,
+    )
 
     if (_isEmpty(error)) {
       gaEditAO()
@@ -174,7 +203,6 @@ const EditOrderModal = ({
       }
 
       if (id === Recurring.id) {
-        console.log(orderData);
         delete orderData.symbol
 
         updateRecurringAO(authToken, order.gid, orderData)
@@ -191,7 +219,9 @@ const EditOrderModal = ({
       const { field, message, i18n } = error
       setValidationErrors({
         ...validationErrors,
-        [field]: i18n ? t(`algoOrderForm.validationMessages.${i18n.key}`, i18n.props) : message,
+        [field]: i18n
+          ? t(`algoOrderForm.validationMessages.${i18n.key}`, i18n.props)
+          : message,
       })
     }
   }
@@ -213,7 +243,11 @@ const EditOrderModal = ({
       action: layout.action,
     })
 
-    const generated = generateOrder(data, data.symbol, getContext(data.symbol, markets))
+    const generated = generateOrder(
+      data,
+      data.symbol,
+      getContext(data.symbol, markets),
+    )
     const processed = processUpdateOrder(generated, order.id)
 
     updateOrder(authToken, processed)
@@ -237,9 +271,7 @@ const EditOrderModal = ({
       processedValue = _trim(value)
     }
 
-    const validationError = (C && C.validateValue)
-      ? C.validateValue(processedValue, t)
-      : null
+    const validationError = C && C.validateValue ? C.validateValue(processedValue, t) : null
 
     setValidationErrors({
       [key]: validationError,
@@ -260,22 +292,22 @@ const EditOrderModal = ({
       onClose={onClose}
       onSubmit={onSubmit}
     >
-      {_isEmpty(args) ? (
-        t('editOrderModal.noOrder')
-      ) : renderLayout({
-        onSubmit: () => { },
-        onFieldChange,
-        layout,
-        validationErrors,
-        renderData: symbolToQuoteBase(args?.symbol),
-        isOrderExecuting: false,
-        t,
-        fieldData: {
-          ...args,
-          _orderEditing: true,
-          _context: getContext(args?.symbol, markets),
-        },
-      })}
+      {_isEmpty(args)
+        ? t('editOrderModal.noOrder')
+        : renderLayout({
+          onSubmit: () => {},
+          onFieldChange,
+          layout,
+          validationErrors,
+          renderData: symbolToQuoteBase(args?.symbol),
+          isOrderExecuting: false,
+          t,
+          fieldData: {
+            ...args,
+            _orderEditing: true,
+            _context: getContext(args?.symbol, markets),
+          },
+        })}
       <Modal.Footer>
         <Modal.Button onClick={onClose} secondary>
           {t('ui.cancel')}
