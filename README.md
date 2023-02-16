@@ -13,7 +13,7 @@ npm start
 
 ## Environment
 
-Standard Environment variables include:
+Standard environment variables include:
 
 | name                | values              | description                            |
 | ------------------- | ------------------- | -------------------------------------- |
