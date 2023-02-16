@@ -19,6 +19,7 @@ Standard Environment variables include:
 | ------------------- | ------------------- | -------------------------------------- |
 | CI_ENVIRONMENT_NAME | staging\|production | Use to set config based on environment |
 
+
 ## Test production/staging build
 
 Install serve package globally
