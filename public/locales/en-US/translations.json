@@ -43,7 +43,8 @@
     "title": "Active Orders",
     "cancellBtn": "Cancel All",
     "resumeBtn": "Resume",
-    "selectAllBtn": "Select All"
+    "selectAllBtn": "Select All",
+    "restoredConnectionMessage": "Connection was lost and restored. Please select algorithmic orders you want to reopen"
   },
   "closePositionModal": {
     "title": "Closing Position",

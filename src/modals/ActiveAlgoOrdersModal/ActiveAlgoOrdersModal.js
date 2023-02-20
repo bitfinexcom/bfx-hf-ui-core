@@ -9,7 +9,7 @@ import _forEach from 'lodash/forEach'
 import { useTranslation } from 'react-i18next'
 
 import Modal from '../../ui/Modal'
-
+import AttentionBar from '../../ui/AttentionBar/AttentionBar'
 import AlgoOrdersTable from './ActiveAlgoOrdersModal.table'
 
 import './style.css'
@@ -98,6 +98,9 @@ const ActiveAlgoOrdersModal = ({
       className='hfui-active-ao-modal__wrapper'
       width={800}
     >
+      <AttentionBar green className='message-bar'>
+        <p>{t('activeAlgoOrdersModal.restoredConnectionMessage')}</p>
+      </AttentionBar>
       <AlgoOrdersTable
         orders={activeAlgoOrders}
         onOrderSelect={onOrderSelect}
