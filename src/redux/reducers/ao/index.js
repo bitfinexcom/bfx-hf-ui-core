@@ -15,10 +15,12 @@ function reducer(state = getInitialState(), action = {}) {
 
   switch (type) {
     case types.SET_ACTIVE_AOS: {
-      const { activeAlgoOrders } = payload
+      const { activeAlgoOrders, isAfterLogin: isAlgoOrdersAfterLogin } = payload
+
       return {
         ...state,
         activeAlgoOrders,
+        isAlgoOrdersAfterLogin,
       }
     }
 
@@ -77,7 +79,10 @@ function reducer(state = getInitialState(), action = {}) {
           ...state.aoParams,
           [symbol]: {
             ...state.aoParams?.[symbol],
-            [algoID]: _filter(state.aoParams?.[symbol]?.[algoID], (p) => p?.id !== id),
+            [algoID]: _filter(
+              state.aoParams?.[symbol]?.[algoID],
+              (p) => p?.id !== id,
+            ),
           },
         },
       }

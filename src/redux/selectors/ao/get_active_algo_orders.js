@@ -5,7 +5,7 @@ import { reduxSelectors } from '@ufx-ui/bfx-containers'
 
 import { getPairFromMarket } from '../../../util/market'
 import { REDUCER_PATHS } from '../../config'
-import { getMarkets } from '../meta'
+import { getMarketsForBothModes } from '../meta'
 
 const { getCurrencySymbolMemo } = reduxSelectors
 
@@ -17,7 +17,7 @@ export const getActiveAlgoOrders = (state) => _get(state, `${path}.activeAlgoOrd
 
 const activeAlgoOrdersWithReplacedPairs = createSelector(
   [
-    getMarkets,
+    getMarketsForBothModes,
     getActiveAlgoOrders,
     getCurrencySymbolMemo,
   ],

@@ -18,6 +18,7 @@ const ActiveAlgoOrdersModal = ({
   isOpen,
   activeAlgoOrders,
   handleActiveOrders,
+  isAfterLogin,
 }) => {
   const { t } = useTranslation()
   const [selectedOrders, setSelectedOrders] = useState([])
@@ -26,14 +27,14 @@ const ActiveAlgoOrdersModal = ({
     if (e) {
       setSelectedOrders([...selectedOrders, { gid, algoID }])
     } else {
-      setSelectedOrders(_filter(selectedOrders, order => gid !== order.gid))
+      setSelectedOrders(_filter(selectedOrders, (order) => gid !== order.gid))
     }
   }
 
   const onAllOrdersSelect = (e) => {
     let allOrders = []
     if (e) {
-      _forEach(activeAlgoOrders, order => {
+      _forEach(activeAlgoOrders, (order) => {
         const { gid, algoID } = order
         allOrders.push({ gid, algoID })
       })
@@ -45,13 +46,13 @@ const ActiveAlgoOrdersModal = ({
 
   const isOrderSelected = (gid) => {
     const gids = []
-    _forEach(selectedOrders, order => gids.push(order.gid))
+    _forEach(selectedOrders, (order) => gids.push(order.gid))
     return _includes(gids, gid)
   }
 
   const isAllOrdersSelected = () => {
     const allOrders = []
-    _forEach(activeAlgoOrders, order => {
+    _forEach(activeAlgoOrders, (order) => {
       const { gid, algoID } = order
       allOrders.push({ gid, algoID })
     })
@@ -60,24 +61,27 @@ const ActiveAlgoOrdersModal = ({
 
   const prepareOrders = (orders) => {
     const preparedOrders = []
-    _forEach(orders, order => {
+    _forEach(orders, (order) => {
       const { gid, algoID } = order
       preparedOrders.push({ gid, algoID })
     })
     return preparedOrders
   }
 
-  const onSubmit = useCallback((type) => {
-    const ordersLeft = _differenceBy(activeAlgoOrders, selectedOrders, 'gid')
-    const allOrders = prepareOrders(activeAlgoOrders)
-    const unselectedOrders = prepareOrders(ordersLeft)
-    handleActiveOrders({
-      type,
-      allOrders,
-      selectedOrders,
-      unselectedOrders,
-    })
-  }, [handleActiveOrders, activeAlgoOrders, selectedOrders])
+  const onSubmit = useCallback(
+    (type) => {
+      const ordersLeft = _differenceBy(activeAlgoOrders, selectedOrders, 'gid')
+      const allOrders = prepareOrders(activeAlgoOrders)
+      const unselectedOrders = prepareOrders(ordersLeft)
+      handleActiveOrders({
+        type,
+        allOrders,
+        selectedOrders,
+        unselectedOrders,
+      })
+    },
+    [handleActiveOrders, activeAlgoOrders, selectedOrders],
+  )
 
   const onResumeButtonClickHandler = useCallback(() => {
     if (_isEmpty(selectedOrders)) {
@@ -86,8 +90,7 @@ const ActiveAlgoOrdersModal = ({
     onSubmit('resume')
   }, [selectedOrders, onSubmit])
 
-  const cancellOrders = useCallback(() => onSubmit('cancel_all'),
-    [onSubmit])
+  const cancellOrders = useCallback(() => onSubmit('cancel_all'), [onSubmit])
 
   return (
     <Modal
@@ -98,9 +101,11 @@ const ActiveAlgoOrdersModal = ({
       className='hfui-active-ao-modal__wrapper'
       width={800}
     >
-      <AttentionBar green className='message-bar'>
-        <p>{t('activeAlgoOrdersModal.restoredConnectionMessage')}</p>
-      </AttentionBar>
+      {!isAfterLogin && (
+        <AttentionBar green className='message-bar'>
+          <p>{t('activeAlgoOrdersModal.restoredConnectionMessage')}</p>
+        </AttentionBar>
+      )}
       <AlgoOrdersTable
         orders={activeAlgoOrders}
         onOrderSelect={onOrderSelect}
@@ -133,6 +138,7 @@ ActiveAlgoOrdersModal.propTypes = {
   handleActiveOrders: PropTypes.func.isRequired,
   activeAlgoOrders: PropTypes.arrayOf(PropTypes.object), // eslint-disable-line
   isOpen: PropTypes.bool.isRequired,
+  isAfterLogin: PropTypes.bool.isRequired,
 }
 
 ActiveAlgoOrdersModal.defaultProps = {
