@@ -59,13 +59,6 @@ export default () => {
         break
       }
 
-      case WSTypes.RECONNECTED: {
-        store.dispatch(AOActions.showActiveOrdersModal(true))
-        debug('reconnected')
-        next(action)
-        break
-      }
-
       case WSTypes.DISCONNECTED: {
         debug('disconnected')
         next(action)
