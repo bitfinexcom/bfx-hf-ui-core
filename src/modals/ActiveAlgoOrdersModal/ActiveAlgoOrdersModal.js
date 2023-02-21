@@ -45,13 +45,24 @@ const ActiveAlgoOrdersModal = ({
     const mainMappedOrders = mapOrders(activeAlgoOrders.main)
     const paperMappedOrders = mapOrders(activeAlgoOrders.paper)
 
-    return _isEqual(mainMappedOrders, selectedMainOrders) && _isEqual(paperMappedOrders, selectedPaperOrders)
+    return (
+      _isEqual(mainMappedOrders, selectedMainOrders)
+      && _isEqual(paperMappedOrders, selectedPaperOrders)
+    )
   }
 
   const onSubmit = useCallback(
     (type) => {
-      const mainOrdersLeft = _differenceBy(activeAlgoOrders.main, selectedMainOrders, 'gid')
-      const paperOrdersLeft = _differenceBy(activeAlgoOrders.paper, selectedPaperOrders, 'gid')
+      const mainOrdersLeft = _differenceBy(
+        activeAlgoOrders.main,
+        selectedMainOrders,
+        'gid',
+      )
+      const paperOrdersLeft = _differenceBy(
+        activeAlgoOrders.paper,
+        selectedPaperOrders,
+        'gid',
+      )
       const allOrders = {
         main: mapOrders(activeAlgoOrders.main),
         paper: mapOrders(activeAlgoOrders.paper),
@@ -105,25 +116,29 @@ const ActiveAlgoOrdersModal = ({
           <p>{t('activeAlgoOrdersModal.restoredConnectionMessage')}</p>
         </AttentionBar>
       )}
-      <AlgoOrdersTable
-        orders={activeAlgoOrders.main}
-        selectedOrders={selectedMainOrders}
-        setSelectedOrders={setSelectedMainOrders}
-        isAllOrdersSelected={isAllOrdersSelected}
-        title={t('activeAlgoOrdersModal.liveModeAOs')}
-      />
-      <AlgoOrdersTable
-        orders={activeAlgoOrders.paper}
-        selectedOrders={selectedPaperOrders}
-        setSelectedOrders={setSelectedPaperOrders}
-        isAllOrdersSelected={isAllOrdersSelected}
-        title={t('activeAlgoOrdersModal.sandboxModeAOs')}
-      />
+      {!_isEmpty(activeAlgoOrders.main) && (
+        <AlgoOrdersTable
+          orders={activeAlgoOrders.main}
+          selectedOrders={selectedMainOrders}
+          setSelectedOrders={setSelectedMainOrders}
+          isAllOrdersSelected={isAllOrdersSelected}
+          title={t('activeAlgoOrdersModal.liveModeAOs')}
+        />
+      )}
+      {!_isEmpty(activeAlgoOrders.paper) && (
+        <AlgoOrdersTable
+          orders={activeAlgoOrders.paper}
+          selectedOrders={selectedPaperOrders}
+          setSelectedOrders={setSelectedPaperOrders}
+          isAllOrdersSelected={isAllOrdersSelected}
+          title={t('activeAlgoOrdersModal.sandboxModeAOs')}
+        />
+      )}
       <Checkbox
         className='select-all'
         label={t('activeAlgoOrdersModal.selectAllBtn')}
         checked={isAllOrdersSelected()}
-        onChange={e => onAllOrdersSelect(e)}
+        onChange={(e) => onAllOrdersSelect(e)}
       />
       <Modal.Footer>
         <Modal.Button
