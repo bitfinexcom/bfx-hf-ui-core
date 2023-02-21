@@ -99,7 +99,7 @@ const ActiveAlgoOrdersModal = ({
       onSubmit={onResumeButtonClickHandler}
       label={t('activeAlgoOrdersModal.title')}
       className='hfui-active-ao-modal__wrapper'
-      width={800}
+      width={900}
     >
       {!isAfterLogin && (
         <AttentionBar green className='message-bar'>
