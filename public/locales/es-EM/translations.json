@@ -419,7 +419,7 @@
     "startedLiveStrategyExecution": "Se inició la ejecución de la estrategia en vivo ({{name}}) para {{symbol}} - {{tf}}",
     "stoppedLiveStrategyExecution": "Se pausó la ejecución de la estrategia en vivo ({{name}}) para {{symbol}} - {{tf}}",
     "stoppedAO": "Orden de algoritmo detenida",
-    "startedAO": "Comenzó AO {{name}} el {{target}}",
+    "startedAO": "Comenzó AO {{alias}} el {{target}}",
     "unknownAlgoOrderId": "ID de orden de algoritmo desconocido: {{aoID}}",
     "cancellingOrderOn": "Cancelar orden en {{target}}",
     "unauthorized": "No Autorizado",

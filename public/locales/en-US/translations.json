@@ -116,6 +116,9 @@
     "market": "Market",
     "price": "Price",
     "amount": "Amount",
+    "interval": "Interval",
+    "slice": "Slice",
+    "target": "Target",
     "amountHelp": "Total order amount, to be executed slice-by-slice",
     "sliceAmount": "Slice Amount",
     "sliceAmountHelp": "Allows individual buy & sell amounts to be adjusted",
@@ -210,7 +213,10 @@
       "monthOn": "month, on {{day}}",
       "startOn": "on {{dateTime}}",
       "startNow": "as soon as you click submit",
-      "manuallyStop": "you manually stop this Algorithmic Order"
+      "manuallyStop": "you manually stop this Algorithmic Order",
+      "startedAt": "Started",
+      "endedAt": "Will stop",
+      "willStart": "Will start"
     },
     "splitAmount": "SPLIT AMOUNT",
     "endless": "ENDLESS",
@@ -329,8 +335,7 @@
     "title": "Algo. Orders",
     "titleFull": "Algorithmic Orders",
     "noOrders": "No active algorithmic orders",
-    "noHistory": "No algorithmic orders in history",
-    "detailsModalTitle": "Algo Order Details"
+    "noHistory": "No algorithmic orders in history"
   },
   "appSettings": {
     "title": "Settings",
@@ -459,7 +464,10 @@
     "startedLiveStrategyExecution": "Started live strategy execution ({{label}}) for {{symbol}}-{{timeframe}}",
     "stoppedLiveStrategyExecution": "Stopped live strategy execution ({{label}}) for {{symbol}}-{{timeframe}}",
     "stoppedAO": "Stopped algo order",
-    "startedAO": "Started AO {{name}} on {{target}}",
+    "removedRecurringAO": "Recurring AO {{alias}} was removed",
+    "startedAO": "Started AO {{alias}} on {{target}}",
+    "createdRecurringAO": "Recurring AO {{alias}} was created on {{target}}",
+    "updatedRecurringAO": "Recurring AO {{alias}} was updated",
     "unknownAlgoOrderId": "Unknown algo order ID: {{aoID}}",
     "cancellingOrderOn": "Cancelling order on {{target}}",
     "unauthorized": "Unauthorized",
@@ -467,6 +475,7 @@
     "algoOrderParameterRemovedSuccessfully": "Algo order parameter has been removed successfully",
     "algoOrderParametersSuccessfullySaved": "Algo order parameters successfully saved",
     "algoOrdersCurrentlyOnlyEnabledFor": "Algo orders currently only enabled for {{target}}",
+    "algoOrderEqualParamsError": "The recurring order with equal params is active",
     "failedToStartAlgoOrder": "Failed to start algo order: {{algoID}}",
     "noClientOpenFor": "No client open for {{target}}",
     "errorRemovingOrder": "Error removing order: {{algoID}} [{{gid}}]",

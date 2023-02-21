@@ -1,5 +1,4 @@
 import _isString from 'lodash/isString'
-import { Recurring } from 'bfx-hf-algo'
 import t from '../constants/ws'
 import ui from '../constants/ui'
 import { getScope } from '../../util/scope'
@@ -387,30 +386,19 @@ export default {
   webAuth: (token) => send({ event: 'auth', token }),
   onUnload: (authToken, mode) => send(['algo_order.pause', authToken, mode]),
 
-  submitAlgoOrder: (authToken, id, args) => {
-    if (id === Recurring.id) {
-      return send([
-        'algo_order.submit',
-        authToken,
-        'bitfinex',
-        id,
-        args,
-      ])
-    }
-    return send([
-      'algo_order.submit',
-      authToken,
-      'bitfinex',
-      id,
-      {
-        ...args,
-        meta: {
-          ...(args.meta || {}),
-          scope: getScope(),
-        },
+  submitAlgoOrder: (authToken, id, args) => send([
+    'algo_order.submit',
+    authToken,
+    'bitfinex',
+    id,
+    {
+      ...args,
+      meta: {
+        ...(args.meta || {}),
+        scope: getScope(),
       },
-    ])
-  },
+    },
+  ]),
 
   submitOrder: (authToken, args) => send([
     'order.submit',

@@ -419,7 +419,7 @@
     "startedLiveStrategyExecution": "Started live strategy execution ({{name}}) for {{symbol}}-{{tf}}",
     "stoppedLiveStrategyExecution": "Stopped live strategy execution ({{name}}) for {{symbol}}-{{tf}}",
     "stoppedAO": "Algo emri durduruldu",
-    "startedAO": "Started AO {{name}} on {{target}}",
+    "startedAO": "Started AO {{alias}} on {{target}}",
     "unknownAlgoOrderId": "Unknown algo order ID: {{aoID}}",
     "cancellingOrderOn": "Cancelling order on {{target}}",
     "unauthorized": "Yetkisiz",

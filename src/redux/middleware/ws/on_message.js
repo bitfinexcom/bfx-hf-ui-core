@@ -424,6 +424,13 @@ export default (alias, store) => (e = {}) => {
         break
       }
 
+      case 'data.recurring_ao_list': {
+        const [, mode, aos] = payload
+        store.dispatch(WSActions.recvDataAlgoOrders({ mode, aos }))
+
+        break
+      }
+
       case 'bt.exec': {
         const [, from, to, symbol, tf, withCandles, withTrades, syncData] = payload
         store.dispatch(WSActions.recvBacktestExecute({

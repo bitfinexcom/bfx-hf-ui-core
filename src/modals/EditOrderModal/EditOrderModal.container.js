@@ -5,10 +5,14 @@ import UIActions from '../../redux/actions/ui'
 import WSActions from '../../redux/actions/ws'
 import GAActions from '../../redux/actions/google_analytics'
 import {
-  getMaxOrderCounts, getUIModalStateForKey, getUIState,
+  getMaxOrderCounts,
+  getUIModalStateForKey,
+  getUIState,
 } from '../../redux/selectors/ui'
 import {
-  getAuthToken, getFilteredAtomicOrdersCount, getAtomicOrders,
+  getAuthToken,
+  getFilteredAtomicOrdersCount,
+  getAtomicOrders,
 } from '../../redux/selectors/ws'
 import { getMarkets } from '../../redux/selectors/meta'
 
@@ -27,12 +31,12 @@ const mapStateToProps = (state = {}) => ({
   markets: getMarkets(state),
 })
 
-const mapDispatchToProps = dispatch => ({
-  changeVisibilityState: (visible) => dispatch(UIActions.changeUIModalState(UI_MODAL_KEYS.EDIT_ORDER_MODAL, visible)),
+const mapDispatchToProps = (dispatch) => ({
+  changeVisibilityState: (visible) => dispatch(
+    UIActions.changeUIModalState(UI_MODAL_KEYS.EDIT_ORDER_MODAL, visible),
+  ),
   updateOrder: (authToken, order) => {
-    dispatch(WSActions.send([
-      'order.update', authToken, order,
-    ]))
+    dispatch(WSActions.send(['order.update', authToken, order]))
   },
   gaEditAO: () => {
     dispatch(GAActions.editAO())
@@ -40,17 +44,30 @@ const mapDispatchToProps = dispatch => ({
   cancelAlgoOrder: (authToken, gid) => {
     dispatch(WSActions.send(['algo_order.cancel', authToken, 'bitfinex', gid]))
   },
-  submitAlgoOrder: (authToken, id, _symbol, _futures, _margin, data, gid) => {
-    const orderData = {
-      ...data, _symbol, _margin, _futures,
-    }
-    dispatch(WSActions.submitAlgoOrder(authToken, id, orderData))
+  submitAlgoOrder: (authToken, id, gid, data) => {
+    dispatch(WSActions.submitAlgoOrder(authToken, id, data))
 
     // TODO: Instead of submitting orderData as a trace object, there should be a:
     // "updated [arr]: of objects, one per setting, under the format:
     // { setting [string], oldValue [string], newValue [string] }"
-    dispatch(UIActions.logInformation(`User requested an update for the ${id} algorithmic order with ID ${gid}`, LOG_LEVELS.INFO, 'ao_updated', orderData))
+    dispatch(
+      UIActions.logInformation(
+        `User requested an update for the ${id} algorithmic order with ID ${gid}`,
+        LOG_LEVELS.INFO,
+        'ao_updated',
+        data,
+      ),
+    )
   },
+  updateRecurringAO: (authToken, gid, payload) => dispatch(
+    WSActions.send([
+      'recurring_algo_order.update',
+      authToken,
+      'bitfinex',
+      gid,
+      payload,
+    ]),
+  ),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(EditOrderModal)

@@ -29,9 +29,10 @@ const HOSTED_ALGO_ORDERS = [Iceberg, TWAP]
 
 const getAlgoOrders = (isBeta) => (isElectronApp ? getAlgoOrdersForStandalone(isBeta) : HOSTED_ALGO_ORDERS)
 
-export const getAOs = memoizeOne((t, isBeta) => _map(getAlgoOrders(isBeta), (ao) => ao.meta.getUIDef({
+export const getAOs = memoizeOne((t, isBeta, isEditMode = false) => _map(getAlgoOrders(isBeta), (ao) => ao.meta.getUIDef({
   timeframes: timeFrames,
   i18n: { t, prefix: 'algoOrderForm.' },
+  isEditMode,
 }),
 ),
 )

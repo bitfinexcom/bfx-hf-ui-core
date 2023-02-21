@@ -90,10 +90,15 @@ const mapDispatchToProps = (dispatch) => ({
       ...packet,
     }
 
+    dispatch(WSActions.submitOrder(authToken, orderData))
     dispatch(
-      WSActions.submitOrder(authToken, orderData),
+      UIActions.logInformation(
+        'Initialising atomic order',
+        LOG_LEVELS.INFO,
+        'atomic_order_init',
+        orderData,
+      ),
     )
-    dispatch(UIActions.logInformation('Initialising atomic order', LOG_LEVELS.INFO, 'atomic_order_init', orderData))
 
     if (!wsConnected) {
       dispatch(UIActions.setUIValue(UI_KEYS.isOrderExecuting, false))
@@ -109,24 +114,25 @@ const mapDispatchToProps = (dispatch) => ({
     authToken, id, market, context, data, wsConnected,
   }) => {
     debug('submitting algo order %s on %s [%s]', id, market.uiID, context)
-    if (id === Recurring.id) {
-      const orderData = {
-        ...data,
-        _symbol: market.wsID,
-      }
-      dispatch(WSActions.submitAlgoOrder(authToken, id, orderData))
-      return
-    }
+
     const orderData = {
       ...data,
       _symbol: market.wsID,
-      _margin: context === 'm',
-      _futures: context === 'f',
     }
+    if (id !== Recurring.id) {
+      orderData._margin = context === 'm'
+      orderData._futures = context === 'f'
+    }
+
+    dispatch(WSActions.submitAlgoOrder(authToken, id, orderData))
     dispatch(
-      WSActions.submitAlgoOrder(authToken, id, orderData),
+      UIActions.logInformation(
+        `New ${id} algorithmic order submitted`,
+        LOG_LEVELS.INFO,
+        'ao_init',
+        orderData,
+      ),
     )
-    dispatch(UIActions.logInformation(`New ${id} algorithmic order submitted`, LOG_LEVELS.INFO, 'ao_init', orderData))
 
     if (!wsConnected) {
       dispatch(UIActions.setUIValue(UI_KEYS.isOrderExecuting, false))

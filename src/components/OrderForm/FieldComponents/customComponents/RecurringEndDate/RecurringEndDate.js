@@ -6,12 +6,14 @@ import { isValidDate } from '../../../../../util/date'
 const RecurringEndDate = ({ fieldData, onFieldChange, ...props }) => {
   const { endless, endedAt, startedAt } = fieldData
 
-  const [value, setValue] = useState()
+  const [value, setValue] = useState(null)
 
   const resetInput = useCallback(() => {
-    setValue(null)
-    onFieldChange('endedAt', null)
-  }, [onFieldChange])
+    if (value) {
+      setValue(null)
+      onFieldChange('endedAt', null)
+    }
+  }, [onFieldChange, value])
 
   useEffect(() => {
     if (endless || !startedAt) {
