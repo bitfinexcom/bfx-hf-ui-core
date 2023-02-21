@@ -1,11 +1,12 @@
 import types from '../constants/ao'
 
-export function setActiveAlgoOrders(activeAlgoOrders, isAfterLogin) {
+export function setActiveAlgoOrders(activeAlgoOrders, mode, isAfterLogin) {
   return {
     type: types.SET_ACTIVE_AOS,
     payload: {
       activeAlgoOrders,
       isAfterLogin,
+      mode,
     },
   }
 }

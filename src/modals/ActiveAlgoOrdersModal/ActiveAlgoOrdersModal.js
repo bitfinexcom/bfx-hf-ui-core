@@ -3,14 +3,14 @@ import PropTypes from 'prop-types'
 import _isEqual from 'lodash/isEqual'
 import _isEmpty from 'lodash/isEmpty'
 import _differenceBy from 'lodash/differenceBy'
-import _filter from 'lodash/filter'
-import _includes from 'lodash/includes'
-import _forEach from 'lodash/forEach'
+import _map from 'lodash/map'
 import { useTranslation } from 'react-i18next'
 
+import { Checkbox } from '@ufx-ui/core'
 import Modal from '../../ui/Modal'
 import AttentionBar from '../../ui/AttentionBar/AttentionBar'
 import AlgoOrdersTable from './ActiveAlgoOrdersModal.table'
+import { ORDER_SHAPE } from '../../constants/prop-types-shapes'
 
 import './style.css'
 
@@ -21,58 +21,50 @@ const ActiveAlgoOrdersModal = ({
   isAfterLogin,
 }) => {
   const { t } = useTranslation()
-  const [selectedOrders, setSelectedOrders] = useState([])
+  const [selectedPaperOrders, setSelectedPaperOrders] = useState([])
+  const [selectedMainOrders, setSelectedMainOrders] = useState([])
 
-  const onOrderSelect = (e, gid, algoID) => {
-    if (e) {
-      setSelectedOrders([...selectedOrders, { gid, algoID }])
-    } else {
-      setSelectedOrders(_filter(selectedOrders, (order) => gid !== order.gid))
-    }
-  }
+  const noOrdersSelected = _isEmpty(selectedMainOrders) && _isEmpty(selectedPaperOrders)
+
+  const mapOrders = useCallback((orders) => {
+    return _map(orders, (order) => {
+      const { gid, algoID } = order
+      return { gid, algoID }
+    })
+  }, [])
 
   const onAllOrdersSelect = (e) => {
-    let allOrders = []
-    if (e) {
-      _forEach(activeAlgoOrders, (order) => {
-        const { gid, algoID } = order
-        allOrders.push({ gid, algoID })
-      })
-    } else {
-      allOrders = []
-    }
-    setSelectedOrders(allOrders)
-  }
+    const mainMappedOrders = e ? mapOrders(activeAlgoOrders.main) : []
+    const paperMappedOrders = e ? mapOrders(activeAlgoOrders.paper) : []
 
-  const isOrderSelected = (gid) => {
-    const gids = []
-    _forEach(selectedOrders, (order) => gids.push(order.gid))
-    return _includes(gids, gid)
+    setSelectedMainOrders(mainMappedOrders)
+    setSelectedPaperOrders(paperMappedOrders)
   }
 
   const isAllOrdersSelected = () => {
-    const allOrders = []
-    _forEach(activeAlgoOrders, (order) => {
-      const { gid, algoID } = order
-      allOrders.push({ gid, algoID })
-    })
-    return _isEqual(allOrders, selectedOrders)
-  }
+    const mainMappedOrders = mapOrders(activeAlgoOrders.main)
+    const paperMappedOrders = mapOrders(activeAlgoOrders.paper)
 
-  const prepareOrders = (orders) => {
-    const preparedOrders = []
-    _forEach(orders, (order) => {
-      const { gid, algoID } = order
-      preparedOrders.push({ gid, algoID })
-    })
-    return preparedOrders
+    return _isEqual(mainMappedOrders, selectedMainOrders) && _isEqual(paperMappedOrders, selectedPaperOrders)
   }
 
   const onSubmit = useCallback(
     (type) => {
-      const ordersLeft = _differenceBy(activeAlgoOrders, selectedOrders, 'gid')
-      const allOrders = prepareOrders(activeAlgoOrders)
-      const unselectedOrders = prepareOrders(ordersLeft)
+      const mainOrdersLeft = _differenceBy(activeAlgoOrders.main, selectedMainOrders, 'gid')
+      const paperOrdersLeft = _differenceBy(activeAlgoOrders.paper, selectedPaperOrders, 'gid')
+      const allOrders = {
+        main: mapOrders(activeAlgoOrders.main),
+        paper: mapOrders(activeAlgoOrders.paper),
+      }
+      const unselectedOrders = {
+        main: mapOrders(mainOrdersLeft),
+        paper: mapOrders(paperOrdersLeft),
+      }
+      const selectedOrders = {
+        main: selectedMainOrders,
+        paper: selectedPaperOrders,
+      }
+
       handleActiveOrders({
         type,
         allOrders,
@@ -80,15 +72,22 @@ const ActiveAlgoOrdersModal = ({
         unselectedOrders,
       })
     },
-    [handleActiveOrders, activeAlgoOrders, selectedOrders],
+    [
+      activeAlgoOrders.main,
+      activeAlgoOrders.paper,
+      selectedMainOrders,
+      selectedPaperOrders,
+      mapOrders,
+      handleActiveOrders,
+    ],
   )
 
   const onResumeButtonClickHandler = useCallback(() => {
-    if (_isEmpty(selectedOrders)) {
+    if (noOrdersSelected) {
       return
     }
     onSubmit('resume')
-  }, [selectedOrders, onSubmit])
+  }, [noOrdersSelected, onSubmit])
 
   const cancellOrders = useCallback(() => onSubmit('cancel_all'), [onSubmit])
 
@@ -107,11 +106,24 @@ const ActiveAlgoOrdersModal = ({
         </AttentionBar>
       )}
       <AlgoOrdersTable
-        orders={activeAlgoOrders}
-        onOrderSelect={onOrderSelect}
-        onAllOrdersSelect={onAllOrdersSelect}
-        isOrderSelected={isOrderSelected}
+        orders={activeAlgoOrders.main}
+        selectedOrders={selectedMainOrders}
+        setSelectedOrders={setSelectedMainOrders}
         isAllOrdersSelected={isAllOrdersSelected}
+        title={t('activeAlgoOrdersModal.liveModeAOs')}
+      />
+      <AlgoOrdersTable
+        orders={activeAlgoOrders.paper}
+        selectedOrders={selectedPaperOrders}
+        setSelectedOrders={setSelectedPaperOrders}
+        isAllOrdersSelected={isAllOrdersSelected}
+        title={t('activeAlgoOrdersModal.sandboxModeAOs')}
+      />
+      <Checkbox
+        className='select-all'
+        label={t('activeAlgoOrdersModal.selectAllBtn')}
+        checked={isAllOrdersSelected()}
+        onChange={e => onAllOrdersSelect(e)}
       />
       <Modal.Footer>
         <Modal.Button
@@ -124,7 +136,7 @@ const ActiveAlgoOrdersModal = ({
         <Modal.Button
           primary
           onClick={onResumeButtonClickHandler}
-          disabled={_isEmpty(selectedOrders)}
+          disabled={noOrdersSelected}
           className='hfui-active-ao-modal-btn'
         >
           {t('activeAlgoOrdersModal.resumeBtn')}
@@ -136,7 +148,10 @@ const ActiveAlgoOrdersModal = ({
 
 ActiveAlgoOrdersModal.propTypes = {
   handleActiveOrders: PropTypes.func.isRequired,
-  activeAlgoOrders: PropTypes.arrayOf(PropTypes.object), // eslint-disable-line
+  activeAlgoOrders: PropTypes.shape({
+    main: PropTypes.arrayOf(PropTypes.shape(ORDER_SHAPE)),
+    paper: PropTypes.arrayOf(PropTypes.shape(ORDER_SHAPE)),
+  }),
   isOpen: PropTypes.bool.isRequired,
   isAfterLogin: PropTypes.bool.isRequired,
 }

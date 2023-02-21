@@ -394,22 +394,14 @@ export default (alias, store) => (e = {}) => {
       }
 
       case 'data.aos': {
-        const [, , , aos] = payload
+        const [, , mode, isAfterLogin, aos] = payload
 
         if (_isEmpty(aos)) {
           break
         }
 
         const adapted = _map(aos, ao => (_isArray(ao) ? AOAdapter(ao) : ao))
-        store.dispatch(AOActions.setActiveAlgoOrders(adapted, true))
-        store.dispatch(AOActions.showActiveOrdersModal(true))
-        break
-      }
-
-      case 'data.all_aos': {
-        const [,, { main, paper }] = payload
-
-        store.dispatch(AOActions.setActiveAlgoOrders([...main, ...paper], false))
+        store.dispatch(AOActions.setActiveAlgoOrders(adapted, mode, isAfterLogin))
         store.dispatch(AOActions.showActiveOrdersModal(true))
         break
       }

@@ -21,8 +21,8 @@ const activeAlgoOrdersWithReplacedPairs = createSelector(
     getActiveAlgoOrders,
     getCurrencySymbolMemo,
   ],
-  (markets, orders, getCurrencySymbol) => {
-    return _map(orders, (order) => {
+  (markets, { main, paper }, getCurrencySymbol) => {
+    const prepareActiveOrder = (order) => {
       const currentMarket = markets[order?.args?.symbol]
 
       return {
@@ -32,7 +32,12 @@ const activeAlgoOrdersWithReplacedPairs = createSelector(
           symbol: getPairFromMarket(currentMarket, getCurrencySymbol),
         },
       }
-    })
+    }
+
+    return {
+      main: _map(main, prepareActiveOrder),
+      paper: _map(paper, prepareActiveOrder),
+    }
   },
 )
 

@@ -44,7 +44,9 @@
     "cancellBtn": "Cancel All",
     "resumeBtn": "Resume",
     "selectAllBtn": "Select All",
-    "restoredConnectionMessage": "Connection was lost and restored. Please select algorithmic orders you want to reopen"
+    "restoredConnectionMessage": "Connection was lost and restored. Please select algorithmic orders you want to reopen",
+    "sandboxModeAOs": "The Algorithmic orders of Sandbox Mode",
+    "liveModeAOs": "The Algorithmic orders of Live Mode"
   },
   "closePositionModal": {
     "title": "Closing Position",
