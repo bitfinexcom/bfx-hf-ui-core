@@ -72,7 +72,9 @@ const AlgoOrderDetailsModal = ({ onClose, algoOrderId }) => {
         <div className='title-container'>
           <div className='hfui-navbar__layout-settings__title'>
             {rowData?.name}
-            <span className='sub-title'>{rowData?.alias}</span>
+            {rowData?.name !== rowData?.alias && (
+              <span className='sub-title'>{rowData?.alias}</span>
+            )}
           </div>
           <PanelIconButton
             onClick={onClose}
@@ -96,7 +98,9 @@ const AlgoOrderDetailsModal = ({ onClose, algoOrderId }) => {
         <div className='info-col'>
           <span className='info-label'>{t('table.symbol')}</span>
           {' '}
-          <span className='info-value'>{getMarketPair(rowData?.args?.symbol)}</span>
+          <span className='info-value'>
+            {getMarketPair(rowData?.args?.symbol)}
+          </span>
         </div>
         <div className='info-col'>
           <span className='info-label'>{t('table.context')}</span>
