@@ -6,7 +6,6 @@ import _isArray from 'lodash/isArray'
 import Debug from 'debug'
 
 import WSTypes from '../../constants/ws'
-import AOActions from '../../actions/ao'
 import UIActions from '../../actions/ui'
 
 import onWSOpen from './on_open'
