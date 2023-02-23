@@ -32,6 +32,7 @@ import {
   getIsBetaVersion,
   getIsStrategiesLiveExecVisible,
   getUIState,
+  getServicesStatus,
 } from '../../redux/selectors/ui'
 import { getScope } from '../../util/scope'
 import { UI_KEYS } from '../../redux/constants/ui_keys'
@@ -71,6 +72,7 @@ const mapStateToProps = (state = {}, ownProps = {}) => {
     isBetaVersion: getIsBetaVersion(state),
     showAdvancedAlgos:
       getIsStrategiesLiveExecVisible(state) || getIsBetaVersion(state),
+    isAlgoWorkerStarted: getServicesStatus(state)?.algoWorker,
   }
 }
 
