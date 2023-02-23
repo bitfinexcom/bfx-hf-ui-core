@@ -418,6 +418,7 @@ class OrderForm extends React.Component {
       activeMarket,
       t,
       showAdvancedAlgos,
+      isAlgoWorkerStarted,
     } = this.props
     const orders = getAtomicOrders(t)
 
@@ -434,7 +435,8 @@ class OrderForm extends React.Component {
     const algoOrders = getAOs(t, showAdvancedAlgos)
 
     const apiClientConfigured = apiCredentials?.configured && apiCredentials?.valid
-    const isConnectedWithValidAPI = apiClientConnected && apiClientConfigured
+    const isConnectedWithValidAPI = apiClientConnected && apiClientConfigured && isAlgoWorkerStarted
+
     const showOrderform = isConnectedWithValidAPI || !isElectronApp
     const renderData = marketToQuoteBase(currentMarket)
     const atomicOrderTypes = []
@@ -617,6 +619,7 @@ OrderForm.propTypes = {
   apiClientConnecting: PropTypes.bool.isRequired,
   apiClientConnected: PropTypes.bool.isRequired,
   isKeysUpdating: PropTypes.bool.isRequired,
+  isAlgoWorkerStarted: PropTypes.bool.isRequired,
 }
 
 OrderForm.defaultProps = {
@@ -624,7 +627,7 @@ OrderForm.defaultProps = {
   removeable: true,
   isOrderExecuting: false,
   apiCredentials: {},
-  onRemove: () => {},
+  onRemove: () => { },
   authToken: null,
   showAdvancedAlgos: false,
 }
