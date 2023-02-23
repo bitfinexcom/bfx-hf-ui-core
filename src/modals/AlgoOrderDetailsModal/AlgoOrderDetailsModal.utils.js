@@ -69,7 +69,10 @@ export const getOrderDetails = (rowData = {}, t) => {
 
     case Recurring.id:
       return [
-        { label: t('algoOrderForm.amount'), value: args.amount },
+        {
+          label: t('algoOrderForm.amount'),
+          value: `${args.amount} ${args.currency}`,
+        },
         {
           label: t('algoOrderForm.action'),
           value: t(`algoOrderForm.${args.action}`),
