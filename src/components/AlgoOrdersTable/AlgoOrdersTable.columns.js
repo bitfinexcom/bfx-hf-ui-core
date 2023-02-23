@@ -21,8 +21,8 @@ export default ({
     {
       label: t('table.alias'),
       dataKey: 'alias',
-      width: 90,
-      flexGrow: 0.7,
+      width: 130,
+      flexGrow: 2.5,
       cellRenderer: ({ rowData = {} }) => defaultCellRenderer(rowData.alias || rowData.name),
     },
     {
@@ -60,8 +60,8 @@ export default ({
     columns.push({
       label: '',
       dataKey: '',
-      width: 250,
-      flexGrow: 2.5,
+      width: 150,
+      flexGrow: 1,
       cellRenderer: ({ rowData = {} }) => {
         return (
           <div>

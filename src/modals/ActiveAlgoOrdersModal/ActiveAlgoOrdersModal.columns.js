@@ -22,9 +22,9 @@ export default (onOrderSelect, isOrderSelected, t) => [
   {
     label: t('table.alias'),
     dataKey: 'alias',
-    width: 100,
+    width: 350,
     flexGrow: 1,
-    cellRenderer: ({ rowData = {} }) => rowData.alias,
+    cellRenderer: ({ rowData = {} }) => rowData.alias || rowData.args?.alias,
   },
   {
     label: t('table.context'),
@@ -46,12 +46,5 @@ export default (onOrderSelect, isOrderSelected, t) => [
     width: 160,
     flexGrow: 1.6,
     cellRenderer: ({ rowData = {} }) => rowData.args?.symbol,
-  },
-  {
-    label: t('table.label'),
-    dataKey: 'label',
-    width: 400,
-    flexGrow: 4,
-    cellRenderer: ({ rowData = {} }) => rowData.label,
   },
 ]
