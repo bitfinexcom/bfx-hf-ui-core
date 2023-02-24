@@ -24,7 +24,7 @@ export default (onOrderSelect, isOrderSelected, t) => [
     dataKey: 'alias',
     width: 350,
     flexGrow: 1,
-    cellRenderer: ({ rowData = {} }) => rowData.alias || rowData.args?.alias,
+    cellRenderer: ({ rowData = {} }) => rowData.alias || rowData.label,
   },
   {
     label: t('table.context'),
