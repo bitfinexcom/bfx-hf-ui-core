@@ -1,4 +1,6 @@
-import React, { memo, useState, useEffect } from 'react'
+import React, {
+  memo, useState, useEffect,
+} from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Checkbox } from '@ufx-ui/core'
 import { useTranslation } from 'react-i18next'
@@ -15,10 +17,12 @@ import {
   SETTINGS_KEYS,
   getDMSSetting,
   getShowAlgoPauseInfoSetting,
+  getIsAutoResumeAOs,
 } from '../../redux/selectors/ui'
 import { DONT_SHOW_DMS_MODAL_KEY } from '../../constants/variables'
 import { UI_MODAL_KEYS } from '../../redux/constants/modals'
 import AttentionBar from '../../ui/AttentionBar/AttentionBar'
+import OverrideTimer from './AppSettingsModal.OverrideTimer'
 
 const INITIAL_AUTO_LOGIN = getAutoLoginState()
 
@@ -27,12 +31,14 @@ const General = () => {
   const { t } = useTranslation()
   const settingsDms = useSelector(getDMSSetting)
   const settingsShowAlgoPauseInfo = useSelector(getShowAlgoPauseInfoSetting)
+  const isAutoResumeAOs = useSelector(getIsAutoResumeAOs)
 
   const [isAutoLoginChecked, setIsAutoLoginChecked] = useState(INITIAL_AUTO_LOGIN)
   const [isDmsChecked, setIsDmsChecked] = useState(settingsDms)
   const [isShowAlgoPauseInfoChecked, setIsShowAlgoPauseInfoChecked] = useState(
     settingsShowAlgoPauseInfo,
   )
+  const [isAutoResumeAOsChecked, setIsAutoResumeAOsChecked] = useState(isAutoResumeAOs)
 
   useEffect(() => {
     setIsDmsChecked(settingsDms)
@@ -62,6 +68,14 @@ const General = () => {
     dispatch(GAActions.updateSettings())
   }
 
+  const updateAutoResumeAOs = (nextAutoResumeAOs) => {
+    setIsAutoResumeAOsChecked(nextAutoResumeAOs)
+    dispatch(
+      WSActions.saveSettings(SETTINGS_KEYS.AUTO_RESUME_AOS, nextAutoResumeAOs),
+    )
+    dispatch(GAActions.updateSettings())
+  }
+
   return (
     <div>
       <div className='appsettings-modal__setting'>
@@ -86,6 +100,21 @@ const General = () => {
         />
         <div className='appsettings-modal__description'>
           {t('appSettings.showPauseInfoText')}
+        </div>
+      </div>
+      <OverrideTimer />
+      <div className='appsettings-modal__setting'>
+        <Checkbox
+          onChange={updateAutoResumeAOs}
+          label={t('appSettings.autoResumeAOsCheckbox')}
+          checked={isAutoResumeAOsChecked}
+          className='appsettings-modal__checkbox'
+        />
+        <div className='appsettings-modal__description'>
+          <p>{t('appSettings.autoResumeAOsText')}</p>
+          <AttentionBar red>
+            {t('appSettings.autoResumeAOsWarning')}
+          </AttentionBar>
         </div>
       </div>
       {isDevEnv() && (
