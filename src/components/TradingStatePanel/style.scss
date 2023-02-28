@@ -19,7 +19,7 @@
   padding: 0 12px;
 
   & > *:not(:last-child) {
-    margin-right: 10px;
+    margin-right: 5px;
   }
 
   .filter-by {
@@ -36,8 +36,14 @@
     margin-right: 5px;
   }
 
+  .hfui-panel__button {
+    padding-right: 4px;
+    padding-left: 3px;
+  }
+
   &-market-select {
-    max-width: 120px !important;
+    max-width: 165px !important;
+    min-width: 165px;
   }
 }
 
