@@ -16,6 +16,7 @@ import {
 
 const maxReconnectionTimeInSec = MAX_RECONNECTION_TIME / 1000
 const defaultReconnectionTimeInSec = DEFAULT_RECONNECTION_TIME / 1000
+const maxReconnectionTimeInMin = maxReconnectionTimeInSec / 60
 
 const validateInput = (v, t) => {
   const numericError = NumberInput.validateValue(v, t)
@@ -25,11 +26,11 @@ const validateInput = (v, t) => {
   }
 
   if (v < DEFAULT_RECONNECTION_TIME) {
-    return t('appSettings.overrideDefaultReconnectionTimerMinError')
+    return t('appSettings.overrideDefaultReconnectionTimerMinError', { seconds: defaultReconnectionTimeInSec })
   }
 
   if (v > MAX_RECONNECTION_TIME) {
-    return t('appSettings.overrideDefaultReconnectionTimerMaxError')
+    return t('appSettings.overrideDefaultReconnectionTimerMaxError', { minutes: maxReconnectionTimeInMin })
   }
 
   return null
@@ -89,7 +90,12 @@ const OverrideTimer = () => {
         className='appsettings-modal__checkbox'
       />
       <div className='appsettings-modal__description'>
-        <p>{t('appSettings.overrideDefaultReconnectionTimerText')}</p>
+        <p>
+          {t('appSettings.overrideDefaultReconnectionTimerText', {
+            minValue: defaultReconnectionTimeInSec,
+            maxValueInMin: maxReconnectionTimeInMin,
+          })}
+        </p>
         <NumberInput
           className='override-reconnection-timer__input'
           value={reconnectionTimeInput}
