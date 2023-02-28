@@ -508,6 +508,10 @@
     "text": "Please be aware that when this setting is enabled, closing the app will not only cancel all orders that have been created by the Bitfinex Honey, but will also cancel all other orders, including those that have been opened on the Bitfinex website or elsewhere.\n\nThis is a recommended setting, but you should be aware of the possible consequences.",
     "dontShowAgain": "Don't show again"
   },
+  "discardAOEdit": {
+    "title": "Discard changes",
+    "text": "You will loose all changes made to this Algorithmic Order."
+  },
   "resetAPIKeysModal": {
     "title": "Reset API credentials",
     "text": "This will reset your API credentials. Are you sure you want to proceed?"
@@ -836,6 +840,8 @@
   "ui": {
     "ok": "Okay",
     "cancel": "Cancel",
+    "goBack": "Go back",
+    "discardChanges": "Discard changes",
     "reset": "Reset",
     "dontShowAgain": "I understood. Don't show me again!",
     "dropdown": "Select an option",

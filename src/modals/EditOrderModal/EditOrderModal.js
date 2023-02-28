@@ -32,6 +32,7 @@ import {
 } from '../../components/OrderForm/OrderForm.orders.helpers'
 import { MARKET_SHAPE, ORDER_SHAPE } from '../../constants/prop-types-shapes'
 import { getCurrencyDefinition } from '../../components/OrderForm/FieldComponents/fields.helpers'
+import DiscardAOEdit from '../DiscardAOEdit'
 
 import '../../components/OrderForm/style.css'
 import './style.css'
@@ -123,6 +124,8 @@ const EditOrderModal = ({
   const [layout, setLayout] = useState({})
   const [args, setArgs] = useState({})
   const [validationErrors, setValidationErrors] = useState({})
+  const [madeChanges, setMadeChanges] = useState(false)
+  const [discardConfirmationVisible, setDiscardConfirmationVisible] = useState(false)
   const [isAO, setIsAO] = useState(true)
   const hasError = _some(_values(validationErrors), _isString)
 
@@ -162,13 +165,24 @@ const EditOrderModal = ({
     setIsAO(isAlgoOrder)
   }, [order, t])
 
-  const onClose = () => {
+  const forcedClose = () => {
     changeVisibilityState(false)
-    // TODO: enable this block
+    setMadeChanges(false)
+    setDiscardConfirmationVisible(false)
+
     // setTimeout(() => { // clearing order data after modal close amination ends
     //   setLayout({})
     //   setArgs({})
     // }, 600)
+  }
+
+  const onClose = () => {
+    if (madeChanges) {
+      setDiscardConfirmationVisible(true)
+      return
+    }
+
+    forcedClose()
   }
 
   const onSubmitAO = () => {
@@ -252,6 +266,7 @@ const EditOrderModal = ({
 
     updateOrder(authToken, processed)
     onClose()
+    setMadeChanges(false)
   }
 
   const onFieldChange = (key, value) => {
@@ -280,6 +295,7 @@ const EditOrderModal = ({
       ...args,
       [key]: processedValue,
     })
+    setMadeChanges(true)
 
     return true
   }
@@ -311,13 +327,15 @@ const EditOrderModal = ({
           })}
       </div>
       <Modal.Footer>
-        <Modal.Button onClick={onClose} secondary>
-          {t('ui.cancel')}
-        </Modal.Button>
         <Modal.Button onClick={onSubmit} disabled={hasError} primary>
           {t('ui.ok')}
         </Modal.Button>
       </Modal.Footer>
+      <DiscardAOEdit
+        onSubmit={forcedClose}
+        onClose={() => setDiscardConfirmationVisible(false)}
+        visible={discardConfirmationVisible}
+      />
     </Modal>
   )
 }
