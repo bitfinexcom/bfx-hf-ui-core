@@ -22,6 +22,7 @@ import getFilteredAlgoOrdersCount from './get_filtered_algo_orders_count'
 import {
   getCurrentModeAlgoOrders,
   getAllAlgoOrdersArray,
+  getCurrentModeActiveAlgoOrders,
 } from './get_algo_orders'
 import getNotifications from './get_notifications'
 import getOrderHistory from './get_order_history'
@@ -90,6 +91,7 @@ export {
   getFilteredAtomicOrders,
   getFilteredAtomicOrdersCount,
   getCurrentModeAlgoOrders,
+  getCurrentModeActiveAlgoOrders,
   getAllAlgoOrdersArray,
   getFilteredAlgoOrders,
   getFilteredAlgoOrdersCount,
