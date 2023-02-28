@@ -8,7 +8,7 @@ const path = REDUCER_PATHS.UI
 const EMPTY_OBJ = {}
 
 export const DEFAULT_RECONNECTION_TIME = 30 * 1000
-export const MAX_RECONNECTION_TIME_SEC = 600
+export const MAX_RECONNECTION_TIME = 600 * 1000
 
 export const SETTINGS_KEYS = {
   DMS: 'dms',

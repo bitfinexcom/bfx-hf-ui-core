@@ -407,6 +407,8 @@
     "overrideDefaultReconnectionTimerCheckbox": "Override default reconnection timer",
     "overrideDefaultReconnectionTimerText": "text",
     "overrideDefaultReconnectionTimerInput": "seconds (max {{maxValue}}s)",
+    "overrideDefaultReconnectionTimerMinError": "The disconnection delay cannot be less than 30 seconds",
+    "overrideDefaultReconnectionTimerMaxError": "The disconnection delay cannot be greater than 10 minutes",
     "autoResumeAOsCheckbox": "Automatically resume Algorithmic Orders",
     "autoResumeAOsText": "By default, after ",
     "autoResumeAOsWarning": "Enabling this settings should be done with caution!"

@@ -8,8 +8,32 @@ import WSActions from '../../redux/actions/ws'
 import GAActions from '../../redux/actions/google_analytics'
 import NumberInput from '../../components/OrderForm/FieldComponents/input.number'
 import {
-  DEFAULT_RECONNECTION_TIME, getReconnectionTime, MAX_RECONNECTION_TIME_SEC, SETTINGS_KEYS,
+  DEFAULT_RECONNECTION_TIME,
+  getReconnectionTime,
+  MAX_RECONNECTION_TIME,
+  SETTINGS_KEYS,
 } from '../../redux/selectors/ui'
+
+const maxReconnectionTimeInSec = MAX_RECONNECTION_TIME / 1000
+const defaultReconnectionTimeInSec = DEFAULT_RECONNECTION_TIME / 1000
+
+const validateInput = (v, t) => {
+  const numericError = NumberInput.validateValue(v, t)
+
+  if (numericError) {
+    return numericError
+  }
+
+  if (v < DEFAULT_RECONNECTION_TIME) {
+    return t('appSettings.overrideDefaultReconnectionTimerMinError')
+  }
+
+  if (v > MAX_RECONNECTION_TIME) {
+    return t('appSettings.overrideDefaultReconnectionTimerMaxError')
+  }
+
+  return null
+}
 
 const OverrideTimer = () => {
   const { t } = useTranslation()
@@ -24,6 +48,7 @@ const OverrideTimer = () => {
     isOverrideDefaultReconnectionTimeChecked,
     setOverrideDefaultReconnectionTimeChecked,
   ] = useState(reconnectionTime !== DEFAULT_RECONNECTION_TIME)
+  const [reconnectionTimeInputError, setReconnectionTimeInputError] = useState('')
 
   const updateReconnectionTime = useMemo(
     () => _debounce((value) => {
@@ -37,8 +62,12 @@ const OverrideTimer = () => {
   )
 
   const onReconnectionTimeInputChange = (nextTime) => {
+    const timeInMs = nextTime * 1000
+    const validationError = validateInput(timeInMs, t)
+
     setReconnectionTimeInput(nextTime)
-    if (nextTime * 1000 === reconnectionTime) {
+    setReconnectionTimeInputError(validationError)
+    if (timeInMs === reconnectionTime || validationError) {
       return
     }
     updateReconnectionTime(nextTime)
@@ -46,7 +75,7 @@ const OverrideTimer = () => {
 
   const handleOverrideDefaultReconnectionCheckbox = (isChecked) => {
     if (!isChecked) {
-      onReconnectionTimeInputChange(DEFAULT_RECONNECTION_TIME / 1000)
+      onReconnectionTimeInputChange(defaultReconnectionTimeInSec)
     }
     setOverrideDefaultReconnectionTimeChecked(isChecked)
   }
@@ -67,10 +96,12 @@ const OverrideTimer = () => {
           onChange={onReconnectionTimeInputChange}
           disabled={!isOverrideDefaultReconnectionTimeChecked}
           indicator={t('appSettings.overrideDefaultReconnectionTimerInput', {
-            maxValue: MAX_RECONNECTION_TIME_SEC,
+            maxValue: maxReconnectionTimeInSec,
           })}
-          max={MAX_RECONNECTION_TIME_SEC}
-          // validationError={{}}
+          max={maxReconnectionTimeInSec}
+          min={defaultReconnectionTimeInSec}
+          validationError={reconnectionTimeInputError}
+          percentage
         />
       </div>
     </div>
