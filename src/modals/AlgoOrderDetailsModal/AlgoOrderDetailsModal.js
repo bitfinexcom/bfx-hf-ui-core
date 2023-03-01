@@ -45,19 +45,22 @@ const AlgoOrderDetailsModal = ({ onClose, algoOrderId }) => {
     ...order,
     pair: getMarketPair(order.symbol),
   }))
-  const filteredOrders = [
-    ...mappedAtomics,
-    ..._filter(
-      orders,
-      (order) => _toString(order.gid) === _toString(rowData?.gid),
-    ),
-  ]
+  const filteredOrders = useMemo(
+    () => [
+      ...mappedAtomics,
+      ..._filter(
+        orders,
+        (order) => _toString(order.gid) === _toString(rowData?.gid),
+      ),
+    ],
+    [mappedAtomics, orders, rowData?.gid],
+  )
 
   const handleSave = useCallback(
     (name, gid) => {
-      saveAsJSON(orders, `algo-${name}-${gid}`)
+      saveAsJSON(filteredOrders, `algo-${name}-${gid}`)
     },
-    [orders],
+    [filteredOrders],
   )
 
   if (isOpen && _isEmpty(rowData)) {
