@@ -23,12 +23,20 @@ export const getOrderDetails = (rowData = {}, t) => {
         },
         { label: t('algoOrderForm.slice'), value: args.sliceAmount },
         { label: t('algoOrderForm.target'), value: args.priceCondition },
+        {
+          label: t('algoOrderForm.action'),
+          value: t(`algoOrderForm.${args.action}`),
+        },
       ]
 
     case PingPong.id:
       return [
         { label: t('algoOrderForm.pingpong.pingPrice'), value: args.pingPrice },
         { label: t('algoOrderForm.pingpong.pongPrice'), value: args.pongPrice },
+        {
+          label: t('algoOrderForm.action'),
+          value: t(`algoOrderForm.${args.action}`),
+        },
         { label: t('algoOrderForm.orderCount'), value: args.orderCount },
       ]
 
@@ -41,6 +49,10 @@ export const getOrderDetails = (rowData = {}, t) => {
             value: args.sliceAmountPerc,
           },
         { label: t('algoOrderForm.price'), value: args.price },
+        {
+          label: t('algoOrderForm.action'),
+          value: t(`algoOrderForm.${args.action}`),
+        },
       ]
 
     case AccumulateDistribute.id:
@@ -58,13 +70,25 @@ export const getOrderDetails = (rowData = {}, t) => {
           label: t('algoOrderForm.intervalDistortion'),
           value: args.intervalDistortion,
         },
+        {
+          label: t('algoOrderForm.action'),
+          value: t(`algoOrderForm.${args.action}`),
+        },
       ]
 
     case Bracket.id:
       return [
         { label: t('algoOrderForm.ocoLimitPrice'), value: args.limitPrice },
         { label: t('algoOrderForm.ocoStopPrice'), value: args.stopPrice },
+        {
+          label: t('algoOrderForm.ocoAction'),
+          value: t(`algoOrderForm.${args.ocoAction}`),
+        },
         { label: t('algoOrderForm.initialOrderPrice'), value: args.orderPrice },
+        {
+          label: t('algoOrderForm.action'),
+          value: t(`algoOrderForm.${args.action}`),
+        },
       ]
 
     case Recurring.id:
