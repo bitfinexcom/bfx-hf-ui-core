@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 
-import { handleActiveOrders } from '../../redux/actions/ao'
+import { resumeRemoveActiveAlgoOrders } from '../../redux/actions/ao'
 import { getActiveAlgoOrders, getIsActiveAlgoOrdersAfterLogin } from '../../redux/selectors/ao'
 
 import ActiveAlgoOrdersModal from './ActiveAlgoOrdersModal'
@@ -11,7 +11,7 @@ const mapStateToProps = (state = {}) => ({
 })
 
 const mapDispatchToProps = {
-  handleActiveOrders,
+  resumeRemoveActiveAlgoOrders,
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(ActiveAlgoOrdersModal)

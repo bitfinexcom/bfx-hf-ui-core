@@ -1,38 +1,88 @@
-import { put, select } from 'redux-saga/effects'
-
-import WSActions from '../../actions/ws'
+import _isEmpty from 'lodash/isEmpty'
+import _isArray from 'lodash/isArray'
+import _forEach from 'lodash/forEach'
+import { put, select, delay } from 'redux-saga/effects'
+import { AOAdapter } from '../../adapters/ws'
 import AOActions from '../../actions/ao'
-import { getAuthToken } from '../../selectors/ws'
+import { getIsAutoResumeAOs } from '../../selectors/ui'
+import resumeRemoveActiveAlgoOrders from './on_resume_remove_active_algo_orders_handler'
 
-export default function* handleActiveAlgoOrders({ payload: _payload }) {
-  const {
-    type,
-    allOrders,
-    selectedOrders,
-    unselectedOrders,
-  } = _payload
-  const authToken = yield select(getAuthToken)
-
-  const payload = {
-    main: {},
-    paper: {},
+const prepareAOsList = (aos, shouldPrepareAOsForResume) => {
+  if (_isEmpty(aos)) {
+    return {
+      AOs: [],
+      AOsForResume: null,
+    }
   }
 
-  if (type === 'resume') {
-    payload.main.resume = [...selectedOrders.main]
-    payload.paper.resume = [...selectedOrders.paper]
+  const AOs = []
+  const AOsForResume = shouldPrepareAOsForResume ? [] : null
 
-    payload.main.remove = [...unselectedOrders.main]
-    payload.paper.remove = [...unselectedOrders.paper]
+  _forEach(aos, (ao) => {
+    const adapted = _isArray(ao) ? AOAdapter(ao) : ao
+    AOs.push(adapted)
+
+    if (shouldPrepareAOsForResume) {
+      const resumeAO = {
+        gid: adapted.gid,
+        algoID: adapted.algoID,
+      }
+      AOsForResume.push(resumeAO)
+    }
+  })
+
+  return {
+    AOs,
+    AOsForResume,
   }
-  if (type === 'cancel_all') {
-    payload.main.remove = [...allOrders.main]
-    payload.paper.remove = [...allOrders.paper]
-  }
-  yield put(
-    WSActions.send(['algo_order.selected_resume_remove', authToken, payload]),
+}
+
+export default function* handleActiveAlgoOrders({ payload }) {
+  // Delay because the server spawns many identical messages
+  yield delay(500)
+
+  const [, , isAfterLogin, aos] = payload
+
+  const { paper, main } = aos
+
+  const shouldAutoResumeAOs = select(getIsAutoResumeAOs) && !isAfterLogin
+
+  const { AOs: AOsMain, AOsForResume: AOsForResumeMain } = prepareAOsList(
+    main,
+    shouldAutoResumeAOs,
+  )
+  const { AOs: AOsPaper, AOsForResume: AOsForResumePaper } = prepareAOsList(
+    paper,
+    shouldAutoResumeAOs,
   )
 
-  yield put(AOActions.setActiveAlgoOrders({ main: [], paper: [] }, true))
-  yield put(AOActions.showActiveOrdersModal(false))
+  if (shouldAutoResumeAOs) {
+    const resumeAOsPayload = {
+      type: 'resume',
+      selectedOrders: {
+        main: AOsForResumeMain || [],
+        paper: AOsForResumePaper || [],
+      },
+      unselectedOrders: {
+        main: [],
+        paper: [],
+      },
+
+    }
+
+    yield resumeRemoveActiveAlgoOrders({ payload: resumeAOsPayload })
+    return
+  }
+  const isAOsMainExists = !_isEmpty(AOsMain)
+  const isAOsPaperExists = !_isEmpty(AOsPaper)
+
+  if (isAOsMainExists) {
+    yield put(AOActions.setActiveAlgoOrders(AOsMain, 'main', isAfterLogin))
+  }
+  if (isAOsPaperExists) {
+    yield put(AOActions.setActiveAlgoOrders(AOsPaper, 'paper', isAfterLogin))
+  }
+  if (isAOsMainExists || isAOsPaperExists) {
+    yield put(AOActions.showActiveOrdersModal(true))
+  }
 }

@@ -403,7 +403,15 @@
     "betaModalTitle": "BETA PROGRAM DISCLAIMER",
     "privacyDisclaimer1": "<p>By using this application you accept that Bitfinex collects <bold>anonymous basic information</bold> to improve the product performance including, but not limited to, error crash reports, app session times, order characteristics or strategy metadata. This app also uses third-party integrations, which allow us to better understand, enrich and improve your customer experience.</p>",
     "privacyDisclaimer2": "<p><bold>We do not store any private information related to your account (for example, your strategy algorithms, signals, triggers, parameters or personal trading patterns).</bold></p>",
-    "privacyDisclaimer3": "<p>You can opt out of this entirely by modifying your application directly from the source code published on Github, under the conditions of the licensing. Bitfinex's privacy policy can be found <url>here</url>.</p>"
+    "privacyDisclaimer3": "<p>You can opt out of this entirely by modifying your application directly from the source code published on Github, under the conditions of the licensing. Bitfinex's privacy policy can be found <url>here</url>.</p>",
+    "overrideDefaultReconnectionTimerCheckbox": "Override default reconnection timer",
+    "overrideDefaultReconnectionTimerText": "By default after {{minValue}} seconds of disconnection any algorithmic orders are stopped until user confirmation. This time can be extended up to {{maxValueInMin}} minutes.",
+    "overrideDefaultReconnectionTimerInput": "seconds (max {{maxValue}}s)",
+    "overrideDefaultReconnectionTimerMinError": "The disconnection delay cannot be less than {{seconds}} seconds",
+    "overrideDefaultReconnectionTimerMaxError": "The disconnection delay cannot be greater than {{minutes}} minutes",
+    "autoResumeAOsCheckbox": "Automatically resume Algorithmic Orders",
+    "autoResumeAOsText": "By default after disconnection we present a modal for the user to select which orders remain active. Selecting this option bypasses this behaviour and automatically restarts existing active Agorithmic Orders.",
+    "autoResumeAOsWarning": "Enabling this settings should be done with caution!"
   },
   "atomicOrdersTableModal": {
     "title": "Atomic Orders",

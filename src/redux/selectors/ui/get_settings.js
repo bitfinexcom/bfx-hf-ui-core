@@ -7,6 +7,9 @@ const path = REDUCER_PATHS.UI
 
 const EMPTY_OBJ = {}
 
+export const DEFAULT_RECONNECTION_TIME = 30 * 1000
+export const MAX_RECONNECTION_TIME = 600 * 1000
+
 export const SETTINGS_KEYS = {
   DMS: 'dms',
   SHOW_ALGO_PAUSE_INFO: 'showAlgoPauseInfo',
@@ -15,6 +18,8 @@ export const SETTINGS_KEYS = {
   JOIN_BETA_PROGRAM: 'joinBetaProgram',
   HIDE_ON_CLOSE: 'hideOnClose',
   FULLSCREEN: 'fullScreen',
+  AUTO_RESUME_AOS: 'autoResumeAOs',
+  PACKET_WD_DELAY: 'packetWDDelay',
 }
 
 export const THEMES = {
@@ -67,6 +72,16 @@ export const getShouldHideOnClose = createSelector(
 export const getIsFullscreen = createSelector(
   getSettings,
   (settings) => _get(settings, SETTINGS_KEYS.FULLSCREEN, true),
+)
+
+export const getReconnectionTime = createSelector(
+  getSettings,
+  (settings) => _get(settings, SETTINGS_KEYS.PACKET_WD_DELAY, DEFAULT_RECONNECTION_TIME),
+)
+
+export const getIsAutoResumeAOs = createSelector(
+  getSettings,
+  (settings) => _get(settings, SETTINGS_KEYS.AUTO_RESUME_AOS, false),
 )
 
 export default getSettings

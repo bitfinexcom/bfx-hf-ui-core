@@ -17,7 +17,7 @@ import './style.css'
 const ActiveAlgoOrdersModal = ({
   isOpen,
   activeAlgoOrders,
-  handleActiveOrders,
+  resumeRemoveActiveAlgoOrders,
   isAfterLogin,
 }) => {
   const { t } = useTranslation()
@@ -76,7 +76,7 @@ const ActiveAlgoOrdersModal = ({
         paper: selectedPaperOrders,
       }
 
-      handleActiveOrders({
+      resumeRemoveActiveAlgoOrders({
         type,
         allOrders,
         selectedOrders,
@@ -89,7 +89,7 @@ const ActiveAlgoOrdersModal = ({
       selectedMainOrders,
       selectedPaperOrders,
       mapOrders,
-      handleActiveOrders,
+      resumeRemoveActiveAlgoOrders,
     ],
   )
 
@@ -112,7 +112,7 @@ const ActiveAlgoOrdersModal = ({
       width={900}
     >
       {!isAfterLogin && (
-        <AttentionBar green className='message-bar'>
+        <AttentionBar green>
           <p>{t('activeAlgoOrdersModal.restoredConnectionMessage')}</p>
         </AttentionBar>
       )}
@@ -162,7 +162,7 @@ const ActiveAlgoOrdersModal = ({
 }
 
 ActiveAlgoOrdersModal.propTypes = {
-  handleActiveOrders: PropTypes.func.isRequired,
+  resumeRemoveActiveAlgoOrders: PropTypes.func.isRequired,
   activeAlgoOrders: PropTypes.shape({
     main: PropTypes.arrayOf(PropTypes.shape(ORDER_SHAPE)),
     paper: PropTypes.arrayOf(PropTypes.shape(ORDER_SHAPE)),

@@ -1,9 +1,7 @@
 import _isArray from 'lodash/isArray'
 import _isObject from 'lodash/isObject'
 import _isNumber from 'lodash/isNumber'
-import _isEmpty from 'lodash/isEmpty'
 import _reduce from 'lodash/reduce'
-import _map from 'lodash/map'
 import Debug from 'debug'
 import { v4 } from 'uuid'
 import i18nLib from '../../../locales/i18n'
@@ -17,7 +15,6 @@ import closeElectronApp from '../../helpers/close_electron_app'
 import { MAIN_MODE, PAPER_MODE } from '../../reducers/ui'
 import tokenStore from '../../../util/token_store'
 import { isElectronApp, HONEY_AUTH_URL } from '../../config'
-import { AOAdapter } from '../../adapters/ws'
 import { UI_MODAL_KEYS } from '../../constants/modals'
 import { UI_KEYS } from '../../constants/ui_keys'
 import { WS_CONNECTION } from '../../constants/ws'
@@ -394,15 +391,7 @@ export default (alias, store) => (e = {}) => {
       }
 
       case 'data.aos': {
-        const [, , mode, isAfterLogin, aos] = payload
-
-        if (_isEmpty(aos)) {
-          break
-        }
-
-        const adapted = _map(aos, ao => (_isArray(ao) ? AOAdapter(ao) : ao))
-        store.dispatch(AOActions.setActiveAlgoOrders(adapted, mode, isAfterLogin))
-        store.dispatch(AOActions.showActiveOrdersModal(true))
+        store.dispatch(AOActions.handleActiveAlgoOrders(payload))
         break
       }
 
