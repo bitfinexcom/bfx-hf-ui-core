@@ -3,6 +3,7 @@ import ClassNames from 'clsx'
 import PropTypes from 'prop-types'
 import _map from 'lodash/map'
 
+import _uniqueId from 'lodash/uniqueId'
 import RadioButton from '../../../ui/RadioButton'
 import { renderString } from './fields.helpers'
 
@@ -13,15 +14,19 @@ const RadioInput = memo(
     <div
       className={ClassNames('hfui-orderform__input', className, { disabled })}
     >
-      {_map(options, ({ value: v, label }, i) => (
-        <RadioButton
-          key={i}
-          label={renderString(label, renderData)}
-          value={value === v}
-          onChange={() => onChange(v)}
-          uppercase
-        />
-      ))}
+      {_map(options, ({ value: v, label }, i) => {
+        const domID = _uniqueId(i)
+        return (
+          <RadioButton
+            key={domID}
+            id={domID}
+            label={renderString(label, renderData)}
+            value={value === v}
+            onChange={() => onChange(v)}
+            uppercase
+          />
+        )
+      })}
     </div>
   ),
 )
