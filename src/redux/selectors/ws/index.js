@@ -18,7 +18,6 @@ import getAtomicOrders from './get_atomic_orders'
 import getFilteredAtomicOrders from './get_filtered_atomic_orders'
 import getFilteredAtomicOrdersCount from './get_filtered_atomic_orders_count'
 import getFilteredAlgoOrders from './get_filtered_algo_orders'
-import getFilteredAlgoOrdersCount from './get_filtered_algo_orders_count'
 import {
   getCurrentModeAlgoOrders,
   getAllAlgoOrdersArray,
@@ -94,7 +93,6 @@ export {
   getCurrentModeActiveAlgoOrders,
   getAllAlgoOrdersArray,
   getFilteredAlgoOrders,
-  getFilteredAlgoOrdersCount,
   getFavoritePairs,
   getFavoritePairsObject,
 
