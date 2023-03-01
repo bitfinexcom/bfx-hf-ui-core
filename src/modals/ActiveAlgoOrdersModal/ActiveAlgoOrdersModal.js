@@ -112,7 +112,7 @@ const ActiveAlgoOrdersModal = ({
       width={900}
     >
       {!isAfterLogin && (
-        <AttentionBar green className='message-bar'>
+        <AttentionBar green>
           <p>{t('activeAlgoOrdersModal.restoredConnectionMessage')}</p>
         </AttentionBar>
       )}

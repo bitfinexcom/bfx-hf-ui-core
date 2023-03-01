@@ -1,6 +1,4 @@
-import React, {
-  memo, useState, useEffect,
-} from 'react'
+import React, { memo, useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Checkbox } from '@ufx-ui/core'
 import { useTranslation } from 'react-i18next'
@@ -86,9 +84,9 @@ const General = () => {
           className='appsettings-modal__checkbox'
         />
         <div className='appsettings-modal__description'>
+          <AttentionBar red>{t('appSettings.deadManWarning')}</AttentionBar>
           <p>{t('appSettings.deadManText1')}</p>
           <p>{t('appSettings.deadManText2')}</p>
-          <AttentionBar red>{t('appSettings.deadManWarning')}</AttentionBar>
         </div>
       </div>
       <div className='appsettings-modal__setting'>
@@ -111,10 +109,10 @@ const General = () => {
           className='appsettings-modal__checkbox'
         />
         <div className='appsettings-modal__description'>
-          <p>{t('appSettings.autoResumeAOsText')}</p>
           <AttentionBar red>
             {t('appSettings.autoResumeAOsWarning')}
           </AttentionBar>
+          <p>{t('appSettings.autoResumeAOsText')}</p>
         </div>
       </div>
       {isDevEnv() && (
