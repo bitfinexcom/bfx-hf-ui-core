@@ -113,7 +113,6 @@
     "monaco-editor": "^0.27.0",
     "monaco-editor-webpack-plugin": "^4.2.0",
     "original-fs": "^1.2.0",
-    "pretty-checkbox": "^3.0.3",
     "prop-types": "^15.8.1",
     "randomcolor": "^0.6.2",
     "rc-progress": "^3.4.0",
