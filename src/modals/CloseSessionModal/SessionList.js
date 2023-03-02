@@ -83,7 +83,7 @@ const SessionList = ({ onModalClose, openAODetailsModal }) => {
             className='primary-label'
             onClick={openAODetailsModal.bind(this, order.gid)}
           >
-            {order.label}
+            {order.alias || order.label}
           </span>
           &nbsp;
           <span className='secondary-label'>
