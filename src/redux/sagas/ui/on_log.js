@@ -1,6 +1,5 @@
 import { put, select } from 'redux-saga/effects'
 import _toUpper from 'lodash/toUpper'
-import _includes from 'lodash/includes'
 
 import WSActions from '../../actions/ws'
 import { getSockets } from '../../selectors/ws'
@@ -17,10 +16,6 @@ const LEVEL_CONSOLE_MAPPING = {
   fatal: 'error',
 }
 
-const METRICS_SERVER_LEVELS = [
-  'error', 'fatal',
-]
-
 export default function* ({ payload }) {
   const {
     message, level,
@@ -36,7 +31,5 @@ export default function* ({ payload }) {
     return
   }
 
-  if (_includes(METRICS_SERVER_LEVELS, level)) {
-    yield put(WSActions.send(['error_log.dump', JSON.stringify(payload)]))
-  }
+  yield put(WSActions.send(['error_log.dump', JSON.stringify(payload)]))
 }

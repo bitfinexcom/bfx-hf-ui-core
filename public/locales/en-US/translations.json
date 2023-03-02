@@ -172,6 +172,7 @@
     "ocoSettings": "OcO Settings",
     "initialOrderAmount": "Initial Order amount",
     "ocoOrderAmount": "OcO Order amount",
+    "ocoAction": "OcO action",
     "initialOrderPrice": "Primary Order Price",
     "ocoLimitPrice": "Higher Bracket Price",
     "ocoStopPrice": "Lower Bracket Price",
