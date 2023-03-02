@@ -15,12 +15,11 @@ import {
 } from '../../redux/selectors/meta'
 import { changeMode, setCurrentStrategy } from '../../redux/actions/ui'
 import routes from '../../constants/routes'
-import { showActiveOrdersModal } from '../../redux/actions/ao'
 import { getIsPaperTrading } from '../../redux/selectors/ui'
 import { prepareStrategyToLoad } from '../../components/StrategyEditor/StrategyEditor.helpers'
 import { MAIN_MODE } from '../../redux/reducers/ui'
 
-const SessionList = ({ onModalClose }) => {
+const SessionList = ({ onModalClose, openAODetailsModal }) => {
   const activeStrategies = useSelector(getSortedByTimeActiveStrategies())
   const _getMarketPair = useSelector(getMarketPair)
   const isPaperTrading = useSelector(getIsPaperTrading)
@@ -53,10 +52,7 @@ const SessionList = ({ onModalClose }) => {
 
     onModalClose()
   }
-  const onAlgoOrderClick = () => {
-    onModalClose()
-    dispatch(showActiveOrdersModal(true))
-  }
+
   return (
     <ul className='close-session-modal__orders-list'>
       {_map(activeStrategies, (strategy) => (
@@ -83,7 +79,10 @@ const SessionList = ({ onModalClose }) => {
       ))}
       {_map(algoOrders, (order) => (
         <li className='close-session-modal__orders-list-item' key={order.gid}>
-          <span className='primary-label' onClick={onAlgoOrderClick}>
+          <span
+            className='primary-label'
+            onClick={openAODetailsModal.bind(this, order.gid)}
+          >
             {order.label}
           </span>
           &nbsp;
@@ -98,6 +97,7 @@ const SessionList = ({ onModalClose }) => {
 
 SessionList.propTypes = {
   onModalClose: PropTypes.func.isRequired,
+  openAODetailsModal: PropTypes.func.isRequired,
 }
 
 export default SessionList
