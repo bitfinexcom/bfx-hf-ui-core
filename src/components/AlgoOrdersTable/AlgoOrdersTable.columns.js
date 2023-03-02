@@ -1,21 +1,11 @@
 import React from 'react'
 import { Icon } from 'react-fa'
-import OutsideClickHandler from 'react-outside-click-handler'
 
 import { defaultCellRenderer } from '../../util/ui'
-import { Item } from '../Navbar/Navbar.LayoutSettings'
+import AlgoOrderActions from './AlgoOrderActions'
 
 export default ({
-  authToken,
-  cancelOrder,
-  gaCancelOrder,
-  t,
-  getMarketPair,
-  editOrder,
-  showActions,
-  activeOrderGID,
-  setActiveOrderGID,
-  setMoreInfoGID,
+  t, getMarketPair, showActions, setMoreInfoGID,
 }) => {
   const columns = [
     {
@@ -88,39 +78,7 @@ export default ({
       minWidth: 20,
       cellRenderer: (
         { rowData = {} } // eslint-disable-line
-      ) => (
-        <div className='icons-cell'>
-          <Icon
-            className='more-options-button'
-            name='ellipsis-v'
-            aria-label='More options'
-            onClick={() => rowData?.gid && setActiveOrderGID(rowData.gid)}
-          />
-
-          {activeOrderGID === rowData?.gid && (
-            <OutsideClickHandler onOutsideClick={() => setActiveOrderGID(null)}>
-              <div className='hfui-navbar__layout-settings__menu edit-order-menu'>
-                <div
-                  className='hfui-navbar__layout-settings__menu-buttons'
-                  onClick={() => setActiveOrderGID(null)}
-                >
-                  <Item onClick={() => editOrder(rowData)}>
-                    {t('table.edit')}
-                  </Item>
-                  <Item
-                    onClick={() => {
-                      cancelOrder(authToken, rowData)
-                      gaCancelOrder()
-                    }}
-                  >
-                    {t('table.cancelRemaining')}
-                  </Item>
-                </div>
-              </div>
-            </OutsideClickHandler>
-          )}
-        </div>
-      ),
+      ) => <AlgoOrderActions key={rowData.gid} order={rowData} />,
       disableSort: true,
     })
   }

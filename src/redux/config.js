@@ -1,3 +1,5 @@
+import { Recurring } from 'bfx-hf-algo'
+
 const REDUCER_PATHS = {
   WS: 'ws',
   ROUTER: 'router',
@@ -51,6 +53,8 @@ const HONEY_AUTH_URL = `${process.env.REACT_APP_UFX_API_URL}/honey`
 const PASSWORD_MIN_LENGTH = 8
 const PASSWORD_MAX_LENGTH = 64
 
+const HOSTED_ALGO_ORDERS = [Recurring.id]
+
 export {
   REDUCER_PATHS,
   PUB_REST_API_URL,
@@ -71,4 +75,5 @@ export {
   PASSWORD_MAX_LENGTH,
   MARGIN_TRADING_ARTICLE_URL,
   STOP_ORDER_ARTICLE_URL,
+  HOSTED_ALGO_ORDERS,
 }

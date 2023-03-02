@@ -22,6 +22,12 @@
         width: 100% !important;
       }
     }
+
+    .actions-container {
+      display: flex;
+      width: 80px;
+      justify-content: space-between;
+    }
   }
 
   .info-title {
