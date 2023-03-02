@@ -33,9 +33,8 @@ UICheckboxGroup.propTypes = {
     QUOTE: PropTypes.string.isRequired,
     BASE: PropTypes.string.isRequired,
   }).isRequired,
-  fieldData: PropTypes.objectOf(PropTypes.oneOfType([
-    PropTypes.string, PropTypes.bool, PropTypes.number, PropTypes.instanceOf(Date),
-  ])).isRequired,
+  // eslint-disable-next-line react/forbid-prop-types
+  fieldData: PropTypes.object.isRequired,
   onFieldChange: PropTypes.func.isRequired,
 }
 
