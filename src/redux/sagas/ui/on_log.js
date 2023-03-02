@@ -17,10 +17,6 @@ const LEVEL_CONSOLE_MAPPING = {
   fatal: 'error',
 }
 
-const METRICS_SERVER_LEVELS = [
-  'error', 'fatal',
-]
-
 export default function* ({ payload }) {
   const {
     message, level,
@@ -36,7 +32,5 @@ export default function* ({ payload }) {
     return
   }
 
-  if (_includes(METRICS_SERVER_LEVELS, level)) {
-    yield put(WSActions.send(['error_log.dump', JSON.stringify(payload)]))
-  }
+  yield put(WSActions.send(['error_log.dump', JSON.stringify(payload)]))
 }
