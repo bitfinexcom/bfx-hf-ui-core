@@ -45,7 +45,13 @@ export const makeShorterLongName = (name, limit) => _truncate(name, {
   omission: '...',
 })
 
-export const defaultCellRenderer = (content) => (<Truncate>{content}</Truncate>)
+export const defaultCellRenderer = (content) => (
+  <Truncate
+    placement='bottom'
+  >
+    {content}
+  </Truncate>
+)
 
 export const saveAsJSON = (obj, fileName) => {
   const data = `data:text/json;charset=utf-8,${encodeURIComponent(JSON.stringify(obj, null, 2))}`
