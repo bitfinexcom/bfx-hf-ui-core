@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useHistory, useLocation } from 'react-router'
 import { useTranslation } from 'react-i18next'
 import {
-  getAllAlgoOrdersArray,
+  getFilteredLocalAlgoOrders,
   getSortedByTimeActiveStrategies,
   getSortedByTimeStrategies,
 } from '../../redux/selectors/ws'
@@ -23,7 +23,7 @@ const SessionList = ({ onModalClose, openAODetailsModal }) => {
   const activeStrategies = useSelector(getSortedByTimeActiveStrategies())
   const _getMarketPair = useSelector(getMarketPair)
   const isPaperTrading = useSelector(getIsPaperTrading)
-  const algoOrders = useSelector(getAllAlgoOrdersArray)
+  const algoOrders = useSelector(getFilteredLocalAlgoOrders)
   const savedStrategies = useSelector(getSortedByTimeStrategies)
   const markets = useSelector(getMarketsForExecution)
 
