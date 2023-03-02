@@ -874,7 +874,8 @@
     "required": "REQUIRED",
     "proceed": "Proceed",
     "saveAndLaunch": "Save & Launch",
-    "launchNoSave": "Launch without saving"
+    "launchNoSave": "Launch without saving",
+    "updateAndRestart": "Update and Restart"
   },
   "crashHandler": {
     "text1": "An error occurred that caused the Bitfinex Honey UI to halt. Please, restart the application to proceed working with it",

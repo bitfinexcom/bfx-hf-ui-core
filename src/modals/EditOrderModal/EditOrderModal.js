@@ -328,7 +328,7 @@ const EditOrderModal = ({
       </div>
       <Modal.Footer>
         <Modal.Button onClick={onSubmit} disabled={hasError} primary>
-          {t('ui.ok')}
+          {t('ui.updateAndRestart')}
         </Modal.Button>
       </Modal.Footer>
       <DiscardAOEdit
