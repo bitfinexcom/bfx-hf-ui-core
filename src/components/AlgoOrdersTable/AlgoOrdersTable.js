@@ -50,8 +50,8 @@ const AlgoOrdersTable = ({
         <VirtualTable
           data={data}
           columns={AOColumns}
-          defaultSortBy='createdAt'
-          defaultSortDirection='ASC'
+          defaultSortBy='lastActive'
+          defaultSortDirection='DESC'
           rowHeight={30}
         />
       )}

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useRef } from 'react'
 import PropTypes from 'prop-types'
 import Debug from 'debug'
 import { Tooltip } from '@ufx-ui/core'
@@ -15,10 +15,15 @@ import { UI_KEYS } from '../../redux/constants/ui_keys'
 import { getAuthToken } from '../../redux/selectors/ws'
 import { ORDER_SHAPE } from '../../constants/prop-types-shapes'
 import { LOG_LEVELS } from '../../constants/logging'
+import PanelIconButton from '../../ui/Panel/Panel.IconButton'
 
 const debug = Debug('hfui:c:algo-order-action')
 
-const AlgoOrderActions = ({ order }) => {
+const AlgoOrderActions = ({
+  order,
+  isInAlgoOrderDetailsModal,
+}) => {
+  const tooltipRef = useRef(null)
   const { t } = useTranslation()
   const dispatch = useDispatch()
   const authToken = useSelector(getAuthToken)
@@ -27,8 +32,15 @@ const AlgoOrderActions = ({ order }) => {
 
   const cancelOrder = () => {
     debug('cancelling algo order %d', gid)
+
     dispatch(WSActions.send(['algo_order.cancel', authToken, 'bitfinex', gid]))
-    dispatch(UIActions.logInformation(`User requested the cancellation of algorithmic order with ID ${id}`, LOG_LEVELS.INFO, 'ao_cancelled'))
+    dispatch(
+      UIActions.logInformation(
+        `User requested the cancellation of algorithmic order with ID ${id}`,
+        LOG_LEVELS.INFO,
+        'ao_cancelled',
+      ),
+    )
   }
 
   const gaCancelOrder = () => {
@@ -40,12 +52,15 @@ const AlgoOrderActions = ({ order }) => {
     dispatch(
       UIActions.changeUIModalState(UI_MODAL_KEYS.EDIT_ORDER_MODAL, true),
     )
+    // when option selected and EditOrderModal appears, the Tooltip component should be hidden
+    tooltipRef?.current?.hideTooltip?.()
   }
 
   return (
     <div className='hfui-ao-actions'>
       <Tooltip
         className='tooltip__edit-order-menu'
+        ref={tooltipRef}
         trigger='click'
         content={(
           <div className='hfui-navbar__layout-settings__menu-buttons'>
@@ -61,11 +76,18 @@ const AlgoOrderActions = ({ order }) => {
           </div>
         )}
       >
-        <Icon
-          className='more-options-button'
-          name='ellipsis-v'
-          aria-label='More options'
-        />
+        {isInAlgoOrderDetailsModal ? (
+          <PanelIconButton
+            onClick={() => {}}
+            icon={<Icon name='ellipsis-v' aria-label='More options' />}
+          />
+        ) : (
+          <Icon
+            className='more-options-button'
+            name='ellipsis-v'
+            aria-label='More options'
+          />
+        )}
       </Tooltip>
     </div>
   )
@@ -73,6 +95,11 @@ const AlgoOrderActions = ({ order }) => {
 
 AlgoOrderActions.propTypes = {
   order: PropTypes.shape(ORDER_SHAPE).isRequired,
+  isInAlgoOrderDetailsModal: PropTypes.bool,
+}
+
+AlgoOrderActions.defaultProps = {
+  isInAlgoOrderDetailsModal: false,
 }
 
 export default AlgoOrderActions

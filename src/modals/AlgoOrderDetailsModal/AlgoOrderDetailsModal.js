@@ -21,7 +21,7 @@ import { getAOContext } from '../../util/order'
 import { saveAsJSON } from '../../util/ui'
 import { rowMapping } from '../../components/OrderHistory/OrderHistory.colunms'
 import Scrollbars from '../../ui/Scrollbars'
-import PanelIconButton from '../../ui/Panel/Panel.IconButton'
+import AlgoOrderDetailsModalHeader from './AlgoOrderDetailsModal.Header'
 
 import './style.css'
 
@@ -71,18 +71,7 @@ const AlgoOrderDetailsModal = ({ onClose, algoOrderId }) => {
     <Modal
       onClose={onClose}
       isOpen={isOpen}
-      title={(
-        <div className='title-container'>
-          <div className='hfui-navbar__layout-settings__title'>
-            {rowData?.name}
-            <span className='sub-title'>{rowData?.alias}</span>
-          </div>
-          <PanelIconButton
-            onClick={onClose}
-            icon={<i className='icon-cancel' />}
-          />
-        </div>
-      )}
+      title={<AlgoOrderDetailsModalHeader rowData={rowData} onClose={onClose} />}
       className='hfui-ao-details-modal'
       height={460}
       width={1200}
