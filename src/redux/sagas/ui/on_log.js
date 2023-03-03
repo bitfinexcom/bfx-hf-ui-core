@@ -1,5 +1,6 @@
 import { put, select } from 'redux-saga/effects'
 import _toUpper from 'lodash/toUpper'
+import _includes from 'lodash/includes'
 
 import WSActions from '../../actions/ws'
 import { getSockets } from '../../selectors/ws'
