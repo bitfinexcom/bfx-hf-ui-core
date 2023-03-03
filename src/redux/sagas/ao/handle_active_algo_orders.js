@@ -80,7 +80,6 @@ export default function* handleActiveAlgoOrders({ payload }) {
     yield put(AOActions.setActiveAlgoOrders(AOsMain, 'main', isAfterLogin))
   }
   if (isAOsPaperExists) {
-    console.log(isAOsPaperExists)
     yield put(AOActions.setActiveAlgoOrders(AOsPaper, 'paper', isAfterLogin))
   }
   if (isAOsMainExists || isAOsPaperExists) {
