@@ -44,8 +44,8 @@ export default function* handleActiveAlgoOrders({ payload }) {
   const [, , isAfterLogin, aos] = payload
 
   const { paper, main } = aos
-
-  const shouldAutoResumeAOs = select(getIsAutoResumeAOs) && !isAfterLogin
+  const isAutoResumeChecked = yield select(getIsAutoResumeAOs)
+  const shouldAutoResumeAOs = isAutoResumeChecked && !isAfterLogin
 
   const { AOs: AOsMain, AOsForResume: AOsForResumeMain } = prepareAOsList(
     main,
