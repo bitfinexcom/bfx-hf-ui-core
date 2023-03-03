@@ -36,9 +36,11 @@ export default function* ({ payload }) {
     return
   }
 
-  yield put(WSActions.send(['error_log.dump', JSON.stringify(payload)]))
+  const stringifiedPayload = JSON.stringify(payload)
+
+  yield put(WSActions.send(['error_log.dump', stringifiedPayload]))
 
   if (_includes(METRICS_SERVER_LEVELS, level)) {
-    yield put(WSActions.send(['fatal_error.log', level, JSON.stringify(payload)]))
+    yield put(WSActions.send(['fatal_error.log', level, stringifiedPayload]))
   }
 }
