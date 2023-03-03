@@ -29,3 +29,8 @@ export const getCurrentModeAlgoOrders = createSelector(
   [getAllAlgoOrders, getAlgoOrdersHistory, getShowAOsHistory, getCurrentMode],
   (algoOrders, historyAOs, showHistory, currentMode) => _get(showHistory ? historyAOs : algoOrders, currentMode, EMPTY_OBJ),
 )
+
+export const getCurrentModeActiveAlgoOrders = createSelector(
+  [getAllAlgoOrders, getCurrentMode],
+  (algoOrders, currentMode) => _get(algoOrders, currentMode, EMPTY_OBJ),
+)

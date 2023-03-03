@@ -7,6 +7,7 @@ import _toString from 'lodash/toString'
 import _reverse from 'lodash/reverse'
 import _truncate from 'lodash/truncate'
 import _replace from 'lodash/replace'
+import _keys from 'lodash/keys'
 import { Truncate } from '@ufx-ui/core'
 
 // takes a number as input and returns a localised version with semicolons in it
@@ -101,3 +102,5 @@ export const formatDate = (rawDate, returnDateString) => {
 
   return defaultCellRenderer(date)
 }
+
+export const countObjectChildren = (obj) => _size(_keys(obj))

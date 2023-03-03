@@ -4,15 +4,17 @@ import { reduxSelectors } from '@ufx-ui/bfx-containers'
 import {
   getFilteredPositionsCount,
   getFilteredAtomicOrdersCount,
-  getFilteredAlgoOrdersCount,
   getAuthToken,
   getCurrentModeAlgoOrders,
+  getCurrentModeActiveAlgoOrders,
   getAllPositions,
   getAtomicOrders,
 } from '../../redux/selectors/ws'
 import { getMarkets } from '../../redux/selectors/meta'
 import UIActions from '../../redux/actions/ui'
+import AOActions from '../../redux/actions/ao'
 import { getComponentState, getCurrentMode } from '../../redux/selectors/ui'
+import { getShowAOsHistory } from '../../redux/selectors/ao'
 
 import TradingStatePanel from './TradingStatePanel'
 
@@ -21,8 +23,9 @@ const mapStateToProps = (state = {}, { layoutID, layoutI: id } = {}) => ({
   currentMode: getCurrentMode(state),
   getPositionsCount: getFilteredPositionsCount(state),
   getAtomicOrdersCount: getFilteredAtomicOrdersCount(state),
-  getAlgoOrdersCount: getFilteredAlgoOrdersCount(state),
   algoOrders: getCurrentModeAlgoOrders(state),
+  activeAlgoOrders: getCurrentModeActiveAlgoOrders(state),
+  isHistoryActive: getShowAOsHistory(state),
   positions: getAllPositions(state),
   atomicOrders: getAtomicOrders(state),
   markets: getMarkets(state),
@@ -39,6 +42,9 @@ const mapDispatchToProps = (dispatch) => ({
         componentID,
       }),
     )
+  },
+  setShowAOsHistory: (showAOsHistory) => {
+    dispatch(AOActions.setShowAOsHistory(showAOsHistory))
   },
 })
 
