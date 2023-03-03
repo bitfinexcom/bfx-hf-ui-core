@@ -57,7 +57,8 @@
     margin-top: 15px;
   }
 
-  .type-action li > div {
+  .type-action li > div,
+  .type-ocoAction li > div {
     display: flex;
     justify-content: center;
   }

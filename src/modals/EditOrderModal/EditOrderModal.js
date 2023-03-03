@@ -5,14 +5,9 @@ import _find from 'lodash/find'
 import _isObject from 'lodash/isObject'
 import _isEmpty from 'lodash/isEmpty'
 import _isBoolean from 'lodash/isBoolean'
-import _toNumber from 'lodash/toNumber'
 import _isString from 'lodash/isString'
 import _toLower from 'lodash/toLower'
 import _replace from 'lodash/replace'
-import _toString from 'lodash/toString'
-import _keys from 'lodash/keys'
-import _includes from 'lodash/includes'
-import _reduce from 'lodash/reduce'
 import _values from 'lodash/values'
 import _some from 'lodash/some'
 import _trim from 'lodash/trim'
@@ -31,79 +26,11 @@ import {
   getAtomicOrders,
 } from '../../components/OrderForm/OrderForm.orders.helpers'
 import { MARKET_SHAPE, ORDER_SHAPE } from '../../constants/prop-types-shapes'
-import { getCurrencyDefinition } from '../../components/OrderForm/FieldComponents/fields.helpers'
+import { getContext, processAOArgs, processUpdateOrder } from './EditOrderModal.utils'
 import DiscardAOEdit from '../DiscardAOEdit'
 
 import '../../components/OrderForm/style.css'
 import './style.css'
-
-const getContext = (symbol, markets) => {
-  const market = markets[symbol]
-
-  if (_includes(market?.contexts, 'f')) {
-    return 'f'
-  }
-
-  return 'e'
-}
-
-const flagsMapping = {
-  hidden: 64,
-  close: 512,
-  reduceonly: 1024,
-  postonly: 4096,
-  oco: 16384,
-}
-
-const calculateFlags = (order) => {
-  const flags = _keys(flagsMapping)
-  return _reduce(
-    flags,
-    (prev, curr) => {
-      return order[curr] ? prev + flagsMapping[curr] : prev
-    },
-    0,
-  )
-}
-
-const processUpdateOrder = (order, id) => ({
-  ...order,
-  id,
-  amount: _toString(order.amount),
-  price: order.price && _toString(order.price),
-  price_trailing: order.priceTrailing && _toString(order.priceTrailing),
-  price_aux_limit: order.priceAuxLimit && _toString(order.priceAuxLimit),
-  meta: {
-    make_visible: _toNumber(order.visibleOnHit),
-  },
-  flags: calculateFlags(order),
-})
-
-const processAOArgs = (args) => {
-  const updArgs = { ...args }
-  updArgs.amount = Math.abs(updArgs.amount)
-
-  if (!updArgs.action) {
-    updArgs.action = updArgs.amount < 0 ? 'sell' : 'buy'
-  }
-
-  if (_isString(updArgs.startedAt)) {
-    updArgs.startedAt = new Date(updArgs.startedAt)
-  }
-  if (_isString(updArgs.endedAt)) {
-    updArgs.endedAt = new Date(updArgs.endedAt)
-  }
-
-  if (updArgs.currency) {
-    updArgs.currency = getCurrencyDefinition(updArgs.currency, updArgs.symbol)
-  }
-
-  if (updArgs.sliceAmount) {
-    updArgs.sliceAmount = Math.abs(updArgs.sliceAmount)
-  }
-
-  return updArgs
-}
 
 const EditOrderModal = ({
   changeVisibilityState,
@@ -154,7 +81,7 @@ const EditOrderModal = ({
     }
 
     if (isAlgoOrder) {
-      updOrder.args = processAOArgs(updOrder.args)
+      updOrder.args = { ...processAOArgs(updOrder.args, order.id) }
       updOrder.args.alias = updOrder.alias
     } else {
       uiDef.action = updOrder.amount < 0 ? 'sell' : 'buy'
