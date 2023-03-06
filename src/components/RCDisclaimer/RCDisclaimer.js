@@ -52,7 +52,7 @@ const RCDisclaimer = () => {
         <p className='hfui-rc-disclaimer__text'>
           <Trans
             t={t}
-            i18nKey='RC_disclaimer.title'
+            i18nKey='RC_disclaimer.top'
             values={{
               appVersion,
             }}
