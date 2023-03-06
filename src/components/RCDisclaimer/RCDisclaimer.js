@@ -17,16 +17,21 @@ const debug = Debug('hfui-rc-disclaimer')
 
 const RCDisclaimer = () => {
   const { t } = useTranslation()
-  const showRCDisclaimer = useSelector(state => getUIState(state, UI_KEYS.isRCDisclaimerShown))
+  const showRCDisclaimer = useSelector((state) => getUIState(state, UI_KEYS.isRCDisclaimerShown))
 
   const dispatch = useDispatch()
 
   const onClose = () => {
     try {
       const allowedRCVersionsJSON = localStorage.getItem(ALLOWED_RC_VERSIONS)
-      const allowedRCVersions = allowedRCVersionsJSON ? JSON.parse(allowedRCVersionsJSON) : []
+      const allowedRCVersions = allowedRCVersionsJSON
+        ? JSON.parse(allowedRCVersionsJSON)
+        : []
 
-      const updatedAllowedRCVersionsJSON = JSON.stringify([...allowedRCVersions, appVersion])
+      const updatedAllowedRCVersionsJSON = JSON.stringify([
+        ...allowedRCVersions,
+        appVersion,
+      ])
       localStorage.setItem(ALLOWED_RC_VERSIONS, updatedAllowedRCVersionsJSON)
     } catch (err) {
       debug('Error on saving allowed RC version to LS', err)
@@ -53,7 +58,12 @@ const RCDisclaimer = () => {
             }}
             components={{
               url: (
-                <a href={ISSUES_REPORT_URL} target='_blank' rel='noopener noreferrer' />
+                <a
+                  className='hfui-rc-disclaimer__link'
+                  href={ISSUES_REPORT_URL}
+                  target='_blank'
+                  rel='noopener noreferrer'
+                />
               ),
             }}
           />
@@ -64,7 +74,6 @@ const RCDisclaimer = () => {
           icon={<i className='icon-cancel' />}
         />
       </div>
-
     </CSSTransition>
   )
 }

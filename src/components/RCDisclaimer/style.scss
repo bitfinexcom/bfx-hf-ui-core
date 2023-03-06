@@ -39,16 +39,19 @@
   left: 0;
 
   &__text {
+    width: 95%;
     text-align: center;
     font-weight: 600;
     color: $red-color;
-
-    a.Dark {
-      color: $white-color;
-    }
   }
 
   .hfui-panel__icon-button {
     margin-right: 5px;
+  }
+}
+
+body.Dark {
+  .hfui-rc-disclaimer__link {
+    color: $white-color;
   }
 }
