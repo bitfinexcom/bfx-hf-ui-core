@@ -30,9 +30,9 @@ import {
   getIsPaperTrading,
   getMaxOrderCounts,
   getIsBetaVersion,
-  getIsStrategiesLiveExecVisible,
   getUIState,
   getServicesStatus,
+  getIsRecurringAOVisible,
 } from '../../redux/selectors/ui'
 import { getScope } from '../../util/scope'
 import { UI_KEYS } from '../../redux/constants/ui_keys'
@@ -71,7 +71,7 @@ const mapStateToProps = (state = {}, ownProps = {}) => {
     maxOrderCounts: getMaxOrderCounts(state),
     isBetaVersion: getIsBetaVersion(state),
     showAdvancedAlgos:
-      getIsStrategiesLiveExecVisible(state) || getIsBetaVersion(state),
+      getIsRecurringAOVisible(state) || getIsBetaVersion(state),
     isAlgoWorkerStarted: getServicesStatus(state)?.algoWorker,
   }
 }

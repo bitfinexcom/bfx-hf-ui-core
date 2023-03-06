@@ -19,7 +19,12 @@ export const getIsStrategiesLiveExecVisible = createSelector(
 
 export const getIsStrategiesTabVisible = createSelector(
   getStrategiesFeatureFlags,
-  (strategiesFlags) => _some(strategiesFlags, flag => flag === true),
+  (strategiesFlags) => _some(strategiesFlags, (flag) => flag === true),
+)
+
+export const getIsRecurringAOVisible = createSelector(
+  getFeatureFlags,
+  (flags) => flags?.recurring_AOs,
 )
 
 export default getFeatureFlags
