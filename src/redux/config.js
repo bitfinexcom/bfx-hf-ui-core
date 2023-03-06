@@ -1,4 +1,5 @@
 import { Recurring } from 'bfx-hf-algo'
+import _includes from 'lodash/includes'
 
 const REDUCER_PATHS = {
   WS: 'ws',
@@ -29,13 +30,19 @@ const isMacOS = navigator.userAgent.indexOf('Mac') !== -1
 
 const PUB_REST_API_URL = isElectronApp ? 'http://localhost:45001' : process.env.REACT_APP_UFX_PUBLIC_API_URL
 
+const RC_KEYWORD = '-rc'
+
 const appVersion = process.env.npm_package_version
+
+const isRCVersion = _includes(appVersion, RC_KEYWORD)
 
 const RELEASE_URL = 'https://github.com/bitfinexcom/bfx-hf-ui/releases'
 
 const API_DOCS_URL = 'https://docs.bitfinex.com/docs/introduction'
 
 const SOURCE_CODE_URL = 'https://github.com/bitfinexcom/bfx-hf-ui'
+
+const ISSUES_REPORT_URL = 'https://bitfinex-honey.upvoty.com/b/issues/'
 
 const LICENCE_URL = 'https://github.com/bitfinexcom/bfx-hf-ui/blob/master/LICENSE'
 
@@ -76,4 +83,7 @@ export {
   MARGIN_TRADING_ARTICLE_URL,
   STOP_ORDER_ARTICLE_URL,
   HOSTED_ALGO_ORDERS,
+  RC_KEYWORD,
+  isRCVersion,
+  ISSUES_REPORT_URL,
 }

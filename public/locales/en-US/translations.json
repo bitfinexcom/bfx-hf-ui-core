@@ -990,5 +990,8 @@
     "additionStopOrderCheckbox": "Automatically add a Stop order after each entry trade",
     "additionStopOrderCheckboxDescription": "The app will automatically place a <url>Stop Order</url> with each new position based on the following value",
     "stopOrderValuePlaceholder": "% of the entry price"
+  },
+  "RC_disclaimer": {
+    "title": "{{appVersion}} DISCLAIMER: This software is a Release Candidate (RC) version used for internal testing by Bitfinex. We appreciate any <url>feedback</url> but please refrain from running live orders and strategies as these RC might contain unexpected instabilities"
   }
 }
