@@ -20,7 +20,7 @@ import {
 import { DONT_SHOW_DMS_MODAL_KEY } from '../../constants/variables'
 import { UI_MODAL_KEYS } from '../../redux/constants/modals'
 import AttentionBar from '../../ui/AttentionBar/AttentionBar'
-import OverrideTimer from './AppSettingsModal.OverrideTimer'
+// import OverrideTimer from './AppSettingsModal.OverrideTimer'
 
 const INITIAL_AUTO_LOGIN = getAutoLoginState()
 
@@ -100,7 +100,7 @@ const General = () => {
           {t('appSettings.showPauseInfoText')}
         </div>
       </div>
-      <OverrideTimer />
+      {/* <OverrideTimer /> */}
       <div className='appsettings-modal__setting'>
         <Checkbox
           onChange={updateAutoResumeAOs}
