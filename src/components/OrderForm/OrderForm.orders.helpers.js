@@ -4,7 +4,6 @@ import {
   AccumulateDistribute,
   PingPong,
   Bracket,
-  Recurring,
 } from 'bfx-hf-algo'
 import memoizeOne from 'memoize-one'
 import _values from 'lodash/values'
@@ -15,7 +14,7 @@ import timeFrames from '../../util/time_frames'
 
 import rawOrders from '../../orders'
 
-const DEV_ONLY_ALGO_ORDERS = [AccumulateDistribute, Recurring]
+const DEV_ONLY_ALGO_ORDERS = [AccumulateDistribute]
 
 const getAlgoOrdersForStandalone = (isBeta) => [
   ...(isBeta ? DEV_ONLY_ALGO_ORDERS : []),
