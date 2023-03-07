@@ -155,7 +155,7 @@ const EditOrderModal = ({
         submitAlgoOrder(authToken, id, gid, orderData)
       }
 
-      onClose()
+      forcedClose()
     } else {
       const { field, message, i18n } = error
       setValidationErrors({
@@ -192,7 +192,7 @@ const EditOrderModal = ({
     const processed = processUpdateOrder(generated, order.id)
 
     updateOrder(authToken, processed)
-    onClose()
+    forcedClose()
     setMadeChanges(false)
   }
 
