@@ -1,11 +1,9 @@
-import { put, select } from 'redux-saga/effects'
+import { put } from 'redux-saga/effects'
 import _toUpper from 'lodash/toUpper'
 import _includes from 'lodash/includes'
 
 import WSActions from '../../actions/ws'
-import { getSockets } from '../../selectors/ws'
 import { isElectronApp } from '../../config'
-import WSTypes, { SOCKET_STATUS_MAP } from '../../constants/ws'
 
 const ipcHelpers = window.electronService
 
@@ -25,13 +23,12 @@ export default function* ({ payload }) {
   const {
     message, level,
   } = payload
-  const sockets = yield select(getSockets)
 
   const method = LEVEL_CONSOLE_MAPPING[level] || LEVEL_CONSOLE_MAPPING.info
 
   console[method](`${new Date().toISOString()} ${_toUpper(level)}: ${message}`)
 
-  if (sockets[WSTypes.ALIAS_API_SERVER].status !== SOCKET_STATUS_MAP.ONLINE && isElectronApp && ipcHelpers) {
+  if (isElectronApp && ipcHelpers) {
     ipcHelpers?.dumpLogData(payload)
     return
   }
