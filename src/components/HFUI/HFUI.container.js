@@ -12,6 +12,7 @@ import {
   getIsBetaVersion,
   getIsStrategiesTabVisible,
   SETTINGS_KEYS,
+  getIsFullscreen,
 } from '../../redux/selectors/ui'
 import { MAX_ORDER_COUNT_SETTING } from '../../redux/selectors/ui/get_core_settings'
 import { getAuthToken, getIsBitfinexConnected } from '../../redux/selectors/ws'
@@ -32,6 +33,7 @@ const mapStateToProps = (state = {}) => {
     settingsTheme: getThemeSetting(state),
     isBfxConnected: getIsBitfinexConnected(state),
     showStrategies: getIsBetaVersion(state) || getIsStrategiesTabVisible(state),
+    isFullscreen: getIsFullscreen(state),
   }
 }
 
