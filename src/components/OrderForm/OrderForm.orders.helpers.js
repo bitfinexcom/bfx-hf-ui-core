@@ -4,10 +4,12 @@ import {
   AccumulateDistribute,
   PingPong,
   Bracket,
+  Recurring,
 } from 'bfx-hf-algo'
 import memoizeOne from 'memoize-one'
 import _values from 'lodash/values'
 import _map from 'lodash/map'
+import _filter from 'lodash/filter'
 
 import { isElectronApp } from '../../redux/config'
 import timeFrames from '../../util/time_frames'
@@ -36,8 +38,18 @@ export const getAOs = memoizeOne((t, isBeta, isEditMode = false) => _map(getAlgo
 ),
 )
 
-export const getAtomicOrders = memoizeOne((t) => _map(_values(rawOrders), (uiDef) => uiDef(t)),
-)
+export const getAtomicOrders = memoizeOne((t) => _map(_values(rawOrders), (uiDef) => uiDef(t)))
+
+export const filterAOs = (aos, market) => {
+  const { isPerp } = market
+  let processedAOs = aos
+
+  if (isPerp) {
+    processedAOs = _filter(aos, (ao) => ao.id !== Recurring.id)
+  }
+
+  return processedAOs
+}
 
 export const validateOrderLimits = (
   orderCount,

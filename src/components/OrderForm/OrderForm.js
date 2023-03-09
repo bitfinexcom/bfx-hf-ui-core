@@ -22,7 +22,9 @@ import AOParamSettings from './Orderform.AlgoParams'
 import ConnectingModal from '../APIKeysConfigurateForm/ConnectingModal'
 import SubmitAPIKeysModal from '../APIKeysConfigurateForm/SubmitAPIKeysModal'
 import OrderFormMenu from './OrderFormMenu'
-import { getAOs, getAtomicOrders } from './OrderForm.orders.helpers'
+import {
+  getAOs, getAtomicOrders, filterAOs,
+} from './OrderForm.orders.helpers'
 import {
   renderLayout,
   processFieldData,
@@ -433,6 +435,7 @@ class OrderForm extends React.Component {
     } = this.state
 
     const algoOrders = getAOs(t, showAdvancedAlgos)
+    const processedAOs = filterAOs(algoOrders, activeMarket)
 
     const apiClientConfigured = apiCredentials?.configured && apiCredentials?.valid
     const isConnectedWithValidAPI = apiClientConnected && apiClientConfigured && isAlgoWorkerStarted
@@ -449,7 +452,7 @@ class OrderForm extends React.Component {
     }),
     )
 
-    _forEach(algoOrders, ({ label, id, uiIcon }) => {
+    _forEach(processedAOs, ({ label, id, uiIcon }) => {
       algoOrderTypes.push({
         id,
         label,
