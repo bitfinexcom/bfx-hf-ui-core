@@ -20,6 +20,7 @@ import { getAuthToken, getIsBitfinexConnected } from '../../redux/selectors/ws'
 import HFUI from './HFUI'
 import { UI_MODAL_KEYS } from '../../redux/constants/modals'
 import { UI_KEYS } from '../../redux/constants/ui_keys'
+import { LOG_LEVELS } from '../../constants/logging'
 
 const mapStateToProps = (state = {}) => {
   const { ui } = state
@@ -63,6 +64,7 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch(WSActions.onUnload(authToken, mode))
   },
   subscribeAllTickers: () => {
+    dispatch(UIActions.logInformation(null, LOG_LEVELS.DEBUG, 'market_data_fetch'))
     dispatch(reduxActions.fetchAllTickersPeriodically())
   },
   shouldShowAOPauseModalState: () => {

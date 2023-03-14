@@ -225,6 +225,11 @@ export default (alias, store) => (e = {}) => {
       case 'notify': {
         const [, status, message, i18n] = payload
 
+        if (i18n.key === 'invalidPassword') {
+          // auth failed
+          store.dispatch(UIActions.logInformation(null, LOG_LEVELS.DEBUG, 'app_login_failed'))
+        }
+
         const notificationObject = {
           status,
           text: i18n ? i18nLib.t(`notifications.${i18n.key}`, i18n.props) : message,
@@ -385,6 +390,7 @@ export default (alias, store) => (e = {}) => {
 
       case 'data.order_history': {
         const [, orderHist] = payload
+        store.dispatch(UIActions.logInformation(null, LOG_LEVELS.DEBUG, 'order_history_success'))
         store.dispatch(UIActions.setUIValue(UI_KEYS.isLoadingOrderHistData, false))
         store.dispatch(WSActions.recvOrderHist({ orderHist }))
         break

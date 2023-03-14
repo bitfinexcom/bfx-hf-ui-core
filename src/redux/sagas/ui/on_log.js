@@ -35,7 +35,9 @@ export default function* ({ payload }) {
   const localTime = new Date().toISOString()
   const timestamp = Math.floor(Date.now() / 1000) // in seconds
 
-  console[method](`${localTime} ${_toUpper(level)}: ${message}`)
+  if (message) {
+    console[method](`${localTime} ${_toUpper(level)}: ${message}`)
+  }
 
   if (isElectronApp && ipcHelpers) {
     ipcHelpers?.dumpLogData(payload)
