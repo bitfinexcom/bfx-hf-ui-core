@@ -406,6 +406,7 @@ class OrderForm extends React.Component {
       currentLayout,
       helpOpen,
       currentMarket,
+      isAlgoOrder,
     } = this.state
 
     const algoOrders = getAOs(t, showAdvancedAlgos)
@@ -453,7 +454,7 @@ class OrderForm extends React.Component {
                 icon={<Icon name='question' />}
               />
             ),
-            !helpOpen && currentLayout && currentLayout.id && (
+            !helpOpen && currentLayout && currentLayout.id && isAlgoOrder && (
               <AOParamSettings
                 key='ao-settings'
                 algoID={currentLayout.id}
