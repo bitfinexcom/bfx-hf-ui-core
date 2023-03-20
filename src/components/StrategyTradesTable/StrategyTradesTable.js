@@ -1,7 +1,12 @@
 /* eslint-disable react/display-name */
 /* eslint-disable react/prop-types */
 import React, {
-  useEffect, memo, useState, useRef, useCallback, useMemo,
+  useEffect,
+  memo,
+  useState,
+  useRef,
+  useCallback,
+  useMemo,
 } from 'react'
 import { Button, VirtualTable } from '@ufx-ui/core'
 import { reduxSelectors } from '@ufx-ui/bfx-containers'
@@ -21,7 +26,12 @@ import {
 import { getRowRenderer, rowCache } from './StrategyTradesTable.Row'
 
 import { onTradeExportClick } from './StrategyTradesTable.helpers'
-import { STRATEGY_LAYOUT_CONFIG_SHAPE, STRATEGY_SHAPE, STRATEGY_TRADE_SHAPE } from '../../constants/prop-types-shapes'
+import {
+  STRATEGY_LAYOUT_CONFIG_SHAPE,
+  STRATEGY_SHAPE,
+  STRATEGY_TRADE_SHAPE,
+} from '../../constants/prop-types-shapes'
+import { getFormatTimeFn } from '../../redux/selectors/ui'
 
 import './style.css'
 
@@ -35,7 +45,10 @@ const StrategyTradesTable = ({
 }) => {
   const [isExpanded, setIsExpanded] = useState(false)
   const getCurrencySymbol = useSelector(getCurrencySymbolMemo)
+  const formatTime = useSelector(getFormatTimeFn)
+
   const { strategyOptions: { symbol = {} } = {} } = strategy
+  const { t } = useTranslation()
 
   const onExpandClick = useCallback(() => {
     const currentElementIndex = _findIndex(
@@ -59,7 +72,10 @@ const StrategyTradesTable = ({
     setLayoutConfig(LAYOUT_CONFIG)
   }
 
-  const { t } = useTranslation()
+  const onExportButtonClick = useCallback(
+    () => onTradeExportClick(results, symbol, t, getCurrencySymbol, formatTime),
+    [getCurrencySymbol, results, symbol, t, formatTime],
+  )
 
   const [selectedIndex, setSelectedIndex] = useState(-1)
   const tableRef = useRef()
@@ -67,12 +83,19 @@ const StrategyTradesTable = ({
     if (tableRef.current) {
       tableRef.current.recomputeRowHeights()
     }
-  },
-  [tableRef, selectedIndex, isExpanded])
+  }, [tableRef, selectedIndex, isExpanded])
 
-  const columns = StrategyTradesTableColumns(t, selectedIndex, setSelectedIndex)
+  const columns = StrategyTradesTableColumns({
+    t,
+    selectedIndex,
+    setSelectedIndex,
+    formatTime,
+  })
 
-  const rowRenderer = useMemo(() => getRowRenderer(selectedIndex), [selectedIndex])
+  const rowRenderer = useMemo(
+    () => getRowRenderer(selectedIndex),
+    [selectedIndex],
+  )
 
   return (
     <Panel
@@ -88,7 +111,7 @@ const StrategyTradesTable = ({
         <>
           <Button
             className='panel-button'
-            onClick={() => onTradeExportClick(results, symbol, t, getCurrencySymbol)}
+            onClick={onExportButtonClick}
             disabled={_isEmpty(results)}
           >
             <Icon name='file' />
@@ -136,7 +159,8 @@ const StrategyTradesTable = ({
 
 StrategyTradesTable.propTypes = {
   results: PropTypes.shape(STRATEGY_TRADE_SHAPE).isRequired,
-  layoutConfig: PropTypes.arrayOf(PropTypes.shape(STRATEGY_LAYOUT_CONFIG_SHAPE)).isRequired,
+  layoutConfig: PropTypes.arrayOf(PropTypes.shape(STRATEGY_LAYOUT_CONFIG_SHAPE))
+    .isRequired,
   setLayoutConfig: PropTypes.func.isRequired,
   strategy: PropTypes.shape(STRATEGY_SHAPE).isRequired,
 }

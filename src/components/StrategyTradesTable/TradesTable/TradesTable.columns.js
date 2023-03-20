@@ -13,7 +13,7 @@ const STYLES = {
   RIGHT_ALIGN: { textAlign: 'right' },
 }
 
-export default (t) => {
+export default (t, formatTime) => {
   const {
     id, action, type, timestamp, executedAt, orderPrice, tradePrice, amount,
   } = getTradesHeaders(t)
@@ -37,13 +37,13 @@ export default (t) => {
     {
       label: timestamp,
       dataKey: 'mtsCreate',
-      cellRenderer: ({ rowData }) => defaultCellRenderer(getTradeTimestamp(rowData)),
+      cellRenderer: ({ rowData }) => defaultCellRenderer(getTradeTimestamp(rowData, formatTime)),
       style: STYLES.RIGHT_ALIGN,
     },
     {
       label: executedAt,
       dataKey: 'mtsUpdate',
-      cellRenderer: ({ rowData }) => defaultCellRenderer(getTradeExecutedAt(rowData)),
+      cellRenderer: ({ rowData }) => defaultCellRenderer(getTradeExecutedAt(rowData, formatTime)),
       style: STYLES.RIGHT_ALIGN,
     },
     {

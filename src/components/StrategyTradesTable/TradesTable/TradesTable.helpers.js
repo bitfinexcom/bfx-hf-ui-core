@@ -1,4 +1,4 @@
-import { formatDate } from '../../../util/ui'
+import { processDateForCSV, renderDate } from '../../../util/ui'
 
 export const getTradeAmount = (trade) => trade?.order_js?.amountOrig || trade?.order_js?.amount || trade?.amount
 
@@ -8,9 +8,19 @@ export const getTradePrice = (trade) => trade?.order_js?.price
 
 export const getTradeType = (trade) => trade?.order_js?.type
 
-export const getTradeTimestamp = (trade, asRawString) => formatDate(trade?.order_js?.mtsCreate, asRawString)
+export const getTradeTimestamp = (trade, formatTime, asCSVField = false) => {
+  const value = trade?.order_js?.mtsCreate
+  return asCSVField
+    ? processDateForCSV(value, formatTime)
+    : renderDate(value, formatTime)
+}
 
-export const getTradeExecutedAt = (trade, asRawString) => formatDate(trade?.order_js?.mtsUpdate, asRawString)
+export const getTradeExecutedAt = (trade, formatTime, asCSVField = false) => {
+  const value = trade?.order_js?.mtsUpdate
+  return asCSVField
+    ? processDateForCSV(value, formatTime)
+    : renderDate(value, formatTime)
+}
 
 export const getOrderID = (trade) => trade?.order_id
 
