@@ -1,4 +1,4 @@
-import { isValid } from 'date-fns'
+import { isValid, format } from 'date-fns'
 import i18n, { LANGUAGES } from '../locales/i18n'
 
 export const isValidDate = (date) => {
@@ -37,5 +37,18 @@ export const getLocalDateFormat = (lang) => {
 
     default:
       return 'MMMM d, yyyy h:mm aa'
+  }
+}
+
+export const formatTime = (timestampFormat) => (date) => {
+  const formatedInLocalFormat = new Date(date).toLocaleString()
+  if (!timestampFormat) {
+    return formatedInLocalFormat
+  }
+  try {
+    return format(date, timestampFormat)
+  } catch (error) {
+    console.warn(error)
+    return formatedInLocalFormat
   }
 }

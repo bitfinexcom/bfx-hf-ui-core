@@ -20,6 +20,7 @@ export const SETTINGS_KEYS = {
   FULLSCREEN: 'fullScreen',
   AUTO_RESUME_AOS: 'autoResumeAOs',
   PACKET_WD_DELAY: 'packetWDDelay',
+  TIMESTAMP_FORMAT: 'timestampFormat',
 }
 
 export const THEMES = {
@@ -82,6 +83,11 @@ export const getReconnectionTime = createSelector(
 export const getIsAutoResumeAOs = createSelector(
   getSettings,
   (settings) => _get(settings, SETTINGS_KEYS.AUTO_RESUME_AOS, false),
+)
+
+export const getTimestampFormat = createSelector(
+  getSettings,
+  (settings) => _get(settings, SETTINGS_KEYS.TIMESTAMP_FORMAT, ''),
 )
 
 export default getSettings

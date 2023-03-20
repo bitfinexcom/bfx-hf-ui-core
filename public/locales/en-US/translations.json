@@ -412,7 +412,12 @@
     "overrideDefaultReconnectionTimerMaxError": "The disconnection delay cannot be greater than {{minutes}} minutes",
     "autoResumeAOsCheckbox": "Automatically resume Algorithmic Orders",
     "autoResumeAOsText": "By default after disconnection we present a modal for the user to select which orders remain active. Selecting this option bypasses this behaviour and automatically restarts existing active Agorithmic Orders.",
-    "autoResumeAOsWarning": "Enabling this settings should be done with caution!"
+    "autoResumeAOsWarning": "Enabling this settings should be done with caution!",
+    "timestampFormat": "Timestamp Format",
+    "invalidTimestampFormat": "Invalid timestamp format",
+    "timestampFormatPreview": "Preview: {{date}}",
+    "localTimestampFormat": "Local timestamp format",
+    "timestampFormatHelpLink": "How to set a timestamp format"
   },
   "atomicOrdersTableModal": {
     "title": "Atomic Orders",
