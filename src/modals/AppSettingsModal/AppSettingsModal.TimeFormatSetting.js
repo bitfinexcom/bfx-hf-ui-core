@@ -116,7 +116,7 @@ const TimeFormatSetting = () => {
         onClick={resetTimestampFormat}
         disabled={!formatInput}
       >
-        {t('ui.reset')}
+        {t('appSettings.resetToDefaultBtn')}
       </Button>
     </div>
   )

@@ -417,7 +417,8 @@
     "invalidTimestampFormat": "Invalid timestamp format",
     "timestampFormatPreview": "Preview: {{date}}",
     "localTimestampFormat": "Local timestamp format",
-    "timestampFormatHelpLink": "How to set a timestamp format"
+    "timestampFormatHelpLink": "How to set a timestamp format",
+    "resetToDefaultBtn": "Reset to default"
   },
   "atomicOrdersTableModal": {
     "title": "Atomic Orders",
