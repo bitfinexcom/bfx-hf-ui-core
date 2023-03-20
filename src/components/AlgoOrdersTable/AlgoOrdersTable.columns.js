@@ -1,7 +1,7 @@
 import React from 'react'
 import { Icon } from 'react-fa'
 
-import { defaultCellRenderer } from '../../util/ui'
+import { defaultCellRenderer, renderDate } from '../../util/ui'
 import AlgoOrderActions from './AlgoOrderActions'
 
 export default ({
@@ -24,7 +24,7 @@ export default ({
       dataKey: 'createdAt',
       width: 175,
       flexGrow: 1.75,
-      cellRenderer: ({ rowData = {} }) => defaultCellRenderer(formatTime(rowData.createdAt || +rowData.gid)),
+      cellRenderer: ({ rowData = {} }) => renderDate(rowData.createdAt || +rowData.gid, formatTime),
     },
     {
       label: t('table.lastActive'),
@@ -33,7 +33,7 @@ export default ({
       flexGrow: 1.75,
       cellRenderer: ({ rowData = {} }) => {
         const { lastActive } = rowData
-        return defaultCellRenderer(lastActive ? formatTime(lastActive) : '-')
+        return renderDate(lastActive, formatTime)
       },
     },
     {

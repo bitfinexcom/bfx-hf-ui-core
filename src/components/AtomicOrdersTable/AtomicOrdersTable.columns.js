@@ -4,7 +4,7 @@ import React from 'react'
 import { PrettyValue, Tooltip } from '@ufx-ui/core'
 import { Icon } from 'react-fa'
 
-import { defaultCellRenderer } from '../../util/ui'
+import { defaultCellRenderer, renderDate } from '../../util/ui'
 import { orderContext } from '../../util/order'
 import { AMOUNT_DECIMALS, PRICE_SIG_FIGS } from '../../constants/precision'
 import VisibleOnHitIcon from '../../ui/Icons/VisibleOnHitIcon'
@@ -65,7 +65,7 @@ export default ({
     dataKey: 'created',
     width: 135,
     flexGrow: 1.35,
-    cellRenderer: ({ rowData = {} }) => defaultCellRenderer(formatTime(+rowData.created)),
+    cellRenderer: ({ rowData = {} }) => renderDate(+rowData.created, formatTime),
   },
   {
     label: t('table.amount'),
