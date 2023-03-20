@@ -1,6 +1,6 @@
 import { isValid, format } from 'date-fns'
 import Debug from 'debug'
-import i18n, { LANGUAGES } from '../locales/i18n'
+import i18n, { DATE_FNS_LOCALES, LANGUAGES } from '../locales/i18n'
 
 const debug = Debug('hfui:date-utils')
 
@@ -52,7 +52,10 @@ export const safelyFormatTime = (timestampFormat) => (date) => {
     return formatedInLocalFormat
   }
   try {
-    return format(date, timestampFormat)
+    const i18nMappedKey = i18n.getMappedLanguageKey()
+    return format(date, timestampFormat, {
+      locale: DATE_FNS_LOCALES[i18nMappedKey],
+    })
   } catch (error) {
     debug('Error in formatting date', date, timestampFormat)
     return formatedInLocalFormat

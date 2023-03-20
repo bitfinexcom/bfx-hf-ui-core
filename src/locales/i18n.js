@@ -7,7 +7,7 @@ import detector from 'i18next-browser-languagedetector'
 import _findKey from 'lodash/findKey'
 import { initReactI18next } from 'react-i18next'
 import {
-  ru, es, tr, zhCN, zhTW, enUS,
+  ru, es, tr, zhCN, zhTW, enUS, pt,
 } from 'date-fns/locale'
 import { registerLocale } from 'react-datepicker'
 
@@ -43,12 +43,23 @@ export const LANGUAGES_CHART_TABLE = {
   pt: 'pt',
 }
 
+export const DATE_FNS_LOCALES = {
+  en: enUS,
+  es,
+  ru,
+  tr,
+  cn: zhCN,
+  tw: zhTW,
+  pt,
+}
+
 registerLocale(LANGUAGES.en, enUS)
 registerLocale(LANGUAGES.ru, ru)
 registerLocale(LANGUAGES.es, es)
 registerLocale(LANGUAGES.tr, tr)
 registerLocale(LANGUAGES.tw, zhTW)
 registerLocale(LANGUAGES.cn, zhCN)
+registerLocale(LANGUAGES.pt, pt)
 
 export const LOCAL_STORAGE_I18N_KEY = 'HF_LOCALE'
 

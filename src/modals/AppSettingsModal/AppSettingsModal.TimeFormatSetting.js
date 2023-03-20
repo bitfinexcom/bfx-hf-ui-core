@@ -8,6 +8,7 @@ import WSActions from '../../redux/actions/ws'
 import GAActions from '../../redux/actions/google_analytics'
 import { getTimestampFormat, SETTINGS_KEYS } from '../../redux/selectors/ui'
 import { SETUP_TIMESTAMP_FORMAT_ARTICLE } from '../../redux/config'
+import i18n, { DATE_FNS_LOCALES } from '../../locales/i18n'
 
 const getCurrentDateStringInLocalFormat = () => new Date().toLocaleString()
 
@@ -23,10 +24,14 @@ const TimeFormatSetting = () => {
   const { t } = useTranslation()
   const dispatch = useDispatch()
 
+  const formatCurrentTime = (formatStr) => {
+    const i18nMappedKey = i18n.getMappedLanguageKey()
+    return format(new Date(), formatStr, { locale: DATE_FNS_LOCALES[i18nMappedKey] })
+  }
   const onChange = (value) => {
     try {
       const formatedTime = value
-        ? format(new Date(), value)
+        ? formatCurrentTime(value)
         : getCurrentDateStringInLocalFormat()
 
       setIsValid(true)
@@ -40,9 +45,7 @@ const TimeFormatSetting = () => {
   }
 
   const saveSetting = (value) => {
-    dispatch(
-      WSActions.saveSettings(SETTINGS_KEYS.TIMESTAMP_FORMAT, value),
-    )
+    dispatch(WSActions.saveSettings(SETTINGS_KEYS.TIMESTAMP_FORMAT, value))
     dispatch(GAActions.updateSettings())
   }
 
@@ -63,12 +66,13 @@ const TimeFormatSetting = () => {
     setFormatInput(savedTimestampFormat)
     if (savedTimestampFormat) {
       try {
-        setPreview(format(new Date(), savedTimestampFormat))
+        setPreview(formatCurrentTime(savedTimestampFormat))
       } catch (e) {
         console.error(e)
       }
     }
-  }, [savedTimestampFormat])
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [savedTimestampFormat, i18n.language])
 
   return (
     <div className='appsettings-modal__setting'>
