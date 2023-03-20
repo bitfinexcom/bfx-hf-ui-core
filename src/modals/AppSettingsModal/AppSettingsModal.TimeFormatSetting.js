@@ -37,28 +37,34 @@ const TimeFormatSetting = () => {
     }
   }
 
+  const saveSetting = (value) => {
+    dispatch(
+      WSActions.saveSettings(SETTINGS_KEYS.TIMESTAMP_FORMAT, value),
+    )
+    dispatch(GAActions.updateSettings())
+  }
+
   const onSubmit = () => {
     if (!isValid) {
       return
     }
 
-    dispatch(
-      WSActions.saveSettings(SETTINGS_KEYS.TIMESTAMP_FORMAT, formatInput),
-    )
-    dispatch(GAActions.updateSettings())
+    saveSetting(formatInput)
   }
 
   const resetTimestampFormat = () => {
     onChange('')
-    onSubmit('')
+    saveSetting('')
   }
 
   useEffect(() => {
     setFormatInput(savedTimestampFormat)
-    try {
-      setPreview(format(new Date(), savedTimestampFormat))
-    } catch (e) {
-      console.error(e)
+    if (savedTimestampFormat) {
+      try {
+        setPreview(format(new Date(), savedTimestampFormat))
+      } catch (e) {
+        console.error(e)
+      }
     }
   }, [savedTimestampFormat])
 
