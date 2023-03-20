@@ -5,9 +5,11 @@ import PropTypes from 'prop-types'
 import { useTranslation } from 'react-i18next'
 import clsx from 'clsx'
 import { Tooltip } from '@ufx-ui/core'
+import { useSelector } from 'react-redux'
 import { renderString, CONVERT_LABELS_TO_PLACEHOLDERS } from './fields.helpers'
 import { LANGUAGES } from '../../../locales/i18n'
 import { getLocalDateFormat } from '../../../util/date'
+import { getTimestampFormat } from '../../../redux/selectors/ui'
 
 const DateInput = ({
   value,
@@ -26,6 +28,8 @@ const DateInput = ({
 
   const i18nMappedKey = i18n.getMappedLanguageKey()
 
+  const timestampFormat = useSelector(getTimestampFormat) || getLocalDateFormat(LANGUAGES[i18nMappedKey])
+
   return (
     <div
       className={clsx('hfui-orderform__input fullWidth hfui-input', {
@@ -35,7 +39,7 @@ const DateInput = ({
       <DatePicker
         width='100%'
         popperPlacement='bottom-start'
-        dateFormat={getLocalDateFormat(LANGUAGES[i18nMappedKey])}
+        dateFormat={timestampFormat}
         timeCaption={t('table.time')}
         timeFormat='HH:mm'
         dropdownMode='select'
