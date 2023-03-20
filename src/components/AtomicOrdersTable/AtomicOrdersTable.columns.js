@@ -120,7 +120,7 @@ export default ({
             </Tooltip>
           )}
           {rowData.tif && (
-            <Tooltip content={rowData.tifDate.toLocaleString()}>
+            <Tooltip content={formatTime(rowData.tifDate)}>
               <Icon name='clock-o' />
             </Tooltip>
           )}

@@ -1,10 +1,12 @@
 import React, { useMemo } from 'react'
 import PropTypes from 'prop-types'
 import { useTranslation } from 'react-i18next'
+import { useSelector } from 'react-redux'
 import {
   getDateInShortFormat,
   getWeekDayString,
 } from '../../../../../util/date'
+import { getFormatTimeFn } from '../../../../../redux/selectors/ui'
 
 import './style.css'
 
@@ -16,6 +18,8 @@ const RECURRENCE_OPTIONS = {
 
 const RecurringAOSummary = ({ fieldData }) => {
   const { t } = useTranslation()
+  const formatTime = useSelector(getFormatTimeFn)
+
   const { recurrence, startedAt, endedAt } = fieldData
 
   const recurrenceString = useMemo(() => {
@@ -38,11 +42,11 @@ const RecurringAOSummary = ({ fieldData }) => {
     recurrence: recurrenceString,
     startTime: startedAt
       ? t('algoOrderForm.recurring.startOn', {
-        dateTime: startedAt.toLocaleString(),
+        dateTime: formatTime(startedAt),
       })
       : t('algoOrderForm.recurring.startNow'),
     endTime: endedAt
-      ? endedAt.toLocaleString()
+      ? formatTime(endedAt)
       : t('algoOrderForm.recurring.manuallyStop'),
   })
   return <div className='hfui-recurring-ao-message'>{message}</div>

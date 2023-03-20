@@ -72,6 +72,7 @@ export const getTooltip = (order, args = {}) => {
     getMarketBySymbol,
     getCurrencySymbol,
     t,
+    formatTime,
   } = args
 
   const ORDER_CONTEXT_LABEL = {
@@ -143,7 +144,7 @@ export const getTooltip = (order, args = {}) => {
   }
 
   tooltipLines.push(t('chart.trading.order.tooltip.placed', {
-    placedDate: new Date(order.created).toLocaleString(),
+    placedDate: formatTime(order.created),
   }))
 
   const tooltip = tooltipLines.join('\n')

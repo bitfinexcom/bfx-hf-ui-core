@@ -11,7 +11,7 @@ const convertIntervalToSeconds = (interval) => {
   return `${interval / 1000}s`
 }
 
-export const getOrderDetails = (rowData = {}, t) => {
+export const getOrderDetails = (rowData = {}, t, formatTime) => {
   const { args = {}, id } = rowData
   const amount = Math.abs(args.amount)
   const sliceAmount = args.sliceAmount ? Math.abs(args.sliceAmount) : null
@@ -176,12 +176,12 @@ export const getOrderDetails = (rowData = {}, t) => {
             args.startedAt < Date.now()
               ? t('algoOrderForm.recurring.startedAt')
               : t('algoOrderForm.recurring.willStart'),
-          value: new Date(args.startedAt).toLocaleString(),
+          value: formatTime(args.startedAt),
         },
         {
           label: t('algoOrderForm.recurring.endedAt'),
           value: args.endedAt
-            ? new Date(args.endedAt).toLocaleString()
+            ? formatTime(args.endedAt)
             : t('algoOrderForm.recurring.endless'),
         },
       ]

@@ -9,9 +9,11 @@ import GAActions from '../../redux/actions/google_analytics'
 import { getTimestampFormat, SETTINGS_KEYS } from '../../redux/selectors/ui'
 import { SETUP_TIMESTAMP_FORMAT_ARTICLE } from '../../redux/config'
 
+const getCurrentDateStringInLocalFormat = () => new Date().toLocaleString()
+
 const TimeFormatSetting = () => {
   const [formatInput, setFormatInput] = useState()
-  const [preview, setPreview] = useState(new Date().toLocaleString())
+  const [preview, setPreview] = useState(getCurrentDateStringInLocalFormat())
   const [isValid, setIsValid] = useState(true)
 
   const savedTimestampFormat = useSelector(getTimestampFormat)
@@ -25,7 +27,7 @@ const TimeFormatSetting = () => {
     try {
       const formatedTime = value
         ? format(new Date(), value)
-        : new Date().toLocaleString()
+        : getCurrentDateStringInLocalFormat()
 
       setIsValid(true)
       setFormatInput(value)
