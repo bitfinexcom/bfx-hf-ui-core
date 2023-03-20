@@ -19,9 +19,10 @@ import {
 import { getMarketPair as _getMarketPair } from '../../redux/selectors/meta'
 import { getAOContext } from '../../util/order'
 import { saveAsJSON } from '../../util/ui'
-import { rowMapping } from '../../components/OrderHistory/OrderHistory.colunms'
+import getRowMapping from '../../components/OrderHistory/OrderHistory.columns'
 import Scrollbars from '../../ui/Scrollbars'
 import AlgoOrderDetailsModalHeader from './AlgoOrderDetailsModal.Header'
+import getFormatTimeFn from '../../redux/selectors/ui/get_format_time_fn'
 
 import './style.css'
 
@@ -34,6 +35,7 @@ const AlgoOrderDetailsModal = ({ onClose, algoOrderId }) => {
   const orders = useSelector(getOrderHistory)
   const getMarketPair = useSelector(_getMarketPair)
   const rowData = useSelector(getAlgoOrderById(algoOrderId))
+  const formatTime = useSelector(getFormatTimeFn)
 
   const orderDetails = useMemo(() => getOrderDetails(rowData, t), [rowData, t])
   const detailsSize = _size(orderDetails)
@@ -55,6 +57,8 @@ const AlgoOrderDetailsModal = ({ onClose, algoOrderId }) => {
     ],
     [mappedAtomics, orders, rowData?.gid],
   )
+
+  const orderHistoryMapping = useMemo(() => getRowMapping(formatTime), [formatTime])
 
   const handleSave = useCallback(
     (name, gid) => {
@@ -122,7 +126,7 @@ const AlgoOrderDetailsModal = ({ onClose, algoOrderId }) => {
         <Scrollbars>
           <UfxOrderHistory
             orders={filteredOrders}
-            rowMapping={rowMapping}
+            rowMapping={orderHistoryMapping}
             isMobileLayout={false}
             loadMoreRows={() => {}}
           />

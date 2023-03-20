@@ -1,25 +1,33 @@
-import React, { useEffect, useCallback } from 'react'
+import React, { useEffect, useCallback, useMemo } from 'react'
 import PropTypes from 'prop-types'
 
 import _isEmpty from 'lodash/isEmpty'
-import {
-  OrderHistory as UfxOrderHistory, Spinner,
-} from '@ufx-ui/core'
+import { OrderHistory as UfxOrderHistory, Spinner } from '@ufx-ui/core'
 import { useTranslation } from 'react-i18next'
 import Panel from '../../ui/Panel'
 import useSize from '../../hooks/useSize'
-import { rowMapping } from './OrderHistory.colunms'
+import getRowMapping from './OrderHistory.columns'
 import { getNextEndDate } from './OrderHistory.helpers'
 import { ORDER_SHAPE } from '../../constants/prop-types-shapes'
 
 import './style.css'
 
 const OrderHistory = ({
-  onRemove, dark, orders, fetchOrderHistory, authToken, setIsLoadingOrderHistFlag,
-  isLoadingOrderHistData, apiCredentials, currentMode,
+  onRemove,
+  dark,
+  orders,
+  fetchOrderHistory,
+  authToken,
+  setIsLoadingOrderHistFlag,
+  isLoadingOrderHistData,
+  apiCredentials,
+  currentMode,
+  formatTime,
 }) => {
   const [ref, { width }] = useSize()
   const { t } = useTranslation()
+
+  const orderHistoryMapping = useMemo(() => getRowMapping(formatTime), [formatTime])
 
   const fetchMoreItems = useCallback(() => {
     fetchOrderHistory(authToken, getNextEndDate(orders))
@@ -54,7 +62,7 @@ const OrderHistory = ({
         ) : (
           <UfxOrderHistory
             orders={orders}
-            rowMapping={rowMapping}
+            rowMapping={orderHistoryMapping}
             isMobileLayout={width < 700}
             loadMoreRows={handleLoadMoreRows}
           />
@@ -74,10 +82,11 @@ OrderHistory.propTypes = {
   isLoadingOrderHistData: PropTypes.bool,
   apiCredentials: PropTypes.objectOf(PropTypes.bool),
   currentMode: PropTypes.string.isRequired,
+  formatTime: PropTypes.func.isRequired,
 }
 
 OrderHistory.defaultProps = {
-  onRemove: () => { },
+  onRemove: () => {},
   dark: true,
   orders: [],
   authToken: '',
