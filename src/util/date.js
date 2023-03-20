@@ -1,5 +1,8 @@
 import { isValid, format } from 'date-fns'
+import Debug from 'debug'
 import i18n, { LANGUAGES } from '../locales/i18n'
+
+const debug = Debug('hfui:date-utils')
 
 export const isValidDate = (date) => {
   if (!date) {
@@ -41,6 +44,9 @@ export const getLocalDateFormat = (lang) => {
 }
 
 export const safelyFormatTime = (timestampFormat) => (date) => {
+  if (!isValidDate(date)) {
+    return null
+  }
   const formatedInLocalFormat = new Date(date).toLocaleString()
   if (!timestampFormat) {
     return formatedInLocalFormat
@@ -48,7 +54,7 @@ export const safelyFormatTime = (timestampFormat) => (date) => {
   try {
     return format(date, timestampFormat)
   } catch (error) {
-    console.warn(error)
+    debug('Error in formatting date', date, timestampFormat)
     return formatedInLocalFormat
   }
 }
