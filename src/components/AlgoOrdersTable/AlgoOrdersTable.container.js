@@ -4,11 +4,10 @@ import {
   getCurrentModeAlgoOrders,
   getFilteredAlgoOrders,
 } from '../../redux/selectors/ws'
-import { getActiveMarket } from '../../redux/selectors/ui'
+import { getActiveMarket, getFormatTimeFn } from '../../redux/selectors/ui'
 import AlgoOrdersTable from './AlgoOrdersTable'
 import { getMarketPair } from '../../redux/selectors/meta'
 import { getShowAOsHistory } from '../../redux/selectors/ao'
-import getFormatTimeFn from '../../redux/selectors/ui/get_format_time_fn'
 
 const mapStateToProps = (state = {}, { activeFilter }) => ({
   algoOrders: getCurrentModeAlgoOrders(state),

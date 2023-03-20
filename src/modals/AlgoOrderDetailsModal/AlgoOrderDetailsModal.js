@@ -22,7 +22,7 @@ import { saveAsJSON } from '../../util/ui'
 import getRowMapping from '../../components/OrderHistory/OrderHistory.columns'
 import Scrollbars from '../../ui/Scrollbars'
 import AlgoOrderDetailsModalHeader from './AlgoOrderDetailsModal.Header'
-import getFormatTimeFn from '../../redux/selectors/ui/get_format_time_fn'
+import { getFormatTimeFn } from '../../redux/selectors/ui'
 
 import './style.css'
 

@@ -3,10 +3,9 @@ import { connect } from 'react-redux'
 import WSActions from '../../redux/actions/ws'
 import UIActions from '../../redux/actions/ui'
 import { getAuthToken, getOrderHistory, getCurrentModeAPIKeyState } from '../../redux/selectors/ws'
-import { getCurrentMode, getUIState } from '../../redux/selectors/ui'
+import { getCurrentMode, getFormatTimeFn, getUIState } from '../../redux/selectors/ui'
 import OrderHistory from './OrderHistory'
 import { UI_KEYS } from '../../redux/constants/ui_keys'
-import getFormatTimeFn from '../../redux/selectors/ui/get_format_time_fn'
 
 const mapStateToProps = (state) => ({
   orders: getOrderHistory(state),
