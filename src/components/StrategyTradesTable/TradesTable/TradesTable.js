@@ -8,8 +8,7 @@ import getColumns from './TradesTable.columns'
 import { getFormatTimeFn } from '../../../redux/selectors/ui'
 
 // eslint-disable-next-line prefer-arrow-callback
-const TradesTable = forwardRef(function TradesTable({ data }, ref) {
-  // eslint-disable-line react/prop-types
+const TradesTable = forwardRef(function TradesTable({ data }, ref) { // eslint-disable-line react/prop-types
   const { t } = useTranslation()
   const formatTime = useSelector(getFormatTimeFn)
 
