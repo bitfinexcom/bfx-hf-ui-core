@@ -1,7 +1,7 @@
 import { createSelector } from 'reselect'
-import { formatTime } from '../../../util/date'
+import { safelyFormatTime } from '../../../util/date'
 import { getTimestampFormat } from './get_settings'
 
-const getFormatTimeFn = createSelector(getTimestampFormat, (timestampFormat) => formatTime(timestampFormat))
+const getFormatTimeFn = createSelector(getTimestampFormat, (timestampFormat) => safelyFormatTime(timestampFormat))
 
 export default getFormatTimeFn

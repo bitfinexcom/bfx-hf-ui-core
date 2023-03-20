@@ -40,7 +40,7 @@ export const getLocalDateFormat = (lang) => {
   }
 }
 
-export const formatTime = (timestampFormat) => (date) => {
+export const safelyFormatTime = (timestampFormat) => (date) => {
   const formatedInLocalFormat = new Date(date).toLocaleString()
   if (!timestampFormat) {
     return formatedInLocalFormat
