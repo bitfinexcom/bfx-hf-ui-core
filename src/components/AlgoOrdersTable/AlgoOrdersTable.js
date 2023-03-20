@@ -18,6 +18,7 @@ const AlgoOrdersTable = ({
   renderedInTradingState,
   getMarketPair,
   showHistory,
+  formatTime,
 }) => {
   const data = renderedInTradingState ? filteredAlgoOrders : algoOrders
   const { t } = useTranslation()
@@ -36,8 +37,9 @@ const AlgoOrdersTable = ({
       getMarketPair,
       showActions: !showHistory,
       setMoreInfoGID,
+      formatTime,
     }),
-    [getMarketPair, showHistory, t],
+    [getMarketPair, showHistory, t, formatTime],
   )
 
   return (
@@ -69,6 +71,7 @@ AlgoOrdersTable.propTypes = {
   renderedInTradingState: PropTypes.bool,
   getMarketPair: PropTypes.func.isRequired,
   showHistory: PropTypes.bool.isRequired,
+  formatTime: PropTypes.func.isRequired,
 }
 
 AlgoOrdersTable.defaultProps = {
