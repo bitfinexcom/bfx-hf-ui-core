@@ -25,6 +25,7 @@ export default ({
   getMarketPair,
   editOrder,
   getIsDerivativePair,
+  formatTime,
   orders,
 }) => [
   {
@@ -64,7 +65,7 @@ export default ({
     dataKey: 'created',
     width: 135,
     flexGrow: 1.35,
-    cellRenderer: ({ rowData = {} }) => defaultCellRenderer(new Date(+rowData.created).toLocaleString()),
+    cellRenderer: ({ rowData = {} }) => defaultCellRenderer(formatTime(+rowData.created)),
   },
   {
     label: t('table.amount'),

@@ -20,6 +20,7 @@ const AtomicOrdersTable = ({
   getMarketPair,
   editOrder,
   getIsDerivativePair,
+  formatTime,
 }) => {
   const [ref, size] = useSize()
   const data = renderedInTradingState ? filteredAtomicOrders : atomicOrders
@@ -34,6 +35,7 @@ const AtomicOrdersTable = ({
       getMarketPair,
       editOrder,
       getIsDerivativePair,
+      formatTime,
       orders,
     }),
     [
@@ -44,6 +46,7 @@ const AtomicOrdersTable = ({
       t,
       editOrder,
       getIsDerivativePair,
+      formatTime,
       orders,
     ],
   )
@@ -73,6 +76,7 @@ AtomicOrdersTable.propTypes = {
   editOrder: PropTypes.func.isRequired,
   renderedInTradingState: PropTypes.bool,
   getIsDerivativePair: PropTypes.func.isRequired,
+  formatTime: PropTypes.func.isRequired,
 }
 
 AtomicOrdersTable.defaultProps = {
