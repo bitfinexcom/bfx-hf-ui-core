@@ -1,9 +1,10 @@
-import { put } from 'redux-saga/effects'
+import { put, select } from 'redux-saga/effects'
 import _toUpper from 'lodash/toUpper'
 import _includes from 'lodash/includes'
 
 import WSActions from '../../actions/ws'
 import { isElectronApp } from '../../config'
+import { getOptinCrashReports } from '../../selectors/ui'
 
 const ipcHelpers = window.electronService
 
@@ -23,6 +24,7 @@ export default function* ({ payload }) {
   const {
     message, level,
   } = payload
+  const optinCrashReports = yield select(getOptinCrashReports)
 
   const method = LEVEL_CONSOLE_MAPPING[level] || LEVEL_CONSOLE_MAPPING.info
 
@@ -37,7 +39,7 @@ export default function* ({ payload }) {
 
   yield put(WSActions.send(['error_log.dump', stringifiedPayload]))
 
-  if (_includes(METRICS_SERVER_LEVELS, level)) {
+  if (optinCrashReports && _includes(METRICS_SERVER_LEVELS, level)) {
     yield put(WSActions.send(['fatal_error.log', level, stringifiedPayload]))
   }
 }
