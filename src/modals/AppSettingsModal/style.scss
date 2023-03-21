@@ -140,5 +140,7 @@
     width: 200px !important;
   }
 
-
+  &__timeformat-input {
+    margin-bottom: spacing();
+  }
 }

@@ -26,7 +26,9 @@ const TimeFormatSetting = () => {
 
   const formatCurrentTime = (formatStr) => {
     const i18nMappedKey = i18n.getMappedLanguageKey()
-    return format(new Date(), formatStr, { locale: DATE_FNS_LOCALES[i18nMappedKey] })
+    return format(new Date(), formatStr, {
+      locale: DATE_FNS_LOCALES[i18nMappedKey],
+    })
   }
   const onChange = (value) => {
     try {
@@ -71,12 +73,12 @@ const TimeFormatSetting = () => {
         console.error(e)
       }
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [savedTimestampFormat, i18n.language])
 
   return (
     <div className='appsettings-modal__setting'>
-      <p className=''>
+      <p>
         {t('appSettings.timestampFormat')}
         {' '}
         <a
@@ -90,20 +92,21 @@ const TimeFormatSetting = () => {
           {t('appSettings.timestampFormatHelpLink')}
         </a>
       </p>
+      <div className='appsettings-modal__timeformat-input'>
+        <Input
+          value={formatInput}
+          onChange={onChange}
+          placeholder={t('appSettings.localTimestampFormat')}
+          type='text'
+        />
 
-      <Input
-        value={formatInput}
-        onChange={onChange}
-        placeholder={t('appSettings.localTimestampFormat')}
-        type='text'
-      />
-
-      {!isValid && formatInput && (
-        <p className='hfui-red'>{t('appSettings.invalidTimestampFormat')}</p>
-      )}
-      {preview && (
-        <p>{t('appSettings.timestampFormatPreview', { date: preview })}</p>
-      )}
+        {!isValid && formatInput && (
+          <p className='hfui-red'>{t('appSettings.invalidTimestampFormat')}</p>
+        )}
+        {preview && (
+          <p>{t('appSettings.timestampFormatPreview', { date: preview })}</p>
+        )}
+      </div>
 
       <Button
         intent={Intent.PRIMARY}
