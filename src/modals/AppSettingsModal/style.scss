@@ -72,6 +72,19 @@
     a {
       text-decoration: none;
     }
+
+    a:hover {
+      text-decoration: underline;
+      opacity: 0.9;
+    }
+
+    &.bold {
+      font-weight: 600;
+    }
+
+    &.light {
+      font-weight: 300;
+    }
   }
 
   &__description {
