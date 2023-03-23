@@ -1,7 +1,6 @@
 /* eslint-disable jsx-a11y/anchor-has-content */
 import React, { memo } from 'react'
 import { useTranslation, Trans } from 'react-i18next'
-import NavbarLink from '../../components/Navbar/Navbar.Link'
 
 import {
   appVersion,
@@ -101,13 +100,21 @@ const About = () => {
           }}
         />
       </div>
-      <div className='appsettings-modal__setting light'>
-        <a href={TERMS_CONDITIONS_URL} target='_blank' rel='noopener noreferrer'>
+      <div className='appsettings-modal__setting appsettings-modal__legal light'>
+        <a
+          className='legal__item'
+          href={TERMS_CONDITIONS_URL}
+          target='_blank'
+          rel='noopener noreferrer'
+        >
           {t('appSettings.apiTerms')}
         </a>
-        <br />
-        <br />
-        <a href={PRIVACY_POLICY_URL} target='_blank' rel='noopener noreferrer'>
+        <a
+          className='legal__item'
+          href={PRIVACY_POLICY_URL}
+          target='_blank'
+          rel='noopener noreferrer'
+        >
           {t('appSettings.bfxPrivacy')}
         </a>
       </div>
