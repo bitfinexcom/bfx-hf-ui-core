@@ -111,46 +111,6 @@ const About = () => {
           {t('appSettings.bfxPrivacy')}
         </a>
       </div>
-      <div className='appsettings-modal__legal'>
-        <p>
-          <NavbarLink
-            external={TERMS_CONDITIONS_URL}
-            label={t('appSettings.termsConditions')}
-          />
-        </p>
-        <div className='appsettings-modal__legal-disclaimer'>
-          <Trans
-            t={t}
-            i18nKey='appSettings.privacyDisclaimer1'
-            components={{
-              p: <p />,
-              bold: <b />,
-            }}
-          />
-          <Trans
-            t={t}
-            i18nKey='appSettings.privacyDisclaimer2'
-            components={{
-              p: <p />,
-              bold: <b />,
-            }}
-          />
-          <Trans
-            t={t}
-            i18nKey='appSettings.privacyDisclaimer3'
-            components={{
-              p: <p />,
-              url: (
-                <a
-                  href={PRIVACY_POLICY_URL}
-                  target='_blank'
-                  rel='noopener noreferrer'
-                />
-              ),
-            }}
-          />
-        </div>
-      </div>
     </div>
   )
 }
