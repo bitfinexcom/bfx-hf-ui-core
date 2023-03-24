@@ -4,7 +4,9 @@ import _includes from 'lodash/includes'
 
 import WSActions from '../../actions/ws'
 import { isElectronApp } from '../../config'
-import { getOptinCrashReports } from '../../selectors/ui'
+import {
+  getOptinCrashReports, getOptinBFXAnalytics,
+} from '../../selectors/ui'
 
 const ipcHelpers = window.electronService
 
@@ -24,20 +26,22 @@ export default function* ({ payload }) {
   const {
     message, level,
   } = payload
+  const stringifiedPayload = JSON.stringify(payload)
   const optinCrashReports = yield select(getOptinCrashReports)
+  const optinBFXAnalytics = yield select(getOptinBFXAnalytics)
 
   const method = LEVEL_CONSOLE_MAPPING[level] || LEVEL_CONSOLE_MAPPING.info
 
   console[method](`${new Date().toISOString()} ${_toUpper(level)}: ${message}`)
 
-  if (isElectronApp && ipcHelpers) {
-    ipcHelpers?.dumpLogData(payload)
-    return
+  if (optinBFXAnalytics) {
+    if (isElectronApp && ipcHelpers) {
+      ipcHelpers?.dumpLogData(payload)
+      return
+    }
+
+    yield put(WSActions.send(['error_log.dump', stringifiedPayload]))
   }
-
-  const stringifiedPayload = JSON.stringify(payload)
-
-  yield put(WSActions.send(['error_log.dump', stringifiedPayload]))
 
   if (optinCrashReports && _includes(METRICS_SERVER_LEVELS, level)) {
     yield put(WSActions.send(['fatal_error.log', level, stringifiedPayload]))
