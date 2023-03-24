@@ -1,7 +1,9 @@
-import { put } from 'redux-saga/effects'
+import { put, select } from 'redux-saga/effects'
 import { v4 as uuidv4 } from 'uuid'
 import Debug from 'debug'
+
 import UIActions from '../../actions/ui'
+import { getOptinVendorPendo } from '../../selectors/ui'
 import { LOCAL_STORAGE_UID } from '../../../constants/variables'
 import { LOCAL_STORAGE_I18N_KEY } from '../../../locales/i18n'
 
@@ -36,6 +38,13 @@ export default function* ({ payload = {} }) {
 
   if (!pendo || !auid) {
     debug('pendo is empty')
+    return
+  }
+
+  const optinVendorPendo = yield select(getOptinVendorPendo)
+
+  if (!optinVendorPendo) {
+    debug('Pendo tracking is disabled (optinVendorPendo flag is false)')
     return
   }
 
