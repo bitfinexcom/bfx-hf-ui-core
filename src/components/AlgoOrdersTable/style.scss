@@ -5,10 +5,17 @@
   height: 100%;
   min-width: 700px;
 
+  &_actions_container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
   &_more_info {
     text-transform: uppercase;
     cursor: pointer;
     color: var(--shade-6) !important;
+    margin-right: 10px;
 
     &:hover {
       color: var(--primary-8) !important;
@@ -27,6 +34,13 @@
     &:hover {
       background-color: var(--primary-0);
       color: var(--primary-8);
+    }
+  }
+
+  .ReactVirtualized__Table__rowColumn {
+    // Actions column
+    &:last-child {
+      justify-content: flex-end;
     }
   }
 
