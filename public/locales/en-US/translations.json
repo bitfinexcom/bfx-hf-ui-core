@@ -52,6 +52,24 @@
     "title": "Closing Position",
     "body": "Are you sure you want to close {{pair}} position?"
   },
+  "helpUsImproveModal": {
+    "title": "Help us improve Bitfinex Honey",
+    "description": "We would like to gather usage data. Sounds scary, but <strong>this really helps us convince management to keep maintaining this for free</strong>😅. With the added benefit that we'll be able to better tailor our service to your needs, making your experience faster, more intuitive, and more enjoyable.",
+    "ppNotice": "This is consistent with the <privURL>Bitfinex Privacy Policy</privURL> and the <termsURL>Bitfinex API Terms of Service</termsURL>.",
+    "weWill": "We will:",
+    "willList": [
+      "Always allow you to opt-out from the settings",
+      "Always allow you to opt-out from the settings",
+      "Always allow you to opt-out from the settings"
+    ],
+    "willNotList": [
+      "Never share any private information from your account (such as your IP address, balances, username, keys or order history) with 3rd parties",
+      "Never share any private information from your account (such as your IP address, balances, username, keys or order history) with 3rd parties",
+      "Never share any private information from your account (such as your IP address, balances, username, keys or order history) with 3rd parties"
+    ],
+    "advancedConf": "Advanced Configuration",
+    "illHelp": "No problem, I'll help"
+  },
   "launchStrategyModal": {
     "title": "Launch Strategy",
     "body": "This action will launch this strategy in LIVE mode, acting automatically on your behalf trough the Bitfinex API and using real funds from your Exchange wallet. The current active strategy will stop and this one will take its place."
