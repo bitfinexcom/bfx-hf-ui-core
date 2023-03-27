@@ -12,4 +12,5 @@ export const UI_MODAL_KEYS = {
   CLOSE_SESSION_MODAL: 'CloseSessionModal',
   RESET_LIVE_API_KEY_MODAL: 'ResetLiveApiKeyModal',
   RESET_PAPER_API_KEY_MODAL: 'ResetPaperApiKeyModal',
+  HELP_US_IMPROVE_HONEY_MODAL: 'HelpUsImproveHoneyModal',
 }
