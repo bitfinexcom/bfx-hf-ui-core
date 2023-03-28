@@ -68,7 +68,14 @@
       "Never share any private information from your account (such as your IP address, balances, username, keys or order history) with 3rd parties"
     ],
     "advancedConf": "Advanced Configuration",
-    "illHelp": "No problem, I'll help"
+    "illHelp": "No problem, I'll help",
+    "3rdPartyNotice": "This is how we use trusted 3rd parties services and our own systems to enhance product usability and safety.",
+    "unexpectedErrors": "We store unexpected errors",
+    "unexpectedErrorsDesc": "Storing unexpected errors <strong>on our infrastructure</strong> allows us to proactively act on issues instead of relying on direct user reports, increasing our response time for fixes and making your overall experience safer",
+    "anonymousData": "We store anonymous usage data",
+    "anonymousDataDesc": "Storing anonymous usage data <strong>on our infrastructure</strong> allows us to analyse usage trends of the application worldwide and better understand which actions should be prioritised due to their reach",
+    "pendoUsage": "We improve your experience with Pendo",
+    "pendoUsageDesc": "Interacting with <pendoURL>Pendo</pendoURL> allows us to present you with dynamic informative content and also better analyse how different users use the application worldwide.\nView their <pendoPP>Privacy Policy</pendoPP>.\n\nWe generate a unique ID for your user which is completely unrelated to your Bitfinex account and that's it. We don't share any other details."
   },
   "launchStrategyModal": {
     "title": "Launch Strategy",
@@ -903,7 +910,8 @@
     "proceed": "Proceed",
     "saveAndLaunch": "Save & Launch",
     "launchNoSave": "Launch without saving",
-    "updateAndRestart": "Update and Restart"
+    "updateAndRestart": "Update and Restart",
+    "saveAndContinue": "Save and Continue"
   },
   "crashHandler": {
     "text1": "An error occurred that caused the Bitfinex Honey UI to halt. Please, restart the application to proceed working with it",
