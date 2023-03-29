@@ -43,16 +43,6 @@ export default function* ({ payload }) {
     console[method](`${localTime} ${_toUpper(level)}: ${message}`)
   }
 
-  if (optinBFXAnalytics) {
-    if (isElectronApp && ipcHelpers) {
-      ipcHelpers?.dumpLogData(payload)
-      return
-    }
-
-
-    yield put(WSActions.send(['error_log.dump', stringifiedPayload]))
-  }
-=======
   const stringifiedPayload = JSON.stringify({
     ...payload,
     timestamp,
@@ -61,8 +51,14 @@ export default function* ({ payload }) {
     env,
   })
 
-  yield put(WSActions.send(['error_log.dump', stringifiedPayload]))
+  if (optinBFXAnalytics) {
+    if (isElectronApp && ipcHelpers) {
+      ipcHelpers?.dumpLogData(payload)
+      return
+    }
 
+    yield put(WSActions.send(['error_log.dump', stringifiedPayload]))
+  }
 
   if (optinCrashReports && _includes(METRICS_SERVER_LEVELS, level)) {
     yield put(WSActions.send(['fatal_error.log', level, stringifiedPayload]))
