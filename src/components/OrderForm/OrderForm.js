@@ -16,13 +16,14 @@ import { Recurring } from 'bfx-hf-algo'
 import OrderFormTab from './FieldComponents/ui.tab'
 import { isElectronApp } from '../../redux/config'
 import Panel from '../../ui/Panel'
-import { getIsAnyModalOpen } from '../../util/document'
 
 import AOParamSettings from './Orderform.AlgoParams'
 import ConnectingModal from '../APIKeysConfigurateForm/ConnectingModal'
 import SubmitAPIKeysModal from '../APIKeysConfigurateForm/SubmitAPIKeysModal'
 import OrderFormMenu from './OrderFormMenu'
-import { getAOs, getAtomicOrders } from './OrderForm.orders.helpers'
+import {
+  getAOs, getAtomicOrders, filterAOs,
+} from './OrderForm.orders.helpers'
 import {
   renderLayout,
   processFieldData,
@@ -72,20 +73,11 @@ class OrderForm extends React.Component {
     this.processAOData = this.processAOData.bind(this)
     this.setFieldData = this.setFieldData.bind(this)
     this.validateAOData = this.validateAOData.bind(this)
-    this.handleKeydown = this.handleKeydown.bind(this)
     this.renderAPIStateModal = this.renderAPIStateModal.bind(this)
-  }
-
-  componentDidMount() {
-    window.addEventListener('keydown', this.handleKeydown)
   }
 
   shouldComponentUpdate(nextProps, nextState) {
     return !_isEqual(nextProps, this.props) || !_isEqual(this.state, nextState)
-  }
-
-  componentWillUnmount() {
-    window.removeEventListener('keydown', this.handleKeydown)
   }
 
   static getDerivedStateFromProps(nextProps, prevState) {
@@ -111,22 +103,6 @@ class OrderForm extends React.Component {
       fieldData: {},
       currentLayout: null,
       validationErrors: nextValidationErrors,
-    }
-  }
-
-  handleKeydown(e) {
-    // handle keys only when no modal is open, and it is orderform-details view
-    if (getIsAnyModalOpen() || !this.getIsOrderFormInputsView()) {
-      return
-    }
-
-    const { isAlgoOrder } = this.state
-    const { key } = e
-    if (key === 'Escape') {
-      this.onClearOrderLayout()
-    }
-    if (key === 'Enter' && isAlgoOrder) {
-      this.onSubmit('submit')
     }
   }
 
@@ -430,9 +406,11 @@ class OrderForm extends React.Component {
       currentLayout,
       helpOpen,
       currentMarket,
+      isAlgoOrder,
     } = this.state
 
     const algoOrders = getAOs(t, showAdvancedAlgos)
+    const processedAOs = filterAOs(algoOrders, activeMarket)
 
     const apiClientConfigured = apiCredentials?.configured && apiCredentials?.valid
     const isConnectedWithValidAPI = apiClientConnected && apiClientConfigured && isAlgoWorkerStarted
@@ -449,7 +427,7 @@ class OrderForm extends React.Component {
     }),
     )
 
-    _forEach(algoOrders, ({ label, id, uiIcon }) => {
+    _forEach(processedAOs, ({ label, id, uiIcon }) => {
       algoOrderTypes.push({
         id,
         label,
@@ -476,7 +454,7 @@ class OrderForm extends React.Component {
                 icon={<Icon name='question' />}
               />
             ),
-            !helpOpen && currentLayout && currentLayout.id && (
+            !helpOpen && currentLayout && currentLayout.id && isAlgoOrder && (
               <AOParamSettings
                 key='ao-settings'
                 algoID={currentLayout.id}
