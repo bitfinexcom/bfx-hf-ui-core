@@ -225,14 +225,14 @@ export default (alias, store) => (e = {}) => {
       case 'notify': {
         const [, status, message, i18n] = payload
 
-        if (i18n.key === 'invalidPassword') {
+        if (i18n?.key === 'invalidPassword') {
           // auth failed
           store.dispatch(UIActions.logInformation(null, LOG_LEVELS.DEBUG, 'app_login_failed'))
         }
 
         const notificationObject = {
           status,
-          text: i18n ? i18nLib.t(`notifications.${i18n.key}`, i18n.props) : message,
+          text: i18n ? i18nLib.t(`notifications.${i18n?.key}`, i18n.props) : message,
           mts: Date.now(),
           cid: v4(),
           i18n,
