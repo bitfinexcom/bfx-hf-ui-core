@@ -2,6 +2,7 @@ import _isArray from 'lodash/isArray'
 import _isObject from 'lodash/isObject'
 import _isNumber from 'lodash/isNumber'
 import _reduce from 'lodash/reduce'
+import _keys from 'lodash/keys'
 import Debug from 'debug'
 import { v4 } from 'uuid'
 import i18nLib from '../../../locales/i18n'
@@ -258,6 +259,23 @@ export default (alias, store) => (e = {}) => {
 
       case 'data.api_credentials.validation': {
         const [, apiKeysState] = payload
+
+        const keys = _keys(apiKeysState)
+
+        // we're updating only 1 keyset at a time, either main or paper
+        if (keys.length === 1) {
+          const mode = keys[0]
+          const status = apiKeysState[mode]
+
+          if (status.configured && status.valid) {
+            if (mode === MAIN_MODE) {
+              store.dispatch(WSActions.clearMainAlgoOrders())
+            } else {
+              store.dispatch(WSActions.clearPaperAlgoOrders())
+            }
+          }
+        }
+
         store.dispatch(WSActions.recvAPICredentialsConfigured(apiKeysState))
         // delay for showing 'validation...' message
         setTimeout(() => {

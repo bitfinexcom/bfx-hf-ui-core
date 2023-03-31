@@ -218,6 +218,14 @@ export default {
     type: t.CLEAR_ALGO_ORDERS,
   }),
 
+  clearMainAlgoOrders: () => ({
+    type: t.CLEAR_MAIN_ALGO_ORDERS,
+  }),
+
+  clearSandboxAlgoOrders: () => ({
+    type: t.CLEAR_SANDBOX_ALGO_ORDERS,
+  }),
+
   recvNotification: (notification) => ({
     type: t.DATA_NOTIFICATION,
     payload: { notification },
