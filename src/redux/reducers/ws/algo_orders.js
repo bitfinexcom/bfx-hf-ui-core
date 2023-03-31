@@ -48,6 +48,20 @@ export default (state = getInitialState(), action = {}) => {
       }
     }
 
+    case types.CLEAR_MAIN_ALGO_ORDERS: {
+      return {
+        ...state,
+        main: {},
+      }
+    }
+
+    case types.CLEAR_SANDBOX_ALGO_ORDERS: {
+      return {
+        ...state,
+        paper: {},
+      }
+    }
+
     case types.CLEAR_ALGO_ORDERS:
     case types.DEAUTH: {
       return getInitialState()
