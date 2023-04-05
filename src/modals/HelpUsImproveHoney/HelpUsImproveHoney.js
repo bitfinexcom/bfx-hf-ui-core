@@ -106,6 +106,14 @@ const AdvancedConfiguration = ({
   </>
 )
 
+AdvancedConfiguration.propTypes = {
+  t: PropTypes.func.isRequired,
+  closeAdvanced: PropTypes.func.isRequired,
+  onSubmit: PropTypes.func.isRequired,
+  updateSetting: PropTypes.func.isRequired,
+  settingsTheme: PropTypes.oneOf([THEMES.LIGHT, THEMES.DARK]).isRequired,
+}
+
 const HelpUsImproveHoney = ({
   closeHelpUsImproveHoneyModal, visible, settingsTheme, // authToken,
 }) => {
