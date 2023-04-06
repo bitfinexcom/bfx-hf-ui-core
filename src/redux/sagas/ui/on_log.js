@@ -4,7 +4,9 @@ import _includes from 'lodash/includes'
 
 import WSActions from '../../actions/ws'
 import { isElectronApp, appVersion } from '../../config'
-import { getCurrentMode } from '../../selectors/ui'
+import {
+  getOptinCrashReports, getOptinBFXAnalytics, getCurrentMode,
+} from '../../selectors/ui'
 
 const ipcHelpers = window.electronService
 
@@ -29,6 +31,8 @@ export default function* ({ payload }) {
   const {
     message, level,
   } = payload
+  const optinCrashReports = yield select(getOptinCrashReports)
+  const optinBFXAnalytics = yield select(getOptinBFXAnalytics)
   const env = ENV_MAPPING[yield select(getCurrentMode)]
 
   const method = LEVEL_CONSOLE_MAPPING[level] || LEVEL_CONSOLE_MAPPING.info
@@ -39,11 +43,6 @@ export default function* ({ payload }) {
     console[method](`${localTime} ${_toUpper(level)}: ${message}`)
   }
 
-  if (isElectronApp && ipcHelpers) {
-    ipcHelpers?.dumpLogData(payload)
-    return
-  }
-
   const stringifiedPayload = JSON.stringify({
     ...payload,
     timestamp,
@@ -52,9 +51,16 @@ export default function* ({ payload }) {
     env,
   })
 
-  yield put(WSActions.send(['error_log.dump', stringifiedPayload]))
+  if (optinBFXAnalytics) {
+    if (isElectronApp && ipcHelpers) {
+      ipcHelpers?.dumpLogData(payload)
+      return
+    }
 
-  if (_includes(METRICS_SERVER_LEVELS, level)) {
+    yield put(WSActions.send(['error_log.dump', stringifiedPayload]))
+  }
+
+  if (optinCrashReports && _includes(METRICS_SERVER_LEVELS, level)) {
     yield put(WSActions.send(['fatal_error.log', level, stringifiedPayload]))
   }
 }

@@ -347,6 +347,7 @@
     "generalTab": "General",
     "tradingModeTab": "Trading Mode",
     "appSettingsTab": "App Settings",
+    "analyticsTab": "Analytics",
     "language": "Language",
     "minimizeToTrayCheckbox": "Minimize to Tray",
     "minimizeToTrayText": "The application will run in the background when you close the window. You can close the app at any time by clicking “Quit” ({{key}}) on the menu bar",
@@ -413,7 +414,13 @@
     "overrideDefaultReconnectionTimerMaxError": "The disconnection delay cannot be greater than {{minutes}} minutes",
     "autoResumeAOsCheckbox": "Automatically resume Algorithmic Orders",
     "autoResumeAOsText": "By default after disconnection we present a modal for the user to select which orders remain active. Selecting this option bypasses this behaviour and automatically restarts existing active Agorithmic Orders.",
-    "autoResumeAOsWarning": "Enabling this settings should be done with caution!"
+    "autoResumeAOsWarning": "Enabling this settings should be done with caution!",
+    "optinCrashReports": "Opt in to crash reports",
+    "optinCrashReportsDesc": "If checked we will send the automatic logs of ERROR and FATAL to the metrics server, otherwise this data will be stored locally.",
+    "optinBFXAnalytics": "Opt in to Bitfinex Analytics",
+    "optinBFXAnalyticsDesc": "If checked we will send the event data to the metrics server.",
+    "optinVendorPendo": "Opt in to Pendo Analytics",
+    "optinVendorPendoDesc": "If checked we will use Pendo to collect data about your usage of the application."
   },
   "atomicOrdersTableModal": {
     "title": "Atomic Orders",
