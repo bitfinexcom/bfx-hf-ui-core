@@ -46,6 +46,7 @@ const EditOrderModal = ({
   submitAlgoOrder,
   markets,
   updateRecurringAO,
+  isRelaunching,
 }) => {
   const { t } = useTranslation()
   const [layout, setLayout] = useState({})
@@ -63,7 +64,7 @@ const EditOrderModal = ({
     const updOrder = { ...order }
     const algoOrders = getAOs(t, true, true)
     let isAlgoOrder = true
-    let uiDef = _find(algoOrders, ({ id }) => id === updOrder.id)
+    let uiDef = _find(algoOrders, ({ id }) => id === updOrder.id || id === updOrder.algoID)
 
     if (!uiDef) {
       const orders = getAtomicOrders(t)
@@ -151,7 +152,9 @@ const EditOrderModal = ({
         orderData._futures = _futures
         orderData._margin = _margin
 
-        cancelAlgoOrder(authToken, gid)
+        if (!isRelaunching) {
+          cancelAlgoOrder(authToken, gid)
+        }
         submitAlgoOrder(authToken, id, gid, orderData)
       }
 
@@ -232,7 +235,7 @@ const EditOrderModal = ({
       label={t('editOrderModal.title')}
       className='hfui-edit-order-modal__wrapper hfui-orderform__panel'
       isOpen={visible}
-      onClose={onClose}
+      onClose={isRelaunching ? forcedClose : onClose}
       onSubmit={onSubmit}
     >
       <div className='hfui-orderform__wrapper'>
@@ -255,14 +258,16 @@ const EditOrderModal = ({
       </div>
       <Modal.Footer>
         <Modal.Button onClick={onSubmit} disabled={hasError} primary>
-          {t('ui.updateAndRestart')}
+          {isRelaunching ? t('ui.relaunch') : t('ui.updateAndRestart')}
         </Modal.Button>
       </Modal.Footer>
-      <DiscardAOEdit
-        onSubmit={forcedClose}
-        onClose={() => setDiscardConfirmationVisible(false)}
-        visible={discardConfirmationVisible}
-      />
+      {!isRelaunching && (
+        <DiscardAOEdit
+          onSubmit={forcedClose}
+          onClose={() => setDiscardConfirmationVisible(false)}
+          visible={discardConfirmationVisible}
+        />
+      )}
     </Modal>
   )
 }
@@ -281,6 +286,7 @@ EditOrderModal.propTypes = {
   submitAlgoOrder: PropTypes.func.isRequired,
   markets: PropTypes.objectOf(PropTypes.shape(MARKET_SHAPE)).isRequired,
   updateRecurringAO: PropTypes.func.isRequired,
+  isRelaunching: PropTypes.bool.isRequired,
 }
 
 export default memo(EditOrderModal)

@@ -22,7 +22,8 @@ import { UI_KEYS } from '../../redux/constants/ui_keys'
 import { LOG_LEVELS } from '../../constants/logging'
 
 const mapStateToProps = (state = {}) => ({
-  visible: getUIModalStateForKey(state, UI_MODAL_KEYS.EDIT_ORDER_MODAL),
+  visible: getUIModalStateForKey(state, UI_MODAL_KEYS.EDIT_ORDER_MODAL) || getUIModalStateForKey(state, UI_MODAL_KEYS.RELAUNCH_ORDER_MODAL),
+  isRelaunching: getUIModalStateForKey(state, UI_MODAL_KEYS.RELAUNCH_ORDER_MODAL),
   order: getUIState(state, UI_KEYS.orderToEdit),
   authToken: getAuthToken(state),
   atomicOrdersCount: _size(getAtomicOrders(state)),
@@ -32,9 +33,14 @@ const mapStateToProps = (state = {}) => ({
 })
 
 const mapDispatchToProps = (dispatch) => ({
-  changeVisibilityState: (visible) => dispatch(
-    UIActions.changeUIModalState(UI_MODAL_KEYS.EDIT_ORDER_MODAL, visible),
-  ),
+  changeVisibilityState: (visible) => {
+    dispatch(
+      UIActions.changeUIModalState(UI_MODAL_KEYS.EDIT_ORDER_MODAL, visible),
+    )
+    dispatch(
+      UIActions.changeUIModalState(UI_MODAL_KEYS.RELAUNCH_ORDER_MODAL, visible),
+    )
+  },
   updateOrder: (authToken, order) => {
     dispatch(WSActions.send(['order.update', authToken, order]))
   },
