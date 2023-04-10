@@ -889,6 +889,7 @@
     "startBtn": "Start",
     "stopBtn": "Stop",
     "deleteBtn": "Delete",
+    "relaunch": "Relaunch",
     "expandPanel": "Expand Panel",
     "compressPanel": "Compress Panel",
     "name": "Name",
