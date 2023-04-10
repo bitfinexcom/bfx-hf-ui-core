@@ -30,6 +30,10 @@ const AlgoOrderActions = ({
 
   const { gid, id } = order
 
+  const gaCancelOrder = () => {
+    dispatch(GAActions.cancelAO())
+  }
+
   const cancelOrder = () => {
     debug('cancelling algo order %d', gid)
 
@@ -41,10 +45,7 @@ const AlgoOrderActions = ({
         'ao_cancelled',
       ),
     )
-  }
-
-  const gaCancelOrder = () => {
-    dispatch(GAActions.cancelAO())
+    gaCancelOrder()
   }
 
   const editOrder = () => {
@@ -64,13 +65,10 @@ const AlgoOrderActions = ({
         trigger='click'
         content={(
           <div className='hfui-navbar__layout-settings__menu-buttons'>
-            <Item onClick={() => editOrder(order)}>{t('table.edit')}</Item>
-            <Item
-              onClick={() => {
-                cancelOrder()
-                gaCancelOrder()
-              }}
-            >
+            <Item onClick={editOrder}>
+              {t('table.edit')}
+            </Item>
+            <Item onClick={cancelOrder}>
               {t('table.cancelRemaining')}
             </Item>
           </div>
