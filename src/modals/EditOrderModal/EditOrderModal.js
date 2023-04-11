@@ -115,8 +115,9 @@ const EditOrderModal = ({
 
   const onSubmitAO = () => {
     const { symbol, _futures, _margin } = args
-    const { id, gid } = order
+    const { id, gid, algoID } = order
     const market = { wsID: symbol }
+    const orderID = id || algoID
 
     const activeMarketCount = countFilterAtomicOrdersByMarket(market)
     let data = processFieldData({
@@ -125,7 +126,7 @@ const EditOrderModal = ({
       action: 'submit',
     })
 
-    if (id === Recurring.id) {
+    if (orderID === Recurring.id) {
       data = Recurring.meta.processParams(data, markets[symbol])
     }
     const error = validateAOData(
@@ -144,7 +145,7 @@ const EditOrderModal = ({
         _symbol: symbol,
       }
 
-      if (id === Recurring.id) {
+      if (orderID === Recurring.id) {
         delete orderData.symbol
 
         updateRecurringAO(authToken, order.gid, orderData)
@@ -155,7 +156,7 @@ const EditOrderModal = ({
         if (!isRelaunching) {
           cancelAlgoOrder(authToken, gid)
         }
-        submitAlgoOrder(authToken, id, gid, orderData)
+        submitAlgoOrder(authToken, orderID, gid, orderData)
       }
 
       forcedClose()
