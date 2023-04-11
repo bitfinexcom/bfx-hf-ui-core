@@ -25,6 +25,7 @@ const HistoricalAOActions = ({
 
   const deleteOrder = () => {
     debug('deleting historical algo order %d', gid)
+    // TODO: Send delete request to server
   }
 
   const relaunchOrder = () => {
