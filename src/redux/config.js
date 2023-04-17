@@ -50,6 +50,8 @@ const MARGIN_TRADING_ARTICLE_URL = 'https://support.bitfinex.com/hc/en-us/articl
 
 const STOP_ORDER_ARTICLE_URL = 'https://support.bitfinex.com/hc/en-us/articles/115003506125-What-is-a-Stop-Order-on-Bitfinex'
 
+const SETUP_TIMESTAMP_FORMAT_ARTICLE = 'https://bitfinex-honey.readme.io/docs/timestamp-format?utm-source=standalone'
+
 // product description link
 const HF_DESC_URL = 'https://support.bitfinex.com/hc/en-us/articles/900000096823-Honey-Framework'
 
@@ -89,6 +91,7 @@ export {
   RC_KEYWORD,
   isRCVersion,
   ISSUES_REPORT_URL,
+  SETUP_TIMESTAMP_FORMAT_ARTICLE,
   DISCUSSION_BOARD_URL,
   DISCORD_URL,
 }

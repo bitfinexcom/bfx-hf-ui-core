@@ -20,6 +20,7 @@ export const SETTINGS_KEYS = {
   FULLSCREEN: 'fullScreen',
   AUTO_RESUME_AOS: 'autoResumeAOs',
   PACKET_WD_DELAY: 'packetWDDelay',
+  TIMESTAMP_FORMAT: 'timestampFormat',
   OPT_IN_CRASH_REPORTS: 'optinCrashReports',
   OPT_IN_BFX_ANALYTICS: 'optinBFXAnalytics',
   OPT_IN_VENDOR_PENDO: 'optinVendorPendo',
@@ -100,6 +101,11 @@ export const getReconnectionTime = createSelector(
 export const getIsAutoResumeAOs = createSelector(
   getSettings,
   (settings) => _get(settings, SETTINGS_KEYS.AUTO_RESUME_AOS, false),
+)
+
+export const getTimestampFormat = createSelector(
+  getSettings,
+  (settings) => _get(settings, SETTINGS_KEYS.TIMESTAMP_FORMAT, ''),
 )
 
 export default getSettings

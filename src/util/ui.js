@@ -88,19 +88,21 @@ export const readJSONFile = () => new Promise((resolve, reject) => {
   input.remove()
 })
 
-export const formatDate = (rawDate, returnDateString) => {
+export const renderDate = (rawDate, formatTime) => {
   if (!rawDate) {
     return '--'
   }
-
-  const date = new Date(rawDate).toLocaleString()
-
-  // required for CSV compatibility
-  if (returnDateString) {
-    return _replace(date, ',', '')
-  }
+  const date = formatTime(rawDate)
 
   return defaultCellRenderer(date)
+}
+
+export const processDateForCSV = (rawDate, formatTime) => {
+  if (!rawDate) {
+    return '--'
+  }
+  const date = formatTime(rawDate)
+  return _replace(date, ',', '')
 }
 
 export const countObjectChildren = (obj) => _size(_keys(obj))

@@ -22,6 +22,7 @@ import {
 import { isMacOS } from '../../redux/config'
 import { UI_KEYS } from '../../redux/constants/ui_keys'
 import { LOG_LEVELS } from '../../constants/logging'
+import TimeFormatSetting from './AppSettingsModal.TimeFormatSetting'
 
 const ipcHelpers = window.electronService
 
@@ -89,6 +90,7 @@ const AppSettings = () => {
           options={themes}
         />
       </div>
+      <TimeFormatSetting />
       <br />
       <div className='appsettings-modal__setting'>
         <Checkbox

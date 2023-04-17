@@ -1,5 +1,8 @@
-import { isValid } from 'date-fns'
-import i18n, { LANGUAGES } from '../locales/i18n'
+import { isValid, format } from 'date-fns'
+import Debug from 'debug'
+import i18n, { DATE_FNS_LOCALES, LANGUAGES } from '../locales/i18n'
+
+const debug = Debug('hfui:date-utils')
 
 export const isValidDate = (date) => {
   if (!date) {
@@ -37,5 +40,24 @@ export const getLocalDateFormat = (lang) => {
 
     default:
       return 'MMMM d, yyyy h:mm aa'
+  }
+}
+
+export const safelyFormatTime = (timestampFormat) => (date) => {
+  if (!isValidDate(date)) {
+    return null
+  }
+  const formatedInLocalFormat = new Date(date).toLocaleString()
+  if (!timestampFormat) {
+    return formatedInLocalFormat
+  }
+  try {
+    const i18nMappedKey = i18n.getMappedLanguageKey()
+    return format(date, timestampFormat, {
+      locale: DATE_FNS_LOCALES[i18nMappedKey],
+    })
+  } catch (error) {
+    debug('Error in formatting date', date, timestampFormat)
+    return formatedInLocalFormat
   }
 }

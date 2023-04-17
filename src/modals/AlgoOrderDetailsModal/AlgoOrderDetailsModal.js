@@ -19,9 +19,10 @@ import {
 import { getMarketPair as _getMarketPair } from '../../redux/selectors/meta'
 import { getAOContext } from '../../util/order'
 import { saveAsJSON } from '../../util/ui'
-import { rowMapping } from '../../components/OrderHistory/OrderHistory.colunms'
+import getRowMapping from '../../components/OrderHistory/OrderHistory.columns'
 import Scrollbars from '../../ui/Scrollbars'
 import AlgoOrderDetailsModalHeader from './AlgoOrderDetailsModal.Header'
+import { getFormatTimeFn } from '../../redux/selectors/ui'
 
 import './style.css'
 
@@ -34,8 +35,12 @@ const AlgoOrderDetailsModal = ({ onClose, algoOrderId }) => {
   const orders = useSelector(getOrderHistory)
   const getMarketPair = useSelector(_getMarketPair)
   const rowData = useSelector(getAlgoOrderById(algoOrderId))
+  const formatTime = useSelector(getFormatTimeFn)
 
-  const orderDetails = useMemo(() => getOrderDetails(rowData, t), [rowData, t])
+  const orderDetails = useMemo(
+    () => getOrderDetails(rowData, t, formatTime),
+    [rowData, t, formatTime],
+  )
   const detailsSize = _size(orderDetails)
   const filteredAtomics = _filter(
     _values(atomicOrders),
@@ -56,6 +61,11 @@ const AlgoOrderDetailsModal = ({ onClose, algoOrderId }) => {
     [mappedAtomics, orders, rowData?.gid],
   )
 
+  const orderHistoryMapping = useMemo(
+    () => getRowMapping(formatTime),
+    [formatTime],
+  )
+
   const handleSave = useCallback(
     (name, gid) => {
       saveAsJSON(filteredOrders, `algo-${name}-${gid}`)
@@ -71,7 +81,9 @@ const AlgoOrderDetailsModal = ({ onClose, algoOrderId }) => {
     <Modal
       onClose={onClose}
       isOpen={isOpen}
-      title={<AlgoOrderDetailsModalHeader rowData={rowData} onClose={onClose} />}
+      title={
+        <AlgoOrderDetailsModalHeader rowData={rowData} onClose={onClose} />
+      }
       className='hfui-ao-details-modal'
       height={460}
       width={1200}
@@ -82,7 +94,7 @@ const AlgoOrderDetailsModal = ({ onClose, algoOrderId }) => {
           <span className='info-label'>{t('table.created')}</span>
           {' '}
           <span className='info-value'>
-            {new Date(rowData?.createdAt || +rowData?.gid).toLocaleString()}
+            {formatTime(rowData?.createdAt || +rowData?.gid)}
           </span>
         </div>
         <div className='info-col'>
@@ -122,7 +134,7 @@ const AlgoOrderDetailsModal = ({ onClose, algoOrderId }) => {
         <Scrollbars>
           <UfxOrderHistory
             orders={filteredOrders}
-            rowMapping={rowMapping}
+            rowMapping={orderHistoryMapping}
             isMobileLayout={false}
             loadMoreRows={() => {}}
           />

@@ -25,7 +25,9 @@ const RowExpandCell = ({ children, index, setSelectedIndex }) => (
   </div>
 )
 
-export default (t, selectedIndex, setSelectedIndex) => {
+export default ({
+  t, selectedIndex, setSelectedIndex, formatTime,
+}) => {
   const {
     id, entryAt, closedAt, entryPrice, closingPrice, amount, realizedPnl,
   } = getPositionsHeaders(t)
@@ -47,7 +49,7 @@ export default (t, selectedIndex, setSelectedIndex) => {
       flexGrow: 1,
       style: STYLES.flexEnd,
       headerStyle: STYLES.flexEnd,
-      cellRenderer: ({ rowData }) => getPositionEntryAt(rowData),
+      cellRenderer: ({ rowData }) => getPositionEntryAt(rowData, formatTime),
     },
     {
       label: closedAt,
@@ -56,7 +58,7 @@ export default (t, selectedIndex, setSelectedIndex) => {
       flexGrow: 1,
       style: STYLES.flexEnd,
       headerStyle: STYLES.flexEnd,
-      cellRenderer: ({ rowData = {} }) => getPositionClosedAt(rowData),
+      cellRenderer: ({ rowData = {} }) => getPositionClosedAt(rowData, formatTime),
     },
     {
       label: entryPrice,

@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 import { Icon } from 'react-fa'
 import _isEmpty from 'lodash/isEmpty'
 import { preparePrice } from 'bfx-api-node-util'
-import { defaultCellRenderer } from '../../util/ui'
+import { defaultCellRenderer, renderDate } from '../../util/ui'
 import resultNumber from '../../util/resultNumber'
 
 const STYLES = {
@@ -12,7 +12,7 @@ const STYLES = {
   flexEnd: { justifyContent: 'flex-end' },
 }
 
-const activeStrategiesColumns = (t, getMarketPair) => [
+const activeStrategiesColumns = (t, getMarketPair, formatTime) => [
   {
     label: t('table.name'),
     dataKey: 'label',
@@ -38,7 +38,7 @@ const activeStrategiesColumns = (t, getMarketPair) => [
     headerStyle: STYLES.flexStart,
     width: 200,
     flexGrow: 1.25,
-    cellRenderer: ({ rowData = {} }) => defaultCellRenderer(new Date(rowData.startedOn).toLocaleString()),
+    cellRenderer: ({ rowData = {} }) => renderDate(rowData.startedOn, formatTime),
   },
   // {
   //   label: t('table.leverage'),
@@ -78,7 +78,7 @@ const activeStrategiesColumns = (t, getMarketPair) => [
   },
 ]
 
-const pastStrategiesColumns = (t, getMarketPair) => [
+const pastStrategiesColumns = (t, getMarketPair, formatTime) => [
   {
     label: t('table.name'),
     dataKey: 'label',
@@ -104,7 +104,7 @@ const pastStrategiesColumns = (t, getMarketPair) => [
     headerStyle: STYLES.flexStart,
     width: 200,
     flexGrow: 1.25,
-    cellRenderer: ({ rowData = {} }) => defaultCellRenderer(new Date(rowData.startedOn).toLocaleString()),
+    cellRenderer: ({ rowData = {} }) => renderDate(rowData.startedOn, formatTime),
   },
   {
     label: t('table.stoppedOn'),
@@ -113,7 +113,7 @@ const pastStrategiesColumns = (t, getMarketPair) => [
     headerStyle: STYLES.flexStart,
     width: 200,
     flexGrow: 1.25,
-    cellRenderer: ({ rowData = {} }) => defaultCellRenderer(new Date(rowData.stoppedOn).toLocaleString()),
+    cellRenderer: ({ rowData = {} }) => renderDate(rowData.stoppedOn, formatTime),
   },
   // {
   //   label: t('table.leverage'),
@@ -200,6 +200,7 @@ const savedStrategiesColumns = ({
   onStrategyRemove,
   saveAsHandler,
   renameStrategy,
+  formatTime,
 }) => [
   {
     label: t('table.name'),
@@ -252,7 +253,7 @@ const savedStrategiesColumns = ({
     headerStyle: STYLES.flexStart,
     width: 200,
     flexGrow: 1.25,
-    cellRenderer: ({ rowData = {} }) => defaultCellRenderer(new Date(rowData.savedTs).toLocaleString()),
+    cellRenderer: ({ rowData = {} }) => renderDate(rowData.savedTs, formatTime),
   },
   {
     dataKey: 'id',

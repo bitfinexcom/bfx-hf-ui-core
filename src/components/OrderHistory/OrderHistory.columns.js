@@ -1,7 +1,7 @@
 import React from 'react'
 import _get from 'lodash/get'
 import _toString from 'lodash/toString'
-import { ORDER_HISTORY_KEYS, PrettyValue, FullDate } from '@ufx-ui/core'
+import { ORDER_HISTORY_KEYS, PrettyValue } from '@ufx-ui/core'
 
 import { getFormatedStatus } from './OrderHistory.helpers'
 import { defaultCellRenderer } from '../../util/ui'
@@ -20,7 +20,7 @@ const {
   UPDATED,
 } = ORDER_HISTORY_KEYS
 
-export const rowMapping = {
+const getRowMapping = (formatTime) => ({
   [ID]: {
     index: 0,
   },
@@ -79,14 +79,14 @@ export const rowMapping = {
   [UPDATED]: {
     index: 7,
     selector: 'mtsUpdate',
-    format: (_value, _, data) => <FullDate ts={_get(data, 'mtsUpdate')} />,
+    format: (_value, _, data) => formatTime(_get(data, 'mtsUpdate')),
   },
   [PLACED]: {
     index: 8,
     selector: 'created',
     // eslint-disable-next-line react/display-name
-    format: (_value, _, data) => {
-      return <FullDate ts={_get(data, 'created')} />
-    },
+    format: (_value, _, data) => formatTime(_get(data, 'created')),
   },
-}
+})
+
+export default getRowMapping

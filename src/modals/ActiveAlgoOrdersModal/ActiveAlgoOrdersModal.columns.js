@@ -2,8 +2,11 @@ import React from 'react'
 import { Checkbox } from '@ufx-ui/core'
 
 import { getAOContext } from '../../util/order'
+import { renderDate } from '../../util/ui'
 
-export default (onOrderSelect, isOrderSelected, t) => [
+export default ({
+  onOrderSelect, isOrderSelected, t, formatTime,
+}) => [
   {
     dataKey: 'algoID',
     width: 30,
@@ -38,7 +41,7 @@ export default (onOrderSelect, isOrderSelected, t) => [
     dataKey: 'createdAt',
     width: 125,
     flexGrow: 1.25,
-    cellRenderer: ({ rowData = {} }) => new Date(rowData.createdAt || +rowData.gid).toLocaleString(),
+    cellRenderer: ({ rowData = {} }) => renderDate(rowData.createdAt || +rowData.gid, formatTime),
   },
   {
     label: t('table.symbol'),

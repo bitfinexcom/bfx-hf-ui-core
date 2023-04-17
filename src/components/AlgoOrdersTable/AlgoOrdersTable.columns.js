@@ -1,11 +1,15 @@
 import React from 'react'
 import { Icon } from 'react-fa'
 
-import { defaultCellRenderer } from '../../util/ui'
+import { defaultCellRenderer, renderDate } from '../../util/ui'
 import AlgoOrderActions from './AlgoOrderActions'
 
 export default ({
-  t, getMarketPair, showActions, setMoreInfoGID,
+  t,
+  getMarketPair,
+  showActions,
+  setMoreInfoGID,
+  formatTime,
 }) => {
   const columns = [
     {
@@ -20,9 +24,7 @@ export default ({
       dataKey: 'createdAt',
       width: 175,
       flexGrow: 1.75,
-      cellRenderer: ({ rowData = {} }) => defaultCellRenderer(
-        new Date(rowData.createdAt || +rowData.gid).toLocaleString(),
-      ),
+      cellRenderer: ({ rowData = {} }) => renderDate(rowData.createdAt || +rowData.gid, formatTime),
     },
     {
       label: t('table.lastActive'),
@@ -31,9 +33,7 @@ export default ({
       flexGrow: 1.75,
       cellRenderer: ({ rowData = {} }) => {
         const { lastActive } = rowData
-        return defaultCellRenderer(
-          lastActive ? new Date(lastActive).toLocaleString() : '-',
-        )
+        return renderDate(lastActive, formatTime)
       },
     },
     {

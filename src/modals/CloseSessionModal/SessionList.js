@@ -15,7 +15,7 @@ import {
 } from '../../redux/selectors/meta'
 import { changeMode, setCurrentStrategy } from '../../redux/actions/ui'
 import routes from '../../constants/routes'
-import { getIsPaperTrading } from '../../redux/selectors/ui'
+import { getFormatTimeFn, getIsPaperTrading } from '../../redux/selectors/ui'
 import { prepareStrategyToLoad } from '../../components/StrategyEditor/StrategyEditor.helpers'
 import { MAIN_MODE } from '../../redux/reducers/ui'
 
@@ -26,6 +26,7 @@ const SessionList = ({ onModalClose, openAODetailsModal }) => {
   const algoOrders = useSelector(getFilteredLocalAlgoOrders)
   const savedStrategies = useSelector(getSortedByTimeStrategies)
   const markets = useSelector(getMarketsForExecution)
+  const formatTime = useSelector(getFormatTimeFn)
 
   const dispatch = useDispatch()
   const { push } = useHistory()
@@ -71,7 +72,7 @@ const SessionList = ({ onModalClose, openAODetailsModal }) => {
             {_getMarketPair(strategy?.symbol)}
             ,&nbsp;
             {t('closeSessionModal.startedOn', {
-              time: new Date(strategy.startedOn).toLocaleString(),
+              time: formatTime(strategy.startedOn),
             })}
             )
           </span>
