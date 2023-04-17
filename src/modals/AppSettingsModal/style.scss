@@ -72,6 +72,19 @@
     a {
       text-decoration: none;
     }
+
+    a:hover {
+      text-decoration: underline;
+      opacity: 0.9;
+    }
+
+    &.bold {
+      font-weight: 600;
+    }
+
+    &.light {
+      font-weight: 300;
+    }
   }
 
   &__description {
@@ -104,14 +117,18 @@
       margin-right: spacing(0.5);
     }
   }
-  &__legal {
-    margin-top: 40px;
-    display: flex;
-    flex-direction: column;
-  }
 
-  &__legal-disclaimer {
-    font-size: 11px;
+  &__legal {
+    font-size: 11px !important;
+
+    .legal__item {
+      margin-bottom: 7px;
+      display: block;
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
   }
 
   &__beta-disclaimer {

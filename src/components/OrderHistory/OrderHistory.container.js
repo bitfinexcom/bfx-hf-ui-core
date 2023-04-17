@@ -6,6 +6,7 @@ import { getAuthToken, getOrderHistory, getCurrentModeAPIKeyState } from '../../
 import { getCurrentMode, getFormatTimeFn, getUIState } from '../../redux/selectors/ui'
 import OrderHistory from './OrderHistory'
 import { UI_KEYS } from '../../redux/constants/ui_keys'
+import { LOG_LEVELS } from '../../constants/logging'
 
 const mapStateToProps = (state) => ({
   orders: getOrderHistory(state),
@@ -18,6 +19,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = dispatch => ({
   fetchOrderHistory: (authToken, endTime = null) => {
+    dispatch(UIActions.logInformation(null, LOG_LEVELS.DEBUG, 'order_history'))
     dispatch(WSActions.send(['get.order_history', authToken, null, endTime, 100]))
   },
   setIsLoadingOrderHistFlag: () => dispatch(UIActions.setUIValue(UI_KEYS.isLoadingOrderHistData, true)),

@@ -15,7 +15,7 @@ export default ({
     {
       label: t('table.alias'),
       dataKey: 'alias',
-      width: 130,
+      width: 175,
       flexGrow: 2.5,
       cellRenderer: ({ rowData = {} }) => defaultCellRenderer(rowData.alias || rowData.label),
     },
@@ -46,39 +46,29 @@ export default ({
   ]
 
   if (showActions) {
-    // 'More info' button
-    columns.push({
-      label: '',
-      dataKey: '',
-      width: 150,
-      flexGrow: 1,
-      cellRenderer: ({ rowData = {} }) => {
-        return (
-          <div>
-            <div
-              className='hfui-aolist__wrapper_more_info'
-              onClick={() => setMoreInfoGID(rowData.gid)}
-            >
-              <Icon
-                name='info-circle'
-                aria-label='More info'
-                onClick={() => {}}
-              />
-              <span className='more_info_action'>{t('table.moreInfo')}</span>
-            </div>
-          </div>
-        )
-      },
-    })
-
     // 'Actions' column
     columns.push({
       dataKey: 'cid',
-      width: 20,
-      minWidth: 20,
+      width: 170,
+      minWidth: 120,
       cellRenderer: (
         { rowData = {} } // eslint-disable-line
-      ) => <AlgoOrderActions key={rowData.gid} order={rowData} />,
+      ) => (
+        <div className='hfui-aolist__wrapper_actions_container'>
+          <div
+            className='hfui-aolist__wrapper_more_info'
+            onClick={() => setMoreInfoGID(rowData.gid)}
+          >
+            <Icon
+              name='info-circle'
+              aria-label='More info'
+              onClick={() => { }}
+            />
+            <span className='more_info_action'>{t('table.moreInfo')}</span>
+          </div>
+          <AlgoOrderActions key={rowData.gid} order={rowData} />
+        </div>
+      ),
       disableSort: true,
     })
   }

@@ -21,6 +21,9 @@ export const SETTINGS_KEYS = {
   AUTO_RESUME_AOS: 'autoResumeAOs',
   PACKET_WD_DELAY: 'packetWDDelay',
   TIMESTAMP_FORMAT: 'timestampFormat',
+  OPT_IN_CRASH_REPORTS: 'optinCrashReports',
+  OPT_IN_BFX_ANALYTICS: 'optinBFXAnalytics',
+  OPT_IN_VENDOR_PENDO: 'optinVendorPendo',
 }
 
 export const THEMES = {
@@ -63,6 +66,21 @@ export const getThemeSetting = createSelector(
 export const getIsBetaVersion = createSelector(
   getSettings,
   (settings) => _get(settings, SETTINGS_KEYS.JOIN_BETA_PROGRAM, false),
+)
+
+export const getOptinCrashReports = createSelector(
+  getSettings,
+  (settings) => _get(settings, SETTINGS_KEYS.OPT_IN_CRASH_REPORTS, false),
+)
+
+export const getOptinBFXAnalytics = createSelector(
+  getSettings,
+  (settings) => _get(settings, SETTINGS_KEYS.OPT_IN_BFX_ANALYTICS, false),
+)
+
+export const getOptinVendorPendo = createSelector(
+  getSettings,
+  (settings) => _get(settings, SETTINGS_KEYS.OPT_IN_VENDOR_PENDO, false),
 )
 
 export const getShouldHideOnClose = createSelector(

@@ -55,6 +55,9 @@ const SETUP_TIMESTAMP_FORMAT_ARTICLE = 'https://bitfinex-honey.readme.io/docs/ti
 // product description link
 const HF_DESC_URL = 'https://support.bitfinex.com/hc/en-us/articles/900000096823-Honey-Framework'
 
+const DISCUSSION_BOARD_URL = 'https://bit.ly/42p9YiV'
+const DISCORD_URL = 'https://bit.ly/400Xj49'
+
 const CHART_URL = isElectronApp ? 'https://bitfinexcom.github.io/bfx-hf-tradingview/' : process.env.REACT_APP_CHART_URL
 
 const HONEY_AUTH_URL = `${process.env.REACT_APP_UFX_API_URL}/honey`
@@ -89,4 +92,6 @@ export {
   isRCVersion,
   ISSUES_REPORT_URL,
   SETUP_TIMESTAMP_FORMAT_ARTICLE,
+  DISCUSSION_BOARD_URL,
+  DISCORD_URL,
 }
