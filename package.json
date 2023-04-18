@@ -78,8 +78,8 @@
   "dependencies": {
     "@blaumaus/react-monaco-editor": "^0.45.0",
     "@svgr/webpack": "5.5.0",
-    "@ufx-ui/bfx-containers": "0.14.1",
-    "@ufx-ui/core": "0.14.1",
+    "@ufx-ui/bfx-containers": "^0.14.2",
+    "@ufx-ui/core": "^0.14.2",
     "@ufx-ui/utils": "0.14.0",
     "axios": "^0.27.2",
     "bfx-api-node-models": "^1.6.3",
