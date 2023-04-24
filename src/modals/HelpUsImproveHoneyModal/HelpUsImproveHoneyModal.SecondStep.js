@@ -6,6 +6,13 @@ import { ToggleSwitch } from 'react-dragswitch'
 import { THEMES } from '../../redux/selectors/ui'
 import { SWITCH_THEME } from '../../components/SwitchMode/SwitchMode'
 import Modal from '../../ui/Modal'
+import {
+  METRICS_CODE_REF_URL,
+  PENDO_CODE_REF_URL,
+  PENDO_PRIVACY_POLICY_URL,
+  PENDO_WEB_URL,
+  UNIQUE_ID_CODE_REF_URL,
+} from '../../redux/config'
 
 const HelpUsImproveHoneySecondStep = ({
   goToFirstStep,
@@ -35,7 +42,19 @@ const HelpUsImproveHoneySecondStep = ({
           />
         </div>
         <p>
-          <Trans t={t} i18nKey='helpUsImproveModal.unexpectedErrorsDesc' />
+          <Trans
+            t={t}
+            i18nKey='helpUsImproveModal.unexpectedErrorsDesc'
+            components={{
+              codeRefUrl: (
+                <a
+                  href={METRICS_CODE_REF_URL}
+                  target='_blank'
+                  rel='noopener noreferrer'
+                />
+              ),
+            }}
+          />
         </p>
       </div>
       <div className='advanced-configuration'>
@@ -50,7 +69,19 @@ const HelpUsImproveHoneySecondStep = ({
           />
         </div>
         <p>
-          <Trans t={t} i18nKey='helpUsImproveModal.anonymousDataDesc' />
+          <Trans
+            t={t}
+            i18nKey='helpUsImproveModal.anonymousDataDesc'
+            components={{
+              codeRefUrl: (
+                <a
+                  href={UNIQUE_ID_CODE_REF_URL}
+                  target='_blank'
+                  rel='noopener noreferrer'
+                />
+              ),
+            }}
+          />
         </p>
       </div>
       <div className='advanced-configuration'>
@@ -71,14 +102,21 @@ const HelpUsImproveHoneySecondStep = ({
             components={{
               pendoURL: (
                 <a
-                  href='https://dummy-url'
+                  href={PENDO_WEB_URL}
                   target='_blank'
                   rel='noopener noreferrer'
                 />
               ),
               pendoPP: (
                 <a
-                  href='https://dummy-url'
+                  href={PENDO_PRIVACY_POLICY_URL}
+                  target='_blank'
+                  rel='noopener noreferrer'
+                />
+              ),
+              codeRefUrl: (
+                <a
+                  href={PENDO_CODE_REF_URL}
                   target='_blank'
                   rel='noopener noreferrer'
                 />

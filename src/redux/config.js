@@ -52,6 +52,12 @@ const STOP_ORDER_ARTICLE_URL = 'https://support.bitfinex.com/hc/en-us/articles/1
 
 const SETUP_TIMESTAMP_FORMAT_ARTICLE = 'https://bitfinex-honey.readme.io/docs/timestamp-format?utm-source=standalone'
 
+const PENDO_WEB_URL = 'https://www.pendo.io'
+const PENDO_PRIVACY_POLICY_URL = 'https://www.pendo.io/legal/privacy-policy'
+const PENDO_CODE_REF_URL = 'https://github.com/bitfinexcom/bfx-hf-ui-core/blob/main/src/redux/sagas/ui/pendo_identify.js'
+const METRICS_CODE_REF_URL = 'https://github.com/bitfinexcom/bfx-hf-server/blob/master/lib/ws_servers/api/metrics_client.js'
+const UNIQUE_ID_CODE_REF_URL = ''
+
 // product description link
 const HF_DESC_URL = 'https://support.bitfinex.com/hc/en-us/articles/900000096823-Honey-Framework'
 
@@ -59,6 +65,7 @@ const DISCUSSION_BOARD_URL = 'https://bit.ly/42p9YiV'
 const DISCORD_URL = 'https://bit.ly/400Xj49'
 
 const CHART_URL = isElectronApp ? 'https://bitfinexcom.github.io/bfx-hf-tradingview/' : process.env.REACT_APP_CHART_URL
+// const CHART_URL = 'http://localhost:3001/bfx-hf-tradingview/'
 
 const HONEY_AUTH_URL = `${process.env.REACT_APP_UFX_API_URL}/honey`
 
@@ -94,4 +101,9 @@ export {
   SETUP_TIMESTAMP_FORMAT_ARTICLE,
   DISCUSSION_BOARD_URL,
   DISCORD_URL,
+  PENDO_WEB_URL,
+  PENDO_PRIVACY_POLICY_URL,
+  PENDO_CODE_REF_URL,
+  METRICS_CODE_REF_URL,
+  UNIQUE_ID_CODE_REF_URL,
 }
