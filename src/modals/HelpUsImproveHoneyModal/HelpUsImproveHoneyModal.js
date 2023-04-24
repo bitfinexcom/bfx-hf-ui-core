@@ -1,14 +1,10 @@
 /* eslint-disable jsx-a11y/anchor-has-content */
 import React, { memo, useState } from 'react'
 import PropTypes from 'prop-types'
-import { useTranslation, Trans } from 'react-i18next'
-import { ToggleSwitch } from 'react-dragswitch'
-import _map from 'lodash/map'
+import { useTranslation } from 'react-i18next'
 
 import Modal from '../../ui/Modal'
-import { PRIVACY_POLICY_URL, TERMS_CONDITIONS_URL } from '../AppSettingsModal/AppSettingsModal.constants'
-import { SWITCH_THEME } from '../../components/SwitchMode/SwitchMode'
-import { THEMES } from '../../redux/selectors/ui'
+import { SETTINGS_KEYS, THEMES } from '../../redux/selectors/ui'
 import HelpUsImproveHoneyModalFirstStep from './HelpUsImproveHoneyModal.FirstStep'
 import HelpUsImproveHoneySecondStep from './HelpUsImproveHoneyModal.SecondStep'
 import useToggle from '../../hooks/useToggle'
@@ -16,46 +12,70 @@ import useToggle from '../../hooks/useToggle'
 import './style.css'
 
 const HelpUsImproveHoney = ({
-  closeHelpUsImproveHoneyModal, visible, settingsTheme, // authToken,
+  closeHelpUsImproveHoneyModal,
+  visible,
+  settingsTheme,
+  updateSettings,
 }) => {
-  const [isFirstStep,, goToFirstStep, goToSecondStep] = useToggle(true)
+  const [isFirstStep, , goToFirstStep, goToSecondStep] = useToggle(true)
+  const [optinCrashReports, setOptinCrashReports] = useState(true)
+  const [optinBFXAnalytics, setOptinBFXAnalytics] = useState(true)
+  const [optinVendorPendo, setOptinVendorPendo] = useState(true)
+
   const { t } = useTranslation()
 
-  const onClose = () => {
-    closeHelpUsImproveHoneyModal()
-  }
-
   const onSubmit = () => {
-    onClose()
-  }
+    if (isFirstStep) {
+      updateSettings({
+        [SETTINGS_KEYS.OPT_IN_CRASH_REPORTS]: true,
+        [SETTINGS_KEYS.OPT_IN_BFX_ANALYTICS]: true,
+        [SETTINGS_KEYS.OPT_IN_VENDOR_PENDO]: true,
+        [SETTINGS_KEYS.SHOW_OPT_IN_MODAL]: false,
+      })
+    } else {
+      updateSettings({
+        [SETTINGS_KEYS.OPT_IN_CRASH_REPORTS]: optinCrashReports,
+        [SETTINGS_KEYS.OPT_IN_BFX_ANALYTICS]: optinBFXAnalytics,
+        [SETTINGS_KEYS.OPT_IN_VENDOR_PENDO]: optinVendorPendo,
+        [SETTINGS_KEYS.SHOW_OPT_IN_MODAL]: false,
+      })
+    }
 
-  const updateSetting = (setting) => (value) => {
-    console.log(setting, value)
+    closeHelpUsImproveHoneyModal()
   }
 
   return (
     <Modal
-      label={isFirstStep ? t('helpUsImproveModal.title') : t('helpUsImproveModal.advancedConf')}
+      label={
+        isFirstStep
+          ? t('helpUsImproveModal.title')
+          : t('helpUsImproveModal.advancedConf')
+      }
       isOpen={visible}
-      onClose={onClose}
+      onClose={() => {}}
       onSubmit={onSubmit}
+      isCloseButtonShown={false}
+      canOutsideClickClose={false}
       className='help-us-improve-honey-modal'
     >
-      {isFirstStep
-        ? (
-          <HelpUsImproveHoneyModalFirstStep
-            onSubmit={onSubmit}
-            goToSecondStep={goToSecondStep}
-          />
-        )
-        : (
-          <HelpUsImproveHoneySecondStep
-            goToFirstStep={goToFirstStep}
-            onSubmit={onSubmit}
-            updateSetting={updateSetting}
-            settingsTheme={settingsTheme}
-          />
-        )}
+      {isFirstStep ? (
+        <HelpUsImproveHoneyModalFirstStep
+          onSubmit={onSubmit}
+          goToSecondStep={goToSecondStep}
+        />
+      ) : (
+        <HelpUsImproveHoneySecondStep
+          goToFirstStep={goToFirstStep}
+          onSubmit={onSubmit}
+          settingsTheme={settingsTheme}
+          optinCrashReports={optinCrashReports}
+          setOptinCrashReports={setOptinCrashReports}
+          optinBFXAnalytics={optinBFXAnalytics}
+          setOptinBFXAnalytics={setOptinBFXAnalytics}
+          optinVendorPendo={optinVendorPendo}
+          setOptinVendorPendo={setOptinVendorPendo}
+        />
+      )}
     </Modal>
   )
 }
@@ -65,6 +85,7 @@ HelpUsImproveHoney.propTypes = {
   visible: PropTypes.bool.isRequired,
   // authToken: PropTypes.string.isRequired,
   settingsTheme: PropTypes.oneOf([THEMES.LIGHT, THEMES.DARK]).isRequired,
+  updateSettings: PropTypes.func.isRequired,
 }
 
 export default memo(HelpUsImproveHoney)

@@ -8,63 +8,57 @@ import { SWITCH_THEME } from '../../components/SwitchMode/SwitchMode'
 import Modal from '../../ui/Modal'
 
 const HelpUsImproveHoneySecondStep = ({
-  goToFirstStep, onSubmit, updateSetting, settingsTheme,
+  goToFirstStep,
+  onSubmit,
+  settingsTheme,
+  optinCrashReports,
+  setOptinCrashReports,
+  optinBFXAnalytics,
+  setOptinBFXAnalytics,
+  optinVendorPendo,
+  setOptinVendorPendo,
 }) => {
   const { t } = useTranslation()
 
   return (
     <div>
-      <p>
-        {t('helpUsImproveModal.3rdPartyNotice')}
-      </p>
+      <p>{t('helpUsImproveModal.3rdPartyNotice')}</p>
       <div className='advanced-configuration'>
         <div className='adv-setting-toggle'>
-          <span>
-            {t('helpUsImproveModal.unexpectedErrors')}
-          </span>
+          <span>{t('helpUsImproveModal.unexpectedErrors')}</span>
           <ToggleSwitch
-            checked
-            onChange={updateSetting('unexpectedErrors')}
+            checked={optinCrashReports}
+            onChange={setOptinCrashReports}
             onColor={SWITCH_THEME[settingsTheme].onColor}
             offColor={SWITCH_THEME[settingsTheme].offColor}
             className='toggle-switch'
           />
         </div>
         <p>
-          <Trans
-            t={t}
-            i18nKey='helpUsImproveModal.unexpectedErrorsDesc'
-          />
+          <Trans t={t} i18nKey='helpUsImproveModal.unexpectedErrorsDesc' />
         </p>
       </div>
       <div className='advanced-configuration'>
         <div className='adv-setting-toggle'>
-          <span>
-            {t('helpUsImproveModal.anonymousData')}
-          </span>
+          <span>{t('helpUsImproveModal.anonymousData')}</span>
           <ToggleSwitch
-            checked
-            onChange={updateSetting('anonymousData')}
+            checked={optinBFXAnalytics}
+            onChange={setOptinBFXAnalytics}
             onColor={SWITCH_THEME[settingsTheme].onColor}
             offColor={SWITCH_THEME[settingsTheme].offColor}
             className='toggle-switch'
           />
         </div>
         <p>
-          <Trans
-            t={t}
-            i18nKey='helpUsImproveModal.anonymousDataDesc'
-          />
+          <Trans t={t} i18nKey='helpUsImproveModal.anonymousDataDesc' />
         </p>
       </div>
       <div className='advanced-configuration'>
         <div className='adv-setting-toggle'>
-          <span>
-            {t('helpUsImproveModal.pendoUsage')}
-          </span>
+          <span>{t('helpUsImproveModal.pendoUsage')}</span>
           <ToggleSwitch
-            checked
-            onChange={updateSetting('pendoUsage')}
+            checked={optinVendorPendo}
+            onChange={setOptinVendorPendo}
             onColor={SWITCH_THEME[settingsTheme].onColor}
             offColor={SWITCH_THEME[settingsTheme].offColor}
             className='toggle-switch'
@@ -108,7 +102,12 @@ const HelpUsImproveHoneySecondStep = ({
 HelpUsImproveHoneySecondStep.propTypes = {
   goToFirstStep: PropTypes.func.isRequired,
   onSubmit: PropTypes.func.isRequired,
-  updateSetting: PropTypes.func.isRequired,
+  optinCrashReports: PropTypes.bool.isRequired,
+  setOptinCrashReports: PropTypes.func.isRequired,
+  optinBFXAnalytics: PropTypes.bool.isRequired,
+  setOptinBFXAnalytics: PropTypes.func.isRequired,
+  optinVendorPendo: PropTypes.bool.isRequired,
+  setOptinVendorPendo: PropTypes.func.isRequired,
   settingsTheme: PropTypes.oneOf([THEMES.LIGHT, THEMES.DARK]).isRequired,
 }
 
