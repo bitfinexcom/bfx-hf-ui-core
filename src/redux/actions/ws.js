@@ -38,7 +38,7 @@ export default {
     payload: { markets },
   }),
 
-  saveSettings: (key, value) => ({
+  saveSetting: (key, value) => ({
     type: ui.SAVE_SETTINGS,
     payload: {
       key,

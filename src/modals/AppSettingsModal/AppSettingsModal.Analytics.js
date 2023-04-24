@@ -19,17 +19,17 @@ const Analytics = () => {
   const optinVendorPendo = useSelector(getOptinVendorPendo)
 
   const optinCrashReportsHandler = (isChecked) => {
-    dispatch(WSActions.saveSettings(SETTINGS_KEYS.OPT_IN_CRASH_REPORTS, isChecked))
+    dispatch(WSActions.saveSetting(SETTINGS_KEYS.OPT_IN_CRASH_REPORTS, isChecked))
     dispatch(GAActions.updateSettings())
   }
 
   const optinBFXAnalyticsHandler = (isChecked) => {
-    dispatch(WSActions.saveSettings(SETTINGS_KEYS.OPT_IN_BFX_ANALYTICS, isChecked))
+    dispatch(WSActions.saveSetting(SETTINGS_KEYS.OPT_IN_BFX_ANALYTICS, isChecked))
     dispatch(GAActions.updateSettings())
   }
 
   const optinVendorPendoHandler = (isChecked) => {
-    dispatch(WSActions.saveSettings(SETTINGS_KEYS.OPT_IN_VENDOR_PENDO, isChecked))
+    dispatch(WSActions.saveSetting(SETTINGS_KEYS.OPT_IN_VENDOR_PENDO, isChecked))
     dispatch(GAActions.updateSettings())
   }
 
