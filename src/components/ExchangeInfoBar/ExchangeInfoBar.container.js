@@ -55,7 +55,7 @@ const mapDispatchToProps = (dispatch) => ({
     ]))
   },
   setVolumeUnit: (key) => dispatch(UIActions.changeTickersVolumeUnit(key)),
-  updateShowOnlyFavoritePairs: (showOnlyFavoritePairs) => dispatch(WSActions.saveSettings(SETTINGS_KEYS.SHOW_ONLY_FAVORITE_PAIRS, showOnlyFavoritePairs)),
+  updateShowOnlyFavoritePairs: (showOnlyFavoritePairs) => dispatch(WSActions.saveSetting(SETTINGS_KEYS.SHOW_ONLY_FAVORITE_PAIRS, showOnlyFavoritePairs)),
   showCcyIconModal: () => dispatch(UIActions.changeUIModalState(UI_MODAL_KEYS.CCY_INFO_MODAL, true)),
 })
 
