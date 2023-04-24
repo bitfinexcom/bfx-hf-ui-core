@@ -71,9 +71,9 @@
     "illHelp": "No problem, I'll help",
     "3rdPartyNotice": "This is how we use trusted 3rd parties services and our own systems to enhance product usability and safety.",
     "unexpectedErrors": "We store unexpected errors",
-    "unexpectedErrorsDesc": "Storing unexpected errors <strong>on our infrastructure</strong> allows us to proactively act on issues instead of relying on direct user reports, increasing our response time for fixes and making your overall experience safer (<codeRefUrl>check the code</codeRefUrl>)",
+    "unexpectedErrorsDesc": "Storing unexpected errors <strong>on our infrastructure</strong> allows us to proactively act on issues instead of relying on direct user reports, increasing our response time for fixes and making your overall experience safer (<codeRefUrl>check the code</codeRefUrl>).",
     "anonymousData": "We store anonymous usage data",
-    "anonymousDataDesc": "Storing anonymous usage data <strong>on our infrastructure</strong> allows us to analyse usage trends of the application worldwide and better understand which actions should be prioritised due to their reach (<codeRefUrl>check the code</codeRefUrl>)",
+    "anonymousDataDesc": "Storing anonymous usage data <strong>on our infrastructure</strong> allows us to analyse usage trends of the application worldwide and better understand which actions should be prioritised due to their reach (<codeRefUrl>check the code</codeRefUrl>).",
     "pendoUsage": "We improve your experience with Pendo",
     "pendoUsageDesc": "Interacting with <pendoURL>Pendo</pendoURL> allows us to present you with dynamic informative content and also better analyse how different users use the application worldwide.\nView their <pendoPP>Privacy Policy</pendoPP>.\n\nWe generate a unique ID for your user which is completely unrelated to your Bitfinex account and that's it. We don't share any other details (<codeRefUrl>check the code</codeRefUrl>)."
   },
@@ -445,13 +445,7 @@
     "timestampFormatPreview": "Preview: {{date}}",
     "localTimestampFormat": "Local timestamp format",
     "timestampFormatHelpLink": "How to set a timestamp format",
-    "resetToDefaultBtn": "Reset to default",
-    "optinCrashReports": "Opt in to crash reports",
-    "optinCrashReportsDesc": "If checked we will send the automatic logs of ERROR and FATAL to the metrics server, otherwise this data will be stored locally.",
-    "optinBFXAnalytics": "Opt in to Bitfinex Analytics",
-    "optinBFXAnalyticsDesc": "If checked we will send the event data to the metrics server.",
-    "optinVendorPendo": "Opt in to Pendo Analytics",
-    "optinVendorPendoDesc": "If checked we will use Pendo to collect data about your usage of the application."
+    "resetToDefaultBtn": "Reset to default"
   },
   "atomicOrdersTableModal": {
     "title": "Atomic Orders",
