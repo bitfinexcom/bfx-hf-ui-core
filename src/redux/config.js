@@ -55,7 +55,7 @@ const SETUP_TIMESTAMP_FORMAT_ARTICLE = 'https://bitfinex-honey.readme.io/docs/ti
 const PENDO_WEB_URL = 'https://www.pendo.io'
 const PENDO_PRIVACY_POLICY_URL = 'https://www.pendo.io/legal/privacy-policy'
 const PENDO_CODE_REF_URL = 'https://github.com/bitfinexcom/bfx-hf-ui-core/blob/main/src/redux/sagas/ui/pendo_identify.js'
-const METRICS_CODE_REF_URL = 'https://github.com/bitfinexcom/bfx-hf-server/blob/master/lib/ws_servers/api/metrics_client.js'
+const METRICS_CODE_REF_URL = 'https://github.com/bitfinexcom/bfx-hf-ui-core/blob/main/src/redux/sagas/ui/on_log.js#L63-L65'
 const UNIQUE_ID_CODE_REF_URL = 'https://github.com/bitfinexcom/bfx-hf-server/blob/10d9db0a660661e8794d5c0a336ad04bbe52a467/lib/ws_servers/api/metrics_client.js#L154-L157'
 
 // product description link
