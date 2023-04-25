@@ -1,10 +1,14 @@
 /* eslint-disable jsx-a11y/anchor-has-content */
 import React, { memo } from 'react'
 import PropTypes from 'prop-types'
-import _map from 'lodash/map'
 import { useTranslation, Trans } from 'react-i18next'
-import { PRIVACY_POLICY_URL, TERMS_CONDITIONS_URL } from '../AppSettingsModal/AppSettingsModal.constants'
+import { Icon } from 'react-fa'
+import {
+  PRIVACY_POLICY_URL,
+  TERMS_CONDITIONS_URL,
+} from '../AppSettingsModal/AppSettingsModal.constants'
 import Modal from '../../ui/Modal'
+import { PENDO_CODE_REF_URL, UNIQUE_ID_CODE_REF_URL } from '../../redux/config'
 
 const HelpUsImproveHoneyModalFirstStep = ({ onSubmit, goToSecondStep }) => {
   const { t } = useTranslation()
@@ -12,10 +16,7 @@ const HelpUsImproveHoneyModalFirstStep = ({ onSubmit, goToSecondStep }) => {
   return (
     <div>
       <p>
-        <Trans
-          t={t}
-          i18nKey='helpUsImproveModal.description'
-        />
+        <Trans t={t} i18nKey='helpUsImproveModal.description' />
       </p>
       <p>
         <Trans
@@ -40,17 +41,78 @@ const HelpUsImproveHoneyModalFirstStep = ({ onSubmit, goToSecondStep }) => {
         />
       </p>
       <p>{t('helpUsImproveModal.weWill')}</p>
-      {_map(t('helpUsImproveModal.willList', { returnObjects: true }), (item) => (
-        <p key={item}>{item}</p>
-      ))}
-      {_map(t('helpUsImproveModal.willNotList', { returnObjects: true }), (item) => (
-        <p key={item}>{item}</p>
-      ))}
+      <ul>
+        <li className='will-list-item'>
+          <Icon name='check' className='check-icon' />
+          <Trans t={t} i18nKey='helpUsImproveModal.willItem1' />
+        </li>
+        <li className='will-list-item'>
+          <Icon name='check' className='check-icon' />
+          <Trans
+            t={t}
+            i18nKey='helpUsImproveModal.willItem2'
+            components={{
+              bold: <b />,
+              codeRefUrl: (
+                <a
+                  href={PENDO_CODE_REF_URL}
+                  target='_blank'
+                  rel='noopener noreferrer'
+                />
+              ),
+            }}
+          />
+        </li>
+        <li className='will-list-item'>
+          <Icon name='check' className='check-icon' />
+          <Trans
+            t={t}
+            i18nKey='helpUsImproveModal.willItem3'
+            components={{
+              bold: <b />,
+              codeRefUrl: (
+                <a
+                  href={UNIQUE_ID_CODE_REF_URL}
+                  target='_blank'
+                  rel='noopener noreferrer'
+                />
+              ),
+            }}
+          />
+        </li>
+        <li className='will-list-item'>
+          <Icon name='times' className='times-icon' />
+          <Trans
+            t={t}
+            i18nKey='helpUsImproveModal.willNotItem1'
+            components={{
+              bold: <b />,
+            }}
+          />
+        </li>
+        <li className='will-list-item'>
+          <Icon name='times' className='times-icon' />
+          <Trans
+            t={t}
+            i18nKey='helpUsImproveModal.willNotItem2'
+            components={{
+              bold: <b />,
+            }}
+          />
+        </li>
+        <li className='will-list-item'>
+          <Icon name='times' className='times-icon' />
+          <Trans
+            t={t}
+            i18nKey='helpUsImproveModal.willNotItem3'
+            components={{
+              bold: <b />,
+            }}
+          />
+        </li>
+      </ul>
       <Modal.Footer>
-        <Modal.Button
-          secondary
-          onClick={goToSecondStep}
-        >
+        <Modal.Button secondary onClick={goToSecondStep}>
           {t('helpUsImproveModal.advancedConf')}
         </Modal.Button>
         <Modal.Button primary onClick={onSubmit}>

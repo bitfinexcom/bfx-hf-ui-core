@@ -1,11 +1,11 @@
-@import '../../variables.scss';
+@import "../../variables.scss";
 
 .help-us-improve-honey-modal {
   .modal__body {
     > p {
       font-size: 14px;
       white-space: pre-line;
-      margin-bottom: 10px;
+      margin-bottom: 10px !important;
     }
 
     .modal__footer {
@@ -38,5 +38,23 @@
       // 100% - 60px of the toggle width
       width: calc(100% - 60px);
     }
+  }
+
+  .will-list-item {
+    &:not(:last-child) {
+      margin-bottom: 10px;
+    }
+  }
+
+  .check-icon {
+    color: var(--primary-9);
+    margin-right: 5px;
+    font-size: 20px;
+  }
+
+  .times-icon {
+    color: var(--red);
+    margin-right: 5px;
+    font-size: 20px;
   }
 }

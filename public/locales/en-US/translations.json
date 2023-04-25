@@ -57,16 +57,12 @@
     "description": "We would like to gather usage data. Sounds scary, but <strong>this really helps us convince management to keep maintaining this for free</strong>😅. With the added benefit that we'll be able to better tailor our service to your needs, making your experience faster, more intuitive, and more enjoyable.",
     "ppNotice": "This is consistent with the <privURL>Bitfinex Privacy Policy</privURL> and the <termsURL>Bitfinex API Terms of Service</termsURL>.",
     "weWill": "We will:",
-    "willList": [
-      "Always allow you to opt-out from the settings",
-      "Always allow you to opt-out from the settings",
-      "Always allow you to opt-out from the settings"
-    ],
-    "willNotList": [
-      "Never share any private information from your account (such as your IP address, balances, username, keys or order history) with 3rd parties",
-      "Never share any private information from your account (such as your IP address, balances, username, keys or order history) with 3rd parties",
-      "Never share any private information from your account (such as your IP address, balances, username, keys or order history) with 3rd parties"
-    ],
+    "willItem1": "Always allow you to opt-out from the settings",
+    "willItem2": "Send <bold>anonymised</bold> click and page-view events to 3rd party providers to guide your experience in the application and improve the product check the code (<codeRefUrl>check the code</codeRefUrl>)",
+    "willItem3": "Send <bold>anonymised</bold> information to Bitfinex servers (such as errors or volume of trades) so we can know how the product is performing (<codeRefUrl>check the code</codeRefUrl>)",
+    "willNotItem1": "<bold>Never</bold> share any private information from your account (such as your IP address, balances, username, keys or order history) with 3rd parties",
+    "willNotItem2": "<bold>Never</bold> collect any proprietary information (such as your strategies or exact order details)",
+    "willNotItem3": "<bold>Never</bold> use the collected information to profile you in order to improve marketing communications",
     "advancedConf": "Advanced Configuration",
     "illHelp": "No problem, I'll help",
     "3rdPartyNotice": "This is how we use trusted 3rd parties services and our own systems to enhance product usability and safety.",
