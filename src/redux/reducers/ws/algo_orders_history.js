@@ -1,6 +1,7 @@
 import _reduce from 'lodash/reduce'
 import _includes from 'lodash/includes'
 import _get from 'lodash/get'
+import _omit from 'lodash/omit'
 import t from '../../constants/ws'
 import { ALLOWED_PAPER_PAIRS } from '../ui'
 
@@ -56,6 +57,15 @@ export default (state = getInitialState(), action = {}) => {
       }
 
       return newState
+    }
+
+    case t.REMOVE_ALGO_ORDER_FROM_HISTORY: {
+      const { gid, mode } = payload
+
+      return {
+        ...state,
+        [mode]: _omit(state[mode], gid),
+      }
     }
 
     default: {

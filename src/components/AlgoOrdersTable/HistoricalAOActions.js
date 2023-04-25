@@ -4,28 +4,39 @@ import Debug from 'debug'
 import { Tooltip } from '@ufx-ui/core'
 import { Icon } from 'react-fa'
 import { useTranslation } from 'react-i18next'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 
 import { Item } from '../Navbar/Navbar.LayoutSettings'
 import UIActions from '../../redux/actions/ui'
+import WSActions from '../../redux/actions/ws'
 import { UI_MODAL_KEYS } from '../../redux/constants/modals'
 import { UI_KEYS } from '../../redux/constants/ui_keys'
 import { ORDER_SHAPE } from '../../constants/prop-types-shapes'
+import { getAuthToken } from '../../redux/selectors/ws'
+import { getCurrentMode } from '../../redux/selectors/ui'
 
 const debug = Debug('hfui:c:algo-order-action')
 
-const HistoricalAOActions = ({
-  order,
-}) => {
+const HistoricalAOActions = ({ order }) => {
   const tooltipRef = useRef(null)
   const { t } = useTranslation()
   const dispatch = useDispatch()
+  const authToken = useSelector(getAuthToken)
+  const mode = useSelector(getCurrentMode)
 
-  const { gid } = order
+  const { gid, algoID } = order
 
   const deleteOrder = () => {
-    debug('deleting historical algo order %d', gid)
-    // TODO: Send delete request to server
+    debug('deleting historical algo order %d', gid, algoID)
+    dispatch(
+      WSActions.send([
+        'algo_order.history_remove',
+        authToken,
+        gid,
+        algoID,
+        mode,
+      ]),
+    )
   }
 
   const relaunchOrder = () => {
@@ -45,12 +56,8 @@ const HistoricalAOActions = ({
         trigger='click'
         content={(
           <div className='hfui-navbar__layout-settings__menu-buttons'>
-            <Item onClick={relaunchOrder}>
-              {t('ui.relaunch')}
-            </Item>
-            <Item onClick={deleteOrder}>
-              {t('ui.deleteBtn')}
-            </Item>
+            <Item onClick={relaunchOrder}>{t('ui.relaunch')}</Item>
+            <Item onClick={deleteOrder}>{t('ui.deleteBtn')}</Item>
           </div>
         )}
       >
