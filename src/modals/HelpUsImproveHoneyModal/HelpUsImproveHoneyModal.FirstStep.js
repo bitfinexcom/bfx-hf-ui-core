@@ -3,6 +3,7 @@ import React, { memo } from 'react'
 import PropTypes from 'prop-types'
 import { useTranslation, Trans } from 'react-i18next'
 import { Icon } from 'react-fa'
+import { Intent } from '@ufx-ui/core'
 import {
   PRIVACY_POLICY_URL,
   TERMS_CONDITIONS_URL,
@@ -112,7 +113,7 @@ const HelpUsImproveHoneyModalFirstStep = ({ onSubmit, goToSecondStep }) => {
         </li>
       </ul>
       <Modal.Footer>
-        <Modal.Button secondary onClick={goToSecondStep}>
+        <Modal.Button intent={Intent.NONE} onClick={goToSecondStep}>
           {t('helpUsImproveModal.advancedConf')}
         </Modal.Button>
         <Modal.Button primary onClick={onSubmit}>

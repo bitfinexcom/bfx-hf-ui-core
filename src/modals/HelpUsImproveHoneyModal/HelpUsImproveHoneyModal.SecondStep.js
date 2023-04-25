@@ -2,6 +2,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Trans, useTranslation } from 'react-i18next'
+import { Intent } from '@ufx-ui/core'
 import { ToggleSwitch } from 'react-dragswitch'
 import { THEMES } from '../../redux/selectors/ui'
 import { SWITCH_THEME } from '../../components/SwitchMode/SwitchMode'
@@ -126,7 +127,7 @@ const HelpUsImproveHoneySecondStep = ({
         </p>
       </div>
       <Modal.Footer>
-        <Modal.Button secondary onClick={goToFirstStep}>
+        <Modal.Button intent={Intent.NONE} onClick={goToFirstStep}>
           {t('ui.goBack')}
         </Modal.Button>
         <Modal.Button primary onClick={onSubmit}>
