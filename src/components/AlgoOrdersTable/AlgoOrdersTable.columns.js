@@ -50,8 +50,8 @@ export default ({
   if (isHistoryView) {
     columns.push({
       dataKey: 'cid',
-      width: 170,
-      minWidth: 120,
+      width: 20,
+      minWidth: 20,
       cellRenderer: (
         { rowData = {} } // eslint-disable-line
       ) => (
