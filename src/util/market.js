@@ -10,6 +10,7 @@ import {
 } from '../redux/reducers/ui'
 
 const PAPER_PAIR_PREFIX = 'TEST'
+const PERP_SUFFIX = 'F0'
 
 export const getDefaultMarket = (markets) => _get(markets, [_first(_keys(markets))], 'uiID')
 
@@ -20,9 +21,8 @@ export const getPairFromMarket = (market, getCurrencySymbol, divider = '/') => (
   )}`)
 
 export const getCorrectIconNameOfPerpCcy = (perpCcy) => {
-  const perpSuffix = 'F0'
-  if (_includes(perpCcy, perpSuffix)) {
-    return _replace(perpCcy, perpSuffix, '')
+  if (_includes(perpCcy, PERP_SUFFIX)) {
+    return _replace(perpCcy, PERP_SUFFIX, '')
   }
   return perpCcy
 }
