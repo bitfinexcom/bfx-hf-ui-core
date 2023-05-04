@@ -29,7 +29,7 @@ const FullscreenModeBar = () => {
   }
 
   const onExitFullscreen = () => {
-    dispatch(WSActions.saveSettings(SETTINGS_KEYS.FULLSCREEN, false))
+    dispatch(WSActions.saveSetting(SETTINGS_KEYS.FULLSCREEN, false))
     if (ipcHelpers) {
       ipcHelpers.sendChangeFullscreenEvent(false)
     }

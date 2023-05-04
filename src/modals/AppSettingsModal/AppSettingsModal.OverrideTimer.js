@@ -55,7 +55,7 @@ const OverrideTimer = () => {
     () => _debounce((value) => {
       const timeInMs = value * 1000
       dispatch(
-        WSActions.saveSettings(SETTINGS_KEYS.PACKET_WD_DELAY, timeInMs),
+        WSActions.saveSetting(SETTINGS_KEYS.PACKET_WD_DELAY, timeInMs),
       )
       dispatch(GAActions.updateSettings())
     }, 1000),

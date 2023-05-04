@@ -47,7 +47,7 @@ const TimeFormatSetting = () => {
   }
 
   const saveSetting = (value) => {
-    dispatch(WSActions.saveSettings(SETTINGS_KEYS.TIMESTAMP_FORMAT, value))
+    dispatch(WSActions.saveSetting(SETTINGS_KEYS.TIMESTAMP_FORMAT, value))
     dispatch(GAActions.updateSettings())
   }
 

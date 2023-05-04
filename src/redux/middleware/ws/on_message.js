@@ -18,7 +18,7 @@ import { isElectronApp, HONEY_AUTH_URL } from '../../config'
 import { UI_MODAL_KEYS } from '../../constants/modals'
 import { UI_KEYS } from '../../constants/ui_keys'
 import { WS_CONNECTION } from '../../constants/ws'
-import { getCurrentStrategy } from '../../selectors/ui'
+import { SETTINGS_KEYS, getCurrentStrategy } from '../../selectors/ui'
 import { LOG_LEVELS } from '../../../constants/logging'
 
 const debug = Debug('hfui:rx:m:ws-hfui-server:msg')
@@ -283,6 +283,9 @@ export default (alias, store) => (e = {}) => {
         const [, settings] = payload
         store.dispatch(UIActions.setUIValue(UI_KEYS.settings, settings))
         store.dispatch(UIActions.logInformation('App setting was updated', LOG_LEVELS.INFO, 'setting_update_success'))
+        if (settings[SETTINGS_KEYS.SHOW_OPT_IN_MODAL]) {
+          store.dispatch(UIActions.changeUIModalState(UI_MODAL_KEYS.HELP_US_IMPROVE_HONEY_MODAL, true))
+        }
         break
       }
 
