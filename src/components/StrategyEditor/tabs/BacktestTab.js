@@ -84,6 +84,7 @@ const BacktestTab = (props) => {
               exitFullscreenChart={hideFullscreenChart}
               trades={trades}
               isBacktest
+              isExecuting={false}
             />
           )
 

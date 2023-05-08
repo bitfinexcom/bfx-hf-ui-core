@@ -32,6 +32,7 @@ const StrategyLiveChart = ({
   lastOpenPosition,
   trades,
   isBacktest,
+  isExecuting,
 }) => {
   const {
     strategyOptions: {
@@ -43,9 +44,13 @@ const StrategyLiveChart = ({
     stoppedOn,
   } = strategy
   const start = isBacktest ? new Date(startDate).getTime() : startedOn
-  const end = isBacktest ? new Date(endDate).getTime() : stoppedOn
+  const end = isBacktest
+    ? new Date(endDate).getTime()
+    : isExecuting
+      ? null
+      : stoppedOn
   const chartRange = useMemo(() => {
-    if (start && end) {
+    if (start || end) {
       return {
         start,
         end,
@@ -59,7 +64,9 @@ const StrategyLiveChart = ({
     () => prepareTVIndicators(indicators),
     [indicators],
   )
-  const interval = TIMEFRAME_INTERVAL_MAPPING[timeframe] || '15'
+  const interval = isBacktest
+    ? TIMEFRAME_INTERVAL_MAPPING[timeframe] || '15'
+    : '1'
 
   const {
     wsID, uiID, base, quote,
@@ -96,6 +103,8 @@ const StrategyLiveChart = ({
       }),
     }
   }, [lastOpenPosition, base, quote, t])
+
+  console.log(chartIndicators, 'indicators')
 
   return (
     <Panel
@@ -134,6 +143,7 @@ const StrategyLiveChart = ({
           hideResolutions
           hideDeleteIndicator
           hideIndicators
+          isStrategyChart
           chartRange={chartRange}
           key={executionId}
         />
@@ -151,12 +161,14 @@ StrategyLiveChart.propTypes = {
   exitFullscreenChart: PropTypes.func.isRequired,
   lastOpenPosition: PropTypes.object, // eslint-disable-line
   isBacktest: PropTypes.bool,
+  isExecuting: PropTypes.bool,
 }
 
 StrategyLiveChart.defaultProps = {
   indicators: [],
   isBacktest: false,
   lastOpenPosition: null,
+  isExecuting: false,
 }
 
 export default memo(StrategyLiveChart)

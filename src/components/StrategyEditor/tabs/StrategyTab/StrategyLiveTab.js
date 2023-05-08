@@ -95,6 +95,7 @@ const StrategyLiveTab = (props) => {
               fullscreenChart={fullscreenChart}
               exitFullscreenChart={unsetFullScreenChart}
               trades={trades}
+              isExecuting={executing}
             />
           )
 
