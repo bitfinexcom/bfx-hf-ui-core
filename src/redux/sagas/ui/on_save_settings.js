@@ -12,7 +12,6 @@ import { LOG_LEVELS } from '../../../constants/logging'
 
 export default function* onSaveSettings(action = {}) {
   const { payload = {} } = action
-  const { key, value } = payload
 
   function* sendWSMessage() {
     const authToken = yield select(getAuthToken)
@@ -25,13 +24,11 @@ export default function* onSaveSettings(action = {}) {
       return
     }
 
-    settings[key] = value
-
     yield put(
       WSActions.send([
         'settings.update',
         authToken,
-        { ...settings },
+        { ...settings, ...payload },
         getScope(),
       ]),
     )

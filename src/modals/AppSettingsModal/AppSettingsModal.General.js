@@ -53,7 +53,7 @@ const General = () => {
       dispatch(changeUIModalState(UI_MODAL_KEYS.CONFIRM_DMS_MODAL, true))
     } else {
       setIsDmsChecked(nextDms)
-      dispatch(WSActions.saveSettings(SETTINGS_KEYS.DMS, nextDms))
+      dispatch(WSActions.saveSetting(SETTINGS_KEYS.DMS, nextDms))
       dispatch(GAActions.updateSettings())
     }
   }
@@ -61,7 +61,7 @@ const General = () => {
   const updateAOPause = (nextAOPause) => {
     setIsShowAlgoPauseInfoChecked(nextAOPause)
     dispatch(
-      WSActions.saveSettings(SETTINGS_KEYS.SHOW_ALGO_PAUSE_INFO, nextAOPause),
+      WSActions.saveSetting(SETTINGS_KEYS.SHOW_ALGO_PAUSE_INFO, nextAOPause),
     )
     dispatch(GAActions.updateSettings())
   }
@@ -69,7 +69,7 @@ const General = () => {
   const updateAutoResumeAOs = (nextAutoResumeAOs) => {
     setIsAutoResumeAOsChecked(nextAutoResumeAOs)
     dispatch(
-      WSActions.saveSettings(SETTINGS_KEYS.AUTO_RESUME_AOS, nextAutoResumeAOs),
+      WSActions.saveSetting(SETTINGS_KEYS.AUTO_RESUME_AOS, nextAutoResumeAOs),
     )
     dispatch(GAActions.updateSettings())
   }
