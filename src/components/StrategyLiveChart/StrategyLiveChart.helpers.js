@@ -1,7 +1,14 @@
 import memoizeOne from 'memoize-one'
 import _map from 'lodash/map'
 import _find from 'lodash/find'
+import _isEmpty from 'lodash/isEmpty'
 
+const generateCustomStudyName = (name, args) => {
+  if (_isEmpty(args)) {
+    return `${name}_`
+  }
+  return `${name} ${args.join(' ')}`
+}
 export const prepareTVIndicators = (indicators) => {
   return _map(indicators, (i) => {
     const transformed = [
@@ -20,6 +27,7 @@ export const prepareTVIndicators = (indicators) => {
         transformed?.[1]?.[2],
       ]
     }
+    transformed[3] = generateCustomStudyName(name, transformed[1])
     return transformed
   })
 }
