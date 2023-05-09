@@ -104,8 +104,6 @@ const StrategyLiveChart = ({
     }
   }, [lastOpenPosition, base, quote, t])
 
-  console.log(chartIndicators, 'indicators')
-
   return (
     <Panel
       removeable={false}

@@ -9,12 +9,7 @@ export const prepareTVIndicators = (indicators) => {
     ]
 
     const instance = i[0] && new i[0]()
-    let name = instance?.label
-    if (instance?.label === 'EMA') {
-      name = 'Moving Average Exponential'
-    } else if (instance?.label === 'ROC') {
-      name = 'Rate Of Change'
-    }
+    const name = instance?.label
     transformed[0] = name
 
     if (instance?.label === 'MACD') {
