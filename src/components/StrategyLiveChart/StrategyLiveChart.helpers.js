@@ -18,15 +18,6 @@ export const prepareTVIndicators = (indicators) => {
     const instance = i[0] && new i[0]()
     const name = instance?.label
     transformed[0] = name
-
-    if (instance?.label === 'MACD') {
-      transformed[1] = [
-        transformed?.[1]?.[0],
-        transformed?.[1]?.[1],
-        'close',
-        transformed?.[1]?.[2],
-      ]
-    }
     transformed[3] = generateCustomStudyName(name, transformed[1])
     return transformed
   })
