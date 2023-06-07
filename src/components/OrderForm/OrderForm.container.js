@@ -24,7 +24,6 @@ import {
   getIsPaperModeApiKeyUpdating,
 } from '../../redux/selectors/ws'
 import {
-  getComponentState,
   getActiveMarket,
   getCurrentMode,
   getIsPaperTrading,
@@ -40,8 +39,7 @@ import { LOG_LEVELS } from '../../constants/logging'
 
 const debug = Debug('hfui:c:order-form')
 
-const mapStateToProps = (state = {}, ownProps = {}) => {
-  const { layoutID, layoutI: id } = ownProps
+const mapStateToProps = (state = {}) => {
   const { ws = {} } = state
   const { favoriteTradingPairs = {} } = ws
   const { favoritePairs = [] } = favoriteTradingPairs
@@ -60,7 +58,6 @@ const mapStateToProps = (state = {}, ownProps = {}) => {
     apiClientConnecting: apiClientConnecting(state),
     apiClientConnected: apiClientConnected(state),
     isKeysUpdating,
-    savedState: getComponentState(state, layoutID, 'orderform', id),
     authToken: getAuthToken(state),
     apiCredentials: getCurrentModeAPIKeyState(state),
     favoritePairs,

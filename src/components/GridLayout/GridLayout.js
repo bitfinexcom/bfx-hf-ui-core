@@ -1,6 +1,5 @@
 import React, {
-  memo, useCallback, useEffect, useState,
-  useMemo,
+  memo, useCallback, useEffect, useState, useMemo,
 } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import PropTypes from 'prop-types'
@@ -12,9 +11,10 @@ import { Spinner } from '@ufx-ui/core'
 
 import { useLocation } from 'react-router'
 import {
-  removeComponent, changeLayout, setUIValue,
+  removeComponent,
+  changeLayout,
+  setUIValue,
 } from '../../redux/actions/ui'
-import { renderLayoutElement } from './GridLayout.helpers'
 import {
   GRID_BREAKPOINTS,
   GRID_COLUMNS,
@@ -23,23 +23,26 @@ import {
   GRID_ROW_HEIGHT,
 } from './Grid.constants'
 
-import {
-  getLayoutForRoute,
-  getUIState,
-} from '../../redux/selectors/ui'
+import { getLayoutForRoute, getUIState } from '../../redux/selectors/ui'
 
 import { generateLayout } from './Grid.layouts'
 import tradingTerminalLayout from './layouts/trading'
 import marketDataLayout from './layouts/marketData'
-import { marketData, strategyEditor, tradingTerminal } from '../../constants/routes'
+import {
+  marketData,
+  strategyEditor,
+  tradingTerminal,
+} from '../../constants/routes'
 import { MARKET_SHAPE, ORDER_SHAPE } from '../../constants/prop-types-shapes'
 
-import './style.css'
 import { UI_KEYS } from '../../redux/constants/ui_keys'
+import GridLayoutItem from './GridLayoutItem'
+
+import './style.css'
 
 const ReactGridLayout = WidthProvider(RGL)
 
-const getLayoutConfig = pathname => {
+const getLayoutConfig = (pathname) => {
   switch (pathname) {
     case marketData.path:
       return marketDataLayout
@@ -52,19 +55,33 @@ const getLayoutConfig = pathname => {
 }
 
 const GridLayout = ({
-  sharedProps, tradesProps, bookProps, chartProps, orderFormProps,
+  sharedProps,
+  tradesProps,
+  bookProps,
+  chartProps,
+  orderFormProps,
 }) => {
   const dispatch = useDispatch()
-  const [breakpoint, setBreakpoint] = useState(RGL.utils.getBreakpointFromWidth(GRID_BREAKPOINTS, document.body.clientWidth))
+  const [breakpoint, setBreakpoint] = useState(
+    RGL.utils.getBreakpointFromWidth(
+      GRID_BREAKPOINTS,
+      document.body.clientWidth,
+    ),
+  )
 
   const { pathname } = useLocation()
-  const isAbleToSaveLayout = !pathname === strategyEditor.path
+  const isAbleToSaveLayout = pathname !== strategyEditor.path
 
   const layoutConfig = useMemo(() => getLayoutConfig(pathname), [pathname])
-  const layoutID = useSelector(state => getUIState(state, UI_KEYS.layoutID))
+  const layoutID = useSelector((state) => getUIState(state, UI_KEYS.layoutID))
 
-  const layoutIsDirty = useSelector(state => state.ui.layoutIsDirty)
-  const [lastLayoutID, layoutDef, isMatchingUnsavedLayout, isMatchingSavedLayout] = useSelector(state => getLayoutForRoute(state, pathname))
+  const layoutIsDirty = useSelector((state) => state.ui.layoutIsDirty)
+  const [
+    lastLayoutID,
+    layoutDef,
+    isMatchingUnsavedLayout,
+    isMatchingSavedLayout,
+  ] = useSelector((state) => getLayoutForRoute(state, pathname))
 
   const onLoadLayout = useCallback(() => {
     // generate default layout
@@ -95,29 +112,40 @@ const GridLayout = ({
     }
   }, [dispatch, isMatchingUnsavedLayout, layoutDef])
 
-  const componentProps = useMemo(() => ({
-    orderForm: orderFormProps,
-    trades: tradesProps,
-    chart: chartProps,
-    book: bookProps,
-    dark: true,
-    sharedProps,
-  }), [bookProps, chartProps, orderFormProps, sharedProps, tradesProps])
+  const componentProps = useMemo(
+    () => ({
+      orderForm: orderFormProps,
+      trades: tradesProps,
+      chart: chartProps,
+      book: bookProps,
+      dark: true,
+      sharedProps,
+    }),
+    [bookProps, chartProps, orderFormProps, sharedProps, tradesProps],
+  )
 
-  const onRemoveComponent = useCallback((i) => dispatch(removeComponent(i)), [dispatch])
+  const onRemoveComponent = useCallback(
+    (i) => dispatch(removeComponent(i)),
+    [dispatch],
+  )
 
   /* fix-start: initial grid rendering issue
-  * when screen is loaded the grids are arranged in stack of items instead of in a linear manner.
-  * https://github.com/react-grid-layout/react-grid-layout/issues/879
-  */
+   * when screen is loaded the grids are arranged in stack of items instead of in a linear manner.
+   * https://github.com/react-grid-layout/react-grid-layout/issues/879
+   */
   useEffect(() => {
-    setTimeout(() => { window.dispatchEvent(new Event('resize')) }, 200)
+    setTimeout(() => {
+      window.dispatchEvent(new Event('resize'))
+    }, 200)
   }, [])
   /* fix-end: initial grid rendering issue */
 
-  const onLayoutChange = useCallback((layout) => {
-    dispatch(changeLayout(layout))
-  }, [dispatch])
+  const onLayoutChange = useCallback(
+    (layout) => {
+      dispatch(changeLayout(layout))
+    },
+    [dispatch],
+  )
 
   const currentLayout = nextLayouts?.[breakpoint] || []
 
@@ -138,10 +166,14 @@ const GridLayout = ({
       onLayoutChange={onLayoutChange}
       measureBeforeMount={false}
     >
-      {_map(currentLayout, def => (
-        <div key={def.i}>
-          {renderLayoutElement(layoutID, def, componentProps, onRemoveComponent)}
-        </div>
+      {_map(currentLayout, (def) => (
+        <GridLayoutItem
+          key={def.i}
+          def={def}
+          layoutID={layoutID}
+          componentProps={componentProps}
+          onRemoveComponent={onRemoveComponent}
+        />
       ))}
     </ReactGridLayout>
   )
@@ -159,9 +191,9 @@ GridLayout.propTypes = {
   orderFormProps: PropTypes.shape({
     orders: PropTypes.arrayOf(PropTypes.shape(ORDER_SHAPE)),
   }),
-  sharedProps: PropTypes.objectOf(PropTypes.oneOfType(
-    [PropTypes.bool, PropTypes.string],
-  )),
+  sharedProps: PropTypes.objectOf(
+    PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
+  ),
 }
 
 GridLayout.defaultProps = {

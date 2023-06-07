@@ -19,6 +19,8 @@ const AlgoOrdersTable = ({
   getMarketPair,
   showHistory,
   formatTime,
+  tableState,
+  updateTableState,
 }) => {
   const data = renderedInTradingState ? filteredAlgoOrders : algoOrders
   const { t } = useTranslation()
@@ -52,6 +54,8 @@ const AlgoOrdersTable = ({
         <VirtualTable
           data={data}
           columns={AOColumns}
+          tableState={tableState}
+          updateTableState={updateTableState}
           defaultSortBy='lastActive'
           defaultSortDirection='DESC'
           rowHeight={30}
@@ -72,6 +76,9 @@ AlgoOrdersTable.propTypes = {
   getMarketPair: PropTypes.func.isRequired,
   showHistory: PropTypes.bool.isRequired,
   formatTime: PropTypes.func.isRequired,
+  // eslint-disable-next-line react/forbid-prop-types
+  tableState: PropTypes.object.isRequired,
+  updateTableState: PropTypes.func.isRequired,
 }
 
 AlgoOrdersTable.defaultProps = {

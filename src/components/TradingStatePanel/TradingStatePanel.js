@@ -1,5 +1,10 @@
 import React, {
-  memo, useRef, useMemo, useCallback, Fragment, useEffect,
+  memo,
+  useRef,
+  useMemo,
+  useCallback,
+  Fragment,
+  useEffect,
 } from 'react'
 import PropTypes from 'prop-types'
 import _isEmpty from 'lodash/isEmpty'
@@ -15,9 +20,7 @@ import {
   getCorrectIconNameOfPerpCcy,
   getPairFromMarket,
 } from '../../util/market'
-import {
-  countObjectChildren,
-} from '../../util/ui'
+import { countObjectChildren } from '../../util/ui'
 import Panel from '../../ui/Panel'
 import PositionsTable from '../PositionsTable'
 import AtomicOrdersTable from '../AtomicOrdersTable'
@@ -25,7 +28,9 @@ import AlgoOrdersTable from '../AlgoOrdersTable'
 import BalancesTable from '../BalancesTable'
 import MarketSelect from '../MarketSelect'
 import {
-  MARKET_SHAPE, ORDER_SHAPE, POSITION_SHAPE,
+  MARKET_SHAPE,
+  ORDER_SHAPE,
+  POSITION_SHAPE,
 } from '../../constants/prop-types-shapes'
 import PanelButton from '../../ui/Panel/Panel.Button'
 import CCYIcon from '../../ui/CCYIcon'
@@ -40,6 +45,15 @@ const PANEL_MAPPING = {
   BALANCES: 3,
 }
 
+const STATE_KEYS = {
+  CURRENT_MARKET: 'currentMarket',
+  TAB: 'tab',
+  POSITIONS_TABLE: 'positionsTable',
+  ATOMIC_ORDERS_TABLE: 'atomicOrdersTable',
+  ALGO_ORDERS_TABLE: 'algoOrdersTable',
+  BALANCES_TABLE: 'balancesTable',
+}
+
 const TradingStatePanel = ({
   dark,
   onRemove,
@@ -50,8 +64,6 @@ const TradingStatePanel = ({
   markets,
   savedState,
   updateState,
-  layoutID,
-  layoutI,
   getCurrencySymbol,
   currentMode,
   algoOrders,
@@ -61,34 +73,43 @@ const TradingStatePanel = ({
   isHistoryActive,
   setShowAOsHistory,
 }) => {
-  const currentMarket = _get(savedState, 'currentMarket', {})
+  const currentMarket = _get(savedState, STATE_KEYS.CURRENT_MARKET, {})
   const activeFilter = _get(currentMarket, currentMode, {})
   const positionsCount = getPositionsCount(activeFilter)
   const atomicOrdersCount = getAtomicOrdersCount(activeFilter)
   const { t } = useTranslation()
 
-  const activeTab = useMemo(() => _get(savedState, 'tab', null), [savedState])
-  const activeAlgosCount = useMemo(() => countObjectChildren(activeAlgoOrders), [activeAlgoOrders])
+  const activeTab = _get(savedState, STATE_KEYS.TAB, null)
+  const activeAlgosCount = useMemo(
+    () => countObjectChildren(activeAlgoOrders),
+    [activeAlgoOrders],
+  )
 
   const saveState = useCallback(
     (param, value) => {
-      updateState(layoutID, layoutI, {
+      updateState({
         [param]: value,
       })
     },
-    [layoutID, layoutI, updateState],
+    [updateState],
   )
 
   const onTabChange = useCallback(
     (tab) => {
-      saveState('tab', tab)
+      saveState(STATE_KEYS.TAB, tab)
     },
     [saveState],
   )
 
-  useEffect(() => {
-    setShowAOsHistory(false)
-  }, [activeTab, setShowAOsHistory])
+  const updateTableState = useCallback(
+    (table) => (newState) => {
+      saveState(table, {
+        ..._get(savedState, table, {}),
+        ...newState,
+      })
+    },
+    [saveState, savedState],
+  )
 
   const filterableMarkets = useMemo(() => {
     // Processing markets for algo orders
@@ -122,11 +143,12 @@ const TradingStatePanel = ({
   }, [markets, algoOrders, atomicOrders, positions, activeTab])
 
   const setActiveFilter = (market) => {
-    saveState('currentMarket', {
+    saveState(STATE_KEYS.CURRENT_MARKET, {
       ...currentMarket,
       [currentMode]: market,
     })
   }
+
   const marketRef = useRef('')
 
   const handleSelectedFilterClick = () => {
@@ -150,6 +172,10 @@ const TradingStatePanel = ({
     ? uiID
     : getPairFromMarket(activeFilter, getCurrencySymbol)
 
+  useEffect(() => {
+    setShowAOsHistory(false)
+  }, [activeTab, setShowAOsHistory])
+
   return (
     <Panel
       label={t('tradingStatePanel.title')}
@@ -159,13 +185,15 @@ const TradingStatePanel = ({
       moveable={moveable}
       removeable={removeable}
     >
-      <OutsideClickHandler onOutsideClick={() => isHistoryActive && setShowAOsHistory(false)}>
+      <OutsideClickHandler
+        onOutsideClick={() => isHistoryActive && setShowAOsHistory(false)}
+      >
         <Panel
           onRemove={onRemove}
           darkHeader
           moveable={false}
           removeable={false}
-          forcedTab={savedState.tab}
+          forcedTab={activeTab}
           onTabChange={onTabChange}
           extraIcons={(
             <div className='hfui-tradingstatepanel__options'>
@@ -205,6 +233,8 @@ const TradingStatePanel = ({
             tabtitle={t('tradingStatePanel.positionsTab')}
             count={positionsCount}
             activeFilter={activeFilter}
+            tableState={_get(savedState, STATE_KEYS.POSITIONS_TABLE, {})}
+            updateTableState={updateTableState(STATE_KEYS.POSITIONS_TABLE)}
           />
           <AtomicOrdersTable
             renderedInTradingState
@@ -212,6 +242,8 @@ const TradingStatePanel = ({
             tabtitle={t('tradingStatePanel.atomicsTab')}
             count={atomicOrdersCount}
             activeFilter={activeFilter}
+            tableState={_get(savedState, STATE_KEYS.ATOMIC_ORDERS_TABLE, {})}
+            updateTableState={updateTableState(STATE_KEYS.ATOMIC_ORDERS_TABLE)}
           />
           <AlgoOrdersTable
             renderedInTradingState
@@ -219,6 +251,8 @@ const TradingStatePanel = ({
             tabtitle={t('tradingStatePanel.algosTab')}
             count={activeAlgosCount}
             activeFilter={activeFilter}
+            tableState={_get(savedState, STATE_KEYS.ALGO_ORDERS_TABLE, {})}
+            updateTableState={updateTableState(STATE_KEYS.ALGO_ORDERS_TABLE)}
           />
           <BalancesTable
             renderedInTradingState
@@ -226,6 +260,8 @@ const TradingStatePanel = ({
             tabtitle={t('tradingStatePanel.balancesTab')}
             hideZeroBalances
             activeFilter={activeFilter}
+            tableState={_get(savedState, STATE_KEYS.BALANCES_TABLE, {})}
+            updateTableState={updateTableState(STATE_KEYS.BALANCES_TABLE)}
           />
         </Panel>
       </OutsideClickHandler>
@@ -250,8 +286,6 @@ TradingStatePanel.propTypes = {
     tab: PropTypes.number,
   }),
   updateState: PropTypes.func.isRequired,
-  layoutI: PropTypes.string.isRequired,
-  layoutID: PropTypes.string,
   getCurrencySymbol: PropTypes.func.isRequired,
   currentMode: PropTypes.string.isRequired,
   setShowAOsHistory: PropTypes.func.isRequired,
@@ -262,11 +296,10 @@ TradingStatePanel.defaultProps = {
   dark: true,
   moveable: false,
   removeable: false,
-  getPositionsCount: () => { },
-  getAtomicOrdersCount: () => { },
-  onRemove: () => { },
+  getPositionsCount: () => {},
+  getAtomicOrdersCount: () => {},
+  onRemove: () => {},
   savedState: {},
-  layoutID: '',
   positions: {},
   atomicOrders: {},
 }

@@ -8,13 +8,26 @@ import Chart from '../Chart'
 import MarketSelect from '../MarketSelect'
 import { getPairFromMarket } from '../../util/market'
 import { MARKET_SHAPE } from '../../constants/prop-types-shapes'
-
-import './style.css'
 import useWidgetMarket from '../../hooks/useWidgetMarket'
 
+import './style.css'
+
 const ChartPanel = ({
-  dark, label, onRemove, moveable, removeable, showChartMarket, markets, canChangeMarket, activeMarket,
-  savedState: { currentMarket: savedMarket }, updateState, layoutID, layoutI, showMarket, getCurrencySymbol, settingsTheme,
+  dark,
+  label,
+  onRemove,
+  moveable,
+  removeable,
+  showChartMarket,
+  markets,
+  canChangeMarket,
+  activeMarket,
+  savedState: { currentMarket: savedMarket },
+  updateState,
+  layoutI,
+  showMarket,
+  getCurrencySymbol,
+  settingsTheme,
 }) => {
   const currentMarket = useWidgetMarket(savedMarket, activeMarket)
   const currentPair = getPairFromMarket(currentMarket, getCurrencySymbol)
@@ -26,7 +39,7 @@ const ChartPanel = ({
     }
 
     // setCurrentMarket(market)
-    updateState(layoutID, layoutI, {
+    updateState({
       currentMarket: market,
     })
   }
@@ -54,8 +67,12 @@ const ChartPanel = ({
       moveable={moveable}
       removeable={removeable}
       showChartMarket={showChartMarket}
-      chartMarketSelect={showChartMarket && canChangeMarket && renderMarketDropdown()}
-      headerComponents={showMarket && !canChangeMarket && <p>{isPerp ? uiID : currentPair}</p>}
+      chartMarketSelect={
+        showChartMarket && canChangeMarket && renderMarketDropdown()
+      }
+      headerComponents={
+        showMarket && !canChangeMarket && <p>{isPerp ? uiID : currentPair}</p>
+      }
       className='hfui-chart__wrapper'
     >
       <Chart market={currentMarket} theme={settingsTheme} layoutI={layoutI} />
@@ -75,7 +92,6 @@ ChartPanel.propTypes = {
   showChartMarket: PropTypes.bool,
   showMarket: PropTypes.bool,
   layoutI: PropTypes.string.isRequired,
-  layoutID: PropTypes.string,
   savedState: PropTypes.shape({
     currentMarket: PropTypes.shape(MARKET_SHAPE),
   }),
@@ -91,17 +107,16 @@ ChartPanel.defaultProps = {
   savedState: {},
   moveable: true,
   removeable: true,
-  onRemove: () => { },
+  onRemove: () => {},
   activeMarket: {
     base: 'BTC',
     quote: 'USD',
     restID: 'tBTCUSD',
   },
-  updateState: () => { },
+  updateState: () => {},
   showChartMarket: false,
   canChangeMarket: false,
   showMarket: false,
-  layoutID: '',
   settingsTheme: THEMES.DARK,
 }
 

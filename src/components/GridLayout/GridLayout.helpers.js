@@ -156,7 +156,14 @@ const componentForType = (c) => {
   }
 }
 
-export const renderLayoutElement = (layoutID, def = {}, componentProps = {}, onRemoveComponent) => {
+export const renderLayoutElement = ({
+  layoutID,
+  def = {},
+  componentProps = {},
+  onRemoveComponent,
+  savedState = {},
+  updateState,
+}) => {
   const { i, c, props = {} } = def
   const C = componentForType(c)
   const cProps = {
@@ -165,6 +172,8 @@ export const renderLayoutElement = (layoutID, def = {}, componentProps = {}, onR
     layoutID,
     layoutI: i,
     onRemove: () => onRemoveComponent(i),
+    savedState,
+    updateState,
   }
 
   if (!C) {
