@@ -11,6 +11,8 @@ const PastStrategiesList = ({
   strategies,
   getMarketPair,
   formatTime,
+  tableState,
+  updateTableState,
 }) => {
   const { t } = useTranslation()
 
@@ -31,6 +33,8 @@ const PastStrategiesList = ({
         <VirtualTable
           data={strategies}
           columns={mappedColumns}
+          tableState={tableState}
+          updateTableState={updateTableState}
           defaultSortBy='startedOn'
           defaultSortDirection='DESC'
           onRowClick={onRowClick}
@@ -45,6 +49,9 @@ PastStrategiesList.propTypes = {
   strategies: PropTypes.arrayOf(PropTypes.shape(STRATEGY_SHAPE)).isRequired,
   getMarketPair: PropTypes.func.isRequired,
   formatTime: PropTypes.func.isRequired,
+  // eslint-disable-next-line react/forbid-prop-types
+  tableState: PropTypes.object.isRequired,
+  updateTableState: PropTypes.func.isRequired,
 }
 
 export default PastStrategiesList
