@@ -167,13 +167,15 @@ const GridLayout = ({
       measureBeforeMount={false}
     >
       {_map(currentLayout, (def) => (
-        <GridLayoutItem
-          key={def.i}
-          def={def}
-          layoutID={layoutID}
-          componentProps={componentProps}
-          onRemoveComponent={onRemoveComponent}
-        />
+        <div key={def.i}>
+          <GridLayoutItem
+            key={def.i}
+            def={def}
+            layoutID={layoutID}
+            componentProps={componentProps}
+            onRemoveComponent={onRemoveComponent}
+          />
+        </div>
       ))}
     </ReactGridLayout>
   )
