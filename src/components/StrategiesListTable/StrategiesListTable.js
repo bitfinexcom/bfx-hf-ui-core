@@ -32,11 +32,12 @@ import {
 } from '../../redux/selectors/ui'
 import UIActions from '../../redux/actions/ui'
 import { UI_KEYS } from '../../redux/constants/ui_keys'
+import { MAIN_MODE, PAPER_MODE } from '../../redux/reducers/ui'
+import { COMPONENT_IDS } from '../GridLayout/GridLayout.helpers'
 
 import './style.css'
-import { MAIN_MODE, PAPER_MODE } from '../../redux/reducers/ui'
 
-const COMPONENT_ID = 'STRATEGIES_LIST_TABLE'
+const COMPONENT_ID = COMPONENT_IDS.STRATEGIES_LIST_TABLE
 const STATE_KEYS = {
   TAB: 'tab',
   ACTIVE_STARETGIES_TABLE: 'activeStrategiesTable',

@@ -38,10 +38,11 @@ import {
   getUIState,
 } from '../../redux/selectors/ui'
 import { UI_KEYS } from '../../redux/constants/ui_keys'
+import { COMPONENT_IDS } from '../GridLayout/GridLayout.helpers'
 
 import './style.css'
 
-const COMPONENT_ID = 'STRATEGY_TRADES_TABLE'
+const COMPONENT_ID = COMPONENT_IDS.STRATEGIES_TRADES_TABLE
 
 const { getCurrencySymbolMemo } = reduxSelectors
 
