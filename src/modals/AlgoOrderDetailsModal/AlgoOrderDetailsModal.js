@@ -8,7 +8,7 @@ import _values from 'lodash/values'
 import _isEmpty from 'lodash/isEmpty'
 import { OrderHistory as UfxOrderHistory, Spinner } from '@ufx-ui/core'
 import { useTranslation } from 'react-i18next'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import Modal from '../../ui/Modal'
 import { getOrderDetails } from './AlgoOrderDetailsModal.utils'
 import {
@@ -22,9 +22,13 @@ import { saveAsJSON } from '../../util/ui'
 import getRowMapping from '../../components/OrderHistory/OrderHistory.columns'
 import Scrollbars from '../../ui/Scrollbars'
 import AlgoOrderDetailsModalHeader from './AlgoOrderDetailsModal.Header'
-import { getFormatTimeFn } from '../../redux/selectors/ui'
+import { getComponentState, getFormatTimeFn, getUIState } from '../../redux/selectors/ui'
+import { UI_KEYS } from '../../redux/constants/ui_keys'
+import UIActions from '../../redux/actions/ui'
 
 import './style.css'
+
+const COMPONENT_ID = 'AO_DETAILS_MODAL'
 
 const AlgoOrderDetailsModal = ({ onClose, algoOrderId }) => {
   const { t } = useTranslation()
@@ -36,6 +40,9 @@ const AlgoOrderDetailsModal = ({ onClose, algoOrderId }) => {
   const getMarketPair = useSelector(_getMarketPair)
   const rowData = useSelector(getAlgoOrderById(algoOrderId))
   const formatTime = useSelector(getFormatTimeFn)
+  const layoutID = useSelector((state) => getUIState(state, UI_KEYS.layoutID))
+  const tableState = useSelector((state) => getComponentState(state, layoutID, null, COMPONENT_ID),
+  )
 
   const orderDetails = useMemo(
     () => getOrderDetails(rowData, t, formatTime),
@@ -66,12 +73,24 @@ const AlgoOrderDetailsModal = ({ onClose, algoOrderId }) => {
     [formatTime],
   )
 
+  const dispatch = useDispatch()
+
   const handleSave = useCallback(
     (name, gid) => {
       saveAsJSON(filteredOrders, `algo-${name}-${gid}`)
     },
     [filteredOrders],
   )
+
+  const updateTableState = (state) => {
+    dispatch(
+      UIActions.updateComponentState({
+        state,
+        layoutID,
+        componentID: COMPONENT_ID,
+      }),
+    )
+  }
 
   if (isOpen && _isEmpty(rowData)) {
     return <Spinner />
@@ -137,6 +156,8 @@ const AlgoOrderDetailsModal = ({ onClose, algoOrderId }) => {
             rowMapping={orderHistoryMapping}
             isMobileLayout={false}
             loadMoreRows={() => {}}
+            tableState={tableState}
+            updateTableState={updateTableState}
           />
         </Scrollbars>
       </div>
