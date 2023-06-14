@@ -18,10 +18,11 @@ import getAtomicOrders from './get_atomic_orders'
 import getFilteredAtomicOrders from './get_filtered_atomic_orders'
 import getFilteredAtomicOrdersCount from './get_filtered_atomic_orders_count'
 import getFilteredAlgoOrders from './get_filtered_algo_orders'
-import getFilteredAlgoOrdersCount from './get_filtered_algo_orders_count'
 import {
   getCurrentModeAlgoOrders,
   getAllAlgoOrdersArray,
+  getCurrentModeActiveAlgoOrders,
+  getFilteredLocalAlgoOrders,
 } from './get_algo_orders'
 import getNotifications from './get_notifications'
 import getOrderHistory from './get_order_history'
@@ -90,9 +91,10 @@ export {
   getFilteredAtomicOrders,
   getFilteredAtomicOrdersCount,
   getCurrentModeAlgoOrders,
+  getCurrentModeActiveAlgoOrders,
   getAllAlgoOrdersArray,
+  getFilteredLocalAlgoOrders,
   getFilteredAlgoOrders,
-  getFilteredAlgoOrdersCount,
   getFavoritePairs,
   getFavoritePairsObject,
 

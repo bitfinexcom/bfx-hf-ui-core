@@ -157,7 +157,7 @@ MarketSelect.propTypes = {
     PropTypes.arrayOf(PropTypes.shape(MARKET_SHAPE)),
   ]).isRequired,
   renderLabel: PropTypes.bool,
-  className: PropTypes.instanceOf(Object),
+  className: PropTypes.string,
   currentMode: PropTypes.string,
   savePairs: PropTypes.func.isRequired,
   authToken: PropTypes.string.isRequired,
@@ -169,7 +169,7 @@ MarketSelect.propTypes = {
 
 MarketSelect.defaultProps = {
   value: null,
-  className: {},
+  className: null,
   favoritePairs: [],
   currentMode: '',
   renderLabel: false,

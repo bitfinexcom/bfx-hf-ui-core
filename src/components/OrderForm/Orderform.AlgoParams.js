@@ -14,7 +14,6 @@ import { useTranslation } from 'react-i18next'
 import { removeAlgoOrderParams, saveAlgoOrderParams, setActiveAOParamsID } from '../../redux/actions/ao'
 import { getActiveAOparamsID, getAOParams } from '../../redux/selectors/ao'
 
-import LayoutIcon from '../Navbar/layout-icon.svg'
 import NavbarButton from '../Navbar/Navbar.Button'
 
 import AddNewParam from './Modals/AddNewParam'
@@ -102,7 +101,7 @@ const AlgoParams = ({
   return (
     <div className='hfui-orderform__ao-settings'>
       <NavbarButton
-        icon={LayoutIcon}
+        icon='layout-icon'
         alt='AO Params settings'
         onClick={() => setIsOpen(true)}
         className={isOpen ? 'is-open' : undefined}

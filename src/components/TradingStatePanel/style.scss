@@ -1,6 +1,10 @@
 @import "../../variables.scss";
 
 .hfui-tradingstatepanel__wrapper {
+  .hfui-panel__inner > div {
+    height: 100% !important;
+  }
+
   > .hfui-panel__content {
     margin: 0 (0 - spacing());
   }
@@ -19,7 +23,7 @@
   padding: 0 12px;
 
   & > *:not(:last-child) {
-    margin-right: 10px;
+    margin-right: 5px;
   }
 
   .filter-by {
@@ -34,6 +38,16 @@
     font-size: 16px;
     padding-top: 2px;
     margin-right: 5px;
+  }
+
+  .hfui-panel__button {
+    padding-right: 4px;
+    padding-left: 3px;
+  }
+
+  &-market-select {
+    max-width: 165px !important;
+    min-width: 165px;
   }
 }
 

@@ -48,6 +48,7 @@ const HFUI = (props) => {
     openAppSettingsModal,
     setApplicationHiddenStatus,
     updateFullscreenState,
+    isFullscreen,
   } = props
   useInjectBfxData()
 
@@ -85,13 +86,19 @@ const HFUI = (props) => {
       ipcHelpers.addOpenSettingsModalListener(openAppSettingsModal)
       ipcHelpers.addAppHiddenListener(() => setApplicationHiddenStatus(true, notificationOnAppHide))
       ipcHelpers.addAppRestoredListener(() => setApplicationHiddenStatus(false))
-      ipcHelpers.addFullscreenChangeListener((_, { fullscreen }) => updateFullscreenState(fullscreen))
+      ipcHelpers.addFullscreenChangeListener((_, { fullscreen }) => {
+        if (isFullscreen === fullscreen) {
+          return
+        }
+        updateFullscreenState(fullscreen)
+      })
 
       return () => {
         ipcHelpers.removeAllGlobalListeners()
       }
     }
   }, [
+    isFullscreen,
     authToken,
     onElectronAppClose,
     openAppSettingsModal,
@@ -209,6 +216,7 @@ HFUI.propTypes = {
   openAppSettingsModal: PropTypes.func.isRequired,
   setApplicationHiddenStatus: PropTypes.func.isRequired,
   updateFullscreenState: PropTypes.func.isRequired,
+  isFullscreen: PropTypes.bool.isRequired,
 }
 
 HFUI.defaultProps = {

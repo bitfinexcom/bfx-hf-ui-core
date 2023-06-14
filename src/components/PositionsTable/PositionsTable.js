@@ -13,6 +13,8 @@ const PositionsTable = ({
   positions,
   renderedInTradingState,
   getMarketPair,
+  tableState,
+  updateTableState,
 }) => {
   const { t } = useTranslation()
   const columns = useMemo(
@@ -30,6 +32,8 @@ const PositionsTable = ({
       <VirtualTable
         data={data}
         columns={columns}
+        tableState={tableState}
+        updateTableState={updateTableState}
         defaultSortBy='id'
         defaultSortDirection='ASC'
       />
@@ -43,6 +47,9 @@ PositionsTable.propTypes = {
   positions: PropTypes.objectOf(PropTypes.shape(POSITION_SHAPE)),
   renderedInTradingState: PropTypes.bool,
   getMarketPair: PropTypes.func.isRequired,
+  // eslint-disable-next-line react/forbid-prop-types
+  tableState: PropTypes.object.isRequired,
+  updateTableState: PropTypes.func.isRequired,
 }
 
 PositionsTable.defaultProps = {

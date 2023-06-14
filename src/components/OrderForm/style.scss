@@ -57,13 +57,15 @@
     margin-top: 15px;
   }
 
-  .type-action li > div {
+  .type-action li > div,
+  .type-ocoAction li > div {
     display: flex;
     justify-content: center;
   }
 
   .type-actions {
-    ul, li > div {
+    ul,
+    li > div {
       display: flex;
       justify-content: center;
     }
@@ -326,7 +328,6 @@
 
 .hfui-orderform__input {
   display: inline-block;
-  vertical-align: middle;
   margin: 0 0 16px 0;
 
   input[type="range"] {
@@ -375,14 +376,6 @@
   &.checkboxes {
     font-size: 13px;
     max-width: 166px;
-
-    .pretty .state {
-      margin-left: 4px;
-    }
-
-    .pretty {
-      margin-bottom: 8px;
-    }
   }
 
   &.execute {
@@ -400,6 +393,18 @@
   .hfui-dropdown__wrapper {
     width: 100%;
   }
+
+  &.vertical-align {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    height: 32px;
+    margin-top: 0;
+
+    .ufx-checkbox {
+      margin-top: 0;
+    }
+  }
 }
 
 .hfui-orderform__input-label {
@@ -409,8 +414,6 @@
   line-height: 16px;
   margin-top: 2px;
   display: flex;
-  flex-shrink: 0;
-  justify-content: space-between;
 
   &.disabled {
     opacity: 0.5;
@@ -419,6 +422,10 @@
 
   &.error {
     color: $red-color;
+  }
+
+  .trigger {
+    margin-left: 5px;
   }
 }
 

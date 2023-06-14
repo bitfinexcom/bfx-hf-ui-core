@@ -15,19 +15,16 @@ import './style.css'
 const AlgoOrdersTable = ({
   filteredAlgoOrders,
   algoOrders,
-  cancelOrder,
-  authToken,
-  gaCancelOrder,
   renderedInTradingState,
   getMarketPair,
-  editOrder,
   showHistory,
+  formatTime,
+  tableState,
+  updateTableState,
 }) => {
   const data = renderedInTradingState ? filteredAlgoOrders : algoOrders
   const { t } = useTranslation()
 
-  // Storing a null or an order ID here, indicates if Edit / Canel modal is opened for a specific row
-  const [activeOrderGID, setActiveOrderGID] = useState(null)
   // Indicates if the 'More info' modal is opened for a specific row
   const [moreInfoGID, setMoreInfoGID] = useState(null)
 
@@ -38,27 +35,13 @@ const AlgoOrdersTable = ({
 
   const AOColumns = useMemo(
     () => AlgoOrdersTableColumns({
-      authToken,
-      cancelOrder,
-      gaCancelOrder,
       t,
       getMarketPair,
-      editOrder,
       showActions: !showHistory,
-      activeOrderGID,
-      setActiveOrderGID,
       setMoreInfoGID,
+      formatTime,
     }),
-    [
-      activeOrderGID,
-      authToken,
-      cancelOrder,
-      editOrder,
-      gaCancelOrder,
-      getMarketPair,
-      showHistory,
-      t,
-    ],
+    [getMarketPair, showHistory, t, formatTime],
   )
 
   return (
@@ -71,8 +54,10 @@ const AlgoOrdersTable = ({
         <VirtualTable
           data={data}
           columns={AOColumns}
-          defaultSortBy='createdAt'
-          defaultSortDirection='ASC'
+          tableState={tableState}
+          updateTableState={updateTableState}
+          defaultSortBy='lastActive'
+          defaultSortDirection='DESC'
           rowHeight={30}
         />
       )}
@@ -87,13 +72,13 @@ const AlgoOrdersTable = ({
 AlgoOrdersTable.propTypes = {
   algoOrders: PropTypes.objectOf(PropTypes.shape(ORDER_SHAPE)).isRequired,
   filteredAlgoOrders: PropTypes.objectOf(PropTypes.shape(ORDER_SHAPE)),
-  cancelOrder: PropTypes.func.isRequired,
-  gaCancelOrder: PropTypes.func.isRequired,
-  authToken: PropTypes.string.isRequired,
   renderedInTradingState: PropTypes.bool,
   getMarketPair: PropTypes.func.isRequired,
-  editOrder: PropTypes.func.isRequired,
   showHistory: PropTypes.bool.isRequired,
+  formatTime: PropTypes.func.isRequired,
+  // eslint-disable-next-line react/forbid-prop-types
+  tableState: PropTypes.object.isRequired,
+  updateTableState: PropTypes.func.isRequired,
 }
 
 AlgoOrdersTable.defaultProps = {

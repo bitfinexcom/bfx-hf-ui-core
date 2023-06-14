@@ -1,3 +1,59 @@
 .hfui-radio-button {
   font-size: 13px;
+
+  &:not(:last-child) {
+    margin-right: 5px;
+  }
+
+  input[type="radio"] {
+    position: absolute;
+    opacity: 0;
+
+    + .radio-label {
+      cursor: pointer;
+
+      &:before {
+        content: "";
+        background: transparent;
+        border-radius: 100%;
+        border: 1px solid var(--shade-6);
+        display: inline-block;
+        width: 1.1em;
+        height: 1.1em;
+        position: relative;
+        top: 0.1em;
+        margin-right: 5px;
+        vertical-align: top;
+        text-align: center;
+        transition: all 250ms ease;
+        cursor: pointer;
+      }
+    }
+    &:checked {
+      + .radio-label {
+        &:before {
+          background-color: var(--shade-6);
+          box-shadow: inset 0 0 0 2px var(--background-color);
+        }
+      }
+    }
+
+    &:disabled {
+      + .radio-label {
+        &:before {
+          box-shadow: inset 0 0 0 2px var(--shade-6);
+          border-color: var(--shade-6);
+          background: var(--shade-3);
+          cursor: not-allowed;
+        }
+      }
+    }
+    + .radio-label {
+      &:empty {
+        &:before {
+          margin-right: 0;
+        }
+      }
+    }
+  }
 }

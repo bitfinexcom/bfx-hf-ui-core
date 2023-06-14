@@ -4,27 +4,25 @@ import PropTypes from 'prop-types'
 import './style.css'
 
 const RadioButton = ({
-  onChange, value, label, id, uppercase,
+  onChange, value, label, id, uppercase, disabled,
 }) => (
-  <div className='pretty p-default p-round hfui-radio-button'>
+  <div className='hfui-radio-button'>
     <input
-      className='hfui-input'
       type='radio'
       id={id}
       checked={value}
       onChange={onChange}
+      disabled={disabled}
     />
-
-    <div className='state'>
-      <label
-        htmlFor={id}
-        style={{
-          textTransform: uppercase ? 'uppercase' : 'auto',
-        }}
-      >
-        {label}
-      </label>
-    </div>
+    <label
+      style={{
+        textTransform: uppercase ? 'uppercase' : 'auto',
+      }}
+      className='radio-label'
+      htmlFor={id}
+    >
+      {label}
+    </label>
   </div>
 )
 
@@ -34,14 +32,16 @@ RadioButton.propTypes = {
   value: PropTypes.bool,
   uppercase: PropTypes.bool,
   label: PropTypes.string,
+  disabled: PropTypes.bool,
 }
 
 RadioButton.defaultProps = {
   id: '',
   uppercase: false,
-  onChange: () => { },
+  onChange: () => {},
   value: '',
   label: '',
+  disabled: false,
 }
 
 export default memo(RadioButton)

@@ -6,11 +6,12 @@ import Input from '../../../ui/Input'
 import Modal from '../../../ui/Modal'
 import blankTemplate from '../../../components/StrategyEditor/templates/blank'
 import { validateStrategyName } from '../../../components/StrategyEditor/StrategyEditor.helpers'
+import { LOG_LEVELS } from '../../../constants/logging'
 
 import './style.css'
 
 const CreateNewStrategyModal = ({
-  onSubmit, onClose, isOpen,
+  onSubmit, onClose, isOpen, logInformation,
 }) => {
   const [label, setLabel] = useState('')
   const [error, setError] = useState('')
@@ -26,7 +27,8 @@ const CreateNewStrategyModal = ({
 
     onSubmit(label, blankTemplate)
     onClose()
-  }, [label, onClose, onSubmit, t])
+    logInformation(`New strategy draft created (${label})`, LOG_LEVELS.INFO, 'strategy_draft_init', { source: 'new' })
+  }, [label, onClose, onSubmit, t, logInformation])
 
   return (
     <Modal
@@ -59,6 +61,7 @@ const CreateNewStrategyModal = ({
 CreateNewStrategyModal.propTypes = {
   onSubmit: PropTypes.func.isRequired,
   onClose: PropTypes.func.isRequired,
+  logInformation: PropTypes.func.isRequired,
   isOpen: PropTypes.bool,
 }
 

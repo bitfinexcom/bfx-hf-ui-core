@@ -419,7 +419,7 @@
     "startedLiveStrategyExecution": "已開始執行{{symbol}}-{{tf}}的({{name}})即時策略",
     "stoppedLiveStrategyExecution": "已停止執行{{symbol}}-{{tf}}的({{name}})即時策略",
     "stoppedAO": "已停止演算法訂單",
-    "startedAO": "運行 {{target}} 中的演算法訂單 {{name}}",
+    "startedAO": "運行 {{target}} 中的演算法訂單 {{alias}}",
     "unknownAlgoOrderId": "不明演算法訂單編號： {{aoID}}",
     "cancellingOrderOn": "取消 {{target}} 中的訂單",
     "unauthorized": "未經驗證",

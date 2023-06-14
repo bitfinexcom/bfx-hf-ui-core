@@ -26,6 +26,7 @@ import {
 import StrategyEditor from './StrategyEditor'
 import { getMarketsSortedByVolumeForExecution } from '../../redux/selectors/meta'
 import { UI_KEYS } from '../../redux/constants/ui_keys'
+import { LOG_LEVELS } from '../../constants/logging'
 
 const mapStateToProps = (state = {}) => {
   return {
@@ -83,19 +84,22 @@ const mapDispatchToProps = (dispatch) => ({
         constraints,
       ]),
     )
+    dispatch(UIActions.logInformation(`Strategy (${label}) is active and running`, LOG_LEVELS.INFO, 'strategy_init'))
     dispatch(WSActions.setExecutionLoading(true))
   },
-  dsExecuteBacktest: ({
-    startNum,
-    endNum,
-    symbol,
-    timeframe,
-    candles,
-    trades,
-    candleSeed,
-    strategyContent,
-    constraints,
-  }) => {
+  dsExecuteBacktest: (data) => {
+    const {
+      startNum,
+      endNum,
+      symbol,
+      timeframe,
+      candles,
+      trades,
+      candleSeed,
+      strategyContent,
+      constraints,
+      label,
+    } = data
     const processedStrategy = _omitBy(strategyContent, _isEmpty)
     const sync = true
 
@@ -123,12 +127,14 @@ const mapDispatchToProps = (dispatch) => ({
       }),
     )
     dispatch(WSActions.setBacktestLoading())
+    dispatch(UIActions.logInformation(`New backtest initiated for draft ${label}`, LOG_LEVELS.INFO, 'backtest_start', data))
   },
-  dsStopLiveStrategy: (authToken, runningStrategyID) => {
+  dsStopLiveStrategy: (authToken, liveExecGid) => {
     dispatch(WSActions.setExecutionLoading(true))
     dispatch(
-      WSActions.send(['strategy.execute_stop', authToken, runningStrategyID]),
+      WSActions.send(['strategy.execute_stop', authToken, liveExecGid]),
     )
+    dispatch(UIActions.logInformation(`Strategy (${liveExecGid}) was stopped by the user and is no longer trading`, LOG_LEVELS.INFO, 'strategy_stopped'))
   },
   showError: (text) => {
     dispatch(
@@ -153,6 +159,7 @@ const mapDispatchToProps = (dispatch) => ({
           data: ['stop.bt', backtestGid],
         }),
       )
+      dispatch(UIActions.logInformation('Backtest cancelled by the user', LOG_LEVELS.INFO, 'backtest_cancelled'))
     } else {
       if (!liveExecGid) {
         dispatch(WSActions.resetExecutionData())
@@ -162,6 +169,7 @@ const mapDispatchToProps = (dispatch) => ({
       dispatch(
         WSActions.send(['strategy.execute_stop', authToken, liveExecGid]),
       )
+      dispatch(UIActions.logInformation(`Strategy (${liveExecGid}) was stopped by the user and is no longer trading`, LOG_LEVELS.INFO, 'strategy_stopped'))
     }
   },
   changeTradingMode: (isPaperTrading) => {
@@ -172,6 +180,9 @@ const mapDispatchToProps = (dispatch) => ({
   },
   removeStrategyToExecuteFromLS: () => {
     dispatch(UIActions.setUIValue(UI_KEYS.pendingLiveStrategy, null))
+  },
+  logInformation: (message, level, action, trace) => {
+    dispatch(UIActions.logInformation(message, level, action, trace))
   },
 })
 

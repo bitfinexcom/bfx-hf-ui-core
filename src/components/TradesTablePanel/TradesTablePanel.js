@@ -23,15 +23,17 @@ import './style.css'
 const { trades } = reduxConstants
 const { SUBSCRIPTION_CONFIG } = trades
 const { WSSubscribeChannel, WSUnsubscribeChannel } = reduxActions
-const { getRecentTrades, hasFetchedTrades: hasFetchedTradesSelector, isSubscribedToTrades } = reduxSelectors
+const {
+  getRecentTrades,
+  hasFetchedTrades: hasFetchedTradesSelector,
+  isSubscribedToTrades,
+} = reduxSelectors
 
 const TradesTablePanel = (props) => {
   const {
     dark,
-    layoutI,
     onRemove,
     moveable,
-    layoutID,
     showMarket,
     removeable,
     savedState,
@@ -51,37 +53,44 @@ const TradesTablePanel = (props) => {
   const currentPair = getPairFromMarket(activeMarket, getCurrencySymbol)
 
   const { symbol, dispatch, isWSConnected } = useCommonBfxData(base, quote)
-  const marketData = useSelector(state => getRecentTrades(state, symbol))
-  const hasFetchedTrades = useSelector(state => hasFetchedTradesSelector(state, symbol))
-  const isSubscribedToSymbol = useSelector(state => isSubscribedToTrades(state, symbol))
+  const marketData = useSelector((state) => getRecentTrades(state, symbol))
+  const hasFetchedTrades = useSelector((state) => hasFetchedTradesSelector(state, symbol))
+  const isSubscribedToSymbol = useSelector((state) => isSubscribedToTrades(state, symbol))
 
   const { t } = useTranslation()
 
   useEffect(() => {
     if (isWSConnected && symbol && !isSubscribedToSymbol) {
-      dispatch(WSSubscribeChannel({
-        ...SUBSCRIPTION_CONFIG,
-        symbol,
-      }))
+      dispatch(
+        WSSubscribeChannel({
+          ...SUBSCRIPTION_CONFIG,
+          symbol,
+        }),
+      )
     }
   }, [isWSConnected, symbol, isSubscribedToSymbol, dispatch])
 
   const unSubscribeWSChannel = (s) => {
-    const tradesUsingSymbol = _filter(allMarketTrades, (tradesState) => tradesState?.currentMarket?.wsID === s)
+    const tradesUsingSymbol = _filter(
+      allMarketTrades,
+      (tradesState) => tradesState?.currentMarket?.wsID === s,
+    )
 
     // do not unsubscribe if more than one trades comp are subscribed to the symbol
     if (_size(tradesUsingSymbol) > 1) {
       return
     }
 
-    dispatch(WSUnsubscribeChannel({
-      ...SUBSCRIPTION_CONFIG,
-      symbol: s,
-    }))
+    dispatch(
+      WSUnsubscribeChannel({
+        ...SUBSCRIPTION_CONFIG,
+        symbol: s,
+      }),
+    )
   }
 
   const saveState = (param, value) => {
-    updateState(layoutID, layoutI, {
+    updateState({
       [param]: value,
     })
   }
@@ -125,7 +134,9 @@ const TradesTablePanel = (props) => {
       secondaryHeaderComponents={
         showMarket && canChangeMarket && renderMarketDropdown()
       }
-      headerComponents={showMarket && !canChangeMarket && <p>{isPerp ? uiID : currentPair}</p>}
+      headerComponents={
+        showMarket && !canChangeMarket && <p>{isPerp ? uiID : currentPair}</p>
+      }
     >
       <Trades
         market={marketData}
@@ -145,8 +156,6 @@ TradesTablePanel.propTypes = {
   canChangeMarket: PropTypes.bool,
   allMarketTrades: PropTypes.arrayOf(PropTypes.shape(TRADE_SHAPE)),
   onRemove: PropTypes.func.isRequired,
-  layoutI: PropTypes.string.isRequired,
-  layoutID: PropTypes.string,
   updateState: PropTypes.func.isRequired,
   markets: PropTypes.objectOf(PropTypes.object).isRequired, // eslint-disable-line
   activeMarket: PropTypes.shape({
@@ -163,7 +172,6 @@ TradesTablePanel.defaultProps = {
   showMarket: false,
   allMarketTrades: [],
   canChangeMarket: true,
-  layoutID: '',
 }
 
 export default memo(TradesTablePanel)

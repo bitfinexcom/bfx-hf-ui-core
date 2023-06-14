@@ -3,6 +3,11 @@ import types from '../../constants/ao'
 
 function getInitialState() {
   return {
+    activeAlgoOrders: {
+      main: [],
+      paper: [],
+    },
+    isAlgoOrdersAfterLogin: true,
     showActiveAlgoModal: false,
     activeAOParamsID: null,
     showAOsHistory: false,
@@ -15,10 +20,15 @@ function reducer(state = getInitialState(), action = {}) {
 
   switch (type) {
     case types.SET_ACTIVE_AOS: {
-      const { activeAlgoOrders } = payload
+      const { activeAlgoOrders, isAfterLogin: isAlgoOrdersAfterLogin, mode } = payload
+
       return {
         ...state,
-        activeAlgoOrders,
+        activeAlgoOrders: {
+          ...state.activeAlgoOrders,
+          [mode]: activeAlgoOrders,
+        },
+        isAlgoOrdersAfterLogin,
       }
     }
 
@@ -77,7 +87,10 @@ function reducer(state = getInitialState(), action = {}) {
           ...state.aoParams,
           [symbol]: {
             ...state.aoParams?.[symbol],
-            [algoID]: _filter(state.aoParams?.[symbol]?.[algoID], (p) => p?.id !== id),
+            [algoID]: _filter(
+              state.aoParams?.[symbol]?.[algoID],
+              (p) => p?.id !== id,
+            ),
           },
         },
       }

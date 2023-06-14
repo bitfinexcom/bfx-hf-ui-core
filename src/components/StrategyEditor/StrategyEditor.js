@@ -58,6 +58,7 @@ import { UI_MODAL_KEYS } from '../../redux/constants/modals'
 import { PAPER_MODE } from '../../redux/reducers/ui'
 import SettingsTitle from './tabs/SettingsTitle'
 import { LANGUAGES } from '../../locales/i18n'
+import { LOG_LEVELS } from '../../constants/logging'
 
 import './style.css'
 
@@ -96,6 +97,7 @@ const StrategyEditor = (props) => {
     evalSectionContent,
     setSectionErrors,
     serviceStatus,
+    logInformation,
   } = props
   const { t, i18n: { language } } = useTranslation()
 
@@ -268,11 +270,15 @@ const StrategyEditor = (props) => {
           delete preparedStrategy.strategyContent.id
         }
         onCreateStrategyFromExisted(preparedStrategy.label, preparedStrategy)
+        logInformation(`New strategy draft created (${preparedStrategy.label})`, LOG_LEVELS.INFO, 'strategy_draft_init', {
+          source: 'json',
+          from: preparedStrategy.label,
+        })
       }
     } catch (e) {
       debug('Error while importing strategy: %s', e)
     }
-  }, [onCreateStrategyFromExisted])
+  }, [onCreateStrategyFromExisted, logInformation])
 
   const onSaveStrategy = useCallback(() => {
     if (executionId) {
@@ -743,12 +749,13 @@ const StrategyEditor = (props) => {
         onClose={onCloseModals}
         onSubmit={onCreateStrategyFromExisted}
         currentStrategy={strategy}
+        logInformation={logInformation}
       />
       <CreateNewStrategyModal
         isOpen={createNewStrategyModalOpen}
         onClose={onCloseModals}
         onSubmit={onCreateNewStrategy}
-        onImportStrategy={onImportStrategy}
+        logInformation={logInformation}
       />
       <OpenExistingStrategyModal
         isOpen={isOpenExistingStrategyModalOpen}
@@ -820,6 +827,7 @@ StrategyEditor.propTypes = {
     bfxClient: PropTypes.bool,
     strategyManager: PropTypes.bool,
   }).isRequired,
+  logInformation: PropTypes.func.isRequired,
 }
 
 StrategyEditor.defaultProps = {

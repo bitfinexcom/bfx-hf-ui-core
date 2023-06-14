@@ -1,24 +1,88 @@
-import { put, select } from 'redux-saga/effects'
-
-import WSActions from '../../actions/ws'
+import _isEmpty from 'lodash/isEmpty'
+import _isArray from 'lodash/isArray'
+import _forEach from 'lodash/forEach'
+import { put, select, delay } from 'redux-saga/effects'
+import { AOAdapter } from '../../adapters/ws'
 import AOActions from '../../actions/ao'
-import { getAuthToken } from '../../selectors/ws'
+import { getIsAutoResumeAOs } from '../../selectors/ui'
+import resumeRemoveActiveAlgoOrders from './on_resume_remove_active_algo_orders_handler'
+
+const prepareAOsList = (aos, shouldPrepareAOsForResume) => {
+  if (_isEmpty(aos)) {
+    return {
+      AOs: [],
+      AOsForResume: null,
+    }
+  }
+
+  const AOs = []
+  const AOsForResume = shouldPrepareAOsForResume ? [] : null
+
+  _forEach(aos, (ao) => {
+    const adapted = _isArray(ao) ? AOAdapter(ao) : ao
+    AOs.push(adapted)
+
+    if (shouldPrepareAOsForResume) {
+      const resumeAO = {
+        gid: adapted.gid,
+        algoID: adapted.algoID,
+      }
+      AOsForResume.push(resumeAO)
+    }
+  })
+
+  return {
+    AOs,
+    AOsForResume,
+  }
+}
 
 export default function* handleActiveAlgoOrders({ payload }) {
-  const {
-    type,
-    allOrders,
-    selectedOrders,
-    unselectedOrders,
-  } = payload
-  const authToken = yield select(getAuthToken)
-  if (type === 'resume') {
-    yield put(WSActions.send(['algo_order.remove', authToken, unselectedOrders]))
-    yield put(WSActions.send(['algo_order.load', authToken, selectedOrders]))
+  // Delay because the server spawns many identical messages
+  yield delay(500)
+
+  const [, , isAfterLogin, aos] = payload
+
+  const { paper, main } = aos
+  const isAutoResumeChecked = yield select(getIsAutoResumeAOs)
+  const shouldAutoResumeAOs = isAutoResumeChecked && !isAfterLogin
+
+  const { AOs: AOsMain, AOsForResume: AOsForResumeMain } = prepareAOsList(
+    main,
+    shouldAutoResumeAOs,
+  )
+  const { AOs: AOsPaper, AOsForResume: AOsForResumePaper } = prepareAOsList(
+    paper,
+    shouldAutoResumeAOs,
+  )
+
+  if (shouldAutoResumeAOs) {
+    const resumeAOsPayload = {
+      type: 'resume',
+      selectedOrders: {
+        main: AOsForResumeMain || [],
+        paper: AOsForResumePaper || [],
+      },
+      unselectedOrders: {
+        main: [],
+        paper: [],
+      },
+
+    }
+
+    yield resumeRemoveActiveAlgoOrders({ payload: resumeAOsPayload })
+    return
   }
-  if (type === 'cancel_all') {
-    yield put(WSActions.send(['algo_order.remove', authToken, allOrders]))
+  const isAOsMainExists = !_isEmpty(AOsMain)
+  const isAOsPaperExists = !_isEmpty(AOsPaper)
+
+  if (isAOsMainExists) {
+    yield put(AOActions.setActiveAlgoOrders(AOsMain, 'main', isAfterLogin))
   }
-  yield put(AOActions.setActiveAlgoOrders([]))
-  yield put(AOActions.showActiveOrdersModal(false))
+  if (isAOsPaperExists) {
+    yield put(AOActions.setActiveAlgoOrders(AOsPaper, 'paper', isAfterLogin))
+  }
+  if (isAOsMainExists || isAOsPaperExists) {
+    yield put(AOActions.showActiveOrdersModal(true))
+  }
 }

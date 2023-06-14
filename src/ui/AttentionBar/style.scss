@@ -5,6 +5,11 @@
   background: var(--red-background);
   border-radius: $border-radius;
   padding: spacing(0.5) spacing();
+  margin-bottom: spacing(0.5);
+
+  &:last-child{
+    margin-bottom: 0
+  }
 
   &.green {
     color: var(--primary-9);

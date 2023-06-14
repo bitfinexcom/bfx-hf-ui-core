@@ -7,6 +7,7 @@ import _toString from 'lodash/toString'
 import _reverse from 'lodash/reverse'
 import _truncate from 'lodash/truncate'
 import _replace from 'lodash/replace'
+import _keys from 'lodash/keys'
 import { Truncate } from '@ufx-ui/core'
 
 // takes a number as input and returns a localised version with semicolons in it
@@ -45,7 +46,13 @@ export const makeShorterLongName = (name, limit) => _truncate(name, {
   omission: '...',
 })
 
-export const defaultCellRenderer = (content) => (<Truncate>{content}</Truncate>)
+export const defaultCellRenderer = (content) => (
+  <Truncate
+    placement='bottom'
+  >
+    {content}
+  </Truncate>
+)
 
 export const saveAsJSON = (obj, fileName) => {
   const data = `data:text/json;charset=utf-8,${encodeURIComponent(JSON.stringify(obj, null, 2))}`
@@ -81,17 +88,21 @@ export const readJSONFile = () => new Promise((resolve, reject) => {
   input.remove()
 })
 
-export const formatDate = (rawDate, returnDateString) => {
+export const renderDate = (rawDate, formatTime) => {
   if (!rawDate) {
     return '--'
   }
-
-  const date = new Date(rawDate).toLocaleString()
-
-  // required for CSV compatibility
-  if (returnDateString) {
-    return _replace(date, ',', '')
-  }
+  const date = formatTime(rawDate)
 
   return defaultCellRenderer(date)
 }
+
+export const processDateForCSV = (rawDate, formatTime) => {
+  if (!rawDate) {
+    return '--'
+  }
+  const date = formatTime(rawDate)
+  return _replace(date, ',', '')
+}
+
+export const countObjectChildren = (obj) => _size(_keys(obj))

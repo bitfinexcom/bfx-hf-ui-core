@@ -38,6 +38,8 @@ const ExchangeInfoBar = ({
   showCcyIconModal,
   isCcyArticleAvailbale,
   getCurrencySymbol,
+  savedState,
+  updateState,
 }) => {
   const [tickerRef, size] = useSize()
 
@@ -52,12 +54,15 @@ const ExchangeInfoBar = ({
     }
     onChangeMarket(newMarket, activeMarket)
   }
+
   const {
     low, high, lastPrice, change, changePerc, volumeConverted,
   } = activeMarketTicker
+
   const {
     base, quote, uiID, isPerp,
   } = activeMarket
+
   const { t } = useTranslation()
 
   const tickerMapping = useMemo(
@@ -130,6 +135,8 @@ const ExchangeInfoBar = ({
             }
             rowMapping={tickerListMapping}
             setVolumeUnit={setVolumeUnit}
+            tableState={savedState}
+            updateTableState={updateState}
             showVolumeUnit
           />
         </div>
@@ -156,6 +163,9 @@ ExchangeInfoBar.propTypes = {
   showCcyIconModal: PropTypes.func.isRequired,
   isCcyArticleAvailbale: PropTypes.bool,
   getCurrencySymbol: PropTypes.func.isRequired,
+  // eslint-disable-next-line react/forbid-prop-types
+  savedState: PropTypes.object.isRequired,
+  updateState: PropTypes.func.isRequired,
 }
 
 ExchangeInfoBar.defaultProps = {

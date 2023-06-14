@@ -29,11 +29,16 @@ body.hosted {
   height: 52px;
   padding: 0 spacing(1.25);
   margin-bottom: 20px;
+  transition: margin-top 0.2s ease-in;
 
   .hfui-navbar__logo {
     width: 83px;
     margin-right: spacing();
     height: 100%;
+  }
+
+  &.marginTop {
+    margin-top: 52px;
   }
 
   &,
@@ -145,7 +150,7 @@ body.hosted {
       .dropdown-leaf {
         width: 15px;
         height: 15px;
-    
+
         &:hover {
           cursor: pointer;
           opacity: 0.8;
@@ -180,7 +185,7 @@ body.hosted {
         color: var(--text-color);
         text-decoration: none;
         font-size: 14px;
-    
+
         &:hover {
           color: var(--primary-8);
         }
@@ -289,8 +294,8 @@ body.hosted {
     position: absolute;
     top: spacing(0.5) + 1;
     left: spacing(1);
-    font-family: "untitled-font-4";
-    content: "S"; // check
+    font-family: "bitfinex-honey-font";
+    content: "U"; // check
   }
 
   .hfui-navbar__layout-settings__item-unsaved,

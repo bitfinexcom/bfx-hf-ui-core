@@ -7,15 +7,9 @@ import { getAuthToken } from '../../../util/token_store'
 import WSTypes from '../../constants/ws'
 import { isElectronApp } from '../../config'
 
-let wasConnected = false
-
 export default function* ({ payload }) {
   const { alias } = payload
   yield put(A.flushQueue())
-
-  if (wasConnected) {
-    yield put(A.reconnected(alias))
-  }
 
   yield put(A.recvNotification({
     mts: Date.now(),
@@ -28,6 +22,4 @@ export default function* ({ payload }) {
     const token = getAuthToken()
     yield put(A.webAuth(token))
   }
-
-  wasConnected = true
 }

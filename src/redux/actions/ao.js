@@ -1,10 +1,19 @@
 import types from '../constants/ao'
 
-export function setActiveAlgoOrders(activeAlgoOrders) {
+export function handleActiveAlgoOrders(payload) {
+  return {
+    type: types.HANDLE_ACTIVE_AOS,
+    payload,
+  }
+}
+
+export function setActiveAlgoOrders(activeAlgoOrders, mode, isAfterLogin) {
   return {
     type: types.SET_ACTIVE_AOS,
     payload: {
       activeAlgoOrders,
+      isAfterLogin,
+      mode,
     },
   }
 }
@@ -16,9 +25,9 @@ export function showActiveOrdersModal(status) {
   }
 }
 
-export function handleActiveOrders(data) {
+export function resumeRemoveActiveAlgoOrders(data) {
   return {
-    type: types.HANDLE_ACTIVE_AOS,
+    type: types.RESUME_REMOVE_ACTIVE_AOS,
     payload: data,
   }
 }
@@ -89,7 +98,7 @@ export function setShowAOsHistory(showAOsHistory) {
 export default {
   setActiveAlgoOrders,
   showActiveOrdersModal,
-  handleActiveOrders,
+  handleActiveAlgoOrders,
   getAlgoOrderParams,
   setAlgoOrderParams,
   removeAlgoOrderParams,

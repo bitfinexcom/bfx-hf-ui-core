@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useMemo } from 'react'
 import PropTypes from 'prop-types'
 import _isEmpty from 'lodash/isEmpty'
 import { VirtualTable } from '@ufx-ui/core'
@@ -12,8 +12,22 @@ const SavedStrategiesList = ({
   onStrategyRemove,
   saveAsHandler,
   renameStrategy,
+  formatTime,
+  tableState,
+  updateTableState,
 }) => {
   const { t } = useTranslation()
+
+  const mappedColumns = useMemo(
+    () => savedStrategiesColumns({
+      t,
+      onStrategyRemove,
+      saveAsHandler,
+      renameStrategy,
+      formatTime,
+    }),
+    [onStrategyRemove, renameStrategy, saveAsHandler, t, formatTime],
+  )
 
   return (
     <>
@@ -26,12 +40,9 @@ const SavedStrategiesList = ({
       ) : (
         <VirtualTable
           data={strategies}
-          columns={savedStrategiesColumns({
-            t,
-            onStrategyRemove,
-            saveAsHandler,
-            renameStrategy,
-          })}
+          columns={mappedColumns}
+          tableState={tableState}
+          updateTableState={updateTableState}
           defaultSortBy='savedTs'
           defaultSortDirection='DESC'
           onRowClick={onRowClick}
@@ -47,6 +58,10 @@ SavedStrategiesList.propTypes = {
   onStrategyRemove: PropTypes.func.isRequired,
   saveAsHandler: PropTypes.func.isRequired,
   renameStrategy: PropTypes.func.isRequired,
+  formatTime: PropTypes.func.isRequired,
+  // eslint-disable-next-line react/forbid-prop-types
+  tableState: PropTypes.object.isRequired,
+  updateTableState: PropTypes.func.isRequired,
 }
 
 export default SavedStrategiesList

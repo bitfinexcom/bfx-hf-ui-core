@@ -20,7 +20,6 @@ export default {
   }),
 
   connected: (alias) => ({ type: t.CONNECTED, payload: { alias } }),
-  reconnected: (alias) => ({ type: t.RECONNECTED, payload: { alias } }),
   disconnected: (alias) => ({ type: t.DISCONNECTED, payload: { alias } }),
   disconnect: (alias) => ({ type: t.DISCONNECT, payload: { alias } }),
 
@@ -39,12 +38,16 @@ export default {
     payload: { markets },
   }),
 
-  saveSettings: (key, value) => ({
+  saveSetting: (key, value) => ({
     type: ui.SAVE_SETTINGS,
     payload: {
-      key,
-      value,
+      [key]: value,
     },
+  }),
+
+  saveSettings: (settingsToUpdate) => ({
+    type: ui.SAVE_SETTINGS,
+    payload: settingsToUpdate,
   }),
 
   bufferDataFromExchange: (chanID, data, rawData = null) => ({
