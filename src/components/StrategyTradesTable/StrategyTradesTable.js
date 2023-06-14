@@ -1,13 +1,18 @@
 /* eslint-disable react/display-name */
 /* eslint-disable react/prop-types */
 import React, {
-  useEffect, memo, useState, useRef, useCallback, useMemo,
+  useEffect,
+  memo,
+  useState,
+  useRef,
+  useCallback,
+  useMemo,
 } from 'react'
 import { Button, VirtualTable } from '@ufx-ui/core'
 import { reduxSelectors } from '@ufx-ui/bfx-containers'
 import PropTypes from 'prop-types'
 import { useTranslation } from 'react-i18next'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import _findIndex from 'lodash/findIndex'
 import _isEmpty from 'lodash/isEmpty'
 import { Icon } from 'react-fa'
@@ -19,11 +24,25 @@ import {
   LAYOUT_CONFIG,
 } from '../StrategyEditor/components/StrategiesGridLayout.constants'
 import { getRowRenderer, rowCache } from './StrategyTradesTable.Row'
+import UIActions from '../../redux/actions/ui'
 
 import { onTradeExportClick } from './StrategyTradesTable.helpers'
-import { STRATEGY_LAYOUT_CONFIG_SHAPE, STRATEGY_SHAPE, STRATEGY_TRADE_SHAPE } from '../../constants/prop-types-shapes'
+import {
+  STRATEGY_LAYOUT_CONFIG_SHAPE,
+  STRATEGY_SHAPE,
+  STRATEGY_TRADE_SHAPE,
+} from '../../constants/prop-types-shapes'
+import {
+  getComponentState,
+  getFormatTimeFn,
+  getUIState,
+} from '../../redux/selectors/ui'
+import { UI_KEYS } from '../../redux/constants/ui_keys'
+import { COMPONENT_IDS } from '../GridLayout/GridLayout.helpers'
 
 import './style.css'
+
+const COMPONENT_ID = COMPONENT_IDS.STRATEGIES_TRADES_TABLE
 
 const { getCurrencySymbolMemo } = reduxSelectors
 
@@ -35,7 +54,13 @@ const StrategyTradesTable = ({
 }) => {
   const [isExpanded, setIsExpanded] = useState(false)
   const getCurrencySymbol = useSelector(getCurrencySymbolMemo)
+  const formatTime = useSelector(getFormatTimeFn)
+  const layoutID = useSelector((state) => getUIState(state, UI_KEYS.layoutID))
+  const tableState = useSelector((state) => getComponentState(state, layoutID, null, COMPONENT_ID),
+  )
   const { strategyOptions: { symbol = {} } = {} } = strategy
+  const { t } = useTranslation()
+  const dispatch = useDispatch()
 
   const onExpandClick = useCallback(() => {
     const currentElementIndex = _findIndex(
@@ -54,12 +79,25 @@ const StrategyTradesTable = ({
     setLayoutConfig(newLayoutConfig)
   }, [layoutConfig, setLayoutConfig])
 
+  const updateTableState = (state) => {
+    dispatch(
+      UIActions.updateComponentState({
+        state,
+        layoutID,
+        componentID: COMPONENT_ID,
+      }),
+    )
+  }
+
   const onCompressClick = () => {
     setIsExpanded(false)
     setLayoutConfig(LAYOUT_CONFIG)
   }
 
-  const { t } = useTranslation()
+  const onExportButtonClick = useCallback(
+    () => onTradeExportClick(results, symbol, t, getCurrencySymbol, formatTime),
+    [getCurrencySymbol, results, symbol, t, formatTime],
+  )
 
   const [selectedIndex, setSelectedIndex] = useState(-1)
   const tableRef = useRef()
@@ -67,12 +105,19 @@ const StrategyTradesTable = ({
     if (tableRef.current) {
       tableRef.current.recomputeRowHeights()
     }
-  },
-  [tableRef, selectedIndex, isExpanded])
+  }, [tableRef, selectedIndex, isExpanded])
 
-  const columns = StrategyTradesTableColumns(t, selectedIndex, setSelectedIndex)
+  const columns = StrategyTradesTableColumns({
+    t,
+    selectedIndex,
+    setSelectedIndex,
+    formatTime,
+  })
 
-  const rowRenderer = useMemo(() => getRowRenderer(selectedIndex), [selectedIndex])
+  const rowRenderer = useMemo(
+    () => getRowRenderer(selectedIndex),
+    [selectedIndex],
+  )
 
   return (
     <Panel
@@ -88,7 +133,7 @@ const StrategyTradesTable = ({
         <>
           <Button
             className='panel-button'
-            onClick={() => onTradeExportClick(results, symbol, t, getCurrencySymbol)}
+            onClick={onExportButtonClick}
             disabled={_isEmpty(results)}
           >
             <Icon name='file' />
@@ -128,6 +173,8 @@ const StrategyTradesTable = ({
           scrollingResetTimeInterval={0}
           defaultSortBy='entryAt'
           defaultSortDirection='DESC'
+          updateTableState={updateTableState}
+          tableState={tableState}
         />
       )}
     </Panel>
@@ -136,7 +183,8 @@ const StrategyTradesTable = ({
 
 StrategyTradesTable.propTypes = {
   results: PropTypes.shape(STRATEGY_TRADE_SHAPE).isRequired,
-  layoutConfig: PropTypes.arrayOf(PropTypes.shape(STRATEGY_LAYOUT_CONFIG_SHAPE)).isRequired,
+  layoutConfig: PropTypes.arrayOf(PropTypes.shape(STRATEGY_LAYOUT_CONFIG_SHAPE))
+    .isRequired,
   setLayoutConfig: PropTypes.func.isRequired,
   strategy: PropTypes.shape(STRATEGY_SHAPE).isRequired,
 }

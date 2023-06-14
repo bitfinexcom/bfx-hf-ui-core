@@ -5,6 +5,7 @@ import Debug from 'debug'
 import _size from 'lodash/size'
 
 import { withTranslation } from 'react-i18next'
+import { Recurring } from 'bfx-hf-algo'
 import OrderForm from './OrderForm'
 import UIActions from '../../redux/actions/ui'
 import WSActions from '../../redux/actions/ws'
@@ -23,22 +24,22 @@ import {
   getIsPaperModeApiKeyUpdating,
 } from '../../redux/selectors/ws'
 import {
-  getComponentState,
   getActiveMarket,
   getCurrentMode,
   getIsPaperTrading,
   getMaxOrderCounts,
   getIsBetaVersion,
-  getIsStrategiesLiveExecVisible,
   getUIState,
+  getServicesStatus,
+  getIsRecurringAOVisible,
 } from '../../redux/selectors/ui'
 import { getScope } from '../../util/scope'
 import { UI_KEYS } from '../../redux/constants/ui_keys'
+import { LOG_LEVELS } from '../../constants/logging'
 
 const debug = Debug('hfui:c:order-form')
 
-const mapStateToProps = (state = {}, ownProps = {}) => {
-  const { layoutID, layoutI: id } = ownProps
+const mapStateToProps = (state = {}) => {
   const { ws = {} } = state
   const { favoriteTradingPairs = {} } = ws
   const { favoritePairs = [] } = favoriteTradingPairs
@@ -57,7 +58,6 @@ const mapStateToProps = (state = {}, ownProps = {}) => {
     apiClientConnecting: apiClientConnecting(state),
     apiClientConnected: apiClientConnected(state),
     isKeysUpdating,
-    savedState: getComponentState(state, layoutID, 'orderform', id),
     authToken: getAuthToken(state),
     apiCredentials: getCurrentModeAPIKeyState(state),
     favoritePairs,
@@ -68,7 +68,8 @@ const mapStateToProps = (state = {}, ownProps = {}) => {
     maxOrderCounts: getMaxOrderCounts(state),
     isBetaVersion: getIsBetaVersion(state),
     showAdvancedAlgos:
-      getIsStrategiesLiveExecVisible(state) || getIsBetaVersion(state),
+      getIsRecurringAOVisible(state) || getIsBetaVersion(state),
+    isAlgoWorkerStarted: getServicesStatus(state)?.algoWorker,
   }
 }
 
@@ -83,11 +84,19 @@ const mapDispatchToProps = (dispatch) => ({
 
   submitOrder: ({ authToken, packet, wsConnected }) => {
     debug('submitting order %j', packet)
+    const orderData = {
+      symbol: packet.symbol.w,
+      ...packet,
+    }
+
+    dispatch(WSActions.submitOrder(authToken, orderData))
     dispatch(
-      WSActions.submitOrder(authToken, {
-        symbol: packet.symbol.w,
-        ...packet,
-      }),
+      UIActions.logInformation(
+        'Initialising atomic order',
+        LOG_LEVELS.INFO,
+        'atomic_order_init',
+        orderData,
+      ),
     )
 
     if (!wsConnected) {
@@ -104,13 +113,24 @@ const mapDispatchToProps = (dispatch) => ({
     authToken, id, market, context, data, wsConnected,
   }) => {
     debug('submitting algo order %s on %s [%s]', id, market.uiID, context)
+
+    const orderData = {
+      ...data,
+      _symbol: market.wsID,
+    }
+    if (id !== Recurring.id) {
+      orderData._margin = context === 'm'
+      orderData._futures = context === 'f'
+    }
+
+    dispatch(WSActions.submitAlgoOrder(authToken, id, orderData))
     dispatch(
-      WSActions.submitAlgoOrder(authToken, id, {
-        ...data,
-        _symbol: market.wsID,
-        _margin: context === 'm',
-        _futures: context === 'f',
-      }),
+      UIActions.logInformation(
+        `New ${id} algorithmic order submitted`,
+        LOG_LEVELS.INFO,
+        'ao_init',
+        orderData,
+      ),
     )
 
     if (!wsConnected) {

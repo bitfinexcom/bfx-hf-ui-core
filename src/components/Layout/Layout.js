@@ -4,13 +4,19 @@ import cx from 'clsx'
 import Navbar from '../Navbar'
 import StatusBar from '../StatusBar'
 import { MIN_SAFE_WIDTH } from '../../constants/variables'
+import { isElectronApp } from '../../redux/config'
 
 import './style.css'
 
 // eslint-disable-next-line react/prop-types
 function Layout({ children, ...props }) {
+  const style = {}
+  if (isElectronApp) {
+    style.minWidth = MIN_SAFE_WIDTH
+  }
+
   return (
-    <div className='layout' {...props}>
+    <div className='layout' style={style} {...props}>
       {children}
     </div>
   )

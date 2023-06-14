@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import _values from 'lodash/values'
 import _map from 'lodash/map'
 import { Icon } from 'react-fa'
+import classNames from 'clsx'
 
 import { useTranslation } from 'react-i18next'
 import HFIcon from '../../ui/HFIcon'
@@ -16,22 +17,35 @@ import CloseSessionButton from './Navbar.CloseSessionButton'
 import LayoutSettings from './Navbar.LayoutSettings'
 import APIBanner from './Navbar.APIBanner'
 import AppSettings from './Navbar.AppSettings'
+import RCDisclaimer from '../RCDisclaimer/RCDisclaimer'
 import Routes, { strategyEditor } from '../../constants/routes'
 import { isElectronApp } from '../../redux/config'
 import {
-  getThemeSetting, THEMES, getIsPaperTrading, getIsBetaVersion, getIsStrategiesTabVisible,
+  getThemeSetting,
+  THEMES,
+  getIsPaperTrading,
+  getIsBetaVersion,
+  getIsStrategiesTabVisible,
+  getUIState,
 } from '../../redux/selectors/ui'
 import { UI_MODAL_KEYS } from '../../redux/constants/modals'
+import { UI_KEYS } from '../../redux/constants/ui_keys'
 
 import './style.css'
 
 const getOption = (label, url) => (
-  <a key={label} className='dropdown-leaf-link' href={url} target='_blank' rel='noopener noreferrer'>
+  <a
+    key={label}
+    className='dropdown-leaf-link'
+    href={url}
+    target='_blank'
+    rel='noopener noreferrer'
+  >
     {label}
   </a>
 )
 
-const getLeafDropdownOptions = (theme) => ([
+const getLeafDropdownOptions = (theme) => [
   <BitfinexIcon key='logo' fill={theme === THEMES.DARK ? 'white' : 'black'} />,
   getOption('Trading', 'https://trading.bitfinex.com/trading'),
   getOption('Wallet', 'https://movement.bitfinex.com/wallets'),
@@ -39,7 +53,7 @@ const getLeafDropdownOptions = (theme) => ([
   getOption('Pulse', 'https://pulse.bitfinex.com/'),
   getOption('OTC', 'https://trading.bitfinex.com/otc'),
   getOption('Leaderboard', 'https://leaderboard.bitfinex.com/'),
-])
+]
 
 const Navbar = () => {
   const dispatch = useDispatch()
@@ -48,60 +62,87 @@ const Navbar = () => {
   const isPaperTrading = useSelector(getIsPaperTrading)
   const isBetaVersion = useSelector(getIsBetaVersion)
   const isStrategiesTabVisible = useSelector(getIsStrategiesTabVisible)
+  const showRCDisclaimer = useSelector((state) => getUIState(state, UI_KEYS.isRCDisclaimerShown),
+  )
   const showStrategies = isBetaVersion || isStrategiesTabVisible
-  const leafOptions = useMemo(() => getLeafDropdownOptions(settingsTheme), [settingsTheme])
+  const leafOptions = useMemo(
+    () => getLeafDropdownOptions(settingsTheme),
+    [settingsTheme],
+  )
 
   return (
-    <div className='hfui-navbar__wrapper'>
-      <HFIcon className='hfui-navbar__logo' fill={settingsTheme === THEMES.DARK ? 'white' : 'black'} />
-      <ul className='hfui-navbar__main-links'>
-        {_map(_values(Routes), ({ path, label }) => {
-          return showStrategies || path !== strategyEditor.path
-            ? (
+    <>
+      <RCDisclaimer />
+      <div
+        className={classNames('hfui-navbar__wrapper', {
+          marginTop: showRCDisclaimer,
+        })}
+      >
+        <HFIcon
+          className='hfui-navbar__logo'
+          fill={settingsTheme === THEMES.DARK ? 'white' : 'black'}
+        />
+        <ul className='hfui-navbar__main-links'>
+          {_map(_values(Routes), ({ path, label }) => {
+            return showStrategies || path !== strategyEditor.path ? (
               <li key={path}>
                 <NavbarLink
                   route={path}
-                  label={t(label, { paperPrefix: isPaperTrading ? t('main.paperPrefix') : null })}
+                  label={t(label, {
+                    paperPrefix: isPaperTrading ? t('main.paperPrefix') : null,
+                  })}
                 />
               </li>
-            )
-            : null
-        })}
-      </ul>
-      <div className='hfui-tradingpage__menu'>
-        <div className='hfui-exchangeinfobar__buttons'>
-          <LayoutSettings />
-          <NavbarButton
-            alt={t('notifications.title')}
-            icon='notifications'
-            onClick={() => dispatch(UIActions.toggleUIModalState(UI_MODAL_KEYS.NOTIFICATIONS_PANEL))}
-          />
-          {isElectronApp && <AppSettings />}
-          <Dropdown
-            label={(
-              <>
-                <img src='/bitfinex-leaf.svg' className='dropdown-leaf' alt='' />
-                <Icon name='chevron-down' width={2} className='label-chevron' />
-              </>
-            )}
-            options={leafOptions}
-            className='simpledropdown-wrapper'
-          />
-        </div>
-        {isElectronApp && (
-          <>
-            <div className='hfui-tradingpaper__control'>
-              <div className='hfui-tradingpaper__control-toggle'>
-                <p>{t('main.sandbox')}</p>
-                <SwitchMode />
+            ) : null
+          })}
+        </ul>
+        <div className='hfui-tradingpage__menu'>
+          <div className='hfui-exchangeinfobar__buttons'>
+            <LayoutSettings />
+            <NavbarButton
+              alt={t('notifications.title')}
+              icon='notifications'
+              onClick={() => dispatch(
+                UIActions.toggleUIModalState(
+                  UI_MODAL_KEYS.NOTIFICATIONS_PANEL,
+                ),
+              )}
+            />
+            {isElectronApp && <AppSettings />}
+            <Dropdown
+              label={(
+                <>
+                  <img
+                    src='/bitfinex-leaf.svg'
+                    className='dropdown-leaf'
+                    alt=''
+                  />
+                  <Icon
+                    name='chevron-down'
+                    width={2}
+                    className='label-chevron'
+                  />
+                </>
+              )}
+              options={leafOptions}
+              className='simpledropdown-wrapper'
+            />
+          </div>
+          {isElectronApp && (
+            <>
+              <div className='hfui-tradingpaper__control'>
+                <div className='hfui-tradingpaper__control-toggle'>
+                  <p>{t('main.sandbox')}</p>
+                  <SwitchMode />
+                </div>
               </div>
-            </div>
-            <APIBanner />
-          </>
-        )}
-        <CloseSessionButton />
+              <APIBanner />
+            </>
+          )}
+          <CloseSessionButton />
+        </div>
       </div>
-    </div>
+    </>
   )
 }
 export default memo(Navbar)

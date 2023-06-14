@@ -15,7 +15,7 @@ const mapDispatchToProps = dispatch => ({
   changeAOPauseModalState: (visible) => {
     dispatch(UIActions.changeUIModalState(UI_MODAL_KEYS.AO_PAUSE_MODAL, visible))
   },
-  onDontShowAgain: () => dispatch(WSActions.saveSettings(SETTINGS_KEYS.SHOW_ALGO_PAUSE_INFO, false)),
+  onDontShowAgain: () => dispatch(WSActions.saveSetting(SETTINGS_KEYS.SHOW_ALGO_PAUSE_INFO, false)),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(AOPauseModal)

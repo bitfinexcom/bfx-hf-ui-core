@@ -9,7 +9,12 @@ import PanelSettings from '../../ui/PanelSettings'
 
 import './style.css'
 
-const BalancesTablePanel = ({ onRemove, dark }) => {
+const BalancesTablePanel = ({
+  onRemove,
+  dark,
+  updateState,
+  savedState,
+}) => {
   const [isSettingsOpen, setIsSettingsOpen] = useState(false)
   const [hideZeroBalances, setHideZeroBalances] = useState(true)
 
@@ -40,6 +45,8 @@ const BalancesTablePanel = ({ onRemove, dark }) => {
         />
       ) : (
         <BalancesTable
+          tableState={savedState}
+          updateTableState={updateState}
           hideZeroBalances={hideZeroBalances}
         />
       )}
@@ -48,12 +55,14 @@ const BalancesTablePanel = ({ onRemove, dark }) => {
 }
 
 BalancesTablePanel.propTypes = {
-  onRemove: PropTypes.func,
+  onRemove: PropTypes.func.isRequired,
   dark: PropTypes.bool,
+  // eslint-disable-next-line react/forbid-prop-types
+  savedState: PropTypes.object.isRequired,
+  updateState: PropTypes.func.isRequired,
 }
 
 BalancesTablePanel.defaultProps = {
-  onRemove: () => { },
   dark: true,
 }
 

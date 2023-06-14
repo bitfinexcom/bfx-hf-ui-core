@@ -1,0 +1,60 @@
+@import "../../variables.scss";
+
+.help-us-improve-honey-modal {
+  .modal__body {
+    > p {
+      font-size: 14px;
+      white-space: pre-line;
+      margin-bottom: 10px !important;
+    }
+
+    .modal__footer {
+      display: flex;
+      justify-content: flex-end;
+      align-items: baseline;
+      margin-left: 0;
+    }
+  }
+
+  .advanced-configuration {
+    margin-top: 20px;
+
+    &:first-child {
+      margin-top: 0;
+    }
+
+    > .adv-setting-toggle {
+      display: flex;
+      justify-content: space-between;
+
+      > span {
+        font-weight: bold;
+      }
+    }
+
+    > p {
+      white-space: pre-line;
+      text-align: justify;
+      // 100% - 60px of the toggle width
+      width: calc(100% - 60px);
+    }
+  }
+
+  .will-list-item {
+    &:not(:last-child) {
+      margin-bottom: 10px;
+    }
+  }
+
+  .check-icon {
+    color: var(--primary-9);
+    margin-right: 5px;
+    font-size: 20px;
+  }
+
+  .times-icon {
+    color: var(--red);
+    margin-right: 5px;
+    font-size: 20px;
+  }
+}

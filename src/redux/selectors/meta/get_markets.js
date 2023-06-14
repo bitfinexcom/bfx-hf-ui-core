@@ -43,6 +43,15 @@ export const getMarkets = createSelector(
   },
 )
 
+export const getMarketsForBothModes = createSelector(
+  [getMarketsObject], (markets) => {
+    return {
+      ...markets?.[MARKET_TYPES_KEYS.SANDBOX_MARKETS],
+      ...markets?.[MARKET_TYPES_KEYS.LIVE_MARKETS],
+    }
+  },
+)
+
 export const getMarketsForExecution = createSelector(
   [
     getMarketsObject,

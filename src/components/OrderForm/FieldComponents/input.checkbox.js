@@ -7,9 +7,9 @@ import _toUpper from 'lodash/toUpper'
 import { renderString } from './fields.helpers'
 
 const CheckboxInput = memo(({
-  id, value, def: { label, customHelp } = {}, onChange, disabled, renderData,
+  id, value, def: { label, customHelp } = {}, onChange, disabled, renderData, className,
 }) => (
-  <div className={ClassNames('hfui-orderform__input inline', { disabled })}>
+  <div className={ClassNames('hfui-orderform__input inline', className, { disabled })}>
     <Checkbox
       id={id}
       checked={!!value}
@@ -43,11 +43,13 @@ CheckboxInput.propTypes = {
     PropTypes.bool,
   ]).isRequired,
   onChange: PropTypes.func.isRequired,
+  className: PropTypes.string,
   disabled: PropTypes.bool,
 }
 
 CheckboxInput.defaultProps = {
   disabled: false,
+  className: null,
 }
 
 export default CheckboxInput

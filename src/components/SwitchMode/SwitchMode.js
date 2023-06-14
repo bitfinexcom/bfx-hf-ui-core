@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next'
 import { Tooltip } from '@ufx-ui/core'
 import { THEMES } from '../../redux/selectors/ui'
 
-const SWITCH_THEME = {
+export const SWITCH_THEME = {
   [THEMES.LIGHT]: {
     onColor: '#07aa8c',
     offColor: '#818e9a',

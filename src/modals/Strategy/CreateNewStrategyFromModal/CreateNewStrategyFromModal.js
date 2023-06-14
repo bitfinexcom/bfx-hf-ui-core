@@ -13,6 +13,7 @@ import Dropdown from '../../../ui/Dropdown'
 import Templates from '../../../components/StrategyEditor/templates'
 import Tabs from '../../../ui/Tabs/Tabs'
 import { getSortedByTimeStrategies } from '../../../redux/selectors/ws'
+import { LOG_LEVELS } from '../../../constants/logging'
 
 import {
   dropdownOptionsAdaptor,
@@ -26,6 +27,7 @@ const CreateNewStrategyFromModalOpen = ({
   onClose,
   isOpen,
   currentStrategy,
+  logInformation,
 }) => {
   const savedStrategies = useSelector(getSortedByTimeStrategies)
   const { t } = useTranslation()
@@ -72,6 +74,10 @@ const CreateNewStrategyFromModalOpen = ({
     }
 
     onSubmit(label, newStrategy, false)
+    logInformation(`New strategy draft created (${label})`, LOG_LEVELS.INFO, 'strategy_draft_init', {
+      source: 'from',
+      from: newStrategy?.label,
+    })
     onClose()
   }, [
     currentStrategy,
@@ -85,6 +91,7 @@ const CreateNewStrategyFromModalOpen = ({
     selectedStrategyLabel,
     t,
     template,
+    logInformation,
   ])
 
   useEffect(() => {
@@ -167,6 +174,7 @@ const CreateNewStrategyFromModalOpen = ({
 CreateNewStrategyFromModalOpen.propTypes = {
   onSubmit: PropTypes.func.isRequired,
   onClose: PropTypes.func.isRequired,
+  logInformation: PropTypes.func.isRequired,
   currentStrategy: PropTypes.shape(STRATEGY_SHAPE),
   isOpen: PropTypes.bool,
 }

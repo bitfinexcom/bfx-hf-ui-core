@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react'
+import React, { useCallback, useMemo } from 'react'
 import PropTypes from 'prop-types'
 import _map from 'lodash/map'
 import _size from 'lodash/size'
@@ -8,7 +8,7 @@ import _values from 'lodash/values'
 import _isEmpty from 'lodash/isEmpty'
 import { OrderHistory as UfxOrderHistory, Spinner } from '@ufx-ui/core'
 import { useTranslation } from 'react-i18next'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import Modal from '../../ui/Modal'
 import { getOrderDetails } from './AlgoOrderDetailsModal.utils'
 import {
@@ -19,10 +19,16 @@ import {
 import { getMarketPair as _getMarketPair } from '../../redux/selectors/meta'
 import { getAOContext } from '../../util/order'
 import { saveAsJSON } from '../../util/ui'
-import { rowMapping } from '../../components/OrderHistory/OrderHistory.colunms'
+import getRowMapping from '../../components/OrderHistory/OrderHistory.columns'
 import Scrollbars from '../../ui/Scrollbars'
+import AlgoOrderDetailsModalHeader from './AlgoOrderDetailsModal.Header'
+import { getComponentState, getFormatTimeFn, getUIState } from '../../redux/selectors/ui'
+import { UI_KEYS } from '../../redux/constants/ui_keys'
+import UIActions from '../../redux/actions/ui'
 
 import './style.css'
+
+const COMPONENT_ID = 'AO_DETAILS_MODAL'
 
 const AlgoOrderDetailsModal = ({ onClose, algoOrderId }) => {
   const { t } = useTranslation()
@@ -33,8 +39,15 @@ const AlgoOrderDetailsModal = ({ onClose, algoOrderId }) => {
   const orders = useSelector(getOrderHistory)
   const getMarketPair = useSelector(_getMarketPair)
   const rowData = useSelector(getAlgoOrderById(algoOrderId))
+  const formatTime = useSelector(getFormatTimeFn)
+  const layoutID = useSelector((state) => getUIState(state, UI_KEYS.layoutID))
+  const tableState = useSelector((state) => getComponentState(state, layoutID, null, COMPONENT_ID),
+  )
 
-  const orderDetails = getOrderDetails(rowData)
+  const orderDetails = useMemo(
+    () => getOrderDetails(rowData, t, formatTime),
+    [rowData, t, formatTime],
+  )
   const detailsSize = _size(orderDetails)
   const filteredAtomics = _filter(
     _values(atomicOrders),
@@ -44,20 +57,40 @@ const AlgoOrderDetailsModal = ({ onClose, algoOrderId }) => {
     ...order,
     pair: getMarketPair(order.symbol),
   }))
-  const filteredOrders = [
-    ...mappedAtomics,
-    ..._filter(
-      orders,
-      (order) => _toString(order.gid) === _toString(rowData?.gid),
-    ),
-  ]
+  const filteredOrders = useMemo(
+    () => [
+      ...mappedAtomics,
+      ..._filter(
+        orders,
+        (order) => _toString(order.gid) === _toString(rowData?.gid),
+      ),
+    ],
+    [mappedAtomics, orders, rowData?.gid],
+  )
+
+  const orderHistoryMapping = useMemo(
+    () => getRowMapping(formatTime),
+    [formatTime],
+  )
+
+  const dispatch = useDispatch()
 
   const handleSave = useCallback(
     (name, gid) => {
-      saveAsJSON(orders, `algo-${name}-${gid}`)
+      saveAsJSON(filteredOrders, `algo-${name}-${gid}`)
     },
-    [orders],
+    [filteredOrders],
   )
+
+  const updateTableState = (state) => {
+    dispatch(
+      UIActions.updateComponentState({
+        state,
+        layoutID,
+        componentID: COMPONENT_ID,
+      }),
+    )
+  }
 
   if (isOpen && _isEmpty(rowData)) {
     return <Spinner />
@@ -67,29 +100,28 @@ const AlgoOrderDetailsModal = ({ onClose, algoOrderId }) => {
     <Modal
       onClose={onClose}
       isOpen={isOpen}
-      title={t('AOTableModal.detailsModalTitle')}
+      title={
+        <AlgoOrderDetailsModalHeader rowData={rowData} onClose={onClose} />
+      }
       className='hfui-ao-details-modal'
       height={460}
       width={1200}
+      isCloseButtonShown={false}
     >
-      <div className='title-container'>
-        <div className='hfui-navbar__layout-settings__title'>
-          {rowData?.name}
-          <span className='sub-title'>{rowData?.label}</span>
-        </div>
-      </div>
       <div className='basic-info'>
         <div className='info-col'>
           <span className='info-label'>{t('table.created')}</span>
           {' '}
           <span className='info-value'>
-            {new Date(rowData?.createdAt || +rowData?.gid).toLocaleString()}
+            {formatTime(rowData?.createdAt || +rowData?.gid)}
           </span>
         </div>
         <div className='info-col'>
           <span className='info-label'>{t('table.symbol')}</span>
           {' '}
-          <span className='info-value'>{rowData?.args?.symbol}</span>
+          <span className='info-value'>
+            {getMarketPair(rowData?.args?.symbol)}
+          </span>
         </div>
         <div className='info-col'>
           <span className='info-label'>{t('table.context')}</span>
@@ -121,9 +153,11 @@ const AlgoOrderDetailsModal = ({ onClose, algoOrderId }) => {
         <Scrollbars>
           <UfxOrderHistory
             orders={filteredOrders}
-            rowMapping={rowMapping}
+            rowMapping={orderHistoryMapping}
             isMobileLayout={false}
             loadMoreRows={() => {}}
+            tableState={tableState}
+            updateTableState={updateTableState}
           />
         </Scrollbars>
       </div>

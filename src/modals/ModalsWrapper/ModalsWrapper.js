@@ -12,6 +12,7 @@ const ClosePositionModal = lazy(() => import('../ClosePositionModal'))
 const ConfirmDMSModal = lazy(() => import('../ConfirmDMSModal'))
 const EditOrderModal = lazy(() => import('../EditOrderModal'))
 const ResetAPIKeysModal = lazy(() => import('../ResetAPIKeysModal'))
+const HelpUsImproveHoneyModal = lazy(() => import('../HelpUsImproveHoneyModal'))
 
 const ModalsWrapper = ({ isElectronApp }) => {
   return (
@@ -24,6 +25,7 @@ const ModalsWrapper = ({ isElectronApp }) => {
           <AppSettingsModal />
           <CloseSessionModal />
           <ResetAPIKeysModal />
+          <HelpUsImproveHoneyModal />
         </>
       )}
       <NoConnectionActionModal />

@@ -1,12 +1,11 @@
 import { put, select } from 'redux-saga/effects'
-import { getAuthToken, getIsAOsHistoryLoaded } from '../../selectors/ws'
+import { getAuthToken } from '../../selectors/ws'
 import WSActions from '../../actions/ws'
 
 export default function* requestAOsHistory({ payload }) {
   const { showAOsHistory } = payload
-  const isHistoryLoaded = yield select(getIsAOsHistoryLoaded)
 
-  if (!showAOsHistory || isHistoryLoaded) {
+  if (!showAOsHistory) {
     return
   }
   const authToken = yield select(getAuthToken)

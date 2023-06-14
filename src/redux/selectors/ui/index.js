@@ -15,6 +15,7 @@ import getServicesStatus from './get_services_status'
 import getUIModalStateForKey from './get_ui_modal_state'
 import getCurrentStrategy from './get_current_strategy'
 import getIsStrategyDirty from './get_is_strategy_dirty'
+import getFormatTimeFn from './get_format_time_fn'
 
 export * from './get_settings'
 export * from './get_core_settings'
@@ -39,4 +40,5 @@ export {
   getCurrentStrategy,
   getIsStrategyDirty,
   getUIModalStateForKey,
+  getFormatTimeFn,
 }

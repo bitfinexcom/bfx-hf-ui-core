@@ -9,6 +9,7 @@ import AtomicOrdersTable from './AtomicOrdersTable'
 import { cancelOrder } from './AtomicOrdersTable.helpers'
 import { UI_MODAL_KEYS } from '../../redux/constants/modals'
 import { UI_KEYS } from '../../redux/constants/ui_keys'
+import { getFormatTimeFn } from '../../redux/selectors/ui'
 
 const { getIsDerivativePair } = reduxSelectors
 
@@ -18,6 +19,7 @@ const mapStateToProps = (state = {}, { activeFilter }) => ({
   atomicOrders: getAtomicOrders(state),
   getMarketPair: getMarketPair(state),
   getIsDerivativePair: getIsDerivativePair(state),
+  formatTime: getFormatTimeFn(state),
 })
 
 const mapDispatchToProps = dispatch => ({

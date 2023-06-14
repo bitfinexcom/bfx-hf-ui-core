@@ -12,16 +12,45 @@ import { ORDER_SHAPE } from '../../constants/prop-types-shapes'
 import './style.css'
 
 const AtomicOrdersTable = ({
-  atomicOrders, filteredAtomicOrders, renderedInTradingState,
-  cancelOrder, authToken, getMarketPair, editOrder, getIsDerivativePair,
+  atomicOrders,
+  filteredAtomicOrders,
+  renderedInTradingState,
+  cancelOrder,
+  authToken,
+  getMarketPair,
+  editOrder,
+  getIsDerivativePair,
+  formatTime,
+  tableState,
+  updateTableState,
 }) => {
   const [ref, size] = useSize()
   const data = renderedInTradingState ? filteredAtomicOrders : atomicOrders
   const { t } = useTranslation()
   const orders = getAtomicOrders(t)
   const columns = useMemo(
-    () => AtomicOrdersTableColumns(authToken, cancelOrder, size, t, getMarketPair, editOrder, getIsDerivativePair, orders),
-    [authToken, cancelOrder, getMarketPair, size, t, editOrder, getIsDerivativePair, orders],
+    () => AtomicOrdersTableColumns({
+      authToken,
+      cancelOrder,
+      size,
+      t,
+      getMarketPair,
+      editOrder,
+      getIsDerivativePair,
+      formatTime,
+      orders,
+    }),
+    [
+      authToken,
+      cancelOrder,
+      getMarketPair,
+      size,
+      t,
+      editOrder,
+      getIsDerivativePair,
+      formatTime,
+      orders,
+    ],
   )
 
   return (
@@ -32,6 +61,8 @@ const AtomicOrdersTable = ({
         <VirtualTable
           data={data}
           columns={columns}
+          tableState={tableState}
+          updateTableState={updateTableState}
           defaultSortBy='created'
           defaultSortDirection='DESC'
         />
@@ -49,6 +80,10 @@ AtomicOrdersTable.propTypes = {
   editOrder: PropTypes.func.isRequired,
   renderedInTradingState: PropTypes.bool,
   getIsDerivativePair: PropTypes.func.isRequired,
+  formatTime: PropTypes.func.isRequired,
+  // eslint-disable-next-line react/forbid-prop-types
+  tableState: PropTypes.object.isRequired,
+  updateTableState: PropTypes.func.isRequired,
 }
 
 AtomicOrdersTable.defaultProps = {

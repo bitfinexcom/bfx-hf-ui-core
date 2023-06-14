@@ -14,4 +14,5 @@ export const UI_KEYS = {
   remoteVersion: 'remoteVersion',
   isApplicationHidden: 'isApplicationHidden',
   isFullscreenBarShown: 'isFullscreenBarShown',
+  isRCDisclaimerShown: 'isRCDisclaimerShown',
 }

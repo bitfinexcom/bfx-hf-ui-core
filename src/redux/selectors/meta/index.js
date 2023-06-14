@@ -1,6 +1,7 @@
 import {
   getMarkets,
   getMarketPair,
+  getMarketsForBothModes,
   getMarketsForExecution,
   getMarketsSortedByVolumeForExecution,
 } from './get_markets'
@@ -13,6 +14,7 @@ export {
   getMarkets,
   getMarketPair,
   getMarketsForExecution,
+  getMarketsForBothModes,
   getMarketsSortedByVolumeForExecution,
   getMarketBySymbol,
   getTicker,

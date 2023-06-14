@@ -4,9 +4,12 @@ import PropTypes from 'prop-types'
 
 import { useTranslation } from 'react-i18next'
 import clsx from 'clsx'
+import { Tooltip } from '@ufx-ui/core'
+import { useSelector } from 'react-redux'
 import { renderString, CONVERT_LABELS_TO_PLACEHOLDERS } from './fields.helpers'
 import { LANGUAGES } from '../../../locales/i18n'
 import { getLocalDateFormat } from '../../../util/date'
+import { getTimestampFormat } from '../../../redux/selectors/ui'
 
 const DateInput = ({
   value,
@@ -18,19 +21,25 @@ const DateInput = ({
   validationError,
   disabled,
 }) => {
-  const { label, minDate: MIN_DATE } = def
+  const { label, minDate: MIN_DATE, customHelp } = def
   const renderedLabel = renderString(label, renderData)
 
   const { t, i18n } = useTranslation()
 
   const i18nMappedKey = i18n.getMappedLanguageKey()
 
+  const timestampFormat = useSelector(getTimestampFormat) || getLocalDateFormat(LANGUAGES[i18nMappedKey])
+
   return (
-    <div className={clsx('hfui-orderform__input fullWidth hfui-input', { disabled })}>
+    <div
+      className={clsx('hfui-orderform__input fullWidth hfui-input', {
+        disabled,
+      })}
+    >
       <DatePicker
         width='100%'
         popperPlacement='bottom-start'
-        dateFormat={getLocalDateFormat(LANGUAGES[i18nMappedKey])}
+        dateFormat={timestampFormat}
         timeCaption={t('table.time')}
         timeFormat='HH:mm'
         dropdownMode='select'
@@ -49,7 +58,17 @@ const DateInput = ({
       />
 
       {!CONVERT_LABELS_TO_PLACEHOLDERS && (
-        <p className='hfui-orderform__input-label'>{renderedLabel}</p>
+        <p className='hfui-orderform__input-label'>
+          {renderedLabel}
+          {customHelp && (
+            <Tooltip
+              className='__react-tooltip __react_component_tooltip'
+              content={customHelp}
+            >
+              <i className='fa fa-info-circle' />
+            </Tooltip>
+          )}
+        </p>
       )}
 
       {validationError && (
@@ -81,12 +100,13 @@ DateInput.propTypes = {
       PropTypes.number,
       PropTypes.bool,
       PropTypes.instanceOf(Date),
+      PropTypes.object,
     ]),
   ),
   renderData: PropTypes.objectOf(
     PropTypes.oneOfType([PropTypes.string, PropTypes.number, PropTypes.bool]),
   ),
-  value: PropTypes.instanceOf(Date),
+  value: PropTypes.oneOfType([PropTypes.instanceOf(Date), PropTypes.string]),
   onChange: PropTypes.func.isRequired,
   validationError: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
   minDate: PropTypes.instanceOf(Date),
@@ -99,7 +119,7 @@ DateInput.defaultProps = {
   maxDate: null,
   renderData: {},
   validationError: '',
-  value: new Date(),
+  value: null,
   def: {},
   disabled: false,
 }

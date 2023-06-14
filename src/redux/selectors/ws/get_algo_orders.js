@@ -1,8 +1,10 @@
 import _get from 'lodash/get'
 import _values from 'lodash/values'
+import _includes from 'lodash/includes'
+import _filter from 'lodash/filter'
 
 import { createSelector } from 'reselect'
-import { REDUCER_PATHS } from '../../config'
+import { HOSTED_ALGO_ORDERS, REDUCER_PATHS } from '../../config'
 import { getShowAOsHistory } from '../ao'
 import { getCurrentMode } from '../ui'
 import getAlgoOrdersHistory from './get_algo_orders_history'
@@ -18,7 +20,17 @@ export const getAllAlgoOrdersArray = createSelector(
   ({ paper, main }) => _values({ ...paper, ...main }),
 )
 
+export const getFilteredLocalAlgoOrders = createSelector(
+  getAllAlgoOrdersArray,
+  (aos) => _filter(aos, ({ id }) => !_includes(HOSTED_ALGO_ORDERS, id)),
+)
+
 export const getCurrentModeAlgoOrders = createSelector(
   [getAllAlgoOrders, getAlgoOrdersHistory, getShowAOsHistory, getCurrentMode],
   (algoOrders, historyAOs, showHistory, currentMode) => _get(showHistory ? historyAOs : algoOrders, currentMode, EMPTY_OBJ),
+)
+
+export const getCurrentModeActiveAlgoOrders = createSelector(
+  [getAllAlgoOrders, getCurrentMode],
+  (algoOrders, currentMode) => _get(algoOrders, currentMode, EMPTY_OBJ),
 )

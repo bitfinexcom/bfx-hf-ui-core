@@ -156,7 +156,9 @@ BacktestTab.propTypes = {
     finished: PropTypes.bool,
     loading: PropTypes.bool,
     strategy: PropTypes.shape({
-      closedPositions: PropTypes.arrayOf(PropTypes.string),
+      closedPositions: PropTypes.oneOfType([
+        PropTypes.arrayOf(PropTypes.string), PropTypes.object,
+      ]),
     }),
     progressPerc: PropTypes.number,
     gid: PropTypes.number,

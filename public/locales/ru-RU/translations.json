@@ -419,7 +419,7 @@
     "startedLiveStrategyExecution": "Начато выполнение стратегии в реальном времени ({{name}}) для {{symbol}} - {{tf}}",
     "stoppedLiveStrategyExecution": "Закончено выполнение стратегии в реальном времени ({{name}}) для {{symbol}} - {{tf}}",
     "stoppedAO": "Остановленный алгоритмический ордер",
-    "startedAO": "Запущен АО {{name}} на {{target}}",
+    "startedAO": "Запущен АО {{alias}} на {{target}}",
     "unknownAlgoOrderId": "Неизвестный алгоритмический ордер ID: {{aoID}}",
     "cancellingOrderOn": "Отменяем ордер на {{target}}",
     "unauthorized": "Неавторизованный",

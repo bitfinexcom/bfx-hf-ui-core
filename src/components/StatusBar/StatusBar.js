@@ -4,14 +4,16 @@ import PropTypes from 'prop-types'
 import { useTranslation } from 'react-i18next'
 
 import { useDispatch } from 'react-redux'
-import { isElectronApp, appVersion, RELEASE_URL } from '../../redux/config'
+import {
+  isElectronApp, appVersion, RELEASE_URL, isRCVersion,
+} from '../../redux/config'
 import { changeUIModalState, setSettingsTab } from '../../redux/actions/ui'
 
 import NavbarButton from '../Navbar/Navbar.Link'
 import { SETTINGS_TABS } from '../../modals/AppSettingsModal/AppSettingsModal.constants'
+import { UI_MODAL_KEYS } from '../../redux/constants/modals'
 
 import './style.css'
-import { UI_MODAL_KEYS } from '../../redux/constants/modals'
 
 const StatusBar = ({
   wsConnected,
@@ -51,9 +53,16 @@ const StatusBar = ({
   }
 
   return (
-    <div className='hfui-statusbar__wrapper'>
+    <div className={ClassNames('hfui-statusbar__wrapper')}>
+      {isRCVersion && (
+      <div className='hfui-statusbar__rc'>
+        <p className='hfui-statusbar__rc-disclaimer'>
+          {t('RC_disclaimer.bottom')}
+        </p>
+      </div>
+      )}
       <div className='hfui-statusbar__left'>
-        {!isPaperTrading && (
+        {!isPaperTrading && !isRCVersion && (
           <div className='hfui-statusbar__desclaimer'>
             <span className='hfui-statusbar__pulse' />
             <span>{t('statusbar.liveModeDisclaimer')}</span>

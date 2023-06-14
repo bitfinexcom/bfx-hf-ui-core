@@ -4,7 +4,12 @@ import { useTranslation } from 'react-i18next'
 import AtomicOrdersTable from '../AtomicOrdersTable'
 import Panel from '../../ui/Panel'
 
-const AtomicOrdersTablePanel = ({ dark, onRemove }) => {
+const AtomicOrdersTablePanel = ({
+  dark,
+  onRemove,
+  updateState,
+  savedState,
+}) => {
   const { t } = useTranslation()
 
   return (
@@ -14,18 +19,23 @@ const AtomicOrdersTablePanel = ({ dark, onRemove }) => {
       dark={dark}
       darkHeader={dark}
     >
-      <AtomicOrdersTable />
+      <AtomicOrdersTable
+        tableState={savedState}
+        updateTableState={updateState}
+      />
     </Panel>
   )
 }
 
 AtomicOrdersTablePanel.propTypes = {
-  onRemove: PropTypes.func,
+  onRemove: PropTypes.func.isRequired,
   dark: PropTypes.bool,
+  // eslint-disable-next-line react/forbid-prop-types
+  savedState: PropTypes.object.isRequired,
+  updateState: PropTypes.func.isRequired,
 }
 
 AtomicOrdersTablePanel.defaultProps = {
-  onRemove: () => { },
   dark: true,
 }
 

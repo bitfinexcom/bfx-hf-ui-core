@@ -24,12 +24,14 @@ const mapDispatchToProps = dispatch => ({ // eslint-disable-line
     updateAutoLoginState()
     dispatch(WSActions.initAuth(password))
   },
-
   onUnlock: (password, mode) => {
     const isPaperTrading = mode === PAPER_MODE
     dispatch(WSActions.auth(password, mode))
     dispatch(UIActions.setMarketFromStore(isPaperTrading))
     dispatch(UIActions.setTradingMode(isPaperTrading))
+  },
+  logInformation: (message, level, action, trace) => {
+    dispatch(UIActions.logInformation(message, level, action, trace))
   },
 })
 

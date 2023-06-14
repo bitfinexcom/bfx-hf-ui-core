@@ -3,11 +3,19 @@
 .hfui-aolist__wrapper {
   padding-bottom: 8px;
   height: 100%;
+  min-width: 700px;
+
+  &_actions_container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
 
   &_more_info {
     text-transform: uppercase;
     cursor: pointer;
     color: var(--shade-6) !important;
+    margin-right: 10px;
 
     &:hover {
       color: var(--primary-8) !important;
@@ -29,6 +37,13 @@
     }
   }
 
+  .ReactVirtualized__Table__rowColumn {
+    // Actions column
+    &:last-child {
+      justify-content: flex-end;
+    }
+  }
+
   .ReactVirtualized__Table__Grid {
     > div {
       overflow-x: hidden !important;
@@ -37,24 +52,11 @@
   }
 }
 
-.icons-cell {
+.hfui-ao-actions {
   display: flex;
   justify-content: space-around;
   align-items: center;
   color: var(--shade-6) !important;
-
-  .edit-order-menu {
-    top: 0% !important;
-    left: 82% !important;
-    min-width: 180px;
-
-    .hfui-navbar__layout-settings__menu-buttons {
-      :hover {
-        color: var(--primary-8) !important;
-        background-color: var(--lighter-background-color) !important;
-      }
-    }
-  }
 
   .more-options-button {
     padding-left: 5px;
@@ -68,4 +70,8 @@
       color: var(--primary-8);
     }
   }
+}
+
+.tooltip__edit-order-menu {
+  padding: 0;
 }

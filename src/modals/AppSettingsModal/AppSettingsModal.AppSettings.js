@@ -21,6 +21,8 @@ import {
 } from '../../redux/selectors/ui'
 import { isMacOS } from '../../redux/config'
 import { UI_KEYS } from '../../redux/constants/ui_keys'
+import { LOG_LEVELS } from '../../constants/logging'
+import TimeFormatSetting from './AppSettingsModal.TimeFormatSetting'
 
 const ipcHelpers = window.electronService
 
@@ -52,24 +54,25 @@ const AppSettings = () => {
 
   const updateTheme = (nextTheme) => {
     setCurrentTheme(nextTheme)
-    dispatch(WSActions.saveSettings(SETTINGS_KEYS.THEME, nextTheme))
+    dispatch(WSActions.saveSetting(SETTINGS_KEYS.THEME, nextTheme))
     dispatch(GAActions.updateSettings())
     localStorage.setItem(SETTINGS_KEYS.THEME, nextTheme)
   }
 
   const hideOnCloseHandler = (shouldHide) => {
     setHideOnCloseChecked(shouldHide)
-    dispatch(WSActions.saveSettings(SETTINGS_KEYS.HIDE_ON_CLOSE, shouldHide))
+    dispatch(WSActions.saveSetting(SETTINGS_KEYS.HIDE_ON_CLOSE, shouldHide))
     dispatch(GAActions.updateSettings())
   }
 
   const fullscreenHandler = (fullscreen) => {
     setFullscreenChecked(fullscreen)
-    dispatch(WSActions.saveSettings(SETTINGS_KEYS.FULLSCREEN, fullscreen))
+    dispatch(WSActions.saveSetting(SETTINGS_KEYS.FULLSCREEN, fullscreen))
     dispatch(UIActions.setUIValue(UI_KEYS.isFullscreenBarShown, fullscreen))
     dispatch(GAActions.updateSettings())
     if (ipcHelpers) {
       ipcHelpers.sendChangeFullscreenEvent(fullscreen)
+      dispatch(UIActions.logInformation('The fullscreen mode is toggled', LOG_LEVELS.INFO, 'fullscreen_toggle'))
     }
   }
 
@@ -87,6 +90,7 @@ const AppSettings = () => {
           options={themes}
         />
       </div>
+      <TimeFormatSetting />
       <br />
       <div className='appsettings-modal__setting'>
         <Checkbox

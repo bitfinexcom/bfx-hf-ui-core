@@ -14,7 +14,6 @@ import { useLocation } from 'react-router'
 import { selectLayout, deleteLayout, saveLayout } from '../../redux/actions/ui'
 import { getLayouts, getUIState } from '../../redux/selectors/ui'
 
-import LayoutIcon from './layout-icon.svg'
 import NavbarButton from './Navbar.Button'
 import Routes from '../../constants/routes'
 import useToggle from '../../hooks/useToggle'
@@ -107,7 +106,7 @@ const LayoutSettings = () => {
     <div className='hfui-navbar__layout-settings'>
       <OutsideClickHandler onOutsideClick={closeLayoutMenu}>
         <NavbarButton
-          icon={LayoutIcon}
+          icon='layout-icon'
           alt={t('layoutSettings.title')}
           onClick={handleLayoutIconClick}
           className={isLayoutMenuOpen ? 'is-open' : undefined}

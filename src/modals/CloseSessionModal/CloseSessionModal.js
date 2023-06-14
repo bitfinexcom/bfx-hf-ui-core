@@ -8,20 +8,31 @@ import { getUIModalStateForKey } from '../../redux/selectors/ui'
 import { UI_MODAL_KEYS } from '../../redux/constants/modals'
 import UIActions from '../../redux/actions/ui'
 import WSActions from '../../redux/actions/ws'
+import { LOG_LEVELS } from '../../constants/logging'
 
 import SessionList from './SessionList'
+import AlgoOrderDetailsModal from '../AlgoOrderDetailsModal'
 
 import './style.css'
 
 const CloseSessionModal = () => {
   const [isLoading, setIsLoading] = useState(false)
+  const [moreInfoAlgoOrderGID, setMoreInfoAlgoOrderGID] = useState(null)
 
   const isOpen = useSelector((state) => getUIModalStateForKey(state, UI_MODAL_KEYS.CLOSE_SESSION_MODAL))
 
   const dispatch = useDispatch()
   const { t } = useTranslation()
 
-  const onClose = () => dispatch(UIActions.changeUIModalState(UI_MODAL_KEYS.CLOSE_SESSION_MODAL, false))
+  const onClose = () => {
+    dispatch(UIActions.changeUIModalState(UI_MODAL_KEYS.CLOSE_SESSION_MODAL, false))
+  }
+
+  const onCloseAndLog = () => {
+    onClose()
+    dispatch(UIActions.logInformation('Closing session terminated - user did not cancel active orders or strategies.', LOG_LEVELS.INFO, 'close_session_progress'))
+  }
+
   const onSubmit = () => {
     dispatch(WSActions.send(['app.safe_close']))
     setIsLoading(true)
@@ -31,6 +42,7 @@ const CloseSessionModal = () => {
       setIsLoading(false)
       onClose()
 
+      dispatch(UIActions.logInformation('Can\'t close the session: the message allowing the application to close was not received.', LOG_LEVELS.ERROR, 'close_session_failed'))
       dispatch(UIActions.recvNotification({
         mts: Date.now(),
         status: 'error',
@@ -40,32 +52,45 @@ const CloseSessionModal = () => {
     }, 10000)
   }
 
+  const openAODetailsModal = (gid) => {
+    onClose()
+    setMoreInfoAlgoOrderGID(gid)
+  }
+
+  const AODetailsModalClose = () => {
+    setMoreInfoAlgoOrderGID(null)
+    dispatch(UIActions.changeUIModalState(UI_MODAL_KEYS.CLOSE_SESSION_MODAL, true))
+  }
+
   return (
-    <Modal
-      label={t('closeSessionModal.title')}
-      isOpen={isOpen}
-      onClose={onClose}
-      onSubmit={onSubmit}
-      width={600}
-    >
-      {isLoading ? <Spinner /> : (
-        <div>
-          <p className='close-session-modal__description'>
-            {t('closeSessionModal.text_1')}
-          </p>
-          <SessionList onModalClose={onClose} />
-          <p>{t('closeSessionModal.text_2')}</p>
-        </div>
-      )}
-      <Modal.Footer>
-        <Modal.Button primary onClick={onSubmit} disabled={isLoading}>
-          {t('closeSessionModal.submitButton')}
-        </Modal.Button>
-        <Modal.Button secondary onClick={onClose} disabled={isLoading}>
-          {t('closeSessionModal.closeButton')}
-        </Modal.Button>
-      </Modal.Footer>
-    </Modal>
+    <>
+      <Modal
+        label={t('closeSessionModal.title')}
+        isOpen={isOpen}
+        onClose={onCloseAndLog}
+        onSubmit={onSubmit}
+        width={600}
+      >
+        {isLoading ? <Spinner /> : (
+          <div>
+            <p className='close-session-modal__description'>
+              {t('closeSessionModal.text_1')}
+            </p>
+            <SessionList onModalClose={onClose} openAODetailsModal={openAODetailsModal} />
+            <p>{t('closeSessionModal.text_2')}</p>
+          </div>
+        )}
+        <Modal.Footer>
+          <Modal.Button primary onClick={onSubmit} disabled={isLoading}>
+            {t('closeSessionModal.submitButton')}
+          </Modal.Button>
+          <Modal.Button secondary onClick={onCloseAndLog} disabled={isLoading}>
+            {t('closeSessionModal.closeButton')}
+          </Modal.Button>
+        </Modal.Footer>
+      </Modal>
+      <AlgoOrderDetailsModal onClose={AODetailsModalClose} algoOrderId={moreInfoAlgoOrderGID} />
+    </>
   )
 }
 

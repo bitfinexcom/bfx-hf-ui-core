@@ -72,6 +72,19 @@
     a {
       text-decoration: none;
     }
+
+    a:hover {
+      text-decoration: underline;
+      opacity: 0.9;
+    }
+
+    &.bold {
+      font-weight: 600;
+    }
+
+    &.light {
+      font-weight: 300;
+    }
   }
 
   &__description {
@@ -99,20 +112,23 @@
     margin-bottom: spacing(1.5);
     padding: spacing();
 
-    svg {
-      width: 16px;
-      height: 16px;
+    i {
+      font-size: 17px;
       margin-right: spacing(0.5);
     }
   }
-  &__legal {
-    margin-top: 40px;
-    display: flex;
-    flex-direction: column;
-  }
 
-  &__legal-disclaimer {
-    font-size: 11px;
+  &__legal {
+    font-size: 11px !important;
+
+    .legal__item {
+      margin-bottom: 7px;
+      display: block;
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
   }
 
   &__beta-disclaimer {
@@ -135,5 +151,13 @@
       margin: 20px auto;
       display: block;
     }
+  }
+
+  .override-reconnection-timer__input {
+    width: 200px !important;
+  }
+
+  &__timeformat-input {
+    margin-bottom: spacing();
   }
 }

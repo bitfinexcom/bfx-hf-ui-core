@@ -12,6 +12,7 @@ import {
   getIsBetaVersion,
   getIsStrategiesTabVisible,
   SETTINGS_KEYS,
+  getIsFullscreen,
 } from '../../redux/selectors/ui'
 import { MAX_ORDER_COUNT_SETTING } from '../../redux/selectors/ui/get_core_settings'
 import { getAuthToken, getIsBitfinexConnected } from '../../redux/selectors/ws'
@@ -19,6 +20,7 @@ import { getAuthToken, getIsBitfinexConnected } from '../../redux/selectors/ws'
 import HFUI from './HFUI'
 import { UI_MODAL_KEYS } from '../../redux/constants/modals'
 import { UI_KEYS } from '../../redux/constants/ui_keys'
+import { LOG_LEVELS } from '../../constants/logging'
 
 const mapStateToProps = (state = {}) => {
   const { ui } = state
@@ -32,6 +34,7 @@ const mapStateToProps = (state = {}) => {
     settingsTheme: getThemeSetting(state),
     isBfxConnected: getIsBitfinexConnected(state),
     showStrategies: getIsBetaVersion(state) || getIsStrategiesTabVisible(state),
+    isFullscreen: getIsFullscreen(state),
   }
 }
 
@@ -61,6 +64,7 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch(WSActions.onUnload(authToken, mode))
   },
   subscribeAllTickers: () => {
+    dispatch(UIActions.logInformation(null, LOG_LEVELS.DEBUG, 'market_data_fetch'))
     dispatch(reduxActions.fetchAllTickersPeriodically())
   },
   shouldShowAOPauseModalState: () => {
@@ -89,7 +93,7 @@ const mapDispatchToProps = (dispatch) => ({
   },
   updateFullscreenState: (fullscreen) => {
     dispatch(UIActions.setUIValue(UI_KEYS.isFullscreenBarShown, fullscreen))
-    dispatch(WSActions.saveSettings(SETTINGS_KEYS.FULLSCREEN, fullscreen))
+    dispatch(WSActions.saveSetting(SETTINGS_KEYS.FULLSCREEN, fullscreen))
   },
 })
 

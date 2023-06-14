@@ -2,7 +2,7 @@
 
 .hfui-active-ao-modal__wrapper {
   .modal__body {
-    max-height: 500px;
+    max-height: 600px;
     overflow: auto;
 
     .ao-modal-virtual-table {
@@ -15,6 +15,12 @@
         width: 18px;
         height: 18px;
       }
+    }
+
+    .table-title {
+      margin-bottom: 7px;
+      font-size: 15px;
+      font-weight: 600;
     }
 
     .ReactVirtualized__Table__row {
