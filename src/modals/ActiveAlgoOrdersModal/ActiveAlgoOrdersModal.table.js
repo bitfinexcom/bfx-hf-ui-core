@@ -5,12 +5,16 @@ import _forEach from 'lodash/forEach'
 import _filter from 'lodash/filter'
 import { VirtualTable } from '@ufx-ui/core'
 import { useTranslation } from 'react-i18next'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 
 import columns from './ActiveAlgoOrdersModal.columns'
-import { getFormatTimeFn } from '../../redux/selectors/ui'
+import { getComponentState, getFormatTimeFn, getUIState } from '../../redux/selectors/ui'
+import { UI_KEYS } from '../../redux/constants/ui_keys'
+import UIActions from '../../redux/actions/ui'
 
 import './style.css'
+
+const COMPONENT_ID = 'ACTIVE_AOS_MODAL'
 
 const AlgoOrdersTable = ({
   orders,
@@ -21,6 +25,21 @@ const AlgoOrdersTable = ({
   const { t } = useTranslation()
 
   const formatTime = useSelector(getFormatTimeFn)
+  const layoutID = useSelector((state) => getUIState(state, UI_KEYS.layoutID))
+  const tableState = useSelector((state) => getComponentState(state, layoutID, null, COMPONENT_ID),
+  )
+
+  const dispatch = useDispatch()
+
+  const updateTableState = (state) => {
+    dispatch(
+      UIActions.updateComponentState({
+        state,
+        layoutID,
+        componentID: COMPONENT_ID,
+      }),
+    )
+  }
 
   const onOrderSelect = useCallback(
     (e, gid, algoID) => {
@@ -74,6 +93,8 @@ const AlgoOrdersTable = ({
         defaultSortDirection='ASC'
         onRowClick={onRowClick}
         rowHeight={40}
+        updateTableState={updateTableState}
+        tableState={tableState}
       />
     </>
   )

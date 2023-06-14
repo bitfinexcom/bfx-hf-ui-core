@@ -23,6 +23,8 @@ const OrderHistory = ({
   apiCredentials,
   currentMode,
   formatTime,
+  updateState,
+  savedState,
 }) => {
   const [ref, { width }] = useSize()
   const { t } = useTranslation()
@@ -65,6 +67,8 @@ const OrderHistory = ({
             rowMapping={orderHistoryMapping}
             isMobileLayout={width < 700}
             loadMoreRows={handleLoadMoreRows}
+            tableState={savedState}
+            updateTableState={updateState}
           />
         )}
       </div>
@@ -83,6 +87,9 @@ OrderHistory.propTypes = {
   apiCredentials: PropTypes.objectOf(PropTypes.bool),
   currentMode: PropTypes.string.isRequired,
   formatTime: PropTypes.func.isRequired,
+  // eslint-disable-next-line react/forbid-prop-types
+  savedState: PropTypes.object.isRequired,
+  updateState: PropTypes.func.isRequired,
 }
 
 OrderHistory.defaultProps = {

@@ -11,14 +11,13 @@ import {
   getAtomicOrders,
 } from '../../redux/selectors/ws'
 import { getMarkets } from '../../redux/selectors/meta'
-import UIActions from '../../redux/actions/ui'
 import AOActions from '../../redux/actions/ao'
-import { getComponentState, getCurrentMode } from '../../redux/selectors/ui'
+import { getCurrentMode } from '../../redux/selectors/ui'
 import { getShowAOsHistory } from '../../redux/selectors/ao'
 
 import TradingStatePanel from './TradingStatePanel'
 
-const mapStateToProps = (state = {}, { layoutID, layoutI: id } = {}) => ({
+const mapStateToProps = (state = {}) => ({
   authToken: getAuthToken(state),
   currentMode: getCurrentMode(state),
   getPositionsCount: getFilteredPositionsCount(state),
@@ -29,20 +28,10 @@ const mapStateToProps = (state = {}, { layoutID, layoutI: id } = {}) => ({
   positions: getAllPositions(state),
   atomicOrders: getAtomicOrders(state),
   markets: getMarkets(state),
-  savedState: getComponentState(state, layoutID, 'trading_state', id),
   getCurrencySymbol: reduxSelectors.getCurrencySymbolMemo(state),
 })
 
 const mapDispatchToProps = (dispatch) => ({
-  updateState: (layoutID, componentID, state) => {
-    dispatch(
-      UIActions.updateComponentState({
-        state,
-        layoutID,
-        componentID,
-      }),
-    )
-  },
   setShowAOsHistory: (showAOsHistory) => {
     dispatch(AOActions.setShowAOsHistory(showAOsHistory))
   },

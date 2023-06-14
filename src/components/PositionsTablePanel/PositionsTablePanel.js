@@ -5,7 +5,12 @@ import { useTranslation } from 'react-i18next'
 import PositionsTable from '../PositionsTable'
 import Panel from '../../ui/Panel'
 
-const PositionsTablePanel = ({ onRemove, dark }) => {
+const PositionsTablePanel = ({
+  onRemove,
+  dark,
+  updateState,
+  savedState,
+}) => {
   const { t } = useTranslation()
 
   return (
@@ -15,7 +20,10 @@ const PositionsTablePanel = ({ onRemove, dark }) => {
       dark={dark}
       darkHeader={dark}
     >
-      <PositionsTable />
+      <PositionsTable
+        tableState={savedState}
+        updateTableState={updateState}
+      />
     </Panel>
   )
 }
@@ -23,6 +31,9 @@ const PositionsTablePanel = ({ onRemove, dark }) => {
 PositionsTablePanel.propTypes = {
   onRemove: PropTypes.func.isRequired,
   dark: PropTypes.bool,
+  // eslint-disable-next-line react/forbid-prop-types
+  savedState: PropTypes.object.isRequired,
+  updateState: PropTypes.func.isRequired,
 }
 
 PositionsTablePanel.defaultProps = {

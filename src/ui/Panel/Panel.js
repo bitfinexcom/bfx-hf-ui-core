@@ -81,10 +81,6 @@ const Panel = ({
 
   const _setSelectedSBTab = (tab) => setSelectedSBTab(tab)
 
-  useEffect(() => {
-    _setSelectedTab(initTab)
-  }, [_setSelectedTab, initTab])
-
   const setPanelFullscreen = () => {
     if (panelRef.current === null) return
 

@@ -12,7 +12,7 @@ import { Button, VirtualTable } from '@ufx-ui/core'
 import { reduxSelectors } from '@ufx-ui/bfx-containers'
 import PropTypes from 'prop-types'
 import { useTranslation } from 'react-i18next'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import _findIndex from 'lodash/findIndex'
 import _isEmpty from 'lodash/isEmpty'
 import { Icon } from 'react-fa'
@@ -24,6 +24,7 @@ import {
   LAYOUT_CONFIG,
 } from '../StrategyEditor/components/StrategiesGridLayout.constants'
 import { getRowRenderer, rowCache } from './StrategyTradesTable.Row'
+import UIActions from '../../redux/actions/ui'
 
 import { onTradeExportClick } from './StrategyTradesTable.helpers'
 import {
@@ -31,9 +32,17 @@ import {
   STRATEGY_SHAPE,
   STRATEGY_TRADE_SHAPE,
 } from '../../constants/prop-types-shapes'
-import { getFormatTimeFn } from '../../redux/selectors/ui'
+import {
+  getComponentState,
+  getFormatTimeFn,
+  getUIState,
+} from '../../redux/selectors/ui'
+import { UI_KEYS } from '../../redux/constants/ui_keys'
+import { COMPONENT_IDS } from '../GridLayout/GridLayout.helpers'
 
 import './style.css'
+
+const COMPONENT_ID = COMPONENT_IDS.STRATEGIES_TRADES_TABLE
 
 const { getCurrencySymbolMemo } = reduxSelectors
 
@@ -46,9 +55,12 @@ const StrategyTradesTable = ({
   const [isExpanded, setIsExpanded] = useState(false)
   const getCurrencySymbol = useSelector(getCurrencySymbolMemo)
   const formatTime = useSelector(getFormatTimeFn)
-
+  const layoutID = useSelector((state) => getUIState(state, UI_KEYS.layoutID))
+  const tableState = useSelector((state) => getComponentState(state, layoutID, null, COMPONENT_ID),
+  )
   const { strategyOptions: { symbol = {} } = {} } = strategy
   const { t } = useTranslation()
+  const dispatch = useDispatch()
 
   const onExpandClick = useCallback(() => {
     const currentElementIndex = _findIndex(
@@ -66,6 +78,16 @@ const StrategyTradesTable = ({
     setIsExpanded(true)
     setLayoutConfig(newLayoutConfig)
   }, [layoutConfig, setLayoutConfig])
+
+  const updateTableState = (state) => {
+    dispatch(
+      UIActions.updateComponentState({
+        state,
+        layoutID,
+        componentID: COMPONENT_ID,
+      }),
+    )
+  }
 
   const onCompressClick = () => {
     setIsExpanded(false)
@@ -151,6 +173,8 @@ const StrategyTradesTable = ({
           scrollingResetTimeInterval={0}
           defaultSortBy='entryAt'
           defaultSortDirection='DESC'
+          updateTableState={updateTableState}
+          tableState={tableState}
         />
       )}
     </Panel>

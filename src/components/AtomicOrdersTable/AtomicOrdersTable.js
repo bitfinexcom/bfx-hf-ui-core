@@ -21,6 +21,8 @@ const AtomicOrdersTable = ({
   editOrder,
   getIsDerivativePair,
   formatTime,
+  tableState,
+  updateTableState,
 }) => {
   const [ref, size] = useSize()
   const data = renderedInTradingState ? filteredAtomicOrders : atomicOrders
@@ -59,6 +61,8 @@ const AtomicOrdersTable = ({
         <VirtualTable
           data={data}
           columns={columns}
+          tableState={tableState}
+          updateTableState={updateTableState}
           defaultSortBy='created'
           defaultSortDirection='DESC'
         />
@@ -77,6 +81,9 @@ AtomicOrdersTable.propTypes = {
   renderedInTradingState: PropTypes.bool,
   getIsDerivativePair: PropTypes.func.isRequired,
   formatTime: PropTypes.func.isRequired,
+  // eslint-disable-next-line react/forbid-prop-types
+  tableState: PropTypes.object.isRequired,
+  updateTableState: PropTypes.func.isRequired,
 }
 
 AtomicOrdersTable.defaultProps = {

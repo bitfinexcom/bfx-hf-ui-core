@@ -6,7 +6,12 @@ import AlgoOrdersTable from '../AlgoOrdersTable'
 import Panel from '../../ui/Panel'
 import AlgoOrdersHistoryButton from '../AlgoOrdersHistoryButton'
 
-const AlgoOrdersTablePanel = ({ dark, onRemove }) => {
+const AlgoOrdersTablePanel = ({
+  dark,
+  onRemove,
+  updateState,
+  savedState,
+}) => {
   const { t } = useTranslation()
 
   return (
@@ -17,7 +22,10 @@ const AlgoOrdersTablePanel = ({ dark, onRemove }) => {
       darkHeader={dark}
       extraIcons={<AlgoOrdersHistoryButton />}
     >
-      <AlgoOrdersTable />
+      <AlgoOrdersTable
+        tableState={savedState}
+        updateTableState={updateState}
+      />
     </Panel>
   )
 }
@@ -25,6 +33,9 @@ const AlgoOrdersTablePanel = ({ dark, onRemove }) => {
 AlgoOrdersTablePanel.propTypes = {
   dark: PropTypes.bool,
   onRemove: PropTypes.func.isRequired,
+  // eslint-disable-next-line react/forbid-prop-types
+  savedState: PropTypes.object.isRequired,
+  updateState: PropTypes.func.isRequired,
 }
 
 AlgoOrdersTablePanel.defaultProps = {

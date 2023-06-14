@@ -37,9 +37,19 @@ const {
 
 const OrderBookPanel = (props) => {
   const {
-    onRemove, showMarket, canChangeStacked, moveable,
-    removeable, dark, savedState, activeMarket,
-    markets, canChangeMarket, layoutID, layoutI, updateState, allMarketBooks, getCurrencySymbol,
+    onRemove,
+    showMarket,
+    canChangeStacked,
+    moveable,
+    removeable,
+    dark,
+    savedState,
+    activeMarket,
+    markets,
+    canChangeMarket,
+    updateState,
+    allMarketBooks,
+    getCurrencySymbol,
   } = props
   const {
     sumAmounts = true,
@@ -54,55 +64,60 @@ const OrderBookPanel = (props) => {
 
   const [settingsOpen, setSettingsOpen] = useState(false)
 
-  const {
-    isWSConnected,
-    symbol,
-    dispatch,
-  } = useCommonBfxData(base, quote)
+  const { isWSConnected, symbol, dispatch } = useCommonBfxData(base, quote)
 
-  const snapshotReceived = useSelector(state => getBookSnapshotReceived(state, symbol))
-  const asks = useSelector(state => getBookAsks(state, symbol))
-  const bids = useSelector(state => getBookBids(state, symbol))
-  const pAsks = useSelector(state => getBookpAsks(state, symbol))
-  const pBids = useSelector(state => getBookpBidsDesc(state, symbol))
-  const tAsks = useSelector(state => getBooktAsks(state, symbol))
-  const tBids = useSelector(state => getBooktBids(state, symbol))
-  const isSubscribedToSymbol = useSelector(state => isSubscribedToBook(state, symbol))
+  const snapshotReceived = useSelector((state) => getBookSnapshotReceived(state, symbol),
+  )
+  const asks = useSelector((state) => getBookAsks(state, symbol))
+  const bids = useSelector((state) => getBookBids(state, symbol))
+  const pAsks = useSelector((state) => getBookpAsks(state, symbol))
+  const pBids = useSelector((state) => getBookpBidsDesc(state, symbol))
+  const tAsks = useSelector((state) => getBooktAsks(state, symbol))
+  const tBids = useSelector((state) => getBooktBids(state, symbol))
+  const isSubscribedToSymbol = useSelector((state) => isSubscribedToBook(state, symbol),
+  )
 
   const { t } = useTranslation()
 
   // resubscribe book channel on market change
   useEffect(() => {
     if (isWSConnected && symbol && !isSubscribedToSymbol) {
-      dispatch(WSSubscribeChannel({
-        ...SUBSCRIPTION_CONFIG,
-        prec: 'P0',
-        symbol,
-      }))
+      dispatch(
+        WSSubscribeChannel({
+          ...SUBSCRIPTION_CONFIG,
+          prec: 'P0',
+          symbol,
+        }),
+      )
     }
   }, [isWSConnected, symbol, isSubscribedToSymbol, dispatch])
 
   const unSubscribeWSChannel = (s) => {
-    const booksUsingSymbol = _filter(allMarketBooks, (bookState) => bookState?.currentMarket?.wsID === s)
+    const booksUsingSymbol = _filter(
+      allMarketBooks,
+      (bookState) => bookState?.currentMarket?.wsID === s,
+    )
 
     // do not unsubscribe if more more than one books are subscribed to the symbol
     if (_size(booksUsingSymbol) > 1) {
       return
     }
 
-    dispatch(WSUnsubscribeChannel({
-      ...SUBSCRIPTION_CONFIG,
-      prec: 'P0',
-      symbol: s,
-    }))
+    dispatch(
+      WSUnsubscribeChannel({
+        ...SUBSCRIPTION_CONFIG,
+        prec: 'P0',
+        symbol: s,
+      }),
+    )
   }
 
   const onToggleSettings = () => {
-    setSettingsOpen(state => !state)
+    setSettingsOpen((state) => !state)
   }
 
   const saveState = (param, value) => {
-    updateState(layoutID, layoutI, {
+    updateState({
       [param]: value,
     })
   }
@@ -153,7 +168,9 @@ const OrderBookPanel = (props) => {
       secondaryHeaderComponents={
         showMarket && canChangeMarket && renderMarketDropdown()
       }
-      headerComponents={showMarket && !canChangeMarket && <p>{isPerp ? uiID : currentPair}</p>}
+      headerComponents={
+        showMarket && !canChangeMarket && <p>{isPerp ? uiID : currentPair}</p>
+      }
       settingsOpen={settingsOpen}
       onToggleSettings={onToggleSettings}
       className='hfui-book__wrapper'
@@ -193,7 +210,7 @@ const OrderBookPanel = (props) => {
           tAsks={tAsks}
           tBids={tBids}
           loading={!snapshotReceived}
-        // ufx-ui/book props end
+          // ufx-ui/book props end
         />
       )}
     </Panel>
@@ -212,12 +229,12 @@ OrderBookPanel.propTypes = {
   activeMarket: PropTypes.shape(MARKET_SHAPE),
   markets: PropTypes.objectOf(PropTypes.shape(MARKET_SHAPE)).isRequired,
   canChangeMarket: PropTypes.bool.isRequired,
-  layoutID: PropTypes.string,
-  layoutI: PropTypes.string.isRequired,
   updateState: PropTypes.func.isRequired,
-  allMarketBooks: PropTypes.arrayOf(PropTypes.shape({
-    currentMarket: PropTypes.shape(MARKET_SHAPE),
-  })),
+  allMarketBooks: PropTypes.arrayOf(
+    PropTypes.shape({
+      currentMarket: PropTypes.shape(MARKET_SHAPE),
+    }),
+  ),
   getCurrencySymbol: PropTypes.func.isRequired,
 }
 
@@ -234,7 +251,6 @@ OrderBookPanel.defaultProps = {
   dark: true,
   savedState: {},
   allMarketBooks: [],
-  layoutID: '',
 }
 
 export default memo(OrderBookPanel)

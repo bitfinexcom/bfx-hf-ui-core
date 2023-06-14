@@ -13,6 +13,8 @@ const SavedStrategiesList = ({
   saveAsHandler,
   renameStrategy,
   formatTime,
+  tableState,
+  updateTableState,
 }) => {
   const { t } = useTranslation()
 
@@ -39,6 +41,8 @@ const SavedStrategiesList = ({
         <VirtualTable
           data={strategies}
           columns={mappedColumns}
+          tableState={tableState}
+          updateTableState={updateTableState}
           defaultSortBy='savedTs'
           defaultSortDirection='DESC'
           onRowClick={onRowClick}
@@ -55,6 +59,9 @@ SavedStrategiesList.propTypes = {
   saveAsHandler: PropTypes.func.isRequired,
   renameStrategy: PropTypes.func.isRequired,
   formatTime: PropTypes.func.isRequired,
+  // eslint-disable-next-line react/forbid-prop-types
+  tableState: PropTypes.object.isRequired,
+  updateTableState: PropTypes.func.isRequired,
 }
 
 export default SavedStrategiesList
