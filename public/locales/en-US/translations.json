@@ -68,7 +68,7 @@
     "unexpectedErrors": "We store unexpected errors",
     "unexpectedErrorsDesc": "Storing unexpected errors <strong>on our infrastructure</strong> allows us to proactively act on issues instead of relying on direct user reports, increasing our response time for fixes and making your overall experience safer (<codeRefUrl>check the code</codeRefUrl>).",
     "anonymousData": "We store anonymous usage data",
-    "anonymousDataDesc": "Storing anonymous usage data <strong>on our infrastructure</strong> allows us to analyse usage trends of the application worldwide and better understand which actions should be prioritised due to their reach (<codeRefUrl>check the code</codeRefUrl>).",
+    "anonymousDataDesc": "Storing anonymous usage data <strong>on our infrastructure</strong> allows us to analyse usage trends of the application worldwide and better understand which actions should be prioritised due to their reach (<codeRefUrl>check the code</codeRefUrl>)."
   },
   "launchStrategyModal": {
     "title": "Launch Strategy",
