@@ -9,7 +9,7 @@ import GAActions from '../../redux/actions/google_analytics'
 import {
   SETTINGS_KEYS,
   getOptinCrashReports,
-  getOptinBFXAnalytics
+  getOptinBFXAnalytics,
 } from '../../redux/selectors/ui'
 import {
   METRICS_CODE_REF_URL,
