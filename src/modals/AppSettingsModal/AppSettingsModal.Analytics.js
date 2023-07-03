@@ -9,14 +9,10 @@ import GAActions from '../../redux/actions/google_analytics'
 import {
   SETTINGS_KEYS,
   getOptinCrashReports,
-  getOptinBFXAnalytics,
-  getOptinVendorPendo,
+  getOptinBFXAnalytics
 } from '../../redux/selectors/ui'
 import {
   METRICS_CODE_REF_URL,
-  PENDO_CODE_REF_URL,
-  PENDO_PRIVACY_POLICY_URL,
-  PENDO_WEB_URL,
   UNIQUE_ID_CODE_REF_URL,
 } from '../../redux/config'
 // import InnerModal from '../../ui/InnerModal/InnerModal'
@@ -27,7 +23,6 @@ const Analytics = () => {
 
   const optinCrashReports = useSelector(getOptinCrashReports)
   const optinBFXAnalytics = useSelector(getOptinBFXAnalytics)
-  const optinVendorPendo = useSelector(getOptinVendorPendo)
 
   const optinCrashReportsHandler = (isChecked) => {
     dispatch(
@@ -39,13 +34,6 @@ const Analytics = () => {
   const optinBFXAnalyticsHandler = (isChecked) => {
     dispatch(
       WSActions.saveSetting(SETTINGS_KEYS.OPT_IN_BFX_ANALYTICS, isChecked),
-    )
-    dispatch(GAActions.updateSettings())
-  }
-
-  const optinVendorPendoHandler = (isChecked) => {
-    dispatch(
-      WSActions.saveSetting(SETTINGS_KEYS.OPT_IN_VENDOR_PENDO, isChecked),
     )
     dispatch(GAActions.updateSettings())
   }
@@ -97,43 +85,6 @@ const Analytics = () => {
             }}
           />
         </div>
-      </div>
-      <div className='appsettings-modal__setting appsettings-modal__setting--crash-reports'>
-        <Checkbox
-          onChange={optinVendorPendoHandler}
-          label={t('helpUsImproveModal.pendoUsage')}
-          checked={optinVendorPendo}
-          className='appsettings-modal__checkbox'
-        />
-        <p className='appsettings-modal__description'>
-          <Trans
-            t={t}
-            i18nKey='helpUsImproveModal.pendoUsageDesc'
-            components={{
-              pendoURL: (
-                <a
-                  href={PENDO_WEB_URL}
-                  target='_blank'
-                  rel='noopener noreferrer'
-                />
-              ),
-              pendoPP: (
-                <a
-                  href={PENDO_PRIVACY_POLICY_URL}
-                  target='_blank'
-                  rel='noopener noreferrer'
-                />
-              ),
-              codeRefUrl: (
-                <a
-                  href={PENDO_CODE_REF_URL}
-                  target='_blank'
-                  rel='noopener noreferrer'
-                />
-              ),
-            }}
-          />
-        </p>
       </div>
     </div>
   )
