@@ -129,6 +129,7 @@ const IDEPanel = ({
           >
             <MonacoEditor
               value={IDEcontent[activeContent] || ''}
+              activeContent={activeContent}
               onChange={onEditorContentChange}
               theme={settingsTheme}
               readOnly={!isPaperTrading}

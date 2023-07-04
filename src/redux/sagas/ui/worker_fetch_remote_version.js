@@ -14,6 +14,10 @@ const REMOTE_MANIFEST_URL = 'https://api.github.com/repos/bitfinexcom/bfx-hf-ui/
 const debug = Debug('hfui:rx:s:ws-hfui:worker-fetch-remote-version')
 
 export default function* () {
+  if (!appVersion) {
+    return
+  }
+
   while (isElectronApp) {
     let manifest
 

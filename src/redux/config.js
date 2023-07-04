@@ -1,5 +1,6 @@
-import { Recurring } from 'bfx-hf-algo'
 import _includes from 'lodash/includes'
+import { Recurring } from 'bfx-hf-algo'
+import { version } from '../../package.json'
 
 const REDUCER_PATHS = {
   WS: 'ws',
@@ -30,9 +31,9 @@ const isMacOS = navigator.userAgent.indexOf('Mac') !== -1
 
 const PUB_REST_API_URL = isElectronApp ? 'http://localhost:45001' : process.env.REACT_APP_UFX_PUBLIC_API_URL
 
-const RC_KEYWORD = '-rc'
+const appVersion = version
 
-const appVersion = process.env.npm_package_version
+const RC_KEYWORD = '-rc'
 
 const isRCVersion = _includes(appVersion, RC_KEYWORD)
 

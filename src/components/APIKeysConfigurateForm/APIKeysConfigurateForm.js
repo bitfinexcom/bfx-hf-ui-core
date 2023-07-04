@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next'
 import Scrollbars from '../../ui/Scrollbars'
 import NavbarLink from '../Navbar/Navbar.Link'
 import { getIsPaperTrading } from '../../redux/selectors/ui'
-import './style.scss'
+import './style.css'
 
 const CREATE_API_KEYS_URL = 'https://setting.bitfinex.com/api#new-key'
 const CREATE_BFX_ACCOUNT_URL = 'https://www.bitfinex.com/sign-up'
