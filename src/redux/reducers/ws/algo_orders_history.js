@@ -1,8 +1,7 @@
 import _reduce from 'lodash/reduce'
-import _includes from 'lodash/includes'
 import _get from 'lodash/get'
 import t from '../../constants/ws'
-import { ALLOWED_PAPER_PAIRS } from '../ui'
+import { getIsPaperPair } from '../../../util/market'
 
 const getInitialState = () => ({
   main: {},
@@ -30,7 +29,7 @@ export default (state = getInitialState(), action = {}) => {
             // invalid order
             return acc
           }
-          const isPaperPair = _includes(ALLOWED_PAPER_PAIRS, symbol)
+          const isPaperPair = getIsPaperPair(symbol)
           acc[isPaperPair ? 'paper' : 'main'][gid] = newAOobject
 
           return acc

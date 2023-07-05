@@ -37,6 +37,7 @@ import { appVersion, isElectronApp, isRCVersion } from '../../config'
 import { storeLastUsedLayoutID } from '../../../util/layout'
 import { DEFAULT_TAB } from '../../../modals/AppSettingsModal/AppSettingsModal.constants'
 import { UI_MODAL_KEYS } from '../../constants/modals'
+import { getIsPaperPair } from '../../../util/market'
 
 const debug = Debug('hfui:rx:r:ui')
 const LAYOUTS_KEY = 'HF_UI_LAYOUTS'
@@ -48,8 +49,6 @@ export const IS_PAPER_TRADING = 'IS_PAPER_TRADING'
 export const PAPER_MODE = 'paper'
 export const MAIN_MODE = 'main'
 let shownOldFormatModal = false
-
-export const ALLOWED_PAPER_PAIRS = ['tTESTBTC:TESTUSD']
 
 const DEFAULT_MARKET = {
   contexts: ['e', 'm'],
@@ -338,7 +337,7 @@ function reducer(state = getInitialState(), action = {}) {
       const mode = isPaperTrading ? PAPER_MODE : MAIN_MODE
       const activeMarketJSON = localStorage.getItem(isPaperTrading ? ACTIVE_MARKET_PAPER_KEY : ACTIVE_MARKET_KEY)
       const savedMarket = JSON.parse(activeMarketJSON)
-      const activeMarket = (!isPaperTrading || _includes(ALLOWED_PAPER_PAIRS, savedMarket?.wsID)) && !!savedMarket ? savedMarket : DEFAULT_ACTIVE_MARKET_STATE[mode].activeMarket
+      const activeMarket = (!isPaperTrading || getIsPaperPair(savedMarket)) && !!savedMarket ? savedMarket : DEFAULT_ACTIVE_MARKET_STATE[mode].activeMarket
 
       return {
         ...state,
