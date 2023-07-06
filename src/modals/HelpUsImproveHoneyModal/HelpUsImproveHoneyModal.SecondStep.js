@@ -9,9 +9,6 @@ import { SWITCH_THEME } from '../../components/SwitchMode/SwitchMode'
 import Modal from '../../ui/Modal'
 import {
   METRICS_CODE_REF_URL,
-  PENDO_CODE_REF_URL,
-  PENDO_PRIVACY_POLICY_URL,
-  PENDO_WEB_URL,
   UNIQUE_ID_CODE_REF_URL,
 } from '../../redux/config'
 
@@ -23,8 +20,6 @@ const HelpUsImproveHoneySecondStep = ({
   setOptinCrashReports,
   optinBFXAnalytics,
   setOptinBFXAnalytics,
-  optinVendorPendo,
-  setOptinVendorPendo,
 }) => {
   const { t } = useTranslation()
 
@@ -85,47 +80,6 @@ const HelpUsImproveHoneySecondStep = ({
           />
         </p>
       </div>
-      <div className='advanced-configuration'>
-        <div className='adv-setting-toggle'>
-          <span>{t('helpUsImproveModal.pendoUsage')}</span>
-          <ToggleSwitch
-            checked={optinVendorPendo}
-            onChange={setOptinVendorPendo}
-            onColor={SWITCH_THEME[settingsTheme].onColor}
-            offColor={SWITCH_THEME[settingsTheme].offColor}
-            className='toggle-switch'
-          />
-        </div>
-        <p>
-          <Trans
-            t={t}
-            i18nKey='helpUsImproveModal.pendoUsageDesc'
-            components={{
-              pendoURL: (
-                <a
-                  href={PENDO_WEB_URL}
-                  target='_blank'
-                  rel='noopener noreferrer'
-                />
-              ),
-              pendoPP: (
-                <a
-                  href={PENDO_PRIVACY_POLICY_URL}
-                  target='_blank'
-                  rel='noopener noreferrer'
-                />
-              ),
-              codeRefUrl: (
-                <a
-                  href={PENDO_CODE_REF_URL}
-                  target='_blank'
-                  rel='noopener noreferrer'
-                />
-              ),
-            }}
-          />
-        </p>
-      </div>
       <Modal.Footer>
         <Modal.Button intent={Intent.NONE} onClick={goToFirstStep}>
           {t('ui.goBack')}
@@ -145,8 +99,6 @@ HelpUsImproveHoneySecondStep.propTypes = {
   setOptinCrashReports: PropTypes.func.isRequired,
   optinBFXAnalytics: PropTypes.bool.isRequired,
   setOptinBFXAnalytics: PropTypes.func.isRequired,
-  optinVendorPendo: PropTypes.bool.isRequired,
-  setOptinVendorPendo: PropTypes.func.isRequired,
   settingsTheme: PropTypes.oneOf([THEMES.LIGHT, THEMES.DARK]).isRequired,
 }
 

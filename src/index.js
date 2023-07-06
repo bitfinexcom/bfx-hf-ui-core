@@ -9,7 +9,6 @@ import HFUIWrapper from './components/HFUIWrapper'
 import i18n from './locales/i18n'
 import { isElectronApp } from './redux/config'
 
-import './util/pendo'
 import './passive_listener_fix'
 import './index.css'
 
