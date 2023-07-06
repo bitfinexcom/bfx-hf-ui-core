@@ -187,6 +187,14 @@ export default {
     payload,
   }),
 
+  recvRemoveAlgoOrderFromHistory: (gid, mode) => ({
+    type: t.REMOVE_ALGO_ORDER_FROM_HISTORY,
+    payload: {
+      gid,
+      mode,
+    },
+  }),
+
   setAlgoOrderToHistory: (stoppedAO, mode) => ({
     type: t.SET_ALGO_ORDER_TO_HISTORY,
     payload: {

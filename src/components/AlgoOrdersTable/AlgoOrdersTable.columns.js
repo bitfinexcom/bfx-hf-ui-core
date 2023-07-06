@@ -3,13 +3,14 @@ import { Icon } from 'react-fa'
 
 import { defaultCellRenderer, renderDate } from '../../util/ui'
 import AlgoOrderActions from './AlgoOrderActions'
+import HistoricalAOActions from './HistoricalAOActions'
 
 export default ({
   t,
   getMarketPair,
-  showActions,
   setMoreInfoGID,
   formatTime,
+  isHistoryView,
 }) => {
   const columns = [
     {
@@ -45,8 +46,25 @@ export default ({
     },
   ]
 
-  if (showActions) {
-    // 'Actions' column
+  // 'Actions' column for history orders
+  if (isHistoryView) {
+    columns.push({
+      dataKey: 'cid',
+      width: 20,
+      minWidth: 20,
+      cellRenderer: (
+        { rowData = {} } // eslint-disable-line
+      ) => (
+        <div className='hfui-aolist__wrapper_actions_container'>
+          <HistoricalAOActions key={rowData.gid} order={rowData} />
+        </div>
+      ),
+      disableSort: true,
+    })
+  }
+
+  // 'Actions' column for active orders
+  if (!isHistoryView) {
     columns.push({
       dataKey: 'cid',
       width: 170,

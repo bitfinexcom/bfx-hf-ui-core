@@ -37,7 +37,7 @@ const AlgoOrdersTable = ({
     () => AlgoOrdersTableColumns({
       t,
       getMarketPair,
-      showActions: !showHistory,
+      isHistoryView: showHistory,
       setMoreInfoGID,
       formatTime,
     }),

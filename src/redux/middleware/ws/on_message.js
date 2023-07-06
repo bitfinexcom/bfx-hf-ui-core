@@ -415,6 +415,12 @@ export default (alias, store) => (e = {}) => {
         break
       }
 
+      case 'algo.order_history_removed': {
+        const [, gid, mode] = payload
+        store.dispatch(WSActions.recvRemoveAlgoOrderFromHistory(gid, mode))
+        break
+      }
+
       case 'data.recurring_ao_list': {
         const [, mode, aos] = payload
         store.dispatch(WSActions.recvDataAlgoOrders({ mode, aos }))
