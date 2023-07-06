@@ -16,7 +16,7 @@ import timeFrames from '../../util/time_frames'
 
 import rawOrders from '../../orders'
 
-const DEV_ONLY_ALGO_ORDERS = [AccumulateDistribute, Recurring]
+const DEV_ONLY_ALGO_ORDERS = [AccumulateDistribute]
 
 const getAlgoOrdersForStandalone = (isBeta) => [
   ...(isBeta ? DEV_ONLY_ALGO_ORDERS : []),
