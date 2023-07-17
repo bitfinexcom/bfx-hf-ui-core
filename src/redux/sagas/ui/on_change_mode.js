@@ -13,6 +13,7 @@ export default function* onChangeMode(action) {
   yield put(UIActions.logInformation(msg, LOG_LEVELS.INFO, 'change_env'))
 
   yield put(UIActions.setTradingMode(isPaperTrading))
+  yield put(UIActions.setPendoState(false))
   yield put(WSActions.setUsername(null))
   yield put(UIActions.setMarketFromStore(isPaperTrading))
   yield put(WSActions.recvBalances({ balances: [] }))

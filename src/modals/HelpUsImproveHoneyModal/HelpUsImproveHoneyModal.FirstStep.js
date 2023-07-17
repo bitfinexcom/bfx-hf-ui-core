@@ -9,7 +9,7 @@ import {
   TERMS_CONDITIONS_URL,
 } from '../AppSettingsModal/AppSettingsModal.constants'
 import Modal from '../../ui/Modal'
-import { UNIQUE_ID_CODE_REF_URL } from '../../redux/config'
+import { PENDO_CODE_REF_URL, UNIQUE_ID_CODE_REF_URL } from '../../redux/config'
 
 const HelpUsImproveHoneyModalFirstStep = ({ onSubmit, goToSecondStep }) => {
   const { t } = useTranslation()
@@ -52,6 +52,23 @@ const HelpUsImproveHoneyModalFirstStep = ({ onSubmit, goToSecondStep }) => {
           <Trans
             t={t}
             i18nKey='helpUsImproveModal.willItem2'
+            components={{
+              bold: <b />,
+              codeRefUrl: (
+                <a
+                  href={PENDO_CODE_REF_URL}
+                  target='_blank'
+                  rel='noopener noreferrer'
+                />
+              ),
+            }}
+          />
+        </li>
+        <li className='will-list-item'>
+          <Icon name='check' className='check-icon' />
+          <Trans
+            t={t}
+            i18nKey='helpUsImproveModal.willItem3'
             components={{
               bold: <b />,
               codeRefUrl: (

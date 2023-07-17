@@ -20,6 +20,7 @@ const HelpUsImproveHoney = ({
   const [isFirstStep, , goToFirstStep, goToSecondStep] = useToggle(true)
   const [optinCrashReports, setOptinCrashReports] = useState(true)
   const [optinBFXAnalytics, setOptinBFXAnalytics] = useState(true)
+  const [optinVendorPendo, setOptinVendorPendo] = useState(true)
 
   const { t } = useTranslation()
 
@@ -28,12 +29,14 @@ const HelpUsImproveHoney = ({
       updateSettings({
         [SETTINGS_KEYS.OPT_IN_CRASH_REPORTS]: true,
         [SETTINGS_KEYS.OPT_IN_BFX_ANALYTICS]: true,
+        [SETTINGS_KEYS.OPT_IN_VENDOR_PENDO]: true,
         [SETTINGS_KEYS.SHOW_OPT_IN_MODAL]: false,
       })
     } else {
       updateSettings({
         [SETTINGS_KEYS.OPT_IN_CRASH_REPORTS]: optinCrashReports,
         [SETTINGS_KEYS.OPT_IN_BFX_ANALYTICS]: optinBFXAnalytics,
+        [SETTINGS_KEYS.OPT_IN_VENDOR_PENDO]: optinVendorPendo,
         [SETTINGS_KEYS.SHOW_OPT_IN_MODAL]: false,
       })
     }
@@ -69,6 +72,8 @@ const HelpUsImproveHoney = ({
           setOptinCrashReports={setOptinCrashReports}
           optinBFXAnalytics={optinBFXAnalytics}
           setOptinBFXAnalytics={setOptinBFXAnalytics}
+          optinVendorPendo={optinVendorPendo}
+          setOptinVendorPendo={setOptinVendorPendo}
         />
       )}
     </Modal>

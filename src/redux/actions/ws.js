@@ -23,6 +23,11 @@ export default {
   disconnected: (alias) => ({ type: t.DISCONNECTED, payload: { alias } }),
   disconnect: (alias) => ({ type: t.DISCONNECT, payload: { alias } }),
 
+  recvUserAuid: (auid, mode) => ({
+    type: t.SET_AUID,
+    payload: { auid, mode },
+  }),
+
   setBacktestLoading: () => ({
     type: t.SET_BACKTEST_LOADING,
     payload: {},
