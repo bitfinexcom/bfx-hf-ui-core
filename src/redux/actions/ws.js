@@ -38,16 +38,12 @@ export default {
     payload: { markets },
   }),
 
-  saveSetting: (key, value) => ({
+  saveSettings: (key, value) => ({
     type: ui.SAVE_SETTINGS,
     payload: {
-      [key]: value,
+      key,
+      value,
     },
-  }),
-
-  saveSettings: (settingsToUpdate) => ({
-    type: ui.SAVE_SETTINGS,
-    payload: settingsToUpdate,
   }),
 
   bufferDataFromExchange: (chanID, data, rawData = null) => ({

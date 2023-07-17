@@ -54,20 +54,20 @@ const AppSettings = () => {
 
   const updateTheme = (nextTheme) => {
     setCurrentTheme(nextTheme)
-    dispatch(WSActions.saveSetting(SETTINGS_KEYS.THEME, nextTheme))
+    dispatch(WSActions.saveSettings(SETTINGS_KEYS.THEME, nextTheme))
     dispatch(GAActions.updateSettings())
     localStorage.setItem(SETTINGS_KEYS.THEME, nextTheme)
   }
 
   const hideOnCloseHandler = (shouldHide) => {
     setHideOnCloseChecked(shouldHide)
-    dispatch(WSActions.saveSetting(SETTINGS_KEYS.HIDE_ON_CLOSE, shouldHide))
+    dispatch(WSActions.saveSettings(SETTINGS_KEYS.HIDE_ON_CLOSE, shouldHide))
     dispatch(GAActions.updateSettings())
   }
 
   const fullscreenHandler = (fullscreen) => {
     setFullscreenChecked(fullscreen)
-    dispatch(WSActions.saveSetting(SETTINGS_KEYS.FULLSCREEN, fullscreen))
+    dispatch(WSActions.saveSettings(SETTINGS_KEYS.FULLSCREEN, fullscreen))
     dispatch(UIActions.setUIValue(UI_KEYS.isFullscreenBarShown, fullscreen))
     dispatch(GAActions.updateSettings())
     if (ipcHelpers) {

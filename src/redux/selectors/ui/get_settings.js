@@ -24,7 +24,6 @@ export const SETTINGS_KEYS = {
   OPT_IN_CRASH_REPORTS: 'optinCrashReports',
   OPT_IN_BFX_ANALYTICS: 'optinBFXAnalytics',
   OPT_IN_VENDOR_PENDO: 'optinVendorPendo',
-  SHOW_OPT_IN_MODAL: 'showOptInModal',
 }
 
 export const THEMES = {

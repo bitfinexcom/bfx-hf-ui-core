@@ -15,7 +15,7 @@ const mapStateToProps = (state = {}) => ({
 const mapDispatchToProps = dispatch => ({
   changeConfirmDMSModalState: (isVisible) => dispatch(UIActions.changeUIModalState(UI_MODAL_KEYS.CONFIRM_DMS_MODAL, isVisible)),
   changeDMSSetting: (nextDms) => {
-    dispatch(WSActions.saveSetting(SETTINGS_KEYS.DMS, nextDms))
+    dispatch(WSActions.saveSettings(SETTINGS_KEYS.DMS, nextDms))
     dispatch(GAActions.updateSettings())
   },
 })

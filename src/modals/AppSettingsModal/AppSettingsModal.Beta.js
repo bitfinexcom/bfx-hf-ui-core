@@ -26,13 +26,13 @@ const Beta = () => {
       openBetaModal()
       return
     }
-    dispatch(WSActions.saveSetting(SETTINGS_KEYS.JOIN_BETA_PROGRAM, false))
+    dispatch(WSActions.saveSettings(SETTINGS_KEYS.JOIN_BETA_PROGRAM, false))
     dispatch(GAActions.updateSettings())
   }
 
   const updateBetaProgram = (e) => {
     e.stopPropagation()
-    dispatch(WSActions.saveSetting(SETTINGS_KEYS.JOIN_BETA_PROGRAM, true))
+    dispatch(WSActions.saveSettings(SETTINGS_KEYS.JOIN_BETA_PROGRAM, true))
     dispatch(GAActions.updateSettings())
     closeBetaModal()
   }
