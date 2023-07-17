@@ -58,7 +58,8 @@
     "ppNotice": "This is consistent with the <privURL>Bitfinex Privacy Policy</privURL> and the <termsURL>Bitfinex API Terms of Service</termsURL>.",
     "weWill": "We will:",
     "willItem1": "Always allow you to opt-out from the settings",
-    "willItem2": "Send <bold>anonymised</bold> information to Bitfinex servers (such as errors or volume of trades) so we can know how the product is performing (<codeRefUrl>check the code</codeRefUrl>)",
+    "willItem2": "Send <bold>anonymised</bold> click and page-view events to 3rd party providers to guide your experience in the application and improve the product check the code (<codeRefUrl>check the code</codeRefUrl>)",
+    "willItem3": "Send <bold>anonymised</bold> information to Bitfinex servers (such as errors or volume of trades) so we can know how the product is performing (<codeRefUrl>check the code</codeRefUrl>)",
     "willNotItem1": "<bold>Never</bold> share any private information from your account (such as your IP address, balances, username, keys or order history) with 3rd parties",
     "willNotItem2": "<bold>Never</bold> collect any proprietary information (such as your strategies or exact order details)",
     "willNotItem3": "<bold>Never</bold> use the collected information to profile you in order to improve marketing communications",
@@ -68,7 +69,9 @@
     "unexpectedErrors": "We store unexpected errors",
     "unexpectedErrorsDesc": "Storing unexpected errors <strong>on our infrastructure</strong> allows us to proactively act on issues instead of relying on direct user reports, increasing our response time for fixes and making your overall experience safer (<codeRefUrl>check the code</codeRefUrl>).",
     "anonymousData": "We store anonymous usage data",
-    "anonymousDataDesc": "Storing anonymous usage data <strong>on our infrastructure</strong> allows us to analyse usage trends of the application worldwide and better understand which actions should be prioritised due to their reach (<codeRefUrl>check the code</codeRefUrl>)."
+    "anonymousDataDesc": "Storing anonymous usage data <strong>on our infrastructure</strong> allows us to analyse usage trends of the application worldwide and better understand which actions should be prioritised due to their reach (<codeRefUrl>check the code</codeRefUrl>).",
+    "pendoUsage": "We improve your experience with Pendo",
+    "pendoUsageDesc": "Interacting with <pendoURL>Pendo</pendoURL> allows us to present you with dynamic informative content and also better analyse how different users use the application worldwide.\nView their <pendoPP>Privacy Policy</pendoPP>.\n\nWe generate a unique ID for your user which is completely unrelated to your Bitfinex account and that's it. We don't share any other details (<codeRefUrl>check the code</codeRefUrl>)."
   },
   "launchStrategyModal": {
     "title": "Launch Strategy",

@@ -88,6 +88,9 @@ function getInitialState() {
     isApplicationHidden: false,
     isFullscreenBarShown: false,
     isRCDisclaimerShown: false,
+    pendo: {
+      isInitialized: false,
+    },
   }
 
   _map(_values(UI_MODAL_KEYS), (modalKey) => {
@@ -545,6 +548,13 @@ function reducer(state = getInitialState(), action = {}) {
           ...state.serviceStatus,
           [mode]: serviceStatus,
         },
+      }
+    }
+
+    case types.SET_PENDO_STATE: {
+      return {
+        ...state,
+        pendo: { ...payload },
       }
     }
 

@@ -163,6 +163,11 @@ export const removeStrategy = (authToken, id) => ({
   payload: { authToken, id },
 })
 
+export const setPendoState = (isInitialized, auid) => ({
+  type: types.SET_PENDO_STATE,
+  payload: { isInitialized, auid },
+})
+
 export const logInformation = (message, level, action, trace) => ({
   type: types.LOG,
   payload: {
@@ -194,5 +199,6 @@ export default {
   removeStrategy,
   setCurrentStrategy,
   setIsStrategyDirty,
+  setPendoState,
   logInformation,
 }

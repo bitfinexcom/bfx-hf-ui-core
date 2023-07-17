@@ -23,6 +23,7 @@ export const SETTINGS_KEYS = {
   TIMESTAMP_FORMAT: 'timestampFormat',
   OPT_IN_CRASH_REPORTS: 'optinCrashReports',
   OPT_IN_BFX_ANALYTICS: 'optinBFXAnalytics',
+  OPT_IN_VENDOR_PENDO: 'optinVendorPendo',
   SHOW_OPT_IN_MODAL: 'showOptInModal',
 }
 
@@ -76,6 +77,11 @@ export const getOptinCrashReports = createSelector(
 export const getOptinBFXAnalytics = createSelector(
   getSettings,
   (settings) => _get(settings, SETTINGS_KEYS.OPT_IN_BFX_ANALYTICS, false),
+)
+
+export const getOptinVendorPendo = createSelector(
+  getSettings,
+  (settings) => _get(settings, SETTINGS_KEYS.OPT_IN_VENDOR_PENDO, false),
 )
 
 export const getShouldHideOnClose = createSelector(
