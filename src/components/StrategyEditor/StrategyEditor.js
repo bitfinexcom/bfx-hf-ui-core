@@ -234,7 +234,7 @@ const StrategyEditor = (props) => {
 
       // Need to delete inherited execution data of parent strategy
       delete newStrategy.executionId
-      delete newStrategy.results
+      newStrategy.results = {}
       delete newStrategy.startedOn
       delete newStrategy.stoppedOn
 
@@ -350,12 +350,14 @@ const StrategyEditor = (props) => {
 
   const saveStrategyOptions = useCallback(
     (newOptions) => {
-      onSaveAsStrategy({
+      const newStrategy = {
         ...strategy,
         strategyOptions: { ...strategyOptions, ...newOptions },
-      })
+      }
+      saveStrategy(newStrategy)
+      onLoadStrategy(newStrategy, false)
     },
-    [onSaveAsStrategy, strategy, strategyOptions],
+    [onLoadStrategy, saveStrategy, strategy, strategyOptions],
   )
 
   const onBacktestStart = useCallback(() => {

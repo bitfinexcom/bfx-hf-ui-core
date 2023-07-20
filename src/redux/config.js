@@ -63,7 +63,6 @@ const DISCUSSION_BOARD_URL = 'https://bit.ly/42p9YiV'
 const DISCORD_URL = 'https://bit.ly/400Xj49'
 
 const CHART_URL = isElectronApp ? 'https://bitfinexcom.github.io/bfx-hf-tradingview/' : process.env.REACT_APP_CHART_URL
-// const CHART_URL = 'http://localhost:3001/bfx-hf-tradingview/'
 
 const HONEY_AUTH_URL = `${process.env.REACT_APP_UFX_API_URL}/honey`
 

@@ -26,6 +26,7 @@ const Chart = ({
   hideResolutions,
   hideIndicators,
   hideDeleteIndicator,
+  isStrategyChart,
   onClosePosition,
   position,
   chartRange,
@@ -51,6 +52,7 @@ const Chart = ({
     hideResolutions,
     hideIndicators,
     hideDeleteIndicator,
+    isStrategyChart,
   }).toString()
 
   useEffect(() => {
@@ -80,6 +82,7 @@ Chart.propTypes = {
   hideResolutions: PropTypes.bool,
   hideIndicators: PropTypes.bool,
   hideDeleteIndicator: PropTypes.bool,
+  isStrategyChart: PropTypes.bool,
   position: PropTypes.object, // eslint-disable-line react/forbid-prop-types
   chartRange: PropTypes.object, // eslint-disable-line react/forbid-prop-types
   onClosePosition: PropTypes.func,
@@ -98,6 +101,7 @@ Chart.defaultProps = {
   hideResolutions: false,
   hideIndicators: false,
   hideDeleteIndicator: false,
+  isStrategyChart: false,
   position: null,
   chartRange: null,
   onClosePosition: null,
