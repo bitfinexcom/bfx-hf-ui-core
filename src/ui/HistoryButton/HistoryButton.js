@@ -19,7 +19,7 @@ const HistoryButton = ({ onClick, isActive, isLoading }) => {
         isLoading ? (
           <Spinner className='hfui-history-button__spinner' />
         ) : (
-          <HistoryIcon className='hfui-history-button__icon' width='25px' height='25px' />
+          <HistoryIcon width='25px' height='25px' />
         )
       }
     />
