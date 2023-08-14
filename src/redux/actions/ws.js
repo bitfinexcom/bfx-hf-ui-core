@@ -93,6 +93,11 @@ export default {
     payload: { strategies },
   }),
 
+  recvStrategyBacktestsList: (strategyId, backtestsList) => ({
+    type: t.ADD_STRATEGY_BACKTESTS_LIST,
+    payload: { strategyId, backtestsList },
+  }),
+
   recvAPICredentialsConfigured: (state) => ({
     type: t.DATA_API_CREDENTIALS_CONFIGURED,
     payload: { state },

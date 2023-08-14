@@ -98,8 +98,13 @@ const StrategyEditor = (props) => {
     setSectionErrors,
     serviceStatus,
     logInformation,
+    fetchBacktestsList,
+    isBacktestsListFetched,
   } = props
-  const { t, i18n: { language } } = useTranslation()
+  const {
+    t,
+    i18n: { language },
+  } = useTranslation()
 
   const [isRemoveModalOpen, , openRemoveModal, closeRemoveModal] = useToggle(false)
   const [
@@ -270,10 +275,15 @@ const StrategyEditor = (props) => {
           delete preparedStrategy.strategyContent.id
         }
         onCreateStrategyFromExisted(preparedStrategy.label, preparedStrategy)
-        logInformation(`New strategy draft created (${preparedStrategy.label})`, LOG_LEVELS.INFO, 'strategy_draft_init', {
-          source: 'json',
-          from: preparedStrategy.label,
-        })
+        logInformation(
+          `New strategy draft created (${preparedStrategy.label})`,
+          LOG_LEVELS.INFO,
+          'strategy_draft_init',
+          {
+            source: 'json',
+            from: preparedStrategy.label,
+          },
+        )
       }
     } catch (e) {
       debug('Error while importing strategy: %s', e)
@@ -555,6 +565,7 @@ const StrategyEditor = (props) => {
     [sectionErrors],
   )
 
+  // Start strategy executing after change mode
   useEffect(() => {
     if (
       isPaperTrading
@@ -573,6 +584,16 @@ const StrategyEditor = (props) => {
     loadStrategyAndStartExecution(strategyToLoad)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [savedStrategies, pendingLiveStrategy, isStrategyManagerRunning])
+
+  // Fetch backtests list of the strategy
+  useEffect(() => {
+    console.log(isBacktestsListFetched)
+    if (!isPaperTrading || !strategyId || isBacktestsListFetched) {
+      return
+    }
+
+    fetchBacktestsList(strategyId)
+  }, [isPaperTrading, fetchBacktestsList, strategyId, isBacktestsListFetched])
 
   const sbtitleStrategy = useCallback(
     ({ selectedTab, sidebarOpened }) => (
@@ -830,6 +851,8 @@ StrategyEditor.propTypes = {
     strategyManager: PropTypes.bool,
   }).isRequired,
   logInformation: PropTypes.func.isRequired,
+  fetchBacktestsList: PropTypes.func.isRequired,
+  isBacktestsListFetched: PropTypes.bool.isRequired,
 }
 
 StrategyEditor.defaultProps = {

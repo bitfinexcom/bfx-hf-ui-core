@@ -485,6 +485,13 @@ export default (alias, store) => (e = {}) => {
         break
       }
 
+      case 'data.bt.history.list': {
+        const [, strategyId, backtestsList] = payload
+        store.dispatch(WSActions.recvStrategyBacktestsList(strategyId, backtestsList))
+
+        break
+      }
+
       case 'algo.reload': {
         store.dispatch(WSActions.clearAlgoOrders())
         break
