@@ -20,6 +20,12 @@
     }
   }
 
+  .tabs-menu {
+    @extend .item;
+    display: flex;
+    justify-content: space-between;
+  }
+
   &__icn-selector-container {
     display: flex;
     justify-content: flex-end;

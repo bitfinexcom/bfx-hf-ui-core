@@ -78,7 +78,7 @@ export const BACKTEST_LAYOUT_CONFIG_NO_DATA = [
     i: COMPONENTS_KEYS.OPTIONS,
     x: 0,
     y: 0,
-    w: 20,
+    w: 25,
     h: 9,
   },
 ]

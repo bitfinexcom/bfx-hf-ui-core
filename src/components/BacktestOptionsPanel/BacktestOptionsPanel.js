@@ -1,5 +1,6 @@
 import React, { useMemo, useState } from 'react'
 import PropTypes from 'prop-types'
+import _toUpper from 'lodash/toUpper'
 import _debounce from 'lodash/debounce'
 import { useTranslation } from 'react-i18next'
 import {
@@ -16,6 +17,9 @@ import ClockIcon from '../../ui/Icons/ClockIcon'
 import CalendarIcon from '../../ui/Icons/CalendarIcon'
 
 import './style.css'
+import HistoryButton from '../../ui/HistoryButton/HistoryButton'
+import useToggle from '../../hooks/useToggle'
+import PanelButton from '../../ui/Panel/Panel.Button'
 
 const MAX_DATE = new Date()
 
@@ -55,6 +59,7 @@ const BacktestOptionsPanel = ({
   const { t } = useTranslation()
   const [seedError, setSeedError] = useState(null)
   const [candleSeedValue, setCandleSeedValue] = useState(candleSeed)
+  const [isHistoryTabActive,, setHistoryTabActive, setNewTestTabActive] = useToggle(false)
   const [isCustomDatePicker, setIsCustomDatePicker] = useState(false)
   const timePeriods = getTimePeriods(t)
 
@@ -135,6 +140,18 @@ const BacktestOptionsPanel = ({
 
   return (
     <div className='hfui-strategy-backtest-options'>
+      <div className='tabs-menu'>
+        <PanelButton
+          onClick={setNewTestTabActive}
+          text={_toUpper(t('strategyEditor.newTest'))}
+          isActive={!isHistoryTabActive}
+        />
+        <HistoryButton
+          onClick={setHistoryTabActive}
+          isActive={isHistoryTabActive}
+          isLoading={false}
+        />
+      </div>
       <div className='item'>
         <div className='hfui-strategy-backtest-options__icn-selector-container'>
           <ClockIcon
