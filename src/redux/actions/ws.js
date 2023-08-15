@@ -391,6 +391,14 @@ export default {
     type: t.EXPORT_STRATEGIES_ON_RESET,
     payload: { password },
   }),
+  changeBacktestFavoriteState: (backtestId, isFavorite) => ({
+    type: t.BACKTEST_SET_FAVORITE,
+    payload: { backtestId, isFavorite },
+  }),
+  removeBacktest: (backtestId) => ({
+    type: t.BACKTEST_REMOVE,
+    payload: { backtestId },
+  }),
 
   initAuth: (password) => send(['auth.init', password, MAIN_MODE, getScope()]),
   auth: (password, mode) => send(['auth.submit', password, mode, getScope()]),

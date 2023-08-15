@@ -871,7 +871,8 @@
     "lastQuarter": "Last quarter",
     "lastYear": "Last year",
     "lastXyears": "Last {{amount}} years",
-    "elapsedTime": "Elapsed time"
+    "elapsedTime": "Elapsed time",
+    "noHistoryBacktests": "No backtests in history"
   },
   "ui": {
     "ok": "Okay",
@@ -913,7 +914,8 @@
     "saveAndLaunch": "Save & Launch",
     "launchNoSave": "Launch without saving",
     "updateAndRestart": "Update and Restart",
-    "saveAndContinue": "Save and Continue"
+    "saveAndContinue": "Save and Continue",
+    "starred": "Starred"
   },
   "crashHandler": {
     "text1": "An error occurred that caused the Bitfinex Honey UI to halt. Please, restart the application to proceed working with it",

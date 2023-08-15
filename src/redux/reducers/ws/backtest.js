@@ -2,15 +2,14 @@ import types from '../../constants/ws'
 
 function getInitialState() {
   return {
+    currentTest: null,
     loading: false,
     executing: false,
     finished: false,
+    trades: [],
+    candles: [],
     gid: null,
     progressPerc: 0,
-    results: {
-    },
-    strategiesBacktests: {
-    },
   }
 }
 
@@ -79,18 +78,6 @@ function reducer(state = getInitialState(), action = {}) {
       }
     }
 
-    case types.ADD_STRATEGY_BACKTESTS_LIST: {
-      const { strategyId, backtestsList } = payload
-
-      return {
-        ...state,
-        strategiesBacktests: {
-          ...state.strategiesBacktests,
-          [strategyId]: backtestsList,
-        },
-      }
-    }
-
     case types.DISCONNECTED:
     case types.RESET_DATA_BACKTEST: {
       return getInitialState()
@@ -98,6 +85,8 @@ function reducer(state = getInitialState(), action = {}) {
 
     case types.PURGE_DATA_BACKTEST: {
       return {
+        candles: [],
+        trades: [],
         loading: false,
         executing: false,
         progressPerc: 0,

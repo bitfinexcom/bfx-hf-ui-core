@@ -31,7 +31,7 @@ import getCurrentStrategyOpenPositions from './get_current_strategy_open_positio
 import getBacktestState from './get_backtest_state'
 import getBacktestData from './get_backtest_data'
 import getBacktestResults from './get_backtest_results'
-import getStrategiesBacktests from './get_strategies_backtests'
+import getBacktestHistory from './get_backtest_history'
 import getCurrentStrategyBacktestsList from './get_current_strategy_backtests_list'
 
 import {
@@ -79,7 +79,7 @@ export {
   getBacktestState,
   getBacktestData,
   getBacktestResults,
-  getStrategiesBacktests,
+  getBacktestHistory,
   getCurrentStrategyBacktestsList,
 
   apiClientConnected,

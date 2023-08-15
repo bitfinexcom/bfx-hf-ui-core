@@ -488,7 +488,18 @@ export default (alias, store) => (e = {}) => {
       case 'data.bt.history.list': {
         const [, strategyId, backtestsList] = payload
         store.dispatch(WSActions.recvStrategyBacktestsList(strategyId, backtestsList))
+        break
+      }
 
+      case 'data.bt.history.favorite': {
+        const [, backtestId, isFavorite] = payload
+        store.dispatch(WSActions.changeBacktestFavoriteState(backtestId, isFavorite))
+        break
+      }
+
+      case 'data.bt.history.deleted': {
+        const [, backtestId] = payload
+        store.dispatch(WSActions.removeBacktest(backtestId))
         break
       }
 
