@@ -20,6 +20,20 @@
     }
   }
 
+  .details-field {
+    margin-bottom: 10px;
+    font-size: 15px;
+
+    .label {
+      font-weight: 400;
+      margin-bottom: 3px;
+    }
+
+    .value {
+      font-weight: 700;
+    }
+  }
+
   .backtest-history-table {
     @extend .item;
     width: 100%;

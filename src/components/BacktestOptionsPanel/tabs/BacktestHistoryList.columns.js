@@ -4,7 +4,9 @@ import { Icon } from 'react-fa'
 import { renderDate } from '../../../util/ui'
 import FavoriteIcon from '../../../ui/Icons/FavoriteIcon'
 
-export default ({ toggleFavorite, formatTime, removeBacktest }) => [
+export default ({
+  toggleFavorite, formatTime, removeBacktest, t,
+}) => [
   {
     dataKey: 'executionId',
     width: 25,
@@ -31,13 +33,13 @@ export default ({ toggleFavorite, formatTime, removeBacktest }) => [
   },
   {
     dataKey: 'timestamp',
+    label: t('strategyEditor.executedAt'),
     width: 100,
     flexGrow: 1,
     style: { justifyContent: 'center' },
     cellRenderer: ({ rowData = {} }) => {
       return renderDate(rowData.timestamp, formatTime)
     },
-    disableSort: true,
   },
   {
     dataKey: 'id',

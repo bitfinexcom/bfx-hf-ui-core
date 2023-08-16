@@ -53,8 +53,9 @@ const BacktestHistoryList = ({ onBacktestRowClick }) => {
       formatTime,
       toggleFavorite,
       removeBacktest,
+      t,
     }),
-    [toggleFavorite, formatTime, removeBacktest],
+    [toggleFavorite, formatTime, removeBacktest, t],
   )
 
   const data = useMemo(() => {
@@ -91,8 +92,8 @@ const BacktestHistoryList = ({ onBacktestRowClick }) => {
             defaultSortDirection='DESC'
             defaultSortBy='dataKey'
             onRowClick={onBacktestRowClick}
-            headerHeight={0}
             rowHeight={30}
+            disableColumnsResizing
           />
         )}
       </div>

@@ -872,7 +872,12 @@
     "lastYear": "Last year",
     "lastXyears": "Last {{amount}} years",
     "elapsedTime": "Elapsed time",
-    "noHistoryBacktests": "No backtests in history"
+    "noHistoryBacktests": "No backtests in history",
+    "executedAt": "Executed at",
+    "period": "Period",
+    "tradingPair": "Trading Pair",
+    "source": "Source",
+    "candlesSource": "Candles ({{timeframe}}),\n\n Seed count = {{candleSeed}}"
   },
   "ui": {
     "ok": "Okay",
