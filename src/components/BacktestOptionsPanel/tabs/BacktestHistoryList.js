@@ -1,4 +1,5 @@
 import React, { useCallback, useMemo } from 'react'
+import PropTypes from 'prop-types'
 import _toUpper from 'lodash/toUpper'
 import _filter from 'lodash/filter'
 import _isEmpty from 'lodash/isEmpty'
@@ -14,7 +15,7 @@ import WSTypes from '../../../redux/constants/ws'
 import BacktestHistoryListColumns from './BacktestHistoryList.columns'
 import { getFormatTimeFn } from '../../../redux/selectors/ui'
 
-const BacktestHistoryList = () => {
+const BacktestHistoryList = ({ onBacktestRowClick }) => {
   const [isFavoriteSelected, toggleFavoritesList] = useToggle(false)
 
   const { t } = useTranslation()
@@ -46,15 +47,6 @@ const BacktestHistoryList = () => {
     },
     [dispatch],
   )
-
-  const onRowClick = ({ rowData }) => {
-    dispatch(
-      WSActions.send({
-        alias: WSTypes.ALIAS_DATA_SERVER,
-        data: ['get.bt.history.details', rowData.executionId],
-      }),
-    )
-  }
 
   const columns = useMemo(
     () => BacktestHistoryListColumns({
@@ -98,7 +90,7 @@ const BacktestHistoryList = () => {
             columns={columns}
             defaultSortDirection='DESC'
             defaultSortBy='dataKey'
-            onRowClick={onRowClick}
+            onRowClick={onBacktestRowClick}
             headerHeight={0}
             rowHeight={30}
           />
@@ -106,6 +98,10 @@ const BacktestHistoryList = () => {
       </div>
     </>
   )
+}
+
+BacktestHistoryList.propTypes = {
+  onBacktestRowClick: PropTypes.func.isRequired,
 }
 
 export default BacktestHistoryList

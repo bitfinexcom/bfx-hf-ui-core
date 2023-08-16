@@ -1,11 +1,12 @@
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import _toUpper from 'lodash/toUpper'
-import _bind from 'lodash/bind'
+import { Icon } from 'react-fa'
 import BacktestOptionsNewTest from './tabs/NewTest'
 import HistoryButton from '../../ui/HistoryButton/HistoryButton'
 import BacktestHistoryList from './tabs/BacktestHistoryList'
 import PanelButton from '../../ui/Panel/Panel.Button'
+import BacktestDetails from './tabs/BacktestDetails'
 
 import './style.css'
 
@@ -17,19 +18,44 @@ const BACKTEST_OPTIONS_TABS = {
 
 const BacktestOptionsPanel = (props) => {
   const [activeTab, setActiveTab] = useState(BACKTEST_OPTIONS_TABS.NEW_TEST)
+  const [backtestDetails, setBacktestDetails] = useState(null)
   const { t } = useTranslation()
+
+  const onNewTestTabClick = () => setActiveTab(BACKTEST_OPTIONS_TABS.NEW_TEST)
+  const onHistoryTabClick = () => {
+    if (activeTab !== BACKTEST_OPTIONS_TABS.NEW_TEST) {
+      return
+    }
+    setActiveTab(BACKTEST_OPTIONS_TABS.HISTORY_LIST)
+  }
+  const onBackButtonClick = () => setActiveTab(BACKTEST_OPTIONS_TABS.HISTORY_LIST)
+
+  const onBacktestRowClick = ({ rowData }) => {
+    setBacktestDetails(rowData)
+    setActiveTab(BACKTEST_OPTIONS_TABS.HISTORY_DETAILS)
+  }
 
   return (
     <div className='hfui-strategy-backtest-options'>
       <div className='tabs-menu'>
-        <PanelButton
-          onClick={_bind(setActiveTab, BACKTEST_OPTIONS_TABS.NEW_TEST)}
-          text={_toUpper(t('strategyEditor.newTest'))}
-          isActive={activeTab === BACKTEST_OPTIONS_TABS.NEW_TEST}
-        />
+        {activeTab === BACKTEST_OPTIONS_TABS.HISTORY_DETAILS ? (
+          <PanelButton
+            onClick={onBackButtonClick}
+            text={_toUpper(t('ui.goBack'))}
+            isActive={false}
+            icon={<Icon name='arrow-left' />}
+          />
+        ) : (
+          <PanelButton
+            onClick={onNewTestTabClick}
+            text={_toUpper(t('strategyEditor.newTest'))}
+            isActive={activeTab === BACKTEST_OPTIONS_TABS.NEW_TEST}
+          />
+        )}
+
         <HistoryButton
-          onClick={_bind(setActiveTab, BACKTEST_OPTIONS_TABS.HISTORY_LIST)}
-          isActive={activeTab === BACKTEST_OPTIONS_TABS.HISTORY_LIST}
+          onClick={onHistoryTabClick}
+          isActive={activeTab !== BACKTEST_OPTIONS_TABS.NEW_TEST}
           isLoading={false}
         />
       </div>
@@ -37,7 +63,10 @@ const BacktestOptionsPanel = (props) => {
         <BacktestOptionsNewTest {...props} />
       )}
       {activeTab === BACKTEST_OPTIONS_TABS.HISTORY_LIST && (
-        <BacktestHistoryList />
+        <BacktestHistoryList onBacktestRowClick={onBacktestRowClick} />
+      )}
+      {activeTab === BACKTEST_OPTIONS_TABS.HISTORY_DETAILS && (
+        <BacktestDetails backtest={backtestDetails} />
       )}
     </div>
   )
