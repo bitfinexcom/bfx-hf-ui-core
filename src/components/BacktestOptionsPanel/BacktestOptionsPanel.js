@@ -43,13 +43,14 @@ const BacktestOptionsPanel = (props) => {
             onClick={onBackButtonClick}
             text={_toUpper(t('ui.goBack'))}
             isActive={false}
-            icon={<Icon name='arrow-left' />}
+            icon={<Icon name='arrow-left' className='icon' />}
           />
         ) : (
           <PanelButton
             onClick={onNewTestTabClick}
             text={_toUpper(t('strategyEditor.newTest'))}
             isActive={activeTab === BACKTEST_OPTIONS_TABS.NEW_TEST}
+            icon={<Icon name='play' className='icon' />}
           />
         )}
 

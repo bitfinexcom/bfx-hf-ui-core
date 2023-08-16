@@ -7,6 +7,7 @@
   border-radius: 5px;
   height: 100%;
   padding: 16px;
+  min-width: 275px;
 
   .item {
     margin-bottom: 10px;
@@ -27,6 +28,7 @@
     .label {
       font-weight: 400;
       margin-bottom: 3px;
+      color: var(--shade-5);
     }
 
     .value {
@@ -51,6 +53,10 @@
     @extend .item;
     display: flex;
     justify-content: space-between;
+
+    .icon {
+      font-size: 14px;
+    }
   }
 
   &__icn-selector-container {
