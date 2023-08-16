@@ -1,36 +1,43 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import _toUpper from 'lodash/toUpper'
-import BacktestOptionsNewTest from './BacktestOptions.NewTest'
+import _bind from 'lodash/bind'
+import BacktestOptionsNewTest from './tabs/NewTest'
 import HistoryButton from '../../ui/HistoryButton/HistoryButton'
-import useToggle from '../../hooks/useToggle'
-import BacktestOptionsHistory from './BacktestOptions.History'
+import BacktestHistoryList from './tabs/BacktestHistoryList'
 import PanelButton from '../../ui/Panel/Panel.Button'
 
 import './style.css'
 
+const BACKTEST_OPTIONS_TABS = {
+  NEW_TEST: 'NEW TEST',
+  HISTORY_LIST: 'HISTORY_LIST',
+  HISTORY_DETAILS: 'HISTORY_DETAILS',
+}
+
 const BacktestOptionsPanel = (props) => {
-  const [isHistoryTabActive, , setHistoryTabActive, setNewTestTabActive] = useToggle(false)
+  const [activeTab, setActiveTab] = useState(BACKTEST_OPTIONS_TABS.NEW_TEST)
   const { t } = useTranslation()
 
   return (
     <div className='hfui-strategy-backtest-options'>
       <div className='tabs-menu'>
         <PanelButton
-          onClick={setNewTestTabActive}
+          onClick={_bind(setActiveTab, BACKTEST_OPTIONS_TABS.NEW_TEST)}
           text={_toUpper(t('strategyEditor.newTest'))}
-          isActive={!isHistoryTabActive}
+          isActive={activeTab === BACKTEST_OPTIONS_TABS.NEW_TEST}
         />
         <HistoryButton
-          onClick={setHistoryTabActive}
-          isActive={isHistoryTabActive}
+          onClick={_bind(setActiveTab, BACKTEST_OPTIONS_TABS.HISTORY_LIST)}
+          isActive={activeTab === BACKTEST_OPTIONS_TABS.HISTORY_LIST}
           isLoading={false}
         />
       </div>
-      {isHistoryTabActive ? (
-        <BacktestOptionsHistory />
-      ) : (
+      {activeTab === BACKTEST_OPTIONS_TABS.NEW_TEST && (
         <BacktestOptionsNewTest {...props} />
+      )}
+      {activeTab === BACKTEST_OPTIONS_TABS.HISTORY_LIST && (
+        <BacktestHistoryList />
       )}
     </div>
   )

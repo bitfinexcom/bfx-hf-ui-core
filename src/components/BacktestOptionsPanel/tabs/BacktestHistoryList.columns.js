@@ -1,8 +1,8 @@
 import React from 'react'
 import { Button } from '@ufx-ui/core'
 import { Icon } from 'react-fa'
-import { renderDate } from '../../util/ui'
-import FavoriteIcon from '../../ui/Icons/FavoriteIcon'
+import { renderDate } from '../../../util/ui'
+import FavoriteIcon from '../../../ui/Icons/FavoriteIcon'
 
 export default ({ toggleFavorite, formatTime, removeBacktest }) => [
   {

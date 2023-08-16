@@ -5,16 +5,16 @@ import _isEmpty from 'lodash/isEmpty'
 import { useTranslation } from 'react-i18next'
 import { VirtualTable } from '@ufx-ui/core'
 import { useDispatch, useSelector } from 'react-redux'
-import FavoriteIcon from '../../ui/Icons/FavoriteIcon'
-import PanelButton from '../../ui/Panel/Panel.Button'
-import useToggle from '../../hooks/useToggle'
-import { getCurrentStrategyBacktestsList } from '../../redux/selectors/ws'
-import WSActions from '../../redux/actions/ws'
-import WSTypes from '../../redux/constants/ws'
-import BacktestOptionsHistoryColumns from './BacktestOptions.History.columns'
-import { getFormatTimeFn } from '../../redux/selectors/ui'
+import FavoriteIcon from '../../../ui/Icons/FavoriteIcon'
+import PanelButton from '../../../ui/Panel/Panel.Button'
+import useToggle from '../../../hooks/useToggle'
+import { getCurrentStrategyBacktestsList } from '../../../redux/selectors/ws'
+import WSActions from '../../../redux/actions/ws'
+import WSTypes from '../../../redux/constants/ws'
+import BacktestHistoryListColumns from './BacktestHistoryList.columns'
+import { getFormatTimeFn } from '../../../redux/selectors/ui'
 
-const BacktestOptionsHistory = () => {
+const BacktestHistoryList = () => {
   const [isFavoriteSelected, toggleFavoritesList] = useToggle(false)
 
   const { t } = useTranslation()
@@ -57,7 +57,7 @@ const BacktestOptionsHistory = () => {
   }
 
   const columns = useMemo(
-    () => BacktestOptionsHistoryColumns({
+    () => BacktestHistoryListColumns({
       formatTime,
       toggleFavorite,
       removeBacktest,
@@ -108,4 +108,4 @@ const BacktestOptionsHistory = () => {
   )
 }
 
-export default BacktestOptionsHistory
+export default BacktestHistoryList

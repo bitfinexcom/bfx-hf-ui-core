@@ -6,14 +6,14 @@ import {
   Checkbox, Button, Spinner, Intent,
 } from '@ufx-ui/core'
 import cx from 'clsx'
-import AmountInput from '../OrderForm/FieldComponents/input.amount'
-import DateInput from '../OrderForm/FieldComponents/input.date'
-import TimeFrameDropdown from '../TimeFrameDropdown'
-import Dropdown from '../../ui/Dropdown'
-import { STRATEGY_OPTIONS_KEYS } from '../StrategyEditor/StrategyEditor.helpers'
-import { STRATEGY_SHAPE } from '../../constants/prop-types-shapes'
-import ClockIcon from '../../ui/Icons/ClockIcon'
-import CalendarIcon from '../../ui/Icons/CalendarIcon'
+import AmountInput from '../../OrderForm/FieldComponents/input.amount'
+import DateInput from '../../OrderForm/FieldComponents/input.date'
+import TimeFrameDropdown from '../../TimeFrameDropdown'
+import Dropdown from '../../../ui/Dropdown'
+import { STRATEGY_OPTIONS_KEYS } from '../../StrategyEditor/StrategyEditor.helpers'
+import { STRATEGY_SHAPE } from '../../../constants/prop-types-shapes'
+import ClockIcon from '../../../ui/Icons/ClockIcon'
+import CalendarIcon from '../../../ui/Icons/CalendarIcon'
 
 const MAX_DATE = new Date()
 
