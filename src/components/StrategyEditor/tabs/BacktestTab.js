@@ -26,16 +26,14 @@ import {
 import BacktestResultsOptionsPanel from '../../BacktestOptionsPanel/BacktestResultsOptionsPanel'
 import BacktestProgressBar from '../../BacktestProgressBar'
 import WSActions from '../../../redux/actions/ws'
+import UIActions from '../../../redux/actions/ui'
 import WSTypes from '../../../redux/constants/ws'
-import { getCurrentStrategyBacktestsList } from '../../../redux/selectors/ws'
-
-export const BACKTEST_TAB_SECTIONS = {
-  NEW_BT: 'NEW_BT',
-  NEW_BT_RESULTS: 'NEW_BT _RESULTS',
-  HISTORY_BT_LIST: 'HISTORY_BT_LIST',
-  HISTORY_BT_DETAILS: 'HISTORY_BT_DETAILS',
-  HISTORY_BT_RESULTS: 'HISTORY_BT_RESULTS',
-}
+import {
+  getBacktestState,
+  getCurrentStrategyBacktestsList,
+} from '../../../redux/selectors/ws'
+import { BACKTEST_TAB_SECTIONS } from '../../../redux/reducers/ui'
+import { getBacktestActiveSection } from '../../../redux/selectors/ui'
 
 const getInitialMessageI18Key = (activeSection) => {
   if (activeSection === BACKTEST_TAB_SECTIONS.NEW_BT) {
@@ -52,7 +50,6 @@ const getInitialMessageI18Key = (activeSection) => {
 
 const BacktestTab = (props) => {
   const {
-    results,
     onCancelProcess,
     strategy,
     indicators,
@@ -60,17 +57,22 @@ const BacktestTab = (props) => {
     onBacktestStart,
     saveStrategyOptions,
   } = props
-  const [activeSection, setActiveSection] = useState(
-    BACKTEST_TAB_SECTIONS.NEW_BT,
-  )
-  const [btHistoryId, setBtHistoryId] = useState(null)
   const [layoutConfig, setLayoutConfig] = useState()
   const [fullscreenChart, , showFullscreenChart, hideFullscreenChart] = useToggle(false)
-  const isBacktestListFetched = _isArray(useSelector(getCurrentStrategyBacktestsList))
+
+  const isBacktestListFetched = _isArray(
+    useSelector(getCurrentStrategyBacktestsList),
+  )
+  const activeSection = useSelector(getBacktestActiveSection)
+  const backtestState = useSelector(getBacktestState)
 
   const {
-    finished = false, loading, progressPerc, gid, timestamp,
-  } = results
+    finished = false,
+    loading,
+    progressPerc,
+    gid,
+    results,
+  } = backtestState
   const { id: strategyId } = strategy
   const positions = results?.strategy?.closedPositions
 
@@ -80,6 +82,13 @@ const BacktestTab = (props) => {
 
   const { t } = useTranslation()
   const dispatch = useDispatch()
+
+  const setActiveSection = useCallback(
+    (section) => {
+      dispatch(UIActions.setBacktestActiveSection(section))
+    },
+    [dispatch],
+  )
 
   useEffect(() => {
     if (!showBacktestResults) {
@@ -93,27 +102,18 @@ const BacktestTab = (props) => {
     if (finished) {
       setActiveSection(BACKTEST_TAB_SECTIONS.NEW_BT_RESULTS)
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [finished])
 
   // If a strategy has changed, reset tab state
   useEffect(() => {
-    setBtHistoryId(null)
-    dispatch(WSActions.purgeBacktestData())
-
     if (!isBacktestListFetched) {
-      dispatch(WSActions.send({
-        alias: WSTypes.ALIAS_DATA_SERVER,
-        data: ['get.bt.history.list', strategyId],
-      }))
-    }
-
-    if (activeSection === BACKTEST_TAB_SECTIONS.NEW_BT) {
-      return
-    }
-    if (activeSection === BACKTEST_TAB_SECTIONS.NEW_BT_RESULTS) {
-      setActiveSection(BACKTEST_TAB_SECTIONS.NEW_BT)
-    } else {
-      setActiveSection(BACKTEST_TAB_SECTIONS.HISTORY_BT_LIST)
+      dispatch(
+        WSActions.send({
+          alias: WSTypes.ALIAS_DATA_SERVER,
+          data: ['get.bt.history.list', strategyId],
+        }),
+      )
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [strategyId])
@@ -125,9 +125,6 @@ const BacktestTab = (props) => {
           return showBacktestResults ? (
             <BacktestResultsOptionsPanel
               showFullscreenChart={showFullscreenChart}
-              backtestTimestamp={timestamp}
-              activeSection={activeSection}
-              setActiveSection={setActiveSection}
             />
           ) : (
             <BacktestOptionsPanel
@@ -136,10 +133,6 @@ const BacktestTab = (props) => {
               saveStrategyOptions={saveStrategyOptions}
               isLoading={loading}
               onCancelProcess={onCancelProcess}
-              activeSection={activeSection}
-              setActiveSection={setActiveSection}
-              setBtHistoryId={setBtHistoryId}
-              btHistoryId={btHistoryId}
             />
           )
 
@@ -183,14 +176,11 @@ const BacktestTab = (props) => {
     [
       showBacktestResults,
       showFullscreenChart,
-      timestamp,
-      activeSection,
       strategy,
       onBacktestStart,
       saveStrategyOptions,
       loading,
       onCancelProcess,
-      btHistoryId,
       indicators,
       markets,
       fullscreenChart,
@@ -224,19 +214,6 @@ const BacktestTab = (props) => {
 }
 
 BacktestTab.propTypes = {
-  results: PropTypes.shape({
-    finished: PropTypes.bool,
-    loading: PropTypes.bool,
-    strategy: PropTypes.shape({
-      closedPositions: PropTypes.oneOfType([
-        PropTypes.arrayOf(PropTypes.string),
-        PropTypes.object,
-      ]),
-    }),
-    progressPerc: PropTypes.number,
-    gid: PropTypes.number,
-    timestamp: PropTypes.number,
-  }).isRequired,
   onCancelProcess: PropTypes.func.isRequired,
   strategy: PropTypes.shape(STRATEGY_SHAPE).isRequired,
   markets: PropTypes.arrayOf(PropTypes.shape(MARKET_SHAPE)).isRequired,

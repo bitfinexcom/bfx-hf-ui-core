@@ -473,7 +473,7 @@ export default (alias, store) => (e = {}) => {
           store.dispatch(UIActions.logInformation(error, LOG_LEVELS.ERROR, 'backtest_failed'))
           break
         }
-        store.dispatch(WSActions.recvBacktestResults(res))
+        store.dispatch(WSActions.recvBacktestResults(res, true))
         store.dispatch(UIActions.logInformation('Backtest finished successfully', LOG_LEVELS.INFO, 'backtest_success'))
         break
       }

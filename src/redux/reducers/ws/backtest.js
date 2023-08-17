@@ -1,7 +1,9 @@
-import types from '../../constants/ws'
+import WSTypes from '../../constants/ws'
+import UITypes from '../../constants/ui'
 
 function getInitialState() {
   return {
+    result: null,
     currentTest: null,
     loading: false,
     executing: false,
@@ -16,7 +18,7 @@ function getInitialState() {
 function reducer(state = getInitialState(), action = {}) {
   const { type, payload = {} } = action
   switch (type) {
-    case types.BACKTEST_EXECUTE: {
+    case WSTypes.BACKTEST_EXECUTE: {
       // data server has received backtest request
       // and is syncing data
       const newState = getInitialState()
@@ -27,7 +29,7 @@ function reducer(state = getInitialState(), action = {}) {
       }
     }
 
-    case types.BACKTEST_START: {
+    case WSTypes.BACKTEST_START: {
       // data server is about to start sending
       // backtest data
       return {
@@ -37,14 +39,14 @@ function reducer(state = getInitialState(), action = {}) {
       }
     }
 
-    case types.SET_BACKTEST_LOADING: {
+    case WSTypes.SET_BACKTEST_LOADING: {
       return {
         ...state,
         loading: true,
       }
     }
 
-    case types.BACKTEST_PROGRESS: {
+    case WSTypes.BACKTEST_PROGRESS: {
       const { progressPerc } = payload
       return {
         ...state,
@@ -52,14 +54,16 @@ function reducer(state = getInitialState(), action = {}) {
       }
     }
 
-    case types.BACKTEST_RESULTS: {
+    case WSTypes.BACKTEST_RESULTS: {
+      const { results, isExecuted } = payload
       return {
         ...state,
-        ...payload,
+        finished: isExecuted,
+        results,
       }
     }
 
-    case types.BACKTEST_STARTED: {
+    case WSTypes.BACKTEST_STARTED: {
       const { gid } = payload
 
       return {
@@ -68,27 +72,27 @@ function reducer(state = getInitialState(), action = {}) {
       }
     }
 
-    case types.BACKTEST_STOPPED: {
+    case WSTypes.BACKTEST_STOPPED: {
       return {
         ...state,
         loading: false,
         executing: false,
-        finished: true,
         gid: null,
       }
     }
 
-    case types.DISCONNECTED:
-    case types.PURGE_DATA_BACKTEST: {
+    case WSTypes.DISCONNECTED:
+    case WSTypes.PURGE_DATA_BACKTEST:
+    case UITypes.SET_CURRENT_STRATEGY: {
       return getInitialState()
     }
 
-    case types.BACKTEST_CANDLE: {
+    case WSTypes.BACKTEST_CANDLE: {
       state.candles.push(payload)
       return state
     }
 
-    case types.BACKTEST_TRADE: {
+    case WSTypes.BACKTEST_TRADE: {
       state.trades.push(payload)
       return state
     }

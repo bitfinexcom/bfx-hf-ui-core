@@ -1,27 +1,32 @@
 import React from 'react'
 import _toUpper from 'lodash/toUpper'
+import _get from 'lodash/get'
 import PropTypes from 'prop-types'
 import { useTranslation } from 'react-i18next'
 import { useDispatch, useSelector } from 'react-redux'
 import { Icon } from 'react-fa'
 import Button from '../../ui/Button'
-import { getFormatTimeFn } from '../../redux/selectors/ui'
+import {
+  getBacktestActiveSection,
+  getFormatTimeFn,
+} from '../../redux/selectors/ui'
 import { renderDate } from '../../util/ui'
 import PanelButton from '../../ui/Panel/Panel.Button'
-import { BACKTEST_TAB_SECTIONS } from '../StrategyEditor/tabs/BacktestTab'
-import WSActions from '../../redux/actions/ws'
 
-const BacktestResultsOptionsPanel = ({
-  showFullscreenChart,
-  backtestTimestamp,
-  activeSection,
-  setActiveSection,
-}) => {
+import UIActions from '../../redux/actions/ui'
+import WSActions from '../../redux/actions/ws'
+import { BACKTEST_TAB_SECTIONS } from '../../redux/reducers/ui'
+import { getCurrentHistoryBacktest } from '../../redux/selectors/ws'
+
+const BacktestResultsOptionsPanel = ({ showFullscreenChart }) => {
   const formatTime = useSelector(getFormatTimeFn)
+  const backtest = useSelector(getCurrentHistoryBacktest)
+  const activeSection = useSelector(getBacktestActiveSection)
 
   const { t } = useTranslation()
   const dispatch = useDispatch()
 
+  const setActiveSection = (section) => dispatch(UIActions.setBacktestActiveSection(section))
   const onBackButtonClick = () => setActiveSection(BACKTEST_TAB_SECTIONS.HISTORY_BT_DETAILS)
   const onNewTestButtonClick = () => {
     dispatch(WSActions.purgeBacktestData())
@@ -43,7 +48,9 @@ const BacktestResultsOptionsPanel = ({
           <p>
             {t('strategyEditor.backtestHistoryResults')}
             &nbsp;
-            <b>{renderDate(backtestTimestamp, formatTime, false)}</b>
+            <b>
+              {renderDate(_get(backtest, 'timestamp', 0), formatTime, false)}
+            </b>
           </p>
           <Button
             className='hfui-strategy-options__option-btn'
@@ -76,13 +83,6 @@ const BacktestResultsOptionsPanel = ({
 
 BacktestResultsOptionsPanel.propTypes = {
   showFullscreenChart: PropTypes.func.isRequired,
-  setActiveSection: PropTypes.func.isRequired,
-  activeSection: PropTypes.string.isRequired,
-  backtestTimestamp: PropTypes.number,
-}
-
-BacktestResultsOptionsPanel.defaultProps = {
-  backtestTimestamp: null,
 }
 
 export default BacktestResultsOptionsPanel

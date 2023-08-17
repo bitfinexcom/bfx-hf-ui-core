@@ -71,7 +71,7 @@ const StrategyEditor = (props) => {
     onRemove,
     authToken,
     gaCreateStrategy,
-    backtestResults,
+    backtestState,
     strategyDirty,
     setStrategyDirty,
     setStrategy,
@@ -335,13 +335,13 @@ const StrategyEditor = (props) => {
   )
 
   const _cancelProcess = useCallback(() => {
-    const { gid } = backtestResults
+    const { gid } = backtestState
 
     cancelProcess(authToken, isPaperTrading, gid, loadingGid)
     closeCancelProcessModal()
   }, [
     authToken,
-    backtestResults,
+    backtestState,
     cancelProcess,
     closeCancelProcessModal,
     isPaperTrading,
@@ -634,11 +634,11 @@ const StrategyEditor = (props) => {
   const sbtitleBacktest = useCallback(
     ({ sidebarOpened }) => (
       <BacktestTabTitle
-        results={backtestResults}
+        backtestState={backtestState}
         sidebarOpened={sidebarOpened}
       />
     ),
-    [backtestResults],
+    [backtestState],
   )
 
   const sbtitleSettings = useCallback(
@@ -683,7 +683,6 @@ const StrategyEditor = (props) => {
               <BacktestTab
                 htmlKey='backtest'
                 sbtitle={sbtitleBacktest}
-                results={backtestResults}
                 onBacktestStart={onBacktestStart}
                 saveStrategyOptions={saveStrategyOptions}
                 onCancelProcess={onCancelProcess}
@@ -792,9 +791,8 @@ StrategyEditor.propTypes = {
   onRemove: PropTypes.func.isRequired,
   authToken: PropTypes.string.isRequired,
   setStrategy: PropTypes.func,
-  backtestResults: PropTypes.shape({
+  backtestState: PropTypes.shape({
     gid: PropTypes.number,
-    strategy: PropTypes.object, // eslint-disable-line
   }).isRequired,
   strategy: PropTypes.shape(STRATEGY_SHAPE),
   dsStopLiveStrategy: PropTypes.func.isRequired,

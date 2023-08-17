@@ -257,9 +257,9 @@ export default {
     },
   }),
 
-  recvBacktestResults: (opts) => ({
+  recvBacktestResults: (opts, isExecuted) => ({
     type: t.BACKTEST_RESULTS,
-    payload: opts,
+    payload: { results: opts, isExecuted },
   }),
 
   recvBacktestStarted: (gid) => ({
@@ -399,6 +399,10 @@ export default {
   removeBacktest: (backtestId) => ({
     type: t.BACKTEST_REMOVE,
     payload: { backtestId },
+  }),
+  setHistoryBacktestId: (id) => ({
+    type: t.SET_HISTORY_BACKTEST_ID,
+    payload: { id },
   }),
 
   initAuth: (password) => send(['auth.init', password, MAIN_MODE, getScope()]),

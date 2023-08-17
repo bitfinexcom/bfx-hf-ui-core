@@ -9,7 +9,7 @@ import GAActions from '../../redux/actions/google_analytics'
 import WSTypes from '../../redux/constants/ws'
 import {
   getAuthToken,
-  getBacktestResults,
+  getBacktestState,
   getCurrentStrategyExecutionState,
   getSavedStrategies,
 } from '../../redux/selectors/ws'
@@ -31,7 +31,7 @@ import { LOG_LEVELS } from '../../constants/logging'
 const mapStateToProps = (state = {}) => {
   return {
     authToken: getAuthToken(state),
-    backtestResults: getBacktestResults(state),
+    backtestState: getBacktestState(state),
     executionState: getCurrentStrategyExecutionState(state),
     settingsTheme: getThemeSetting(state),
     isPaperTrading: getIsPaperTrading(state),

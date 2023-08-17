@@ -1,22 +1,26 @@
 import React from 'react'
 import { useTranslation } from 'react-i18next'
-import PropTypes from 'prop-types'
 import _toUpper from 'lodash/toUpper'
 import { Icon } from 'react-fa'
+import { useDispatch, useSelector } from 'react-redux'
 import BacktestOptionsNewTest from './tabs/NewTest'
 import HistoryButton from '../../ui/HistoryButton/HistoryButton'
 import BacktestHistoryList from './tabs/BacktestHistoryList'
 import PanelButton from '../../ui/Panel/Panel.Button'
 import BacktestDetails from './tabs/BacktestDetails'
-import { BACKTEST_TAB_SECTIONS } from '../StrategyEditor/tabs/BacktestTab'
+import { BACKTEST_TAB_SECTIONS } from '../../redux/reducers/ui'
+import UIActions from '../../redux/actions/ui'
+import WSActions from '../../redux/actions/ws'
+import { getBacktestActiveSection } from '../../redux/selectors/ui'
 
 import './style.css'
 
 const BacktestOptionsPanel = (props) => {
-  const { setActiveSection, activeSection, setBtHistoryId } = props
-
   const { t } = useTranslation()
+  const dispatch = useDispatch()
+  const activeSection = useSelector(getBacktestActiveSection)
 
+  const setActiveSection = (section) => dispatch(UIActions.setBacktestActiveSection(section))
   const onNewTestTabClick = () => setActiveSection(BACKTEST_TAB_SECTIONS.NEW_BT)
   const onHistoryTabClick = () => {
     if (activeSection !== BACKTEST_TAB_SECTIONS.NEW_BT) {
@@ -27,7 +31,7 @@ const BacktestOptionsPanel = (props) => {
   const onBackButtonClick = () => setActiveSection(BACKTEST_TAB_SECTIONS.HISTORY_BT_LIST)
 
   const onBacktestRowClick = ({ rowData }) => {
-    setBtHistoryId(rowData.executionId)
+    dispatch(WSActions.setHistoryBacktestId(rowData.executionId))
     setActiveSection(BACKTEST_TAB_SECTIONS.HISTORY_BT_DETAILS)
   }
 
@@ -63,16 +67,10 @@ const BacktestOptionsPanel = (props) => {
         <BacktestHistoryList onBacktestRowClick={onBacktestRowClick} />
       )}
       {activeSection === BACKTEST_TAB_SECTIONS.HISTORY_BT_DETAILS && (
-        <BacktestDetails {...props} />
+        <BacktestDetails />
       )}
     </div>
   )
-}
-
-BacktestOptionsPanel.propTypes = {
-  activeSection: PropTypes.string.isRequired,
-  setActiveSection: PropTypes.func.isRequired,
-  setBtHistoryId: PropTypes.func.isRequired,
 }
 
 export default BacktestOptionsPanel

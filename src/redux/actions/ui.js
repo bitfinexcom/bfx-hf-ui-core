@@ -170,6 +170,11 @@ export const logInformation = (message, level, action, trace) => ({
   },
 })
 
+export const setBacktestActiveSection = (section) => ({
+  type: types.SET_BACKTEST_ACTIVE_SECTION,
+  payload: { section },
+})
+
 export default {
   setUIValue,
   updateUIValue,
@@ -195,4 +200,5 @@ export default {
   setCurrentStrategy,
   setIsStrategyDirty,
   logInformation,
+  setBacktestActiveSection,
 }

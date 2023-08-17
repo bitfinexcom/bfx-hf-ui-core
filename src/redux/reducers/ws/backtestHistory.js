@@ -4,10 +4,12 @@ import _omit from 'lodash/omit'
 import _filter from 'lodash/filter'
 import _isEmpty from 'lodash/isEmpty'
 import WSTypes from '../../constants/ws'
+import UITypes from '../../constants/ui'
 
 const getInitialState = () => ({
   mappedKeysByStrategyIds: {},
   backtests: {},
+  backtestId: null,
 })
 
 const reducer = (state = getInitialState(), action = {}) => {
@@ -110,6 +112,22 @@ const reducer = (state = getInitialState(), action = {}) => {
         ...state,
         backtests: _omit(backtests, backtestIds),
         mappedKeysByStrategyIds: _omit(mappedKeysByStrategyIds, strategyId),
+      }
+    }
+
+    case WSTypes.SET_HISTORY_BACKTEST_ID: {
+      const { id } = payload
+
+      return {
+        ...state,
+        backtestId: id,
+      }
+    }
+
+    case UITypes.SET_CURRENT_STRATEGY: {
+      return {
+        ...state,
+        backtestId: null,
       }
     }
 
