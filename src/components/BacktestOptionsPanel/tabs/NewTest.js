@@ -260,7 +260,7 @@ const BacktestOptionsNewTest = ({
       </div>
 
       {isLoading && (
-        <div className='item'>
+        <div className='button-container'>
           <Button
             intent={Intent.NONE}
             onClick={onCancelProcess}
@@ -270,7 +270,7 @@ const BacktestOptionsNewTest = ({
           </Button>
         </div>
       )}
-      <div className='item'>
+      <div className='button-container'>
         {isLoading ? (
           <Button
             className='hfui-strategy-backtest-options__calculating-btn'

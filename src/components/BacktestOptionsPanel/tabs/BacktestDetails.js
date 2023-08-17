@@ -56,13 +56,15 @@ const BacktestDetails = ({ btHistoryId, setActiveSection }) => {
           </div>
         )
       })}
-      <Button
-        className='hfui-strategy-backtest-options__start-btn'
-        onClick={onButtonClick}
-        intent={Intent.PRIMARY}
-      >
-        {t('table.moreInfo')}
-      </Button>
+      <div className='button-container'>
+        <Button
+          className='hfui-strategy-backtest-options__start-btn'
+          onClick={onButtonClick}
+          intent={Intent.PRIMARY}
+        >
+          {t('table.moreInfo')}
+        </Button>
+      </div>
     </>
   )
 }

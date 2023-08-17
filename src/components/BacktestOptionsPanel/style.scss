@@ -60,6 +60,12 @@
     }
   }
 
+  .button-container {
+    @extend .item;
+    display: flex;
+    justify-content: center;
+  }
+
   &__icn-selector-container {
     display: flex;
     justify-content: flex-end;
@@ -103,7 +109,7 @@
   }
 
   &__start-btn {
-    width: 100%;
+    width: 150px;
     height: 34px;
   }
 
