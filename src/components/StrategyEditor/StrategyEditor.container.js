@@ -2,7 +2,6 @@ import { connect } from 'react-redux'
 import { v4 as uuidv4 } from 'uuid'
 import _omitBy from 'lodash/omitBy'
 import _isEmpty from 'lodash/isEmpty'
-import _isArray from 'lodash/isArray'
 
 import WSActions from '../../redux/actions/ws'
 import UIActions from '../../redux/actions/ui'
@@ -11,7 +10,6 @@ import WSTypes from '../../redux/constants/ws'
 import {
   getAuthToken,
   getBacktestResults,
-  getCurrentStrategyBacktestsList,
   getCurrentStrategyExecutionState,
   getSavedStrategies,
 } from '../../redux/selectors/ws'
@@ -45,7 +43,6 @@ const mapStateToProps = (state = {}) => {
     pendingLiveStrategy: getUIState(state, UI_KEYS.pendingLiveStrategy, null),
     serviceStatus: getServicesStatus(state),
     markets: getMarketsSortedByVolumeForExecution(state),
-    isBacktestsListFetched: _isArray(getCurrentStrategyBacktestsList(state)),
   }
 }
 
@@ -55,9 +52,6 @@ const mapDispatchToProps = (dispatch) => ({
   },
   gaCreateStrategy: () => {
     dispatch(GAActions.createStrategy())
-  },
-  clearBacktestOptions: () => {
-    dispatch(WSActions.resetBacktestData())
   },
   dsExecuteLiveStrategy: ({
     authToken,
@@ -191,12 +185,6 @@ const mapDispatchToProps = (dispatch) => ({
   },
   logInformation: (message, level, action, trace) => {
     dispatch(UIActions.logInformation(message, level, action, trace))
-  },
-  fetchBacktestsList: (id) => {
-    dispatch(WSActions.send({
-      alias: WSTypes.ALIAS_DATA_SERVER,
-      data: ['get.bt.history.list', id],
-    }))
   },
 })
 

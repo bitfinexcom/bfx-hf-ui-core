@@ -3,7 +3,8 @@ import React, {
 } from 'react'
 import PropTypes from 'prop-types'
 import { useTranslation } from 'react-i18next'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import _isArray from 'lodash/isArray'
 
 import StrategyPerfomanceMetrics from '../../StrategyPerfomanceMetrics'
 import useToggle from '../../../hooks/useToggle'
@@ -25,6 +26,8 @@ import {
 import BacktestResultsOptionsPanel from '../../BacktestOptionsPanel/BacktestResultsOptionsPanel'
 import BacktestProgressBar from '../../BacktestProgressBar'
 import WSActions from '../../../redux/actions/ws'
+import WSTypes from '../../../redux/constants/ws'
+import { getCurrentStrategyBacktestsList } from '../../../redux/selectors/ws'
 
 export const BACKTEST_TAB_SECTIONS = {
   NEW_BT: 'NEW_BT',
@@ -62,8 +65,8 @@ const BacktestTab = (props) => {
   )
   const [btHistoryId, setBtHistoryId] = useState(null)
   const [layoutConfig, setLayoutConfig] = useState()
-
   const [fullscreenChart, , showFullscreenChart, hideFullscreenChart] = useToggle(false)
+  const isBacktestListFetched = _isArray(useSelector(getCurrentStrategyBacktestsList))
 
   const {
     finished = false, loading, progressPerc, gid, timestamp,
@@ -96,6 +99,13 @@ const BacktestTab = (props) => {
   useEffect(() => {
     setBtHistoryId(null)
     dispatch(WSActions.purgeBacktestData())
+
+    if (!isBacktestListFetched) {
+      dispatch(WSActions.send({
+        alias: WSTypes.ALIAS_DATA_SERVER,
+        data: ['get.bt.history.list', strategyId],
+      }))
+    }
 
     if (activeSection === BACKTEST_TAB_SECTIONS.NEW_BT) {
       return

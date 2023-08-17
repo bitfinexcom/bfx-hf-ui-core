@@ -98,8 +98,6 @@ const StrategyEditor = (props) => {
     setSectionErrors,
     serviceStatus,
     logInformation,
-    fetchBacktestsList,
-    isBacktestsListFetched,
   } = props
   const {
     t,
@@ -583,16 +581,6 @@ const StrategyEditor = (props) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [savedStrategies, pendingLiveStrategy, isStrategyManagerRunning])
 
-  // Fetch backtests list of the strategy
-  useEffect(() => {
-    console.log(isBacktestsListFetched)
-    if (!isPaperTrading || !strategyId || isBacktestsListFetched) {
-      return
-    }
-
-    fetchBacktestsList(strategyId)
-  }, [isPaperTrading, fetchBacktestsList, strategyId, isBacktestsListFetched])
-
   const sbtitleStrategy = useCallback(
     ({ selectedTab, sidebarOpened }) => (
       <StrategyTabTitle
@@ -848,8 +836,6 @@ StrategyEditor.propTypes = {
     strategyManager: PropTypes.bool,
   }).isRequired,
   logInformation: PropTypes.func.isRequired,
-  fetchBacktestsList: PropTypes.func.isRequired,
-  isBacktestsListFetched: PropTypes.bool.isRequired,
 }
 
 StrategyEditor.defaultProps = {
