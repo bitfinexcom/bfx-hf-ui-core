@@ -32,6 +32,19 @@ export const BACKTEST_TAB_SECTIONS = {
   HISTORY_BT_RESULTS: 'HISTORY_BT_RESULTS',
 }
 
+const getInitialMessageI18Key = (activeSection) => {
+  if (activeSection === BACKTEST_TAB_SECTIONS.NEW_BT) {
+    return 'strategyEditor.backtestingStartingMessage'
+  }
+  if (activeSection === BACKTEST_TAB_SECTIONS.HISTORY_BT_LIST) {
+    return 'strategyEditor.backtestingHistoryListMessage'
+  }
+  if (activeSection === BACKTEST_TAB_SECTIONS.HISTORY_BT_DETAILS) {
+    return 'strategyEditor.backtestingHistoryDetailsMessage'
+  }
+  return ''
+}
+
 const BacktestTab = (props) => {
   const {
     results,
@@ -172,7 +185,7 @@ const BacktestTab = (props) => {
             <BacktestProgressBar percent={progressPerc} startedOn={gid} />
           ) : (
             <p className='hfui-strategyeditor__initial-message'>
-              {t('strategyEditor.backtestingStartingMessage')}
+              {t(getInitialMessageI18Key(activeSection))}
             </p>
           )}
         </div>
