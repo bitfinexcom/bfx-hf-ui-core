@@ -88,13 +88,13 @@ export const readJSONFile = () => new Promise((resolve, reject) => {
   input.remove()
 })
 
-export const renderDate = (rawDate, formatTime) => {
+export const renderDate = (rawDate, formatTime, shouldTruncate = true) => {
   if (!rawDate) {
     return '--'
   }
   const date = formatTime(rawDate)
 
-  return defaultCellRenderer(date)
+  return shouldTruncate ? defaultCellRenderer(date) : date
 }
 
 export const processDateForCSV = (rawDate, formatTime) => {

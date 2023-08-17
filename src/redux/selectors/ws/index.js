@@ -32,6 +32,7 @@ import getBacktestState from './get_backtest_state'
 import getBacktestData from './get_backtest_data'
 import getBacktestResults from './get_backtest_results'
 import getBacktestHistory from './get_backtest_history'
+import getBacktestById from './get_backtest_by_id'
 import getCurrentStrategyBacktestsList from './get_current_strategy_backtests_list'
 
 import {
@@ -81,6 +82,7 @@ export {
   getBacktestResults,
   getBacktestHistory,
   getCurrentStrategyBacktestsList,
+  getBacktestById,
 
   apiClientConnected,
   apiClientConnecting,

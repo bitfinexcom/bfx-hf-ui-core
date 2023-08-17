@@ -22,6 +22,7 @@
   }
 
   .details-field {
+    @extend .item;
     margin-bottom: 10px;
     font-size: 15px;
 

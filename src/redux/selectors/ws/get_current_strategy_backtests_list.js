@@ -8,14 +8,14 @@ import { getBacktestHistory } from '.'
 const getCurrentStrategyBacktestsList = createSelector(
   [getCurrentStrategy, getBacktestHistory],
   ({ id }, backtestHistory) => {
-    const { mappedKeysByStrategyIds, backtestResults } = backtestHistory
+    const { mappedKeysByStrategyIds, backtests } = backtestHistory
     const mappedKeys = _get(mappedKeysByStrategyIds, id, null)
 
     if (!_isArray(mappedKeys)) {
       return mappedKeys
     }
     return _map(mappedKeys, (executionId) => {
-      return _get(backtestResults, executionId, {})
+      return _get(backtests, executionId, {})
     })
   },
 )

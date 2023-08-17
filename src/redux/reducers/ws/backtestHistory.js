@@ -6,7 +6,7 @@ import types from '../../constants/ws'
 
 const getInitialState = () => ({
   mappedKeysByStrategyIds: {},
-  backtestResults: {},
+  backtests: {},
 })
 
 const reducer = (state = getInitialState(), action = {}) => {
@@ -17,8 +17,8 @@ const reducer = (state = getInitialState(), action = {}) => {
       const { strategyId, backtestsList } = payload
 
       const mappedBacktestKeys = []
-      const backtestResults = {
-        ...state.backtestResults,
+      const backtests = {
+        ...state.backtests,
       }
 
       _forEach(backtestsList, (_backtest) => {
@@ -29,7 +29,7 @@ const reducer = (state = getInitialState(), action = {}) => {
         // normalize types after SQLite
         backtest.isFavorite = !!isFavorite
 
-        backtestResults[executionId] = backtest
+        backtests[executionId] = backtest
       })
 
       return {
@@ -38,19 +38,19 @@ const reducer = (state = getInitialState(), action = {}) => {
           ...state.mappedKeysByStrategyIds,
           [strategyId]: mappedBacktestKeys,
         },
-        backtestResults,
+        backtests,
       }
     }
 
     case types.BACKTEST_SET_FAVORITE: {
       const { backtestId, isFavorite } = payload
 
-      const backtest = _get(state, `backtestResults.${backtestId}`, {})
+      const backtest = _get(state, `backtests.${backtestId}`, {})
 
       return {
         ...state,
-        backtestResults: {
-          ...state.backtestResults,
+        backtests: {
+          ...state.backtests,
           [backtestId]: {
             ...backtest,
             isFavorite: !!isFavorite,
@@ -62,7 +62,7 @@ const reducer = (state = getInitialState(), action = {}) => {
     case types.BACKTEST_REMOVE: {
       const { backtestId } = payload
 
-      const backtest = _get(state, `backtestResults.${backtestId}`, {})
+      const backtest = _get(state, `backtests.${backtestId}`, {})
       const { strategyId } = backtest
       const backtestKeys = state.mappedKeysByStrategyIds[strategyId]
       const filteredKeys = _filter(backtestKeys, (id) => backtestId !== id)
@@ -73,7 +73,7 @@ const reducer = (state = getInitialState(), action = {}) => {
           ...state.mappedKeysByStrategyIds,
           [strategyId]: filteredKeys,
         },
-        backtestResults: _omit(state.backtestResults, backtestId),
+        backtests: _omit(state.backtests, backtestId),
       }
     }
 

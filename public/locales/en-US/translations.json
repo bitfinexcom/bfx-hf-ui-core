@@ -877,7 +877,8 @@
     "period": "Period",
     "tradingPair": "Trading Pair",
     "source": "Source",
-    "candlesSource": "Candles ({{timeframe}}),\n\n Seed count = {{candleSeed}}"
+    "candlesSource": "Candles ({{timeframe}}),\n\n Seed count = {{candleSeed}}",
+    "backtestHistoryResults": "Backtest results for"
   },
   "ui": {
     "ok": "Okay",

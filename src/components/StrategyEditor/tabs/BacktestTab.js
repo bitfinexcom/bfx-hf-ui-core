@@ -24,6 +24,14 @@ import {
 import BacktestResultsOptionsPanel from '../../BacktestOptionsPanel/BacktestResultsOptionsPanel'
 import BacktestProgressBar from '../../BacktestProgressBar'
 
+export const BACKTEST_TAB_SECTIONS = {
+  NEW_BT: 'NEW_BT',
+  NEW_BT_RESULTS: 'NEW_BT _RESULTS',
+  HISTORY_BT_LIST: 'HISTORY_BT_LIST',
+  HISTORY_BT_DETAILS: 'HISTORY_BT_DETAILS',
+  HISTORY_BT_RESULTS: 'HISTORY_BT_RESULTS',
+}
+
 const BacktestTab = (props) => {
   const {
     results,
@@ -36,33 +44,50 @@ const BacktestTab = (props) => {
     openNewTest,
   } = props
   const { t } = useTranslation()
+
+  const [activeSection, setActiveSection] = useState(
+    BACKTEST_TAB_SECTIONS.NEW_BT,
+  )
+  const [btHistoryId, setBtHistoryId] = useState(null)
   const [layoutConfig, setLayoutConfig] = useState()
+
   const [fullscreenChart, , showFullscreenChart, hideFullscreenChart] = useToggle(false)
 
   const {
-    finished = false, loading, progressPerc, gid,
+    finished = false, loading, progressPerc, gid, timestamp,
   } = results
   // const loading = true
   const positions = results?.strategy?.closedPositions
 
   const trades = useMemo(() => prepareChartTrades(positions), [positions])
+  const showBacktestResults = activeSection === BACKTEST_TAB_SECTIONS.NEW_BT_RESULTS
+    || activeSection === BACKTEST_TAB_SECTIONS.HISTORY_BT_RESULTS
 
   useEffect(() => {
-    if (!finished) {
+    if (!showBacktestResults) {
       setLayoutConfig(BACKTEST_LAYOUT_CONFIG_NO_DATA)
       return
     }
     setLayoutConfig(LAYOUT_CONFIG)
+  }, [showBacktestResults])
+
+  useEffect(() => {
+    if (finished) {
+      setActiveSection(BACKTEST_TAB_SECTIONS.NEW_BT_RESULTS)
+    }
   }, [finished])
 
   const renderGridComponents = useCallback(
     (i) => {
       switch (i) {
         case COMPONENTS_KEYS.OPTIONS:
-          return finished ? (
+          return showBacktestResults ? (
             <BacktestResultsOptionsPanel
               showFullscreenChart={showFullscreenChart}
               openNewTest={openNewTest}
+              backtestTimestamp={timestamp}
+              activeSection={activeSection}
+              setActiveSection={setActiveSection}
             />
           ) : (
             <BacktestOptionsPanel
@@ -71,6 +96,10 @@ const BacktestTab = (props) => {
               saveStrategyOptions={saveStrategyOptions}
               isLoading={loading}
               onCancelProcess={onCancelProcess}
+              activeSection={activeSection}
+              setActiveSection={setActiveSection}
+              setBtHistoryId={setBtHistoryId}
+              btHistoryId={btHistoryId}
             />
           )
 
@@ -112,14 +141,17 @@ const BacktestTab = (props) => {
       }
     },
     [
-      finished,
+      showBacktestResults,
       showFullscreenChart,
       openNewTest,
+      timestamp,
+      activeSection,
       strategy,
       onBacktestStart,
       saveStrategyOptions,
       loading,
       onCancelProcess,
+      btHistoryId,
       indicators,
       markets,
       fullscreenChart,
@@ -137,7 +169,7 @@ const BacktestTab = (props) => {
         layoutConfig={layoutConfig}
         renderGridComponents={renderGridComponents}
       />
-      {!finished && (
+      {!showBacktestResults && (
         <div className='hfui-strategyeditor__backtest-tab-empty'>
           {loading ? (
             <BacktestProgressBar percent={progressPerc} startedOn={gid} />
@@ -158,11 +190,13 @@ BacktestTab.propTypes = {
     loading: PropTypes.bool,
     strategy: PropTypes.shape({
       closedPositions: PropTypes.oneOfType([
-        PropTypes.arrayOf(PropTypes.string), PropTypes.object,
+        PropTypes.arrayOf(PropTypes.string),
+        PropTypes.object,
       ]),
     }),
     progressPerc: PropTypes.number,
     gid: PropTypes.number,
+    timestamp: PropTypes.number,
   }).isRequired,
   onCancelProcess: PropTypes.func.isRequired,
   strategy: PropTypes.shape(STRATEGY_SHAPE).isRequired,
