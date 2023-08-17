@@ -470,6 +470,7 @@ export default (alias, store) => (e = {}) => {
         const [, res] = payload
         const { error } = res
         if (error) {
+          store.dispatch(UIActions.logInformation(error, LOG_LEVELS.ERROR, 'backtest_failed'))
           break
         }
         store.dispatch(WSActions.recvBacktestResults(res))
