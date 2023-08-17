@@ -3,6 +3,7 @@ import React, {
 } from 'react'
 import PropTypes from 'prop-types'
 import { useTranslation } from 'react-i18next'
+import { useDispatch } from 'react-redux'
 
 import StrategyPerfomanceMetrics from '../../StrategyPerfomanceMetrics'
 import useToggle from '../../../hooks/useToggle'
@@ -23,6 +24,7 @@ import {
 } from '../../../constants/prop-types-shapes'
 import BacktestResultsOptionsPanel from '../../BacktestOptionsPanel/BacktestResultsOptionsPanel'
 import BacktestProgressBar from '../../BacktestProgressBar'
+import WSActions from '../../../redux/actions/ws'
 
 export const BACKTEST_TAB_SECTIONS = {
   NEW_BT: 'NEW_BT',
@@ -55,8 +57,6 @@ const BacktestTab = (props) => {
     onBacktestStart,
     saveStrategyOptions,
   } = props
-  const { t } = useTranslation()
-
   const [activeSection, setActiveSection] = useState(
     BACKTEST_TAB_SECTIONS.NEW_BT,
   )
@@ -68,12 +68,15 @@ const BacktestTab = (props) => {
   const {
     finished = false, loading, progressPerc, gid, timestamp,
   } = results
-  // const loading = true
+  const { id: strategyId } = strategy
   const positions = results?.strategy?.closedPositions
 
   const trades = useMemo(() => prepareChartTrades(positions), [positions])
   const showBacktestResults = activeSection === BACKTEST_TAB_SECTIONS.NEW_BT_RESULTS
     || activeSection === BACKTEST_TAB_SECTIONS.HISTORY_BT_RESULTS
+
+  const { t } = useTranslation()
+  const dispatch = useDispatch()
 
   useEffect(() => {
     if (!showBacktestResults) {
@@ -88,6 +91,22 @@ const BacktestTab = (props) => {
       setActiveSection(BACKTEST_TAB_SECTIONS.NEW_BT_RESULTS)
     }
   }, [finished])
+
+  // If a strategy has changed, reset tab state
+  useEffect(() => {
+    setBtHistoryId(null)
+    dispatch(WSActions.purgeBacktestData())
+
+    if (activeSection === BACKTEST_TAB_SECTIONS.NEW_BT) {
+      return
+    }
+    if (activeSection === BACKTEST_TAB_SECTIONS.NEW_BT_RESULTS) {
+      setActiveSection(BACKTEST_TAB_SECTIONS.NEW_BT)
+    } else {
+      setActiveSection(BACKTEST_TAB_SECTIONS.HISTORY_BT_LIST)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [strategyId])
 
   const renderGridComponents = useCallback(
     (i) => {
