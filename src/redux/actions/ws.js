@@ -391,6 +391,10 @@ export default {
     type: t.EXPORT_STRATEGIES_ON_RESET,
     payload: { password },
   }),
+  setBacktestToHistory: (backtest) => ({
+    type: t.SET_BACKTEST_TO_HISTORY,
+    payload: { backtest },
+  }),
   changeBacktestFavoriteState: (backtestId, isFavorite) => ({
     type: t.BACKTEST_SET_FAVORITE,
     payload: { backtestId, isFavorite },

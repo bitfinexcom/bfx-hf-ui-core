@@ -77,6 +77,25 @@ const reducer = (state = getInitialState(), action = {}) => {
       }
     }
 
+    case types.SET_BACKTEST_TO_HISTORY: {
+      const { backtest } = payload
+      const { executionId, strategyId } = backtest
+
+      const strategyMappedKeys = state.mappedKeysByStrategyIds[strategyId] || []
+
+      return {
+        ...state,
+        backtests: {
+          ...state.backtests,
+          [executionId]: backtest,
+        },
+        mappedKeysByStrategyIds: {
+          ...state.mappedKeysByStrategyIds,
+          [strategyId]: [...strategyMappedKeys, executionId],
+        },
+      }
+    }
+
     default: {
       return state
     }
