@@ -5,7 +5,10 @@ import { renderDate } from '../../../util/ui'
 import FavoriteIcon from '../../../ui/Icons/FavoriteIcon'
 
 export default ({
-  toggleFavorite, formatTime, removeBacktest, t,
+  toggleFavorite,
+  formatTime,
+  removeBacktestFromHistory,
+  t,
 }) => [
   {
     dataKey: 'executionId',
@@ -46,12 +49,12 @@ export default ({
     flexGrow: 0.1,
     width: 25,
     cellRenderer: ({ rowData: { executionId } = {} }) => {
-      const handleRemoveBacktestButton = (e) => {
+      const handleRemoveBacktestFromHistoryButton = (e) => {
         e.stopPropagation()
-        removeBacktest(executionId)
+        removeBacktestFromHistory(executionId)
       }
       return (
-        <Button minimal onClick={handleRemoveBacktestButton}>
+        <Button minimal onClick={handleRemoveBacktestFromHistoryButton}>
           <Icon name='trash-o' />
         </Button>
       )

@@ -36,7 +36,7 @@ const BacktestHistoryList = ({ onBacktestRowClick }) => {
     [dispatch],
   )
 
-  const removeBacktest = useCallback(
+  const removeBacktestFromHistory = useCallback(
     (id) => {
       dispatch(
         WSActions.send({
@@ -52,10 +52,10 @@ const BacktestHistoryList = ({ onBacktestRowClick }) => {
     () => BacktestHistoryListColumns({
       formatTime,
       toggleFavorite,
-      removeBacktest,
+      removeBacktestFromHistory,
       t,
     }),
-    [toggleFavorite, formatTime, removeBacktest, t],
+    [toggleFavorite, formatTime, removeBacktestFromHistory, t],
   )
 
   const data = useMemo(() => {
