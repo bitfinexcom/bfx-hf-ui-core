@@ -14,7 +14,7 @@ export default function* ({ payload }) {
   yield put(WSActions.send(['strategy.remove', authToken, id]))
   yield put(UIActions.logInformation(`Deleted strategy draft (${id})`, LOG_LEVELS.INFO, 'strategy_draft_removed'))
   if (currentStrategyId === id) {
-    yield put(WSActions.resetBacktestData())
+    yield put(WSActions.purgeBacktestData())
     yield put(UIActions.setCurrentStrategy({}, PAPER_MODE))
   }
 }

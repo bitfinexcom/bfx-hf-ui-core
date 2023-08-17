@@ -373,9 +373,6 @@ export default {
   purgeBacktestData: () => ({
     type: t.PURGE_DATA_BACKTEST,
   }),
-  resetBacktestData: () => ({
-    type: t.RESET_DATA_BACKTEST,
-  }),
   updatingApiKey: (mode, isUpdating) => ({
     type: t.UPDATING_API_KEY,
     payload: { mode, isUpdating },
