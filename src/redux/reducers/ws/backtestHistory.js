@@ -2,7 +2,8 @@ import _get from 'lodash/get'
 import _forEach from 'lodash/forEach'
 import _omit from 'lodash/omit'
 import _filter from 'lodash/filter'
-import types from '../../constants/ws'
+import _isEmpty from 'lodash/isEmpty'
+import WSTypes from '../../constants/ws'
 
 const getInitialState = () => ({
   mappedKeysByStrategyIds: {},
@@ -13,7 +14,7 @@ const reducer = (state = getInitialState(), action = {}) => {
   const { type, payload = {} } = action
 
   switch (type) {
-    case types.ADD_STRATEGY_BACKTESTS_LIST: {
+    case WSTypes.ADD_STRATEGY_BACKTESTS_LIST: {
       const { strategyId, backtestsList } = payload
 
       const mappedBacktestKeys = []
@@ -42,7 +43,7 @@ const reducer = (state = getInitialState(), action = {}) => {
       }
     }
 
-    case types.BACKTEST_SET_FAVORITE: {
+    case WSTypes.BACKTEST_SET_FAVORITE: {
       const { backtestId, isFavorite } = payload
 
       const backtest = _get(state, `backtests.${backtestId}`, {})
@@ -59,7 +60,7 @@ const reducer = (state = getInitialState(), action = {}) => {
       }
     }
 
-    case types.BACKTEST_REMOVE: {
+    case WSTypes.BACKTEST_REMOVE: {
       const { backtestId } = payload
 
       const backtest = _get(state, `backtests.${backtestId}`, {})
@@ -77,7 +78,7 @@ const reducer = (state = getInitialState(), action = {}) => {
       }
     }
 
-    case types.SET_BACKTEST_TO_HISTORY: {
+    case WSTypes.SET_BACKTEST_TO_HISTORY: {
       const { backtest } = payload
       const { executionId, strategyId } = backtest
 
@@ -93,6 +94,22 @@ const reducer = (state = getInitialState(), action = {}) => {
           ...state.mappedKeysByStrategyIds,
           [strategyId]: [...strategyMappedKeys, executionId],
         },
+      }
+    }
+
+    case WSTypes.DATA_REMOVE_STRATEGY: {
+      const { id: strategyId } = payload
+      const { backtests, mappedKeysByStrategyIds } = state
+      const backtestIds = mappedKeysByStrategyIds[strategyId] || []
+
+      if (_isEmpty(backtestIds)) {
+        return { ...state }
+      }
+
+      return {
+        ...state,
+        backtests: _omit(backtests, backtestIds),
+        mappedKeysByStrategyIds: _omit(mappedKeysByStrategyIds, strategyId),
       }
     }
 
