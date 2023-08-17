@@ -41,7 +41,6 @@ const BacktestTab = (props) => {
     markets,
     onBacktestStart,
     saveStrategyOptions,
-    openNewTest,
   } = props
   const { t } = useTranslation()
 
@@ -84,7 +83,6 @@ const BacktestTab = (props) => {
           return showBacktestResults ? (
             <BacktestResultsOptionsPanel
               showFullscreenChart={showFullscreenChart}
-              openNewTest={openNewTest}
               backtestTimestamp={timestamp}
               activeSection={activeSection}
               setActiveSection={setActiveSection}
@@ -143,7 +141,6 @@ const BacktestTab = (props) => {
     [
       showBacktestResults,
       showFullscreenChart,
-      openNewTest,
       timestamp,
       activeSection,
       strategy,
@@ -204,7 +201,6 @@ BacktestTab.propTypes = {
   indicators: INDICATORS_ARRAY_SHAPE,
   onBacktestStart: PropTypes.func.isRequired,
   saveStrategyOptions: PropTypes.func.isRequired,
-  openNewTest: PropTypes.func.isRequired,
 }
 
 BacktestTab.defaultProps = {

@@ -2,31 +2,30 @@ import React from 'react'
 import _toUpper from 'lodash/toUpper'
 import PropTypes from 'prop-types'
 import { useTranslation } from 'react-i18next'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { Icon } from 'react-fa'
 import Button from '../../ui/Button'
 import { getFormatTimeFn } from '../../redux/selectors/ui'
 import { renderDate } from '../../util/ui'
 import PanelButton from '../../ui/Panel/Panel.Button'
 import { BACKTEST_TAB_SECTIONS } from '../StrategyEditor/tabs/BacktestTab'
+import WSActions from '../../redux/actions/ws'
 
 const BacktestResultsOptionsPanel = ({
   showFullscreenChart,
-  openNewTest,
   backtestTimestamp,
   activeSection,
   setActiveSection,
 }) => {
-  const { t } = useTranslation()
   const formatTime = useSelector(getFormatTimeFn)
 
-  const onBackButonClick = () => setActiveSection(BACKTEST_TAB_SECTIONS.HISTORY_BT_DETAILS)
+  const { t } = useTranslation()
+  const dispatch = useDispatch()
+
+  const onBackButtonClick = () => setActiveSection(BACKTEST_TAB_SECTIONS.HISTORY_BT_DETAILS)
   const onNewTestButtonClick = () => {
-    if (activeSection === BACKTEST_TAB_SECTIONS.HISTORY_BT_RESULTS) {
-      setActiveSection(BACKTEST_TAB_SECTIONS.NEW_BT)
-      return
-    }
-    openNewTest()
+    dispatch(WSActions.purgeBacktestData())
+    setActiveSection(BACKTEST_TAB_SECTIONS.NEW_BT)
   }
 
   const showBtHistoryResults = activeSection === BACKTEST_TAB_SECTIONS.HISTORY_BT_RESULTS
@@ -36,7 +35,7 @@ const BacktestResultsOptionsPanel = ({
       {showBtHistoryResults ? (
         <div className='hfui-strategy-options__results-container'>
           <PanelButton
-            onClick={onBackButonClick}
+            onClick={onBackButtonClick}
             text={_toUpper(t('ui.goBack'))}
             isActive={false}
             icon={<Icon name='arrow-left' className='icon' />}
@@ -77,7 +76,6 @@ const BacktestResultsOptionsPanel = ({
 
 BacktestResultsOptionsPanel.propTypes = {
   showFullscreenChart: PropTypes.func.isRequired,
-  openNewTest: PropTypes.func.isRequired,
   setActiveSection: PropTypes.func.isRequired,
   activeSection: PropTypes.string.isRequired,
   backtestTimestamp: PropTypes.number,

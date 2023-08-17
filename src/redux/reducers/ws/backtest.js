@@ -79,19 +79,9 @@ function reducer(state = getInitialState(), action = {}) {
     }
 
     case types.DISCONNECTED:
-    case types.RESET_DATA_BACKTEST: {
-      return getInitialState()
-    }
-
+    case types.RESET_DATA_BACKTEST:
     case types.PURGE_DATA_BACKTEST: {
-      return {
-        candles: [],
-        trades: [],
-        loading: false,
-        executing: false,
-        progressPerc: 0,
-        ...state,
-      }
+      return getInitialState()
     }
 
     case types.BACKTEST_CANDLE: {

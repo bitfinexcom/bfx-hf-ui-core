@@ -558,8 +558,6 @@ const StrategyEditor = (props) => {
     setStrategy(strategy, PAPER_MODE)
   }, [changeTradingMode, isPaperTrading, setStrategy, strategy])
 
-  const openNewTest = () => onLoadStrategy(strategy)
-
   const hasErrorsInIDE = useMemo(
     () => _some(_values(sectionErrors), (e) => !!e),
     [sectionErrors],
@@ -701,7 +699,6 @@ const StrategyEditor = (props) => {
                 onBacktestStart={onBacktestStart}
                 saveStrategyOptions={saveStrategyOptions}
                 onCancelProcess={onCancelProcess}
-                openNewTest={openNewTest}
                 {...props}
               />
             )}
