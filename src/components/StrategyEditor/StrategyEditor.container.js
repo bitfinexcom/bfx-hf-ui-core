@@ -56,6 +56,9 @@ const mapDispatchToProps = (dispatch) => ({
   gaCreateStrategy: () => {
     dispatch(GAActions.createStrategy())
   },
+  clearBacktestOptions: () => {
+    dispatch(WSActions.resetBacktestData())
+  },
   dsExecuteLiveStrategy: ({
     authToken,
     label,

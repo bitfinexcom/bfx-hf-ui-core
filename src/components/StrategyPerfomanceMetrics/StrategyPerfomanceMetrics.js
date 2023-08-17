@@ -98,7 +98,7 @@ StrategyPerfomanceMetrics.propTypes = {
     returnPerc: PropTypes.string,
     drawdown: PropTypes.string,
   }),
-  isExecuting: PropTypes.bool,
+  isExecuting: PropTypes.bool.isRequired,
   isBacktest: PropTypes.bool,
   startedOn: PropTypes.number,
 }
@@ -125,7 +125,6 @@ StrategyPerfomanceMetrics.defaultProps = {
   },
   isBacktest: false,
   startedOn: 0,
-  isExecuting: false,
 }
 
 export default memo(StrategyPerfomanceMetrics)

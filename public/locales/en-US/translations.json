@@ -732,8 +732,6 @@
     "updateCreds": "Update credentials"
   },
   "strategyEditor": {
-    "clearBacktestResultsModalTitle": "Confirmation Required",
-    "clearBacktestResultsModalText": "If you choose to continue, the current backtest results will be cleared. Do you wish to proceed?",
     "unsavedChanges": "Unsaved changes",
     "unsavedChangesModalTitle": "Do you need to save changes in the strategy before closing?",
     "cancelThisProcess": "Cancel this process",
