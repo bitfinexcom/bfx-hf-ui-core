@@ -51,6 +51,8 @@ const StrategyLiveTab = (props) => {
     loading, executing, results, startedOn,
   } = executionState
 
+  console.log({ executionState, strategy })
+
   const trades = useMemo(() => prepareChartTrades(positions), [positions])
   const lastOpenPosition = useMemo(() => {
     const sorted = _sortBy(_values(openPositions), 'entryAt')
@@ -72,6 +74,13 @@ const StrategyLiveTab = (props) => {
 
   const renderGridComponents = useCallback(
     (i) => {
+      const chartOptions = {
+        candleSeed: strategy.strategyOptions.candleSeed,
+        symbol: strategy.strategyOptions.symbol.wsID,
+        executionId: strategy.executionId || strategy.id,
+        start: strategy.startedOn,
+        end: strategy.stoppedOn,
+      }
       switch (i) {
         case COMPONENTS_KEYS.OPTIONS:
           return (
@@ -91,7 +100,7 @@ const StrategyLiveTab = (props) => {
               indicators={indicators}
               lastOpenPosition={lastOpenPosition}
               markets={markets}
-              strategy={strategy}
+              options={chartOptions}
               fullscreenChart={fullscreenChart}
               exitFullscreenChart={unsetFullScreenChart}
               trades={trades}
