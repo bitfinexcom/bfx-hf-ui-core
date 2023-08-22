@@ -1,7 +1,10 @@
 import types from '../../constants/ws'
 
 const getInitialState = () => {
-  return []
+  return {
+    placed: {},
+    failed: {},
+  }
 }
 
 export default (state = getInitialState(), action = {}) => {
@@ -9,15 +12,21 @@ export default (state = getInitialState(), action = {}) => {
 
   switch (type) {
     case types.RESET_ORDER_HIST: {
-      return { }
+      return getInitialState()
     }
 
     case types.SET_ORDER_HIST: {
-      const { orderHist } = payload
+      const { orderHist: { placed, failed } } = payload
 
       return {
-        ...orderHist,
-        ...state,
+        placed: {
+          ...state.placed,
+          ...placed,
+        },
+        failed: {
+          ...state.failed,
+          ...failed,
+        },
       }
     }
 
@@ -25,8 +34,11 @@ export default (state = getInitialState(), action = {}) => {
       const { order = {} } = payload
 
       return {
-        [order?.id]: order,
         ...state,
+        placed: {
+          ...state.placed,
+          [order?.id]: order,
+        },
       }
     }
 
