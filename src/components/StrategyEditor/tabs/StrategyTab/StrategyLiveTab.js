@@ -51,8 +51,6 @@ const StrategyLiveTab = (props) => {
     loading, executing, results, startedOn,
   } = executionState
 
-  console.log({ executionState, strategy })
-
   const trades = useMemo(() => prepareChartTrades(positions), [positions])
   const lastOpenPosition = useMemo(() => {
     const sorted = _sortBy(_values(openPositions), 'entryAt')
@@ -104,7 +102,6 @@ const StrategyLiveTab = (props) => {
               fullscreenChart={fullscreenChart}
               exitFullscreenChart={unsetFullScreenChart}
               trades={trades}
-              isExecuting={executing}
             />
           )
 
