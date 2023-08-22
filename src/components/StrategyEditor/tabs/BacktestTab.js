@@ -203,6 +203,7 @@ const BacktestTab = (props) => {
       results,
       positions,
       layoutConfig,
+      currentHistoryBacktest,
     ],
   )
 
