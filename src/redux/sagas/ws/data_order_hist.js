@@ -15,13 +15,13 @@ export default function* ({ payload }) {
     failed: {},
   }
   _forEach(orderHist, o => {
-    const { status, orderSubmitError } = o
+    const { status } = o
     if (status === FAILED_ORDER_STATUS) {
-      transformed.failed[o?.id] = {
+      transformed.failed[o?._id] = {
         ...o,
+        originalAmount: o.amount,
         created: new Date(o.createdAt).getTime(),
         pair: getMarketPairState(o.symbol),
-        status: `${status}: ${orderSubmitError}`,
         price: 0,
       }
       return
