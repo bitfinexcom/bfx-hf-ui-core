@@ -18,6 +18,7 @@ import NavbarButton from '../Navbar/Navbar.Button'
 
 import AddNewParam from './Modals/AddNewParam'
 import { makeShorterLongName } from '../../util/ui'
+import { processAOArgs } from '../../modals/EditOrderModal/EditOrderModal.utils'
 
 const MAX_NAME_LENGTH = 30
 
@@ -82,7 +83,7 @@ const AlgoParams = ({
 
   const onSelect = (selectedParams) => {
     const { id, params } = selectedParams
-    const updatedParams = { ...params }
+    const updatedParams = processAOArgs(params, algoID)
 
     for (let i = 0; i < percentageParams.length; ++i) {
       if (percentageParams[i] in updatedParams) {
