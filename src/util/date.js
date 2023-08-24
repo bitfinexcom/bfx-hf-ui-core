@@ -53,11 +53,11 @@ export const safelyFormatTime = (timestampFormat) => (date) => {
   }
   try {
     const i18nMappedKey = i18n.getMappedLanguageKey()
-    return format(date, timestampFormat, {
+    return format(new Date(date), timestampFormat, {
       locale: DATE_FNS_LOCALES[i18nMappedKey],
     })
   } catch (error) {
-    debug('Error in formatting date', date, timestampFormat)
+    debug('Error in formatting date', date, timestampFormat, error)
     return formatedInLocalFormat
   }
 }
