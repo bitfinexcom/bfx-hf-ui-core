@@ -19,6 +19,7 @@ export default function* ({ payload }) {
     if (status === FAILED_ORDER_STATUS) {
       transformed.failed[o?._id] = {
         ...o,
+        id: o._id,
         originalAmount: o.amount,
         created: new Date(o.createdAt).getTime(),
         pair: getMarketPairState(o.symbol),
