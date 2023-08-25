@@ -55,7 +55,8 @@ const BacktestOptionsPanel = ({
   const { t } = useTranslation()
   const [seedError, setSeedError] = useState(null)
   const [candleSeedValue, setCandleSeedValue] = useState(candleSeed)
-  const [isCustomDatePicker, setIsCustomDatePicker] = useState(false)
+  const [isCustomDatePicker, setIsCustomDatePicker] = useState(true)
+  const [timePeriodDropdownValue, setTimePeriodDropdownValue] = useState(null)
   const timePeriods = getTimePeriods(t)
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -66,36 +67,12 @@ const BacktestOptionsPanel = ({
 
   const setTimeframe = (value) => saveStrategyOptions({ [STRATEGY_OPTIONS_KEYS.TIMEFRAME]: value })
 
-  const timePeriod = useMemo(() => {
-    const diff = endDate.getTime() - startDate.getTime()
-    // Apparently the dates sometimes overlap on Chrome so there's a few extra hours in the diff, let's subtract them.
-    const diffHours = Math.ceil(diff / (1000 * 60 * 60)) - 2
-
-    if (diffHours <= TIME_MAPPING['168h']) {
-      return '168h'
-    }
-
-    if (diffHours <= TIME_MAPPING['720h']) {
-      return '720h'
-    }
-
-    if (diffHours <= TIME_MAPPING['2160h']) {
-      return '2160h'
-    }
-
-    if (diffHours <= TIME_MAPPING['8640h']) {
-      return '8640h'
-    }
-
-    return '25920h'
-  }, [startDate, endDate])
-
   const setTimePeriod = (value) => {
     const end = new Date()
     const start = new Date()
     const hours = TIME_MAPPING[value]
     start.setHours(start.getHours() - hours)
-
+    setTimePeriodDropdownValue(value)
     saveStrategyOptions({
       [STRATEGY_OPTIONS_KEYS.START_DATE]: start,
       [STRATEGY_OPTIONS_KEYS.END_DATE]: end,
@@ -180,7 +157,7 @@ const BacktestOptionsPanel = ({
         <div className='item'>
           <Dropdown
             disabled={isLoading}
-            value={timePeriod}
+            value={timePeriodDropdownValue}
             onChange={setTimePeriod}
             options={timePeriods}
             placeholder={t('strategyEditor.timePeriod')}
