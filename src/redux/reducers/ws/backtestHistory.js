@@ -96,6 +96,7 @@ const reducer = (state = getInitialState(), action = {}) => {
           ...state.mappedKeysByStrategyIds,
           [strategyId]: [...strategyMappedKeys, executionId],
         },
+        backtestId: executionId,
       }
     }
 

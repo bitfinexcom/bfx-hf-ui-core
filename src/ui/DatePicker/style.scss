@@ -5,24 +5,16 @@
   position: fixed;
   width: 100vw;
   height: 100vh;
-  // background-color: rgba(0, 0, 0, 0.8);
   left: 0;
   top: 0;
   justify-content: center;
   align-items: center;
   display: flex;
-  z-index: 2147483647;
-}
-
-.hfui-datepicker-input {
-  width: 380px !important;
-}
-.react-datepicker__tab-loop {
-  position: relative;
+  z-index: 5;
 }
 
 .react-datepicker-popper {
-  top: -15px !important;
+  padding: 0 !important;
 }
 
 .react-datepicker {

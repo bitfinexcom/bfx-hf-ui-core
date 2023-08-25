@@ -16,7 +16,6 @@ import { getPositionTooltip } from '../../util/chart'
 import {
   INDICATORS_ARRAY_SHAPE,
   MARKET_SHAPE,
-  STRATEGY_SHAPE,
   STRATEGY_TRADE_SHAPE,
 } from '../../constants/prop-types-shapes'
 import PanelIconButton from '../../ui/Panel/Panel.IconButton'
@@ -28,36 +27,30 @@ const StrategyLiveChart = ({
   markets,
   fullscreenChart,
   exitFullscreenChart,
-  strategy,
+  options,
   lastOpenPosition,
   trades,
   isBacktest,
-  isExecuting,
 }) => {
   const {
-    strategyOptions: {
-      timeframe, symbol, startDate, endDate,
-    },
-    id,
-    executionId = id,
-    startedOn,
-    stoppedOn,
-  } = strategy
-  const start = isBacktest ? new Date(startDate).getTime() : startedOn
-  const end = isBacktest
-    ? new Date(endDate).getTime()
-    : isExecuting
-      ? null
-      : stoppedOn
+    timeframe,
+    symbol,
+    candleSeed,
+    executionId,
+    start,
+    end,
+  } = options
+
   const chartRange = useMemo(() => {
     if (start || end) {
       return {
         start,
         end,
+        candleSeed,
       }
     }
     return {}
-  }, [end, start])
+  }, [end, start, candleSeed])
   const { t } = useTranslation()
   const settingsTheme = useSelector(getThemeSetting)
   const chartIndicators = useMemo(
@@ -70,7 +63,7 @@ const StrategyLiveChart = ({
 
   const {
     wsID, uiID, base, quote,
-  } = getStrategyMarket(markets, symbol?.wsID)
+  } = getStrategyMarket(markets, symbol)
   const chartMarket = useMemo(
     () => ({
       wsID,
@@ -152,21 +145,26 @@ const StrategyLiveChart = ({
 
 StrategyLiveChart.propTypes = {
   markets: PropTypes.arrayOf(PropTypes.shape(MARKET_SHAPE)).isRequired,
-  strategy: PropTypes.shape(STRATEGY_SHAPE).isRequired,
+  options: PropTypes.shape({
+    timeframe: PropTypes.string,
+    symbol: PropTypes.string,
+    end: PropTypes.number,
+    start: PropTypes.number,
+    candleSeed: PropTypes.number,
+    executionId: PropTypes.string,
+  }).isRequired,
   indicators: INDICATORS_ARRAY_SHAPE,
   trades: PropTypes.arrayOf(PropTypes.shape(STRATEGY_TRADE_SHAPE)).isRequired,
   fullscreenChart: PropTypes.bool.isRequired,
   exitFullscreenChart: PropTypes.func.isRequired,
   lastOpenPosition: PropTypes.object, // eslint-disable-line
   isBacktest: PropTypes.bool,
-  isExecuting: PropTypes.bool,
 }
 
 StrategyLiveChart.defaultProps = {
   indicators: [],
   isBacktest: false,
   lastOpenPosition: null,
-  isExecuting: false,
 }
 
 export default memo(StrategyLiveChart)

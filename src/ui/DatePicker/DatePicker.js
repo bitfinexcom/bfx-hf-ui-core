@@ -55,6 +55,7 @@ const DatePicker = ({
   customHelp,
   validationError,
   disabled,
+  ...props
 }) => {
   const { t, i18n } = useTranslation()
   const i18nMappedKey = i18n.getMappedLanguageKey()
@@ -122,6 +123,7 @@ const DatePicker = ({
         locale={LANGUAGES[i18nMappedKey]}
         disabled={disabled}
         popperContainer={DatePickerPortal}
+        {...props}
       />
       {!CONVERT_LABELS_TO_PLACEHOLDERS && (
         <p className='hfui-orderform__input-label'>

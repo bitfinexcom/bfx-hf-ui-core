@@ -7,7 +7,7 @@ import {
 } from '@ufx-ui/core'
 import cx from 'clsx'
 import AmountInput from '../../OrderForm/FieldComponents/input.amount'
-import DateInput from '../../OrderForm/FieldComponents/input.date'
+import DatePicker from '../../../ui/DatePicker/DatePicker'
 import TimeFrameDropdown from '../../TimeFrameDropdown'
 import Dropdown from '../../../ui/Dropdown'
 import { STRATEGY_OPTIONS_KEYS } from '../../StrategyEditor/StrategyEditor.helpers'
@@ -53,7 +53,8 @@ const BacktestOptionsNewTest = ({
   const { t } = useTranslation()
   const [seedError, setSeedError] = useState(null)
   const [candleSeedValue, setCandleSeedValue] = useState(candleSeed)
-  const [isCustomDatePicker, setIsCustomDatePicker] = useState(false)
+  const [isCustomDatePicker, setIsCustomDatePicker] = useState(true)
+  const [timePeriodDropdownValue, setTimePeriodDropdownValue] = useState(null)
   const timePeriods = getTimePeriods(t)
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -64,36 +65,12 @@ const BacktestOptionsNewTest = ({
 
   const setTimeframe = (value) => saveStrategyOptions({ [STRATEGY_OPTIONS_KEYS.TIMEFRAME]: value })
 
-  const timePeriod = useMemo(() => {
-    const diff = endDate.getTime() - startDate.getTime()
-    // Apparently the dates sometimes overlap on Chrome so there's a few extra hours in the diff, let's subtract them.
-    const diffHours = Math.ceil(diff / (1000 * 60 * 60)) - 2
-
-    if (diffHours <= TIME_MAPPING['168h']) {
-      return '168h'
-    }
-
-    if (diffHours <= TIME_MAPPING['720h']) {
-      return '720h'
-    }
-
-    if (diffHours <= TIME_MAPPING['2160h']) {
-      return '2160h'
-    }
-
-    if (diffHours <= TIME_MAPPING['8640h']) {
-      return '8640h'
-    }
-
-    return '25920h'
-  }, [startDate, endDate])
-
   const setTimePeriod = (value) => {
     const end = new Date()
     const start = new Date()
     const hours = TIME_MAPPING[value]
     start.setHours(start.getHours() - hours)
-
+    setTimePeriodDropdownValue(value)
     saveStrategyOptions({
       [STRATEGY_OPTIONS_KEYS.START_DATE]: start,
       [STRATEGY_OPTIONS_KEYS.END_DATE]: end,
@@ -155,18 +132,18 @@ const BacktestOptionsNewTest = ({
       {isCustomDatePicker ? (
         <>
           <div className='item'>
-            <DateInput
+            <DatePicker
               onChange={setStartDate}
-              def={{ label: t('strategyEditor.startDate') }}
+              label={t('strategyEditor.startDate')}
               value={startDate}
               maxDate={endDate}
               disabled={isLoading}
             />
           </div>
           <div className='item'>
-            <DateInput
+            <DatePicker
               onChange={setEndDate}
-              def={{ label: t('strategyEditor.endDate') }}
+              label={t('strategyEditor.endDate')}
               value={endDate}
               maxDate={MAX_DATE}
               minDate={startDate}
@@ -178,7 +155,7 @@ const BacktestOptionsNewTest = ({
         <div className='item'>
           <Dropdown
             disabled={isLoading}
-            value={timePeriod}
+            value={timePeriodDropdownValue}
             onChange={setTimePeriod}
             options={timePeriods}
             placeholder={t('strategyEditor.timePeriod')}
@@ -289,7 +266,6 @@ const BacktestOptionsNewTest = ({
           </Button>
         )}
       </div>
-
     </>
   )
 }
