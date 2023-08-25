@@ -1,19 +1,50 @@
-import React, { memo } from 'react'
+import React, { memo, useCallback, useMemo } from 'react'
 import ReactDatePicker from 'react-datepicker'
 import PropTypes from 'prop-types'
+import _includes from 'lodash/includes'
 
 import { useTranslation } from 'react-i18next'
 import clsx from 'clsx'
 import { Tooltip } from '@ufx-ui/core'
 import { useSelector } from 'react-redux'
+import { endOfDay, isSameDay, startOfDay } from 'date-fns'
 
 import { LANGUAGES } from '../../locales/i18n'
-import { getLocalDateFormat } from '../../util/date'
+import { getLocalDateFormat, isValidDate } from '../../util/date'
 import { getTimestampFormat } from '../../redux/selectors/ui'
 import { CONVERT_LABELS_TO_PLACEHOLDERS } from '../../components/OrderForm/FieldComponents/fields.helpers'
 import DatePickerPortal from './DatePicker.Portal'
 
 import './style.css'
+
+const getTimeFormat = (dateFormat) => {
+  if (_includes(dateFormat, 'H')) {
+    return 'HH:mm'
+  }
+  return 'h:mm aa'
+}
+
+const calculateMinMaxTime = ({ date, minDate, maxDate }) => {
+  if (!minDate) {
+    return {}
+  }
+
+  const isSameDayAsMinDate = !date || isSameDay(date, minDate)
+  if (isSameDayAsMinDate) {
+    return {
+      minTime: minDate,
+      maxTime: endOfDay(minDate),
+    }
+  }
+  const isSameDayAsMaxDate = maxDate && isSameDay(date, maxDate)
+  if (isSameDayAsMaxDate) {
+    return {
+      minTime: startOfDay(maxDate),
+      maxTime: maxDate,
+    }
+  }
+  return {}
+}
 
 const DatePicker = ({
   value,
@@ -29,8 +60,43 @@ const DatePicker = ({
   const i18nMappedKey = i18n.getMappedLanguageKey()
   const timestampFormat = useSelector(getTimestampFormat)
     || getLocalDateFormat(LANGUAGES[i18nMappedKey])
-  return (
 
+  const handleDatePickerChange = useCallback(
+    (date) => {
+      if (!date || !isValidDate(date)) {
+        onChange(null)
+        return
+      }
+      const selectedDateMts = date.getTime()
+      const minDateMts = minDate?.getTime()
+      const maxDateMts = maxDate?.getTime()
+
+      let resultDate = date
+
+      if (selectedDateMts < minDateMts) {
+        resultDate = minDate
+      }
+      if (selectedDateMts > maxDateMts) {
+        resultDate = maxDate
+      }
+
+      onChange(resultDate)
+    },
+    [onChange, minDate, maxDate],
+  )
+
+  const { minTime, maxTime } = useMemo(
+    () => calculateMinMaxTime({
+      date: value && new Date(value),
+      minDate,
+      maxDate,
+    }),
+    [value, minDate, maxDate],
+  )
+
+  const timeFormat = useMemo(() => getTimeFormat(timestampFormat), [timestampFormat])
+
+  return (
     <div
       className={clsx('hfui-orderform__input fullWidth hfui-input', {
         disabled,
@@ -40,37 +106,39 @@ const DatePicker = ({
         width='100%'
         dateFormat={timestampFormat}
         timeCaption={t('table.time')}
-                // timeFormat={timestampFormat}
+        timeFormat={timeFormat}
         dropdownMode='select'
         showTimeSelect
         showYearDropdown
         showMonthDropdown
-        timeIntervals={30}
+        timeIntervals={15}
         selected={value}
         minDate={minDate}
+        minTime={minTime}
         maxDate={maxDate}
-        onChange={onChange}
+        maxTime={maxTime}
+        onChange={handleDatePickerChange}
         placeholder={CONVERT_LABELS_TO_PLACEHOLDERS ? label : undefined}
         locale={LANGUAGES[i18nMappedKey]}
         disabled={disabled}
         popperContainer={DatePickerPortal}
       />
       {!CONVERT_LABELS_TO_PLACEHOLDERS && (
-      <p className='hfui-orderform__input-label'>
-        {label}
-        {customHelp && (
-        <Tooltip
-          className='__react-tooltip __react_component_tooltip'
-          content={customHelp}
-        >
-          <i className='fa fa-info-circle' />
-        </Tooltip>
-        )}
-      </p>
+        <p className='hfui-orderform__input-label'>
+          {label}
+          {customHelp && (
+            <Tooltip
+              className='__react-tooltip __react_component_tooltip'
+              content={customHelp}
+            >
+              <i className='fa fa-info-circle' />
+            </Tooltip>
+          )}
+        </p>
       )}
 
       {validationError && (
-      <p className='hfui-orderform__input-error-label'>{validationError}</p>
+        <p className='hfui-orderform__input-error-label'>{validationError}</p>
       )}
     </div>
   )
