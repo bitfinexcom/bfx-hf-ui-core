@@ -1,4 +1,4 @@
-import React, { memo, useMemo } from 'react'
+import React, { memo } from 'react'
 import ReactDatePicker from 'react-datepicker'
 import PropTypes from 'prop-types'
 
@@ -9,7 +9,7 @@ import { useSelector } from 'react-redux'
 
 import { LANGUAGES } from '../../locales/i18n'
 import { getLocalDateFormat } from '../../util/date'
-import { getFormatTimeFn, getTimestampFormat } from '../../redux/selectors/ui'
+import { getTimestampFormat } from '../../redux/selectors/ui'
 import { CONVERT_LABELS_TO_PLACEHOLDERS } from '../../components/OrderForm/FieldComponents/fields.helpers'
 import DatePickerPortal from './DatePicker.Portal'
 
@@ -29,15 +29,6 @@ const DatePicker = ({
   const i18nMappedKey = i18n.getMappedLanguageKey()
   const timestampFormat = useSelector(getTimestampFormat)
     || getLocalDateFormat(LANGUAGES[i18nMappedKey])
-  const formatTime = useSelector(getFormatTimeFn)
-
-  const renderedValue = useMemo(() => {
-    if (!value) {
-      return ''
-    }
-    return formatTime(value)
-  }, [value, formatTime])
-
   return (
 
     <div
@@ -66,7 +57,7 @@ const DatePicker = ({
       />
       {!CONVERT_LABELS_TO_PLACEHOLDERS && (
       <p className='hfui-orderform__input-label'>
-        {renderedValue}
+        {label}
         {customHelp && (
         <Tooltip
           className='__react-tooltip __react_component_tooltip'
