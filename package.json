@@ -53,8 +53,8 @@
   },
   "dependencies": {
     "@monaco-editor/react": "4.4.6",
-    "@ufx-ui/bfx-containers": "0.15.0",
-    "@ufx-ui/core": "0.15.0",
+    "@ufx-ui/bfx-containers": "0.15.3",
+    "@ufx-ui/core": "0.15.3",
     "@ufx-ui/utils": "0.15.0",
     "axios": "^1.1.3",
     "bfx-api-node-models": "^1.6.3",
