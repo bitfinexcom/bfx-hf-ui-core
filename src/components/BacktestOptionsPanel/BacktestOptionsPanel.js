@@ -7,7 +7,7 @@ import {
 } from '@ufx-ui/core'
 import cx from 'clsx'
 import AmountInput from '../OrderForm/FieldComponents/input.amount'
-import DateInput from '../OrderForm/FieldComponents/input.date'
+import DatePicker from '../../ui/DatePicker/DatePicker'
 import TimeFrameDropdown from '../TimeFrameDropdown'
 import Dropdown from '../../ui/Dropdown'
 import { STRATEGY_OPTIONS_KEYS } from '../StrategyEditor/StrategyEditor.helpers'
@@ -157,18 +157,18 @@ const BacktestOptionsPanel = ({
       {isCustomDatePicker ? (
         <>
           <div className='item'>
-            <DateInput
+            <DatePicker
               onChange={setStartDate}
-              def={{ label: t('strategyEditor.startDate') }}
+              label={t('strategyEditor.startDate')}
               value={startDate}
               maxDate={endDate}
               disabled={isLoading}
             />
           </div>
           <div className='item'>
-            <DateInput
+            <DatePicker
               onChange={setEndDate}
-              def={{ label: t('strategyEditor.endDate') }}
+              label={t('strategyEditor.endDate')}
               value={endDate}
               maxDate={MAX_DATE}
               minDate={startDate}
