@@ -6,15 +6,10 @@ import {
   getDateInShortFormat,
   getWeekDayString,
 } from '../../../../../util/date'
+import { RECURRENCE_OPTIONS } from '../../../OrderForm.helpers'
 import { getFormatTimeFn } from '../../../../../redux/selectors/ui'
 
 import './style.css'
-
-const RECURRENCE_OPTIONS = {
-  DAILY: 'daily',
-  WEEKLY: 'weekly',
-  MONTHLY: 'monthly',
-}
 
 const RecurringAOSummary = ({ fieldData }) => {
   const { t } = useTranslation()
