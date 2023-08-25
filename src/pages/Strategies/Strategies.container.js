@@ -6,14 +6,13 @@ import {
 } from '../../redux/selectors/ui'
 import UIActions from '../../redux/actions/ui'
 import WSActions from '../../redux/actions/ws'
-import { getAuthToken, getBacktestResults } from '../../redux/selectors/ws'
+import { getAuthToken } from '../../redux/selectors/ws'
 
 import StrategiesPage from './Strategies'
 
 const mapStateToProps = (state) => ({
   authToken: getAuthToken(state),
   strategy: getCurrentStrategy(state),
-  backtestResults: getBacktestResults(state),
   strategyDirty: getIsStrategyDirty(state),
   isPaperTrading: getIsPaperTrading(state),
 })

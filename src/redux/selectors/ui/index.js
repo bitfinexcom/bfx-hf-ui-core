@@ -16,6 +16,7 @@ import getUIModalStateForKey from './get_ui_modal_state'
 import getCurrentStrategy from './get_current_strategy'
 import getIsStrategyDirty from './get_is_strategy_dirty'
 import getFormatTimeFn from './get_format_time_fn'
+import getBacktestActiveSection from './get_backtest_active_section'
 
 export * from './get_settings'
 export * from './get_core_settings'
@@ -41,4 +42,5 @@ export {
   getIsStrategyDirty,
   getUIModalStateForKey,
   getFormatTimeFn,
+  getBacktestActiveSection,
 }

@@ -21,9 +21,14 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    width: 250px;
+    min-width: 250px;
     border-radius: 5px;
     padding: 10px;
+    gap: 15px;
+
+    .icon {
+      font-size: 14px;
+    }
   }
 
   &__left-container {
@@ -95,7 +100,7 @@
     margin-bottom: 0;
   }
 
-  &__description{
+  &__description {
     padding-left: 11px;
   }
 

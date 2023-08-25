@@ -67,9 +67,7 @@ const ExecutionTab = ({
           {t('strategySettingsModal.capitalAllocationLabel')}
         </p>
         <div className='hfui-execution-options-modal-selection'>
-          <p>
-            {t('strategySettingsModal.capitalAllocationHelp')}
-          </p>
+          <p>{t('strategySettingsModal.capitalAllocationHelp')}</p>
           <AmountInput
             placeholder={t('ui.e.g.', { value: 3000.0 })}
             onChange={capitalAllocationHandler}
@@ -91,9 +89,7 @@ const ExecutionTab = ({
           </Tooltip>
         </p>
         <div className='hfui-execution-options-modal-selection'>
-          <p>
-            {t('strategySettingsModal.stopLossHelp')}
-          </p>
+          <p>{t('strategySettingsModal.stopLossHelp')}</p>
           <PercentInput
             placeholder={t('ui.e.g.', { value: '45%' })}
             value={stopLossPerc}
@@ -115,9 +111,7 @@ const ExecutionTab = ({
           </Tooltip>
         </p>
         <div className='hfui-execution-options-modal-selection'>
-          <p>
-            {t('strategySettingsModal.maximumDrawdownHelp')}
-          </p>
+          <p>{t('strategySettingsModal.maximumDrawdownHelp')}</p>
           <PercentInput
             placeholder={t('ui.e.g.', { value: '45%' })}
             value={maxDrawdownPerc}
@@ -133,9 +127,12 @@ const ExecutionTab = ({
 }
 
 ExecutionTab.propTypes = {
-  capitalAllocation: PropTypes.string.isRequired,
-  stopLossPerc: PropTypes.string.isRequired,
-  maxDrawdownPerc: PropTypes.string.isRequired,
+  capitalAllocation: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
+    .isRequired,
+  stopLossPerc: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
+    .isRequired,
+  maxDrawdownPerc: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
+    .isRequired,
   setCapitalAllocationValue: PropTypes.func.isRequired,
   setStopLossPercValue: PropTypes.func.isRequired,
   setMaxDrawdownPercValue: PropTypes.func.isRequired,

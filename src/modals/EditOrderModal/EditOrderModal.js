@@ -26,14 +26,17 @@ import {
   getAtomicOrders,
 } from '../../components/OrderForm/OrderForm.orders.helpers'
 import { MARKET_SHAPE, ORDER_SHAPE } from '../../constants/prop-types-shapes'
-import { getContext, processAOArgs, processUpdateOrder } from './EditOrderModal.utils'
+import {
+  getContext,
+  processAOArgs,
+  processUpdateOrder,
+} from './EditOrderModal.utils'
 import DiscardAOEdit from '../DiscardAOEdit'
 
 import '../../components/OrderForm/style.css'
 import './style.css'
 
 const EditOrderModal = ({
-  changeVisibilityState,
   visible,
   order,
   updateOrder,
@@ -47,6 +50,7 @@ const EditOrderModal = ({
   markets,
   updateRecurringAO,
   isRelaunching,
+  onClose: _onClose,
 }) => {
   const { t } = useTranslation()
   const [layout, setLayout] = useState({})
@@ -62,9 +66,12 @@ const EditOrderModal = ({
       return
     }
     const updOrder = { ...order }
-    const algoOrders = getAOs(t, true, true)
+    const algoOrders = getAOs(t, true, !isRelaunching)
     let isAlgoOrder = true
-    let uiDef = _find(algoOrders, ({ id }) => id === updOrder.id || id === updOrder.algoID)
+    let uiDef = _find(
+      algoOrders,
+      ({ id }) => id === updOrder.id || id === updOrder.algoID,
+    )
 
     if (!uiDef) {
       const orders = getAtomicOrders(t)
@@ -82,7 +89,9 @@ const EditOrderModal = ({
     }
 
     if (isAlgoOrder) {
-      updOrder.args = { ...processAOArgs(updOrder.args, order.id) }
+      updOrder.args = {
+        ...processAOArgs(updOrder.args, updOrder.id, isRelaunching),
+      }
       updOrder.args.alias = updOrder.alias
     } else {
       uiDef.action = updOrder.amount < 0 ? 'sell' : 'buy'
@@ -91,17 +100,18 @@ const EditOrderModal = ({
     setArgs(isAlgoOrder ? updOrder.args : updOrder)
     setLayout(uiDef)
     setIsAO(isAlgoOrder)
-  }, [order, t])
+  }, [order, t, isRelaunching])
 
   const forcedClose = () => {
-    changeVisibilityState(false)
+    _onClose()
     setMadeChanges(false)
     setDiscardConfirmationVisible(false)
 
-    // setTimeout(() => { // clearing order data after modal close amination ends
-    //   setLayout({})
-    //   setArgs({})
-    // }, 600)
+    setTimeout(() => {
+      // clearing order data after modal close amination ends
+      setLayout({})
+      setArgs({})
+    }, 600)
   }
 
   const onClose = () => {
@@ -148,7 +158,11 @@ const EditOrderModal = ({
       if (orderID === Recurring.id) {
         delete orderData.symbol
 
-        updateRecurringAO(authToken, order.gid, orderData)
+        if (isRelaunching) {
+          submitAlgoOrder(authToken, orderID, gid, orderData)
+        } else {
+          updateRecurringAO(authToken, gid, orderData)
+        }
       } else {
         orderData._futures = _futures
         orderData._margin = _margin
@@ -274,7 +288,7 @@ const EditOrderModal = ({
 }
 
 EditOrderModal.propTypes = {
-  changeVisibilityState: PropTypes.func.isRequired,
+  onClose: PropTypes.func.isRequired,
   visible: PropTypes.bool.isRequired,
   order: PropTypes.shape(ORDER_SHAPE).isRequired,
   updateOrder: PropTypes.func.isRequired,
