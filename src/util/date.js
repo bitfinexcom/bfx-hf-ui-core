@@ -22,10 +22,7 @@ export const getDateInShortFormat = (date) => {
   if (!isValidDate(date)) {
     return null
   }
-  return new Date(date).toLocaleString(i18n.language, {
-    day: '2-digit',
-    month: '2-digit',
-  })
+  return format(new Date(date), 'do')
 }
 
 export const getLocalDateFormat = (lang) => {
