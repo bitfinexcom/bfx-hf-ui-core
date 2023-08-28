@@ -26,7 +26,7 @@ const RecurringAOSummary = ({ fieldData }) => {
       return t('algoOrderForm.recurring.weekOn', { weekday })
     }
     if (recurrence === RECURRENCE_OPTIONS.MONTHLY) {
-      const day = getDateInShortFormat(startedAt)
+      const day = getDateInShortFormat(startedAt || new Date())
       return t('algoOrderForm.recurring.monthOn', { day })
     }
 
