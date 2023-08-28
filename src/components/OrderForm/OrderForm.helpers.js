@@ -110,6 +110,9 @@ const verifyCondition = (condition = {}, value) => {
   if (typeof condition.lte !== 'undefined') {
     return value <= condition.lte
   }
+  if (typeof condition.exist !== 'undefined') {
+    return !!value === condition.exist
+  }
 
   console.error(`unknown condition: ${_join(_keys(condition), ', ')}`)
 
