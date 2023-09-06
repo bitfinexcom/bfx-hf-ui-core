@@ -73,19 +73,24 @@ const getRowMapping = (formatTime) => ({
   [STATUS]: {
     index: 6,
     format: (_value, _, data) => {
-      return getFormatedStatus(_get(data, 'status'))
+      let status = _get(data, 'status')
+      const orderSubmitError = _get(data, 'orderSubmitError', null)
+      if (orderSubmitError) {
+        status = `${status}: ${orderSubmitError}`
+      }
+      return getFormatedStatus(status)
     },
   },
   [UPDATED]: {
     index: 7,
     selector: 'mtsUpdate',
-    format: (_value, _, data) => formatTime(_get(data, 'mtsUpdate')),
+    format: (_value, _, data) => formatTime(_get(data, 'mtsUpdate', null)) || '-',
   },
   [PLACED]: {
     index: 8,
     selector: 'created',
     // eslint-disable-next-line react/display-name
-    format: (_value, _, data) => formatTime(_get(data, 'created')),
+    format: (_value, _, data) => formatTime(_get(data, 'created', null)) || '-',
   },
 })
 

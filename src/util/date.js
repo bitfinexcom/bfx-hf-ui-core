@@ -22,10 +22,7 @@ export const getDateInShortFormat = (date) => {
   if (!isValidDate(date)) {
     return null
   }
-  return new Date(date).toLocaleString(i18n.language, {
-    day: '2-digit',
-    month: '2-digit',
-  })
+  return format(new Date(date), 'do')
 }
 
 export const getLocalDateFormat = (lang) => {
@@ -53,11 +50,11 @@ export const safelyFormatTime = (timestampFormat) => (date) => {
   }
   try {
     const i18nMappedKey = i18n.getMappedLanguageKey()
-    return format(date, timestampFormat, {
+    return format(new Date(date), timestampFormat, {
       locale: DATE_FNS_LOCALES[i18nMappedKey],
     })
   } catch (error) {
-    debug('Error in formatting date', date, timestampFormat)
+    debug('Error in formatting date', date, timestampFormat, error)
     return formatedInLocalFormat
   }
 }
