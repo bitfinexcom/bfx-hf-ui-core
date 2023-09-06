@@ -18,6 +18,16 @@ import WSActions from '../../redux/actions/ws'
 import { BACKTEST_TAB_SECTIONS } from '../../redux/reducers/ui'
 import { getCurrentHistoryBacktest } from '../../redux/selectors/ws'
 
+const renderBacktestRange = (backtest, formatTime, t) => (
+  <p>
+    {t('strategyEditor.backtestHistoryResults')}
+    &nbsp;
+    <b>{renderDate(_get(backtest, 'start', 0), formatTime, false)}</b>
+    &nbsp; - &nbsp;
+    <b>{renderDate(_get(backtest, 'end', 0), formatTime, false)}</b>
+  </p>
+)
+
 const BacktestResultsOptionsPanel = ({ showFullscreenChart }) => {
   const formatTime = useSelector(getFormatTimeFn)
   const backtest = useSelector(getCurrentHistoryBacktest)
@@ -45,13 +55,7 @@ const BacktestResultsOptionsPanel = ({ showFullscreenChart }) => {
             isActive={false}
             icon={<Icon name='arrow-left' className='icon' />}
           />
-          <p>
-            {t('strategyEditor.backtestHistoryResults')}
-            &nbsp;
-            <b>
-              {renderDate(_get(backtest, 'timestamp', 0), formatTime, false)}
-            </b>
-          </p>
+          {renderBacktestRange(backtest, formatTime, t)}
           <Button
             className='hfui-strategy-options__option-btn'
             label={t('strategyEditor.newTest')}
@@ -62,6 +66,7 @@ const BacktestResultsOptionsPanel = ({ showFullscreenChart }) => {
       ) : (
         <div className='hfui-strategy-options__results-container'>
           <p>{t('strategyEditor.backtestSuccessful')}</p>
+          {renderBacktestRange(backtest, formatTime, t)}
           <Button
             className='hfui-strategy-options__option-btn'
             label={t('strategyEditor.newTest')}

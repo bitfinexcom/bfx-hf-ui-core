@@ -30,6 +30,7 @@ import UIActions from '../../../redux/actions/ui'
 import WSTypes from '../../../redux/constants/ws'
 import {
   getBacktestState,
+  getCurrentHistoryBacktest,
   getCurrentStrategyBacktestsList,
 } from '../../../redux/selectors/ws'
 import { BACKTEST_TAB_SECTIONS } from '../../../redux/reducers/ui'
@@ -65,6 +66,7 @@ const BacktestTab = (props) => {
   )
   const activeSection = useSelector(getBacktestActiveSection)
   const backtestState = useSelector(getBacktestState)
+  const currentHistoryBacktest = useSelector(getCurrentHistoryBacktest)
 
   const {
     finished = false,
@@ -105,7 +107,7 @@ const BacktestTab = (props) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [finished])
 
-  // If a strategy has changed, reset tab state
+  // Fetch BT history list
   useEffect(() => {
     if (!isBacktestListFetched) {
       dispatch(
@@ -120,6 +122,18 @@ const BacktestTab = (props) => {
 
   const renderGridComponents = useCallback(
     (i) => {
+      const {
+        timeframe, symbol, candleSeed, start, end, executionId,
+      } = currentHistoryBacktest
+      const chartOptions = {
+        timeframe,
+        symbol,
+        candleSeed,
+        executionId,
+        start,
+        end,
+      }
+
       switch (i) {
         case COMPONENTS_KEYS.OPTIONS:
           return showBacktestResults ? (
@@ -141,7 +155,7 @@ const BacktestTab = (props) => {
             <StrategyLiveChart
               indicators={indicators}
               markets={markets}
-              strategy={strategy}
+              options={chartOptions}
               fullscreenChart={fullscreenChart}
               exitFullscreenChart={hideFullscreenChart}
               trades={trades}
@@ -189,6 +203,7 @@ const BacktestTab = (props) => {
       results,
       positions,
       layoutConfig,
+      currentHistoryBacktest,
     ],
   )
 
