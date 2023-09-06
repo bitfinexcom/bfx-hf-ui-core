@@ -410,8 +410,8 @@ export default (alias, store) => (e = {}) => {
       }
 
       case 'algo.order_history_loaded': {
-        const [, aos] = payload
-        store.dispatch(WSActions.recvDataAlgoOrdersHistory(aos))
+        const [, , mode, aos] = payload
+        store.dispatch(WSActions.recvDataAlgoOrdersHistory(aos, mode))
         break
       }
 

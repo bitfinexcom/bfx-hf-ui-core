@@ -342,7 +342,8 @@
       "invalidPriceDeltaProvided": "Invalid price delta provided",
       "orderCountExceedsTotalMaxLimit": "limit: placed count exceeded ({{count}}/{{limit}})",
       "orderCountExceedsPairMaxLimit": "limit: placed count exceeded ({{count}}/{{limit}} for {{pair}})",
-      "aliasMaxLength": "The maximum number of chars should be {{value}}"
+      "aliasMaxLength": "The maximum number of chars should be {{value}}",
+      "lastOrderDateRequired": "Last Order Date must be specified"
     }
   },
   "AOPauseModal": {

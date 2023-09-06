@@ -101,6 +101,7 @@ const DatePicker = ({
     <div
       className={clsx('hfui-orderform__input fullWidth hfui-input', {
         disabled,
+        invalid: !!validationError,
       })}
     >
       <ReactDatePicker

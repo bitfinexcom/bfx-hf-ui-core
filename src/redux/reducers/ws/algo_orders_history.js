@@ -1,8 +1,6 @@
-import _reduce from 'lodash/reduce'
-import _get from 'lodash/get'
+import _forEach from 'lodash/forEach'
 import _omit from 'lodash/omit'
 import t from '../../constants/ws'
-import { getIsPaperPair } from '../../../util/market'
 
 const getInitialState = () => ({
   main: {},
@@ -15,32 +13,18 @@ export default (state = getInitialState(), action = {}) => {
 
   switch (type) {
     case t.DATA_ALGO_ORDERS_HISTORY: {
-      const newState = _reduce(payload, (acc, ao) => {
-        const { gid, state: _state } = ao
-        try {
-          const parsedState = JSON.parse(_state)
-          const newAOobject = {
-            ...ao,
-            ...parsedState,
-          }
-          delete newAOobject.state
+      const { aos, mode } = payload
 
-          const symbol = _get(newAOobject, 'args.symbol', null)
-          if (!symbol) {
-            // invalid order
-            return acc
-          }
-          const isPaperPair = getIsPaperPair(symbol)
-          acc[isPaperPair ? 'paper' : 'main'][gid] = newAOobject
+      const transformed = {}
+      _forEach(aos, (ao) => {
+        transformed[ao?.gid] = ao
+      })
 
-          return acc
-        } catch {
-          return acc
-        }
-      }, getInitialState())
-
-      newState.isLoaded = true
-      return newState
+      return {
+        ...state,
+        [mode]: transformed,
+        isLoaded: true,
+      }
     }
 
     case t.SET_ALGO_ORDER_TO_HISTORY: {

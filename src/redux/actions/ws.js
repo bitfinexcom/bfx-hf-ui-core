@@ -187,9 +187,9 @@ export default {
     payload,
   }),
 
-  recvDataAlgoOrdersHistory: (payload) => ({
+  recvDataAlgoOrdersHistory: (aos, mode) => ({
     type: t.DATA_ALGO_ORDERS_HISTORY,
-    payload,
+    payload: { aos, mode },
   }),
 
   recvRemoveAlgoOrderFromHistory: (gid, mode) => ({
