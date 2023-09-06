@@ -3,6 +3,8 @@ import React, {
 } from 'react'
 import PropTypes from 'prop-types'
 import { useTranslation } from 'react-i18next'
+import { useDispatch, useSelector } from 'react-redux'
+import _isArray from 'lodash/isArray'
 
 import StrategyPerfomanceMetrics from '../../StrategyPerfomanceMetrics'
 import useToggle from '../../../hooks/useToggle'
@@ -23,46 +25,106 @@ import {
 } from '../../../constants/prop-types-shapes'
 import BacktestResultsOptionsPanel from '../../BacktestOptionsPanel/BacktestResultsOptionsPanel'
 import BacktestProgressBar from '../../BacktestProgressBar'
+import WSActions from '../../../redux/actions/ws'
+import UIActions from '../../../redux/actions/ui'
+import WSTypes from '../../../redux/constants/ws'
+import {
+  getBacktestState,
+  getCurrentStrategyBacktestsList,
+} from '../../../redux/selectors/ws'
+import { BACKTEST_TAB_SECTIONS } from '../../../redux/reducers/ui'
+import { getBacktestActiveSection } from '../../../redux/selectors/ui'
+
+const getInitialMessageI18Key = (activeSection) => {
+  if (activeSection === BACKTEST_TAB_SECTIONS.NEW_BT) {
+    return 'strategyEditor.backtestingStartingMessage'
+  }
+  if (activeSection === BACKTEST_TAB_SECTIONS.HISTORY_BT_LIST) {
+    return 'strategyEditor.backtestingHistoryListMessage'
+  }
+  if (activeSection === BACKTEST_TAB_SECTIONS.HISTORY_BT_DETAILS) {
+    return 'strategyEditor.backtestingHistoryDetailsMessage'
+  }
+  return ''
+}
 
 const BacktestTab = (props) => {
   const {
-    results,
     onCancelProcess,
     strategy,
     indicators,
     markets,
     onBacktestStart,
     saveStrategyOptions,
-    openNewTest,
   } = props
-  const { t } = useTranslation()
   const [layoutConfig, setLayoutConfig] = useState()
   const [fullscreenChart, , showFullscreenChart, hideFullscreenChart] = useToggle(false)
 
+  const isBacktestListFetched = _isArray(
+    useSelector(getCurrentStrategyBacktestsList),
+  )
+  const activeSection = useSelector(getBacktestActiveSection)
+  const backtestState = useSelector(getBacktestState)
+
   const {
-    finished = false, loading, progressPerc, gid,
-  } = results
-  // const loading = true
+    finished = false,
+    loading,
+    progressPerc,
+    gid,
+    results,
+  } = backtestState
+  const { id: strategyId } = strategy
   const positions = results?.strategy?.closedPositions
 
   const trades = useMemo(() => prepareChartTrades(positions), [positions])
+  const showBacktestResults = activeSection === BACKTEST_TAB_SECTIONS.NEW_BT_RESULTS
+    || activeSection === BACKTEST_TAB_SECTIONS.HISTORY_BT_RESULTS
+
+  const { t } = useTranslation()
+  const dispatch = useDispatch()
+
+  const setActiveSection = useCallback(
+    (section) => {
+      dispatch(UIActions.setBacktestActiveSection(section))
+    },
+    [dispatch],
+  )
 
   useEffect(() => {
-    if (!finished) {
+    if (!showBacktestResults) {
       setLayoutConfig(BACKTEST_LAYOUT_CONFIG_NO_DATA)
       return
     }
     setLayoutConfig(LAYOUT_CONFIG)
+  }, [showBacktestResults])
+
+  useEffect(() => {
+    if (finished) {
+      setActiveSection(BACKTEST_TAB_SECTIONS.NEW_BT_RESULTS)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [finished])
+
+  // If a strategy has changed, reset tab state
+  useEffect(() => {
+    if (!isBacktestListFetched) {
+      dispatch(
+        WSActions.send({
+          alias: WSTypes.ALIAS_DATA_SERVER,
+          data: ['get.bt.history.list', strategyId],
+        }),
+      )
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [strategyId])
 
   const renderGridComponents = useCallback(
     (i) => {
       switch (i) {
         case COMPONENTS_KEYS.OPTIONS:
-          return finished ? (
+          return showBacktestResults ? (
             <BacktestResultsOptionsPanel
               showFullscreenChart={showFullscreenChart}
-              openNewTest={openNewTest}
             />
           ) : (
             <BacktestOptionsPanel
@@ -112,9 +174,8 @@ const BacktestTab = (props) => {
       }
     },
     [
-      finished,
+      showBacktestResults,
       showFullscreenChart,
-      openNewTest,
       strategy,
       onBacktestStart,
       saveStrategyOptions,
@@ -137,13 +198,13 @@ const BacktestTab = (props) => {
         layoutConfig={layoutConfig}
         renderGridComponents={renderGridComponents}
       />
-      {!finished && (
+      {!showBacktestResults && (
         <div className='hfui-strategyeditor__backtest-tab-empty'>
           {loading ? (
             <BacktestProgressBar percent={progressPerc} startedOn={gid} />
           ) : (
             <p className='hfui-strategyeditor__initial-message'>
-              {t('strategyEditor.backtestingStartingMessage')}
+              {t(getInitialMessageI18Key(activeSection))}
             </p>
           )}
         </div>
@@ -153,24 +214,12 @@ const BacktestTab = (props) => {
 }
 
 BacktestTab.propTypes = {
-  results: PropTypes.shape({
-    finished: PropTypes.bool,
-    loading: PropTypes.bool,
-    strategy: PropTypes.shape({
-      closedPositions: PropTypes.oneOfType([
-        PropTypes.arrayOf(PropTypes.string), PropTypes.object,
-      ]),
-    }),
-    progressPerc: PropTypes.number,
-    gid: PropTypes.number,
-  }).isRequired,
   onCancelProcess: PropTypes.func.isRequired,
   strategy: PropTypes.shape(STRATEGY_SHAPE).isRequired,
   markets: PropTypes.arrayOf(PropTypes.shape(MARKET_SHAPE)).isRequired,
   indicators: INDICATORS_ARRAY_SHAPE,
   onBacktestStart: PropTypes.func.isRequired,
   saveStrategyOptions: PropTypes.func.isRequired,
-  openNewTest: PropTypes.func.isRequired,
 }
 
 BacktestTab.defaultProps = {

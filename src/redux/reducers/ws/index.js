@@ -11,6 +11,7 @@ import orderHistory from './order_history'
 import algoOrders from './algo_orders'
 import algoOrdersHistory from './algo_orders_history'
 import backtest from './backtest'
+import backtestHistory from './backtestHistory'
 import execution from './execution'
 import favoriteTradingPairs from './favorite_pairs'
 
@@ -26,6 +27,7 @@ export default combineReducers({
   socket,
   auth,
   backtest,
+  backtestHistory,
   execution,
   favoriteTradingPairs,
 })

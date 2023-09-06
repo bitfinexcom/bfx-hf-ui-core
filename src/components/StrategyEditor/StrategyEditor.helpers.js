@@ -121,6 +121,7 @@ export const prepareStrategyBacktestingArgs = (strategy) => {
       endDate,
     },
     strategyContent,
+    id,
   } = strategy
 
   return {
@@ -130,6 +131,7 @@ export const prepareStrategyBacktestingArgs = (strategy) => {
     [STRATEGY_OPTIONS_KEYS.TIMEFRAME]: timeframe,
     [STRATEGY_OPTIONS_KEYS.TRADES]: trades,
     strategyContent,
+    id,
     [STRATEGY_OPTIONS_KEYS.CANDLES]: candles,
     [STRATEGY_OPTIONS_KEYS.CANDLE_SEED]: candleSeed,
     constraints: {

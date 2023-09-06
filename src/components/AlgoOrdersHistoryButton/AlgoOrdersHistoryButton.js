@@ -1,23 +1,15 @@
 import React, { useRef, useEffect } from 'react'
-import _toUpper from 'lodash/toUpper'
 import { useDispatch, useSelector } from 'react-redux'
 
-import { useTranslation } from 'react-i18next'
-import { Spinner } from '@ufx-ui/core'
-import PanelButton from '../../ui/Panel/Panel.Button'
 import { getShowAOsHistory } from '../../redux/selectors/ao'
 import { getIsAOsHistoryLoaded } from '../../redux/selectors/ws'
 import AOActions from '../../redux/actions/ao'
 import useToggle from '../../hooks/useToggle'
-import HistoryIcon from '../../ui/Icons/HistoryIcon'
-
-import './style.css'
+import HistoryButton from '../../ui/HistoryButton'
 
 const AlgoOrdersHistoryButton = () => {
   const [isHistoryLoading, , setIsLoading, setStopLoading] = useToggle(false)
   const timeoutId = useRef(null)
-
-  const { t } = useTranslation()
 
   const isHistoryActive = useSelector(getShowAOsHistory)
   const isHistoryLoaded = useSelector(getIsAOsHistoryLoaded)
@@ -62,17 +54,10 @@ const AlgoOrdersHistoryButton = () => {
   }, [])
 
   return (
-    <PanelButton
+    <HistoryButton
       onClick={onButtonClickHandler}
-      text={_toUpper(t('tradingStatePanel.history'))}
       isActive={isHistoryActive}
-      icon={
-        isHistoryLoading ? (
-          <Spinner className='hfui-history-button__spinner' />
-        ) : (
-          <HistoryIcon className='hfui-history-button__icon' width='25px' height='25px' />
-        )
-      }
+      isLoading={isHistoryLoading}
     />
   )
 }
