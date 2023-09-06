@@ -428,6 +428,13 @@ export default (alias, store) => (e = {}) => {
         break
       }
 
+      case 'data.recur_ao_atomic_orders': {
+        const [,,, orderHist] = payload
+        store.dispatch(WSActions.recvOrderHist({ orderHist }))
+
+        break
+      }
+
       case 'bt.exec': {
         const [, from, to, symbol, tf, withCandles, withTrades, syncData] = payload
         store.dispatch(WSActions.recvBacktestExecute({
