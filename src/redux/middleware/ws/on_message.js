@@ -410,8 +410,8 @@ export default (alias, store) => (e = {}) => {
       }
 
       case 'algo.order_history_loaded': {
-        const [, aos] = payload
-        store.dispatch(WSActions.recvDataAlgoOrdersHistory(aos))
+        const [, , mode, aos] = payload
+        store.dispatch(WSActions.recvDataAlgoOrdersHistory(aos, mode))
         break
       }
 
@@ -424,6 +424,13 @@ export default (alias, store) => (e = {}) => {
       case 'data.recurring_ao_list': {
         const [, mode, aos] = payload
         store.dispatch(WSActions.recvDataAlgoOrders({ mode, aos }))
+
+        break
+      }
+
+      case 'data.recur_ao_atomic_orders': {
+        const [,,, orderHist] = payload
+        store.dispatch(WSActions.recvOrderHist({ orderHist }))
 
         break
       }
@@ -468,7 +475,12 @@ export default (alias, store) => (e = {}) => {
 
       case 'bt.btresult': {
         const [, res] = payload
-        store.dispatch(WSActions.recvBacktestResults(res))
+        const { error } = res
+        if (error) {
+          store.dispatch(UIActions.logInformation(error, LOG_LEVELS.ERROR, 'backtest_failed'))
+          break
+        }
+        store.dispatch(WSActions.recvBacktestResults(res, true))
         store.dispatch(UIActions.logInformation('Backtest finished successfully', LOG_LEVELS.INFO, 'backtest_success'))
         break
       }
@@ -482,6 +494,30 @@ export default (alias, store) => (e = {}) => {
       case 'bt.stopped': {
         const [, gid] = payload
         store.dispatch(WSActions.recvBacktestStopped(gid))
+        break
+      }
+
+      case 'data.bt.saved': {
+        const [, , bt] = payload
+        store.dispatch(WSActions.setBacktestToHistory(bt))
+        break
+      }
+
+      case 'data.bt.history.list': {
+        const [, strategyId, backtestsList] = payload
+        store.dispatch(WSActions.recvStrategyBacktestsList(strategyId, backtestsList))
+        break
+      }
+
+      case 'data.bt.history.favorite': {
+        const [, backtestId, isFavorite] = payload
+        store.dispatch(WSActions.changeBacktestFavoriteState(backtestId, isFavorite))
+        break
+      }
+
+      case 'data.bt.history.deleted': {
+        const [, backtestId] = payload
+        store.dispatch(WSActions.removeBacktest(backtestId))
         break
       }
 
@@ -593,7 +629,7 @@ export default (alias, store) => (e = {}) => {
       }
 
       case 'info.username': {
-        const [,, username] = payload
+        const [, , username] = payload
         store.dispatch(WSActions.setUsername(username))
         break
       }

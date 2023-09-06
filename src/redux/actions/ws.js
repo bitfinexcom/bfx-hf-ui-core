@@ -93,6 +93,11 @@ export default {
     payload: { strategies },
   }),
 
+  recvStrategyBacktestsList: (strategyId, backtestsList) => ({
+    type: t.ADD_STRATEGY_BACKTESTS_LIST,
+    payload: { strategyId, backtestsList },
+  }),
+
   recvAPICredentialsConfigured: (state) => ({
     type: t.DATA_API_CREDENTIALS_CONFIGURED,
     payload: { state },
@@ -182,9 +187,9 @@ export default {
     payload,
   }),
 
-  recvDataAlgoOrdersHistory: (payload) => ({
+  recvDataAlgoOrdersHistory: (aos, mode) => ({
     type: t.DATA_ALGO_ORDERS_HISTORY,
-    payload,
+    payload: { aos, mode },
   }),
 
   recvRemoveAlgoOrderFromHistory: (gid, mode) => ({
@@ -252,9 +257,9 @@ export default {
     },
   }),
 
-  recvBacktestResults: (opts) => ({
+  recvBacktestResults: (opts, isExecuted) => ({
     type: t.BACKTEST_RESULTS,
-    payload: opts,
+    payload: { results: opts, isExecuted },
   }),
 
   recvBacktestStarted: (gid) => ({
@@ -368,9 +373,6 @@ export default {
   purgeBacktestData: () => ({
     type: t.PURGE_DATA_BACKTEST,
   }),
-  resetBacktestData: () => ({
-    type: t.RESET_DATA_BACKTEST,
-  }),
   updatingApiKey: (mode, isUpdating) => ({
     type: t.UPDATING_API_KEY,
     payload: { mode, isUpdating },
@@ -385,6 +387,22 @@ export default {
   exportStrategiesOnReset: (password) => ({
     type: t.EXPORT_STRATEGIES_ON_RESET,
     payload: { password },
+  }),
+  setBacktestToHistory: (backtest) => ({
+    type: t.SET_BACKTEST_TO_HISTORY,
+    payload: { backtest },
+  }),
+  changeBacktestFavoriteState: (backtestId, isFavorite) => ({
+    type: t.BACKTEST_SET_FAVORITE,
+    payload: { backtestId, isFavorite },
+  }),
+  removeBacktest: (backtestId) => ({
+    type: t.BACKTEST_REMOVE,
+    payload: { backtestId },
+  }),
+  setHistoryBacktestId: (id) => ({
+    type: t.SET_HISTORY_BACKTEST_ID,
+    payload: { id },
   }),
 
   initAuth: (password) => send(['auth.init', password, MAIN_MODE, getScope()]),

@@ -6,7 +6,7 @@ import ClassNames from 'clsx'
 import PropTypes from 'prop-types'
 import { useLocation } from 'react-router'
 import {
-  getBacktestResults,
+  getBacktestState,
   getCurrentStrategyExecutionState,
   getExecutionConnectionState,
 } from '../../redux/selectors/ws'
@@ -26,7 +26,7 @@ const NavbarButton = ({
   )
   const { isExecutionConnected } = useSelector(getExecutionConnectionState)
 
-  const { loading: btLoading, finished } = useSelector(getBacktestResults)
+  const { loading: btLoading, finished } = useSelector(getBacktestState)
 
   const getIndicator = () => {
     if (route !== strategyEditor.path || pathname === strategyEditor.path) {

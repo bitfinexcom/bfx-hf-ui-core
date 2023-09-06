@@ -71,7 +71,7 @@ const StrategyEditor = (props) => {
     onRemove,
     authToken,
     gaCreateStrategy,
-    backtestResults,
+    backtestState,
     strategyDirty,
     setStrategyDirty,
     setStrategy,
@@ -99,7 +99,10 @@ const StrategyEditor = (props) => {
     serviceStatus,
     logInformation,
   } = props
-  const { t, i18n: { language } } = useTranslation()
+  const {
+    t,
+    i18n: { language },
+  } = useTranslation()
 
   const [isRemoveModalOpen, , openRemoveModal, closeRemoveModal] = useToggle(false)
   const [
@@ -270,10 +273,15 @@ const StrategyEditor = (props) => {
           delete preparedStrategy.strategyContent.id
         }
         onCreateStrategyFromExisted(preparedStrategy.label, preparedStrategy)
-        logInformation(`New strategy draft created (${preparedStrategy.label})`, LOG_LEVELS.INFO, 'strategy_draft_init', {
-          source: 'json',
-          from: preparedStrategy.label,
-        })
+        logInformation(
+          `New strategy draft created (${preparedStrategy.label})`,
+          LOG_LEVELS.INFO,
+          'strategy_draft_init',
+          {
+            source: 'json',
+            from: preparedStrategy.label,
+          },
+        )
       }
     } catch (e) {
       debug('Error while importing strategy: %s', e)
@@ -327,13 +335,13 @@ const StrategyEditor = (props) => {
   )
 
   const _cancelProcess = useCallback(() => {
-    const { gid } = backtestResults
+    const { gid } = backtestState
 
     cancelProcess(authToken, isPaperTrading, gid, loadingGid)
     closeCancelProcessModal()
   }, [
     authToken,
-    backtestResults,
+    backtestState,
     cancelProcess,
     closeCancelProcessModal,
     isPaperTrading,
@@ -548,13 +556,12 @@ const StrategyEditor = (props) => {
     setStrategy(strategy, PAPER_MODE)
   }, [changeTradingMode, isPaperTrading, setStrategy, strategy])
 
-  const openNewTest = () => onLoadStrategy(strategy)
-
   const hasErrorsInIDE = useMemo(
     () => _some(_values(sectionErrors), (e) => !!e),
     [sectionErrors],
   )
 
+  // Start strategy executing after change mode
   useEffect(() => {
     if (
       isPaperTrading
@@ -627,11 +634,11 @@ const StrategyEditor = (props) => {
   const sbtitleBacktest = useCallback(
     ({ sidebarOpened }) => (
       <BacktestTabTitle
-        results={backtestResults}
+        backtestState={backtestState}
         sidebarOpened={sidebarOpened}
       />
     ),
-    [backtestResults],
+    [backtestState],
   )
 
   const sbtitleSettings = useCallback(
@@ -676,11 +683,9 @@ const StrategyEditor = (props) => {
               <BacktestTab
                 htmlKey='backtest'
                 sbtitle={sbtitleBacktest}
-                results={backtestResults}
                 onBacktestStart={onBacktestStart}
                 saveStrategyOptions={saveStrategyOptions}
                 onCancelProcess={onCancelProcess}
-                openNewTest={openNewTest}
                 {...props}
               />
             )}
@@ -786,9 +791,8 @@ StrategyEditor.propTypes = {
   onRemove: PropTypes.func.isRequired,
   authToken: PropTypes.string.isRequired,
   setStrategy: PropTypes.func,
-  backtestResults: PropTypes.shape({
+  backtestState: PropTypes.shape({
     gid: PropTypes.number,
-    strategy: PropTypes.object, // eslint-disable-line
   }).isRequired,
   strategy: PropTypes.shape(STRATEGY_SHAPE),
   dsStopLiveStrategy: PropTypes.func.isRequired,

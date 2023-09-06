@@ -33,13 +33,14 @@ const mapStateToProps = (state = {}) => ({
 })
 
 const mapDispatchToProps = (dispatch) => ({
-  changeVisibilityState: (visible) => {
+  onClose: () => {
     dispatch(
-      UIActions.changeUIModalState(UI_MODAL_KEYS.EDIT_ORDER_MODAL, visible),
+      UIActions.changeUIModalState(UI_MODAL_KEYS.EDIT_ORDER_MODAL, false),
     )
     dispatch(
-      UIActions.changeUIModalState(UI_MODAL_KEYS.RELAUNCH_ORDER_MODAL, visible),
+      UIActions.changeUIModalState(UI_MODAL_KEYS.RELAUNCH_ORDER_MODAL, false),
     )
+    dispatch(UIActions.setUIValue(UI_KEYS.orderToEdit, {}))
   },
   updateOrder: (authToken, order) => {
     dispatch(WSActions.send(['order.update', authToken, order]))

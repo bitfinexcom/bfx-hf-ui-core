@@ -42,6 +42,12 @@ import RecurringAmount from './FieldComponents/customComponents/RecurringAmount'
 
 const debug = Debug('hfui:order-form:helpers')
 
+const RECURRENCE_OPTIONS = {
+  DAILY: 'daily',
+  WEEKLY: 'weekly',
+  MONTHLY: 'monthly',
+}
+
 const COMPONENTS_FOR_ID = {
   'ui.checkbox_group': UICheckboxGroup,
   'input.number': NumberInput,
@@ -103,6 +109,9 @@ const verifyCondition = (condition = {}, value) => {
   }
   if (typeof condition.lte !== 'undefined') {
     return value <= condition.lte
+  }
+  if (typeof condition.exist !== 'undefined') {
+    return !!value === condition.exist
   }
 
   console.error(`unknown condition: ${_join(_keys(condition), ', ')}`)
@@ -523,6 +532,7 @@ export {
   defaultDataForLayout,
   fixComponentContext,
   COMPONENTS_FOR_ID,
+  RECURRENCE_OPTIONS,
   symbolToQuoteBase,
   validateAOData,
 }

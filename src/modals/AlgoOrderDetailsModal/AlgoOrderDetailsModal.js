@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo } from 'react'
+import React, { useCallback, useEffect, useMemo } from 'react'
 import PropTypes from 'prop-types'
 import _map from 'lodash/map'
 import _size from 'lodash/size'
@@ -6,6 +6,7 @@ import _filter from 'lodash/filter'
 import _toString from 'lodash/toString'
 import _values from 'lodash/values'
 import _isEmpty from 'lodash/isEmpty'
+import { Recurring } from 'bfx-hf-algo'
 import { OrderHistory as UfxOrderHistory, Spinner } from '@ufx-ui/core'
 import { useTranslation } from 'react-i18next'
 import { useDispatch, useSelector } from 'react-redux'
@@ -14,6 +15,7 @@ import { getOrderDetails } from './AlgoOrderDetailsModal.utils'
 import {
   getAlgoOrderById,
   getAtomicOrders,
+  getAuthToken,
   getOrderHistory,
 } from '../../redux/selectors/ws'
 import { getMarketPair as _getMarketPair } from '../../redux/selectors/meta'
@@ -25,6 +27,7 @@ import AlgoOrderDetailsModalHeader from './AlgoOrderDetailsModal.Header'
 import { getComponentState, getFormatTimeFn, getUIState } from '../../redux/selectors/ui'
 import { UI_KEYS } from '../../redux/constants/ui_keys'
 import UIActions from '../../redux/actions/ui'
+import WSActions from '../../redux/actions/ws'
 
 import './style.css'
 
@@ -35,6 +38,7 @@ const AlgoOrderDetailsModal = ({ onClose, algoOrderId }) => {
 
   const isOpen = !!algoOrderId
 
+  const authToken = useSelector(getAuthToken)
   const atomicOrders = useSelector(getAtomicOrders)
   const orders = useSelector(getOrderHistory)
   const getMarketPair = useSelector(_getMarketPair)
@@ -91,6 +95,13 @@ const AlgoOrderDetailsModal = ({ onClose, algoOrderId }) => {
       }),
     )
   }
+
+  useEffect(() => {
+    if (!isOpen || rowData?.id !== Recurring.id) {
+      return
+    }
+    dispatch(WSActions.send(['recurring_algo_order.orders', authToken, 'bitfinex', rowData.gid]))
+  }, [rowData, isOpen, dispatch, authToken])
 
   if (isOpen && _isEmpty(rowData)) {
     return <Spinner />

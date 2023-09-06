@@ -4,13 +4,30 @@ import _forEach from 'lodash/forEach'
 import { getMarketPair } from '../../selectors/meta'
 import WSActions from '../../actions/ws'
 
+const FAILED_ORDER_STATUS = 'FAILED'
+
 export default function* ({ payload }) {
   const { orderHist = [] } = payload
   const getMarketPairState = yield select(getMarketPair)
 
-  const transformed = {}
+  const transformed = {
+    placed: {},
+    failed: {},
+  }
   _forEach(orderHist, o => {
-    transformed[o?.id] = {
+    const { status } = o
+    if (status === FAILED_ORDER_STATUS) {
+      transformed.failed[o?._id] = {
+        ...o,
+        id: o._id,
+        originalAmount: o.amount,
+        created: new Date(o.createdAt).getTime(),
+        pair: getMarketPairState(o.symbol),
+        price: 0,
+      }
+      return
+    }
+    transformed.placed[o?.id] = {
       ...o,
       originalAmount: o.amountOrig,
       priceAverage: o.priceAvg,

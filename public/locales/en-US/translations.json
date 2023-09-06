@@ -342,7 +342,8 @@
       "invalidPriceDeltaProvided": "Invalid price delta provided",
       "orderCountExceedsTotalMaxLimit": "limit: placed count exceeded ({{count}}/{{limit}})",
       "orderCountExceedsPairMaxLimit": "limit: placed count exceeded ({{count}}/{{limit}} for {{pair}})",
-      "aliasMaxLength": "The maximum number of chars should be {{value}}"
+      "aliasMaxLength": "The maximum number of chars should be {{value}}",
+      "lastOrderDateRequired": "Last Order Date must be specified"
     }
   },
   "AOPauseModal": {
@@ -525,6 +526,7 @@
     "submittingOrderTo": "Submitting order to {{target}}",
     "strategyRemovedSuccessfully": "The strategy has been removed successfully",
     "encryptedApiCredentialsSavedFor": "Encrypted API credentials saved for {{target}}",
+    "invalidAPICredentials": "Invalid API credentials",
     "reconnectingWithNewCredentials": "Reconnecting with new credentials...",
     "requestedAlgoOrderNotRunningCannotStop": "Requested algo order not running, cannot stop",
     "favouriteTradingPairsSuccessfullySaved": "Favourite trading pairs successfully saved",
@@ -732,8 +734,6 @@
     "updateCreds": "Update credentials"
   },
   "strategyEditor": {
-    "clearBacktestResultsModalTitle": "Confirmation Required",
-    "clearBacktestResultsModalText": "If you choose to continue, the current backtest results will be cleared. Do you wish to proceed?",
     "unsavedChanges": "Unsaved changes",
     "unsavedChangesModalTitle": "Do you need to save changes in the strategy before closing?",
     "cancelThisProcess": "Cancel this process",
@@ -781,7 +781,9 @@
     "openStartegyModalNoSelectedError": "No strategy selected",
     "backtestingCreateMessage": "Create a strategy to begin backtesting",
     "backtestingLoadingMessage": "Loading candles and executing strategy...",
-    "backtestingStartingMessage": "Press start to begin backtesting",
+    "backtestingStartingMessage": "Click \"Start\" to begin backtesting",
+    "backtestingHistoryListMessage": "Select a completed backtest and view its details",
+    "backtestingHistoryDetailsMessage": "Click \"More info\" to view backtest performance metrics, trades and chart table",
     "exportCSV": "Export as CSV",
     "exportStrategy": "Export strategy to JSON",
     "historical": "Historical",
@@ -871,7 +873,14 @@
     "lastQuarter": "Last quarter",
     "lastYear": "Last year",
     "lastXyears": "Last {{amount}} years",
-    "elapsedTime": "Elapsed time"
+    "elapsedTime": "Elapsed time",
+    "noHistoryBacktests": "No backtests in history",
+    "executedAt": "Executed at",
+    "period": "Period",
+    "tradingPair": "Trading Pair",
+    "source": "Source",
+    "candlesSource": "Candles ({{timeframe}}),\n\n Seed count = {{candleSeed}}",
+    "backtestHistoryResults": "Backtest results for"
   },
   "ui": {
     "ok": "Okay",
@@ -913,7 +922,8 @@
     "saveAndLaunch": "Save & Launch",
     "launchNoSave": "Launch without saving",
     "updateAndRestart": "Update and Restart",
-    "saveAndContinue": "Save and Continue"
+    "saveAndContinue": "Save and Continue",
+    "starred": "Starred"
   },
   "crashHandler": {
     "text1": "An error occurred that caused the Bitfinex Honey UI to halt. Please, restart the application to proceed working with it",
