@@ -12,6 +12,7 @@ function getInitialState() {
     activeAOParamsID: null,
     showAOsHistory: false,
     aoParams: {}, // { symbol: { algoID: [/* data */] } }
+    failedRecurringAoAtomics: {},
   }
 }
 
@@ -102,6 +103,18 @@ function reducer(state = getInitialState(), action = {}) {
       return {
         ...state,
         showAOsHistory,
+      }
+    }
+
+    case types.SET_FAILED_RECURRING_AO_ATOMICS: {
+      const { orders } = payload
+
+      return {
+        ...state,
+        failedRecurringAoAtomics: {
+          ...state.failedRecurringAoAtomics,
+          ...orders,
+        },
       }
     }
 

@@ -5,6 +5,7 @@ import getActiveAOparamsID from './get_active_ao_params_id'
 import getAOParams from './get_ao_params'
 import getShowAOsHistory from './get_show_aos_history'
 import getIsActiveAlgoOrdersAfterLogin from './get_is_active_algo_orders_after_login'
+import getFailedRecurringAoAtomics from './get_failed_recurring_ao_atomics'
 
 export {
   getActiveAlgoOrders,
@@ -14,4 +15,5 @@ export {
   getAOParams,
   getShowAOsHistory,
   getIsActiveAlgoOrdersAfterLogin,
+  getFailedRecurringAoAtomics,
 }
