@@ -72,6 +72,13 @@ const StrategyLiveTab = (props) => {
 
   const renderGridComponents = useCallback(
     (i) => {
+      const chartOptions = {
+        candleSeed: strategy.strategyOptions.candleSeed,
+        symbol: strategy.strategyOptions.symbol.wsID,
+        executionId: strategy.executionId || strategy.id,
+        start: strategy.startedOn,
+        end: strategy.stoppedOn,
+      }
       switch (i) {
         case COMPONENTS_KEYS.OPTIONS:
           return (
@@ -91,11 +98,10 @@ const StrategyLiveTab = (props) => {
               indicators={indicators}
               lastOpenPosition={lastOpenPosition}
               markets={markets}
-              strategy={strategy}
+              options={chartOptions}
               fullscreenChart={fullscreenChart}
               exitFullscreenChart={unsetFullScreenChart}
               trades={trades}
-              isExecuting={executing}
             />
           )
 
