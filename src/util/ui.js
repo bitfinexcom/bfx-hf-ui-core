@@ -10,6 +10,8 @@ import _replace from 'lodash/replace'
 import _keys from 'lodash/keys'
 import { Truncate } from '@ufx-ui/core'
 
+const LS_LAST_SESSION_TIMESTAMP = 'LS_LAST_SESSION_TIMESTAMP'
+
 // takes a number as input and returns a localised version with semicolons in it
 // e.g. 123456789.445566 -> '123,456,789.445566'
 export const localiseNumber = (x = 'N/A') => x.toLocaleString('en-US')
@@ -106,3 +108,13 @@ export const processDateForCSV = (rawDate, formatTime) => {
 }
 
 export const countObjectChildren = (obj) => _size(_keys(obj))
+
+export const saveLastSessionTimestamp = () => localStorage.setItem(LS_LAST_SESSION_TIMESTAMP, Date.now())
+
+export const getLastSessionTimestamp = () => {
+  const ts = localStorage.getItem(LS_LAST_SESSION_TIMESTAMP)
+  if (ts) {
+    return Number(ts)
+  }
+  return Date.now()
+}

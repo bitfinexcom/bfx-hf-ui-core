@@ -88,6 +88,11 @@ export const recvNotification = (notification) => ({
   payload: { notification },
 })
 
+export const setNotifications = (notifications) => ({
+  type: types.DATA_NOTIFICATIONS,
+  payload: { notifications },
+})
+
 export const setCurrentStrategy = (strategy, mode = null) => ({
   type: types.SET_CURRENT_STRATEGY,
   payload: { strategy, mode },
@@ -201,4 +206,5 @@ export default {
   setIsStrategyDirty,
   logInformation,
   setBacktestActiveSection,
+  setNotifications,
 }

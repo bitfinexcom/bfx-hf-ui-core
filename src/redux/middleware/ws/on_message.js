@@ -423,14 +423,14 @@ export default (alias, store) => (e = {}) => {
 
       case 'data.recurring_ao_list': {
         const [, mode, aos] = payload
-        store.dispatch(WSActions.recvDataAlgoOrders({ mode, aos }))
+        store.dispatch(WSActions.recvRecurringAlgoOrders({ mode, aos }))
 
         break
       }
 
       case 'data.recur_ao_atomic_orders': {
-        const [,,, orderHist] = payload
-        store.dispatch(WSActions.recvOrderHist({ orderHist }))
+        const [,, mode, gid, orders] = payload
+        store.dispatch(AOActions.recvRecurringAoAtomics(orders, gid, mode))
 
         break
       }

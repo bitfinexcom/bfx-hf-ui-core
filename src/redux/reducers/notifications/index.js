@@ -1,5 +1,6 @@
 import _filter from 'lodash/filter'
 import _includes from 'lodash/includes'
+import _map from 'lodash/map'
 
 import WSTypes from '../../constants/ws'
 import UITypes from '../../constants/ui'
@@ -21,6 +22,13 @@ function reducer(state = getInitialState(), action = {}) {
         ...state,
         notificationAdapter(notification),
       ]
+    }
+
+    case UITypes.DATA_NOTIFICATIONS: {
+      const { notifications } = payload
+
+      const adaptedNotifications = _map(notifications, notificationAdapter)
+      return [...state, ...adaptedNotifications]
     }
 
     case UITypes.REMOVE_NOTIFICATION: {

@@ -192,6 +192,11 @@ export default {
     payload: { aos, mode },
   }),
 
+  recvRecurringAlgoOrders: (payload) => ({
+    type: t.DATA_RECURRING_ALGO_ORDERS,
+    payload,
+  }),
+
   recvRemoveAlgoOrderFromHistory: (gid, mode) => ({
     type: t.REMOVE_ALGO_ORDER_FROM_HISTORY,
     payload: {
