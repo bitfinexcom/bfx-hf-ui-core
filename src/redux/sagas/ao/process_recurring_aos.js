@@ -1,11 +1,9 @@
 import _map from 'lodash/map'
-import { all, call, select } from 'redux-saga/effects'
+import { all, call } from 'redux-saga/effects'
 import { isFuture } from 'date-fns'
 import _isEmpty from 'lodash/isEmpty'
 import scheduleFetchingRecurringAOStatus from './schedule_fetching_recurring_ao_status'
 import fetchRecurringAoAtomics from './fetch_recurring_ao_atomics'
-import { getCurrentMode } from '../../selectors/ui'
-import { saveLastReceivedRecurringAosTimestamp } from '../../helpers/recurring_ao'
 
 export default function* processRecurringAOs({ payload }) {
   const { aos } = payload

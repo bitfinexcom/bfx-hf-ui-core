@@ -539,7 +539,9 @@
     "decryptedCredentialsFor": "Decrypted credentials for {{target}} ({{mode}})",
     "reboot_notify": "Noticed several internet connection issues. Rebooting app...",
     "strategyLaunchMissingAPIKey": "Please configure API keys first and relaunch strategy",
-    "algoOrderRemovedFromHistorySuccessfully": "The algo order has been successfully removed from history"
+    "algoOrderRemovedFromHistorySuccessfully": "The algo order has been successfully removed from history",
+    "recurringAoExecutedSuccessfully": "Recurring AO {{alias}} was executed successfully at {{time}}",
+    "recurringAoFailed": "Recurring AO {{alias}} was failed at {{time}}. Reason: {{reason}}"
   },
   "confirmDMSModal": {
     "title": "Enable Dead Man Switch",
