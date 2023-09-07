@@ -1,6 +1,6 @@
 /* eslint-disable consistent-return */
 import React, {
-  useEffect, Suspense, lazy, useCallback,
+  useEffect, Suspense, lazy, useCallback, useRef,
 } from 'react'
 import {
   Route, Switch, Redirect, useLocation,
@@ -17,6 +17,8 @@ import Routes from '../../constants/routes'
 import { isElectronApp } from '../../redux/config'
 import ModalsWrapper from '../../modals/ModalsWrapper/ModalsWrapper'
 import FullscreenModeBar from '../FullscreenModeBar'
+import { saveLastSessionTimestamp } from '../../util/ui'
+import TIMEFRAME_WIDTHS from '../../util/time_frame_widths'
 
 import './style.css'
 
@@ -26,6 +28,7 @@ const AuthenticationPage = lazy(() => import('../../pages/Authentication'))
 const StrategiesPage = lazy(() => import('../../pages/Strategies'))
 
 const ipcHelpers = window.electronService
+const SESSION_INTERVAL = TIMEFRAME_WIDTHS['5m']
 
 const HFUI = (props) => {
   const {
@@ -51,6 +54,7 @@ const HFUI = (props) => {
     isFullscreen,
   } = props
   useInjectBfxData()
+  const timerRef = useRef()
 
   const { t } = useTranslation()
 
@@ -61,6 +65,7 @@ const HFUI = (props) => {
   }, [authToken, currentMode, onUnload])
 
   const onElectronAppClose = useCallback(() => {
+    saveLastSessionTimestamp()
     if (!authToken || !settingsShowAlgoPauseInfo) {
       closeElectronApp()
     } else {
@@ -154,6 +159,15 @@ const HFUI = (props) => {
       getCoreSettings(authToken)
     }
   }, [authToken, getCoreSettings, isBfxConnected])
+
+  useEffect(() => {
+    if (timerRef.current) {
+      return
+    }
+    timerRef.current = setInterval(saveLastSessionTimestamp, SESSION_INTERVAL)
+
+    return () => clearInterval(timerRef.current)
+  }, [])
 
   return (
     <Suspense fallback={<></>}>
