@@ -54,7 +54,7 @@ const processUpdateOrder = (order, id) => ({
   flags: calculateFlags(order),
 })
 
-const processAOArgs = (args, id) => {
+const processAOArgs = (args, id, isRelaunching) => {
   const updArgs = { ...args }
   updArgs.amount = Math.abs(updArgs.amount)
 
@@ -67,13 +67,19 @@ const processAOArgs = (args, id) => {
       break
 
     case Recurring.id:
-      if (_isString(updArgs.startedAt)) {
-        updArgs.startedAt = new Date(updArgs.startedAt)
-      }
-      if (_isString(updArgs.endedAt)) {
-        updArgs.endedAt = new Date(updArgs.endedAt)
+      if (isRelaunching) {
+        updArgs.startedAt = null
+        updArgs.endedAt = null
+      } else {
+        if (_isString(updArgs.startedAt)) {
+          updArgs.startedAt = new Date(updArgs.startedAt)
+        }
+        if (_isString(updArgs.endedAt)) {
+          updArgs.endedAt = new Date(updArgs.endedAt)
+        }
       }
       updArgs.currency = getCurrencyDefinition(updArgs.currency, updArgs.symbol)
+
       break
 
     default:

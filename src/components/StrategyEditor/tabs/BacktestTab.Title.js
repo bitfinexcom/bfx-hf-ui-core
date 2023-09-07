@@ -4,10 +4,10 @@ import PropTypes from 'prop-types'
 import { Icon } from 'react-fa'
 import Indicator from '../../../ui/Indicator'
 
-const BacktestTabTitle = ({ results, sidebarOpened }) => {
+const BacktestTabTitle = ({ backtestState, sidebarOpened }) => {
   const { t } = useTranslation()
 
-  const { loading, finished } = results
+  const { loading, finished } = backtestState
 
   const indicatorClassName = !sidebarOpened ? 'indicator-near-icon' : null
 
@@ -26,7 +26,7 @@ const BacktestTabTitle = ({ results, sidebarOpened }) => {
 }
 
 BacktestTabTitle.propTypes = {
-  results: PropTypes.shape({
+  backtestState: PropTypes.shape({
     loading: PropTypes.bool,
     finished: PropTypes.bool,
   }).isRequired,

@@ -19,7 +19,6 @@ import SaveUnsavedChangesModal from '../../modals/Strategy/SaveUnsavedChangesMod
 import RemoveExistingStrategyModal from '../../modals/Strategy/RemoveExistingStrategyModal'
 import SaveStrategyAsModal from '../../modals/Strategy/SaveStrategyAsModal/SaveStrategyAsModal'
 import { getDefaultStrategyOptions } from '../../components/StrategyEditor/StrategyEditor.helpers'
-import ClearBacktestResultsModal from '../../modals/Strategy/ClearBacktestResultsModal'
 import useToggle from '../../hooks/useToggle'
 import { STRATEGY_SHAPE } from '../../constants/prop-types-shapes'
 
@@ -28,13 +27,13 @@ import './style.css'
 const debug = Debug('hfui-ui:p:strategy-editor')
 
 const StrategyEditor = lazy(() => import('../../components/StrategyEditor'))
-const StrategiesListTable = lazy(() => import('../../components/StrategiesListTable'))
+const StrategiesListTable = lazy(() => import('../../components/StrategiesListTable'),
+)
 
 const StrategiesPage = ({
   authToken,
   onSave,
   onRemove,
-  backtestResults: { finished },
   strategy,
   setStrategy,
   strategyDirty,
@@ -59,11 +58,6 @@ const StrategiesPage = ({
     isRenameStrategyModalOpen,,
     openRenameStrategyModal,
     closeRenameStrategyModal,
-  ] = useToggle(false)
-  const [
-    isClearBacktestResultsModalOpen,,
-    openClearBacktestResultsModal,
-    closeClearBacktestResultsModal,
   ] = useToggle(false)
   const [actionStrategy, setActionStrategy] = useState({})
   const [nextStrategyToOpen, setNextStrategyToOpen] = useState(null)
@@ -190,11 +184,6 @@ const StrategiesPage = ({
         openUnsavedStrategyModal()
         return
       }
-      if (finished && !forcedLoad) {
-        setNextStrategyToOpen(strategyToLoad)
-        openClearBacktestResultsModal()
-        return
-      }
       if (
         !_isEmpty(strategyToLoad)
         && _isEmpty(strategyToLoad.strategyOptions)
@@ -213,9 +202,7 @@ const StrategiesPage = ({
       }
     },
     [
-      finished,
       onDefineIndicatorsChange,
-      openClearBacktestResultsModal,
       openUnsavedStrategyModal,
       setStrategy,
       setStrategyDirty,
@@ -236,10 +223,8 @@ const StrategiesPage = ({
     closeRemoveModal()
     closeSaveStrategyAsModal()
     closeRenameStrategyModal()
-    closeClearBacktestResultsModal()
     closeUnsavedStrategyModal()
   }, [
-    closeClearBacktestResultsModal,
     closeRemoveModal,
     closeRenameStrategyModal,
     closeSaveStrategyAsModal,
@@ -348,12 +333,6 @@ const StrategiesPage = ({
           onRemoveStrategy={removeStrategy}
           strategy={actionStrategy}
         />
-        <ClearBacktestResultsModal
-          isOpen={isClearBacktestResultsModalOpen}
-          onClose={onCloseModals}
-          nextStrategy={nextStrategyToOpen}
-          onLoadStrategy={onLoadStrategy}
-        />
       </Layout.Main>
       <Layout.Footer />
     </Layout>
@@ -366,9 +345,6 @@ StrategiesPage.propTypes = {
   authToken: PropTypes.string.isRequired,
   onSave: PropTypes.func.isRequired,
   onRemove: PropTypes.func.isRequired,
-  backtestResults: PropTypes.shape({
-    finished: PropTypes.bool,
-  }).isRequired,
   strategyDirty: PropTypes.bool.isRequired,
   isPaperTrading: PropTypes.bool.isRequired,
   setStrategyDirty: PropTypes.func.isRequired,

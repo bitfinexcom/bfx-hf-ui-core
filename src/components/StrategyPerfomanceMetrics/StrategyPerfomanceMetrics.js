@@ -123,9 +123,9 @@ StrategyPerfomanceMetrics.defaultProps = {
       activeMarket: null,
     },
   },
+  isExecuting: false,
   isBacktest: false,
   startedOn: 0,
-  isExecuting: false,
 }
 
 export default memo(StrategyPerfomanceMetrics)

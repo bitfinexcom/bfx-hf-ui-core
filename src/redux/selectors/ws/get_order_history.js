@@ -9,4 +9,13 @@ const EMPTY_OBJ = {}
 
 const getOrderHistory = (state) => _get(state, `${path}.orderHistory`, EMPTY_OBJ)
 
-export default createSelector(getOrderHistory, orderHistory => _values(orderHistory))
+const getSortedOrderHistory = createSelector(
+  getOrderHistory,
+  ({ placed, failed }) => {
+    const ordersArr = _values({ ...placed, ...failed })
+    ordersArr.sort((a, b) => b.mtsUpdate - a.mtsUpdate)
+    return ordersArr
+  },
+)
+
+export default getSortedOrderHistory

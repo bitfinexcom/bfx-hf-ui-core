@@ -50,6 +50,14 @@ export const PAPER_MODE = 'paper'
 export const MAIN_MODE = 'main'
 let shownOldFormatModal = false
 
+export const BACKTEST_TAB_SECTIONS = {
+  NEW_BT: 'NEW_BT',
+  NEW_BT_RESULTS: 'NEW_BT _RESULTS',
+  HISTORY_BT_LIST: 'HISTORY_BT_LIST',
+  HISTORY_BT_DETAILS: 'HISTORY_BT_DETAILS',
+  HISTORY_BT_RESULTS: 'HISTORY_BT_RESULTS',
+}
+
 const DEFAULT_MARKET = {
   contexts: ['e', 'm'],
   restID: 'tBTCUSD',
@@ -80,6 +88,7 @@ function getInitialState() {
       strategyMainMode: {},
       strategySandboxMode: {},
       isStrategyDirty: false,
+      backtestActiveSection: BACKTEST_TAB_SECTIONS.NEW_BT,
     },
     unsavedLayout: null,
     layoutID: null,
@@ -346,7 +355,7 @@ function reducer(state = getInitialState(), action = {}) {
 
     case types.SET_CURRENT_STRATEGY: {
       const { strategy, mode } = payload
-      const { isPaperTrading } = state
+      const { isPaperTrading, strategyEditor: { backtestActiveSection: _backtestActiveSection } } = state
 
       let key = null
       if (!mode) {
@@ -355,11 +364,25 @@ function reducer(state = getInitialState(), action = {}) {
         key = mode === PAPER_MODE ? 'strategySandboxMode' : 'strategyMainMode'
       }
 
+      let backtestActiveSection = _backtestActiveSection
+      if (isPaperTrading) {
+        switch (backtestActiveSection) {
+          case BACKTEST_TAB_SECTIONS.NEW_BT:
+            break
+          case BACKTEST_TAB_SECTIONS.NEW_BT_RESULTS:
+            backtestActiveSection = BACKTEST_TAB_SECTIONS.NEW_BT
+            break
+          default:
+            backtestActiveSection = BACKTEST_TAB_SECTIONS.HISTORY_BT_LIST
+        }
+      }
+
       return {
         ...state,
         strategyEditor: {
           ...state.strategyEditor,
           [key]: strategy,
+          backtestActiveSection,
         },
       }
     }
@@ -378,6 +401,18 @@ function reducer(state = getInitialState(), action = {}) {
         strategyEditor: {
           ...state.strategyEditor,
           isStrategyDirty,
+        },
+      }
+    }
+
+    case types.SET_BACKTEST_ACTIVE_SECTION: {
+      const { section } = payload
+
+      return {
+        ...state,
+        strategyEditor: {
+          ...state.strategyEditor,
+          backtestActiveSection: section,
         },
       }
     }

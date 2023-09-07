@@ -1,5 +1,5 @@
 import React from 'react'
-import { createRoot } from 'react-dom/client'
+import ReactDOM from 'react-dom'
 import { I18nextProvider } from 'react-i18next'
 import Debug from 'debug'
 import Manifest from '../package.json'
@@ -41,12 +41,12 @@ if (localStorage) {
 debug('boot version %s', Manifest.version)
 
 const container = document.getElementById('root')
-const root = createRoot(container)
 
-root.render((
+ReactDOM.render(
   <StoreWrapper>
     <I18nextProvider i18n={i18n}>
       <HFUIWrapper />
     </I18nextProvider>
-  </StoreWrapper>
-))
+  </StoreWrapper>,
+  container,
+)
