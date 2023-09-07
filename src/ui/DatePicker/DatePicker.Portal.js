@@ -1,5 +1,5 @@
 import ReactDOM from 'react-dom'
-import PropTypes from 'prop-types';
+import PropTypes from 'prop-types'
 import React from 'react'
 
 const DatePickerPortal = ({ children }) => (
@@ -12,11 +12,11 @@ const DatePickerPortal = ({ children }) => (
 )
 
 DatePickerPortal.propTypes = {
-  children: PropTypes.node
+  children: PropTypes.node,
 }
 
 DatePickerPortal.defaultProps = {
-  children: null
+  children: null,
 }
 
 export default DatePickerPortal
