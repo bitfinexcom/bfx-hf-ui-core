@@ -34,6 +34,13 @@
     margin-bottom: 0;
     display: block;
   }
+  .react-datepicker__day--disabled,
+  .react-datepicker__month-text--disabled,
+  .react-datepicker__quarter-text--disabled,
+  .react-datepicker__year-text--disabled,
+  .react-datepicker__time-list-item--disabled {
+    text-decoration: line-through;
+  }
 }
 
 body.Dark {
@@ -98,9 +105,10 @@ body.Dark {
   }
   .react-datepicker__day--disabled,
   .react-datepicker__month-text--disabled,
-  .react-datepicker__quarter-text--disabled
-    .react-datepicker__year-text--disabled {
-    color: var(--shade-0);
+  .react-datepicker__quarter-text--disabled,
+  .react-datepicker__year-text--disabled,
+  .react-datepicker__time-list-item--disabled {
+    color: var(--shade-0) !important;
   }
 
   .react-datepicker__year-select,
