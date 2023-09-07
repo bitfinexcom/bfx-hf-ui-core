@@ -6,6 +6,7 @@ const RECURRENCE_WIDTH = {
   [RECURRENCE_OPTIONS.WEEKLY]: TIMEFRAME_WIDTH['1w'],
   [RECURRENCE_OPTIONS.MONTHLY]: TIMEFRAME_WIDTH['1M'],
 }
+export const DELAY_FOR_FETCH = TIMEFRAME_WIDTH['1m'] * 2
 
 export const calculateNextExecutionTime = (startedAt, endedAt, recurrence) => {
   const recurrenceMs = RECURRENCE_WIDTH[recurrence]
