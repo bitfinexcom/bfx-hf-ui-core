@@ -65,7 +65,6 @@ const HFUI = (props) => {
   }, [authToken, currentMode, onUnload])
 
   const onElectronAppClose = useCallback(() => {
-    saveLastSessionTimestamp()
     if (!authToken || !settingsShowAlgoPauseInfo) {
       closeElectronApp()
     } else {
