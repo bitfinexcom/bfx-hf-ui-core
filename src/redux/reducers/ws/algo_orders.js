@@ -14,7 +14,8 @@ export default (state = getInitialState(), action = {}) => {
   const { type, payload = [] } = action
 
   switch (type) {
-    case types.DATA_ALGO_ORDERS: {
+    case types.DATA_ALGO_ORDERS:
+    case types.DATA_RECURRING_ALGO_ORDERS: {
       const { aos, mode } = payload
       const transformed = {}
       _forEach(aos, (ao) => {

@@ -1,6 +1,6 @@
 import React, { useEffect, useCallback, useMemo } from 'react'
 import PropTypes from 'prop-types'
-
+import _values from 'lodash/values'
 import _isEmpty from 'lodash/isEmpty'
 import { OrderHistory as UfxOrderHistory, Spinner } from '@ufx-ui/core'
 import { useTranslation } from 'react-i18next'
@@ -30,10 +30,11 @@ const OrderHistory = ({
   const { t } = useTranslation()
 
   const orderHistoryMapping = useMemo(() => getRowMapping(formatTime), [formatTime])
+  const orderHistoryArray = useMemo(() => _values(orders), [orders])
 
   const fetchMoreItems = useCallback(() => {
-    fetchOrderHistory(authToken, getNextEndDate(orders))
-  }, [authToken, fetchOrderHistory, orders])
+    fetchOrderHistory(authToken, getNextEndDate(orderHistoryArray))
+  }, [authToken, fetchOrderHistory, orderHistoryArray])
 
   const handleLoadMoreRows = () => {
     setIsLoadingOrderHistFlag(true)
@@ -59,11 +60,11 @@ const OrderHistory = ({
       className='orderhistroy__panel'
     >
       <div ref={ref} className='orderhistroy__wrapper'>
-        {_isEmpty(orders) ? (
+        {_isEmpty(orderHistoryArray) ? (
           <p className='empty'>{t('orderHistoryModal.noHistory')}</p>
         ) : (
           <UfxOrderHistory
-            orders={orders}
+            orders={orderHistoryArray}
             rowMapping={orderHistoryMapping}
             isMobileLayout={width < 700}
             loadMoreRows={handleLoadMoreRows}
@@ -77,7 +78,7 @@ const OrderHistory = ({
 }
 
 OrderHistory.propTypes = {
-  orders: PropTypes.arrayOf(PropTypes.shape(ORDER_SHAPE)),
+  orders: PropTypes.objectOf(PropTypes.shape(ORDER_SHAPE)),
   dark: PropTypes.bool,
   onRemove: PropTypes.func,
   fetchOrderHistory: PropTypes.func.isRequired,
