@@ -15,5 +15,5 @@ export default function* processRecurringAO({ payload }) {
       gid, startedAt, endedAt, recurrence,
     })
   }
-  yield call(fetchRecurringAoAtomics, { gid, firstDataRequest: true })
+  yield call(fetchRecurringAoAtomics, { gid, firstDataRequest: false })
 }
