@@ -7,6 +7,8 @@ import './style.css'
 
 const commonComponentProps = {
   dark: true,
+  moveable: true,
+  removeable: true,
   darkHeader: true,
   showMarket: true,
   canChangeMarket: true,
@@ -22,6 +24,7 @@ const MarketData = () => {
           tradesProps={commonComponentProps}
           bookProps={commonComponentProps}
           chartProps={commonComponentProps}
+          sharedProps={commonComponentProps}
         />
       </Layout.Main>
       <Layout.Footer />

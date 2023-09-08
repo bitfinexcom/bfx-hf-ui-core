@@ -184,12 +184,12 @@ const TradingStatePanel = ({
       className='hfui-tradingstatepanel__wrapper'
       moveable={moveable}
       removeable={removeable}
+      onRemove={onRemove}
     >
       <OutsideClickHandler
         onOutsideClick={() => isHistoryActive && setShowAOsHistory(false)}
       >
         <Panel
-          onRemove={onRemove}
           darkHeader
           moveable={false}
           removeable={false}
