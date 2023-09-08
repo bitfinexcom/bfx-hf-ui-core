@@ -438,8 +438,9 @@ function reducer(state = getInitialState(), action = {}) {
       const layoutDef = getActiveLayoutDef(state)
       const x = _min(_map(layoutDef.layout, l => l.x)) || 0
       const y = _max(_map(layoutDef.layout, l => l.y)) || 0
+      const lastLayoutItemHeight = _get(layoutDef, 'layout[-1].h', 0)
 
-      const newY = y + layoutDef.layout[layoutDef?.layout?.length - 1]?.h
+      const newY = y + lastLayoutItemHeight
 
       return {
         ...state,
