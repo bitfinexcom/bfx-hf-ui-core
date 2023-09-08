@@ -4,7 +4,7 @@ import React, {
 import PropTypes from 'prop-types'
 import { add } from 'date-fns'
 import DateInput from '../../input.date'
-import { isValidDate } from '../../../../../util/date'
+import { isValidDate, roundDay } from '../../../../../util/date'
 import { RECURRENCE_OPTIONS } from '../../../OrderForm.helpers'
 
 const RecurringEndDate = ({ fieldData, onFieldChange, ...props }) => {
@@ -40,12 +40,19 @@ const RecurringEndDate = ({ fieldData, onFieldChange, ...props }) => {
     }
   }, [onFieldChange, value])
 
+  const handleDatePicker = useCallback(
+    (date) => {
+      onFieldChange('endedAt', roundDay(startedAt, date))
+    },
+    [onFieldChange, startedAt],
+  )
+
   useEffect(() => {
-    if (endless || !startedAt) {
+    if (recurrence || endless || !startedAt) {
       resetInput()
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [endless, startedAt])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [endless, startedAt, recurrence])
 
   useEffect(() => {
     if (
@@ -59,7 +66,15 @@ const RecurringEndDate = ({ fieldData, onFieldChange, ...props }) => {
     setValue(endedAt)
   }, [endedAt, onFieldChange, resetInput, startedAt])
 
-  return <DateInput {...props} minDate={minDate} value={value} />
+  return (
+    <DateInput
+      {...props}
+      minDate={minDate}
+      value={value}
+      showTimeSelect={false}
+      onChange={handleDatePicker}
+    />
+  )
 }
 
 RecurringEndDate.propTypes = {

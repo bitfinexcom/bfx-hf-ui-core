@@ -18,17 +18,10 @@
 }
 
 .react-datepicker {
-  width: 327.3px;
 
   .react-datepicker-time__header,
   .react-datepicker-year-header {
     font-weight: 500;
-  }
-  .react-datepicker__current-month,
-  .react-datepicker__navigation--previous,
-  .react-datepicker__navigation--next,
-  .react-datepicker-year-header {
-    display: none;
   }
   .react-datepicker__time-list-item {
     margin-bottom: 0;
