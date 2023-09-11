@@ -409,6 +409,10 @@ export default {
     type: t.SET_HISTORY_BACKTEST_ID,
     payload: { id },
   }),
+  cancelAlgoOrder: (gid) => ({
+    type: t.CANCEL_ALGO_ORDER,
+    payload: { gid },
+  }),
 
   initAuth: (password) => send(['auth.init', password, MAIN_MODE, getScope()]),
   auth: (password, mode) => send(['auth.submit', password, mode, getScope()]),

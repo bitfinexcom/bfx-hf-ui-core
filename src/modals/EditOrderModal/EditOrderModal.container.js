@@ -48,8 +48,15 @@ const mapDispatchToProps = (dispatch) => ({
   gaEditAO: () => {
     dispatch(GAActions.editAO())
   },
-  cancelAlgoOrder: (authToken, gid) => {
-    dispatch(WSActions.send(['algo_order.cancel', authToken, 'bitfinex', gid]))
+  cancelAlgoOrder: (gid) => {
+    dispatch(WSActions.cancelAlgoOrder(gid))
+    dispatch(
+      UIActions.logInformation(
+        `User requested the cancellation of algorithmic order with ID ${gid}`,
+        LOG_LEVELS.INFO,
+        'ao_cancelled',
+      ),
+    )
   },
   submitAlgoOrder: (authToken, id, gid, data) => {
     dispatch(WSActions.submitAlgoOrder(authToken, id, data))

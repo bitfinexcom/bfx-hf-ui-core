@@ -168,7 +168,7 @@ const EditOrderModal = ({
         orderData._margin = _margin
 
         if (!isRelaunching) {
-          cancelAlgoOrder(authToken, gid)
+          cancelAlgoOrder(gid)
         }
         submitAlgoOrder(authToken, orderID, gid, orderData)
       }

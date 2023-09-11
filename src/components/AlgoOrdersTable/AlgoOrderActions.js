@@ -4,7 +4,7 @@ import Debug from 'debug'
 import { Tooltip } from '@ufx-ui/core'
 import { Icon } from 'react-fa'
 import { useTranslation } from 'react-i18next'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 
 import { Item } from '../Navbar/Navbar.LayoutSettings'
 import WSActions from '../../redux/actions/ws'
@@ -12,7 +12,6 @@ import UIActions from '../../redux/actions/ui'
 import GAActions from '../../redux/actions/google_analytics'
 import { UI_MODAL_KEYS } from '../../redux/constants/modals'
 import { UI_KEYS } from '../../redux/constants/ui_keys'
-import { getAuthToken } from '../../redux/selectors/ws'
 import { ORDER_SHAPE } from '../../constants/prop-types-shapes'
 import { LOG_LEVELS } from '../../constants/logging'
 import PanelIconButton from '../../ui/Panel/Panel.IconButton'
@@ -26,9 +25,8 @@ const AlgoOrderActions = ({
   const tooltipRef = useRef(null)
   const { t } = useTranslation()
   const dispatch = useDispatch()
-  const authToken = useSelector(getAuthToken)
 
-  const { gid, id } = order
+  const { gid } = order
 
   const gaCancelOrder = () => {
     dispatch(GAActions.cancelAO())
@@ -37,10 +35,10 @@ const AlgoOrderActions = ({
   const cancelOrder = () => {
     debug('cancelling algo order %d', gid)
 
-    dispatch(WSActions.send(['algo_order.cancel', authToken, 'bitfinex', gid]))
+    dispatch(WSActions.cancelAlgoOrder(gid))
     dispatch(
       UIActions.logInformation(
-        `User requested the cancellation of algorithmic order with ID ${id}`,
+        `User requested the cancellation of algorithmic order with ID ${gid}`,
         LOG_LEVELS.INFO,
         'ao_cancelled',
       ),
