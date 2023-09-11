@@ -1,8 +1,9 @@
 import React, { memo } from 'react'
 import { useTranslation } from 'react-i18next'
 import PropTypes from 'prop-types'
+import _isEmpty from 'lodash/isEmpty'
 import { useSelector } from 'react-redux'
-import { getTicker } from '../../../redux/selectors/meta'
+import { getMarketBySymbol, getTicker } from '../../../redux/selectors/meta'
 import { getActiveMarket } from '../../../redux/selectors/ui'
 import PLNumber from '../../../ui/PLNumber'
 import { processBalance } from '../../../util/ui'
@@ -10,13 +11,23 @@ import { processBalance } from '../../../util/ui'
 const preparePrice = (value) => processBalance(value, false)
 
 const TickerBar = (props) => {
-  const { onFieldChange, layout: { fields } } = props
+  const {
+    onFieldChange, layout: { fields }, fieldData: { symbol },
+  } = props
+  const currentOrderMarket = useSelector(getMarketBySymbol)(symbol)
   const activeMarket = useSelector(getActiveMarket)
-  const activeMarketTicker = useSelector((state) => getTicker(state, activeMarket))
+
+  // Use active market if the order doesn't have its own
+  const market = _isEmpty(currentOrderMarket)
+    ? activeMarket
+    : currentOrderMarket
+
+  const marketTicker = useSelector((state) => getTicker(state, market))
+
   const { t } = useTranslation()
 
-  const { bid, ask } = activeMarketTicker
-  const { quote } = activeMarket
+  const { bid, ask } = marketTicker
+  const { quote } = market
 
   const fieldToChange = Object.prototype.hasOwnProperty.call(fields, 'price') ? 'price' : 'distance'
 
@@ -63,6 +74,9 @@ TickerBar.propTypes = {
     fields: PropTypes.shape({
       ticker: PropTypes.objectOf(PropTypes.string),
     }),
+  }).isRequired,
+  fieldData: PropTypes.shape({
+    symbol: PropTypes.string,
   }).isRequired,
 }
 

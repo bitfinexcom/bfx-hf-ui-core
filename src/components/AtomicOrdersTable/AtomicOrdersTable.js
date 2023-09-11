@@ -26,13 +26,14 @@ const AtomicOrdersTable = ({
 }) => {
   const [ref, size] = useSize()
   const data = renderedInTradingState ? filteredAtomicOrders : atomicOrders
-  const { t } = useTranslation()
+  const { i18n, t } = useTranslation()
   const orders = getAtomicOrders(t)
   const columns = useMemo(
     () => AtomicOrdersTableColumns({
       authToken,
       cancelOrder,
       size,
+      i18n,
       t,
       getMarketPair,
       editOrder,
@@ -45,6 +46,7 @@ const AtomicOrdersTable = ({
       cancelOrder,
       getMarketPair,
       size,
+      i18n,
       t,
       editOrder,
       getIsDerivativePair,

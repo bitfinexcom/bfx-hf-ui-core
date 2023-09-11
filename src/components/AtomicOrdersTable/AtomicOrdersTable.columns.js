@@ -21,6 +21,7 @@ export default ({
   authToken,
   cancelOrder,
   size: { width },
+  i18n,
   t,
   getMarketPair,
   editOrder,
@@ -103,40 +104,44 @@ export default ({
     dataKey: 'status',
     width: 120,
     flexGrow: 1.2,
-    cellRenderer: ({ rowData = {} }) => (
-      <div style={STYLES.status} className='order-status'>
-        <div style={STYLES.statusText}>
-          {defaultCellRenderer(t(`orderStatuses.${rowData.status}`))}
+    cellRenderer: ({ rowData = {} }) => {
+      const i18nKey = `orderStatuses.${rowData.status}`
+      const isStatusExisted = i18n.exists(i18nKey)
+      return (
+        <div style={STYLES.status} className='order-status'>
+          <div style={STYLES.statusText}>
+            {defaultCellRenderer(isStatusExisted ? t(i18nKey) : rowData.status)}
+          </div>
+          <div style={STYLES.statusIcon}>
+            {rowData.hidden && !rowData.visibleOnHit && (
+              <Tooltip content={t('orderForm.hidden')}>
+                <Icon name='eye-slash' />
+              </Tooltip>
+            )}
+            {rowData.hidden && rowData.visibleOnHit && (
+              <Tooltip content={t('orderForm.visibleOnHit')}>
+                <VisibleOnHitIcon />
+              </Tooltip>
+            )}
+            {rowData.tif && (
+              <Tooltip content={formatTime(rowData.tifDate)}>
+                <Icon name='clock-o' />
+              </Tooltip>
+            )}
+            {rowData.postonly && (
+              <Tooltip content={t('orderForm.postOnlyCheckbox')}>
+                <Icon name='info' />
+              </Tooltip>
+            )}
+            {rowData.reduceonly && (
+              <Tooltip content={t('orderForm.reduceOnlyCheckbox')}>
+                <Icon name='info-circle' />
+              </Tooltip>
+            )}
+          </div>
         </div>
-        <div style={STYLES.statusIcon}>
-          {rowData.hidden && !rowData.visibleOnHit && (
-            <Tooltip content={t('orderForm.hidden')}>
-              <Icon name='eye-slash' />
-            </Tooltip>
-          )}
-          {rowData.hidden && rowData.visibleOnHit && (
-            <Tooltip content={t('orderForm.visibleOnHit')}>
-              <VisibleOnHitIcon />
-            </Tooltip>
-          )}
-          {rowData.tif && (
-            <Tooltip content={formatTime(rowData.tifDate)}>
-              <Icon name='clock-o' />
-            </Tooltip>
-          )}
-          {rowData.postonly && (
-            <Tooltip content={t('orderForm.postOnlyCheckbox')}>
-              <Icon name='info' />
-            </Tooltip>
-          )}
-          {rowData.reduceonly && (
-            <Tooltip content={t('orderForm.reduceOnlyCheckbox')}>
-              <Icon name='info-circle' />
-            </Tooltip>
-          )}
-        </div>
-      </div>
-    ),
+      )
+    },
   },
   {
     dataKey: 'cid',
