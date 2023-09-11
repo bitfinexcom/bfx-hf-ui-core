@@ -8,7 +8,7 @@ import _get from 'lodash/get'
 import _debounce from 'lodash/debounce'
 
 import { useSelector } from 'react-redux'
-import MonacoEditor from '../StrategyEditor/components/MonacoEditor'
+import CodeMirror from '../StrategyEditor/components/CodeMirror'
 import { getIsPaperTrading, getThemeSetting } from '../../redux/selectors/ui'
 import Panel from '../../ui/Panel'
 import { STRATEGY_IDE_SECTIONS } from '../StrategyEditor/StrategyEditor.helpers'
@@ -84,6 +84,7 @@ const IDEPanel = ({
       const content = _get(strategy, 'strategyContent', {})
       setIDEcontent(content)
     }
+    setActiveContent('defineIndicators')
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [strategy.id])
 
@@ -127,12 +128,12 @@ const IDEPanel = ({
               'exec-error': execError || sectionErrors[activeContent],
             })}
           >
-            <MonacoEditor
+            <CodeMirror
               value={IDEcontent[activeContent] || ''}
               activeContent={activeContent}
               onChange={onEditorContentChange}
               theme={settingsTheme}
-              readOnly={!isPaperTrading}
+              editable={isPaperTrading}
             />
             {(execError || sectionErrors[activeContent]) && (
               <div className='hfui-strategyeditor__editor-error-output'>
@@ -170,4 +171,7 @@ IDEPanel.defaultProps = {
   },
 }
 
-export default memo(IDEPanel)
+export default memo(
+  IDEPanel,
+  ({ strategy: { id } }, { strategy: { id: _id } }) => id === _id,
+)
