@@ -2,7 +2,7 @@ import React, {
   useState, useEffect, useCallback, useMemo,
 } from 'react'
 import PropTypes from 'prop-types'
-import { add } from 'date-fns'
+import { add, max } from 'date-fns'
 import DateInput from '../../input.date'
 import { isValidDate, roundDay } from '../../../../../util/date'
 import { RECURRENCE_OPTIONS } from '../../../OrderForm.helpers'
@@ -30,7 +30,7 @@ const RecurringEndDate = ({ fieldData, onFieldChange, ...props }) => {
         break
     }
 
-    return add(startedAt || currentDate, addDurationParams)
+    return max([add(startedAt || currentDate, addDurationParams), currentDate])
   }, [recurrence, startedAt])
 
   const resetInput = useCallback(() => {
