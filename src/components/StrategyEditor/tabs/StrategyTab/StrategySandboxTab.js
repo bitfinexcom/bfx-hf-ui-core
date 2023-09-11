@@ -10,7 +10,7 @@ import IDEHelpPanel from '../../../IDEHelpPanel'
 import StrategyOptionsPanelSandbox from '../../../StrategyOptionsPanel/StrategyOptionsPanel.Sandbox'
 
 const StrategySandboxTab = (props) => {
-  const { onCancelProcess } = props
+  const { onCancelProcess, strategy: { id } } = props
 
   const renderGridComponents = useCallback(
     (i) => {
@@ -19,7 +19,7 @@ const StrategySandboxTab = (props) => {
           return <StrategyOptionsPanelSandbox {...props} />
 
         case COMPONENTS_KEYS.IDE:
-          return <IDEPanel {...props} />
+          return <IDEPanel {...props} key={id} />
         case COMPONENTS_KEYS.HELP_DOCS:
           return <IDEHelpPanel />
 
@@ -27,7 +27,7 @@ const StrategySandboxTab = (props) => {
           return null
       }
     },
-    [props],
+    [props, id],
   )
 
   return (
@@ -43,6 +43,9 @@ const StrategySandboxTab = (props) => {
 
 StrategySandboxTab.propTypes = {
   onCancelProcess: PropTypes.func.isRequired,
+  strategy: PropTypes.shape({
+    id: PropTypes.string,
+  }).isRequired,
 }
 
 export default memo(StrategySandboxTab)
