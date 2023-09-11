@@ -1,5 +1,5 @@
 import {
-  isValid, format, startOfDay, addDays,
+  isValid, format, startOfDay, addDays, addMinutes,
 } from 'date-fns'
 import Debug from 'debug'
 import i18n, { DATE_FNS_LOCALES, LANGUAGES } from '../locales/i18n'
@@ -66,6 +66,9 @@ export const roundDay = (firstDate, secondDate) => {
   const roundedFirstDateMs = startOfDay(firstDate).getTime()
   const secondDateMs = new Date(secondDate).getTime()
 
-  const daysDifference = Math.floor((secondDateMs - roundedFirstDateMs) / TIMEFRAME_WIDTHS['1D'])
-  return addDays(firstDate, daysDifference)
+  const daysDifference = Math.floor(
+    (secondDateMs - roundedFirstDateMs) / TIMEFRAME_WIDTHS['1D'],
+  )
+  // add 15 minutes to the end time
+  return addMinutes(addDays(firstDate, daysDifference), 15)
 }

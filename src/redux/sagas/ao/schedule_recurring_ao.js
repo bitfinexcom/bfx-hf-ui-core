@@ -14,7 +14,6 @@ import WSTypes from '../../constants/ws'
 const debug = Debug('hfui:recurring-ao')
 
 function* purgeSchedulerOnAlgoOrderChange({ gid, sagaToExecute }) {
-  console.log('before race')
   const { cancel } = yield race({
     delay: sagaToExecute,
     cancel: take((action) => {
