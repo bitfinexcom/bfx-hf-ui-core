@@ -102,6 +102,20 @@ export function recvRecurringAoAtomics(orders, gid, mode) {
   }
 }
 
+export function recvRecurringAoAtomicsFailed(gid) {
+  return {
+    type: types.GET_RECURRING_AO_ATOMICS_FAILED,
+    payload: { gid },
+  }
+}
+
+export function requestRecurringAoAtomics(payload) {
+  return {
+    type: types.REQUEST_RECURRING_AO_ATOMICS,
+    payload,
+  }
+}
+
 export function setFailedRecurringAoAtomics(orders) {
   return {
     type: types.SET_FAILED_RECURRING_AO_ATOMICS,
@@ -122,4 +136,6 @@ export default {
   setShowAOsHistory,
   recvRecurringAoAtomics,
   setFailedRecurringAoAtomics,
+  recvRecurringAoAtomicsFailed,
+  requestRecurringAoAtomics,
 }

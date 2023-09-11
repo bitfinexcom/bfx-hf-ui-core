@@ -14,6 +14,7 @@ const DateInput = ({
   renderData,
   validationError,
   disabled,
+  showTimeSelect,
 }) => {
   const { label, minDate: MIN_DATE, customHelp } = def
   const renderedLabel = renderString(label, renderData)
@@ -28,6 +29,7 @@ const DateInput = ({
       customHelp={customHelp}
       validationError={validationError}
       disabled={disabled}
+      showTimeSelect={showTimeSelect}
     />
   )
 }
@@ -51,6 +53,7 @@ DateInput.propTypes = {
   minDate: PropTypes.instanceOf(Date),
   maxDate: PropTypes.instanceOf(Date),
   disabled: PropTypes.bool,
+  showTimeSelect: PropTypes.bool,
 }
 
 DateInput.defaultProps = {
@@ -61,6 +64,7 @@ DateInput.defaultProps = {
   value: null,
   def: {},
   disabled: false,
+  showTimeSelect: true,
 }
 
 export default memo(DateInput)

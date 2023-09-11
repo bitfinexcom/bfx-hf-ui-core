@@ -6,6 +6,7 @@ const RECURRENCE_WIDTH = {
   [RECURRENCE_OPTIONS.WEEKLY]: TIMEFRAME_WIDTH['1w'],
   [RECURRENCE_OPTIONS.MONTHLY]: TIMEFRAME_WIDTH['1M'],
 }
+export const RECURRING_DELAY_FOR_FETCH = TIMEFRAME_WIDTH['1m'] * 1.5
 
 export const calculateNextExecutionTime = (startedAt, endedAt, recurrence) => {
   const recurrenceMs = RECURRENCE_WIDTH[recurrence]
@@ -17,7 +18,7 @@ export const calculateNextExecutionTime = (startedAt, endedAt, recurrence) => {
   let nextExecutionTime = new Date(startedAt).getTime()
   const endedAtTime = endedAt ? new Date(endedAt).getTime() : Infinity
 
-  while (nextExecutionTime <= endedAtTime) {
+  while (nextExecutionTime <= endedAtTime + RECURRING_DELAY_FOR_FETCH) {
     if (nextExecutionTime >= Date.now()) {
       break
     }

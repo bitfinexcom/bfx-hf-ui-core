@@ -1,4 +1,4 @@
-export default {
+const TIMEFRAME_WIDTHS = {
   '1m': 1 * 60 * 1000,
   '3m': 3 * 60 * 1000,
   '5m': 5 * 60 * 1000,
@@ -21,3 +21,5 @@ export default {
   '15d': 15 * 24 * 60 * 60 * 1000,
   '1M': 30 * 24 * 60 * 60 * 1000,
 }
+
+export default TIMEFRAME_WIDTHS

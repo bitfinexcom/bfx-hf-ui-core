@@ -1,6 +1,9 @@
-import { isValid, format } from 'date-fns'
+import {
+  isValid, format, startOfDay, addDays, addMinutes,
+} from 'date-fns'
 import Debug from 'debug'
 import i18n, { DATE_FNS_LOCALES, LANGUAGES } from '../locales/i18n'
+import TIMEFRAME_WIDTHS from './time_frame_widths'
 
 const debug = Debug('hfui:date-utils')
 
@@ -57,4 +60,15 @@ export const safelyFormatTime = (timestampFormat) => (date) => {
     debug('Error in formatting date', date, timestampFormat, error)
     return formatedInLocalFormat
   }
+}
+
+export const roundDay = (firstDate, secondDate) => {
+  const roundedFirstDateMs = startOfDay(firstDate).getTime()
+  const secondDateMs = new Date(secondDate).getTime()
+
+  const daysDifference = Math.floor(
+    (secondDateMs - roundedFirstDateMs) / TIMEFRAME_WIDTHS['1D'],
+  )
+  // add 15 minutes to the end time
+  return addMinutes(addDays(firstDate, daysDifference), 15)
 }

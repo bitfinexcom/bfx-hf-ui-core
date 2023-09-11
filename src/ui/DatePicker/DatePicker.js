@@ -109,10 +109,8 @@ const DatePicker = ({
         dateFormat={timestampFormat}
         timeCaption={t('table.time')}
         timeFormat={timeFormat}
-        dropdownMode='select'
+        dropdownMode='scroll'
         showTimeSelect
-        showYearDropdown
-        showMonthDropdown
         timeIntervals={15}
         selected={value}
         minDate={minDate}

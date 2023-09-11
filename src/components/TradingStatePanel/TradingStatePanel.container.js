@@ -9,6 +9,7 @@ import {
   getCurrentModeActiveAlgoOrders,
   getAllPositions,
   getAtomicOrders,
+  getFilteredAlgoOrdersCount,
 } from '../../redux/selectors/ws'
 import { getMarkets } from '../../redux/selectors/meta'
 import AOActions from '../../redux/actions/ao'
@@ -22,6 +23,7 @@ const mapStateToProps = (state = {}) => ({
   currentMode: getCurrentMode(state),
   getPositionsCount: getFilteredPositionsCount(state),
   getAtomicOrdersCount: getFilteredAtomicOrdersCount(state),
+  getAlgoOrdersCount: getFilteredAlgoOrdersCount(state),
   algoOrders: getCurrentModeAlgoOrders(state),
   activeAlgoOrders: getCurrentModeActiveAlgoOrders(state),
   isHistoryActive: getShowAOsHistory(state),

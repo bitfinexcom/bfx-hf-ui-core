@@ -11,6 +11,7 @@ import requestAOsHistory from './request_aos_history'
 import handleActiveAlgoOrders from './handle_active_algo_orders'
 import processRecurringAOs from './process_recurring_aos'
 import processRecurringAO from './process_recurring_ao'
+import fetchRecurringAoAtomics from './fetch_recurring_ao_atomics'
 
 export default function* () {
   yield takeEvery(types.RESUME_REMOVE_ACTIVE_AOS, onResumeRemoveActiveAlgoOrdersHandler)
@@ -21,4 +22,5 @@ export default function* () {
   yield takeEvery(WSTypes.DATA_RECURRING_ALGO_ORDERS, processRecurringAOs)
   yield takeLatest(types.HANDLE_ACTIVE_AOS, handleActiveAlgoOrders)
   yield takeEvery(WSTypes.DATA_ALGO_ORDER, processRecurringAO)
+  yield takeEvery(types.REQUEST_RECURRING_AO_ATOMICS, fetchRecurringAoAtomics)
 }

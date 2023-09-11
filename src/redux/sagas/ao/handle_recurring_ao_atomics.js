@@ -4,6 +4,7 @@ import {
 import _forEach from 'lodash/forEach'
 import _get from 'lodash/get'
 import _isEmpty from 'lodash/isEmpty'
+import Debug from 'debug'
 import { v4 } from 'uuid'
 import WSActions from '../../actions/ws'
 import AOActions from '../../actions/ao'
@@ -11,14 +12,14 @@ import UIActions from '../../actions/ui'
 import { getAlgoOrderById, getOrderHistory } from '../../selectors/ws'
 import { getFailedRecurringAoAtomics } from '../../selectors/ao'
 import { getMarketPair } from '../../selectors/meta'
-import scheduleFetchingRecurringAOStatus from './schedule_fetching_recurring_ao_status'
+import scheduleRecurringAo from './schedule_recurring_ao'
 import TIMEFRAME_WIDTHS from '../../../util/time_frame_widths'
-import fetchRecurringAoAtomics from './fetch_recurring_ao_atomics'
 import { getCurrentMode, getFormatTimeFn } from '../../selectors/ui'
 import { getLastSessionTimestamp } from '../../../util/ui'
 import i18n from '../../../locales/i18n'
 
 const FAILED_ORDER_STATUS = 'FAILED'
+const debug = Debug('hfui:recurring-ao')
 
 export default function* handleRecurringAoAtomics({
   mode,
@@ -125,16 +126,25 @@ export default function* handleRecurringAoAtomics({
   if (!_isEmpty(notifications)) {
     yield put(UIActions.setNotifications(notifications))
   }
+  debug('received atomics for %s', gid, {
+    newFailedOrders,
+    newPlacedOrders,
+    notifications,
+    lastSessionTime: new Date(lastSessionTime).toISOString(),
+    isResponseUseful,
+    firstDataRequest,
+  })
 
   if (isResponseUseful || firstDataRequest) {
-    yield call(scheduleFetchingRecurringAOStatus, {
+    yield call(scheduleRecurringAo, {
       gid,
       startedAt,
       endedAt,
       recurrence,
     })
   } else {
+    debug('there are not new orders for %s, fetch again in 1m', gid)
     yield delay(TIMEFRAME_WIDTHS['1m'])
-    yield call(fetchRecurringAoAtomics, { gid, firstDataRequest: false })
+    yield put(AOActions.requestRecurringAoAtomics({ gid, firstDataRequest: false }))
   }
 }

@@ -18,7 +18,7 @@ const ONLINE_ONLY_MESSAGES = [
   'settings.update',
 ]
 let queue = []
-let isQueueExecuted = false
+let isQueueExecuting = false
 
 export default function* messageQueueWorker(action = {}) {
   const sockets = yield select(getSockets)
@@ -33,7 +33,7 @@ export default function* messageQueueWorker(action = {}) {
   }
   if (action.type !== WSTypes.FLUSH_QUEUE) {
     queue = [...queue, action]
-    if (isQueueExecuted) {
+    if (isQueueExecuting) {
       return
     }
   }
@@ -41,8 +41,7 @@ export default function* messageQueueWorker(action = {}) {
   if (offline || queue.length === 0) {
     return
   }
-  isQueueExecuted = true
-  yield delay(500)
+  isQueueExecuting = true
   debug('flushing %d messages')
 
   for (let i = 0; i < queue.length; i += 1) {
@@ -51,10 +50,10 @@ export default function* messageQueueWorker(action = {}) {
     if (queuedAction.type === WSTypes.BUFF_SEND) {
       queuedAction.type = WSTypes.SEND
     }
-
+    yield delay(500)
     yield put(queuedAction)
   }
 
   queue = []
-  isQueueExecuted = false
+  isQueueExecuting = false
 }
