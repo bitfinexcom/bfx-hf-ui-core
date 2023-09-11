@@ -12,9 +12,8 @@ import UIActions from '../../actions/ui'
 import { getAlgoOrderById, getOrderHistory } from '../../selectors/ws'
 import { getFailedRecurringAoAtomics } from '../../selectors/ao'
 import { getMarketPair } from '../../selectors/meta'
-import scheduleFetchingRecurringAOStatus from './schedule_fetching_recurring_ao_status'
+import scheduleRecurringAo from './schedule_recurring_ao'
 import TIMEFRAME_WIDTHS from '../../../util/time_frame_widths'
-import fetchRecurringAoAtomics from './fetch_recurring_ao_atomics'
 import { getCurrentMode, getFormatTimeFn } from '../../selectors/ui'
 import { getLastSessionTimestamp } from '../../../util/ui'
 import i18n from '../../../locales/i18n'
@@ -137,7 +136,7 @@ export default function* handleRecurringAoAtomics({
   })
 
   if (isResponseUseful || firstDataRequest) {
-    yield call(scheduleFetchingRecurringAOStatus, {
+    yield call(scheduleRecurringAo, {
       gid,
       startedAt,
       endedAt,
@@ -146,6 +145,6 @@ export default function* handleRecurringAoAtomics({
   } else {
     debug('there are not new orders for %s, fetch again in 1m', gid)
     yield delay(TIMEFRAME_WIDTHS['1m'])
-    yield call(fetchRecurringAoAtomics, { gid, firstDataRequest: false })
+    yield put(AOActions.requestRecurringAoAtomics({ gid, firstDataRequest: false }))
   }
 }

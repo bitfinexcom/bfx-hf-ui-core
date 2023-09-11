@@ -435,6 +435,16 @@ export default (alias, store) => (e = {}) => {
         break
       }
 
+      case 'data.recur_ao_atomic_orders.status': {
+        const [, gid, status] = payload
+
+        if (status === 'failed') {
+          store.dispatch(AOActions.recvRecurringAoAtomicsFailed(gid))
+        }
+
+        break
+      }
+
       case 'bt.exec': {
         const [, from, to, symbol, tf, withCandles, withTrades, syncData] = payload
         store.dispatch(WSActions.recvBacktestExecute({
