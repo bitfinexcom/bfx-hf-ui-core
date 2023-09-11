@@ -18,6 +18,7 @@ import getAtomicOrders from './get_atomic_orders'
 import getFilteredAtomicOrders from './get_filtered_atomic_orders'
 import getFilteredAtomicOrdersCount from './get_filtered_atomic_orders_count'
 import getFilteredAlgoOrders from './get_filtered_algo_orders'
+import getFilteredAlgoOrdersCount from './get_filtered_algo_orders_count'
 import {
   getCurrentModeAlgoOrders,
   getAllAlgoOrdersArray,
@@ -34,7 +35,6 @@ import getBacktestResults from './get_backtest_results'
 import getBacktestHistory from './get_backtest_history'
 import getCurrentHistoryBacktest from './get_current_history_backtest'
 import getCurrentStrategyBacktestsList from './get_current_strategy_backtests_list'
-
 import {
   apiClientConnected,
   apiClientConnecting,
@@ -125,4 +125,5 @@ export {
   getIsAOsHistoryLoaded,
   getAlgoOrdersHistory,
   getAlgoOrderById,
+  getFilteredAlgoOrdersCount,
 }

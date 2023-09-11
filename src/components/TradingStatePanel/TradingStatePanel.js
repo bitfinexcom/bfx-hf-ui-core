@@ -20,7 +20,6 @@ import {
   getCorrectIconNameOfPerpCcy,
   getPairFromMarket,
 } from '../../util/market'
-import { countObjectChildren } from '../../util/ui'
 import Panel from '../../ui/Panel'
 import PositionsTable from '../PositionsTable'
 import AtomicOrdersTable from '../AtomicOrdersTable'
@@ -67,23 +66,21 @@ const TradingStatePanel = ({
   getCurrencySymbol,
   currentMode,
   algoOrders,
-  activeAlgoOrders,
   positions,
   atomicOrders,
   isHistoryActive,
   setShowAOsHistory,
+  getAlgoOrdersCount,
 }) => {
   const currentMarket = _get(savedState, STATE_KEYS.CURRENT_MARKET, {})
   const activeFilter = _get(currentMarket, currentMode, {})
   const positionsCount = getPositionsCount(activeFilter)
   const atomicOrdersCount = getAtomicOrdersCount(activeFilter)
+  const algoOrdersCount = getAlgoOrdersCount(activeFilter)
+
   const { t } = useTranslation()
 
   const activeTab = _get(savedState, STATE_KEYS.TAB, null)
-  const activeAlgosCount = useMemo(
-    () => countObjectChildren(activeAlgoOrders),
-    [activeAlgoOrders],
-  )
 
   const saveState = useCallback(
     (param, value) => {
@@ -249,7 +246,7 @@ const TradingStatePanel = ({
             renderedInTradingState
             htmlKey='Algos'
             tabtitle={t('tradingStatePanel.algosTab')}
-            count={activeAlgosCount}
+            count={!isHistoryActive && algoOrdersCount}
             activeFilter={activeFilter}
             tableState={_get(savedState, STATE_KEYS.ALGO_ORDERS_TABLE, {})}
             updateTableState={updateTableState(STATE_KEYS.ALGO_ORDERS_TABLE)}
@@ -278,7 +275,7 @@ TradingStatePanel.propTypes = {
   getAtomicOrdersCount: PropTypes.func,
   markets: PropTypes.objectOf(PropTypes.shape(MARKET_SHAPE)).isRequired,
   algoOrders: PropTypes.objectOf(PropTypes.shape(ORDER_SHAPE)).isRequired,
-  activeAlgoOrders: PropTypes.objectOf(PropTypes.shape(ORDER_SHAPE)).isRequired,
+  getAlgoOrdersCount: PropTypes.func.isRequired,
   positions: PropTypes.objectOf(PropTypes.shape(POSITION_SHAPE)),
   atomicOrders: PropTypes.objectOf(PropTypes.shape(ORDER_SHAPE)),
   savedState: PropTypes.shape({

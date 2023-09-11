@@ -7,7 +7,6 @@ import _toString from 'lodash/toString'
 import _reverse from 'lodash/reverse'
 import _truncate from 'lodash/truncate'
 import _replace from 'lodash/replace'
-import _keys from 'lodash/keys'
 import { Truncate } from '@ufx-ui/core'
 
 const LS_LAST_SESSION_TIMESTAMP = 'LS_LAST_SESSION_TIMESTAMP'
@@ -106,8 +105,6 @@ export const processDateForCSV = (rawDate, formatTime) => {
   const date = formatTime(rawDate)
   return _replace(date, ',', '')
 }
-
-export const countObjectChildren = (obj) => _size(_keys(obj))
 
 export const saveLastSessionTimestamp = () => localStorage.setItem(LS_LAST_SESSION_TIMESTAMP, Date.now())
 
