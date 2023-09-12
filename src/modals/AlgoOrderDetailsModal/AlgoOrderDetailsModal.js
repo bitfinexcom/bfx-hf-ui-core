@@ -25,7 +25,7 @@ import AlgoOrderDetailsModalHeader from './AlgoOrderDetailsModal.Header'
 import { getComponentState, getFormatTimeFn, getUIState } from '../../redux/selectors/ui'
 import { UI_KEYS } from '../../redux/constants/ui_keys'
 import UIActions from '../../redux/actions/ui'
-import { getFailedRecurringAoAtomics } from '../../redux/selectors/ao'
+import { getFailedRecurringAOAtomics } from '../../redux/selectors/ao'
 
 import './style.css'
 
@@ -42,7 +42,7 @@ const AlgoOrderDetailsModal = ({ onClose, algoOrderId, isOpen }) => {
   const layoutID = useSelector((state) => getUIState(state, UI_KEYS.layoutID))
   const tableState = useSelector((state) => getComponentState(state, layoutID, null, COMPONENT_ID),
   )
-  const failedOrders = useSelector(getFailedRecurringAoAtomics)
+  const failedOrders = useSelector(getFailedRecurringAOAtomics)
 
   const orderDetails = useMemo(
     () => getOrderDetails(rowData, t, formatTime),

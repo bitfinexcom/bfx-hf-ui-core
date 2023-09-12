@@ -5,13 +5,13 @@ import Debug from 'debug'
 import WSActions from '../../actions/ws'
 import types from '../../constants/ao'
 import { getAuthToken } from '../../selectors/ws'
-import handleRecurringAoAtomics from './handle_recurring_ao_atomics'
+import handleRecurringAOAtomics from './handle_recurring_ao_atomics'
 import AOActions from '../../actions/ao'
 import { RECURRING_DELAY_FOR_FETCH } from '../../helpers/recurring_ao'
 
 const debug = Debug('hfui:recurring-ao')
 
-export default function* fetchRecurringAoAtomics({
+export default function* fetchRecurringAOAtomics({
   payload: { gid, firstDataRequest },
 }) {
   const authToken = yield select(getAuthToken)
@@ -36,11 +36,11 @@ export default function* fetchRecurringAoAtomics({
         debug('FAILED request atomics for recurring %s, retry in 1.5s', gid)
         yield delay(RECURRING_DELAY_FOR_FETCH)
         yield put(
-          AOActions.requestRecurringAoAtomics({ gid, firstDataRequest }),
+          AOActions.requestRecurringAOAtomics({ gid, firstDataRequest }),
         )
         break
       }
-      yield call(handleRecurringAoAtomics, {
+      yield call(handleRecurringAOAtomics, {
         gid,
         orders,
         firstDataRequest,

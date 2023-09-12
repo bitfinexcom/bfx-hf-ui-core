@@ -2,11 +2,11 @@ import _map from 'lodash/map'
 import { all, call, put } from 'redux-saga/effects'
 import { isFuture } from 'date-fns'
 import _isEmpty from 'lodash/isEmpty'
-import scheduleRecurringAo from './schedule_recurring_ao'
+import runRecurringAOScheduler from './run_recurring_ao_scheduler'
 import AOActions from '../../actions/ao'
 
 export default function* processRecurringAOs({ payload }) {
-  const { aos } = payload
+  const { aos, mode } = payload
 
   if (_isEmpty(aos)) {
     return
@@ -17,11 +17,11 @@ export default function* processRecurringAOs({ payload }) {
     const shouldAtomicsBeFetched = !isFuture(new Date(startedAt))
 
     if (!shouldAtomicsBeFetched) {
-      return call(scheduleRecurringAo, {
-        gid, startedAt, endedAt, recurrence,
+      return call(runRecurringAOScheduler, {
+        gid, startedAt, endedAt, recurrence, mode,
       })
     }
-    return put(AOActions.requestRecurringAoAtomics({ gid, firstDataRequest: true }))
+    return put(AOActions.requestRecurringAOAtomics({ gid, firstDataRequest: true }))
   })
 
   yield all(operations)

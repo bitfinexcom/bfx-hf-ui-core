@@ -2,7 +2,7 @@ import { call, put, delay } from 'redux-saga/effects'
 import Debug from 'debug'
 import { isFuture } from 'date-fns'
 import { Recurring } from 'bfx-hf-algo'
-import scheduleRecurringAo from './schedule_recurring_ao'
+import runRecurringAOScheduler from './run_recurring_ao_scheduler'
 import AOActions from '../../actions/ao'
 import { RECURRING_DELAY_FOR_FETCH } from '../../helpers/recurring_ao'
 
@@ -13,6 +13,7 @@ export default function* processRecurringAO({ payload }) {
     ao: {
       gid, args, createdAt, lastActive, id,
     },
+    mode,
   } = payload
   if (id !== Recurring.id) {
     return
@@ -23,12 +24,12 @@ export default function* processRecurringAO({ payload }) {
   const shouldAtomicsBeFetched = !isFuture(new Date(startedAt)) && isOrderNew
 
   if (!shouldAtomicsBeFetched) {
-    yield call(scheduleRecurringAo, {
-      gid, startedAt, endedAt, recurrence,
+    yield call(runRecurringAOScheduler, {
+      gid, startedAt, endedAt, recurrence, mode,
     })
     return
   }
   debug('fetch recurring ao %s atomics in 1.5m', gid)
   yield delay(RECURRING_DELAY_FOR_FETCH)
-  yield put(AOActions.requestRecurringAoAtomics({ gid, firstDataRequest: false }))
+  yield put(AOActions.requestRecurringAOAtomics({ gid, firstDataRequest: false }))
 }

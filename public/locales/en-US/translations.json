@@ -540,8 +540,9 @@
     "reboot_notify": "Noticed several internet connection issues. Rebooting app...",
     "strategyLaunchMissingAPIKey": "Please configure API keys first and relaunch strategy",
     "algoOrderRemovedFromHistorySuccessfully": "The algo order has been successfully removed from history",
-    "recurringAoExecutedSuccessfully": "Recurring AO {{alias}} was executed successfully at {{time}}",
-    "recurringAoFailed": "Recurring AO {{alias}} was failed at {{time}}. Reason: {{reason}}"
+    "recurringAOExecutedSuccessfully": "Recurring AO {{alias}} was executed successfully at {{time}}",
+    "recurringAOFailed": "Recurring AO {{alias}} was failed at {{time}}. Reason: {{reason}}",
+    "recurringAOWasFinished": "Recurring AO {{alias}} was finished at {{time}}."
   },
   "confirmDMSModal": {
     "title": "Enable Dead Man Switch",

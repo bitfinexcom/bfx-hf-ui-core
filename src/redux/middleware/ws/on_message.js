@@ -429,7 +429,7 @@ export default (alias, store) => (e = {}) => {
 
       case 'data.recur_ao_atomic_orders': {
         const [,, mode, gid, orders] = payload
-        store.dispatch(AOActions.recvRecurringAoAtomics(orders, gid, mode))
+        store.dispatch(AOActions.recvRecurringAOAtomics(orders, gid, mode))
 
         break
       }
@@ -438,7 +438,7 @@ export default (alias, store) => (e = {}) => {
         const [, gid, status] = payload
 
         if (status === 'failed') {
-          store.dispatch(AOActions.recvRecurringAoAtomicsFailed(gid))
+          store.dispatch(AOActions.recvRecurringAOAtomicsFailed(gid))
         }
 
         break

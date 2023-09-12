@@ -95,28 +95,28 @@ export function setShowAOsHistory(showAOsHistory) {
   }
 }
 
-export function recvRecurringAoAtomics(orders, gid, mode) {
+export function recvRecurringAOAtomics(orders, gid, mode) {
   return {
     type: types.DATA_RECURRING_AO_ATOMICS,
     payload: { orders, gid, mode },
   }
 }
 
-export function recvRecurringAoAtomicsFailed(gid) {
+export function recvRecurringAOAtomicsFailed(gid) {
   return {
     type: types.GET_RECURRING_AO_ATOMICS_FAILED,
     payload: { gid },
   }
 }
 
-export function requestRecurringAoAtomics(payload) {
+export function requestRecurringAOAtomics(payload) {
   return {
     type: types.REQUEST_RECURRING_AO_ATOMICS,
     payload,
   }
 }
 
-export function setFailedRecurringAoAtomics(orders) {
+export function setFailedRecurringAOAtomics(orders) {
   return {
     type: types.SET_FAILED_RECURRING_AO_ATOMICS,
     payload: { orders },
@@ -134,8 +134,8 @@ export default {
   setActiveAOParamsID,
   appendAlgoOrderParams,
   setShowAOsHistory,
-  recvRecurringAoAtomics,
-  setFailedRecurringAoAtomics,
-  recvRecurringAoAtomicsFailed,
-  requestRecurringAoAtomics,
+  recvRecurringAOAtomics,
+  setFailedRecurringAOAtomics,
+  recvRecurringAOAtomicsFailed,
+  requestRecurringAOAtomics,
 }
