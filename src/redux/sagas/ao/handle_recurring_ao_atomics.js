@@ -11,9 +11,9 @@ import WSActions from '../../actions/ws'
 import AOActions from '../../actions/ao'
 import UIActions from '../../actions/ui'
 import { getAlgoOrderById, getOrderHistory } from '../../selectors/ws'
-import { getFailedRecurringAoAtomics } from '../../selectors/ao'
+import { getFailedRecurringAOAtomics } from '../../selectors/ao'
 import { getMarketPair } from '../../selectors/meta'
-import scheduleRecurringAo from './schedule_recurring_ao'
+import runRecurringAOScheduler from './run_recurring_ao_scheduler'
 import TIMEFRAME_WIDTHS from '../../../util/time_frame_widths'
 import { getCurrentMode, getFormatTimeFn } from '../../selectors/ui'
 import { getRecurringAtomicsShownNotifications, setRecurringAtomicsShownNotifications } from '../../../util/ui'
@@ -22,13 +22,13 @@ import i18n from '../../../locales/i18n'
 const FAILED_ORDER_STATUS = 'FAILED'
 const debug = Debug('hfui:recurring-ao')
 
-export default function* handleRecurringAoAtomics({
+export default function* handleRecurringAOAtomics({
   mode,
   gid,
   orders,
   firstDataRequest,
 }) {
-  const failedOrders = yield select(getFailedRecurringAoAtomics)
+  const failedOrders = yield select(getFailedRecurringAOAtomics)
   const placedOrders = yield select(getOrderHistory)
   const getMarketPairState = yield select(getMarketPair)
   const currentMode = yield select(getCurrentMode)
@@ -41,7 +41,6 @@ export default function* handleRecurringAoAtomics({
   } = recurringAO
 
   const previouslyShownNotifications = getRecurringAtomicsShownNotifications()
-  console.log(previouslyShownNotifications)
 
   const newFailedOrders = {}
   const newPlacedOrders = {}
@@ -74,7 +73,7 @@ export default function* handleRecurringAoAtomics({
         notification = {
           mts: Date.now(),
           status: 'error',
-          text: i18n.t('notifications.recurringAoFailed', {
+          text: i18n.t('notifications.recurringAOFailed', {
             alias,
             time,
             reason: `${status}: ${orderSubmitError}`,
@@ -85,7 +84,7 @@ export default function* handleRecurringAoAtomics({
         notification = {
           mts: Date.now(),
           status: 'success',
-          text: i18n.t('notifications.recurringAoExecutedSuccessfully', {
+          text: i18n.t('notifications.recurringAOExecutedSuccessfully', {
             alias,
             time,
           }),
@@ -127,7 +126,7 @@ export default function* handleRecurringAoAtomics({
   let isResponseUseful = false
 
   if (!_isEmpty(newFailedOrders)) {
-    yield put(AOActions.setFailedRecurringAoAtomics(newFailedOrders))
+    yield put(AOActions.setFailedRecurringAOAtomics(newFailedOrders))
     isResponseUseful = true
   }
 
@@ -151,15 +150,16 @@ export default function* handleRecurringAoAtomics({
   })
 
   if (isResponseUseful || firstDataRequest) {
-    yield call(scheduleRecurringAo, {
+    yield call(runRecurringAOScheduler, {
       gid,
       startedAt,
       endedAt,
       recurrence,
+      mode,
     })
   } else {
     debug('there are not new orders for %s, fetch again in 1m', gid)
     yield delay(TIMEFRAME_WIDTHS['1m'])
-    yield put(AOActions.requestRecurringAoAtomics({ gid, firstDataRequest: false }))
+    yield put(AOActions.requestRecurringAOAtomics({ gid, firstDataRequest: false }))
   }
 }

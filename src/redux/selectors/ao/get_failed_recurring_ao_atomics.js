@@ -5,6 +5,6 @@ const path = REDUCER_PATHS.AOS
 
 const EMPTY_OBJ = {}
 
-const getFailedRecurringAoAtomics = (state) => _get(state, `${path}.failedRecurringAoAtomics`, EMPTY_OBJ)
+const getFailedRecurringAOAtomics = (state) => _get(state, `${path}.failedRecurringAOAtomics`, EMPTY_OBJ)
 
-export default getFailedRecurringAoAtomics
+export default getFailedRecurringAOAtomics
