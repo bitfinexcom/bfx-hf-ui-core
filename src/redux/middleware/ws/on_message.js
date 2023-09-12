@@ -77,7 +77,6 @@ export default (alias, store) => (e = {}) => {
         }
 
         // reset order history
-        store.dispatch(WSActions.resetOrderHist())
         store.dispatch(WSActions.recvAuthToken(token))
         store.dispatch(WSActions.send(['strategy.execute_status', token]))
         break
