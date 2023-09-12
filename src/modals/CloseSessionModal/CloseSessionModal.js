@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { v4 as uuidv4 } from 'uuid'
 import { useSelector, useDispatch } from 'react-redux'
 import { useTranslation } from 'react-i18next'
+import _delay from 'lodash/delay'
 import { Spinner } from '@ufx-ui/core'
 import Modal from '../../ui/Modal'
 import { getUIModalStateForKey } from '../../redux/selectors/ui'
@@ -9,6 +10,7 @@ import { UI_MODAL_KEYS } from '../../redux/constants/modals'
 import UIActions from '../../redux/actions/ui'
 import WSActions from '../../redux/actions/ws'
 import { LOG_LEVELS } from '../../constants/logging'
+import useToggle from '../../hooks/useToggle'
 
 import SessionList from './SessionList'
 import AlgoOrderDetailsModal from '../AlgoOrderDetailsModal'
@@ -17,7 +19,8 @@ import './style.css'
 
 const CloseSessionModal = () => {
   const [isLoading, setIsLoading] = useState(false)
-  const [moreInfoAlgoOrderGID, setMoreInfoAlgoOrderGID] = useState(null)
+  const [activeAlgoOrder, setActiveAlgoOrder] = useState(null)
+  const [isDetailsModalOpen,, openDetailsModal, closeDetailsModal] = useToggle(false)
 
   const isOpen = useSelector((state) => getUIModalStateForKey(state, UI_MODAL_KEYS.CLOSE_SESSION_MODAL))
 
@@ -54,12 +57,14 @@ const CloseSessionModal = () => {
 
   const openAODetailsModal = (gid) => {
     onClose()
-    setMoreInfoAlgoOrderGID(gid)
+    setActiveAlgoOrder(gid)
+    openDetailsModal()
   }
 
   const AODetailsModalClose = () => {
-    setMoreInfoAlgoOrderGID(null)
+    closeDetailsModal()
     dispatch(UIActions.changeUIModalState(UI_MODAL_KEYS.CLOSE_SESSION_MODAL, true))
+    _delay(setActiveAlgoOrder, 500, null)
   }
 
   return (
@@ -89,7 +94,11 @@ const CloseSessionModal = () => {
           </Modal.Button>
         </Modal.Footer>
       </Modal>
-      <AlgoOrderDetailsModal onClose={AODetailsModalClose} algoOrderId={moreInfoAlgoOrderGID} />
+      <AlgoOrderDetailsModal
+        isOpen={isDetailsModalOpen}
+        onClose={AODetailsModalClose}
+        algoOrderId={activeAlgoOrder}
+      />
     </>
   )
 }

@@ -31,10 +31,8 @@ import './style.css'
 
 const COMPONENT_ID = 'AO_DETAILS_MODAL'
 
-const AlgoOrderDetailsModal = ({ onClose, algoOrderId }) => {
+const AlgoOrderDetailsModal = ({ onClose, algoOrderId, isOpen }) => {
   const { t } = useTranslation()
-
-  const isOpen = !!algoOrderId
 
   const atomicOrders = useSelector(getAtomicOrders)
   const orders = useSelector(getOrderHistory)
@@ -174,6 +172,7 @@ const AlgoOrderDetailsModal = ({ onClose, algoOrderId }) => {
 AlgoOrderDetailsModal.propTypes = {
   onClose: PropTypes.func.isRequired,
   algoOrderId: PropTypes.string,
+  isOpen: PropTypes.bool.isRequired,
 }
 
 AlgoOrderDetailsModal.defaultProps = {
