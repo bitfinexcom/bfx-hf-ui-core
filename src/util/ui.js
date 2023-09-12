@@ -9,7 +9,7 @@ import _truncate from 'lodash/truncate'
 import _replace from 'lodash/replace'
 import { Truncate } from '@ufx-ui/core'
 
-const LS_LAST_SESSION_TIMESTAMP = 'LS_LAST_SESSION_TIMESTAMP'
+const LS_RECURRING_ATOMICS_SHOWN_NOTIFICATIONS = 'RECURRING_ATOMICS_SHOWN_NOTIFICATIONS'
 
 // takes a number as input and returns a localised version with semicolons in it
 // e.g. 123456789.445566 -> '123,456,789.445566'
@@ -106,12 +106,37 @@ export const processDateForCSV = (rawDate, formatTime) => {
   return _replace(date, ',', '')
 }
 
-export const saveLastSessionTimestamp = () => localStorage.setItem(LS_LAST_SESSION_TIMESTAMP, Date.now())
-
-export const getLastSessionTimestamp = () => {
-  const ts = localStorage.getItem(LS_LAST_SESSION_TIMESTAMP)
-  if (ts) {
-    return Number(ts)
+export const getRecurringAtomicsShownNotifications = () => {
+  const notificationsString = localStorage.getItem(LS_RECURRING_ATOMICS_SHOWN_NOTIFICATIONS)
+  if (!notificationsString) {
+    return []
   }
-  return Date.now()
+  try {
+    const notificationsArray = JSON.parse(notificationsString)
+    return notificationsArray
+  } catch {
+    console.error('Error in parsing recurring atomics shown notifications')
+    return []
+  }
 }
+
+const getSetRecurringAtomicsShownNotifications = () => {
+  const existedNotifications = getRecurringAtomicsShownNotifications()
+  let updatedNotificationsArray = [...existedNotifications]
+  let timeoutId
+
+  const saveNotificationsToLocalStorage = () => {
+    localStorage.setItem(LS_RECURRING_ATOMICS_SHOWN_NOTIFICATIONS, JSON.stringify(updatedNotificationsArray))
+    timeoutId = null
+  }
+
+  return (notifications) => {
+    updatedNotificationsArray = [...updatedNotificationsArray, ...notifications]
+    if (timeoutId) {
+      clearTimeout(timeoutId)
+    }
+    timeoutId = setTimeout(saveNotificationsToLocalStorage, 5 * 1000)
+  }
+}
+
+export const setRecurringAtomicsShownNotifications = getSetRecurringAtomicsShownNotifications()
