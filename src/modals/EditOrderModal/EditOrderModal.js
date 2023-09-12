@@ -30,6 +30,7 @@ import {
   getContext,
   processAOArgs,
   processUpdateOrder,
+  processAtomic,
 } from './EditOrderModal.utils'
 import DiscardAOEdit from '../DiscardAOEdit'
 
@@ -93,11 +94,12 @@ const EditOrderModal = ({
         ...processAOArgs(updOrder.args, updOrder.id, isRelaunching),
       }
       updOrder.args.alias = updOrder.alias
+      setArgs(updOrder.args)
     } else {
       uiDef.action = updOrder.amount < 0 ? 'sell' : 'buy'
-      updOrder.amount = Math.abs(updOrder.amount)
+      const processed = processAtomic(updOrder)
+      setArgs(processed)
     }
-    setArgs(isAlgoOrder ? updOrder.args : updOrder)
     setLayout(uiDef)
     setIsAO(isAlgoOrder)
   }, [order, t, isRelaunching])
