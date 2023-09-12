@@ -10,27 +10,32 @@ import memoizeOne from 'memoize-one'
 import _values from 'lodash/values'
 import _map from 'lodash/map'
 import _filter from 'lodash/filter'
-
 import { isElectronApp } from '../../redux/config'
 import timeFrames from '../../util/time_frames'
 
 import rawOrders from '../../orders'
 
-const DEV_ONLY_ALGO_ORDERS = [AccumulateDistribute, Recurring]
-
-const getAlgoOrdersForStandalone = (isBeta) => [
-  ...(isBeta ? DEV_ONLY_ALGO_ORDERS : []),
-  PingPong,
-  Iceberg,
-  TWAP,
-  Bracket,
-]
+const getAlgoOrdersForStandalone = (isBeta, isPaperTrading) => {
+  const aos = [
+    PingPong,
+    Iceberg,
+    TWAP,
+    Bracket,
+  ]
+  if (isBeta) {
+    if (!isPaperTrading) {
+      aos.unshift(Recurring)
+    }
+    aos.unshift(AccumulateDistribute)
+  }
+  return aos
+}
 
 const HOSTED_ALGO_ORDERS = [Iceberg, TWAP]
 
-const getAlgoOrders = (isBeta) => (isElectronApp ? getAlgoOrdersForStandalone(isBeta) : HOSTED_ALGO_ORDERS)
+const getAlgoOrders = (isBeta, isPaperTrading) => (isElectronApp ? getAlgoOrdersForStandalone(isBeta, isPaperTrading) : HOSTED_ALGO_ORDERS)
 
-export const getAOs = memoizeOne((t, isBeta, isEditMode = false) => _map(getAlgoOrders(isBeta), (ao) => ao.meta.getUIDef({
+export const getAOs = memoizeOne((t, isBeta, isEditMode, isPaperTrading = false) => _map(getAlgoOrders(isBeta, isPaperTrading), (ao) => ao.meta.getUIDef({
   timeframes: timeFrames,
   i18n: { t, prefix: 'algoOrderForm.' },
   isEditMode,

@@ -142,9 +142,10 @@ class OrderForm extends React.Component {
       aoParams,
       t,
       showAdvancedAlgos,
+      isPaperTrading,
     } = this.props
     const { currentMarket } = this.state
-    const algoOrders = getAOs(t, showAdvancedAlgos)
+    const algoOrders = getAOs(t, showAdvancedAlgos, false, isPaperTrading)
     const orders = getAtomicOrders(t)
     resetActiveAOParamsID()
 
@@ -395,6 +396,7 @@ class OrderForm extends React.Component {
       t,
       showAdvancedAlgos,
       isAlgoWorkerStarted,
+      isPaperTrading,
     } = this.props
     const orders = getAtomicOrders(t)
 
@@ -409,7 +411,7 @@ class OrderForm extends React.Component {
       isAlgoOrder,
     } = this.state
 
-    const algoOrders = getAOs(t, showAdvancedAlgos)
+    const algoOrders = getAOs(t, showAdvancedAlgos, false, isPaperTrading)
     const processedAOs = filterAOs(algoOrders, activeMarket)
 
     const apiClientConfigured = apiCredentials?.configured && apiCredentials?.valid
