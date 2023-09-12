@@ -104,6 +104,9 @@ const processAtomic = (order) => {
   if (newOrder.priceTrailing) {
     newOrder.distance = newOrder.priceTrailing
   }
+  if (newOrder.priceAuxLimit) {
+    newOrder.limitPrice = newOrder.priceAuxLimit
+  }
   return newOrder
 }
 
