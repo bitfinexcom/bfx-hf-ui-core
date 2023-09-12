@@ -11,11 +11,10 @@ const debug = Debug('hfui:recurring-ao')
 export default function* processRecurringAO({ payload }) {
   const {
     ao: {
-      gid, args, createdAt, lastActive, algoID,
+      gid, args, createdAt, lastActive, id,
     },
   } = payload
-
-  if (algoID !== Recurring.id) {
+  if (id !== Recurring.id) {
     return
   }
 
