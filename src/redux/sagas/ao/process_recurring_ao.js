@@ -1,6 +1,7 @@
 import { call, put, delay } from 'redux-saga/effects'
 import Debug from 'debug'
 import { isFuture } from 'date-fns'
+import { Recurring } from 'bfx-hf-algo'
 import scheduleRecurringAo from './schedule_recurring_ao'
 import AOActions from '../../actions/ao'
 import { RECURRING_DELAY_FOR_FETCH } from '../../helpers/recurring_ao'
@@ -10,9 +11,12 @@ const debug = Debug('hfui:recurring-ao')
 export default function* processRecurringAO({ payload }) {
   const {
     ao: {
-      gid, args, createdAt, lastActive,
+      gid, args, createdAt, lastActive, id,
     },
   } = payload
+  if (id !== Recurring.id) {
+    return
+  }
 
   const { startedAt, recurrence, endedAt = null } = args
   const isOrderNew = createdAt === lastActive

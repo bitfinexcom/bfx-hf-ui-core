@@ -18,5 +18,6 @@ export default function* onChangeMode(action) {
   yield put(WSActions.recvBalances({ balances: [] }))
   yield put(WSActions.recvPositions({ positions: [] }))
   yield put(WSActions.recvOrders({ orders: [] }))
+  yield put(WSActions.resetOrderHist())
   yield put(WSActions.changeMode(isPaperTrading))
 }

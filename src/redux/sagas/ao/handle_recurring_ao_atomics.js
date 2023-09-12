@@ -4,6 +4,7 @@ import {
 import _forEach from 'lodash/forEach'
 import _get from 'lodash/get'
 import _isEmpty from 'lodash/isEmpty'
+import _includes from 'lodash/includes'
 import Debug from 'debug'
 import { v4 } from 'uuid'
 import WSActions from '../../actions/ws'
@@ -15,7 +16,7 @@ import { getMarketPair } from '../../selectors/meta'
 import scheduleRecurringAo from './schedule_recurring_ao'
 import TIMEFRAME_WIDTHS from '../../../util/time_frame_widths'
 import { getCurrentMode, getFormatTimeFn } from '../../selectors/ui'
-import { getLastSessionTimestamp } from '../../../util/ui'
+import { getRecurringAtomicsShownNotifications, setRecurringAtomicsShownNotifications } from '../../../util/ui'
 import i18n from '../../../locales/i18n'
 
 const FAILED_ORDER_STATUS = 'FAILED'
@@ -39,21 +40,34 @@ export default function* handleRecurringAoAtomics({
     alias,
   } = recurringAO
 
-  const lastSessionTime = getLastSessionTimestamp()
+  const previouslyShownNotifications = getRecurringAtomicsShownNotifications()
+  console.log(previouslyShownNotifications)
 
   const newFailedOrders = {}
   const newPlacedOrders = {}
   const notifications = []
+  const recentlyShownNotifications = []
 
-  _forEach(orders, (o) => {
+  _forEach(orders, (o, index, arr) => {
     const {
       id = o._id, status, createdAt, orderSubmitError,
     } = o
     const isOrderFailed = status === FAILED_ORDER_STATUS
 
-    const isOrderNew = new Date(createdAt).getTime() > lastSessionTime
+    let shouldBeShownInNotifications
 
-    if (isOrderNew) {
+    // show only the latest orders if there is no local data to avoid spam
+    if (_isEmpty(previouslyShownNotifications)) {
+      shouldBeShownInNotifications = arr.length === index + 1
+      recentlyShownNotifications.push(id)
+    } else {
+      shouldBeShownInNotifications = !_includes(previouslyShownNotifications, id)
+      if (shouldBeShownInNotifications) {
+        recentlyShownNotifications.push(id)
+      }
+    }
+
+    if (shouldBeShownInNotifications) {
       const time = formatTime(createdAt)
       let notification = null
       if (isOrderFailed) {
@@ -125,12 +139,13 @@ export default function* handleRecurringAoAtomics({
   }
   if (!_isEmpty(notifications)) {
     yield put(UIActions.setNotifications(notifications))
+    setRecurringAtomicsShownNotifications(recentlyShownNotifications)
   }
+
   debug('received atomics for %s', gid, {
     newFailedOrders,
     newPlacedOrders,
     notifications,
-    lastSessionTime: new Date(lastSessionTime).toISOString(),
     isResponseUseful,
     firstDataRequest,
   })

@@ -98,4 +98,18 @@ const processAOArgs = (args, id, isRelaunching) => {
   return updArgs
 }
 
-export { getContext, processAOArgs, processUpdateOrder }
+const processAtomic = (order) => {
+  const newOrder = { ...order }
+  newOrder.amount = Math.abs(newOrder.amount)
+  if (newOrder.priceTrailing) {
+    newOrder.distance = newOrder.priceTrailing
+  }
+  if (newOrder.priceAuxLimit) {
+    newOrder.limitPrice = newOrder.priceAuxLimit
+  }
+  return newOrder
+}
+
+export {
+  getContext, processAOArgs, processUpdateOrder, processAtomic,
+}

@@ -2,6 +2,7 @@ import React, {
   memo, useState, useCallback, useMemo,
 } from 'react'
 import PropTypes from 'prop-types'
+import _delay from 'lodash/delay'
 import { VirtualTable } from '@ufx-ui/core'
 import _isEmpty from 'lodash/isEmpty'
 import { useTranslation } from 'react-i18next'
@@ -9,6 +10,7 @@ import { useTranslation } from 'react-i18next'
 import AlgoOrdersTableColumns from './AlgoOrdersTable.columns'
 import { ORDER_SHAPE } from '../../constants/prop-types-shapes'
 import AlgoOrderDetailsModal from '../../modals/AlgoOrderDetailsModal'
+import useToggle from '../../hooks/useToggle'
 
 import './style.css'
 
@@ -25,23 +27,31 @@ const AlgoOrdersTable = ({
   const data = renderedInTradingState ? filteredAlgoOrders : algoOrders
   const { t } = useTranslation()
 
-  // Indicates if the 'More info' modal is opened for a specific row
-  const [moreInfoGID, setMoreInfoGID] = useState(null)
+  const [activeAlgoOrder, setActiveAlgoOrder] = useState(null)
+  const [isDetailsModalOpen,, openDetailsModal, closeDetailsModal] = useToggle(false)
 
   const closeAlgoOrderDetailsModal = useCallback(
-    () => setMoreInfoGID(null),
-    [],
+    () => {
+      closeDetailsModal()
+      _delay(setActiveAlgoOrder, 500, null)
+    },
+    [closeDetailsModal],
   )
+
+  const openAlgoOrderDetailsModal = useCallback((algoOrderId) => {
+    setActiveAlgoOrder(algoOrderId)
+    openDetailsModal()
+  }, [openDetailsModal])
 
   const AOColumns = useMemo(
     () => AlgoOrdersTableColumns({
       t,
       getMarketPair,
       isHistoryView: showHistory,
-      setMoreInfoGID,
+      openAlgoOrderDetailsModal,
       formatTime,
     }),
-    [getMarketPair, showHistory, t, formatTime],
+    [getMarketPair, showHistory, t, formatTime, openAlgoOrderDetailsModal],
   )
 
   return (
@@ -62,8 +72,9 @@ const AlgoOrdersTable = ({
         />
       )}
       <AlgoOrderDetailsModal
-        algoOrderId={moreInfoGID}
+        algoOrderId={activeAlgoOrder}
         onClose={closeAlgoOrderDetailsModal}
+        isOpen={isDetailsModalOpen}
       />
     </div>
   )

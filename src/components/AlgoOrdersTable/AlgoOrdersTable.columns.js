@@ -8,7 +8,7 @@ import HistoricalAOActions from './HistoricalAOActions'
 export default ({
   t,
   getMarketPair,
-  setMoreInfoGID,
+  openAlgoOrderDetailsModal,
   formatTime,
   isHistoryView,
 }) => {
@@ -75,7 +75,7 @@ export default ({
         <div className='hfui-aolist__wrapper_actions_container'>
           <div
             className='hfui-aolist__wrapper_more_info'
-            onClick={() => setMoreInfoGID(rowData.gid)}
+            onClick={() => openAlgoOrderDetailsModal(rowData.gid)}
           >
             <Icon
               name='info-circle'
