@@ -21,6 +21,7 @@ const ExecutionTab = ({
   capitalAllocation,
   stopLossPerc,
   symbol,
+  setHasErrors,
 }) => {
   const [capitalAllocationError, setCapitalAllocationError] = useState('')
   const [stopLossPercError, setStopLossError] = useState('')
@@ -29,12 +30,13 @@ const ExecutionTab = ({
 
   const getCurrencySymbol = useSelector(getCurrencySymbolMemo)
 
-  const strategyQuote = !_isEmpty(symbol) && getCurrencySymbol(symbol?.quote)
+  const strategyQuote = !_isEmpty(symbol) ? getCurrencySymbol(symbol?.quote) : ''
 
   const capitalAllocationHandler = (v) => {
     const error = AmountInput.validateValue(v, t)
 
     setCapitalAllocationError(error)
+    setHasErrors(!!error)
     setCapitalAllocationValue(v)
   }
 
@@ -42,6 +44,7 @@ const ExecutionTab = ({
     const error = AmountInput.validateValue(v, t)
 
     setStopLossError(error)
+    setHasErrors(!!error)
     setStopLossPercValue(v)
   }
 
@@ -49,6 +52,7 @@ const ExecutionTab = ({
     const error = AmountInput.validateValue(v, t)
 
     setMaxDrawdownError(error)
+    setHasErrors(!!error)
     setMaxDrawdownPercValue(v)
   }
 
@@ -138,6 +142,7 @@ ExecutionTab.propTypes = {
   setMaxDrawdownPercValue: PropTypes.func.isRequired,
   isPaperTrading: PropTypes.bool.isRequired,
   symbol: PropTypes.shape(MARKET_SHAPE),
+  setHasErrors: PropTypes.func.isRequired,
 }
 
 ExecutionTab.defaultProps = {

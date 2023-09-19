@@ -13,6 +13,7 @@ const OrdersTab = ({
   setStopOrderValue,
   stopOrderValue,
   isPairSelected,
+  setHasErrors,
 }) => {
   const [stopOrderValueError, setStopOrderValueError] = useState('')
   const { t } = useTranslation()
@@ -21,6 +22,7 @@ const OrdersTab = ({
     const error = AmountInput.validateValue(v, t)
 
     setStopOrderValueError(error)
+    setHasErrors(!!error)
     setStopOrderValue(v)
   }
 
@@ -92,6 +94,7 @@ OrdersTab.propTypes = {
   setStopOrderValue: PropTypes.func.isRequired,
   stopOrderValue: PropTypes.string.isRequired,
   isPairSelected: PropTypes.bool.isRequired,
+  setHasErrors: PropTypes.func.isRequired,
 }
 
 export default OrdersTab
