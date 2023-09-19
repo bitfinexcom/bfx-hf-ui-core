@@ -1030,6 +1030,7 @@
     "increaseLeverageCheckbox": "Increase leverage if required",
     "increaseLeverageCheckboxDescription": "If there isn’t enough initial equity for the value specified above, the app will increase the leverage automatically using all of the remaining funds",
     "additionStopOrderCheckbox": "Automatically add a Stop order after each entry trade",
+    "additionStopOrderCheckboxHelp": "If the entry price of a long position is 1000 and amount is 5%, then a Sell Stop Limit Order will be placed at 950",
     "additionStopOrderCheckboxDescription": "The app will automatically place a <url>Stop Order</url> with each new position based on the following value",
     "stopOrderValuePlaceholder": "% of the entry price"
   },
