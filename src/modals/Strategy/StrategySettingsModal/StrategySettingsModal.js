@@ -40,7 +40,16 @@ const StrategySettingsModal = (props) => {
     strategyId,
   } = props
   const {
-    capitalAllocation, stopLossPerc, maxDrawdownPerc, symbol,
+    capitalAllocation,
+    stopLossPerc,
+    maxDrawdownPerc,
+    symbol,
+    margin,
+    useMaxLeverage,
+    increaseLeverage: savedIncreaseLeverage,
+    leverage,
+    addStopOrder = false,
+    stopOrderPercent,
   } = strategyOptions
 
   const [activeTab, setActiveTab] = useState(STRATEGY_SETTINGS_TABS.Execution)
@@ -54,7 +63,7 @@ const StrategySettingsModal = (props) => {
   const [marginTradeMode, setMarginTradeMode] = useState(
     MARGIN_TRADE_MODES.MAX,
   )
-  const [leverageValue, setLeverageValue] = useState(10)
+  const [leverageValue, setLeverageValue] = useState('10')
   const [increaseLeverage, setIncreaseLeverage] = useState(false)
 
   const [additionStopOrder, setAdditionStopOrder] = useState(false)
@@ -75,7 +84,7 @@ const StrategySettingsModal = (props) => {
   const { t } = useTranslation()
 
   const saveStrategyOptionsHelper = () => {
-    saveStrategyOptions({
+    const optionsToSave = {
       [STRATEGY_OPTIONS_KEYS.CAPITAL_ALLOCATION]: getProcessedLocalState(
         capitalAllocationValue,
       ),
@@ -83,7 +92,20 @@ const StrategySettingsModal = (props) => {
         getProcessedLocalState(stopLossPercValue),
       [STRATEGY_OPTIONS_KEYS.MAX_DRAWDOWN_PERC]:
         getProcessedLocalState(maxDrawdownPercValue),
-    })
+
+      [STRATEGY_OPTIONS_KEYS.MARGIN]: tradeOnMargin,
+      [STRATEGY_OPTIONS_KEYS.ADD_STOP_ORDER]: additionStopOrder,
+    }
+
+    if (tradeOnMargin) {
+      optionsToSave[STRATEGY_OPTIONS_KEYS.USE_MAX_LEVERAGE] = marginTradeMode === MARGIN_TRADE_MODES.MAX
+      optionsToSave[STRATEGY_OPTIONS_KEYS.LEVERAGE] = getProcessedLocalState(leverageValue)
+      optionsToSave[STRATEGY_OPTIONS_KEYS.INCREASE_LEVERAGE] = increaseLeverage
+    }
+    if (additionStopOrder) {
+      optionsToSave[STRATEGY_OPTIONS_KEYS.STOP_ORDER_PERC] = stopOrderValue
+    }
+    saveStrategyOptions(optionsToSave)
     setIsDirty(false)
   }
 
@@ -179,6 +201,23 @@ const StrategySettingsModal = (props) => {
     setMaxDrawdownPercValue(maxDrawdownPerc)
     setStopLossPercValue(stopLossPerc)
 
+    setTradeOnMargin(margin)
+    if (margin) {
+      if (!useMaxLeverage) {
+        setMarginTradeMode(MARGIN_TRADE_MODES.FIXED)
+      }
+      if (leverage) {
+        setLeverageValue(leverage)
+      }
+      if (savedIncreaseLeverage) {
+        setIncreaseLeverage(savedIncreaseLeverage)
+      }
+    }
+
+    setAdditionStopOrder(addStopOrder)
+    if (addStopOrder && stopOrderPercent) {
+      setStopOrderValue(stopOrderPercent)
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [strategyId, isOpen])
 
@@ -218,6 +257,11 @@ const StrategySettingsModal = (props) => {
       capitalAllocation !== capitalAllocationValue
       || maxDrawdownPerc !== maxDrawdownPercValue
       || stopLossPerc !== stopLossPercValue
+      || margin !== tradeOnMargin
+      || leverage !== leverageValue
+      || savedIncreaseLeverage !== increaseLeverage
+      || addStopOrder !== additionStopOrder
+      || stopOrderPercent !== stopOrderValue
     ) {
       setIsDirty(true)
     } else {
@@ -231,6 +275,16 @@ const StrategySettingsModal = (props) => {
     maxDrawdownPercValue,
     stopLossPerc,
     stopLossPercValue,
+    margin,
+    tradeOnMargin,
+    leverage,
+    leverageValue,
+    savedIncreaseLeverage,
+    increaseLeverage,
+    addStopOrder,
+    additionStopOrder,
+    stopOrderPercent,
+    stopOrderValue,
   ])
 
   return (

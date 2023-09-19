@@ -127,7 +127,7 @@ LeverageTab.propTypes = {
   setTradeOnMargin: PropTypes.func.isRequired,
   setMarginTradeMode: PropTypes.func.isRequired,
   marginTradeMode: PropTypes.string.isRequired,
-  leverageValue: PropTypes.number.isRequired,
+  leverageValue: PropTypes.string.isRequired,
   setLeverageValue: PropTypes.func.isRequired,
   increaseLeverage: PropTypes.bool.isRequired,
   setIncreaseLeverage: PropTypes.func.isRequired,
