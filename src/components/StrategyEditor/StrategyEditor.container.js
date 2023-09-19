@@ -65,6 +65,8 @@ const mapDispatchToProps = (dispatch) => ({
     candleSeed,
     margin,
     constraints,
+    leverageSettings,
+    stopOrderSettings,
   }) => {
     const processedStrategy = _omitBy(strategyContent, _isEmpty)
 
@@ -82,6 +84,8 @@ const mapDispatchToProps = (dispatch) => ({
         candleSeed,
         margin,
         constraints,
+        leverageSettings,
+        stopOrderSettings,
       ]),
     )
     dispatch(UIActions.logInformation(`Strategy (${label}) is active and running`, LOG_LEVELS.INFO, 'strategy_init'))

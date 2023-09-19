@@ -88,13 +88,19 @@ export const prepareStrategyExecutionArgs = (strategy) => {
       stopLossPerc,
       maxDrawdownPerc,
       strategyType,
+      margin,
+      useMaxLeverage,
+      increaseLeverage,
+      leverage,
+      addStopOrder,
+      stopOrderPercent,
     },
     label,
     strategyContent,
     id,
   } = strategy
 
-  return {
+  const args = {
     label,
     symbol: symbol?.wsID,
     [STRATEGY_OPTIONS_KEYS.STRATEGY_TYPE]: strategyType,
@@ -103,13 +109,30 @@ export const prepareStrategyExecutionArgs = (strategy) => {
     strategyContent,
     id,
     [STRATEGY_OPTIONS_KEYS.CANDLE_SEED]: candleSeed,
-    [STRATEGY_OPTIONS_KEYS.MARGIN]: DEFAULT_USE_MARGIN,
+    [STRATEGY_OPTIONS_KEYS.MARGIN]: margin,
     constraints: {
       [STRATEGY_OPTIONS_KEYS.CAPITAL_ALLOCATION]: Number(capitalAllocation),
       [STRATEGY_OPTIONS_KEYS.STOP_LOSS_PERC]: Number(stopLossPerc),
       [STRATEGY_OPTIONS_KEYS.MAX_DRAWDOWN_PERC]: Number(maxDrawdownPerc),
     },
+    leverageSettings: {},
+    stopOrderSettings: {
+      addStopOrder,
+    },
   }
+
+  if (margin) {
+    args.leverageSettings.useMaxLeverage = useMaxLeverage
+    if (!useMaxLeverage) {
+      args.leverageSettings.leverage = Number(leverage)
+      args.leverageSettings.increaseLeverage = increaseLeverage
+    }
+  }
+  if (addStopOrder && stopOrderPercent) {
+    args.stopOrderSettings.stopOrderPercent = stopOrderPercent
+  }
+
+  return args
 }
 
 export const prepareStrategyBacktestingArgs = (strategy) => {
