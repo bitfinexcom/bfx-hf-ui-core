@@ -26,7 +26,7 @@ import { STRATEGY_SHAPE } from '../../../constants/prop-types-shapes'
 
 import './style.scss'
 
-const getProcessedLocalState = (value) => String(AmountInput.processValue(value))
+const convertNumberToString = (value) => (value ? String(AmountInput.processValue(value)) : '')
 
 const StrategySettingsModal = (props) => {
   const {
@@ -86,13 +86,13 @@ const StrategySettingsModal = (props) => {
 
   const saveStrategyOptionsHelper = () => {
     const optionsToSave = {
-      [STRATEGY_OPTIONS_KEYS.CAPITAL_ALLOCATION]: getProcessedLocalState(
+      [STRATEGY_OPTIONS_KEYS.CAPITAL_ALLOCATION]: convertNumberToString(
         capitalAllocationValue,
       ),
       [STRATEGY_OPTIONS_KEYS.STOP_LOSS_PERC]:
-        getProcessedLocalState(stopLossPercValue),
+        convertNumberToString(stopLossPercValue),
       [STRATEGY_OPTIONS_KEYS.MAX_DRAWDOWN_PERC]:
-        getProcessedLocalState(maxDrawdownPercValue),
+        convertNumberToString(maxDrawdownPercValue),
 
       [STRATEGY_OPTIONS_KEYS.MARGIN]: tradeOnMargin,
       [STRATEGY_OPTIONS_KEYS.ADD_STOP_ORDER]: additionStopOrder,
@@ -100,7 +100,7 @@ const StrategySettingsModal = (props) => {
 
     if (tradeOnMargin) {
       optionsToSave[STRATEGY_OPTIONS_KEYS.USE_MAX_LEVERAGE] = marginTradeMode === MARGIN_TRADE_MODES.MAX
-      optionsToSave[STRATEGY_OPTIONS_KEYS.LEVERAGE] = getProcessedLocalState(leverageValue)
+      optionsToSave[STRATEGY_OPTIONS_KEYS.LEVERAGE] = convertNumberToString(leverageValue)
       optionsToSave[STRATEGY_OPTIONS_KEYS.INCREASE_LEVERAGE] = increaseLeverage
     }
     if (additionStopOrder) {
@@ -200,26 +200,25 @@ const StrategySettingsModal = (props) => {
   }, [t, getTabContentComponent])
 
   useEffect(() => {
-    setCapitalAllocationValue(capitalAllocation)
-    setMaxDrawdownPercValue(maxDrawdownPerc)
-    setStopLossPercValue(stopLossPerc)
+    setCapitalAllocationValue(convertNumberToString(capitalAllocation))
+    setMaxDrawdownPercValue(convertNumberToString(maxDrawdownPerc))
+    setStopLossPercValue(convertNumberToString(stopLossPerc))
 
     setTradeOnMargin(margin)
-    if (margin) {
-      if (!useMaxLeverage) {
-        setMarginTradeMode(MARGIN_TRADE_MODES.FIXED)
-      }
-      if (leverage) {
-        setLeverageValue(leverage)
-      }
-      if (savedIncreaseLeverage) {
-        setIncreaseLeverage(savedIncreaseLeverage)
-      }
+
+    if (!useMaxLeverage) {
+      setMarginTradeMode(MARGIN_TRADE_MODES.FIXED)
+    }
+    if (leverage) {
+      setLeverageValue(convertNumberToString(leverage))
+    }
+    if (savedIncreaseLeverage) {
+      setIncreaseLeverage(savedIncreaseLeverage)
     }
 
     setAdditionStopOrder(addStopOrder)
-    if (addStopOrder && stopOrderPercent) {
-      setStopOrderValue(stopOrderPercent)
+    if (stopOrderPercent) {
+      setStopOrderValue(convertNumberToString(stopOrderPercent))
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [strategyId, isOpen])
@@ -227,9 +226,9 @@ const StrategySettingsModal = (props) => {
   useEffect(() => {
     if (
       pendingForSaveOptions
-      && capitalAllocation === getProcessedLocalState(capitalAllocationValue)
-      && maxDrawdownPerc === getProcessedLocalState(maxDrawdownPercValue)
-      && stopLossPerc === getProcessedLocalState(stopLossPercValue)
+      && capitalAllocation === convertNumberToString(capitalAllocationValue)
+      && maxDrawdownPerc === convertNumberToString(maxDrawdownPercValue)
+      && stopLossPerc === convertNumberToString(stopLossPercValue)
     ) {
       // Continue process (execute or backtest) after options was saved
       const isExecution = strategySettingsModalType === EXECUTION_TYPES.LIVE
@@ -257,14 +256,14 @@ const StrategySettingsModal = (props) => {
 
   useEffect(() => {
     if (
-      capitalAllocation !== capitalAllocationValue
-      || maxDrawdownPerc !== maxDrawdownPercValue
-      || stopLossPerc !== stopLossPercValue
+      convertNumberToString(capitalAllocation) !== capitalAllocationValue
+      || convertNumberToString(maxDrawdownPerc) !== maxDrawdownPercValue
+      || convertNumberToString(stopLossPerc) !== stopLossPercValue
       || margin !== tradeOnMargin
-      || leverage !== leverageValue
+      || convertNumberToString(leverage) !== leverageValue
       || savedIncreaseLeverage !== increaseLeverage
       || addStopOrder !== additionStopOrder
-      || stopOrderPercent !== stopOrderValue
+      || convertNumberToString(stopOrderPercent) !== stopOrderValue
     ) {
       setIsDirty(true)
     } else {

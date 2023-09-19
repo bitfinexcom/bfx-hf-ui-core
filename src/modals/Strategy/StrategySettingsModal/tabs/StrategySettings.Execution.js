@@ -131,12 +131,9 @@ const ExecutionTab = ({
 }
 
 ExecutionTab.propTypes = {
-  capitalAllocation: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
-    .isRequired,
-  stopLossPerc: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
-    .isRequired,
-  maxDrawdownPerc: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
-    .isRequired,
+  capitalAllocation: PropTypes.string.isRequired,
+  stopLossPerc: PropTypes.string.isRequired,
+  maxDrawdownPerc: PropTypes.string.isRequired,
   setCapitalAllocationValue: PropTypes.func.isRequired,
   setStopLossPercValue: PropTypes.func.isRequired,
   setMaxDrawdownPercValue: PropTypes.func.isRequired,
