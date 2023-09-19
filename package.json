@@ -3,7 +3,7 @@
   "version": "3.31.6",
   "description": "Web based Bitfinex Honey - for live trading and executing algorithmic orders and strategies",
   "engines": {
-    "node": ">=16"
+    "node": ">=18"
   },
   "homepage": "./",
   "scripts": {
