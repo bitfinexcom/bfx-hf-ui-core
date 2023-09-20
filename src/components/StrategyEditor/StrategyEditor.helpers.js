@@ -129,7 +129,7 @@ export const prepareStrategyExecutionArgs = (strategy) => {
     }
   }
   if (addStopOrder && stopOrderPercent) {
-    args.stopOrderSettings.stopOrderPercent = stopOrderPercent
+    args.stopOrderSettings.stopOrderPercent = Number(stopOrderPercent)
   }
 
   return args
