@@ -20,7 +20,6 @@ const {
   getCurrencySymbolMemo,
   getIsSecuritiesPair,
   getIsTradingPair,
-  getIsDerivativePair,
   getTickers,
 } = reduxSelectors
 
@@ -44,7 +43,8 @@ export const getMarkets = createSelector(
 )
 
 export const getMarketsForBothModes = createSelector(
-  [getMarketsObject], (markets) => {
+  [getMarketsObject],
+  (markets) => {
     return {
       ...markets?.[MARKET_TYPES_KEYS.SANDBOX_MARKETS],
       ...markets?.[MARKET_TYPES_KEYS.LIVE_MARKETS],
@@ -53,13 +53,8 @@ export const getMarketsForBothModes = createSelector(
 )
 
 export const getMarketsForExecution = createSelector(
-  [
-    getMarketsObject,
-    getIsTradingPair,
-    getIsDerivativePair,
-    getIsSecuritiesPair,
-  ],
-  (markets, isTradingPair, isDerivativePair, isSecuritiesPair) => {
+  [getMarketsObject, getIsTradingPair, getIsSecuritiesPair],
+  (markets, isTradingPair, isSecuritiesPair) => {
     const liveMarkets = _get(
       markets,
       MARKET_TYPES_KEYS.LIVE_MARKETS,
@@ -69,11 +64,7 @@ export const getMarketsForExecution = createSelector(
     return _reduce(
       liveMarkets,
       (result, value, key) => {
-        if (
-          isTradingPair(key)
-          && !isDerivativePair(key)
-          && !isSecuritiesPair(key)
-        ) {
+        if (isTradingPair(key) && !isSecuritiesPair(key)) {
           return {
             ...result,
             [key]: value,
