@@ -62,16 +62,18 @@ const StrategyLiveChart = ({
     : '1'
 
   const {
-    wsID, uiID, base, quote,
+    wsID, uiID, base, quote, isPerp,
   } = getStrategyMarket(markets, symbol)
+
   const chartMarket = useMemo(
     () => ({
       wsID,
       uiID,
       base,
       quote,
+      isPerp,
     }),
-    [base, quote, uiID, wsID],
+    [base, quote, uiID, wsID, isPerp],
   )
 
   const position = useMemo(() => {

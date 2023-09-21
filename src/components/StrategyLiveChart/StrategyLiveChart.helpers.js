@@ -25,9 +25,9 @@ export const prepareTVIndicators = (indicators) => {
 
 export const getStrategyMarket = memoizeOne((markets, strategyWSID) => {
   const {
-    wsID, uiID, base, quote,
+    wsID, uiID, base, quote, isPerp,
   } = _find(markets, (market) => market.wsID === strategyWSID, null) || {}
   return {
-    wsID, uiID, base, quote,
+    wsID, uiID, base, quote, isPerp,
   }
 })
