@@ -12,11 +12,10 @@ const getBacktestSourceField = (rowData, t) => {
 }
 
 export default ({
-  t, rowData = {}, formatTime, quoteCcy,
+  t, rowData = {}, formatTime, quoteCcy, marketPair,
 }) => {
   const {
     timestamp,
-    symbol,
     start,
     end,
     capitalAllocation,
@@ -37,7 +36,7 @@ export default ({
     },
     {
       label: t('strategyEditor.tradingPair'),
-      value: symbol,
+      value: marketPair,
     },
     {
       label: t('strategyEditor.startDate'),
