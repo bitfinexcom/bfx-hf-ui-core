@@ -149,13 +149,20 @@ export const prepareStrategyBacktestingArgs = (strategy) => {
       maxDrawdownPerc,
       startDate,
       endDate,
+      margin,
+      useMaxLeverage,
+      increaseLeverage,
+      leverage,
+      addStopOrder,
+      stopOrderPercent,
     },
     strategyContent,
     id,
   } = strategy
 
-  return {
+  const args = {
     symbol: symbol?.wsID,
+    label,
     startNum: new Date(startDate).getTime(),
     endNum: new Date(endDate).getTime(),
     [STRATEGY_OPTIONS_KEYS.TIMEFRAME]: timeframe,
@@ -164,13 +171,30 @@ export const prepareStrategyBacktestingArgs = (strategy) => {
     id,
     [STRATEGY_OPTIONS_KEYS.CANDLES]: candles,
     [STRATEGY_OPTIONS_KEYS.CANDLE_SEED]: candleSeed,
+    [STRATEGY_OPTIONS_KEYS.MARGIN]: margin,
     constraints: {
       [STRATEGY_OPTIONS_KEYS.CAPITAL_ALLOCATION]: Number(capitalAllocation),
       [STRATEGY_OPTIONS_KEYS.STOP_LOSS_PERC]: Number(stopLossPerc),
       [STRATEGY_OPTIONS_KEYS.MAX_DRAWDOWN_PERC]: Number(maxDrawdownPerc),
     },
-    label,
+    leverageSettings: {},
+    stopOrderSettings: {
+      addStopOrder,
+    },
   }
+
+  if (margin) {
+    args.leverageSettings.useMaxLeverage = useMaxLeverage
+    if (!useMaxLeverage) {
+      args.leverageSettings.leverage = Number(leverage)
+      args.leverageSettings.increaseLeverage = increaseLeverage
+    }
+  }
+  if (addStopOrder && stopOrderPercent) {
+    args.stopOrderSettings.stopOrderPercent = Number(stopOrderPercent)
+  }
+
+  return args
 }
 
 export const prepareStrategyToLoad = (strategyToLoad, markets, strategies) => {
