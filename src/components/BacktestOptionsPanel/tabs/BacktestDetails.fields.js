@@ -13,37 +13,82 @@ const getBacktestSourceField = (rowData, t) => {
 
 export default ({
   t, rowData = {}, formatTime, quoteCcy,
-}) => [
-  {
-    label: t('strategyEditor.executedAt'),
-    value: renderDate(rowData.timestamp, formatTime),
-  },
-  {
-    label: t('strategyEditor.tradingPair'),
-    value: rowData.symbol,
-  },
-  {
-    label: t('strategyEditor.startDate'),
-    value: renderDate(rowData.start, formatTime),
-  },
-  {
-    label: t('strategyEditor.endDate'),
-    value: renderDate(rowData.end, formatTime),
-  },
-  {
-    label: t('strategyEditor.source'),
-    value: getBacktestSourceField(rowData, t),
-  },
-  {
-    label: t('strategySettingsModal.capitalAllocationLabel'),
-    value: `${rowData.capitalAllocation} ${quoteCcy}`,
-  },
-  {
-    label: t('strategySettingsModal.stopLoss'),
-    value: `${rowData.stopLossPerc}%`,
-  },
-  {
-    label: t('strategySettingsModal.maxDrawdown'),
-    value: `${rowData.maxDrawdownPerc}%`,
-  },
-]
+}) => {
+  const {
+    timestamp,
+    symbol,
+    start,
+    end,
+    capitalAllocation,
+    stopLossPerc,
+    maxDrawdownPerc,
+    margin,
+    useMaxLeverage,
+    increaseLeverage,
+    leverage,
+    addStopOrder,
+    stopOrderPercent,
+  } = rowData
+
+  const backtestDetailsConfig = [
+    {
+      label: t('strategyEditor.executedAt'),
+      value: renderDate(timestamp, formatTime),
+    },
+    {
+      label: t('strategyEditor.tradingPair'),
+      value: symbol,
+    },
+    {
+      label: t('strategyEditor.startDate'),
+      value: renderDate(start, formatTime),
+    },
+    {
+      label: t('strategyEditor.endDate'),
+      value: renderDate(end, formatTime),
+    },
+    {
+      label: t('strategyEditor.source'),
+      value: getBacktestSourceField(rowData, t),
+    },
+    {
+      label: t('strategySettingsModal.capitalAllocationLabel'),
+      value: `${capitalAllocation} ${quoteCcy}`,
+    },
+    {
+      label: t('strategySettingsModal.stopLoss'),
+      value: `${stopLossPerc}%`,
+    },
+    {
+      label: t('strategySettingsModal.maxDrawdown'),
+      value: `${maxDrawdownPerc}%`,
+    },
+  ]
+
+  if (margin) {
+    backtestDetailsConfig.push({
+      label: t('strategySettingsModal.leverage'),
+      value: useMaxLeverage
+        ? t('strategySettingsModal.maxMarginTradeMode')
+        : t('strategySettingsModal.leverageDetails', {
+          value: leverage,
+          details: t(
+            `strategySettingsModal.${
+              increaseLeverage
+                ? 'leverageCouldBeIncreased'
+                : 'leverageFixed'
+            }`,
+          ),
+        }),
+    })
+  }
+
+  if (addStopOrder && stopOrderPercent) {
+    backtestDetailsConfig.push({
+      label: t('strategySettingsModal.stopOrder'),
+      value: `${stopOrderPercent}${t('strategySettingsModal.stopOrderValuePlaceholder')}`,
+    })
+  }
+
+  return backtestDetailsConfig
+}
