@@ -12,6 +12,8 @@ import UIActions from '../../../redux/actions/ui'
 import WSActions from '../../../redux/actions/ws'
 import { getCurrentHistoryBacktest } from '../../../redux/selectors/ws'
 import { BACKTEST_TAB_SECTIONS } from '../../../redux/reducers/ui'
+import Scrollbars from '../../../ui/Scrollbars'
+import { getMarketPair as _getMarketPair } from '../../../redux/selectors/meta'
 
 const { getCurrencySymbolMemo } = reduxSelectors
 
@@ -19,9 +21,11 @@ const BacktestDetails = () => {
   const formatTime = useSelector(getFormatTimeFn)
   const getCurrencySymbol = useSelector(getCurrencySymbolMemo)
   const backtest = useSelector(getCurrentHistoryBacktest)
+  const getMarketPair = useSelector(_getMarketPair)
 
   const [, quote] = getSymbols(backtest.symbol)
   const quoteCcy = getCurrencySymbol(quote)
+  const marketPair = getMarketPair(backtest.symbol)
 
   const { t } = useTranslation()
   const dispatch = useDispatch()
@@ -33,8 +37,9 @@ const BacktestDetails = () => {
       rowData: backtest,
       formatTime,
       quoteCcy,
+      marketPair,
     }),
-    [backtest, t, formatTime, quoteCcy],
+    [backtest, t, formatTime, quoteCcy, marketPair],
   )
 
   const onButtonClick = () => {
@@ -44,14 +49,17 @@ const BacktestDetails = () => {
 
   return (
     <>
-      {_map(backtestDetails, ({ label, value }) => {
-        return (
-          <div className='details-field' key={label}>
-            <div className='label'>{label}</div>
-            <div className='value'>{value}</div>
-          </div>
-        )
-      })}
+      <Scrollbars className='details-container'>
+        {_map(backtestDetails, ({ label, value }) => {
+          return (
+            <div className='details-field' key={label}>
+              <div className='label'>{label}</div>
+              <div className='value'>{value}</div>
+            </div>
+          )
+        })}
+      </Scrollbars>
+
       <div className='button-container'>
         <Button
           className='hfui-strategy-backtest-options__start-btn'

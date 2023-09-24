@@ -44,7 +44,8 @@ export const getMarkets = createSelector(
 )
 
 export const getMarketsForBothModes = createSelector(
-  [getMarketsObject], (markets) => {
+  [getMarketsObject],
+  (markets) => {
     return {
       ...markets?.[MARKET_TYPES_KEYS.SANDBOX_MARKETS],
       ...markets?.[MARKET_TYPES_KEYS.LIVE_MARKETS],
@@ -70,8 +71,7 @@ export const getMarketsForExecution = createSelector(
       liveMarkets,
       (result, value, key) => {
         if (
-          isTradingPair(key)
-          && !isDerivativePair(key)
+          (isTradingPair(key) || isDerivativePair(key))
           && !isSecuritiesPair(key)
         ) {
           return {

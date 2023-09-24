@@ -90,7 +90,7 @@ const BacktestHistoryList = ({ onBacktestRowClick }) => {
             data={data}
             columns={columns}
             defaultSortDirection='DESC'
-            defaultSortBy='dataKey'
+            defaultSortBy='timestamp'
             onRowClick={onBacktestRowClick}
             rowHeight={30}
             disableColumnsResizing

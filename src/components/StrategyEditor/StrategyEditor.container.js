@@ -65,6 +65,8 @@ const mapDispatchToProps = (dispatch) => ({
     candleSeed,
     margin,
     constraints,
+    leverageSettings,
+    stopOrderSettings,
   }) => {
     const processedStrategy = _omitBy(strategyContent, _isEmpty)
 
@@ -82,6 +84,8 @@ const mapDispatchToProps = (dispatch) => ({
         candleSeed,
         margin,
         constraints,
+        leverageSettings,
+        stopOrderSettings,
       ]),
     )
     dispatch(UIActions.logInformation(`Strategy (${label}) is active and running`, LOG_LEVELS.INFO, 'strategy_init'))
@@ -100,6 +104,9 @@ const mapDispatchToProps = (dispatch) => ({
       constraints,
       label,
       id,
+      leverageSettings,
+      stopOrderSettings,
+      margin,
     } = data
     const processedStrategy = _omitBy(strategyContent, _isEmpty)
     const sync = true
@@ -121,9 +128,12 @@ const mapDispatchToProps = (dispatch) => ({
             trades,
             candleSeed,
             sync,
+            margin,
             processedStrategy,
             uuidv4(),
             constraints,
+            leverageSettings,
+            stopOrderSettings,
           ],
         ],
       }),

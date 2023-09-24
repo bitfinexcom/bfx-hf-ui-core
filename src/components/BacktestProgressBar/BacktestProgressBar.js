@@ -64,11 +64,7 @@ const BacktestProgressBar = ({ percent, startedOn }) => {
 
 BacktestProgressBar.propTypes = {
   percent: PropTypes.number.isRequired,
-  startedOn: PropTypes.number,
-}
-
-BacktestProgressBar.defaultProps = {
-  startedOn: new Date().getTime(),
+  startedOn: PropTypes.number.isRequired,
 }
 
 export default BacktestProgressBar

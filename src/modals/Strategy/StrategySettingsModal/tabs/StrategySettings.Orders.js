@@ -2,7 +2,7 @@
 import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 import { Trans, useTranslation } from 'react-i18next'
-import { Checkbox } from '@ufx-ui/core'
+import { Checkbox, Tooltip } from '@ufx-ui/core'
 import AttentionBar from '../../../../ui/AttentionBar/AttentionBar'
 import { STOP_ORDER_ARTICLE_URL } from '../../../../redux/config'
 import AmountInput from '../../../../components/OrderForm/FieldComponents/input.amount'
@@ -13,6 +13,7 @@ const OrdersTab = ({
   setStopOrderValue,
   stopOrderValue,
   isPairSelected,
+  setHasErrors,
 }) => {
   const [stopOrderValueError, setStopOrderValueError] = useState('')
   const { t } = useTranslation()
@@ -21,6 +22,7 @@ const OrdersTab = ({
     const error = AmountInput.validateValue(v, t)
 
     setStopOrderValueError(error)
+    setHasErrors(!!error)
     setStopOrderValue(v)
   }
 
@@ -34,7 +36,20 @@ const OrdersTab = ({
       <div className='hfui-execution-options-modal__option'>
         <Checkbox
           onChange={setAdditionStopOrder}
-          label={t('strategySettingsModal.additionStopOrderCheckbox')}
+          label={(
+            <p>
+              {t('strategySettingsModal.additionStopOrderCheckbox')}
+              &nbsp;
+              <Tooltip
+                className='__react-tooltip __react-tooltip-break-line'
+                content={t(
+                  'strategySettingsModal.additionStopOrderCheckboxHelp',
+                )}
+              >
+                <i className='fa fa-info-circle __react_component_tooltip title-tooltip' />
+              </Tooltip>
+            </p>
+          )}
           checked={additionStopOrder}
           disabled={!isPairSelected}
           className='appsettings-modal__checkbox'
@@ -79,6 +94,7 @@ OrdersTab.propTypes = {
   setStopOrderValue: PropTypes.func.isRequired,
   stopOrderValue: PropTypes.string.isRequired,
   isPairSelected: PropTypes.bool.isRequired,
+  setHasErrors: PropTypes.func.isRequired,
 }
 
 export default OrdersTab

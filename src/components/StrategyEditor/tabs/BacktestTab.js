@@ -75,6 +75,7 @@ const BacktestTab = (props) => {
     gid,
     results,
   } = backtestState
+
   const { id: strategyId } = strategy
   const positions = results?.strategy?.closedPositions
 
@@ -216,7 +217,7 @@ const BacktestTab = (props) => {
       {!showBacktestResults && (
         <div className='hfui-strategyeditor__backtest-tab-empty'>
           {loading ? (
-            <BacktestProgressBar percent={progressPerc} startedOn={gid} />
+            <BacktestProgressBar percent={progressPerc} startedOn={gid || Date.now()} />
           ) : (
             <p className='hfui-strategyeditor__initial-message'>
               {t(getInitialMessageI18Key(activeSection))}

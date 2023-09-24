@@ -18,6 +18,7 @@ const DEFAULT_USE_TRADES = false
 const DEFAULT_USE_MARGIN = false
 const DEFAULT_SEED_COUNT = 10
 const DEFAULT_CANDLES = true
+const DEFAULT_ADD_STOP_ORDER = false
 
 export const STRATEGY_IDE_SECTIONS = [
   'defineIndicators',
@@ -52,6 +53,11 @@ export const STRATEGY_OPTIONS_KEYS = {
   CAPITAL_ALLOCATION: 'capitalAllocation',
   STOP_LOSS_PERC: 'stopLossPerc',
   MAX_DRAWDOWN_PERC: 'maxDrawdownPerc',
+  USE_MAX_LEVERAGE: 'useMaxLeverage',
+  INCREASE_LEVERAGE: 'increaseLeverage',
+  LEVERAGE: 'leverage',
+  ADD_STOP_ORDER: 'addStopOrder',
+  STOP_ORDER_PERC: 'stopOrderPercent',
   STRATEGY_TYPE: 'strategyType',
 }
 
@@ -65,6 +71,7 @@ export const getDefaultStrategyOptions = () => {
     [STRATEGY_OPTIONS_KEYS.START_DATE]: new Date(Date.now() - ONE_DAY),
     [STRATEGY_OPTIONS_KEYS.END_DATE]: new Date(Date.now() - ONE_MIN * 15),
     [STRATEGY_OPTIONS_KEYS.MARGIN]: DEFAULT_USE_MARGIN,
+    [STRATEGY_OPTIONS_KEYS.ADD_STOP_ORDER]: DEFAULT_ADD_STOP_ORDER,
     [STRATEGY_OPTIONS_KEYS.CAPITAL_ALLOCATION]: '',
     [STRATEGY_OPTIONS_KEYS.STOP_LOSS_PERC]: '',
     [STRATEGY_OPTIONS_KEYS.MAX_DRAWDOWN_PERC]: '',
@@ -81,13 +88,19 @@ export const prepareStrategyExecutionArgs = (strategy) => {
       stopLossPerc,
       maxDrawdownPerc,
       strategyType,
+      margin,
+      useMaxLeverage,
+      increaseLeverage,
+      leverage,
+      addStopOrder,
+      stopOrderPercent,
     },
     label,
     strategyContent,
     id,
   } = strategy
 
-  return {
+  const args = {
     label,
     symbol: symbol?.wsID,
     [STRATEGY_OPTIONS_KEYS.STRATEGY_TYPE]: strategyType,
@@ -96,13 +109,30 @@ export const prepareStrategyExecutionArgs = (strategy) => {
     strategyContent,
     id,
     [STRATEGY_OPTIONS_KEYS.CANDLE_SEED]: candleSeed,
-    [STRATEGY_OPTIONS_KEYS.MARGIN]: DEFAULT_USE_MARGIN,
+    [STRATEGY_OPTIONS_KEYS.MARGIN]: margin,
     constraints: {
       [STRATEGY_OPTIONS_KEYS.CAPITAL_ALLOCATION]: Number(capitalAllocation),
       [STRATEGY_OPTIONS_KEYS.STOP_LOSS_PERC]: Number(stopLossPerc),
       [STRATEGY_OPTIONS_KEYS.MAX_DRAWDOWN_PERC]: Number(maxDrawdownPerc),
     },
+    leverageSettings: {},
+    stopOrderSettings: {
+      addStopOrder,
+    },
   }
+
+  if (margin) {
+    args.leverageSettings.useMaxLeverage = useMaxLeverage
+    if (!useMaxLeverage) {
+      args.leverageSettings.leverage = Number(leverage)
+      args.leverageSettings.increaseLeverage = increaseLeverage
+    }
+  }
+  if (addStopOrder && stopOrderPercent) {
+    args.stopOrderSettings.stopOrderPercent = Number(stopOrderPercent)
+  }
+
+  return args
 }
 
 export const prepareStrategyBacktestingArgs = (strategy) => {
@@ -119,13 +149,20 @@ export const prepareStrategyBacktestingArgs = (strategy) => {
       maxDrawdownPerc,
       startDate,
       endDate,
+      margin,
+      useMaxLeverage,
+      increaseLeverage,
+      leverage,
+      addStopOrder,
+      stopOrderPercent,
     },
     strategyContent,
     id,
   } = strategy
 
-  return {
+  const args = {
     symbol: symbol?.wsID,
+    label,
     startNum: new Date(startDate).getTime(),
     endNum: new Date(endDate).getTime(),
     [STRATEGY_OPTIONS_KEYS.TIMEFRAME]: timeframe,
@@ -134,13 +171,30 @@ export const prepareStrategyBacktestingArgs = (strategy) => {
     id,
     [STRATEGY_OPTIONS_KEYS.CANDLES]: candles,
     [STRATEGY_OPTIONS_KEYS.CANDLE_SEED]: candleSeed,
+    [STRATEGY_OPTIONS_KEYS.MARGIN]: margin,
     constraints: {
       [STRATEGY_OPTIONS_KEYS.CAPITAL_ALLOCATION]: Number(capitalAllocation),
       [STRATEGY_OPTIONS_KEYS.STOP_LOSS_PERC]: Number(stopLossPerc),
       [STRATEGY_OPTIONS_KEYS.MAX_DRAWDOWN_PERC]: Number(maxDrawdownPerc),
     },
-    label,
+    leverageSettings: {},
+    stopOrderSettings: {
+      addStopOrder,
+    },
   }
+
+  if (margin) {
+    args.leverageSettings.useMaxLeverage = useMaxLeverage
+    if (!useMaxLeverage) {
+      args.leverageSettings.leverage = Number(leverage)
+      args.leverageSettings.increaseLeverage = increaseLeverage
+    }
+  }
+  if (addStopOrder && stopOrderPercent) {
+    args.stopOrderSettings.stopOrderPercent = Number(stopOrderPercent)
+  }
+
+  return args
 }
 
 export const prepareStrategyToLoad = (strategyToLoad, markets, strategies) => {
