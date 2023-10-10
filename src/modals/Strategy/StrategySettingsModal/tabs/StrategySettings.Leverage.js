@@ -21,6 +21,7 @@ const LeverageTab = ({
   increaseLeverage,
   setIncreaseLeverage,
   isPairSelected,
+  disabledInputs,
 }) => {
   const { t } = useTranslation()
 
@@ -44,7 +45,7 @@ const LeverageTab = ({
           onChange={setTradeOnMargin}
           label={t('strategySettingsModal.tradeOnMarginCheckbox')}
           checked={tradeOnMargin}
-          disabled={!isPairSelected}
+          disabled={disabledInputs}
           className='appsettings-modal__checkbox'
         />
         <div className='appsettings-modal__description'>
@@ -59,7 +60,7 @@ const LeverageTab = ({
               options={marginTradeModesOptions}
               onChange={setMarginTradeMode}
               value={marginTradeMode}
-              disabled={!isPairSelected}
+              disabled={disabledInputs}
             />
           </div>
           {marginTradeMode === MARGIN_TRADE_MODES.MAX && (
@@ -81,14 +82,14 @@ const LeverageTab = ({
                 value={leverageValue}
                 onChange={setLeverageValue}
                 className='hfui-execution-options-modal__option'
-                disabled={!isPairSelected}
+                disabled={disabledInputs}
               />
               <div className='hfui-execution-options-modal__option'>
                 <Checkbox
                   onChange={setIncreaseLeverage}
                   label={t('strategySettingsModal.increaseLeverageCheckbox')}
                   checked={increaseLeverage}
-                  disabled={!isPairSelected}
+                  disabled={disabledInputs}
                   className='appsettings-modal__checkbox'
                 />
                 <div className='appsettings-modal__description'>
@@ -132,6 +133,7 @@ LeverageTab.propTypes = {
   increaseLeverage: PropTypes.bool.isRequired,
   setIncreaseLeverage: PropTypes.func.isRequired,
   isPairSelected: PropTypes.bool.isRequired,
+  disabledInputs: PropTypes.bool.isRequired,
 }
 
 export default LeverageTab

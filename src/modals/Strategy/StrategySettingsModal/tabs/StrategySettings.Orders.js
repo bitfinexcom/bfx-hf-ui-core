@@ -14,6 +14,7 @@ const OrdersTab = ({
   stopOrderValue,
   isPairSelected,
   setHasErrors,
+  disabledInputs,
 }) => {
   const [stopOrderValueError, setStopOrderValueError] = useState('')
   const { t } = useTranslation()
@@ -51,7 +52,7 @@ const OrdersTab = ({
             </p>
           )}
           checked={additionStopOrder}
-          disabled={!isPairSelected}
+          disabled={disabledInputs}
           className='appsettings-modal__checkbox'
         />
         <div className='appsettings-modal__description'>
@@ -78,7 +79,7 @@ const OrdersTab = ({
           value={stopOrderValue}
           min={0}
           max={99}
-          disabled={!additionStopOrder || !isPairSelected}
+          disabled={!additionStopOrder || disabledInputs}
         />
         <p className='hfui-execution-options-modal__right-placeholder'>
           {t('strategySettingsModal.stopOrderValuePlaceholder')}
@@ -95,6 +96,7 @@ OrdersTab.propTypes = {
   stopOrderValue: PropTypes.string.isRequired,
   isPairSelected: PropTypes.bool.isRequired,
   setHasErrors: PropTypes.func.isRequired,
+  disabledInputs: PropTypes.bool.isRequired,
 }
 
 export default OrdersTab

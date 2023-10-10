@@ -155,6 +155,7 @@ const StrategySettingsModal = (props) => {
               setIncreaseLeverage={setIncreaseLeverage}
               increaseLeverage={increaseLeverage}
               isPairSelected={isPairSelected}
+              disabledInputs={!isPaperTrading || !isPairSelected}
             />
           )
 
@@ -167,6 +168,8 @@ const StrategySettingsModal = (props) => {
               setStopOrderValue={setStopOrderValue}
               isPairSelected={isPairSelected}
               setHasErrors={setHasErrors}
+              isPaperTrading={isPaperTrading}
+              disabledInputs={!isPaperTrading || !isPairSelected}
             />
           )
 
