@@ -1,13 +1,14 @@
-import React from 'react'
+import React, { useCallback } from 'react'
 import _isEmpty from 'lodash/isEmpty'
-import _includes from 'lodash/includes'
-import _find from 'lodash/find'
 import PropTypes from 'prop-types'
 import clsx from 'clsx'
 import { Tooltip } from '@ufx-ui/core'
 import { useTranslation } from 'react-i18next'
 import MarketSelect from '../MarketSelect'
-import { STRATEGY_OPTIONS_KEYS } from '../StrategyEditor/StrategyEditor.helpers'
+import {
+  STRATEGY_OPTIONS_KEYS,
+  processMarketChangeInStrategy,
+} from '../StrategyEditor/StrategyEditor.helpers'
 import {
   MARKET_SHAPE,
   STRATEGY_SHAPE,
@@ -19,21 +20,16 @@ const StrategyMarketSelect = ({
   markets,
   isDisabled,
 }) => {
-  const onMarketSelectChange = (selection) => {
-    if (isDisabled) {
-      return
-    }
-    const sel = _find(markets, (m) => m.wsID === selection.wsID)
-    const options = {
-      [STRATEGY_OPTIONS_KEYS.SYMBOL]: sel,
-      [STRATEGY_OPTIONS_KEYS.CAPITAL_ALLOCATION]: 0,
-    }
-
-    if (!_includes(sel?.contexts, 'm')) {
-      options[STRATEGY_OPTIONS_KEYS.MARGIN] = false
-    }
-    saveStrategyOptions(options)
-  }
+  const onMarketSelectChange = useCallback(
+    (selection) => {
+      if (isDisabled) {
+        return
+      }
+      const updatedStrategy = processMarketChangeInStrategy(selection, markets)
+      saveStrategyOptions(updatedStrategy)
+    },
+    [isDisabled, markets, saveStrategyOptions],
+  )
 
   const { t } = useTranslation()
 

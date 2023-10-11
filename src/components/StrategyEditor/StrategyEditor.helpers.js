@@ -2,7 +2,9 @@ import _find from 'lodash/find'
 import _map from 'lodash/map'
 import _reduce from 'lodash/reduce'
 import _isEmpty from 'lodash/isEmpty'
+import _includes from 'lodash/includes'
 import _size from 'lodash/size'
+import { isDerivativeCcy } from '@ufx-ui/utils'
 import { MAX_STRATEGY_LABEL_LENGTH as MAX_LABEL_LENGTH } from '../../constants/variables'
 
 import {
@@ -263,4 +265,23 @@ export const validateStrategyName = (label, t) => {
   }
 
   return ''
+}
+
+export const processMarketChangeInStrategy = (nextMarket, markets) => {
+  const market = _find(markets, (m) => m.wsID === nextMarket.wsID)
+  const options = {
+    [STRATEGY_OPTIONS_KEYS.SYMBOL]: market,
+    [STRATEGY_OPTIONS_KEYS.CAPITAL_ALLOCATION]: 0,
+  }
+
+  const isMarginPair = _includes(market?.contexts, 'm')
+  const isDerivativePair = isDerivativeCcy(market.wsID)
+  if (!isMarginPair) {
+    options[STRATEGY_OPTIONS_KEYS.MARGIN] = isDerivativePair
+  }
+  if (isMarginPair && !isDerivativePair) {
+    options[STRATEGY_OPTIONS_KEYS.USE_MAX_LEVERAGE] = true
+  }
+
+  return options
 }
