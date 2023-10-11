@@ -89,7 +89,7 @@ const StrategySettingsModal = (props) => {
 
   const isPairSelected = !_isEmpty(symbol)
   const isDerivativePair = useMemo(
-    () => getIsDerivativePair(symbol.wsID),
+    () => getIsDerivativePair(symbol?.wsID),
     [symbol, getIsDerivativePair],
   )
 

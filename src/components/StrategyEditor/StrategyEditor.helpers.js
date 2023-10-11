@@ -275,7 +275,7 @@ export const processMarketChangeInStrategy = (nextMarket, markets) => {
   }
 
   const isMarginPair = _includes(market?.contexts, 'm')
-  const isDerivativePair = isDerivativeCcy(market.wsID)
+  const isDerivativePair = isDerivativeCcy(market?.wsID)
   if (!isMarginPair) {
     options[STRATEGY_OPTIONS_KEYS.MARGIN] = isDerivativePair
   }
