@@ -214,7 +214,6 @@ const StrategySettingsModal = (props) => {
 
   const tabsConfig = useMemo(() => {
     const tabs = []
-    console.log(isDerivativePair, isMarginPair)
 
     _forEach(STRATEGY_SETTINGS_TABS, (tab) => {
       if (
