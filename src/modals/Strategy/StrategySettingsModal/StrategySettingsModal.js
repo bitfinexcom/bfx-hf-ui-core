@@ -4,7 +4,11 @@ import React, {
 import { useSelector } from 'react-redux'
 import PropTypes from 'prop-types'
 import { useTranslation } from 'react-i18next'
-import _map from 'lodash/map'
+import { reduxSelectors } from '@ufx-ui/bfx-containers'
+
+import _forEach from 'lodash/forEach'
+import _includes from 'lodash/includes'
+import _get from 'lodash/get'
 import _isEmpty from 'lodash/isEmpty'
 import Modal from '../../../ui/Modal'
 import AmountInput from '../../../components/OrderForm/FieldComponents/input.amount'
@@ -25,6 +29,8 @@ import OrdersTab from './tabs/StrategySettings.Orders'
 import { STRATEGY_SHAPE } from '../../../constants/prop-types-shapes'
 
 import './style.scss'
+
+const { getIsDerivativePair: _getIsDerivativePair } = reduxSelectors
 
 const convertNumberToString = (value) => (value ? String(AmountInput.processValue(value)) : '')
 
@@ -73,6 +79,7 @@ const StrategySettingsModal = (props) => {
   const [pendingForSaveOptions, setPendingForSaveOptions] = useState(false)
 
   const isPaperTrading = useSelector(getIsPaperTrading)
+  const getIsDerivativePair = useSelector(_getIsDerivativePair)
 
   const isFullFilled = isExecutionInputsFullFilled(
     capitalAllocationValue,
@@ -81,6 +88,10 @@ const StrategySettingsModal = (props) => {
   )
 
   const isPairSelected = !_isEmpty(symbol)
+  const isDerivativePair = useMemo(
+    () => getIsDerivativePair(symbol.wsID),
+    [symbol, getIsDerivativePair],
+  )
 
   const { t } = useTranslation()
 
@@ -155,6 +166,8 @@ const StrategySettingsModal = (props) => {
               setIncreaseLeverage={setIncreaseLeverage}
               increaseLeverage={increaseLeverage}
               isPairSelected={isPairSelected}
+              disabledInputs={!isPaperTrading || !isPairSelected}
+              isDerivativePair={isDerivativePair}
             />
           )
 
@@ -167,6 +180,8 @@ const StrategySettingsModal = (props) => {
               setStopOrderValue={setStopOrderValue}
               isPairSelected={isPairSelected}
               setHasErrors={setHasErrors}
+              isPaperTrading={isPaperTrading}
+              disabledInputs={!isPaperTrading || !isPairSelected}
             />
           )
 
@@ -188,27 +203,52 @@ const StrategySettingsModal = (props) => {
       isPairSelected,
       additionStopOrder,
       stopOrderValue,
+      isDerivativePair,
     ],
   )
 
-  const tabs = useMemo(() => {
-    return _map(STRATEGY_SETTINGS_TABS, (tab) => ({
-      key: tab,
-      label: t(`strategySettingsModal.${tab}`),
-      component: getTabContentComponent(tab),
-    }))
-  }, [t, getTabContentComponent])
+  const isMarginPair = useMemo(
+    () => _includes(_get(symbol, 'contexts', []), 'm'),
+    [symbol],
+  )
+
+  const tabsConfig = useMemo(() => {
+    const tabs = []
+    console.log(isDerivativePair, isMarginPair)
+
+    _forEach(STRATEGY_SETTINGS_TABS, (tab) => {
+      if (
+        tab === STRATEGY_SETTINGS_TABS.Leverage
+        && !(isMarginPair || isDerivativePair)
+      ) {
+        return
+      }
+      tabs.push({
+        key: tab,
+        label: t(`strategySettingsModal.${tab}`),
+        component: getTabContentComponent(tab),
+      })
+    })
+
+    return tabs
+  }, [t, getTabContentComponent, isMarginPair, isDerivativePair])
 
   useEffect(() => {
     setCapitalAllocationValue(convertNumberToString(capitalAllocation))
     setMaxDrawdownPercValue(convertNumberToString(maxDrawdownPerc))
     setStopLossPercValue(convertNumberToString(stopLossPerc))
+    setActiveTab(STRATEGY_SETTINGS_TABS.Execution)
 
-    setTradeOnMargin(margin)
+    if (!margin && isDerivativePair) {
+      setTradeOnMargin(true)
+    } else {
+      setTradeOnMargin(margin)
+    }
 
     if (!useMaxLeverage) {
       setMarginTradeMode(MARGIN_TRADE_MODES.FIXED)
     }
+
     if (leverage) {
       setLeverageValue(convertNumberToString(leverage))
     }
@@ -301,7 +341,7 @@ const StrategySettingsModal = (props) => {
       <Modal.Tabs
         activeTab={activeTab}
         setActiveTab={setActiveTab}
-        tabs={tabs}
+        tabs={tabsConfig}
       />
       <Modal.Footer>
         {!isPaperTrading ? (

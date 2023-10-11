@@ -3,7 +3,7 @@
 import React, { useMemo } from 'react'
 import PropTypes from 'prop-types'
 import { Checkbox } from '@ufx-ui/core'
-import _map from 'lodash/map'
+import _forEach from 'lodash/forEach'
 import { Trans, useTranslation } from 'react-i18next'
 import AttentionBar from '../../../../ui/AttentionBar/AttentionBar'
 import Dropdown from '../../../../ui/Dropdown'
@@ -21,15 +21,28 @@ const LeverageTab = ({
   increaseLeverage,
   setIncreaseLeverage,
   isPairSelected,
+  disabledInputs,
+  isDerivativePair,
 }) => {
   const { t } = useTranslation()
 
   const marginTradeModesOptions = useMemo(
-    () => _map(MARGIN_TRADE_MODES, (mode) => ({
-      label: t(`strategySettingsModal.${mode}`),
-      value: mode,
-    })),
-    [t],
+    () => {
+      const options = []
+
+      _forEach(MARGIN_TRADE_MODES, (mode) => {
+        if (mode === MARGIN_TRADE_MODES.FIXED && !isDerivativePair) {
+          return
+        }
+        options.push({
+          label: t(`strategySettingsModal.${mode}`),
+          value: mode,
+        })
+      })
+
+      return options
+    },
+    [t, isDerivativePair],
   )
 
   return (
@@ -44,7 +57,7 @@ const LeverageTab = ({
           onChange={setTradeOnMargin}
           label={t('strategySettingsModal.tradeOnMarginCheckbox')}
           checked={tradeOnMargin}
-          disabled={!isPairSelected}
+          disabled={disabledInputs || isDerivativePair}
           className='appsettings-modal__checkbox'
         />
         <div className='appsettings-modal__description'>
@@ -59,7 +72,7 @@ const LeverageTab = ({
               options={marginTradeModesOptions}
               onChange={setMarginTradeMode}
               value={marginTradeMode}
-              disabled={!isPairSelected}
+              disabled={disabledInputs}
             />
           </div>
           {marginTradeMode === MARGIN_TRADE_MODES.MAX && (
@@ -81,14 +94,14 @@ const LeverageTab = ({
                 value={leverageValue}
                 onChange={setLeverageValue}
                 className='hfui-execution-options-modal__option'
-                disabled={!isPairSelected}
+                disabled={disabledInputs}
               />
               <div className='hfui-execution-options-modal__option'>
                 <Checkbox
                   onChange={setIncreaseLeverage}
                   label={t('strategySettingsModal.increaseLeverageCheckbox')}
                   checked={increaseLeverage}
-                  disabled={!isPairSelected}
+                  disabled={disabledInputs}
                   className='appsettings-modal__checkbox'
                 />
                 <div className='appsettings-modal__description'>
@@ -132,6 +145,8 @@ LeverageTab.propTypes = {
   increaseLeverage: PropTypes.bool.isRequired,
   setIncreaseLeverage: PropTypes.func.isRequired,
   isPairSelected: PropTypes.bool.isRequired,
+  disabledInputs: PropTypes.bool.isRequired,
+  isDerivativePair: PropTypes.bool.isRequired,
 }
 
 export default LeverageTab
