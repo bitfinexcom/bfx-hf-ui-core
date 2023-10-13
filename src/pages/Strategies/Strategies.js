@@ -10,7 +10,9 @@ import _map from 'lodash/map'
 // import _remove from 'lodash/remove'
 import _forEach from 'lodash/forEach'
 import _isEmpty from 'lodash/isEmpty'
-import Indicators from 'bfx-hf-indicators'
+import _every from 'lodash/every'
+import Indicators, { Indicator } from 'bfx-hf-indicators'
+import { useTranslation } from 'react-i18next'
 import { nonce } from 'bfx-api-node-util'
 import HFS from 'bfx-hf-strategy'
 import HFU from 'bfx-hf-util'
@@ -61,14 +63,7 @@ const StrategiesPage = ({
   ] = useToggle(false)
   const [actionStrategy, setActionStrategy] = useState({})
   const [nextStrategyToOpen, setNextStrategyToOpen] = useState(null)
-
-  // const onAddIndicator = (indicator) => {
-  //   setIndicators([...indicators, indicator])
-  // }
-
-  // const onDeleteIndicator = (index) => {
-  //   setIndicators(_remove(indicators, (el, id) => id !== index))
-  // }
+  const { t } = useTranslation()
 
   const onIndicatorsChange = useCallback((updatedIndicators) => {
     const newIndicators = _map(_values(updatedIndicators), (ind) => {
@@ -127,30 +122,36 @@ const StrategiesPage = ({
     (section, providedContent) => {
       const content = providedContent || strategy[section] || ''
 
-      if (section.substring(0, 6) === 'define') {
-        try {
+      try {
+        if (section === 'defineIndicators') {
+          const func = eval(content); // eslint-disable-line
+          const definedIndicators = func(Indicators)
+          const areIndicatorsCorrect = !_isEmpty(definedIndicators)
+            && _every(definedIndicators, (i) => i instanceof Indicator)
+          if (!areIndicatorsCorrect) {
+            throw new Error(t('strategyEditor.noIndicators'))
+          }
+          clearSectionError(section)
+          return func
+        }
+        if (section.substring(0, 6) === 'define') {
           const func = eval(content); // eslint-disable-line
           clearSectionError(section)
           return func
-        } catch (e) {
-          processSectionError(section, e)
-          return null
         }
-      } else if (section.substring(0, 2) === 'on') {
-        try {
+        if (section.substring(0, 2) === 'on') {
           const func = eval(content)({ HFS, HFU, _ }); // eslint-disable-line
           clearSectionError(section)
           return func
-        } catch (e) {
-          processSectionError(section, e)
-          return null
         }
-      } else {
         debug('unrecognised section handler prefix: %s', section)
+        return null
+      } catch (e) {
+        processSectionError(section, e)
         return null
       }
     },
-    [clearSectionError, processSectionError, strategy],
+    [clearSectionError, processSectionError, t, strategy],
   )
 
   const onDefineIndicatorsChange = useCallback(
@@ -201,11 +202,17 @@ const StrategiesPage = ({
         )
       } else {
         // reset indicators state if strategy does not have own indicators
+        processSectionError(
+          'defineIndicators',
+          new Error(t('strategyEditor.noIndicators')),
+        )
         setIndicators([])
       }
     },
     [
       onDefineIndicatorsChange,
+      processSectionError,
+      t,
       openUnsavedStrategyModal,
       setStrategy,
       setStrategyDirty,

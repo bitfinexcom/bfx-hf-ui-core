@@ -6,6 +6,10 @@ import { vscodeDarkInit } from '@uiw/codemirror-theme-vscode'
 
 import { THEMES } from '../../../redux/selectors/ui'
 
+const codeMirrorBasicSetup = {
+  crosshairCursor: false,
+}
+
 const CodeMirror = ({
   value, onChange, editable, theme: appTheme,
 }) => {
@@ -38,6 +42,7 @@ const CodeMirror = ({
       extensions={[javascript({ jsx: false })]}
       editable={editable}
       height='100%'
+      basicSetup={codeMirrorBasicSetup}
       width='100%'
     />
   )

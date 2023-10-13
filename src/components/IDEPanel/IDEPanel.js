@@ -1,5 +1,5 @@
 import React, {
-  useState, memo, useMemo, useEffect,
+  useState, useMemo, useEffect,
 } from 'react'
 import PropTypes from 'prop-types'
 import ClassNames from 'clsx'
@@ -14,6 +14,7 @@ import Panel from '../../ui/Panel'
 import { STRATEGY_IDE_SECTIONS } from '../StrategyEditor/StrategyEditor.helpers'
 import { STRATEGY_SHAPE } from '../../constants/prop-types-shapes'
 import { PAPER_MODE } from '../../redux/reducers/ui'
+import PanelIconButton from '../../ui/Panel/Panel.IconButton'
 
 const IDEPanel = ({
   setStrategyDirty,
@@ -121,32 +122,25 @@ const IDEPanel = ({
             </li>
           ))}
         </ul>
-
-        <div className='hfui-strategyeditor__content-wrapper'>
-          <div
-            className={ClassNames('hfui-strategyeditor__editor-wrapper', {
-              'exec-error': execError || sectionErrors[activeContent],
-            })}
-          >
-            <CodeMirror
-              value={IDEcontent[activeContent] || ''}
-              activeContent={activeContent}
-              onChange={onEditorContentChange}
-              theme={settingsTheme}
-              editable={isPaperTrading}
-            />
-            {(execError || sectionErrors[activeContent]) && (
-              <div className='hfui-strategyeditor__editor-error-output'>
-                <p
-                  className='hfui-panel__close strategyeditor__close-icon'
-                  onClick={onClearErrors}
-                >
-                  &#10005;
-                </p>
-                <pre>{execError || sectionErrors[activeContent]}</pre>
-              </div>
-            )}
-          </div>
+        <div
+          className='hfui-strategyeditor__editor-wrapper'
+        >
+          <CodeMirror
+            value={IDEcontent[activeContent] || ''}
+            activeContent={activeContent}
+            onChange={onEditorContentChange}
+            theme={settingsTheme}
+            editable={isPaperTrading}
+          />
+          {(execError || sectionErrors[activeContent]) && (
+            <div className='hfui-strategyeditor__editor-error-output'>
+              <pre>{execError || sectionErrors[activeContent]}</pre>
+              <PanelIconButton
+                onClick={onClearErrors}
+                icon={<i className='icon-cancel' />}
+              />
+            </div>
+          )}
         </div>
       </div>
     </Panel>
@@ -171,7 +165,4 @@ IDEPanel.defaultProps = {
   },
 }
 
-export default memo(
-  IDEPanel,
-  ({ strategy: { id } }, { strategy: { id: _id } }) => id === _id,
-)
+export default IDEPanel
