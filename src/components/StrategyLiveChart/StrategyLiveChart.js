@@ -124,7 +124,7 @@ const StrategyLiveChart = ({
       {/* We have to use key prop for correct Chart rerender when strategy changed
           https://medium.com/@albertogasparin/forcing-state-reset-on-a-react-component-by-using-the-key-prop-14b36cd7448e
       */}
-      {chartMarket && (
+      {chartMarket && !_isEmpty(indicators) ? (
         <Chart
           market={chartMarket}
           theme={settingsTheme}
@@ -140,6 +140,8 @@ const StrategyLiveChart = ({
           chartRange={chartRange}
           key={executionId}
         />
+      ) : (
+        <p>{t('strategyEditor.noIndicators')}</p>
       )}
     </Panel>
   )
