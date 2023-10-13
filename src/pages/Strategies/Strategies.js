@@ -199,6 +199,9 @@ const StrategiesPage = ({
         onDefineIndicatorsChange(
           strategyToLoad.strategyContent.defineIndicators,
         )
+      } else {
+        // reset indicators state if strategy does not have own indicators
+        setIndicators([])
       }
     },
     [
