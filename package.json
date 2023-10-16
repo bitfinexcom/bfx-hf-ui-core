@@ -58,7 +58,7 @@
     "@ufx-ui/bfx-containers": "0.16.0",
     "@ufx-ui/core": "0.16.0",
     "@ufx-ui/utils": "0.16.0",
-    "@uiw/codemirror-theme-vscode": "^4.21.13",
+    "@uiw/codemirror-theme-vscode": "^4.21.20",
     "@uiw/react-codemirror": "^4.21.13",
     "axios": "^1.1.3",
     "bfx-api-node-models": "^1.6.3",

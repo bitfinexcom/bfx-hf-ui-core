@@ -833,6 +833,7 @@
       "realBalancesWarning": "NOTE: By pressing start, you will be executing your strategy on your live account with real balances.",
       "createStrategy": "Create a strategy to begin executing."
     },
+    "noIndicators": "There are no indicators for execution",
     "candleSeedCount": "Candle seed count",
     "noStrategiesToDisplay": "There are no strategies to display",
     "saveWithDifferentName": "Save with different name",

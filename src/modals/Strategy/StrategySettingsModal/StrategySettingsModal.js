@@ -244,9 +244,9 @@ const StrategySettingsModal = (props) => {
       setTradeOnMargin(margin)
     }
 
-    if (!useMaxLeverage) {
-      setMarginTradeMode(MARGIN_TRADE_MODES.FIXED)
-    }
+    setMarginTradeMode(
+      useMaxLeverage ? MARGIN_TRADE_MODES.MAX : MARGIN_TRADE_MODES.FIXED,
+    )
 
     if (leverage) {
       setLeverageValue(convertNumberToString(leverage))
