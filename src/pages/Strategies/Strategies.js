@@ -64,6 +64,7 @@ const StrategiesPage = ({
   const [actionStrategy, setActionStrategy] = useState({})
   const [nextStrategyToOpen, setNextStrategyToOpen] = useState(null)
   const { t } = useTranslation()
+  const strategyContent = _get(strategy, 'strategyContent', {})
 
   const onIndicatorsChange = useCallback((updatedIndicators) => {
     const newIndicators = _map(_values(updatedIndicators), (ind) => {
@@ -284,12 +285,12 @@ const StrategiesPage = ({
   )
 
   useEffect(() => {
-    const strategyContent = _get(strategy, 'strategyContent', null)
     if (_isEmpty(strategyContent)) {
       return
     }
     processIndicators(strategyContent)
-  }, [strategy, processIndicators])
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [strategyContent])
 
   return (
     <Layout>
