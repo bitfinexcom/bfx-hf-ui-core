@@ -60,6 +60,23 @@ const StrategyLiveTab = (props) => {
   const hasResults = !_isEmpty(results)
   const hasPositions = !_isEmpty(positions)
 
+  const chartOptions = useMemo(() => {
+    return {
+      candleSeed: strategy.strategyOptions.candleSeed,
+      symbol: strategy.strategyOptions.symbol.wsID,
+      executionId: strategy.executionId || strategy.id,
+      start: strategy.startedOn,
+      end: strategy.stoppedOn,
+    }
+  }, [
+    strategy.executionId,
+    strategy.id,
+    strategy.startedOn,
+    strategy.stoppedOn,
+    strategy.strategyOptions.candleSeed,
+    strategy.strategyOptions.symbol.wsID,
+  ])
+
   useEffect(() => {
     if (!executing && !hasResults) {
       setLayoutConfig(LAYOUT_CONFIG_NO_DATA)
@@ -72,13 +89,6 @@ const StrategyLiveTab = (props) => {
 
   const renderGridComponents = useCallback(
     (i) => {
-      const chartOptions = {
-        candleSeed: strategy.strategyOptions.candleSeed,
-        symbol: strategy.strategyOptions.symbol.wsID,
-        executionId: strategy.executionId || strategy.id,
-        start: strategy.startedOn,
-        end: strategy.stoppedOn,
-      }
       switch (i) {
         case COMPONENTS_KEYS.OPTIONS:
           return (
@@ -129,13 +139,15 @@ const StrategyLiveTab = (props) => {
       }
     },
     [
+      strategy,
       markets,
       stopExecution,
       setFullScreenChart,
       executing,
       hasResults,
       indicators,
-      strategy,
+      lastOpenPosition,
+      chartOptions,
       fullscreenChart,
       unsetFullScreenChart,
       trades,
@@ -143,7 +155,6 @@ const StrategyLiveTab = (props) => {
       startedOn,
       positions,
       layoutConfig,
-      lastOpenPosition,
     ],
   )
 

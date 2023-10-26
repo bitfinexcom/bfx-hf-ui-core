@@ -88,7 +88,7 @@ const LeverageTab = ({
               <SliderInput
                 def={{
                   label: t('orderForm.leverage'),
-                  min: 0,
+                  min: 1,
                   max: 100,
                 }}
                 value={leverageValue}

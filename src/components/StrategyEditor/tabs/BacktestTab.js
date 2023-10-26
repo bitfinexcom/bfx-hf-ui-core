@@ -78,6 +78,9 @@ const BacktestTab = (props) => {
 
   const { id: strategyId } = strategy
   const positions = results?.strategy?.closedPositions
+  const {
+    timeframe, symbol, candleSeed, start, end, executionId,
+  } = currentHistoryBacktest
 
   const trades = useMemo(() => prepareChartTrades(positions), [positions])
   const showBacktestResults = activeSection === BACKTEST_TAB_SECTIONS.NEW_BT_RESULTS
@@ -92,6 +95,17 @@ const BacktestTab = (props) => {
     },
     [dispatch],
   )
+
+  const chartOptions = useMemo(() => {
+    return {
+      timeframe,
+      symbol,
+      candleSeed,
+      executionId,
+      start,
+      end,
+    }
+  }, [candleSeed, end, executionId, start, symbol, timeframe])
 
   useEffect(() => {
     if (!showBacktestResults) {
@@ -123,18 +137,6 @@ const BacktestTab = (props) => {
 
   const renderGridComponents = useCallback(
     (i) => {
-      const {
-        timeframe, symbol, candleSeed, start, end, executionId,
-      } = currentHistoryBacktest
-      const chartOptions = {
-        timeframe,
-        symbol,
-        candleSeed,
-        executionId,
-        start,
-        end,
-      }
-
       switch (i) {
         case COMPONENTS_KEYS.OPTIONS:
           return showBacktestResults ? (
@@ -198,13 +200,13 @@ const BacktestTab = (props) => {
       onCancelProcess,
       indicators,
       markets,
+      chartOptions,
       fullscreenChart,
       hideFullscreenChart,
       trades,
       results,
       positions,
       layoutConfig,
-      currentHistoryBacktest,
     ],
   )
 
@@ -217,7 +219,10 @@ const BacktestTab = (props) => {
       {!showBacktestResults && (
         <div className='hfui-strategyeditor__backtest-tab-empty'>
           {loading ? (
-            <BacktestProgressBar percent={progressPerc} startedOn={gid || Date.now()} />
+            <BacktestProgressBar
+              percent={progressPerc}
+              startedOn={gid || Date.now()}
+            />
           ) : (
             <p className='hfui-strategyeditor__initial-message'>
               {t(getInitialMessageI18Key(activeSection))}
