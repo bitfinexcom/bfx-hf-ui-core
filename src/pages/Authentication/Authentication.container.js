@@ -6,12 +6,13 @@ import { isSocketConnected, getAuthConfigured } from '../../redux/selectors/ws'
 import Authentication from './Authentication'
 import { PAPER_MODE } from '../../redux/reducers/ui'
 import { removeStoredPassword, updateAutoLoginState } from '../../util/autologin'
+import WS from '../../redux/constants/ws'
 
 const mapStateToProps = (state = {}) => {
   const { isPaperTrading } = state.ui
 
   return {
-    wsConnected: isSocketConnected(state),
+    wsConnected: isSocketConnected(state, WS.ALIAS_API_SERVER) && isSocketConnected(state, WS.ALIAS_DATA_SERVER),
     configured: getAuthConfigured(state),
     isPaperTrading,
   }
