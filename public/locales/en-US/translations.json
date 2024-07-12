@@ -531,6 +531,7 @@
     "requestedAlgoOrderNotRunningCannotStop": "Requested algo order not running, cannot stop",
     "favouriteTradingPairsSuccessfullySaved": "Favourite trading pairs successfully saved",
     "settingsSuccessfullyUpdated": "Settings successfully updated",
+    "settingsUpdateFailed": "Failed to update settings",
     "reconnectingWithNewDmsSetting": "Reconnecting with new DMS setting...",
     "connectingTo": "Connecting to {{target}}...",
     "connectedTo": "Connected to {{target}}",

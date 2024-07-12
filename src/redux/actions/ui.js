@@ -180,6 +180,11 @@ export const setBacktestActiveSection = (section) => ({
   payload: { section },
 })
 
+export const setBadInternetConnection = (isBadConnection) => ({
+  type: types.SET_BAD_INTERNET_CONNECTION,
+  payload: { isBadConnection },
+})
+
 export default {
   setUIValue,
   updateUIValue,
@@ -207,4 +212,5 @@ export default {
   logInformation,
   setBacktestActiveSection,
   setNotifications,
+  setBadInternetConnection,
 }

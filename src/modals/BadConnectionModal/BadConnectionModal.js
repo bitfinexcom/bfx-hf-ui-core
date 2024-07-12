@@ -8,13 +8,9 @@ import { isElectronApp } from '../../redux/config'
 import './style.css'
 
 const BadConnection = ({
-  changeBadInternetConnectionState, visible,
+  onClose, visible,
 }) => {
   const { t } = useTranslation()
-
-  const onClose = () => {
-    changeBadInternetConnectionState(false)
-  }
 
   const onRestart = () => {
     const path = isElectronApp ? '/index.html' : ''
@@ -37,7 +33,7 @@ const BadConnection = ({
           {action}
         </Modal.Button>
         <Modal.Button onClick={onClose} primary>
-          {t('ui.ok')}
+          {t('ui.proceed')}
         </Modal.Button>
       </Modal.Footer>
     </Modal>
@@ -45,7 +41,7 @@ const BadConnection = ({
 }
 
 BadConnection.propTypes = {
-  changeBadInternetConnectionState: PropTypes.func.isRequired,
+  onClose: PropTypes.func.isRequired,
   visible: PropTypes.bool.isRequired,
 }
 

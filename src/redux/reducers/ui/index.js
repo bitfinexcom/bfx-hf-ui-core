@@ -81,7 +81,6 @@ function getInitialState() {
     modals: {},
     orderToEdit: {},
     isBadInternetConnection: false,
-    isNoConnectionModalVisible: false,
     closePositionModalData: {},
     isOrderExecuting: false,
     strategyEditor: {
