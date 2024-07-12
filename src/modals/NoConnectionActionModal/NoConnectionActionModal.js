@@ -7,13 +7,9 @@ import Modal from '../../ui/Modal'
 import './style.css'
 
 const NoConnectionActionModal = ({
-  changeIsNoConnectionModalState, visible,
+  onClose, visible,
 }) => {
   const { t } = useTranslation()
-
-  const onClose = () => {
-    changeIsNoConnectionModalState(false)
-  }
 
   return (
     <Modal
@@ -34,7 +30,7 @@ const NoConnectionActionModal = ({
 }
 
 NoConnectionActionModal.propTypes = {
-  changeIsNoConnectionModalState: PropTypes.func.isRequired,
+  onClose: PropTypes.func.isRequired,
   visible: PropTypes.bool.isRequired,
 }
 

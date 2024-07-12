@@ -10,7 +10,7 @@ const mapStateToProps = (state = {}) => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-  onClose: (visible) => dispatch(UIActions.changeUIModalState(UI_MODAL_KEYS.BAD_INTERNET_CONNECTION_MODAL, visible)),
+  onClose: () => dispatch(UIActions.changeUIModalState(UI_MODAL_KEYS.BAD_INTERNET_CONNECTION_MODAL, false)),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(BadConnectionModal)
