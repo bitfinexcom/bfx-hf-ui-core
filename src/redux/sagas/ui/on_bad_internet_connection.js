@@ -4,13 +4,13 @@ import { UI_KEYS } from '../../constants/ui_keys'
 import { UI_MODAL_KEYS } from '../../constants/modals'
 import { getDMSSetting } from '../../selectors/ui'
 
-function* onBadConnection() {
-  yield put(UIActions.setUIValue(UI_KEYS.isBadInternetConnection, true))
+function* onBadInternetConnection({ payload: { isBadConnection } }) {
+  yield put(UIActions.setUIValue(UI_KEYS.isBadInternetConnection, isBadConnection))
   const dms = yield select(getDMSSetting)
 
   if (dms) {
-    yield put(UIActions.changeUIModalState(UI_MODAL_KEYS.BAD_INTERNET_CONNECTION_MODAL, true))
+    yield put(UIActions.changeUIModalState(UI_MODAL_KEYS.BAD_INTERNET_CONNECTION_MODAL, isBadConnection))
   }
 }
 
-export default onBadConnection
+export default onBadInternetConnection

@@ -324,11 +324,11 @@ export default (alias, store) => (e = {}) => {
         store.dispatch(WSActions.recvClientStatusUpdate({ status, mode }))
 
         if (status === WS_CONNECTION.CLOSED) {
-          store.dispatch(UIActions.handleBadConnectionAction)
+          store.dispatch(UIActions.setBadInternetConnection(true))
         }
 
         if (status === WS_CONNECTION.OPENED) {
-          store.dispatch(UIActions.setUIValue(UI_KEYS.isBadInternetConnection, false))
+          store.dispatch(UIActions.setBadInternetConnection(false))
         }
 
         break
