@@ -10,7 +10,7 @@ const mapStateToProps = (state = {}) => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-  changeIsNoConnectionModalState: (isOpen) => dispatch(UIActions.changeUIModalState(UI_MODAL_KEYS.NO_CONNECTION_MODAL, isOpen)),
+  onClose: () => dispatch(UIActions.changeUIModalState(UI_MODAL_KEYS.NO_CONNECTION_MODAL, false)),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(NoConnectionActionModal)

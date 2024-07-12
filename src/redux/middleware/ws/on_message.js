@@ -324,7 +324,7 @@ export default (alias, store) => (e = {}) => {
         store.dispatch(WSActions.recvClientStatusUpdate({ status, mode }))
 
         if (status === WS_CONNECTION.CLOSED) {
-          store.dispatch(UIActions.setUIValue(UI_KEYS.isBadInternetConnection, true))
+          store.dispatch(UIActions.handleBadConnectionAction)
         }
 
         if (status === WS_CONNECTION.OPENED) {

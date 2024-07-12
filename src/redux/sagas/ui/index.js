@@ -14,6 +14,7 @@ import removeComponent from './on_remove_component'
 import createLayout from './on_create_layout'
 import deleteLayout from './on_delete_layout'
 import onLog from './on_log'
+import onBadConnection from './on_bad_connection'
 import { isElectronApp } from '../../config'
 
 export default function* () {
@@ -27,6 +28,7 @@ export default function* () {
   yield takeEvery(UITypes.REMOVE_COMPONENT, removeComponent)
   yield takeEvery(UITypes.CREATE_LAYOUT, createLayout)
   yield takeEvery(UITypes.DELETE_LAYOUT, deleteLayout)
+  yield takeEvery(UITypes.HANDLE_BAD_CONNECTION, onBadConnection)
 
   if (isElectronApp) {
     yield takeEvery(UITypes.DATA_NOTIFICATION, onShowNotification)
