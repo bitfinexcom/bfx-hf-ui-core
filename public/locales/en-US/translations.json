@@ -352,7 +352,6 @@
     "text2": "When you restart the Bitfinex Honey application, you will be prompted to select between the currently active algo orders to which two of the given options can be applied:",
     "text3": "1. Resume: The atomic orders placed by the selected algo orders (if active) will be cancelled, and the algo orders will resume placing orders for the remaining amounts. The unselected algo orders will not be resumed and will be lost in perpetuity.",
     "text4": "2. Cancel All: All atomic orders placed by the algo orders (if active) will be cancelled and no algo orders will be resumed.",
-    "text5": "Note: Atomic orders will remain active if DMS option is disabled."
   },
   "AOTableModal": {
     "title": "Algo. Orders",
@@ -403,11 +402,7 @@
     "autologin": "Auto-login in development mode",
     "apiKey": "API Key",
     "apiSecret": "API Secret",
-    "deadManCheckbox": "Dead Man Switch",
     "themeSetting": "Application theme",
-    "deadManText1": "Enabling the Dead Man switch will automatically cancel all active orders when the application closes.",
-    "deadManText2": "Algorithmic orders are cancelled on application close; without the Dead Man switch, any atomic orders created by an AO will remain open, and state may be lost when the application is started up again.",
-    "deadManWarning": "Disabling this should be done with caution!",
     "showPauseInfoCheckbox": "Show Algo Orders pause info",
     "showPauseInfoText": "If checked, the modal with explanations will be displayed when you close the app with active Algo Orders.",
     "howToCreate": "How to create an API Key in Bitfinex?",
@@ -531,7 +526,6 @@
     "requestedAlgoOrderNotRunningCannotStop": "Requested algo order not running, cannot stop",
     "favouriteTradingPairsSuccessfullySaved": "Favourite trading pairs successfully saved",
     "settingsSuccessfullyUpdated": "Settings successfully updated",
-    "reconnectingWithNewDmsSetting": "Reconnecting with new DMS setting...",
     "connectingTo": "Connecting to {{target}}...",
     "connectedTo": "Connected to {{target}}",
     "authenticatedWith": "Authenticated with {{target}}",
@@ -543,11 +537,6 @@
     "recurringAOExecutedSuccessfully": "Recurring AO {{alias}} was executed successfully at {{time}}",
     "recurringAOFailed": "Recurring AO {{alias}} was failed at {{time}}. Reason: {{reason}}",
     "recurringAOWasFinished": "Recurring AO {{alias}} was finished at {{time}}."
-  },
-  "confirmDMSModal": {
-    "title": "Enable Dead Man Switch",
-    "text": "Please be aware that when this setting is enabled, closing the app will not only cancel all orders that have been created by the Bitfinex Honey, but will also cancel all other orders, including those that have been opened on the Bitfinex website or elsewhere.\n\nThis is a recommended setting, but you should be aware of the possible consequences.",
-    "dontShowAgain": "Don't show again"
   },
   "discardAOEdit": {
     "title": "Discard changes",

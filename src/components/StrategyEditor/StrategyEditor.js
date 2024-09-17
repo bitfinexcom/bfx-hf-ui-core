@@ -828,7 +828,6 @@ StrategyEditor.propTypes = {
   evalSectionContent: PropTypes.func.isRequired,
   setSectionErrors: PropTypes.func.isRequired,
   serviceStatus: PropTypes.shape({
-    dmsControl: PropTypes.bool,
     algoWorker: PropTypes.bool,
     bfxClient: PropTypes.bool,
     strategyManager: PropTypes.bool,

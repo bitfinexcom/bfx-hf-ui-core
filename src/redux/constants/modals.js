@@ -3,7 +3,6 @@ export const UI_MODAL_KEYS = {
   AO_PAUSE_MODAL: 'AOPauseModal',
   APP_SETTINGS_MODAL: 'AppSettingsModal',
   CCY_INFO_MODAL: 'CcyInfoModal',
-  CONFIRM_DMS_MODAL: 'ConfirmDMSModal',
   EDIT_ORDER_MODAL: 'EditOrderModal',
   RELAUNCH_ORDER_MODAL: 'RelaunchOrderModal',
   CLOSE_POSITION_MODAL: 'ClosePositionModal',
