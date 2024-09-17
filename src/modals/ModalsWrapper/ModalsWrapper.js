@@ -2,6 +2,7 @@ import React, { lazy, memo } from 'react'
 import PropTypes from 'prop-types'
 import AppSettingsModal from '../AppSettingsModal'
 import CloseSessionModal from '../CloseSessionModal'
+import DMSRemovalDisclaimerModal from '../DMSRemovalDisclaimerModal'
 
 const BadConnectionModal = lazy(() => import('../BadConnectionModal'))
 const NoConnectionActionModal = lazy(() => import('../NoConnectionActionModal'))
@@ -33,6 +34,7 @@ const ModalsWrapper = ({ isElectronApp }) => {
       <CcyInfoModal />
       <EditOrderModal />
       <ClosePositionModal />
+      <DMSRemovalDisclaimerModal />
     </>
   )
 }

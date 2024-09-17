@@ -575,6 +575,10 @@
     "text2": "From now on, each component, including the Order form and Ticker symbols, is independent and can be added or removed in the layout settings.",
     "text3": "If needed, you can add these components to your custom layout in the layout settings, sorry for the inconvenience."
   },
+  "dmsRemovalDisclaimerModal": {
+    "title": "IMPORTANT NOTICE",
+    "text": "On November 6th 2024 the feature 'dead-man switch' ('DMS' for short) will no longer be supported in all versions of Bitfinex Honey, including past versions, independently of the version number and/or release date. After this date, if you stop your local environment, the orders you created using any version of this software will continue running unless you manually cancel them. This can lead to unexpected results in your trading experience."
+  },
   "orderBookModal": {
     "title": "Order Book",
     "sumAmountsCheckbox": "Sum Amounts",
