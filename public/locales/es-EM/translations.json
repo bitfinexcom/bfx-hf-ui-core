@@ -293,7 +293,7 @@
     "text1": "Cerrar la aplicación mientras las órdenes de algoritmo están activas requerirá que reanudes/canceles las órdenes de algoritmo cuando vuelvas a iniciar la aplicación Bitfinex Honey.",
     "text2": "Cuando reinicies la aplicación Bitfinex Honey, se te pedirá que selecciones entre las órdenes de algoritmo actualmente activas a las que se pueden aplicar dos de las opciones dadas:",
     "text3": "1. Reanudar: Los órdenes atómicas realizadas por las órdenes de algoritmo seleccionadas (si están activas) se cancelarán y las órdenes de algoritmo reanudarán la realización de órdenes por las cantidades restantes. Las órdenes de algoritmo no seleccionadas no se reanudarán y se perderán a perpetuidad.",
-    "text4": "2. Cancelar todo: Todos las órdenes atómicos realizadas por las órdenes de algoritmo (si están activas) se cancelarán y no se reanudarán las órdenes de algoritmo.",
+    "text4": "2. Cancelar todo: Todos las órdenes atómicos realizadas por las órdenes de algoritmo (si están activas) se cancelarán y no se reanudarán las órdenes de algoritmo."
   },
   "AOTableModal": {
     "title": "Órdenes Algo.",

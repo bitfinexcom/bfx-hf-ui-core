@@ -351,7 +351,7 @@
     "text1": "Closing the application while algo orders are active will require you to resume/cancel the algo orders when you relaunch the Bitfinex Honey application.",
     "text2": "When you restart the Bitfinex Honey application, you will be prompted to select between the currently active algo orders to which two of the given options can be applied:",
     "text3": "1. Resume: The atomic orders placed by the selected algo orders (if active) will be cancelled, and the algo orders will resume placing orders for the remaining amounts. The unselected algo orders will not be resumed and will be lost in perpetuity.",
-    "text4": "2. Cancel All: All atomic orders placed by the algo orders (if active) will be cancelled and no algo orders will be resumed.",
+    "text4": "2. Cancel All: All atomic orders placed by the algo orders (if active) will be cancelled and no algo orders will be resumed."
   },
   "AOTableModal": {
     "title": "Algo. Orders",

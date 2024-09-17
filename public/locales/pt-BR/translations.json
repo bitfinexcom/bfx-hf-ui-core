@@ -293,7 +293,7 @@
     "text1": "Fechar o aplicativo enquanto as ordens de algo estão ativas exigirá que você retome/cancele as ordens de algo ao reiniciar o aplicativo Bitfinex Honey.",
     "text2": "Ao reiniciar o aplicativo Bitfinex Honey, será solicitado que você selecione entre as ordens de algoritmo atualmente ativas quais as duas opções fornecidas podem ser aplicadas:",
     "text3": "1. Retomar: As ordens atomic realizadas pelas ordens de algo selecionadas (se ativas) serão canceladas, e as ordens de algo continuarão a realizar ordens para os valores restantes. As ordens de algo não selecionadas não serão retomadas e serão perdidas para sempre.",
-    "text4": "2. Cancelar tudo: Todas as ordens atomic realizadas pelas ordens de algo (se ativas) serão canceladas e nenhuma ordem de algo será retomada.",
+    "text4": "2. Cancelar tudo: Todas as ordens atomic realizadas pelas ordens de algo (se ativas) serão canceladas e nenhuma ordem de algo será retomada."
   },
   "AOTableModal": {
     "title": "Algo. Ordens",
