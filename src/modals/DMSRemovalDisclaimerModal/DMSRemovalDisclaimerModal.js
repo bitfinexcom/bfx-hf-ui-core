@@ -1,10 +1,12 @@
+/* eslint-disable jsx-a11y/anchor-has-content */
 import React, { memo } from 'react'
 import PropTypes from 'prop-types'
-import { useTranslation } from 'react-i18next'
+import { Trans, useTranslation } from 'react-i18next'
 import Modal from '../../ui/Modal'
 import { UI_MODAL_KEYS } from '../../redux/constants/modals'
 import { DO_NOT_SHOW_DMS_REMOVAL_DISCLAIMER } from '../../redux/reducers/ui'
 import useCountdown from '../../hooks/useCountdown'
+import { DISCONTINUE_DMS_SUPPORT_ARTICLE_DMS } from '../../redux/config'
 
 const DMSRemovalDisclaimerModal = ({ changeUIModalState, visible }) => {
   const { t } = useTranslation()
@@ -26,7 +28,19 @@ const DMSRemovalDisclaimerModal = ({ changeUIModalState, visible }) => {
       onClose={onSubmit}
       onSubmit={onSubmit}
     >
-      <p>{t('dmsRemovalDisclaimerModal.text')}</p>
+      <Trans
+        t={t}
+        i18nKey='dmsRemovalDisclaimerModal.text'
+        components={{
+          url: (
+            <a
+              href={DISCONTINUE_DMS_SUPPORT_ARTICLE_DMS}
+              target='_blank'
+              rel='noopener noreferrer'
+            />
+          ),
+        }}
+      />
       <Modal.Footer>
         <Modal.Button
           onClick={onSubmit}
