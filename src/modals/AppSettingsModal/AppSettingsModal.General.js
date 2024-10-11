@@ -5,7 +5,6 @@ import { useTranslation } from 'react-i18next'
 
 import WSActions from '../../redux/actions/ws'
 import GAActions from '../../redux/actions/google_analytics'
-import { changeUIModalState } from '../../redux/actions/ui'
 import {
   isDevEnv,
   getAutoLoginState,
@@ -13,50 +12,28 @@ import {
 } from '../../util/autologin'
 import {
   SETTINGS_KEYS,
-  getDMSSetting,
   getShowAlgoPauseInfoSetting,
   getIsAutoResumeAOs,
 } from '../../redux/selectors/ui'
-import { DONT_SHOW_DMS_MODAL_KEY } from '../../constants/variables'
-import { UI_MODAL_KEYS } from '../../redux/constants/modals'
 import AttentionBar from '../../ui/AttentionBar/AttentionBar'
-// import OverrideTimer from './AppSettingsModal.OverrideTimer'
 
 const INITIAL_AUTO_LOGIN = getAutoLoginState()
 
 const General = () => {
   const dispatch = useDispatch()
   const { t } = useTranslation()
-  const settingsDms = useSelector(getDMSSetting)
   const settingsShowAlgoPauseInfo = useSelector(getShowAlgoPauseInfoSetting)
   const isAutoResumeAOs = useSelector(getIsAutoResumeAOs)
 
   const [isAutoLoginChecked, setIsAutoLoginChecked] = useState(INITIAL_AUTO_LOGIN)
-  const [isDmsChecked, setIsDmsChecked] = useState(settingsDms)
   const [isShowAlgoPauseInfoChecked, setIsShowAlgoPauseInfoChecked] = useState(
     settingsShowAlgoPauseInfo,
   )
   const [isAutoResumeAOsChecked, setIsAutoResumeAOsChecked] = useState(isAutoResumeAOs)
 
   useEffect(() => {
-    setIsDmsChecked(settingsDms)
-  }, [settingsDms])
-
-  useEffect(() => {
     setIsShowAlgoPauseInfoChecked(settingsShowAlgoPauseInfo)
   }, [settingsShowAlgoPauseInfo])
-
-  const updateDms = (nextDms) => {
-    const dontShowDMSModal = localStorage.getItem(DONT_SHOW_DMS_MODAL_KEY)
-
-    if (nextDms === true && dontShowDMSModal !== 'true') {
-      dispatch(changeUIModalState(UI_MODAL_KEYS.CONFIRM_DMS_MODAL, true))
-    } else {
-      setIsDmsChecked(nextDms)
-      dispatch(WSActions.saveSetting(SETTINGS_KEYS.DMS, nextDms))
-      dispatch(GAActions.updateSettings())
-    }
-  }
 
   const updateAOPause = (nextAOPause) => {
     setIsShowAlgoPauseInfoChecked(nextAOPause)
@@ -76,19 +53,6 @@ const General = () => {
 
   return (
     <div>
-      <div className='appsettings-modal__setting'>
-        <Checkbox
-          onChange={updateDms}
-          label={t('appSettings.deadManCheckbox')}
-          checked={isDmsChecked}
-          className='appsettings-modal__checkbox'
-        />
-        <div className='appsettings-modal__description'>
-          <AttentionBar red>{t('appSettings.deadManWarning')}</AttentionBar>
-          <p>{t('appSettings.deadManText1')}</p>
-          <p>{t('appSettings.deadManText2')}</p>
-        </div>
-      </div>
       <div className='appsettings-modal__setting'>
         <Checkbox
           onChange={updateAOPause}

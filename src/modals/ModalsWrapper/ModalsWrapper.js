@@ -10,7 +10,6 @@ const OldFormatModal = lazy(() => import('../OldFormatModal'))
 const AOPauseModal = lazy(() => import('../AOPauseModal'))
 const CcyInfoModal = lazy(() => import('../CcyInfoModal'))
 const ClosePositionModal = lazy(() => import('../ClosePositionModal'))
-const ConfirmDMSModal = lazy(() => import('../ConfirmDMSModal'))
 const EditOrderModal = lazy(() => import('../EditOrderModal'))
 const ResetAPIKeysModal = lazy(() => import('../ResetAPIKeysModal'))
 const HelpUsImproveHoneyModal = lazy(() => import('../HelpUsImproveHoneyModal'))
@@ -21,7 +20,6 @@ const ModalsWrapper = ({ isElectronApp }) => {
       {isElectronApp && (
         <>
           <OldFormatModal />
-          <ConfirmDMSModal />
           <AOPauseModal />
           <AppSettingsModal />
           <CloseSessionModal />

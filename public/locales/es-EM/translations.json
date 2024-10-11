@@ -293,8 +293,7 @@
     "text1": "Cerrar la aplicación mientras las órdenes de algoritmo están activas requerirá que reanudes/canceles las órdenes de algoritmo cuando vuelvas a iniciar la aplicación Bitfinex Honey.",
     "text2": "Cuando reinicies la aplicación Bitfinex Honey, se te pedirá que selecciones entre las órdenes de algoritmo actualmente activas a las que se pueden aplicar dos de las opciones dadas:",
     "text3": "1. Reanudar: Los órdenes atómicas realizadas por las órdenes de algoritmo seleccionadas (si están activas) se cancelarán y las órdenes de algoritmo reanudarán la realización de órdenes por las cantidades restantes. Las órdenes de algoritmo no seleccionadas no se reanudarán y se perderán a perpetuidad.",
-    "text4": "2. Cancelar todo: Todos las órdenes atómicos realizadas por las órdenes de algoritmo (si están activas) se cancelarán y no se reanudarán las órdenes de algoritmo.",
-    "text5": "Nota: Las órdenes atómicas permanecerán activas si la opción DMS está desactivada."
+    "text4": "2. Cancelar todo: Todos las órdenes atómicos realizadas por las órdenes de algoritmo (si están activas) se cancelarán y no se reanudarán las órdenes de algoritmo."
   },
   "AOTableModal": {
     "title": "Órdenes Algo.",
@@ -331,11 +330,7 @@
     "autologin": "Inicio de sesión automático en modo de desarrollo",
     "apiKey": "Clave API",
     "apiSecret": "API Secreta",
-    "deadManCheckbox": "Interruptor de Dead Man",
     "themeSetting": "Tema de la aplicación",
-    "deadManText1": "Habilitar el interruptor Dead Man cancelará automáticamente todas las órdenes activas cuando se cierre la aplicación.",
-    "deadManText2": "Las órdenes algorítmicas se cancelan al cerrar la aplicación; sin el interruptor Dead Man, cualquier orden atómica creada por una AO permanecerá abierta y el estado puede perderse cuando la aplicación se inicie nuevamente.",
-    "deadManWarning": "¡Deshabilitar esto debe hacerse con precaución!",
     "usageReportingCheckbox": "Informes de uso",
     "showPauseInfoCheckbox": "Mostrar información de pausa de las Órdenes de Algoritmo",
     "showPauseInfoText": "Si está marcada, el modal con explicaciones se mostrará cuando cierres la aplicación con Órdenes de Algoritmo activas.",
@@ -442,7 +437,6 @@
     "requestedAlgoOrderNotRunningCannotStop": "La orden de algoritmo solicitada no se está ejecutando, no se puede detener",
     "favouriteTradingPairsSuccessfullySaved": "Pares de trading favoritos guardados con éxito",
     "settingsSuccessfullyUpdated": "Configuraciones actualizadas con éxito",
-    "reconnectingWithNewDmsSetting": "Re-conectando con la nueva configuración DMS...",
     "connectingTo": "Conectando a {{target}}...",
     "connectedTo": "Conectado a {{target}}",
     "authenticatedWith": "Autenticado con {{target}}",
@@ -454,11 +448,6 @@
   "tradingModeModal": {
     "title": "Cambiar Modo de Trade",
     "text": "La aplicación se reiniciará después de presionar Aceptar. Es necesario para cambiar el modo de trading. Las órdenes de algoritmo abiertas están en pausa."
-  },
-  "confirmDMSModal": {
-    "title": "Habilitar Interruptor de Dead Man",
-    "text": "Ten en cuenta que cuando esta configuración está habilitada, cerrar la aplicación no solo cancelará todos las órdenes creadas por Bitfinex Honey, sino que también cancelará todas las demás órdenes, incluidas las que se han abierto en el sitio web de Bitfinex o en otro lugar.\n\nEsta es una configuración recomendada, pero debes tener en cuenta las posibles consecuencias.",
-    "dontShowAgain": "No volver a mostrar"
   },
   "editOrderModal": {
     "title": "Editar orden",

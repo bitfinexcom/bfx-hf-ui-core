@@ -17,7 +17,7 @@ const DiscardAOEdit = ({
       isOpen={visible}
       onClose={onClose}
       onSubmit={onSubmit}
-      className='confirm_dms-modal'
+      className='discard-ao-modal'
     >
       <p>{t('discardAOEdit.text')}</p>
       <Modal.Footer>

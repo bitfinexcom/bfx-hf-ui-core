@@ -87,7 +87,6 @@ const AuthenticationUnlockForm = ({
           </div>
         )}
         <Button
-          onClick={onUnlock}
           disabled={!submitReady}
           label={t('auth.unlockBtn')}
           isSubmit
