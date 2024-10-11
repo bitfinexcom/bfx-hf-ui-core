@@ -55,6 +55,7 @@ const SETUP_TIMESTAMP_FORMAT_ARTICLE = 'https://bitfinex-honey.readme.io/docs/ti
 
 const METRICS_CODE_REF_URL = 'https://github.com/bitfinexcom/bfx-hf-ui-core/blob/main/src/redux/sagas/ui/on_log.js#L63-L65'
 const UNIQUE_ID_CODE_REF_URL = 'https://github.com/bitfinexcom/bfx-hf-server/blob/10d9db0a660661e8794d5c0a336ad04bbe52a467/lib/ws_servers/api/metrics_client.js#L154-L157'
+const DISCONTINUE_DMS_SUPPORT_ARTICLE_DMS = 'https://www.bitfinex.com/posts/1072/'
 
 // product description link
 const HF_DESC_URL = 'https://support.bitfinex.com/hc/en-us/articles/900000096823-Honey-Framework'
@@ -100,4 +101,5 @@ export {
   DISCORD_URL,
   METRICS_CODE_REF_URL,
   UNIQUE_ID_CODE_REF_URL,
+  DISCONTINUE_DMS_SUPPORT_ARTICLE_DMS,
 }
