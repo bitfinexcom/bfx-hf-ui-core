@@ -293,8 +293,7 @@
     "text1": "在演算法訂單等待成交期間關閉Bitfinex Honey應用程序，您須在重啟應用程序時恢復或者取消演算法訂單。",
     "text2": "重新啟動 Bitfinex Honey 應用程序時，您必須為現有的待成交演算法訂單套用以下其中一種設定：",
     "text3": "1. 恢復：所勾選的演算法訂單（如待成交）其原有的自動訂單將被取消，並根據剩餘數量重新下單。未勾選的演算法訂單將永久取消，不再更新。",
-    "text4": "2. 全部取消：所有演算法訂單將不再重新下單，包含其原有的待成交自動訂單亦被取消。",
-    "text5": "提醒您：若停用 DMS 選項，自動訂單將持續有效，等待成交。"
+    "text4": "2. 全部取消：所有演算法訂單將不再重新下單，包含其原有的待成交自動訂單亦被取消。"
   },
   "AOTableModal": {
     "title": "演算法訂單",
@@ -331,11 +330,7 @@
     "autologin": "自動登入開發模式",
     "apiKey": "API 金鑰",
     "apiSecret": "API 密碼",
-    "deadManCheckbox": "Dead Man Switch（自動關閉）",
     "themeSetting": "應用程序主題",
-    "deadManText1": "啟用 Dead Man switch （自動關閉），所有待執行訂單將在應用程序關閉時自動取消。",
-    "deadManText2": "演算法訂單將於應用程序關閉時取消；如關閉 Dead Man switch （自動關閉），任何透過演算法訂單建立的自動訂單仍有效，但重新啟動應用程序時將重置其狀態。",
-    "deadManWarning": "謹慎決定是否取消此選項！",
     "usageReportingCheckbox": "使用報告",
     "showPauseInfoCheckbox": "顯示演算法訂單暫停訊息",
     "showPauseInfoText": "勾選後，在演算法訂單待成交的情況下關閉應用程序，將顯示此說明視窗。",
@@ -442,7 +437,6 @@
     "requestedAlgoOrderNotRunningCannotStop": "請求的演算法訂單未運行，無法中止",
     "favouriteTradingPairsSuccessfullySaved": "已成功儲存收藏的交易對",
     "settingsSuccessfullyUpdated": "已成功更新設定",
-    "reconnectingWithNewDmsSetting": "使用新自動關閉設定（DMS）重新連線中...",
     "connectingTo": "連線{{target}} 中...",
     "connectedTo": "已與 {{target}} 連線",
     "authenticatedWith": "已通過 {{target}} 驗證",
@@ -454,11 +448,6 @@
   "tradingModeModal": {
     "title": "切換交易模式",
     "text": "切換交易模式須重啟應用程序。按下「Okay」後將重新啟動，並暫停待執行演算法訂單。"
-  },
-  "confirmDMSModal": {
-    "title": "啟動「當關閉程式訂單將自動取消」功能",
-    "text": "請注意：當開啟此設定時，一旦關閉APP，系統將會取消您在Bitfinex Honey、Bitfinex網頁及其它地方建立之所有訂單。\n\n此為建議設定，但您應了解設定後可能發生的狀況。",
-    "dontShowAgain": "不再顯示"
   },
   "editOrderModal": {
     "title": "修改訂單",

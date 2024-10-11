@@ -293,8 +293,7 @@
     "text1": "持有待成交演算法订单期间，关闭应用程式后，将于重启Bitfinex Honey应用程式时，询问您要重启/取消演算法订单。",
     "text2": "重启Bitfinex Honey应用程式时，将提供两种选项，您需选取现有待成交演算法订单套用相关设置。",
     "text3": "1. 重启：已选取的待成交演算法订单其自动订单将被取消，且将依照可用余额重新提交演算法订单。而未选取的演算法订单则将不再次提交并永久取消。",
-    "text4": "2. 取消全部：所有演算法的待成交自动订单将自动取消且非演算法订单将重启。",
-    "text5": "提醒：如禁用失能开关选项，自动订单将留存为待成交状态。"
+    "text4": "2. 取消全部：所有演算法的待成交自动订单将自动取消且非演算法订单将重启。"
   },
   "AOTableModal": {
     "title": "演算法订单",
@@ -331,11 +330,7 @@
     "autologin": "自动登录开发者模式",
     "apiKey": "API密钥",
     "apiSecret": "API 私钥",
-    "deadManCheckbox": "失能开关",
     "themeSetting": "应用程式主题",
-    "deadManText1": "启用失能开关将于关闭应用程式时，自动取消所有待执行订单。",
-    "deadManText2": "关闭应用程式将取消演算法订单。如无启用失能开关，则不会取消演算法订单。于重启应用程式时，如提示说明订单则有可能会消失。",
-    "deadManWarning": "禁用此设置将收到相关提醒！",
     "usageReportingCheckbox": "使用报告",
     "showPauseInfoCheckbox": "显示演算法订单暂停信息",
     "showPauseInfoText": "如已勾选，当仍持有待执行演算法订单且欲关闭应用程式，即会跳出此模式的信息说明。",
@@ -442,7 +437,6 @@
     "requestedAlgoOrderNotRunningCannotStop": "要求的演算法订单无运作，无法停止。",
     "favouriteTradingPairsSuccessfullySaved": "已成功保存收藏的交易对",
     "settingsSuccessfullyUpdated": "已成功更新设置",
-    "reconnectingWithNewDmsSetting": "通过新的失能开关重新连接中...",
     "connectingTo": "正连接至{{target}}...",
     "connectedTo": "已连接至{{target}}",
     "authenticatedWith": "通过{{target}} 已验证",
@@ -454,11 +448,6 @@
   "tradingModeModal": {
     "title": "切换交易模式",
     "text": "切换至交易模式。点击Okay后将重启应用程式，并暂停待执行演算法订单。"
-  },
-  "confirmDMSModal": {
-    "title": "启用失能开关",
-    "text": "请了解启用此设置后，关闭应用程式将会取消所有于Bitfinex Honey、Bitfinex平台或其他地方所创建的待成交订单。\n\n此仅为建议设置，应了解启用时其相关影响。",
-    "dontShowAgain": "不再显示"
   },
   "editOrderModal": {
     "title": "修改订单",

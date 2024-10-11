@@ -11,7 +11,6 @@ export const DEFAULT_RECONNECTION_TIME = 30 * 1000
 export const MAX_RECONNECTION_TIME = 600 * 1000
 
 export const SETTINGS_KEYS = {
-  DMS: 'dms',
   SHOW_ALGO_PAUSE_INFO: 'showAlgoPauseInfo',
   SHOW_ONLY_FAVORITE_PAIRS: 'showOnlyFavoritePairs',
   THEME: 'theme',
@@ -51,11 +50,6 @@ export const getShowOnlyFavoritePairsSetting = createSelector(
 export const getShowAlgoPauseInfoSetting = createSelector(
   getSettings,
   (settings) => _get(settings, SETTINGS_KEYS.SHOW_ALGO_PAUSE_INFO, true),
-)
-
-export const getDMSSetting = createSelector(
-  getSettings,
-  (settings) => _get(settings, SETTINGS_KEYS.DMS, false),
 )
 
 export const getThemeSetting = createSelector(

@@ -37,8 +37,6 @@ const AOPauseModal = ({
       <br />
       <p>{t('AOPauseModal.text3')}</p>
       <p>{t('AOPauseModal.text4')}</p>
-      <br />
-      <p>{t('AOPauseModal.text5')}</p>
       <Modal.Footer>
         <Modal.Button
           onClick={onCancel}

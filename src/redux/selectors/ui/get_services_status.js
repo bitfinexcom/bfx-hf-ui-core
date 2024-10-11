@@ -6,7 +6,6 @@ import { getCurrentMode } from './index'
 const path = REDUCER_PATHS.UI
 
 const DEFAULT_STATUS = {
-  dmsControl: false,
   algoWorker: false,
   bfxClient: false,
   strategyManager: false,
