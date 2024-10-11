@@ -48,6 +48,7 @@ export const ALLOWED_RC_VERSIONS = 'HF_UI_ALLOWED_RC_VERSIONS'
 export const IS_PAPER_TRADING = 'IS_PAPER_TRADING'
 export const PAPER_MODE = 'paper'
 export const MAIN_MODE = 'main'
+export const DO_NOT_SHOW_DMS_REMOVAL_DISCLAIMER = 'DO_NOT_SHOW_DMS_REMOVAL_DISCLAIMER'
 let shownOldFormatModal = false
 
 export const BACKTEST_TAB_SECTIONS = {
@@ -167,6 +168,10 @@ function getInitialState() {
       }
 
       defaultState.isRCDisclaimerShown = showModal
+    }
+    const doNotShowDmsRemovalDisclaimer = localStorage.getItem(DO_NOT_SHOW_DMS_REMOVAL_DISCLAIMER) === 'true'
+    if (!doNotShowDmsRemovalDisclaimer) {
+      defaultState.modals[`is${UI_MODAL_KEYS.DMS_REMOVAL_DISCLAIMER}Open`] = true
     }
 
     defaultState.layouts = nextFormatLayouts
