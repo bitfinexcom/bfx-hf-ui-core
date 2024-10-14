@@ -52,7 +52,7 @@ const buildGridColumns = (items, breakpoint, currentColumns, columnIdx) => {
       ...defaults,
       x: currentColumnX,
       y: nextY,
-      minW: _min(defaults.minW, itemWidth),
+      minW: _min([defaults.minW, itemWidth]),
       w: itemWidth,
       ...itemOverwrites,
       c: defaults.c,
