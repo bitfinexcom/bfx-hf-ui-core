@@ -18,14 +18,12 @@ import LayoutSettings from './Navbar.LayoutSettings'
 import APIBanner from './Navbar.APIBanner'
 import AppSettings from './Navbar.AppSettings'
 import RCDisclaimer from '../RCDisclaimer/RCDisclaimer'
-import Routes, { strategyEditor } from '../../constants/routes'
+import Routes from '../../constants/routes'
 import { isElectronApp } from '../../redux/config'
 import {
   getThemeSetting,
   THEMES,
   getIsPaperTrading,
-  getIsBetaVersion,
-  getIsStrategiesTabVisible,
   getUIState,
 } from '../../redux/selectors/ui'
 import { UI_MODAL_KEYS } from '../../redux/constants/modals'
@@ -60,11 +58,9 @@ const Navbar = () => {
   const { t } = useTranslation()
   const settingsTheme = useSelector(getThemeSetting)
   const isPaperTrading = useSelector(getIsPaperTrading)
-  const isBetaVersion = useSelector(getIsBetaVersion)
-  const isStrategiesTabVisible = useSelector(getIsStrategiesTabVisible)
   const showRCDisclaimer = useSelector((state) => getUIState(state, UI_KEYS.isRCDisclaimerShown),
   )
-  const showStrategies = isBetaVersion || isStrategiesTabVisible
+
   const leafOptions = useMemo(
     () => getLeafDropdownOptions(settingsTheme),
     [settingsTheme],
@@ -84,7 +80,7 @@ const Navbar = () => {
         />
         <ul className='hfui-navbar__main-links'>
           {_map(_values(Routes), ({ path, label }) => {
-            return showStrategies || path !== strategyEditor.path ? (
+            return (
               <li key={path}>
                 <NavbarLink
                   route={path}
@@ -93,7 +89,7 @@ const Navbar = () => {
                   })}
                 />
               </li>
-            ) : null
+            )
           })}
         </ul>
         <div className='hfui-tradingpage__menu'>
