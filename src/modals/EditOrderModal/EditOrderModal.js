@@ -67,7 +67,7 @@ const EditOrderModal = ({
       return
     }
     const updOrder = { ...order }
-    const algoOrders = getAOs(t, true, !isRelaunching, false)
+    const algoOrders = getAOs({ t, isEditMode: !isRelaunching, isPaperTrading: false })
     let isAlgoOrder = true
     let uiDef = _find(
       algoOrders,
