@@ -15,6 +15,7 @@ import onResetData from './on_reset_data'
 import onExportStrategiesBeforeReset from './on_export_strategies_before_reset_data.js'
 import onAlgoOrderStopped from './on_ao_stopped'
 import cancelAlgoOrder from './cancel_algo_order'
+import onClientStatusUpdate from './on_client_status_update'
 
 export default function* () {
   yield takeEvery(t.BUFF_SEND, messageQueueWorker)
@@ -29,6 +30,7 @@ export default function* () {
   yield takeEvery(t.DATA_ALGO_ORDER_STOPPED, onAlgoOrderStopped)
   yield takeLatest(t.EXPORT_STRATEGIES_ON_RESET, onExportStrategiesBeforeReset)
   yield takeEvery(t.CANCEL_ALGO_ORDER, cancelAlgoOrder)
+  yield takeEvery(t.DATA_CLIENT_STATUS_UPDATE, onClientStatusUpdate)
 
   yield fork(connectionWorker)
   yield fork(pingRebootAppWorker)

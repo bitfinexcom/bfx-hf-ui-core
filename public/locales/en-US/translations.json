@@ -447,6 +447,10 @@
     "reboot": "Reboot",
     "restart": "Restart"
   },
+  "longTermClosedSessionModal": {
+    "title": "Warning - session closed for too long",
+    "description": "The connection to Bitfinex has been down for over 30 minutes, this might have brought instabilities to your trading operations. <bold>Please review carefully all your current trading activity on LIVE mode.</bold>"
+  },
   "noConnectionActionModal": {
     "title": "Connection issue",
     "description": "This action can't be run because the app is encountering connection issues.\nWe are trying to reconnect automatically.\nTry again once you see 'WS connected' present on the status bar at the bottom right-corner."
@@ -920,7 +924,8 @@
     "launchNoSave": "Launch without saving",
     "updateAndRestart": "Update and Restart",
     "saveAndContinue": "Save and Continue",
-    "starred": "Starred"
+    "starred": "Starred",
+    "continueToApp": "Continue to the App"
   },
   "crashHandler": {
     "text1": "An error occurred that caused the Bitfinex Honey UI to halt. Please, restart the application to proceed working with it",
