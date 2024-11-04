@@ -110,7 +110,7 @@ const EditOrderModal = ({
     setDiscardConfirmationVisible(false)
 
     setTimeout(() => {
-      // clearing order data after modal close amination ends
+      // clearing order data after modal close animation ends
       setLayout({})
       setArgs({})
     }, 600)
