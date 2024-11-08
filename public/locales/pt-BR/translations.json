@@ -358,16 +358,6 @@
     "title": "Ordens Atomic",
     "noOrders": "Nenhuma ordem atomic ativa"
   },
-  "badConnectionModal": {
-    "title": "Problema com a conexão",
-    "text1": "Notamos vários problemas de conexão com a internet. É necessário {{action}} o aplicativo para que ele continue a funcionar normalmente.",
-    "text2": "Certifique-se de ter uma conexão com a internet estável e boa.",
-    "text3": "O Bitfinex Honey irá {{action}} depois de você pressionar \"Ok\".",
-    "text4": "O aplicativo irá {{action}} automaticamente em {{countdown}} segundos.",
-    "checkbox": "{{action}} automaticamente",
-    "reboot": "reiniciar",
-    "restart": "Reiniciar"
-  },
   "balancesTableModal": {
     "title": "Saldos",
     "hideZeroCheckbox": "Ocultar saldos de Zero",

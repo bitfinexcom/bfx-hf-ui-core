@@ -358,16 +358,6 @@
     "title": "自動訂單",
     "noOrders": "無待執行的自動訂單"
   },
-  "badConnectionModal": {
-    "title": "連線問題",
-    "text1": "網路連線發生問題。 請 {{action}} 應用程序以恢復正常運作。",
-    "text2": "請確保您的網路連線狀態穩定且良好。",
-    "text3": "按下「Okay」後，Bitfinex Honey 將 {{action}}。",
-    "text4": "此應用程序將在 {{countdown}} 秒後自動 {{action}}。",
-    "checkbox": "自動 {{action}}",
-    "reboot": "重新加載",
-    "restart": "重新啟動"
-  },
   "balancesTableModal": {
     "title": "餘額",
     "hideZeroCheckbox": "隱藏0餘額",
