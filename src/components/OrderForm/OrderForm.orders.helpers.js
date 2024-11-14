@@ -15,27 +15,26 @@ import timeFrames from '../../util/time_frames'
 
 import rawOrders from '../../orders'
 
-const getAlgoOrdersForStandalone = (isBeta, isPaperTrading) => {
+const getAlgoOrdersForStandalone = (isPaperTrading) => {
   const aos = [
+    AccumulateDistribute,
     PingPong,
     Iceberg,
     TWAP,
     Bracket,
   ]
-  if (isBeta) {
-    if (!isPaperTrading) {
-      aos.unshift(Recurring)
-    }
-    aos.unshift(AccumulateDistribute)
+  if (!isPaperTrading) {
+    aos.unshift(Recurring)
   }
+
   return aos
 }
 
 const HOSTED_ALGO_ORDERS = [Iceberg, TWAP]
 
-const getAlgoOrders = (isBeta, isPaperTrading) => (isElectronApp ? getAlgoOrdersForStandalone(isBeta, isPaperTrading) : HOSTED_ALGO_ORDERS)
+const getAlgoOrders = (isPaperTrading) => (isElectronApp ? getAlgoOrdersForStandalone(isPaperTrading) : HOSTED_ALGO_ORDERS)
 
-export const getAOs = memoizeOne((t, isBeta, isEditMode, isPaperTrading = false) => _map(getAlgoOrders(isBeta, isPaperTrading), (ao) => ao.meta.getUIDef({
+export const getAOs = memoizeOne(({ t, isEditMode, isPaperTrading = false }) => _map(getAlgoOrders(isPaperTrading), (ao) => ao.meta.getUIDef({
   timeframes: timeFrames,
   i18n: { t, prefix: 'algoOrderForm.' },
   isEditMode,

@@ -9,8 +9,6 @@ import {
   getCurrentMode,
   getShowAlgoPauseInfoSetting,
   getThemeSetting,
-  getIsBetaVersion,
-  getIsStrategiesTabVisible,
   SETTINGS_KEYS,
   getIsFullscreen,
 } from '../../redux/selectors/ui'
@@ -33,7 +31,6 @@ const mapStateToProps = (state = {}) => {
     settingsShowAlgoPauseInfo: getShowAlgoPauseInfoSetting(state),
     settingsTheme: getThemeSetting(state),
     isBfxConnected: getIsBitfinexConnected(state),
-    showStrategies: getIsBetaVersion(state) || getIsStrategiesTabVisible(state),
     isFullscreen: getIsFullscreen(state),
   }
 }

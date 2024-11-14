@@ -67,7 +67,7 @@ const EditOrderModal = ({
       return
     }
     const updOrder = { ...order }
-    const algoOrders = getAOs(t, true, !isRelaunching, false)
+    const algoOrders = getAOs({ t, isEditMode: !isRelaunching, isPaperTrading: false })
     let isAlgoOrder = true
     let uiDef = _find(
       algoOrders,
@@ -110,7 +110,7 @@ const EditOrderModal = ({
     setDiscardConfirmationVisible(false)
 
     setTimeout(() => {
-      // clearing order data after modal close amination ends
+      // clearing order data after modal close animation ends
       setLayout({})
       setArgs({})
     }, 600)

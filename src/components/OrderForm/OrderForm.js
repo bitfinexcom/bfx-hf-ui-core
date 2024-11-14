@@ -141,11 +141,10 @@ class OrderForm extends React.Component {
       getAlgoOrderParams,
       aoParams,
       t,
-      showAdvancedAlgos,
       isPaperTrading,
     } = this.props
     const { currentMarket } = this.state
-    const algoOrders = getAOs(t, showAdvancedAlgos, false, isPaperTrading)
+    const algoOrders = getAOs({ t, isEditMode: false, isPaperTrading })
     const orders = getAtomicOrders(t)
     resetActiveAOParamsID()
 
@@ -394,7 +393,6 @@ class OrderForm extends React.Component {
       isOrderExecuting,
       activeMarket,
       t,
-      showAdvancedAlgos,
       isAlgoWorkerStarted,
       isPaperTrading,
     } = this.props
@@ -411,7 +409,7 @@ class OrderForm extends React.Component {
       isAlgoOrder,
     } = this.state
 
-    const algoOrders = getAOs(t, showAdvancedAlgos, false, isPaperTrading)
+    const algoOrders = getAOs({ t, isEditMode: false, isPaperTrading })
     const processedAOs = filterAOs(algoOrders, activeMarket)
 
     const apiClientConfigured = apiCredentials?.configured && apiCredentials?.valid
@@ -590,7 +588,6 @@ OrderForm.propTypes = {
   isOrderExecuting: PropTypes.bool,
   moveable: PropTypes.bool,
   removeable: PropTypes.bool,
-  showAdvancedAlgos: PropTypes.bool,
   t: PropTypes.func.isRequired,
   atomicOrdersCount: PropTypes.number.isRequired,
   atomicOrdersCountActiveMarket: PropTypes.number.isRequired,
@@ -609,7 +606,6 @@ OrderForm.defaultProps = {
   apiCredentials: {},
   onRemove: () => { },
   authToken: null,
-  showAdvancedAlgos: false,
 }
 
 export default OrderForm

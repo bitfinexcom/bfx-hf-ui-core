@@ -83,8 +83,6 @@ const StrategyEditor = (props) => {
     isPaperTrading,
     dsExecuteBacktest,
     showError,
-    flags,
-    isBetaVersion,
     executionState,
     sectionErrors,
     savedStrategies,
@@ -663,23 +661,22 @@ const StrategyEditor = (props) => {
             onRemoveStrategy={onRemoveStrategy}
             isWideSidebar={isWideSidebar}
           >
-            {(isBetaVersion || flags?.live_execution) && (
-              <StrategyTab
-                htmlKey='strategy'
-                sbtitle={sbtitleStrategy}
-                onOpenSaveStrategyAsModal={openSaveStrategyAsModal}
-                onOpenEditStrategyLabelModal={openEditStrategyLabelModal}
-                isPaperTrading={isPaperTrading}
-                stopExecution={stopExecution}
-                onSaveStrategy={onSaveStrategy}
-                saveStrategyOptions={saveStrategyOptions}
-                hasErrors={hasErrorsInIDE}
-                onCancelProcess={onCancelProcess}
-                {...props}
-              />
-            )}
 
-            {isPaperTrading && (isBetaVersion || flags?.backtest) && (
+            <StrategyTab
+              htmlKey='strategy'
+              sbtitle={sbtitleStrategy}
+              onOpenSaveStrategyAsModal={openSaveStrategyAsModal}
+              onOpenEditStrategyLabelModal={openEditStrategyLabelModal}
+              isPaperTrading={isPaperTrading}
+              stopExecution={stopExecution}
+              onSaveStrategy={onSaveStrategy}
+              saveStrategyOptions={saveStrategyOptions}
+              hasErrors={hasErrorsInIDE}
+              onCancelProcess={onCancelProcess}
+              {...props}
+            />
+
+            {isPaperTrading ? (
               <BacktestTab
                 htmlKey='backtest'
                 sbtitle={sbtitleBacktest}
@@ -688,32 +685,30 @@ const StrategyEditor = (props) => {
                 onCancelProcess={onCancelProcess}
                 {...props}
               />
-            )}
-            {(isBetaVersion || flags?.docs) && !isPaperTrading && (
-              <IDETab
-                htmlKey='view_in_ide'
-                key='view_in_ide'
-                hasErrors={hasErrorsInIDE}
-                onSaveStrategy={onSaveStrategy}
-                onOpenSaveStrategyAsModal={openSaveStrategyAsModal}
-                sbtitle={sbtitleIDE}
-                setStrategyDirty={setStrategyDirty}
-                onDefineIndicatorsChange={onDefineIndicatorsChange}
-                evalSectionContent={evalSectionContent}
-                setSectionErrors={setSectionErrors}
-                sectionErrors={sectionErrors}
-                setStrategy={setStrategy}
-                strategy={strategy}
-              />
-            )}
-            {(isBetaVersion || flags?.live_execution) && (
-              <div
-                htmlKey='settings'
-                key='settings'
-                sbtitle={sbtitleSettings}
-                onClick={openStrategySettingsModal}
-              />
-            )}
+            )
+              : (
+                <IDETab
+                  htmlKey='view_in_ide'
+                  key='view_in_ide'
+                  hasErrors={hasErrorsInIDE}
+                  onSaveStrategy={onSaveStrategy}
+                  onOpenSaveStrategyAsModal={openSaveStrategyAsModal}
+                  sbtitle={sbtitleIDE}
+                  setStrategyDirty={setStrategyDirty}
+                  onDefineIndicatorsChange={onDefineIndicatorsChange}
+                  evalSectionContent={evalSectionContent}
+                  setSectionErrors={setSectionErrors}
+                  sectionErrors={sectionErrors}
+                  setStrategy={setStrategy}
+                  strategy={strategy}
+                />
+              )}
+            <div
+              htmlKey='settings'
+              key='settings'
+              sbtitle={sbtitleSettings}
+              onClick={openStrategySettingsModal}
+            />
           </StrategyEditorPanel>
           <RemoveExistingStrategyModal
             isOpen={isRemoveModalOpen}
@@ -811,12 +806,6 @@ StrategyEditor.propTypes = {
   saveStrategy: PropTypes.func.isRequired,
   isPaperTrading: PropTypes.bool.isRequired,
   dsExecuteBacktest: PropTypes.func.isRequired,
-  isBetaVersion: PropTypes.bool.isRequired,
-  flags: PropTypes.shape({
-    docs: PropTypes.bool,
-    live_execution: PropTypes.bool,
-    backtest: PropTypes.bool,
-  }).isRequired,
   showError: PropTypes.func.isRequired,
   sectionErrors: PropTypes.objectOf(PropTypes.string).isRequired,
   cancelProcess: PropTypes.func.isRequired,
