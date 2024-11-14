@@ -12,7 +12,7 @@ export default function (state = getInitialState(), action = {}) {
   const { type, payload = {} } = action
 
   switch (type) {
-    case t.DATA_CLIENT_STATUS_UPDATE: {
+    case t.DATA_SET_API_CLIENT_STATUS: {
       const { status, mode } = payload
 
       return {

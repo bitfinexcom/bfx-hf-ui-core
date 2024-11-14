@@ -440,12 +440,9 @@
     "title": "Atomic Orders",
     "noOrders": "No active atomic orders"
   },
-  "badConnectionModal": {
-    "title": "Connection issue",
-    "description": "There has been a connection issue, all running strategies and algorithmic orders have been cancelled.",
-    "checkbox": "{{action}} automatically",
-    "reboot": "Reboot",
-    "restart": "Restart"
+  "longTermClosedSessionModal": {
+    "title": "Warning - session closed for too long",
+    "description": "The connection to Bitfinex has been down for over 30 minutes, this might have brought instabilities to your trading operations. <bold>Please review carefully all your current trading activity on LIVE mode.</bold>"
   },
   "noConnectionActionModal": {
     "title": "Connection issue",
@@ -920,7 +917,8 @@
     "launchNoSave": "Launch without saving",
     "updateAndRestart": "Update and Restart",
     "saveAndContinue": "Save and Continue",
-    "starred": "Starred"
+    "starred": "Starred",
+    "continueToApp": "Continue to the App"
   },
   "crashHandler": {
     "text1": "An error occurred that caused the Bitfinex Honey UI to halt. Please, restart the application to proceed working with it",

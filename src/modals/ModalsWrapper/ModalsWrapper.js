@@ -3,8 +3,8 @@ import PropTypes from 'prop-types'
 import AppSettingsModal from '../AppSettingsModal'
 import CloseSessionModal from '../CloseSessionModal'
 import DMSRemovalDisclaimerModal from '../DMSRemovalDisclaimerModal'
+import LongTermClosedSessionModal from '../LongTermClosedSessionModal/LongTermClosedSessionModal'
 
-const BadConnectionModal = lazy(() => import('../BadConnectionModal'))
 const NoConnectionActionModal = lazy(() => import('../NoConnectionActionModal'))
 const OldFormatModal = lazy(() => import('../OldFormatModal'))
 const AOPauseModal = lazy(() => import('../AOPauseModal'))
@@ -28,7 +28,7 @@ const ModalsWrapper = ({ isElectronApp }) => {
         </>
       )}
       <NoConnectionActionModal />
-      <BadConnectionModal />
+      <LongTermClosedSessionModal />
       <CcyInfoModal />
       <EditOrderModal />
       <ClosePositionModal />

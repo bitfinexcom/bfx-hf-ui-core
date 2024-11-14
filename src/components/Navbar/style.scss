@@ -32,9 +32,9 @@ body.hosted {
   transition: margin-top 0.2s ease-in;
 
   .hfui-navbar__logo {
-    width: 83px;
-    margin-right: spacing();
+    margin-right: spacing(0.5);
     height: 100%;
+    width: 100px;
   }
 
   &.marginTop {

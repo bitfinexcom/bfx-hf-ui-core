@@ -16,6 +16,10 @@
       height: 60px;
       padding-top: 5px;
       padding-bottom: 5px;
+
+      svg {
+        width: 100px;
+      }
     }
 
     .hfui-authenticationpage__content {
@@ -33,7 +37,8 @@
       width: 100%;
     }
 
-    .hfui-authenticationpage__trading-mode, .hfui-dropdown__wrapper {
+    .hfui-authenticationpage__trading-mode,
+    .hfui-dropdown__wrapper {
       width: 100% !important;
     }
   }
@@ -216,7 +221,7 @@
   }
 
   input:focus {
-    border: 1px solid var(--light-background-mix)
+    border: 1px solid var(--light-background-mix);
   }
 }
 

@@ -148,6 +148,11 @@ export default {
     payload: { balance },
   }),
 
+  setAPIClientStatus: ({ status, mode }) => ({
+    type: t.DATA_SET_API_CLIENT_STATUS,
+    payload: { status, mode },
+  }),
+
   recvOrders: ({ orders }) => ({
     type: t.DATA_ORDERS,
     payload: { orders },

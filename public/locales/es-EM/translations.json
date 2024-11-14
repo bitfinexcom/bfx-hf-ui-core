@@ -358,16 +358,6 @@
     "title": "Órdenes Atómicas",
     "noOrders": "Sin órdenes atómicas activas"
   },
-  "badConnectionModal": {
-    "title": "Error de conexión",
-    "text1": "Hemos notado varios problemas de conexión a internet. Es necesario {{action}} la aplicación para continuar con el funcionamiento normal.",
-    "text2": "Asegúrate de tener una conexión a internet estable y buena.",
-    "text3": "Bitfinex Honey hará {{action}} después de presionar 'Aceptar'.",
-    "text4": "La aplicación hará {{action}} automáticamente en {{countdown}} segundos.",
-    "checkbox": "{{action}} automáticamente",
-    "reboot": "reiniciar",
-    "restart": "Reiniciar"
-  },
   "balancesTableModal": {
     "title": "Balances",
     "hideZeroCheckbox": "Ocultar Balances Cero",

@@ -358,16 +358,6 @@
     "title": "自动订单",
     "noOrders": "无待成交自动订单"
   },
-  "badConnectionModal": {
-    "title": "连接问题",
-    "text1": "我们注意到数次连接问题。此需{{action}} 应用程式以继续正常运作。",
-    "text2": "请确保您有稳定且良好的网路连接",
-    "text3": "点击Okay后，将{{action}} Bitfinex Honey。",
-    "text4": "将于{{countdown}} 秒内，自动{{action}} 应用程式。",
-    "checkbox": "自动{{action}}",
-    "reboot": "重新启用",
-    "restart": "重新开始"
-  },
   "balancesTableModal": {
     "title": "余额",
     "hideZeroCheckbox": "隐藏无余额",

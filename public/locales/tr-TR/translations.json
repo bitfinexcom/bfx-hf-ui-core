@@ -358,16 +358,6 @@
     "title": "Atomic Orders",
     "noOrders": "No active atomic orders"
   },
-  "badConnectionModal": {
-    "title": "Connection issue",
-    "text1": "Birkaç internet bağlantısı sorunu fark ettik. Normal çalışmaya devam edebilmek için uygulamanın {{action}} yapılması gerekir.",
-    "text2": "Please make sure you have stable and good internet connection.",
-    "text3": "Bitfinex Honey, siz 'Tamam' a bastıktan sonra {{action}} yapacaktır.",
-    "text4": "Uygulama, {{countdown}} saniye içinde otomatik olarak {{action}} yapacaktır.",
-    "checkbox": "Otomatik olarak {{action}}",
-    "reboot": "yeniden başlat",
-    "restart": "Yeniden Başlat"
-  },
   "balancesTableModal": {
     "title": "Balances",
     "hideZeroCheckbox": "Hide Zero Balances",

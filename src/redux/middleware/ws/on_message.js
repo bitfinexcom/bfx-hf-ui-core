@@ -17,7 +17,7 @@ import tokenStore from '../../../util/token_store'
 import { isElectronApp, HONEY_AUTH_URL } from '../../config'
 import { UI_MODAL_KEYS } from '../../constants/modals'
 import { UI_KEYS } from '../../constants/ui_keys'
-import { WS_CONNECTION } from '../../constants/ws'
+
 import { SETTINGS_KEYS, getCurrentStrategy } from '../../selectors/ui'
 import { LOG_LEVELS } from '../../../constants/logging'
 
@@ -322,14 +322,6 @@ export default (alias, store) => (e = {}) => {
       case 'data.client': {
         const [, , mode, status] = payload
         store.dispatch(WSActions.recvClientStatusUpdate({ status, mode }))
-
-        if (status === WS_CONNECTION.CLOSED) {
-          store.dispatch(UIActions.setUIValue(UI_KEYS.isBadInternetConnection, true))
-        }
-
-        if (status === WS_CONNECTION.OPENED) {
-          store.dispatch(UIActions.setUIValue(UI_KEYS.isBadInternetConnection, false))
-        }
 
         break
       }
