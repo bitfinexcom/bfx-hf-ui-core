@@ -1,7 +1,6 @@
 /* eslint-disable jsx-a11y/anchor-has-content */
 import React, { memo } from 'react'
 import { useTranslation, Trans } from 'react-i18next'
-import { useDispatch } from 'react-redux'
 
 import {
   appVersion,
@@ -17,16 +16,9 @@ import {
   PRIVACY_POLICY_URL,
   TERMS_CONDITIONS_URL,
 } from './AppSettingsModal.constants'
-import UIActions from '../../redux/actions/ui'
-import { UI_MODAL_KEYS } from '../../redux/constants/modals'
 
 const About = () => {
   const { t } = useTranslation()
-  const dispatch = useDispatch()
-
-  const openHelpUsImproveModal = () => {
-    dispatch(UIActions.changeUIModalState(UI_MODAL_KEYS.HELP_US_IMPROVE_HONEY_MODAL, true))
-  }
 
   return (
     <div>
@@ -125,11 +117,6 @@ const About = () => {
         >
           {t('appSettings.bfxPrivacy')}
         </a>
-      </div>
-      <div className='appsettings-modal__setting appsettings-modal__legal light'>
-        <span onClick={openHelpUsImproveModal}>
-          Advanced privacy configuration
-        </span>
       </div>
     </div>
   )
