@@ -8,9 +8,6 @@ import {
   API_DOCS_URL,
   SOURCE_CODE_URL,
   LICENCE_URL,
-  HF_DESC_URL,
-  DISCUSSION_BOARD_URL,
-  DISCORD_URL,
 } from '../../redux/config'
 import {
   PRIVACY_POLICY_URL,
@@ -52,7 +49,8 @@ const About = () => {
             ),
           }}
         />
-        <br />
+      </div>
+      <div className='appsettings-modal__setting bold'>
         <Trans
           t={t}
           i18nKey='appSettings.sourceCode'
@@ -67,39 +65,7 @@ const About = () => {
           }}
         />
       </div>
-      <div className='appsettings-modal__setting light'>
-        <Trans
-          t={t}
-          i18nKey='appSettings.discussionBoard'
-          components={{
-            url: (
-              <a href={DISCUSSION_BOARD_URL} target='_blank' rel='noopener noreferrer' />
-            ),
-          }}
-        />
-      </div>
-      <div className='appsettings-modal__setting light'>
-        <Trans
-          t={t}
-          i18nKey='appSettings.reachOutDiscord'
-          components={{
-            url: (
-              <a href={DISCORD_URL} target='_blank' rel='noopener noreferrer' />
-            ),
-          }}
-        />
-      </div>
-      <div className='appsettings-modal__setting light'>
-        <Trans
-          t={t}
-          i18nKey='appSettings.wipDocs'
-          components={{
-            url: (
-              <a href={HF_DESC_URL} target='_blank' rel='noopener noreferrer' />
-            ),
-          }}
-        />
-      </div>
+
       <div className='appsettings-modal__setting appsettings-modal__legal light'>
         <a
           className='legal__item'
