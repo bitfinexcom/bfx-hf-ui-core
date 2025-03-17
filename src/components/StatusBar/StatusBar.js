@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next'
 
 import { useDispatch } from 'react-redux'
 import {
-  isElectronApp, appVersion, RELEASE_URL, isRCVersion,
+  isElectronApp, appVersion, RELEASE_URL,
 } from '../../redux/config'
 import { changeUIModalState, setSettingsTab } from '../../redux/actions/ui'
 
@@ -23,8 +23,6 @@ const StatusBar = ({
   apiClientConnected,
   wsInterrupted,
   currentModeApiKeyState,
-  isPaperTrading,
-  isBetaVersion,
 }) => {
   const isWrongAPIKey = !currentModeApiKeyState.valid
   const apiClientDisconnected = isWrongAPIKey || _apiClientDisconnected
@@ -54,26 +52,16 @@ const StatusBar = ({
 
   return (
     <div className={ClassNames('hfui-statusbar__wrapper')}>
-      {isRCVersion && (
       <div className='hfui-statusbar__rc'>
         <p className='hfui-statusbar__rc-disclaimer'>
-          {t('RC_disclaimer.bottom')}
+          {t('lackOfSupportDisclaimer')}
         </p>
-      </div>
-      )}
-      <div className='hfui-statusbar__left'>
-        {!isPaperTrading && !isRCVersion && (
-          <div className='hfui-statusbar__desclaimer'>
-            <span className='hfui-statusbar__pulse' />
-            <span>{t('statusbar.liveModeDisclaimer')}</span>
-          </div>
-        )}
       </div>
 
       <div className='hfui-statusbar__right'>
         {isElectronApp && (
           <>
-            <p className='hfui-statusbar__version'>
+            <div className='hfui-statusbar__version'>
               {remoteVersion && remoteVersion !== appVersion && (
                 <NavbarButton
                   label={t('statusbar.updateToLast')}
@@ -89,12 +77,8 @@ const StatusBar = ({
               <span
                 className='hfui-statusbar__beta'
                 onClick={onVersionTypeClickHandler}
-              >
-                (
-                {isBetaVersion ? 'BETA' : 'STABLE'}
-                )
-              </span>
-            </p>
+              />
+            </div>
             <span
               className={ClassNames('hfui-statusbar__statuscircle', {
                 green: apiClientConnected,
@@ -135,8 +119,6 @@ StatusBar.propTypes = {
   currentModeApiKeyState: PropTypes.shape({
     valid: PropTypes.bool,
   }),
-  isPaperTrading: PropTypes.bool.isRequired,
-  isBetaVersion: PropTypes.bool.isRequired,
 }
 
 StatusBar.defaultProps = {

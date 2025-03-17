@@ -1,4 +1,3 @@
-import _includes from 'lodash/includes'
 import { Recurring } from 'bfx-hf-algo'
 import { version } from '../../package.json'
 
@@ -32,10 +31,6 @@ const isMacOS = navigator.userAgent.indexOf('Mac') !== -1
 const PUB_REST_API_URL = isElectronApp ? 'http://localhost:45001' : process.env.REACT_APP_UFX_PUBLIC_API_URL
 
 const appVersion = version
-
-const RC_KEYWORD = '-rc'
-
-const isRCVersion = _includes(appVersion, RC_KEYWORD)
 
 const RELEASE_URL = 'https://github.com/bitfinexcom/bfx-hf-ui/releases'
 
@@ -91,8 +86,6 @@ export {
   MARGIN_TRADING_ARTICLE_URL,
   STOP_ORDER_ARTICLE_URL,
   HOSTED_ALGO_ORDERS,
-  RC_KEYWORD,
-  isRCVersion,
   ISSUES_REPORT_URL,
   SETUP_TIMESTAMP_FORMAT_ARTICLE,
   DISCUSSION_BOARD_URL,

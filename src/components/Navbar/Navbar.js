@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from 'react-redux'
 import _values from 'lodash/values'
 import _map from 'lodash/map'
 import { Icon } from 'react-fa'
-import classNames from 'clsx'
 
 import { useTranslation } from 'react-i18next'
 import HFIcon from '../../ui/HFIcon'
@@ -17,17 +16,14 @@ import CloseSessionButton from './Navbar.CloseSessionButton'
 import LayoutSettings from './Navbar.LayoutSettings'
 import APIBanner from './Navbar.APIBanner'
 import AppSettings from './Navbar.AppSettings'
-import RCDisclaimer from '../RCDisclaimer/RCDisclaimer'
 import Routes from '../../constants/routes'
 import { isElectronApp } from '../../redux/config'
 import {
   getThemeSetting,
   THEMES,
   getIsPaperTrading,
-  getUIState,
 } from '../../redux/selectors/ui'
 import { UI_MODAL_KEYS } from '../../redux/constants/modals'
-import { UI_KEYS } from '../../redux/constants/ui_keys'
 
 import './style.css'
 
@@ -58,8 +54,6 @@ const Navbar = () => {
   const { t } = useTranslation()
   const settingsTheme = useSelector(getThemeSetting)
   const isPaperTrading = useSelector(getIsPaperTrading)
-  const showRCDisclaimer = useSelector((state) => getUIState(state, UI_KEYS.isRCDisclaimerShown),
-  )
 
   const leafOptions = useMemo(
     () => getLeafDropdownOptions(settingsTheme),
@@ -67,78 +61,71 @@ const Navbar = () => {
   )
 
   return (
-    <>
-      <RCDisclaimer />
-      <div
-        className={classNames('hfui-navbar__wrapper', {
-          marginTop: showRCDisclaimer,
+    <div className='hfui-navbar__wrapper'>
+      <HFIcon
+        className='hfui-navbar__logo'
+        fill={settingsTheme === THEMES.DARK ? 'white' : 'black'}
+      />
+      <ul className='hfui-navbar__main-links'>
+        {_map(_values(Routes), ({ path, label }) => {
+          return (
+            <li key={path}>
+              <NavbarLink
+                route={path}
+                label={t(label, {
+                  paperPrefix: isPaperTrading ? t('main.paperPrefix') : null,
+                })}
+              />
+            </li>
+          )
         })}
-      >
-        <HFIcon
-          className='hfui-navbar__logo'
-          fill={settingsTheme === THEMES.DARK ? 'white' : 'black'}
-        />
-        <ul className='hfui-navbar__main-links'>
-          {_map(_values(Routes), ({ path, label }) => {
-            return (
-              <li key={path}>
-                <NavbarLink
-                  route={path}
-                  label={t(label, {
-                    paperPrefix: isPaperTrading ? t('main.paperPrefix') : null,
-                  })}
+      </ul>
+      <div className='hfui-tradingpage__menu'>
+        <div className='hfui-exchangeinfobar__buttons'>
+          <LayoutSettings />
+          <NavbarButton
+            alt={t('notifications.title')}
+            icon='notifications'
+            onClick={() => dispatch(
+              UIActions.toggleUIModalState(
+                UI_MODAL_KEYS.NOTIFICATIONS_PANEL,
+              ),
+            )}
+          />
+          {isElectronApp && <AppSettings />}
+          <Dropdown
+            label={(
+              <>
+                <img
+                  src='/bitfinex-leaf.svg'
+                  className='dropdown-leaf'
+                  alt=''
                 />
-              </li>
-            )
-          })}
-        </ul>
-        <div className='hfui-tradingpage__menu'>
-          <div className='hfui-exchangeinfobar__buttons'>
-            <LayoutSettings />
-            <NavbarButton
-              alt={t('notifications.title')}
-              icon='notifications'
-              onClick={() => dispatch(
-                UIActions.toggleUIModalState(
-                  UI_MODAL_KEYS.NOTIFICATIONS_PANEL,
-                ),
+                <Icon
+                  name='chevron-down'
+                  width={2}
+                  className='label-chevron'
+                />
+              </>
               )}
-            />
-            {isElectronApp && <AppSettings />}
-            <Dropdown
-              label={(
-                <>
-                  <img
-                    src='/bitfinex-leaf.svg'
-                    className='dropdown-leaf'
-                    alt=''
-                  />
-                  <Icon
-                    name='chevron-down'
-                    width={2}
-                    className='label-chevron'
-                  />
-                </>
-              )}
-              options={leafOptions}
-              className='simpledropdown-wrapper'
-            />
-          </div>
-          {isElectronApp && (
-            <>
-              <div className='hfui-tradingpaper__control'>
-                <div className='hfui-tradingpaper__control-toggle'>
-                  <p>{t('main.sandbox')}</p>
-                  <SwitchMode />
-                </div>
-              </div>
-              <APIBanner />
-            </>
-          )}
-          <CloseSessionButton />
+            options={leafOptions}
+            className='simpledropdown-wrapper'
+          />
         </div>
+        {isElectronApp && (
+        <>
+          <div className='hfui-tradingpaper__control'>
+            <div className='hfui-tradingpaper__control-toggle'>
+              <p>{t('main.sandbox')}</p>
+              <SwitchMode />
+            </div>
+          </div>
+          <APIBanner />
+        </>
+        )}
+        <CloseSessionButton />
       </div>
-    </>
+    </div>
   )
 }
 export default memo(Navbar)

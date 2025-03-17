@@ -1012,8 +1012,5 @@
     "stopOrderValuePlaceholder": "% of the entry price",
     "stopOrder": "Stop Order"
   },
-  "RC_disclaimer": {
-    "top": "v{{appVersion}} DISCLAIMER: This software is a Release Candidate (RC) version used for internal testing by Bitfinex. We appreciate any <url>feedback</url> but please refrain from running live orders and strategies as these RC might contain unexpected instabilities",
-    "bottom": "RELEASE CANDIDATE VERSION. For testing purposes only."
-  }
+  "lackOfSupportDisclaimer": "WARNING: this open source software is no longer maintained and can be unstable"
 }

@@ -12,8 +12,6 @@ import _values from 'lodash/values'
 import _some from 'lodash/some'
 import _isUndefined from 'lodash/isUndefined'
 import _findIndex from 'lodash/findIndex'
-import _includes from 'lodash/includes'
-import _isArray from 'lodash/isArray'
 import { nonce } from 'bfx-api-node-util'
 import { VOLUME_UNIT, VOLUME_UNIT_PAPER } from '@ufx-ui/bfx-containers'
 
@@ -32,7 +30,7 @@ import {
   layoutDefToGridLayout,
   gridLayoutToLayoutDef,
 } from '../../../components/GridLayout/GridLayout.helpers'
-import { appVersion, isElectronApp, isRCVersion } from '../../config'
+import { isElectronApp } from '../../config'
 
 import { storeLastUsedLayoutID } from '../../../util/layout'
 import { DEFAULT_TAB } from '../../../modals/AppSettingsModal/AppSettingsModal.constants'
@@ -44,7 +42,6 @@ const LAYOUTS_KEY = 'HF_UI_LAYOUTS'
 const LAYOUTS_STATE_KEY = 'HF_UI_LAYOUTS_STATE'
 const ACTIVE_MARKET_KEY = 'HF_UI_ACTIVE_MARKET'
 const ACTIVE_MARKET_PAPER_KEY = 'HF_UI_PAPER_ACTIVE_MARKET'
-export const ALLOWED_RC_VERSIONS = 'HF_UI_ALLOWED_RC_VERSIONS'
 export const IS_PAPER_TRADING = 'IS_PAPER_TRADING'
 export const PAPER_MODE = 'paper'
 export const MAIN_MODE = 'main'
@@ -97,7 +94,6 @@ function getInitialState() {
     tickersVolumeUnit: null,
     isApplicationHidden: false,
     isFullscreenBarShown: false,
-    isRCDisclaimerShown: false,
   }
 
   _map(_values(UI_MODAL_KEYS), (modalKey) => {
@@ -155,20 +151,6 @@ function getInitialState() {
       localStorage.setItem(LAYOUTS_KEY, JSON.stringify(nextFormatLayouts))
     }
 
-    if (isRCVersion) {
-      const allowedRCVersionsJSON = localStorage.getItem(ALLOWED_RC_VERSIONS)
-      let showModal = true
-
-      if (allowedRCVersionsJSON) {
-        const allowedRCVersions = JSON.parse(allowedRCVersionsJSON)
-
-        if (_isArray(allowedRCVersions) && _includes(allowedRCVersions, appVersion)) {
-          showModal = false
-        }
-      }
-
-      defaultState.isRCDisclaimerShown = showModal
-    }
     const doNotShowDmsRemovalDisclaimer = localStorage.getItem(DO_NOT_SHOW_DMS_REMOVAL_DISCLAIMER) === 'true'
     if (!doNotShowDmsRemovalDisclaimer) {
       defaultState.modals[`is${UI_MODAL_KEYS.DMS_REMOVAL_DISCLAIMER}Open`] = true
