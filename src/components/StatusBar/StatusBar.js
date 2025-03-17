@@ -24,7 +24,6 @@ const StatusBar = ({
   wsInterrupted,
   currentModeApiKeyState,
   isPaperTrading,
-  isBetaVersion,
 }) => {
   const isWrongAPIKey = !currentModeApiKeyState.valid
   const apiClientDisconnected = isWrongAPIKey || _apiClientDisconnected
@@ -86,14 +85,10 @@ const StatusBar = ({
                 {appVersion}
               </span>
               &nbsp;
-              <span
+              <p
                 className='hfui-statusbar__beta'
                 onClick={onVersionTypeClickHandler}
-              >
-                (
-                {isBetaVersion ? 'BETA' : 'STABLE'}
-                )
-              </span>
+              />
             </p>
             <span
               className={ClassNames('hfui-statusbar__statuscircle', {
@@ -136,7 +131,6 @@ StatusBar.propTypes = {
     valid: PropTypes.bool,
   }),
   isPaperTrading: PropTypes.bool.isRequired,
-  isBetaVersion: PropTypes.bool.isRequired,
 }
 
 StatusBar.defaultProps = {
