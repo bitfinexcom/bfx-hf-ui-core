@@ -3,7 +3,6 @@ import { reduxActions } from '@ufx-ui/bfx-containers'
 import { v4 as uuidv4 } from 'uuid'
 
 import WSActions from '../../redux/actions/ws'
-import GAActions from '../../redux/actions/google_analytics'
 import UIActions from '../../redux/actions/ui'
 import {
   getCurrentMode,
@@ -50,9 +49,6 @@ const mapDispatchToProps = (dispatch) => ({
         [MAX_ORDER_COUNT_SETTING],
       ]),
     )
-  },
-  GAPageview: (page) => {
-    dispatch(GAActions.pageview(page))
   },
   getFavoritePairs: (authToken, mode) => {
     dispatch(WSActions.send(['get.favourite_trading_pairs', authToken, mode]))

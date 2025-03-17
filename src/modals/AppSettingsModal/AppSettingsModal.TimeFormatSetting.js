@@ -5,7 +5,6 @@ import { useDispatch, useSelector } from 'react-redux'
 import { Button, Intent } from '@ufx-ui/core'
 import Input from '../../ui/Input'
 import WSActions from '../../redux/actions/ws'
-import GAActions from '../../redux/actions/google_analytics'
 import { getTimestampFormat, SETTINGS_KEYS } from '../../redux/selectors/ui'
 import { SETUP_TIMESTAMP_FORMAT_ARTICLE } from '../../redux/config'
 import i18n, { DATE_FNS_LOCALES } from '../../locales/i18n'
@@ -48,7 +47,6 @@ const TimeFormatSetting = () => {
 
   const saveSetting = (value) => {
     dispatch(WSActions.saveSetting(SETTINGS_KEYS.TIMESTAMP_FORMAT, value))
-    dispatch(GAActions.updateSettings())
   }
 
   const onSubmit = () => {

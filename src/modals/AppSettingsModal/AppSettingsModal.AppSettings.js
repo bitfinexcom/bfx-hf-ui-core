@@ -9,7 +9,6 @@ import _map from 'lodash/map'
 import { Checkbox } from '@ufx-ui/core'
 import WSActions from '../../redux/actions/ws'
 import UIActions from '../../redux/actions/ui'
-import GAActions from '../../redux/actions/google_analytics'
 import LanguageSettings from '../../components/Navbar/Navbar.LanguageSettings'
 import Dropdown from '../../ui/Dropdown'
 import {
@@ -55,21 +54,18 @@ const AppSettings = () => {
   const updateTheme = (nextTheme) => {
     setCurrentTheme(nextTheme)
     dispatch(WSActions.saveSetting(SETTINGS_KEYS.THEME, nextTheme))
-    dispatch(GAActions.updateSettings())
     localStorage.setItem(SETTINGS_KEYS.THEME, nextTheme)
   }
 
   const hideOnCloseHandler = (shouldHide) => {
     setHideOnCloseChecked(shouldHide)
     dispatch(WSActions.saveSetting(SETTINGS_KEYS.HIDE_ON_CLOSE, shouldHide))
-    dispatch(GAActions.updateSettings())
   }
 
   const fullscreenHandler = (fullscreen) => {
     setFullscreenChecked(fullscreen)
     dispatch(WSActions.saveSetting(SETTINGS_KEYS.FULLSCREEN, fullscreen))
     dispatch(UIActions.setUIValue(UI_KEYS.isFullscreenBarShown, fullscreen))
-    dispatch(GAActions.updateSettings())
     if (ipcHelpers) {
       ipcHelpers.sendChangeFullscreenEvent(fullscreen)
       dispatch(UIActions.logInformation('The fullscreen mode is toggled', LOG_LEVELS.INFO, 'fullscreen_toggle'))

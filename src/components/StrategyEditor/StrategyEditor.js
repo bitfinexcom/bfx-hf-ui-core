@@ -70,7 +70,6 @@ const StrategyEditor = (props) => {
     removeable,
     onRemove,
     authToken,
-    gaCreateStrategy,
     backtestState,
     strategyDirty,
     setStrategyDirty,
@@ -205,8 +204,6 @@ const StrategyEditor = (props) => {
 
   const onCreateNewStrategy = useCallback(
     (label, content = {}) => {
-      gaCreateStrategy()
-
       const newStrategyContent = { ...content }
 
       const newStrategy = {
@@ -220,13 +217,11 @@ const StrategyEditor = (props) => {
 
       onCloseModals()
     },
-    [gaCreateStrategy, onCloseModals, onLoadStrategy, saveStrategy],
+    [onCloseModals, onLoadStrategy, saveStrategy],
   )
 
   const onCreateStrategyFromExisted = useCallback(
     (label, _newStrategy, forcedLoad = false) => {
-      gaCreateStrategy()
-
       const newStrategy = {
         ..._newStrategy,
         label,
@@ -244,7 +239,7 @@ const StrategyEditor = (props) => {
 
       onCloseModals()
     },
-    [gaCreateStrategy, onCloseModals, onLoadStrategy, saveStrategy],
+    [onCloseModals, onLoadStrategy, saveStrategy],
   )
 
   const onRemoveStrategy = useCallback(() => {
@@ -796,7 +791,6 @@ StrategyEditor.propTypes = {
   indicators: INDICATORS_ARRAY_SHAPE,
   strategyDirty: PropTypes.bool.isRequired,
   setStrategyDirty: PropTypes.func.isRequired,
-  gaCreateStrategy: PropTypes.func.isRequired,
   executionState: PropTypes.shape({
     executing: PropTypes.bool,
     loading: PropTypes.bool,
