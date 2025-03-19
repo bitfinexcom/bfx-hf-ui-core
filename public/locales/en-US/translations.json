@@ -1007,5 +1007,5 @@
     "stopOrderValuePlaceholder": "% of the entry price",
     "stopOrder": "Stop Order"
   },
-  "lackOfSupportDisclaimer": "WARNING: this open source software is no longer maintained and can be unstable"
+  "lackOfSupportDisclaimer": "WARNING: This application is based on open source software that is no longer maintained. Use of this application may lead to unexpected results, including unexpected trading behaviours. Use at your own risk."
 }
