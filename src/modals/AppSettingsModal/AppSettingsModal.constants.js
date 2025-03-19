@@ -23,6 +23,8 @@ export const SETTINGS_TABS_COMPONENTS = {
 
 export const DEFAULT_TAB = SETTINGS_TABS.General
 
-export const TERMS_CONDITIONS_URL = 'https://www.bitfinex.com/legal/general/api-terms'
+export const API_TERMS_CONDITIONS_URL = 'https://www.bitfinex.com/legal/general/api-terms'
 
 export const PRIVACY_POLICY_URL = 'https://www.bitfinex.com/legal/privacy'
+
+export const TERMS_OF_SERVICE = 'https://www.bitfinex.com/legal/exchange/terms/'

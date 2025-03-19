@@ -307,8 +307,6 @@
     "language": "Idioma",
     "aboutTab": "Acerca",
     "appVersion": "Versión {{version}}",
-    "description": "La aplicación de trading logarítmica basada en el <url>API de Bitfinex</url>, creada por el equipo de Bitfinex.",
-    "licence": "Este software tiene la licencia de <url>Apache-2.0</url>.",
     "sourceCode": "El código fuente está disponible en <url>Github</url>.",
     "moreInfo": "Visita la <url>página de preguntas frecuentes</url> de Bitfinex Honey para más información.",
     "apiKeys": "Claves API",

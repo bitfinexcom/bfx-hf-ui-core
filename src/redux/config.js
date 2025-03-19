@@ -40,7 +40,7 @@ const SOURCE_CODE_URL = 'https://github.com/bitfinexcom/bfx-hf-ui'
 
 const ISSUES_REPORT_URL = 'https://bitfinex-honey.upvoty.com/b/issues/'
 
-const LICENCE_URL = 'https://github.com/bitfinexcom/bfx-hf-ui/blob/master/LICENSE'
+const LICENSE_URL = 'https://github.com/bitfinexcom/bfx-hf-ui/blob/master/LICENSE'
 
 const MARGIN_TRADING_ARTICLE_URL = 'https://support.bitfinex.com/hc/en-us/articles/115004555165-What-is-Margin-Trading-on-Bitfinex'
 
@@ -72,7 +72,7 @@ export {
   RELEASE_URL,
   API_DOCS_URL,
   SOURCE_CODE_URL,
-  LICENCE_URL,
+  LICENSE_URL,
   isDevEnv,
   PASSWORD_MIN_LENGTH,
   PASSWORD_MAX_LENGTH,

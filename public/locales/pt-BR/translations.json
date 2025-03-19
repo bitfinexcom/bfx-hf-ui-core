@@ -307,8 +307,6 @@
     "language": "Idioma",
     "aboutTab": "Sobre",
     "appVersion": "Versão {{version}}",
-    "description": "Aplicativo oficial de algoritmos para trading, gratuito, baseado no <url>API Bitfinex</url> e criado pelo time da Bitfinex.",
-    "licence": "Este software é licenciado pela licença <url>Apache-2.0</url>.",
     "sourceCode": "O código fonte está disponível no <url>Github</url>.",
     "moreInfo": "Veja a <url>Página de FAQ</url> do Bitfinex Honey para mais informações.",
     "apiKeys": "Chaves de API",

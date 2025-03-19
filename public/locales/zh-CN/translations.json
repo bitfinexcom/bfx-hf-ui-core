@@ -307,8 +307,6 @@
     "language": "语言",
     "aboutTab": "关于",
     "appVersion": "版本 {{version}}",
-    "description": "由Bitfinex团队根据<url>Bitfinex API</url>创建的免费演算法交易应用程式，。",
-    "licence": "此软件获得 <url>Apache-2.0</url> 许可授权。",
     "sourceCode": "源代码放置于<url>Github</url>。",
     "moreInfo": "访问Bitfinex Honey<url>常见问题</url>了解更多信息。",
     "apiKeys": "API 密钥",
