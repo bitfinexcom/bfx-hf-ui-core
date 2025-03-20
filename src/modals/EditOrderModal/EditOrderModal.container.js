@@ -3,7 +3,6 @@ import _size from 'lodash/size'
 
 import UIActions from '../../redux/actions/ui'
 import WSActions from '../../redux/actions/ws'
-import GAActions from '../../redux/actions/google_analytics'
 import {
   getMaxOrderCounts,
   getUIModalStateForKey,
@@ -44,9 +43,6 @@ const mapDispatchToProps = (dispatch) => ({
   },
   updateOrder: (authToken, order) => {
     dispatch(WSActions.send(['order.update', authToken, order]))
-  },
-  gaEditAO: () => {
-    dispatch(GAActions.editAO())
   },
   cancelAlgoOrder: (gid) => {
     dispatch(WSActions.cancelAlgoOrder(gid))

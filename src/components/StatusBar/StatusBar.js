@@ -74,7 +74,7 @@ const StatusBar = ({
                 {appVersion}
               </span>
               &nbsp;
-              <span
+              <p
                 className='hfui-statusbar__beta'
                 onClick={onVersionTypeClickHandler}
               />

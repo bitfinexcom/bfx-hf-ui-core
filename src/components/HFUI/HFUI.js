@@ -3,7 +3,7 @@ import React, {
   useEffect, Suspense, lazy, useCallback,
 } from 'react'
 import {
-  Route, Switch, Redirect, useLocation,
+  Route, Switch, Redirect,
 } from 'react-router'
 import PropTypes from 'prop-types'
 
@@ -36,7 +36,6 @@ const HFUI = (props) => {
     notificationsVisible,
     getFavoritePairs,
     currentMode,
-    GAPageview,
     onUnload,
     subscribeAllTickers,
     shouldShowAOPauseModalState,
@@ -120,12 +119,6 @@ const HFUI = (props) => {
     body.classList.add(settingsTheme)
   }, [settingsTheme, authToken])
 
-  const location = useLocation()
-  const { pathname } = location
-  useEffect(() => {
-    GAPageview(pathname)
-  }, [GAPageview, pathname])
-
   // fetch after successful log in
   useEffect(() => {
     if (authToken) {
@@ -205,7 +198,6 @@ HFUI.propTypes = {
   getPastStrategies: PropTypes.func.isRequired,
   onUnload: PropTypes.func.isRequired,
   notificationsVisible: PropTypes.bool.isRequired,
-  GAPageview: PropTypes.func.isRequired,
   subscribeAllTickers: PropTypes.func.isRequired,
   shouldShowAOPauseModalState: PropTypes.func.isRequired,
   settingsShowAlgoPauseInfo: PropTypes.bool,

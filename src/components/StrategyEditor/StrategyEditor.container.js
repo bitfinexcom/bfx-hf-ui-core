@@ -5,7 +5,6 @@ import _isEmpty from 'lodash/isEmpty'
 
 import WSActions from '../../redux/actions/ws'
 import UIActions from '../../redux/actions/ui'
-import GAActions from '../../redux/actions/google_analytics'
 import WSTypes from '../../redux/constants/ws'
 import {
   getAuthToken,
@@ -45,9 +44,6 @@ const mapStateToProps = (state = {}) => {
 const mapDispatchToProps = (dispatch) => ({
   onRemove: (authToken, id) => {
     dispatch(UIActions.removeStrategy(authToken, id))
-  },
-  gaCreateStrategy: () => {
-    dispatch(GAActions.createStrategy())
   },
   dsExecuteLiveStrategy: ({
     authToken,

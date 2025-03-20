@@ -4,7 +4,6 @@ import { Checkbox } from '@ufx-ui/core'
 import { useTranslation } from 'react-i18next'
 
 import WSActions from '../../redux/actions/ws'
-import GAActions from '../../redux/actions/google_analytics'
 import {
   isDevEnv,
   getAutoLoginState,
@@ -40,7 +39,6 @@ const General = () => {
     dispatch(
       WSActions.saveSetting(SETTINGS_KEYS.SHOW_ALGO_PAUSE_INFO, nextAOPause),
     )
-    dispatch(GAActions.updateSettings())
   }
 
   const updateAutoResumeAOs = (nextAutoResumeAOs) => {
@@ -48,7 +46,6 @@ const General = () => {
     dispatch(
       WSActions.saveSetting(SETTINGS_KEYS.AUTO_RESUME_AOS, nextAutoResumeAOs),
     )
-    dispatch(GAActions.updateSettings())
   }
 
   return (

@@ -14,7 +14,6 @@ export const SETTINGS_KEYS = {
   SHOW_ALGO_PAUSE_INFO: 'showAlgoPauseInfo',
   SHOW_ONLY_FAVORITE_PAIRS: 'showOnlyFavoritePairs',
   THEME: 'theme',
-  JOIN_BETA_PROGRAM: 'joinBetaProgram',
   HIDE_ON_CLOSE: 'hideOnClose',
   FULLSCREEN: 'fullScreen',
   AUTO_RESUME_AOS: 'autoResumeAOs',
@@ -52,11 +51,6 @@ export const getShowAlgoPauseInfoSetting = createSelector(
 export const getThemeSetting = createSelector(
   getSettings,
   (settings) => _get(settings, SETTINGS_KEYS.THEME, getDefaultTheme()),
-)
-
-export const getIsBetaVersion = createSelector(
-  getSettings,
-  (settings) => _get(settings, SETTINGS_KEYS.JOIN_BETA_PROGRAM, false),
 )
 
 export const getShouldHideOnClose = createSelector(
