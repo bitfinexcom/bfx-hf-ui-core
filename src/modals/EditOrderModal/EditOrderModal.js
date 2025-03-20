@@ -45,7 +45,6 @@ const EditOrderModal = ({
   atomicOrdersCount,
   countFilterAtomicOrdersByMarket,
   maxOrderCounts,
-  gaEditAO,
   cancelAlgoOrder,
   submitAlgoOrder,
   markets,
@@ -151,7 +150,6 @@ const EditOrderModal = ({
     )
 
     if (_isEmpty(error)) {
-      gaEditAO()
       const orderData = {
         ...data,
         _symbol: symbol,
@@ -298,7 +296,6 @@ EditOrderModal.propTypes = {
   atomicOrdersCount: PropTypes.number.isRequired,
   countFilterAtomicOrdersByMarket: PropTypes.func.isRequired,
   maxOrderCounts: PropTypes.objectOf(PropTypes.number).isRequired,
-  gaEditAO: PropTypes.func.isRequired,
   cancelAlgoOrder: PropTypes.func.isRequired,
   submitAlgoOrder: PropTypes.func.isRequired,
   markets: PropTypes.objectOf(PropTypes.shape(MARKET_SHAPE)).isRequired,

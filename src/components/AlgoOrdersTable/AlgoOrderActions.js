@@ -9,7 +9,6 @@ import { useDispatch } from 'react-redux'
 import { Item } from '../Navbar/Navbar.LayoutSettings'
 import WSActions from '../../redux/actions/ws'
 import UIActions from '../../redux/actions/ui'
-import GAActions from '../../redux/actions/google_analytics'
 import { UI_MODAL_KEYS } from '../../redux/constants/modals'
 import { UI_KEYS } from '../../redux/constants/ui_keys'
 import { ORDER_SHAPE } from '../../constants/prop-types-shapes'
@@ -28,10 +27,6 @@ const AlgoOrderActions = ({
 
   const { gid } = order
 
-  const gaCancelOrder = () => {
-    dispatch(GAActions.cancelAO())
-  }
-
   const cancelOrder = () => {
     debug('cancelling algo order %d', gid)
 
@@ -43,7 +38,6 @@ const AlgoOrderActions = ({
         'ao_cancelled',
       ),
     )
-    gaCancelOrder()
   }
 
   const editOrder = () => {

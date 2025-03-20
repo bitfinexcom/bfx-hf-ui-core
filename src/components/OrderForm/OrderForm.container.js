@@ -9,7 +9,6 @@ import { Recurring } from 'bfx-hf-algo'
 import OrderForm from './OrderForm'
 import UIActions from '../../redux/actions/ui'
 import WSActions from '../../redux/actions/ws'
-import GAActions from '../../redux/actions/google_analytics'
 import AOActions from '../../redux/actions/ao'
 import { getAOParams } from '../../redux/selectors/ao'
 import {
@@ -97,12 +96,6 @@ const mapDispatchToProps = (dispatch) => ({
     if (!wsConnected) {
       dispatch(UIActions.setUIValue(UI_KEYS.isOrderExecuting, false))
     }
-  },
-  gaSubmitOrder: () => {
-    dispatch(GAActions.submitAtomicOrder())
-  },
-  gaSubmitAO: () => {
-    dispatch(GAActions.submitAO())
   },
   submitAlgoOrder: ({
     authToken, id, market, context, data, wsConnected,

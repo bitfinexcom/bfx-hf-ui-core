@@ -5,7 +5,6 @@ import { Checkbox } from '@ufx-ui/core'
 import { useDispatch, useSelector } from 'react-redux'
 import { useTranslation } from 'react-i18next'
 import WSActions from '../../redux/actions/ws'
-import GAActions from '../../redux/actions/google_analytics'
 import NumberInput from '../../components/OrderForm/FieldComponents/input.number'
 import {
   DEFAULT_RECONNECTION_TIME,
@@ -57,7 +56,6 @@ const OverrideTimer = () => {
       dispatch(
         WSActions.saveSetting(SETTINGS_KEYS.PACKET_WD_DELAY, timeInMs),
       )
-      dispatch(GAActions.updateSettings())
     }, 1000),
     [dispatch],
   )

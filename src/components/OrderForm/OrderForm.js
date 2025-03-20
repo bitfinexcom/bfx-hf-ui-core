@@ -227,7 +227,7 @@ class OrderForm extends React.Component {
     } = this.state
 
     const {
-      submitOrder, authToken, gaSubmitOrder, wsConnected,
+      submitOrder, authToken, wsConnected,
     } = this.props
     const { generateOrder } = currentLayout
     const data = processFieldData({
@@ -243,7 +243,6 @@ class OrderForm extends React.Component {
         packet,
         wsConnected,
       })
-      gaSubmitOrder()
     } catch (e) {
       setIsOrderExecuting(false)
       this.setState(() => ({ creationError: e.message }))
@@ -254,7 +253,6 @@ class OrderForm extends React.Component {
     const {
       submitAlgoOrder,
       authToken,
-      gaSubmitAO,
       setIsOrderExecuting,
       t,
       wsConnected,
@@ -276,7 +274,6 @@ class OrderForm extends React.Component {
     const errors = this.validateAOData(data)
 
     if (_isEmpty(errors)) {
-      gaSubmitAO()
       submitAlgoOrder({
         id,
         data,
@@ -579,9 +576,7 @@ OrderForm.propTypes = {
   aoParams: PropTypes.objectOf(PropTypes.object).isRequired, // eslint-disable-line
   resetActiveAOParamsID: PropTypes.func.isRequired,
   submitOrder: PropTypes.func.isRequired,
-  gaSubmitOrder: PropTypes.func.isRequired,
   submitAlgoOrder: PropTypes.func.isRequired,
-  gaSubmitAO: PropTypes.func.isRequired,
   isPaperTrading: PropTypes.bool.isRequired,
   authToken: PropTypes.string,
   onRemove: PropTypes.func,
