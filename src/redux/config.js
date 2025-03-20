@@ -1,4 +1,3 @@
-import _includes from 'lodash/includes'
 import { Recurring } from 'bfx-hf-algo'
 import { version } from '../../package.json'
 
@@ -33,10 +32,6 @@ const PUB_REST_API_URL = isElectronApp ? 'http://localhost:45001' : process.env.
 
 const appVersion = version
 
-const RC_KEYWORD = '-rc'
-
-const isRCVersion = _includes(appVersion, RC_KEYWORD)
-
 const RELEASE_URL = 'https://github.com/bitfinexcom/bfx-hf-ui/releases'
 
 const API_DOCS_URL = 'https://docs.bitfinex.com/docs/introduction'
@@ -45,7 +40,7 @@ const SOURCE_CODE_URL = 'https://github.com/bitfinexcom/bfx-hf-ui'
 
 const ISSUES_REPORT_URL = 'https://bitfinex-honey.upvoty.com/b/issues/'
 
-const LICENCE_URL = 'https://github.com/bitfinexcom/bfx-hf-ui/blob/master/LICENSE'
+const LICENSE_URL = 'https://github.com/bitfinexcom/bfx-hf-ui/blob/master/LICENSE'
 
 const MARGIN_TRADING_ARTICLE_URL = 'https://support.bitfinex.com/hc/en-us/articles/115004555165-What-is-Margin-Trading-on-Bitfinex'
 
@@ -54,12 +49,6 @@ const STOP_ORDER_ARTICLE_URL = 'https://support.bitfinex.com/hc/en-us/articles/1
 const SETUP_TIMESTAMP_FORMAT_ARTICLE = 'https://bitfinex-honey.readme.io/docs/timestamp-format?utm-source=standalone'
 
 const DISCONTINUE_DMS_SUPPORT_ARTICLE_DMS = 'https://www.bitfinex.com/posts/1072/'
-
-// product description link
-const HF_DESC_URL = 'https://support.bitfinex.com/hc/en-us/articles/900000096823-Honey-Framework'
-
-const DISCUSSION_BOARD_URL = 'https://bit.ly/42p9YiV'
-const DISCORD_URL = 'https://bit.ly/400Xj49'
 
 const CHART_URL = isElectronApp ? 'https://bitfinexcom.github.io/bfx-hf-tradingview/' : process.env.REACT_APP_CHART_URL
 
@@ -83,19 +72,14 @@ export {
   RELEASE_URL,
   API_DOCS_URL,
   SOURCE_CODE_URL,
-  LICENCE_URL,
-  HF_DESC_URL,
+  LICENSE_URL,
   isDevEnv,
   PASSWORD_MIN_LENGTH,
   PASSWORD_MAX_LENGTH,
   MARGIN_TRADING_ARTICLE_URL,
   STOP_ORDER_ARTICLE_URL,
   HOSTED_ALGO_ORDERS,
-  RC_KEYWORD,
-  isRCVersion,
   ISSUES_REPORT_URL,
   SETUP_TIMESTAMP_FORMAT_ARTICLE,
-  DISCUSSION_BOARD_URL,
-  DISCORD_URL,
   DISCONTINUE_DMS_SUPPORT_ARTICLE_DMS,
 }

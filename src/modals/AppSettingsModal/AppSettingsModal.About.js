@@ -7,14 +7,12 @@ import {
   RELEASE_URL,
   API_DOCS_URL,
   SOURCE_CODE_URL,
-  LICENCE_URL,
-  HF_DESC_URL,
-  DISCUSSION_BOARD_URL,
-  DISCORD_URL,
+  LICENSE_URL,
 } from '../../redux/config'
 import {
   PRIVACY_POLICY_URL,
-  TERMS_CONDITIONS_URL,
+  API_TERMS_CONDITIONS_URL,
+  TERMS_OF_SERVICE,
 } from './AppSettingsModal.constants'
 
 const About = () => {
@@ -27,10 +25,11 @@ const About = () => {
           {t('appSettings.appVersion', { version: appVersion })}
         </a>
       </div>
-      <div className='appsettings-modal__setting bold'>
+      <p className='appsettings-modal__setting bold'>{t('appSettings.description_warning')}</p>
+      <div className='appsettings-modal__setting'>
         <Trans
           t={t}
-          i18nKey='appSettings.description'
+          i18nKey='appSettings.description_api'
           components={{
             url: (
               <a
@@ -39,20 +38,23 @@ const About = () => {
                 rel='noopener noreferrer'
               />
             ),
+            bold: <b />,
           }}
         />
       </div>
-      <div className='appsettings-modal__setting bold'>
+      <div className='appsettings-modal__setting'>
         <Trans
           t={t}
-          i18nKey='appSettings.licence'
+          i18nKey='appSettings.description_license'
           components={{
             url: (
-              <a href={LICENCE_URL} target='_blank' rel='noopener noreferrer' />
+              <a href={LICENSE_URL} target='_blank' rel='noopener noreferrer' />
             ),
+            bold: <b />,
           }}
         />
-        <br />
+      </div>
+      <div className='appsettings-modal__setting'>
         <Trans
           t={t}
           i18nKey='appSettings.sourceCode'
@@ -67,43 +69,19 @@ const About = () => {
           }}
         />
       </div>
-      <div className='appsettings-modal__setting light'>
-        <Trans
-          t={t}
-          i18nKey='appSettings.discussionBoard'
-          components={{
-            url: (
-              <a href={DISCUSSION_BOARD_URL} target='_blank' rel='noopener noreferrer' />
-            ),
-          }}
-        />
-      </div>
-      <div className='appsettings-modal__setting light'>
-        <Trans
-          t={t}
-          i18nKey='appSettings.reachOutDiscord'
-          components={{
-            url: (
-              <a href={DISCORD_URL} target='_blank' rel='noopener noreferrer' />
-            ),
-          }}
-        />
-      </div>
-      <div className='appsettings-modal__setting light'>
-        <Trans
-          t={t}
-          i18nKey='appSettings.wipDocs'
-          components={{
-            url: (
-              <a href={HF_DESC_URL} target='_blank' rel='noopener noreferrer' />
-            ),
-          }}
-        />
-      </div>
+
       <div className='appsettings-modal__setting appsettings-modal__legal light'>
         <a
+          className='legal__item legal__item--bold'
+          href={TERMS_OF_SERVICE}
+          target='_blank'
+          rel='noopener noreferrer'
+        >
+          {t('appSettings.termsOfService')}
+        </a>
+        <a
           className='legal__item'
-          href={TERMS_CONDITIONS_URL}
+          href={API_TERMS_CONDITIONS_URL}
           target='_blank'
           rel='noopener noreferrer'
         >

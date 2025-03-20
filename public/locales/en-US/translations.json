@@ -355,14 +355,13 @@
     "exitFullscreenButton": "Exit fullscreen ({{key}})",
     "aboutTab": "About",
     "appVersion": "Version {{version}}",
-    "description": "Official free algorithmic trading app based on the <url>Bitfinex API</url>, created by the Bitfinex team.",
-    "licence": "This software is licenced under the <url>Apache-2.0</url> Licence.",
+    "description_warning": "Warning: This application is based on open source software that is no longer maintained. Use of this application may lead to unexpected results, including unexpected trading behaviors. Use at your own risk.",
+    "description_api": "This <bold>application</bold> is a free algorithmic trading app created by the Bitfinex team <bold>that can communicate with the Bitfinex platform using the <url>Bitfinex API</url></bold>",
+    "description_license": "This <bold>application and open source</bold> software <bold>on which it is based are</bold> licensed under the <url>Apache-2.0 License</url>, <bold>including Section 7 (Disclaimer of Warranty) and 8 (Limitation of Liability)</bold>",
     "sourceCode": "The source code is available on <url>Github</url>.",
     "moreInfo": "Visit the Bitfinex Honey <url>FAQ page</url> for more information.",
-    "discussionBoard": "Visit our <url>Discussion board</url> to request features or fixes.",
-    "reachOutDiscord": "You can reach out to the team behind the software in our dedicated <url>Discord</url> channel.",
-    "wipDocs": "We are working on an improved documentation, in the meanwhile you can visit our current <url>FAQ page</url> for generic information.",
     "apiTerms": "Bitfinex API Terms of Service",
+    "termsOfService": "Bitfinex Terms of Service",
     "bfxPrivacy": "Bitfinex Privacy Policy",
     "apiKeys": "API keys",
     "noApiKeys": "Don't have API keys?",
@@ -1010,8 +1009,5 @@
     "stopOrderValuePlaceholder": "% of the entry price",
     "stopOrder": "Stop Order"
   },
-  "RC_disclaimer": {
-    "top": "v{{appVersion}} DISCLAIMER: This software is a Release Candidate (RC) version used for internal testing by Bitfinex. We appreciate any <url>feedback</url> but please refrain from running live orders and strategies as these RC might contain unexpected instabilities",
-    "bottom": "RELEASE CANDIDATE VERSION. For testing purposes only."
-  }
+  "lackOfSupportDisclaimer": "WARNING: This application is based on open source software that is no longer maintained. Use of this application may lead to unexpected results, including unexpected trading behaviours. Use at your own risk."
 }

@@ -2,7 +2,7 @@ import { connect } from 'react-redux'
 
 import StatusBar from './StatusBar'
 import {
-  getRemoteVersion, getIsPaperTrading, getUIState,
+  getRemoteVersion, getUIState,
 } from '../../redux/selectors/ui'
 import {
   apiClientConnected, apiClientConnecting, apiClientDisconnected, getCurrentModeAPIKeyState, isSocketConnected,
@@ -17,7 +17,6 @@ const mapStateToProps = (state) => ({
   apiClientConnected: apiClientConnected(state),
   wsInterrupted: getUIState(state, UI_KEYS.isBadInternetConnection, false),
   currentModeApiKeyState: getCurrentModeAPIKeyState(state),
-  isPaperTrading: getIsPaperTrading(state),
 })
 
 export default connect(mapStateToProps)(StatusBar)

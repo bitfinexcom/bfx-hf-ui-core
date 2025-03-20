@@ -12,7 +12,6 @@ import { getThemeSetting, THEMES } from '../../redux/selectors/ui'
 import useToggle from '../../hooks/useToggle'
 import ResetDataConfirmModal from '../../modals/ResetDataConfirmModal'
 import { LOG_LEVELS } from '../../constants/logging'
-import RCDisclaimer from '../../components/RCDisclaimer/RCDisclaimer'
 
 import './style.css'
 
@@ -40,7 +39,6 @@ const Authentication = ({
 
   return (
     <div className='hfui-authenticationpage__wrapper'>
-      <RCDisclaimer />
       <div className='hfui-authenticationpage__inner'>
         <div className='hfui-authenticationpage__inner-left'>
           <HFIcon fill={settingsTheme === THEMES.DARK ? 'white' : 'black'} />
