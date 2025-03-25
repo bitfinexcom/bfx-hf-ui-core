@@ -398,6 +398,7 @@
     "Light": "Light theme",
     "privacyPolicy": "Privacy Policy",
     "betaDisclaimerNoFeatures": "NOTICE: No new features or releases are expected for this application",
+    "betaProgramText": "Stay up-to-date with every new feature and be one of the first to try it as soon as it’s released.",
     "betaProgramCheckbox": "Join the Beta Program",
     "overrideDefaultReconnectionTimerCheckbox": "Override default reconnection timer",
     "overrideDefaultReconnectionTimerText": "By default after {{minValue}} seconds of disconnection any algorithmic orders are stopped until user confirmation. This time can be extended up to {{maxValueInMin}} minutes.",
