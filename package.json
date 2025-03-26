@@ -1,6 +1,6 @@
 {
   "name": "bfx-hf-ui-core",
-  "version": "4.0.0-rc.2",
+  "version": "4.0.0",
   "description": "Web based Bitfinex Honey - for live trading and executing algorithmic orders and strategies",
   "engines": {
     "node": ">=18"
